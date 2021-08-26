@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:myprofit_vendorapp/UI/home/home.dart';
 import 'package:myprofit_vendorapp/localization/app_translations.dart';
 import 'package:myprofit_vendorapp/signup/signup.dart';
 import 'package:myprofit_vendorapp/utility/color.dart';
@@ -133,6 +134,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: () {
                       loginApiCall(
                           mobileController.text, _textFieldController.text);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HomeScreen()));
                     },
                     child: new Text(
                       "${AppTranslations.of(context)!.text("verify_key")}",
@@ -313,35 +318,35 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Center(
-                          child: RichText(
-                            text: TextSpan(
-                                text: 'Don\'t have an Account?',
-                                style: TextStyle(
-                                    color: ColorTextPrimary,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 18),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                      text: ' Sign up',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          color: ColorPrimary,
-                                          fontSize: 18),
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      SignUp()));
-                                        })
-                                ]),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 35,
-                        ),
+                        // Center(
+                        //   child: RichText(
+                        //     text: TextSpan(
+                        //         text: 'Don\'t have an Account?',
+                        //         style: TextStyle(
+                        //             color: ColorTextPrimary,
+                        //             fontWeight: FontWeight.w600,
+                        //             fontSize: 18),
+                        //         children: <TextSpan>[
+                        //           TextSpan(
+                        //               text: ' Sign up',
+                        //               style: TextStyle(
+                        //                   fontWeight: FontWeight.w600,
+                        //                   color: ColorPrimary,
+                        //                   fontSize: 18),
+                        //               recognizer: TapGestureRecognizer()
+                        //                 ..onTap = () {
+                        //                   Navigator.push(
+                        //                       context,
+                        //                       MaterialPageRoute(
+                        //                           builder: (context) =>
+                        //                               SignUp()));
+                        //                 })
+                        //         ]),
+                        //   ),
+                        // ),
+                        // SizedBox(
+                        //   height: 35,
+                        // ),
                         Text(
                           "${AppTranslations.of(context)!.text("login_key")}",
                           style: GoogleFonts.openSans(
@@ -393,11 +398,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                     }
                                     _displayDialog(
                                         context, mobileController.text);
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ));
                                   },
                                   child: new Text(
                                     "${AppTranslations.of(context)!.text("login_key")}",
