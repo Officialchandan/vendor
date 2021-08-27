@@ -1,20 +1,21 @@
+
 import 'dart:convert';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:myprofit_vendorapp/UI/home/home.dart';
-import 'package:myprofit_vendorapp/localization/app_translations.dart';
-import 'package:myprofit_vendorapp/provider/api_provider.dart';
+import 'package:vendor/UI/home/home.dart';
+import 'package:vendor/localization/app_translations.dart';
+import 'package:vendor/provider/api_provider.dart';
+import 'package:vendor/utility/color.dart';
+import 'package:vendor/utility/network.dart';
+import 'package:vendor/utility/sharedpref.dart';
+import 'package:vendor/utility/validator.dart';
 
-import 'package:myprofit_vendorapp/utility/color.dart';
-import 'package:myprofit_vendorapp/utility/network.dart';
-import 'package:myprofit_vendorapp/utility/sharedpref.dart';
-import 'package:myprofit_vendorapp/utility/validator.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);

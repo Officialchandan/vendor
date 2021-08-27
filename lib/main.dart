@@ -1,22 +1,21 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:myprofit_vendorapp/provider/NavigationService.dart';
-import 'package:myprofit_vendorapp/utility/color.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:myprofit_vendorapp/utility/sharedpref.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:vendor/provider/NavigationService.dart';
+import 'package:vendor/utility/color.dart';
+import 'package:vendor/utility/sharedpref.dart';
 
 import 'UI/splash/splash_screen.dart';
 import 'localization/app_translations_delegate.dart';
 import 'localization/application.dart';
+
 Dio dio = Dio();
 NavigationService navigationService = NavigationService();
 void main() {
   runApp(MyApp());
 }
-
-
 
 class MyApp extends StatefulWidget {
   // This widget is the root of your application.
@@ -36,8 +35,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-
-
     const MaterialColor themeColor = const MaterialColor(
       0xFF6657f4,
       const <int, Color>{
@@ -69,7 +66,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'My Profit vendor',
       theme: ThemeData(
-         scaffoldBackgroundColor: Colors.white,
+        scaffoldBackgroundColor: Colors.white,
         primarySwatch: themeColor,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         fontFamily: GoogleFonts.openSans().fontFamily,

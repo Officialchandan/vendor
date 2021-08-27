@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:myprofit_vendorapp/UI/login/login_screen.dart';
-import 'package:myprofit_vendorapp/provider/NavigationService.dart';
-import 'package:myprofit_vendorapp/utility/sharedpref.dart';
+
+import 'package:vendor/UI/login/login_screen.dart';
+import 'package:vendor/utility/sharedpref.dart';
 
 import '../main.dart';
 

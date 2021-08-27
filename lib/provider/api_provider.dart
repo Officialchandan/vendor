@@ -4,10 +4,11 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
-import 'package:myprofit_vendorapp/model/login_otp.dart';
-import 'package:myprofit_vendorapp/model/login_response.dart';
-import 'package:myprofit_vendorapp/provider/server_error.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+
+import 'package:vendor/model/login_otp.dart';
+import 'package:vendor/model/login_response.dart';
+import 'package:vendor/provider/server_error.dart';
 
 import '../main.dart';
 

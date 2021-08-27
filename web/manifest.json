@@ -1,6 +1,6 @@
 {
-    "name": "myprofit_vendorapp",
-    "short_name": "myprofit_vendorapp",
+    "name": "vendor",
+    "short_name": "vendor",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

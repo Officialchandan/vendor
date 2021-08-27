@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:myprofit_vendorapp/UI/login/login_screen.dart';
-import 'package:myprofit_vendorapp/localization/app_translations.dart';
-import 'package:myprofit_vendorapp/utility/sharedpref.dart';
+import 'package:vendor/UI/login/login_screen.dart';
+import 'package:vendor/localization/app_translations.dart';
+import 'package:vendor/utility/sharedpref.dart';
 
 class SelectLanguage extends StatefulWidget {
   const SelectLanguage({Key? key}) : super(key: key);
@@ -27,10 +27,7 @@ class _SelectLanguageState extends State<SelectLanguage> {
                 Text(
                   "Select Language",
                   style: GoogleFonts.openSans(
-                      fontSize: 30,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
-                      decoration: TextDecoration.none),
+                      fontSize: 30, color: Colors.white, fontWeight: FontWeight.w700, decoration: TextDecoration.none),
                 ),
                 SizedBox(
                   height: 3,
@@ -38,10 +35,7 @@ class _SelectLanguageState extends State<SelectLanguage> {
                 Text(
                   "Please select your language",
                   style: GoogleFonts.openSans(
-                      fontSize: 15,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                      decoration: TextDecoration.none),
+                      fontSize: 15, color: Colors.white, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
                 ),
                 SizedBox(
                   height: 40,
@@ -69,10 +63,7 @@ class _SelectLanguageState extends State<SelectLanguage> {
                                 borderRadius: BorderRadius.circular(75),
                                 color: Colors.white,
                                 boxShadow: [
-                                  BoxShadow(
-                                      color: Color(0xff897ef7),
-                                      spreadRadius: 10,
-                                      blurRadius: 0),
+                                  BoxShadow(color: Color(0xff897ef7), spreadRadius: 10, blurRadius: 0),
                                 ],
                               ),
                               height: 100,
@@ -80,13 +71,8 @@ class _SelectLanguageState extends State<SelectLanguage> {
                             ),
                             onTap: () {
                               AppTranslations.load(Locale("en")).then((value) {
-                               
-                                   SharedPref.setStringPreference(
-                                    SharedPref.SELECTEDLANG, "en");
-                                  return  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LoginScreen()));
+                                SharedPref.setStringPreference(SharedPref.SELECTEDLANG, "en");
+                                return Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
                               });
                             }),
                       ),
@@ -101,20 +87,14 @@ class _SelectLanguageState extends State<SelectLanguage> {
                                 child: Text(
                                   'हिंदी',
                                   style: GoogleFonts.openSans(
-                                      fontSize: 20,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w600,
-                                      decoration: TextDecoration.none),
+                                      fontSize: 20, color: Colors.black, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
                                 ),
                               ),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(75),
                                 color: Colors.white,
                                 boxShadow: [
-                                  BoxShadow(
-                                      color: Color(0xff897ef7),
-                                      spreadRadius: 10,
-                                      blurRadius: 0),
+                                  BoxShadow(color: Color(0xff897ef7), spreadRadius: 10, blurRadius: 0),
                                 ],
                               ),
                               height: 100,
@@ -122,12 +102,8 @@ class _SelectLanguageState extends State<SelectLanguage> {
                             ),
                             onTap: () {
                               AppTranslations.load(Locale("hi")).then((value) {
-                                SharedPref.setStringPreference(
-                                    SharedPref.SELECTEDLANG, "hi");
-                                return Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LoginScreen()));
+                                SharedPref.setStringPreference(SharedPref.SELECTEDLANG, "hi");
+                                return Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
                               });
                             }),
                       ),

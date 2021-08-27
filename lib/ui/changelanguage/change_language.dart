@@ -3,9 +3,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:myprofit_vendorapp/localization/app_translations.dart';
-import 'package:myprofit_vendorapp/utility/color.dart';
-import 'package:myprofit_vendorapp/utility/sharedpref.dart';
+import 'package:vendor/localization/app_translations.dart';
+import 'package:vendor/utility/color.dart';
+import 'package:vendor/utility/sharedpref.dart';
 
 class ChangeLanGuage extends StatefulWidget {
   const ChangeLanGuage({Key? key}) : super(key: key);
