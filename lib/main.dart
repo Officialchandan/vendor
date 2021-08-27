@@ -11,6 +11,74 @@ import 'localization/app_translations_delegate.dart';
 import 'localization/application.dart';
 
 Dio dio = Dio();
+
+ThemeData themeData = ThemeData(
+
+    // backgroundColor: Colors.white,
+    scaffoldBackgroundColor: Colors.white,
+    splashColor: Colors.black,
+    primarySwatch: MaterialColor(
+      ColorPrimary.value,
+      <int, Color>{
+        50: Color(0xFFFFFFFF),
+        100: Color(0xFFD4D1FD),
+        200: Color(0xFFABA2F6),
+        300: Color(0xFF887BFC),
+        400: Color(0xFF796AFF),
+        500: Color(ColorPrimary.value),
+        600: Color(0xFF5344F8),
+        700: Color(0xFF4530FC),
+        800: Color(0xFF2C17FF),
+        900: Color(0xFF1500F5),
+      },
+    ),
+    iconTheme: IconThemeData(
+      color: ColorPrimary,
+      opacity: 1,
+    ),
+    // accentTextTheme: Theme.of(context).textTheme,
+    fontFamily: GoogleFonts.openSans().fontFamily,
+    primaryColor: ColorPrimary,
+    primaryColorDark: ColorPrimary,
+    accentColor: ColorPrimary,
+    buttonTheme: ButtonThemeData(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      buttonColor: ColorPrimary,
+      textTheme: ButtonTextTheme.primary,
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: Color.fromRGBO(242, 242, 242, 1),
+        hintStyle: TextStyle(
+          color: Color.fromRGBO(85, 85, 85, 1.0),
+          fontSize: 13,
+        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+        disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+        errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+        focusedErrorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+        contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        errorStyle: TextStyle(color: Colors.red, fontSize: 15)),
+    appBarTheme: AppBarTheme(
+      elevation: 1,
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: Colors.red,
+        // statusBarIconBrightness: Brightness.light,
+      ),
+      brightness: Brightness.dark,
+      backgroundColor: ColorPrimary,
+      iconTheme: IconThemeData(
+        color: Colors.white,
+      ),
+      centerTitle: true,
+      actionsIconTheme: IconThemeData(
+        color: Colors.white,
+      ),
+      // toolbarTextStyle: Theme.of(context).textTheme.headline6!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+      // titleTextStyle: Theme.of(context).textTheme.headline6!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+    ));
 void main() {
   runApp(MyApp());
 }
@@ -34,29 +102,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     // FlutterStatusbarcolor.setStatusBarColor(Color(0xff493ad6));
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        appBarTheme: AppBarTheme(
-          brightness: Brightness.dark,
-        ),
-        primaryColor: ColorPrimary,
-        inputDecorationTheme: InputDecorationTheme(
-          filled: true,
-          fillColor: ColorTextFeild,
-          hintStyle: GoogleFonts.openSans(
-            fontWeight: FontWeight.w600,
-          ),
-          contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white),
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-      ),
+      title: 'Vendor',
+      theme: themeData,
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
       localizationsDelegates: [
