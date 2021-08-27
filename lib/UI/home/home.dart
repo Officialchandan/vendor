@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:myprofit_vendorapp/utility/color.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -45,9 +46,42 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home"),
+        title: Text(
+          "Home",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        ),
         centerTitle: true,
         backgroundColor: Colors.indigoAccent,
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(
+              top: 15,
+              bottom: 15,
+              right: 15,
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.share,
+                    color: ColorPrimary,
+                    size: 12,
+                  ),
+                  Text(
+                    " Share Store  ",
+                    style: TextStyle(
+                        color: ColorPrimary,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 12),
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
       ),
       body: StaggeredGridView.countBuilder(
         padding: EdgeInsets.fromLTRB(20, 25, 20, 0),

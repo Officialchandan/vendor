@@ -8,7 +8,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myprofit_vendorapp/UI/home/home.dart';
 import 'package:myprofit_vendorapp/localization/app_translations.dart';
-import 'package:myprofit_vendorapp/signup/signup.dart';
+import 'package:myprofit_vendorapp/provider/api_provider.dart';
+
 import 'package:myprofit_vendorapp/utility/color.dart';
 import 'package:myprofit_vendorapp/utility/network.dart';
 import 'package:myprofit_vendorapp/utility/sharedpref.dart';
@@ -134,10 +135,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: () {
                       loginApiCall(
                           mobileController.text, _textFieldController.text);
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => HomeScreen()));
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (context) => HomeScreen()));
                     },
                     child: new Text(
                       "${AppTranslations.of(context)!.text("verify_key")}",
@@ -169,39 +170,25 @@ class _LoginScreenState extends State<LoginScreen> {
             textColor: Colors.white,
             msg:
                 "${AppTranslations.of(context)!.text("please_enter_username_key")}");
+      } else {
+        final loginData = await ApiProvider().login(mobile);
+        // SharedPref.setStringPreference(SharedPref.USERSTATUS, loginData.status);
+        print("kai kroge +${jsonEncode(loginData)}");
+
+        if (loginData.success == true) {
+          _displayDialog(context, mobileController.text);
+        } else {
+          Fluttertoast.showToast(
+            backgroundColor: ColorPrimary,
+            textColor: Colors.white,
+            msg: loginData.message == "Invalid mobile number!"
+                ? "Please enter vaild mobile number"
+                : "please enter otp now ",
+
+            // timeInSecForIos: 3
+          );
+        }
       }
-      //  else {
-      //   final loginData = await ApiProvider().logInMobole(mobile);
-      //   // SharedPref.setStringPreference(SharedPref.USERSTATUS, loginData.status);
-      //   print("kai kroge +${jsonEncode(loginData)}");
-
-      //   if (loginData.success == true) {
-      //     _displayDialog(context, mobileController.text);
-      //   } else if (loginData.status == "Registered") {
-      //     Fluttertoast.showToast(
-      //       backgroundColor: ColorPrimary,
-      //       textColor: Colors.white,
-      //       msg: loginData.status == "Registered"
-      //           ? "Please enter valid mobile number"
-      //           : "please enter otp now ",
-
-      //       // timeInSecForIos: 3
-      //     );
-      //   } else if (loginData.status == "Unregistered") {
-      //     Navigator.push(context,
-      //         MaterialPageRoute(builder: (context) => RegistrationScreen()));
-      //   } else {
-      //     Fluttertoast.showToast(
-      //       backgroundColor: ColorPrimary,
-      //       textColor: Colors.white,
-      //       msg: loginData.message == "Invalid mobile number!"
-      //           ? "Please enter vaild mobile number"
-      //           : "please enter otp now ",
-
-      //       // timeInSecForIos: 3
-      //     );
-      //   }
-      // }
     } else {
       Fluttertoast.showToast(
           backgroundColor: ColorPrimary,
@@ -222,36 +209,35 @@ class _LoginScreenState extends State<LoginScreen> {
             textColor: Colors.white,
             msg:
                 "${AppTranslations.of(context)!.text("please_enter_password")}");
+      } else {
+        final loginData = await ApiProvider().verifyOtp(mobile, otp);
+        print("edhar ka+${jsonEncode(loginData)}");
+
+        if (loginData.success == true) {
+          SharedPref.setBooleanPreference(SharedPref.LOGIN, true);
+          //SharedPref.setStringPreference(SharedPref.TOKEN, loginData.token!);
+          // SharedPref.setStringPreference(
+          //     SharedPref.VENDORID, loginData.vendorId!.toString());
+
+          // pref.setBool("login", true);
+          // pref.setString("token", loginData.token);
+          // pref.setBool("sucees", loginData.success);
+
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => HomeScreen()),
+              (Route<dynamic> route) => false);
+        } else {
+          Fluttertoast.showToast(
+            backgroundColor: ColorPrimary,
+            textColor: Colors.white,
+            msg: loginData.message == "Invalid credentials!"
+                ? "${AppTranslations.of(context)!.text("otp_incorrect_key")}"
+                : "thanks for login ",
+            // timeInSecForIos: 3
+          );
+        }
       }
-      // else {
-      //   final loginData = await ApiProvider().logIn(mobile, otp);
-      //   print("edhar ka+${jsonEncode(loginData)}");
-
-      //   if (loginData.success == true) {
-      //     SharedPref.setBooleanPreference(SharedPref.LOGIN, true);
-      //     SharedPref.setStringPreference(SharedPref.TOKEN, loginData.token);
-      //     SharedPref.setStringPreference(
-      //         SharedPref.VENDORID, loginData.vendorId.toString());
-
-      //     // pref.setBool("login", true);
-      //     // pref.setString("token", loginData.token);
-      //     // pref.setBool("sucees", loginData.success);
-
-      //     Navigator.pushAndRemoveUntil(
-      //         context,
-      //         MaterialPageRoute(builder: (context) => TabContainer(0)),
-      //         (Route<dynamic> route) => false);
-      //   } else {
-      //     Fluttertoast.showToast(
-      //       backgroundColor: ColorPrimary,
-      //       textColor: Colors.white,
-      //       msg: loginData.message == "Invalid credentials!"
-      //           ? "${AppTranslations.of(context)!.text("otp_incorrect_key")}"
-      //           : "thanks for login ",
-      //       // timeInSecForIos: 3
-      //     );
-      //   }
-      // }
     } else {
       Fluttertoast.showToast(
           backgroundColor: ColorPrimary,
@@ -274,8 +260,8 @@ class _LoginScreenState extends State<LoginScreen> {
       controller: mobileController,
       decoration: InputDecoration(
         counterText: "",
-        // hintText:
-        //     "${AppTranslations.of(context)!.text("please_enter_mobile_number_key")}",
+        hintText:
+            "${AppTranslations.of(context)!.text("please_enter_mobile_number_key")}",
         prefixIcon: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -396,8 +382,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                       _tap = false;
                                       loginApiOtpCall(mobileController.text);
                                     }
-                                    _displayDialog(
-                                        context, mobileController.text);
+                                    // _displayDialog(
+                                    //     context, mobileController.text);
                                   },
                                   child: new Text(
                                     "${AppTranslations.of(context)!.text("login_key")}",

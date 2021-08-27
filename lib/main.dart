@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:myprofit_vendorapp/provider/NavigationService.dart';
 import 'package:myprofit_vendorapp/utility/color.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:myprofit_vendorapp/utility/sharedpref.dart';
@@ -10,6 +11,7 @@ import 'UI/splash/splash_screen.dart';
 import 'localization/app_translations_delegate.dart';
 import 'localization/application.dart';
 Dio dio = Dio();
+NavigationService navigationService = NavigationService();
 void main() {
   runApp(MyApp());
 }
@@ -34,10 +36,44 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+
+
+    const MaterialColor themeColor = const MaterialColor(
+      0xFF6657f4,
+      const <int, Color>{
+        50: const Color(0xFF6657f4),
+        100: const Color(0xFF6657f4),
+        200: const Color(0xFF6657f4),
+        300: const Color(0xFF6657f4),
+        400: const Color(0xFF6657f4),
+        500: const Color(0xFF6657f4),
+        600: const Color(0xFF6657f4),
+        700: const Color(0xFF6657f4),
+        800: const Color(0xFF6657f4),
+        900: const Color(0xFF6657f4),
+      },
+    );
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+      // statusBarColor is used to set Status bar color in Android devices.
+      statusBarColor: Color(0xff493ad6),
+
+      // To make Status bar icons color white in Android devices.
+      statusBarIconBrightness: Brightness.light,
+
+      // statusBarBrightness is used to set Status bar icon color in iOS.
+      statusBarBrightness: Brightness.light,
+      // Here light means dark color Status bar icons.
+    ));
+
     // FlutterStatusbarcolor.setStatusBarColor(Color(0xff493ad6));
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'My Profit vendor',
       theme: ThemeData(
+         scaffoldBackgroundColor: Colors.white,
+        primarySwatch: themeColor,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        fontFamily: GoogleFonts.openSans().fontFamily,
+        // fontFamily: TextStyle().fontFamily,
         appBarTheme: AppBarTheme(
           brightness: Brightness.dark,
         ),
