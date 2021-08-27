@@ -1,38 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-class GridViewPractice extends StatefulWidget {
-  const GridViewPractice({Key? key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  _GridViewPracticeState createState() => _GridViewPracticeState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _GridViewPracticeState extends State<GridViewPractice> {
+class _HomeScreenState extends State<HomeScreen> {
   List<String> name = [
     "Billing",
     "Inventory",
-    "Online Shop",
     "Staff Management",
+    "Online Shop",
     "Performance Tracker",
     "Account Management"
   ];
   List<String> description = [
     "Billing description",
     "Inventory description",
-    "Online Shop description",
     "Staff Management description",
+    "Online Shop description",
     "Performance Tracker description",
     "Account Management description"
   ];
 
   List<String> images = [
+    "assets/images/home1.png",
     "assets/images/home2.png",
-    "assets/images/home2.png",
-    "assets/images/home2.png",
-    "assets/images/home2.png",
-    "assets/images/home2.png",
-    "assets/images/home2.png"
+    "assets/images/home4.png",
+    "assets/images/home3.png",
+    "assets/images/home5.png",
+    "assets/images/home6.png"
   ];
 
   @override
@@ -50,24 +50,24 @@ class _GridViewPracticeState extends State<GridViewPractice> {
         backgroundColor: Colors.indigoAccent,
       ),
       body: StaggeredGridView.countBuilder(
-        padding: EdgeInsets.fromLTRB(20, 30, 20, 10),
+        padding: EdgeInsets.fromLTRB(20, 25, 20, 0),
         crossAxisCount: 2,
         itemCount: 6,
         itemBuilder: (BuildContext context, int index) => new Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20.0),
             color: index == 0
-                ? Colors.indigoAccent
+                ? Color(0xff6657f4)
                 : index == 1
-                    ? Colors.purple
+                    ? Color(0xffee776d)
                     : index == 2
-                        ? Colors.pink.shade300
+                        ? Color(0xfff6ac56)
                         : index == 3
-                            ? Colors.blue.shade400
+                            ? Color(0xff5086ed)
                             : index == 4
-                                ? Colors.orange
+                                ? Color(0xff3ebc91)
                                 : index == 5
-                                    ? Colors.green.shade300
+                                    ? Color(0xffc59280)
                                     : Colors.brown,
             //index.isEven ? Colors.indigoAccent : Colors.indigoAccent[100],
           ),
@@ -80,13 +80,15 @@ class _GridViewPracticeState extends State<GridViewPractice> {
                     name[index],
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 25.0,
+                      fontSize: 18.0,
+                      height: 1.5,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   subtitle: Text(
                     description[index],
                     style: TextStyle(
+                      fontSize: 13,
                       color: Colors.white,
                     ),
                   ),
@@ -96,8 +98,8 @@ class _GridViewPracticeState extends State<GridViewPractice> {
                   padding: const EdgeInsets.all(10.0),
                   child: Image.asset(
                     images[index],
-                    height: 50,
-                    width: 50,
+                    height: 70,
+                    width: 70,
                   ))
             ],
           ),
@@ -106,21 +108,21 @@ class _GridViewPracticeState extends State<GridViewPractice> {
           1 // it specifies the number of columns,
           ,
           index == 0
-              ? size / 500
+              ? size / 540
               : index == 1
-                  ? size / 600
+                  ? size / 640
                   : index == 2
-                      ? size / 500
+                      ? size / 540
                       : index == 3
-                          ? size / 600
+                          ? size / 640
                           : index == 4
-                              ? size / 550
+                              ? size / 580
                               : index == 5
-                                  ? size / 550
+                                  ? size / 580
                                   : 0.0,
         ),
-        mainAxisSpacing: 30.0,
-        crossAxisSpacing: 20.0,
+        mainAxisSpacing: 25.0,
+        crossAxisSpacing: 15.0,
       ),
     );
   }

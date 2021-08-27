@@ -130,6 +130,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: () {
                       loginApiCall(
                           mobileController.text, _textFieldController.text);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HomeScreen()));
                     },
                     child: new Text(
                       "${AppTranslations.of(context)!.text("verify_key")}",
@@ -310,35 +314,35 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Center(
-                          child: RichText(
-                            text: TextSpan(
-                                text: 'Don\'t have an Account?',
-                                style: TextStyle(
-                                    color: ColorTextPrimary,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 18),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                      text: ' Sign up',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          color: ColorPrimary,
-                                          fontSize: 18),
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      SignUp()));
-                                        })
-                                ]),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 35,
-                        ),
+                        // Center(
+                        //   child: RichText(
+                        //     text: TextSpan(
+                        //         text: 'Don\'t have an Account?',
+                        //         style: TextStyle(
+                        //             color: ColorTextPrimary,
+                        //             fontWeight: FontWeight.w600,
+                        //             fontSize: 18),
+                        //         children: <TextSpan>[
+                        //           TextSpan(
+                        //               text: ' Sign up',
+                        //               style: TextStyle(
+                        //                   fontWeight: FontWeight.w600,
+                        //                   color: ColorPrimary,
+                        //                   fontSize: 18),
+                        //               recognizer: TapGestureRecognizer()
+                        //                 ..onTap = () {
+                        //                   Navigator.push(
+                        //                       context,
+                        //                       MaterialPageRoute(
+                        //                           builder: (context) =>
+                        //                               SignUp()));
+                        //                 })
+                        //         ]),
+                        //   ),
+                        // ),
+                        // SizedBox(
+                        //   height: 35,
+                        // ),
                         Text(
                           "${AppTranslations.of(context)!.text("login_key")}",
                           style: GoogleFonts.openSans(
