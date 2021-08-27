@@ -1,20 +1,19 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:myprofit_vendorapp/utility/color.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:myprofit_vendorapp/utility/sharedpref.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:vendor/utility/color.dart';
+import 'package:vendor/utility/sharedpref.dart';
 
 import 'UI/splash/splash_screen.dart';
 import 'localization/app_translations_delegate.dart';
 import 'localization/application.dart';
+
 Dio dio = Dio();
 void main() {
   runApp(MyApp());
 }
-
-
 
 class MyApp extends StatefulWidget {
   // This widget is the root of your application.
@@ -23,8 +22,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  AppTranslationsDelegate? _newLocaleDelegate =
-      AppTranslationsDelegate(newLocale: Locale("en", ""));
+  AppTranslationsDelegate? _newLocaleDelegate = AppTranslationsDelegate(newLocale: Locale("en", ""));
 
   @override
   void initState() {
@@ -48,8 +46,7 @@ class _MyAppState extends State<MyApp> {
           hintStyle: GoogleFonts.openSans(
             fontWeight: FontWeight.w600,
           ),
-          contentPadding:
-              const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+          contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.white),
             borderRadius: BorderRadius.circular(10),
@@ -86,8 +83,7 @@ class _MyAppState extends State<MyApp> {
   init() async {
     var lang = await SharedPref.getStringPreference(SharedPref.SELECTEDLANG);
     print("${lang}");
-    _newLocaleDelegate = AppTranslationsDelegate(
-        newLocale: Locale(lang.isEmpty ? "en" : lang, ""));
+    _newLocaleDelegate = AppTranslationsDelegate(newLocale: Locale(lang.isEmpty ? "en" : lang, ""));
     setState(() {});
     application.onLocaleChanged = onLocaleChange;
   }

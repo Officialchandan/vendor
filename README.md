@@ -1,4 +1,4 @@
-# myprofit_vendorapp
+# vendor
 
 A new Flutter project.
 

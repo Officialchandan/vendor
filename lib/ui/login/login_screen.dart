@@ -1,18 +1,15 @@
-import 'dart:convert';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:myprofit_vendorapp/localization/app_translations.dart';
-import 'package:myprofit_vendorapp/signup/signup.dart';
-import 'package:myprofit_vendorapp/utility/color.dart';
-import 'package:myprofit_vendorapp/utility/network.dart';
-import 'package:myprofit_vendorapp/utility/sharedpref.dart';
-import 'package:myprofit_vendorapp/utility/validator.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vendor/localization/app_translations.dart';
+import 'package:vendor/signup/signup.dart';
+import 'package:vendor/utility/color.dart';
+import 'package:vendor/utility/network.dart';
+import 'package:vendor/utility/sharedpref.dart';
+import 'package:vendor/utility/validator.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -397,7 +394,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                ));
+                                                LoginScreen()));
                                   },
                                   child: new Text(
                                     "${AppTranslations.of(context)!.text("login_key")}",

@@ -1,13 +1,11 @@
-
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:myprofit_vendorapp/localization/app_translations.dart';
+import 'package:vendor/localization/app_translations.dart';
 
 class Validator {
   static RegExp emailRegex = new RegExp(
       r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
 
-  static RegExp passwordRegex =
-      RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+  static RegExp passwordRegex = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
 
   static String? emailValidator(String email) {
     if (email.isEmpty) {
