@@ -11,6 +11,7 @@ import 'localization/app_translations_delegate.dart';
 import 'localization/application.dart';
 
 Dio dio = Dio();
+NavigationService navigationService = NavigationService();
 
 ThemeData themeData = ThemeData(
 
@@ -90,7 +91,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  AppTranslationsDelegate? _newLocaleDelegate = AppTranslationsDelegate(newLocale: Locale("en", ""));
+  AppTranslationsDelegate? _newLocaleDelegate =
+      AppTranslationsDelegate(newLocale: Locale("en", ""));
 
   @override
   void initState() {
@@ -130,7 +132,8 @@ class _MyAppState extends State<MyApp> {
   init() async {
     var lang = await SharedPref.getStringPreference(SharedPref.SELECTEDLANG);
     print("${lang}");
-    _newLocaleDelegate = AppTranslationsDelegate(newLocale: Locale(lang.isEmpty ? "en" : lang, ""));
+    _newLocaleDelegate = AppTranslationsDelegate(
+        newLocale: Locale(lang.isEmpty ? "en" : lang, ""));
     setState(() {});
     application.onLocaleChanged = onLocaleChange;
   }
