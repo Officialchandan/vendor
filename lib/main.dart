@@ -3,9 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:vendor/UI/home/home.dart';
+import 'package:vendor/UI/language/select_language.dart';
+import 'package:vendor/UI/login/login_screen.dart';
 import 'package:vendor/provider/NavigationService.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
+import 'package:vendor/utility/routs.dart';
 
 import 'UI/splash/splash_screen.dart';
 import 'localization/app_translations_delegate.dart';
@@ -94,6 +99,28 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
       debugShowCheckedModeBanner: false,
+      onGenerateRoute: (route) {
+        switch (route.name) {
+          case "/":
+            return PageTransition(
+                type: PageTransitionType.fade, child: SplashScreen());
+
+          case Routes.SplashScreen:
+            return PageTransition(
+                type: PageTransitionType.fade, child: SplashScreen());
+          case Routes.SelectLanguage:
+            return PageTransition(
+                type: PageTransitionType.fade, child: SelectLanguage());
+
+          case Routes.LoginScreen:
+            return PageTransition(
+                type: PageTransitionType.fade, child: LoginScreen());
+
+          case Routes.HomeScreen:
+            return PageTransition(
+                type: PageTransitionType.fade, child: HomeScreen());
+        }
+      },
       home: SplashScreen(),
       localizationsDelegates: [
         _newLocaleDelegate!,

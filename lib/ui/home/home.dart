@@ -1,7 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:vendor/utility/color.dart';
-
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -106,37 +107,46 @@ class _HomeScreenState extends State<HomeScreen> {
                                     : Colors.brown,
             //index.isEven ? Colors.indigoAccent : Colors.indigoAccent[100],
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: ListTile(
-                  title: Text(
-                    name[index],
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18.0,
-                      height: 1.5,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  subtitle: Text(
-                    description[index],
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Image.asset(
+          child: GestureDetector(
+            onTap: () {
+              routeManager(index);
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                      padding: EdgeInsets.only(left: 10, top: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(name[index],
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16.0,
+                                height: 1.2,
+                                fontWeight: FontWeight.bold,
+                              )),
+                          Text(
+                            description[index],
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      )),
+                  Container(
+                      child: Image.asset(
                     images[index],
                     height: 70,
                     width: 70,
                   ))
-            ],
+                ],
+              ),
+            ),
           ),
         ),
         staggeredTileBuilder: (int index) => StaggeredTile.count(
@@ -160,5 +170,22 @@ class _HomeScreenState extends State<HomeScreen> {
         crossAxisSpacing: 15.0,
       ),
     );
+  }
+
+  routeManager(index) {
+    log("$index");
+    index == 0
+        ? Navigator.pop(context)
+        : index == 1
+            ? Navigator.pop(context)
+            : index == 2
+                ? Navigator.pop(context)
+                : index == 3
+                    ? Navigator.pop(context)
+                    : index == 4
+                        ? Navigator.pop(context)
+                        : index == 5
+                            ? Navigator.pop(context)
+                            : Navigator.pop(context);
   }
 }

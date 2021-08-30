@@ -5,7 +5,6 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 
-
 import 'package:vendor/model/login_otp.dart';
 import 'package:vendor/model/login_response.dart';
 import 'package:vendor/provider/server_error.dart';
@@ -31,7 +30,7 @@ class ApiProvider {
   //   log(response.body.toString());
   //   return LoginResponse.fromJson(response.body);
   // }
-  Future<LoginResponse> login(mobile) async {
+  Future<LoginOtpResponse> login(mobile) async {
     log("chl gyi");
     try {
       Response res = await dio.post('$baseUrl/genereateOTP',
@@ -39,6 +38,27 @@ class ApiProvider {
           // headers: {"Authorization": "Bearer ${SharedPref.getString('token')}"},
           //)
           data: {"mobile": mobile});
+      print("${res.data}");
+      return LoginOtpResponse.fromJson(res.toString());
+    } catch (error, stacktrace) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Something Went wrong";
+      }
+      print("Exception occurred: $message stackTrace: $stacktrace");
+      return LoginOtpResponse(success: false, message: message);
+    }
+  }
+
+  Future<LoginResponse> verifyOtp(mobile, otp) async {
+    log("chl gyi ${mobile + otp}");
+    try {
+      Response res = await dio
+          .post('$baseUrl/verifyOTP', data: {"mobile": mobile, "otp": otp});
+      log("chl gyi 2${res}");
 
       return LoginResponse.fromJson(res.toString());
     } catch (error, stacktrace) {
@@ -49,29 +69,8 @@ class ApiProvider {
       } else {
         message = "Something Went wrong";
       }
-      print("Exception occurred: $message stackTrace: $stacktrace");
-      return LoginResponse(success: false, message: message);
-    }
-  }
-
-  Future<LoginOtpResponse> verifyOtp(mobile, otp) async {
-    log("chl gyi ${mobile + otp}");
-    try {
-      Response res = await dio
-          .post('$baseUrl/verifyOTP', data: {"mobile": mobile, "otp": otp});
-      log("chl gyi 2${res}");
-
-      return LoginOtpResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
-      String message = "";
-      if (error is DioError) {
-        ServerError e = ServerError.withError(error: error);
-        message = e.getErrorMessage();
-      } else {
-        message = "Something Went wrong";
-      }
       print("Exception occurred: $message stackTrace: $error");
-      return LoginOtpResponse(success: false, message: message);
+      return LoginResponse(success: false, message: message);
     }
   }
 
