@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:vendor/utility/color.dart';
 
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -11,14 +10,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<String> name = [
-    "Billing",
-    "Inventory",
-    "Staff Management",
-    "Online Shop",
-    "Performance Tracker",
-    "Account Management"
-  ];
+  List<String> name = ["Billing", "Inventory", "Staff Management", "Online Shop", "Performance Tracker", "Account Management"];
   List<String> description = [
     "Billing description",
     "Inventory description",
@@ -52,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         centerTitle: true,
-        backgroundColor: Colors.indigoAccent,
+        // backgroundColor: Colors.indigoAccent,
         actions: [
           Padding(
             padding: EdgeInsets.only(
@@ -61,9 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
               right: 15,
             ),
             child: Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(5))),
               child: Row(
                 children: [
                   Icon(
@@ -73,10 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Text(
                     " Share Store  ",
-                    style: TextStyle(
-                        color: ColorPrimary,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 12),
+                    style: TextStyle(color: ColorPrimary, fontWeight: FontWeight.w600, fontSize: 12),
                   )
                 ],
               ),

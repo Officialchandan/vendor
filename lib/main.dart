@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:vendor/provider/NavigationService.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
 
@@ -64,10 +65,10 @@ ThemeData themeData = ThemeData(
         errorStyle: TextStyle(color: Colors.red, fontSize: 15)),
     appBarTheme: AppBarTheme(
       elevation: 1,
-      systemOverlayStyle: SystemUiOverlayStyle(
-        statusBarColor: Colors.red,
-        // statusBarIconBrightness: Brightness.light,
-      ),
+      // systemOverlayStyle: SystemUiOverlayStyle(
+      //   statusBarColor: Colors.red,
+      //   // statusBarIconBrightness: Brightness.light,
+      // ),
       brightness: Brightness.dark,
       backgroundColor: ColorPrimary,
       iconTheme: IconThemeData(
@@ -81,6 +82,11 @@ ThemeData themeData = ThemeData(
       // titleTextStyle: Theme.of(context).textTheme.headline6!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
     ));
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: ColorPrimary,
+  ));
+
   runApp(MyApp());
 }
 
@@ -91,8 +97,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  AppTranslationsDelegate? _newLocaleDelegate =
-      AppTranslationsDelegate(newLocale: Locale("en", ""));
+  AppTranslationsDelegate? _newLocaleDelegate = AppTranslationsDelegate(newLocale: Locale("en", ""));
 
   @override
   void initState() {
@@ -132,8 +137,7 @@ class _MyAppState extends State<MyApp> {
   init() async {
     var lang = await SharedPref.getStringPreference(SharedPref.SELECTEDLANG);
     print("${lang}");
-    _newLocaleDelegate = AppTranslationsDelegate(
-        newLocale: Locale(lang.isEmpty ? "en" : lang, ""));
+    _newLocaleDelegate = AppTranslationsDelegate(newLocale: Locale(lang.isEmpty ? "en" : lang, ""));
     setState(() {});
     application.onLocaleChanged = onLocaleChange;
   }
