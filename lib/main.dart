@@ -7,6 +7,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:vendor/UI/home/home.dart';
 import 'package:vendor/UI/language/select_language.dart';
 import 'package:vendor/UI/login/login_screen.dart';
+import 'package:vendor/billing/billing.dart';
 import 'package:vendor/provider/NavigationService.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
@@ -119,6 +120,9 @@ class _MyAppState extends State<MyApp> {
           case Routes.HomeScreen:
             return PageTransition(
                 type: PageTransitionType.fade, child: HomeScreen());
+          case Routes.BillingScreen:
+            return PageTransition(
+                type: PageTransitionType.fade, child: BillingScreen());      
         }
       },
       home: SplashScreen(),

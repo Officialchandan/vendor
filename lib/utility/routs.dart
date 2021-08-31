@@ -7,4 +7,5 @@ class Routes {
   static const SelectLanguage = "/select_language_screen";
   static const SIGN_UP_SCREEN = "/sign_up_screen";
   static const HomeScreen = "/home_screen";
+  static const BillingScreen = "/billing_screen";
 }

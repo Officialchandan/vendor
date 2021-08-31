@@ -144,11 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       } else {
                         loginBloc.add(GetLoginOtpEvent(
                             mobile: mobileController.text,
-                            otp: _textFieldController.text)
-                            
-                            
-                            
-                            );
+                            otp: _textFieldController.text));
                       }
                       // loginApiCall(
                       //     mobileController.text, _textFieldController.text);
@@ -299,8 +295,8 @@ class _LoginScreenState extends State<LoginScreen> {
           }
 
           if (state is GetLoginOtpState) {
-            Navigator.pushNamed(context, Routes.HomeScreen)
-               ;
+            Navigator.pushNamedAndRemoveUntil(
+                context, Routes.HomeScreen, ModalRoute.withName("/"));
           }
 
           if (state is GetLoginFailureState) {

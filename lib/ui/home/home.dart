@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:vendor/utility/color.dart';
+import 'package:vendor/utility/routs.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -52,6 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
           "Home",
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
+        leading: Text(""),
         centerTitle: true,
         backgroundColor: Colors.indigoAccent,
         actions: [
@@ -109,9 +111,10 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           child: GestureDetector(
             onTap: () {
+              log("f");
               routeManager(index);
             },
-            child: Padding(
+            child: Container(
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -141,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Container(
                       child: Image.asset(
                     images[index],
-                    height: 70,
+                    //height: 70,
                     width: 70,
                   ))
                 ],
@@ -175,7 +178,10 @@ class _HomeScreenState extends State<HomeScreen> {
   routeManager(index) {
     log("$index");
     index == 0
-        ? Navigator.pop(context)
+        ? Navigator.pushNamed(
+            context,
+            Routes.BillingScreen,
+          )
         : index == 1
             ? Navigator.pop(context)
             : index == 2
