@@ -4,10 +4,12 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
+import 'package:vendor/model/customer_number_response.dart';
 
 import 'package:vendor/model/login_otp.dart';
 import 'package:vendor/model/login_response.dart';
 import 'package:vendor/provider/server_error.dart';
+import 'package:vendor/utility/sharedpref.dart';
 
 import '../main.dart';
 
@@ -74,19 +76,30 @@ class ApiProvider {
     }
   }
 
-  // Future<LoginOtpResponse> logInMobole(mobile) async {
-  //   final client = new http.Client();
+  Future<CustomerNumberResponse> getCustomerCoins(mobile) async {
+    log("chl gyi ${mobile}");
+    try {
+      var token = await SharedPref.getStringPreference('token');
 
-  //   var data = {
-  //     "mobile": mobile,
-  //   };
-  //   final response = await client.post(
-  //     Uri.parse('$baseUrl/genereateOTP'),
-  //     body: data,
-  //   );
-  //   print("ssggsggsgsg+${response.body.toString()}");
-  //   log(response.body.toString());
-  //   return LoginOtpResponse.fromJson(response.body);
-  // }
+      Response res = await dio.post('$baseUrl/getCustomerCoins',
+          data: {"mobile": mobile},
+          options: Options(
+            headers: {"Authorization": "Bearer ${token}"},
+          ));
+      log("chl gyi 2${res}");
 
+      return CustomerNumberResponse.fromJson(res.toString());
+    } catch (error, stacktrace) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message =
+            "Customer not registered with us! Kindly first registered yourself with MyProfit";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return CustomerNumberResponse(success: false, message: message);
+    }
+  }
 }

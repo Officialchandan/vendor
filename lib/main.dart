@@ -129,18 +129,23 @@ class _MyAppState extends State<MyApp> {
       onGenerateRoute: (route) {
         switch (route.name) {
           case "/":
-            return PageTransition(type: PageTransitionType.fade, child: SplashScreen());
+            return PageTransition(
+                type: PageTransitionType.fade, child: SplashScreen());
 
           case Routes.SplashScreen:
-            return PageTransition(type: PageTransitionType.fade, child: SplashScreen());
+            return PageTransition(
+                type: PageTransitionType.fade, child: SplashScreen());
           case Routes.SelectLanguage:
-            return PageTransition(type: PageTransitionType.fade, child: SelectLanguage());
+            return PageTransition(
+                type: PageTransitionType.fade, child: SelectLanguage());
 
           case Routes.LoginScreen:
-            return PageTransition(type: PageTransitionType.fade, child: LoginScreen());
+            return PageTransition(
+                type: PageTransitionType.fade, child: LoginScreen());
 
           case Routes.HomeScreen:
-            return PageTransition(type: PageTransitionType.fade, child: HomeScreen());
+            return PageTransition(
+                type: PageTransitionType.fade, child: HomeScreen());
         }
       },
       home: SplashScreen(),
@@ -168,7 +173,8 @@ class _MyAppState extends State<MyApp> {
   init() async {
     var lang = await SharedPref.getStringPreference(SharedPref.SELECTEDLANG);
     print("${lang}");
-    _newLocaleDelegate = AppTranslationsDelegate(newLocale: Locale(lang.isEmpty ? "en" : lang, ""));
+    _newLocaleDelegate = AppTranslationsDelegate(
+        newLocale: Locale(lang.isEmpty ? "en" : lang, ""));
     setState(() {});
     application.onLocaleChanged = onLocaleChange;
   }
