@@ -3,23 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:vendor/UI/home/home.dart';
-import 'package:vendor/UI/language/select_language.dart';
-import 'package:vendor/UI/login/login_screen.dart';
 import 'package:vendor/provider/NavigationService.dart';
+import 'package:vendor/ui/home/home.dart';
+import 'package:vendor/ui/language/select_language.dart';
+import 'package:vendor/ui/login/login_screen.dart';
+import 'package:vendor/ui/splash/splash_screen.dart';
 import 'package:vendor/utility/color.dart';
-import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/routs.dart';
+import 'package:vendor/utility/sharedpref.dart';
 
-import 'UI/splash/splash_screen.dart';
 import 'localization/app_translations_delegate.dart';
 import 'localization/application.dart';
 
 Dio dio = Dio();
+ImagePicker imagePicker = ImagePicker();
 NavigationService navigationService = NavigationService();
 
-ThemeData themeData = ThemeData(
+ThemeData themeData(context) => ThemeData(
 
     // backgroundColor: Colors.white,
     scaffoldBackgroundColor: Colors.white,
@@ -54,19 +56,25 @@ ThemeData themeData = ThemeData(
       textTheme: ButtonTextTheme.primary,
     ),
     inputDecorationTheme: InputDecorationTheme(
-        filled: true,
-        fillColor: Color.fromRGBO(242, 242, 242, 1),
+        // filled: true,
+        // fillColor: Color.fromRGBO(242, 242, 242, 1),
         hintStyle: TextStyle(
           color: Color.fromRGBO(85, 85, 85, 1.0),
           fontSize: 13,
         ),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-        disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-        errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-        focusedErrorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-        contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        floatingLabelBehavior: FloatingLabelBehavior.auto,
+        alignLabelWithHint: true,
+        labelStyle: TextStyle(
+          // color: ColorPrimary,
+          fontSize: 13,
+        ),
+        // border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+        // enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+        // disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+        // focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+        // errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+        // focusedErrorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+        contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
         errorStyle: TextStyle(color: Colors.red, fontSize: 15)),
     appBarTheme: AppBarTheme(
       elevation: 1,
@@ -86,6 +94,7 @@ ThemeData themeData = ThemeData(
       // toolbarTextStyle: Theme.of(context).textTheme.headline6!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       // titleTextStyle: Theme.of(context).textTheme.headline6!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
     ));
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -115,28 +124,23 @@ class _MyAppState extends State<MyApp> {
     // FlutterStatusbarcolor.setStatusBarColor(Color(0xff493ad6));
     return MaterialApp(
       title: 'Vendor',
-      theme: themeData,
+      theme: themeData(context),
       debugShowCheckedModeBanner: false,
       onGenerateRoute: (route) {
         switch (route.name) {
           case "/":
-            return PageTransition(
-                type: PageTransitionType.fade, child: SplashScreen());
+            return PageTransition(type: PageTransitionType.fade, child: SplashScreen());
 
           case Routes.SplashScreen:
-            return PageTransition(
-                type: PageTransitionType.fade, child: SplashScreen());
+            return PageTransition(type: PageTransitionType.fade, child: SplashScreen());
           case Routes.SelectLanguage:
-            return PageTransition(
-                type: PageTransitionType.fade, child: SelectLanguage());
+            return PageTransition(type: PageTransitionType.fade, child: SelectLanguage());
 
           case Routes.LoginScreen:
-            return PageTransition(
-                type: PageTransitionType.fade, child: LoginScreen());
+            return PageTransition(type: PageTransitionType.fade, child: LoginScreen());
 
           case Routes.HomeScreen:
-            return PageTransition(
-                type: PageTransitionType.fade, child: HomeScreen());
+            return PageTransition(type: PageTransitionType.fade, child: HomeScreen());
         }
       },
       home: SplashScreen(),

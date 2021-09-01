@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-
-import 'package:vendor/UI/login/login_screen.dart';
+import 'package:vendor/ui/login/login_screen.dart';
 import 'package:vendor/utility/sharedpref.dart';
 
 import '../main.dart';
@@ -40,8 +39,7 @@ class ServerError implements Exception {
         _errorMessage = "Receive timeout in connection";
         break;
       case DioErrorType.response:
-        _errorMessage =
-            "Received invalid status code: ${error.response!.statusCode}";
+        _errorMessage = "Received invalid status code: ${error.response!.statusCode}";
         if (error.response!.statusCode == 401) {
           print("come here-->");
 
@@ -64,18 +62,13 @@ class ServerError implements Exception {
         barrierDismissible: false,
         context: navigationService.navigatorKey.currentContext!,
         builder: (context) => AlertDialog(
-              content:
-                  Text("Your session has been expired! Please login again"),
+              content: Text("Your session has been expired! Please login again"),
               contentPadding: EdgeInsets.all(15),
               actions: [
                 TextButton(
                     onPressed: () async {
                       SharedPref.clearSharedPreference(context);
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => LoginScreen()),
-                          (route) => false);
+                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginScreen()), (route) => false);
                     },
                     child: Text("Ok"))
               ],

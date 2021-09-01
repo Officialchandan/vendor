@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:vendor/UI/login/login_screen.dart';
 import 'package:vendor/localization/app_translations.dart';
+import 'package:vendor/utility/routs.dart';
 import 'package:vendor/utility/sharedpref.dart';
 
 class SelectLanguage extends StatefulWidget {
@@ -72,7 +72,7 @@ class _SelectLanguageState extends State<SelectLanguage> {
                             onTap: () {
                               AppTranslations.load(Locale("en")).then((value) {
                                 SharedPref.setStringPreference(SharedPref.SELECTEDLANG, "en");
-                                return Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+                                Navigator.pushNamed(context, Routes.LoginScreen);
                               });
                             }),
                       ),
@@ -103,7 +103,7 @@ class _SelectLanguageState extends State<SelectLanguage> {
                             onTap: () {
                               AppTranslations.load(Locale("hi")).then((value) {
                                 SharedPref.setStringPreference(SharedPref.SELECTEDLANG, "hi");
-                                return Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+                                Navigator.pushNamed(context, Routes.LoginScreen);
                               });
                             }),
                       ),

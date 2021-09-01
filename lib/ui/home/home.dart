@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:vendor/ui/inventory/inventory_screen.dart';
 import 'package:vendor/utility/color.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -95,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     : Colors.brown,
             //index.isEven ? Colors.indigoAccent : Colors.indigoAccent[100],
           ),
-          child: GestureDetector(
+          child: InkWell(
             onTap: () {
               routeManager(index);
             },
@@ -165,7 +167,12 @@ class _HomeScreenState extends State<HomeScreen> {
     index == 0
         ? Navigator.pop(context)
         : index == 1
-            ? Navigator.pop(context)
+            ? Navigator.push(
+                context,
+                PageTransition(
+                  child: InventoryScreen(),
+                  type: PageTransitionType.fade,
+                ))
             : index == 2
                 ? Navigator.pop(context)
                 : index == 3

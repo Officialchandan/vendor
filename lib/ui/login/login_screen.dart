@@ -90,27 +90,19 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
               ),
-              content: TextField(
+              content: TextFormField(
                 controller: _textFieldController,
                 cursorColor: ColorPrimary,
                 keyboardType: TextInputType.number,
                 inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
                 decoration: InputDecoration(
-                  filled: true,
-
+                  // filled: true,
                   // fillColor: Colors.black,
                   hintText: "${AppTranslations.of(context)!.text("enter_otp_key")}",
                   hintStyle: GoogleFonts.openSans(
                     fontWeight: FontWeight.w600,
                   ),
-                  contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
+                  // contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
                 ),
               ),
               actions: <Widget>[
@@ -324,7 +316,43 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(
                       height: 40,
                     ),
-                    mobileNumber,
+                    TextFormField(
+                      keyboardType: TextInputType.number,
+                      validator: (numb) => Validator.validateMobile(numb!, context),
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      maxLength: 10,
+                      controller: mobileController,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color.fromRGBO(242, 242, 242, 1),
+                        counterText: "",
+                        hintText: "${AppTranslations.of(context)!.text("please_enter_mobile_number_key")}",
+                        prefixIcon: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              "   +91",
+                              style: TextStyle(color: ColorPrimary),
+                            ),
+                            Container(
+                              height: 25,
+                              width: 1.5,
+                              margin: EdgeInsets.all(3),
+                              color: ColorTextPrimary,
+                            )
+                          ],
+                        ),
+                        prefixIconConstraints: BoxConstraints(minWidth: 50, minHeight: 25, maxHeight: 26, maxWidth: 70),
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+                        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+                        disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+                        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+                        errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+                        focusedErrorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+                        // errorText: Validator.validateMobile(edtMobile.text, context),
+                      ),
+                    ),
                     SizedBox(
                       height: 80,
                     ),

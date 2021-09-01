@@ -1,5 +1,9 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
+import 'package:vendor/ui/inventory/add_product/add_product_screen.dart';
 
 class InventoryScreen extends StatefulWidget {
   @override
@@ -8,6 +12,14 @@ class InventoryScreen extends StatefulWidget {
 
 class _InventoryScreenState extends State<InventoryScreen> {
   CustomAppBar customAppBar = CustomAppBar();
+  final options = [
+    {"title": "Add Product", "subTitle": "click here to add product", "image": "assets/images/category1.png", "id": 1},
+    {"title": "View Product", "subTitle": "click here to add product", "image": "assets/images/category1.png", "id": 2},
+    {"title": "Sale Return", "subTitle": "click here to add product", "image": "assets/images/category1.png", "id": 3},
+    {"title": "Purchase Return", "subTitle": "click here to add product", "image": "assets/images/category1.png", "id": 4},
+    {"title": "Purchase Order Entry", "subTitle": "click here to add product", "image": "assets/images/category1.png", "id": 5},
+    // {"title": "Add Product", "subTitle": "click here to add product", "image": "assets/images/category1.png", "id": 6},
+  ];
 
   @override
   void initState() {
@@ -18,15 +30,42 @@ class _InventoryScreenState extends State<InventoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar,
-      body: SingleChildScrollView(
-        child: Center(
-          child: TextButton(
-            child: Text("change"),
-            onPressed: () {
-              customAppBar.createElement().state.setState(() {});
-            },
-          ),
-        ),
+      body: ListView.builder(
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: Stack(
+              children: [
+                Container(
+                  // margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade50,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: ListTile(
+                    onTap: () {
+                      Navigator.push(context, PageTransition(child: AddProductScreen(), type: PageTransitionType.fade));
+                    },
+                    leading: Icon(Icons.print),
+                    title: Text("${options[index]["title"]}"),
+                    subtitle: Text("${options[index]["subTitle"]}"),
+                  ),
+                ),
+                Positioned(
+                    left: 0,
+                    top: 0,
+                    bottom: 0,
+                    child: Container(
+                      width: 5,
+                      decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
+                    ))
+              ],
+            ),
+          );
+        },
+        itemCount: options.length,
       ),
     );
   }

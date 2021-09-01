@@ -24,7 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_localizations:
-    sdk: flutter  
+    sdk: flutter
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -48,9 +48,19 @@ dependencies:
 
   #api integration
   dio:
-  http: 
+  http:
   url_launcher:
+
+
+  #  picker provider permission check
+  permission_handler:
   path_provider:
+  image_picker:
+
+
+  expandable: ^5.0.1
+
+
 
 dev_dependencies:
   flutter_test:
@@ -73,7 +83,7 @@ flutter:
     - assets/images/2x/
     - assets/images/3x/
     - assets/locale/localization_en.json
-    - assets/locale/localization_hi.json  
+    - assets/locale/localization_hi.json
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
