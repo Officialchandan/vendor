@@ -109,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     : Colors.brown,
             //index.isEven ? Colors.indigoAccent : Colors.indigoAccent[100],
           ),
-          child: GestureDetector(
+          child: InkWell(
             onTap: () {
               log("f");
               routeManager(index);

@@ -20,6 +20,10 @@ import 'localization/application.dart';
 Dio dio = Dio();
 NavigationService navigationService = NavigationService();
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: ColorPrimary,
+  ));
   runApp(MyApp());
 }
 
@@ -41,32 +45,32 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    const MaterialColor themeColor = const MaterialColor(
-      0xFF6657f4,
-      const <int, Color>{
-        50: const Color(0xFF6657f4),
-        100: const Color(0xFF6657f4),
-        200: const Color(0xFF6657f4),
-        300: const Color(0xFF6657f4),
-        400: const Color(0xFF6657f4),
-        500: const Color(0xFF6657f4),
-        600: const Color(0xFF6657f4),
-        700: const Color(0xFF6657f4),
-        800: const Color(0xFF6657f4),
-        900: const Color(0xFF6657f4),
+    MaterialColor themeColor = MaterialColor(
+      ColorPrimary.value,
+      <int, Color>{
+        50: Color(0xFF6657f4),
+        100: Color(0xFF6657f4),
+        200: Color(0xFF6657f4),
+        300: Color(0xFF6657f4),
+        400: Color(0xFF6657f4),
+        500: Color(ColorPrimary.value),
+        600: Color(0xFF6657f4),
+        700: Color(0xFF6657f4),
+        800: Color(0xFF6657f4),
+        900: Color(0xFF6657f4),
       },
     );
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
-      // statusBarColor is used to set Status bar color in Android devices.
-      statusBarColor: Color(0xff493ad6),
+    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+    //   // statusBarColor is used to set Status bar color in Android devices.
+    //   statusBarColor: Color(0xff6657f4),
 
-      // To make Status bar icons color white in Android devices.
-      statusBarIconBrightness: Brightness.light,
+    //   // To make Status bar icons color white in Android devices.
+    //   statusBarIconBrightness: Brightness.light,
 
-      // statusBarBrightness is used to set Status bar icon color in iOS.
-      statusBarBrightness: Brightness.light,
-      // Here light means dark color Status bar icons.
-    ));
+    //   // statusBarBrightness is used to set Status bar icon color in iOS.
+    //   statusBarBrightness: Brightness.light,
+    //   // Here light means dark color Status bar icons.
+    // ));
 
     // FlutterStatusbarcolor.setStatusBarColor(Color(0xff493ad6));
     return MaterialApp(
@@ -122,7 +126,7 @@ class _MyAppState extends State<MyApp> {
                 type: PageTransitionType.fade, child: HomeScreen());
           case Routes.BillingScreen:
             return PageTransition(
-                type: PageTransitionType.fade, child: BillingScreen());      
+                type: PageTransitionType.fade, child: BillingScreen());
         }
       },
       home: SplashScreen(),
