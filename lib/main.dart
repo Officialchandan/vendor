@@ -5,6 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:vendor/provider/Endpoint.dart';
 import 'package:vendor/provider/NavigationService.dart';
 import 'package:vendor/ui/home/home.dart';
 import 'package:vendor/ui/language/select_language.dart';
@@ -17,7 +18,15 @@ import 'package:vendor/utility/sharedpref.dart';
 import 'localization/app_translations_delegate.dart';
 import 'localization/application.dart';
 
+BaseOptions baseOptions = BaseOptions(
+  baseUrl: Endpoint.BASE_URL,
+  receiveTimeout: 60000,
+  sendTimeout: 60000,
+  responseType: ResponseType.json,
+  maxRedirects: 3,
+);
 Dio dio = Dio();
+
 ImagePicker imagePicker = ImagePicker();
 NavigationService navigationService = NavigationService();
 
@@ -129,23 +138,18 @@ class _MyAppState extends State<MyApp> {
       onGenerateRoute: (route) {
         switch (route.name) {
           case "/":
-            return PageTransition(
-                type: PageTransitionType.fade, child: SplashScreen());
+            return PageTransition(type: PageTransitionType.fade, child: SplashScreen());
 
           case Routes.SplashScreen:
-            return PageTransition(
-                type: PageTransitionType.fade, child: SplashScreen());
+            return PageTransition(type: PageTransitionType.fade, child: SplashScreen());
           case Routes.SelectLanguage:
-            return PageTransition(
-                type: PageTransitionType.fade, child: SelectLanguage());
+            return PageTransition(type: PageTransitionType.fade, child: SelectLanguage());
 
           case Routes.LoginScreen:
-            return PageTransition(
-                type: PageTransitionType.fade, child: LoginScreen());
+            return PageTransition(type: PageTransitionType.fade, child: LoginScreen());
 
           case Routes.HomeScreen:
-            return PageTransition(
-                type: PageTransitionType.fade, child: HomeScreen());
+            return PageTransition(type: PageTransitionType.fade, child: HomeScreen());
         }
       },
       home: SplashScreen(),
@@ -173,8 +177,7 @@ class _MyAppState extends State<MyApp> {
   init() async {
     var lang = await SharedPref.getStringPreference(SharedPref.SELECTEDLANG);
     print("${lang}");
-    _newLocaleDelegate = AppTranslationsDelegate(
-        newLocale: Locale(lang.isEmpty ? "en" : lang, ""));
+    _newLocaleDelegate = AppTranslationsDelegate(newLocale: Locale(lang.isEmpty ? "en" : lang, ""));
     setState(() {});
     application.onLocaleChanged = onLocaleChange;
   }

@@ -1,10 +1,10 @@
-import 'dart:collection';
 import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:vendor/UI/login/login_event.dart';
 import 'package:vendor/UI/login/login_state.dart';
+import 'package:vendor/main.dart';
 import 'package:vendor/model/login_otp.dart';
 import 'package:vendor/model/login_response.dart';
 import 'package:vendor/provider/api_provider.dart';
@@ -54,8 +54,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         if (result.success) {
           SharedPref.setBooleanPreference(SharedPref.LOGIN, true);
           SharedPref.setStringPreference(SharedPref.TOKEN, result.token!);
-          SharedPref.setIntegerPreference(
-              SharedPref.VENDORID, result.vendorId!);
+          SharedPref.setIntegerPreference(SharedPref.VENDORID, result.vendorId!);
+          baseOptions.headers.addAll({"Authorization": "bearer ${result.token!}"});
           yield GetLoginOtpState(result.message);
         } else {
           yield GetLoginFailureState(message: result.message);
