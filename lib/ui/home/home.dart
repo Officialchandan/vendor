@@ -3,9 +3,10 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:vendor/ui/inventory/inventory_screen.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/routs.dart';
+
+import 'bottom_navigation_home.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -168,15 +169,14 @@ class _HomeScreenState extends State<HomeScreen> {
   routeManager(index) {
     log("$index");
     index == 0
-        ? Navigator.pushNamed(
-            context,
-            Routes.BillingScreen,
-          )
+        ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: index)
         : index == 1
             ? Navigator.push(
                 context,
                 PageTransition(
-                  child: InventoryScreen(),
+                  child: BottomNavigationHome(
+                    index: 1,
+                  ),
                   type: PageTransitionType.fade,
                 ))
             : index == 2

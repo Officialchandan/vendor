@@ -7,6 +7,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/provider/Endpoint.dart';
 import 'package:vendor/provider/NavigationService.dart';
+import 'package:vendor/provider/api_provider.dart';
+import 'package:vendor/ui/home/bottom_navigation_home.dart';
 import 'package:vendor/ui/home/home.dart';
 import 'package:vendor/ui/language/select_language.dart';
 import 'package:vendor/ui/login/login_screen.dart';
@@ -25,8 +27,8 @@ BaseOptions baseOptions = BaseOptions(
   responseType: ResponseType.json,
   maxRedirects: 3,
 );
-Dio dio = Dio();
-
+Dio dio = Dio(baseOptions);
+ApiProvider apiProvider = ApiProvider();
 ImagePicker imagePicker = ImagePicker();
 NavigationService navigationService = NavigationService();
 
@@ -110,6 +112,8 @@ void main() {
     statusBarColor: ColorPrimary,
   ));
 
+  dio.interceptors.add(
+      LogInterceptor(responseBody: true, responseHeader: false, requestBody: true, request: true, requestHeader: true, error: true));
   runApp(MyApp());
 }
 
@@ -135,6 +139,7 @@ class _MyAppState extends State<MyApp> {
       title: 'Vendor',
       theme: themeData(context),
       debugShowCheckedModeBanner: false,
+      navigatorKey: navigationService.navigatorKey,
       onGenerateRoute: (route) {
         switch (route.name) {
           case "/":
@@ -150,6 +155,13 @@ class _MyAppState extends State<MyApp> {
 
           case Routes.HomeScreen:
             return PageTransition(type: PageTransitionType.fade, child: HomeScreen());
+          case Routes.BOTTOM_NAVIGATION_HOME:
+            int index = route.arguments as int;
+            return PageTransition(
+                type: PageTransitionType.fade,
+                child: BottomNavigationHome(
+                  index: index,
+                ));
         }
       },
       home: SplashScreen(),

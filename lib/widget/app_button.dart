@@ -19,13 +19,11 @@ class AppButton extends StatelessWidget {
       textColor: Colors.white,
       color: ColorPrimary,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      disabledColor: Colors.grey.shade300,
       onPressed: onPressed,
       child: new Text(
         "$title",
-        style: GoogleFonts.openSans(
-            fontSize: 17,
-            fontWeight: FontWeight.w600,
-            decoration: TextDecoration.none),
+        style: GoogleFonts.openSans(fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
       ),
     );
   }

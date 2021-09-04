@@ -1,6 +1,3 @@
-import 'package:vendor/UI/home/home.dart';
-import 'package:vendor/UI/language/select_language.dart';
-
 class Routes {
   static const SplashScreen = "/splash_screen";
   static const LoginScreen = "/login_screen";
@@ -8,4 +5,5 @@ class Routes {
   static const SIGN_UP_SCREEN = "/sign_up_screen";
   static const HomeScreen = "/home_screen";
   static const BillingScreen = "/billing_screen";
+  static const BOTTOM_NAVIGATION_HOME = "/bottom_navigation_home";
 }
