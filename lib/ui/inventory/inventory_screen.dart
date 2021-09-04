@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
 import 'package:vendor/ui/inventory/add_product/add_product_screen.dart';
+import 'package:vendor/ui/inventory/sale_return/sale_return_screen.dart';
+import 'package:vendor/ui/inventory/view_product/select_category.dart';
 
 class InventoryScreen extends StatefulWidget {
   @override
@@ -44,7 +46,13 @@ class _InventoryScreenState extends State<InventoryScreen> {
                   ),
                   child: ListTile(
                     onTap: () {
-                      Navigator.push(context, PageTransition(child: AddProductScreen(), type: PageTransitionType.fade));
+                      if (options[index]["id"] == 2) {
+                        Navigator.push(context, PageTransition(child: ViewCategoryScreen(), type: PageTransitionType.fade));
+                      } else if (options[index]["id"] == 3) {
+                        Navigator.push(context, PageTransition(child: SaleReturnScreen(), type: PageTransitionType.fade));
+                      } else {
+                        Navigator.push(context, PageTransition(child: AddProductScreen(), type: PageTransitionType.fade));
+                      }
                     },
                     leading: Icon(Icons.print),
                     title: Text("${options[index]["title"]}"),

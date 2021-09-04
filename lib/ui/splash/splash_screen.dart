@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:vendor/UI/home/home.dart';
-import 'package:vendor/UI/login/login_screen.dart';
 import 'package:vendor/main.dart';
+import 'package:vendor/ui/home/home.dart';
+import 'package:vendor/ui/login/login_screen.dart';
 import 'package:vendor/utility/routs.dart';
 import 'package:vendor/utility/sharedpref.dart';
 
@@ -20,9 +20,16 @@ class _SplashScreenState extends State<SplashScreen> {
       Timer(Duration(seconds: 3), () => Navigator.pushNamedAndRemoveUntil(context, Routes.SelectLanguage, ModalRoute.withName("/")));
     } else if (log == true) {
       String token = await SharedPref.getStringPreference(SharedPref.TOKEN);
-      baseOptions.headers.addAll({"Authorization": "bearer $token"});
+      int vendorId = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      print("token-->$token");
+      print("vendorId-->$vendorId");
+      if (token.isEmpty) {
+        Timer(Duration(seconds: 3), () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen())));
+      } else {
+        baseOptions.headers.addAll({"Authorization": "bearer $token"});
 
-      Timer(Duration(seconds: 3), () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen())));
+        Timer(Duration(seconds: 3), () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen())));
+      }
     } else {
       Timer(Duration(seconds: 3), () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen())));
     }

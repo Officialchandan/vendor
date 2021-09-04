@@ -1,6 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:vendor/model/login_otp.dart';
-import 'package:vendor/model/login_response.dart';
 
 abstract class LoginState extends Equatable {}
 
@@ -15,6 +13,12 @@ class GetLoginState extends LoginState {
 
   @override
   List<Object> get props => [message];
+}
+
+class LoadingState extends LoginState {
+  LoadingState();
+  @override
+  List<Object?> get props => [];
 }
 
 class GetLoginOtpState extends LoginState {

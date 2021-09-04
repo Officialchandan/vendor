@@ -1,4 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:vendor/utility/color.dart';
 
 class Utility {
   static Future<bool> checkStoragePermission() async {
@@ -23,5 +26,9 @@ class Utility {
       return false;
     }
     return true;
+  }
+
+  static showToast(String msg) {
+    Fluttertoast.showToast(msg: msg, textColor: Colors.white, backgroundColor: ColorPrimary, gravity: ToastGravity.BOTTOM);
   }
 }
