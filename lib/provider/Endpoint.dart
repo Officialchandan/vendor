@@ -10,4 +10,5 @@ class Endpoint {
   static const String GET_SIZE_BY_CATEGORY = "getSizeByCategoryId";
   static const String GET_SUB_CATEGORY = "getSubCategory";
   static const String ADD_PRODUCT_SUBCATEGORY = "addProductSubCategory";
+  static const String GET_SUBCATEGORY_VENDORID = "getAllCategoryByVendorID";
 }

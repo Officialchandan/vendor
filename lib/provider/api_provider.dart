@@ -8,6 +8,7 @@ import 'package:vendor/model/get_categories_response.dart';
 import 'package:vendor/model/get_size_response.dart';
 import 'package:vendor/model/get_sub_category_response.dart';
 import 'package:vendor/model/get_unit_response.dart';
+import 'package:vendor/model/get_vendorcategory_id.dart';
 import 'package:vendor/model/login_otp.dart';
 import 'package:vendor/model/login_response.dart';
 import 'package:vendor/model/product_by_category_response.dart';
@@ -265,6 +266,33 @@ class ApiProvider {
       }
       print("Exception occurred: $message stackTrace: $error");
       return AddSubCategoryResponse(success: false, message: message);
+    }
+  }
+
+
+  Future<GetVendorCategoryById> getCategoryByVendorId() async {
+    try {
+      Map input = HashMap<String, dynamic>();
+
+      input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      //input["category_id"] = categoryId;
+
+      Response res = await dio.post(
+        Endpoint.GET_SUBCATEGORY_VENDORID,
+        data: input,
+      );
+
+      return GetVendorCategoryById.fromJson(res.toString());
+    } catch (error, stacktrace) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return GetVendorCategoryById(success: false, message: message);
     }
   }
 }
