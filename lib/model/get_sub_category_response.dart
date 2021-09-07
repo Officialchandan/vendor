@@ -46,6 +46,7 @@ class SubCategoryModel {
   String categoryId;
   String subCatName;
   String description;
+  bool check = false;
 
   factory SubCategoryModel.fromJson(String str) => SubCategoryModel.fromMap(json.decode(str));
 

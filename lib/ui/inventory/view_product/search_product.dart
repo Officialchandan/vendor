@@ -79,6 +79,7 @@ class _SearchProductScreenState extends State<SearchProductScreen> {
           initialData: [],
           builder: (context, snapshot) {
             if (snapshot.hasData) {
+              print("data-->${snapshot.data}");
               if (snapshot.data!.isEmpty) {
                 return Center(
                   child: Image(
@@ -97,7 +98,7 @@ class _SearchProductScreenState extends State<SearchProductScreen> {
                         child: Image(
                           height: 60,
                           width: 60,
-                          fit: BoxFit.cover,
+                          fit: BoxFit.contain,
                           image: NetworkImage(snapshot.data![index].productImage.first),
                         ),
                       ),

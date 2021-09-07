@@ -48,7 +48,7 @@ class UnitModel {
   String toJson() => json.encode(toMap());
 
   factory UnitModel.fromMap(Map<String, dynamic> json) => UnitModel(
-        id: json["id"] == null ? "0" : json["id"],
+        id: json["id"] == null ? "0" : json["id"].toString(),
         categoryName: json["category_name"] == null ? "" : json["category_name"],
         unitName: json["unit_name"] == null ? "" : json["unit_name"],
       );

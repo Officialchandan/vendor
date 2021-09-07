@@ -14,3 +14,12 @@ class SelectImageEvent extends AddProductEvent {
   @override
   List<Object?> get props => [context];
 }
+
+class ShowOnlineShopEvent extends AddProductEvent {
+  final bool online;
+
+  ShowOnlineShopEvent({required this.online});
+
+  @override
+  List<Object?> get props => [online];
+}

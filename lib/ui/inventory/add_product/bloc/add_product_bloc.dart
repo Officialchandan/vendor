@@ -16,6 +16,9 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
       yield ImageLoadingState();
       yield* selectImage(event.context);
     }
+    if (event is ShowOnlineShopEvent) {
+      yield ShowOnlineShopState(online: event.online);
+    }
   }
 
   Stream<AddProductState> selectImage(BuildContext context) async* {

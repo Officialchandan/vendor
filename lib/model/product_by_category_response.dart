@@ -44,6 +44,7 @@ class ProductModel {
     required this.size,
     required this.earningCoins,
     required this.productImage,
+    required this.image,
     required this.subCategoryId,
   });
 
@@ -61,6 +62,7 @@ class ProductModel {
   String size;
   String earningCoins;
   List<String> productImage;
+  String image;
   List<SubCategoryId> subCategoryId;
 
   factory ProductModel.fromJson(String str) => ProductModel.fromMap(json.decode(str));
@@ -73,6 +75,7 @@ class ProductModel {
         categoryId: json["category_id"] == null ? "0" : json["category_id"].toString(),
         productName: json["product_name"] == null ? "" : json["product_name"].toString(),
         description: json["description"] == null ? "" : json["description"].toString(),
+        image: json["image"] == null ? "" : json["image"].toString(),
         purchasePrice: json["purchase_price"] == null ? "0" : json["purchase_price"].toString(),
         mrp: json["mrp"] == null ? "" : json["mrp"].toString(),
         sellingPrice: json["selling_price"] == null ? "0" : json["selling_price"].toString(),
@@ -81,7 +84,7 @@ class ProductModel {
         color: json["color"] == null ? "" : json["color"].toString(),
         size: json["size"] == null ? "" : json["size"].toString(),
         earningCoins: json["earning_coins"] == null ? "" : json["earning_coins"].toString(),
-        productImage: json["product_image"] == null ? [] : List<String>.from(json["product_image"].map((x) => x)),
+        productImage: json["product_images"] == null ? [] : List<String>.from(json["product_images"].map((x) => x)),
         subCategoryId: json["sub_category_id"] == null
             ? []
             : List<SubCategoryId>.from(json["sub_category_id"].map((x) => SubCategoryId.fromMap(x))),
@@ -100,6 +103,7 @@ class ProductModel {
         "unit": unit == null ? null : unit,
         "color": color == null ? null : color,
         "size": size == null ? null : size,
+        "image": image == null ? null : image,
         "earning_coins": earningCoins == null ? null : earningCoins,
         "product_image": productImage == null ? null : List<dynamic>.from(productImage.map((x) => x)),
         "sub_category_id": subCategoryId == null ? null : List<dynamic>.from(subCategoryId.map((x) => x.toMap())),

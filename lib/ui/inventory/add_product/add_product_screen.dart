@@ -4,12 +4,17 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:vendor/model/get_sub_category_response.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
 import 'package:vendor/ui/inventory/add_product/bloc/add_product_bloc.dart';
 import 'package:vendor/ui/inventory/add_product/bloc/add_product_event.dart';
 import 'package:vendor/ui/inventory/add_product/bloc/add_product_state.dart';
 import 'package:vendor/ui/inventory/product_varient/product_varient_screen.dart';
+import 'package:vendor/ui/inventory/select_sub_category.dart';
 import 'package:vendor/utility/color.dart';
+import 'package:vendor/utility/utility.dart';
+import 'package:vendor/widget/UnitBottomSheet.dart';
+import 'package:vendor/widget/category_bottom_sheet.dart';
 
 class AddProductScreen extends StatefulWidget {
   @override
@@ -20,6 +25,20 @@ class _AddProductScreenState extends State<AddProductScreen> {
   List<File> imageList = [];
   AddProductBloc addProductBloc = AddProductBloc();
   StreamController<List<File>> imgController = StreamController();
+  bool showOnline = true;
+  TextEditingController edtCategory = TextEditingController();
+  TextEditingController edtSubCategoryCategory = TextEditingController();
+  TextEditingController edtMrp = TextEditingController();
+  TextEditingController edtPurchasePrice = TextEditingController();
+  TextEditingController edtSalePrice = TextEditingController();
+  TextEditingController edtColor = TextEditingController();
+  TextEditingController edtSize = TextEditingController();
+  TextEditingController edtDescription = TextEditingController();
+  TextEditingController edtName = TextEditingController();
+  TextEditingController edtUnit = TextEditingController();
+  String categoryId = "";
+  String unitId = "";
+  List<SubCategoryModel> subCategories = [];
 
   @override
   void dispose() {
@@ -117,11 +136,21 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     ],
                   ),
                 ),
-                SwitchListTile(
-                  value: true,
-                  onChanged: (value) {},
-                  title: Text("Show Online"),
-                  contentPadding: EdgeInsets.all(0),
+                BlocBuilder<AddProductBloc, AddProductState>(
+                  builder: (context, state) {
+                    if (state is ShowOnlineShopState) {
+                      showOnline = state.online;
+                    }
+
+                    return SwitchListTile(
+                      value: showOnline,
+                      onChanged: (value) {
+                        addProductBloc.add(ShowOnlineShopEvent(online: value));
+                      },
+                      title: Text("Show Online"),
+                      contentPadding: EdgeInsets.all(0),
+                    );
+                  },
                 ),
                 const SizedBox(
                   height: 15,
@@ -135,8 +164,21 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   height: 15,
                 ),
                 TextFormField(
+                  readOnly: true,
+                  onTap: () {
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return CategoryBottomSheet(onSelect: (category) {
+                            categoryId = category.id;
+                            edtCategory.text = category.categoryName!;
+                          });
+                        });
+                  },
+                  controller: edtCategory,
                   decoration: InputDecoration(
-                      labelText: "Select category",
+                      labelText: "Category",
+                      hintText: "Select category",
                       suffixIcon: Icon(Icons.keyboard_arrow_right_sharp),
                       suffixIconConstraints: BoxConstraints(minWidth: 20, maxWidth: 21, minHeight: 20, maxHeight: 21)),
                 ),
@@ -144,8 +186,28 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   height: 15,
                 ),
                 TextFormField(
+                  readOnly: true,
+                  controller: edtSubCategoryCategory,
+                  onTap: () async {
+                    var result = await Navigator.push(
+                        context,
+                        PageTransition(
+                            child: SelectSubCategory(
+                              categoryId: categoryId,
+                            ),
+                            type: PageTransitionType.fade));
+
+                    if (result != null) {
+                      subCategories = result as List<SubCategoryModel>;
+                      String subCategory = "";
+                      subCategories.forEach((element) {
+                        subCategory = subCategory + element.subCatName + "\n";
+                      });
+                    }
+                  },
                   decoration: InputDecoration(
-                      labelText: "Select subcategory",
+                      hintText: "Select subcategory",
+                      labelText: "Subcategory",
                       suffixIcon: Icon(Icons.keyboard_arrow_right_sharp),
                       suffixIconConstraints: BoxConstraints(minWidth: 20, maxWidth: 21, minHeight: 20, maxHeight: 21)),
                 ),
@@ -177,6 +239,50 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         decoration: InputDecoration(labelText: "Selling price"),
                       ),
                       flex: 3,
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        decoration: InputDecoration(labelText: "Stock"),
+                      ),
+                      flex: 2,
+                    ),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    Expanded(
+                      child: TextFormField(
+                        readOnly: true,
+                        controller: edtUnit,
+                        onTap: () {
+                          if (categoryId.isEmpty) {
+                            Utility.showToast("Please select category first.");
+                            return;
+                          }
+
+                          showModalBottomSheet(
+                              context: context,
+                              builder: (context) {
+                                return UnitBottomSheet(
+                                    categoryId: categoryId,
+                                    onSelect: (unit) {
+                                      unitId = unit.id;
+                                      edtUnit.text = unit.unitName;
+                                    });
+                              });
+                        },
+                        decoration: InputDecoration(
+                            labelText: "Unit",
+                            suffixIcon: Icon(Icons.keyboard_arrow_right_sharp),
+                            suffixIconConstraints: BoxConstraints(minWidth: 20, maxWidth: 21, minHeight: 20, maxHeight: 21)),
+                      ),
+                      flex: 2,
                     ),
                   ],
                 ),

@@ -19,3 +19,12 @@ class SelectImageState extends AddProductState {
   @override
   List<Object?> get props => [image];
 }
+
+class ShowOnlineShopState extends AddProductState {
+  final bool online;
+
+  ShowOnlineShopState({required this.online});
+
+  @override
+  List<Object?> get props => [online];
+}
