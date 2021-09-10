@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -112,8 +114,16 @@ void main() {
     statusBarColor: ColorPrimary,
   ));
 
-  dio.interceptors.add(
-      LogInterceptor(responseBody: true, responseHeader: false, requestBody: true, request: true, requestHeader: true, error: true));
+  dio.interceptors.add(LogInterceptor(
+      responseBody: true,
+      responseHeader: false,
+      requestBody: true,
+      request: true,
+      requestHeader: true,
+      error: true,
+      logPrint: (text) {
+        log(text.toString());
+      }));
   runApp(MyApp());
 }
 
@@ -159,7 +169,8 @@ class _MyAppState extends State<MyApp> {
                 type: PageTransitionType.fade, child: LoginScreen());
 
           case Routes.HomeScreen:
-            return PageTransition(type: PageTransitionType.fade, child: HomeScreen());
+            return PageTransition(
+                type: PageTransitionType.fade, child: HomeScreen());
           case Routes.BOTTOM_NAVIGATION_HOME:
             int index = route.arguments as int;
             return PageTransition(

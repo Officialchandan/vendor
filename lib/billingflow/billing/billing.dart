@@ -7,8 +7,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:vendor/billingflow/billing/billing_bloc.dart';
 import 'package:vendor/billingflow/billing/billing_event.dart';
 import 'package:vendor/billingflow/billing/billing_state.dart';
+import 'package:vendor/billingflow/search_all/search_all_product.dart';
+
 import 'package:vendor/model/get_vendorcategory_id.dart';
-import 'package:vendor/search_all/search_all_product.dart';
+
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/validator.dart';
 
@@ -94,13 +96,21 @@ class _BillingScreenState extends State<BillingScreen> {
                                 "assets/images/point.png",
                                 scale: 2,
                               )),
-                              Text(
-                                "  ${state.data}",
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700,
-                                    color: ColorPrimary),
-                              ),
+                              mobileController.text.length == 10
+                                  ? Text(
+                                      "  ${state.data}",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w700,
+                                          color: ColorPrimary),
+                                    )
+                                  : Text(
+                                      "  0.0",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w700,
+                                          color: ColorPrimary),
+                                    ),
                             ],
                           );
                         }
@@ -165,6 +175,11 @@ class _BillingScreenState extends State<BillingScreen> {
                               ),
                               onChanged: (length) {
                                 if (mobileController.text.length == 10) {
+                                  customerNumberResponseBloc.add(
+                                      GetCustomerNumberResponseEvent(
+                                          mobile: mobileController.text));
+                                }
+                                if (mobileController.text.length == 9) {
                                   customerNumberResponseBloc.add(
                                       GetCustomerNumberResponseEvent(
                                           mobile: mobileController.text));
