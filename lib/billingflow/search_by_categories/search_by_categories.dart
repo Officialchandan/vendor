@@ -239,7 +239,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                                     MainAxisAlignment.end,
                                                 children: [
                                                   Text(
-                                                    "Size : ${searchList[index].size}",
+                                                    "Size : ${searchList[index].productOption[index].value}",
                                                     style: TextStyle(
                                                         fontSize: 15,
                                                         color:
@@ -381,18 +381,18 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                                         children: <TextSpan>[
                                                           new TextSpan(
                                                             text:
-                                                                '${searchList[index].colorName}',
-                                                            style:
-                                                                new TextStyle(
-                                                                    color:
-                                                                        Color(
-                                                              int.parse(searchList[
-                                                                      index]
-                                                                  .colorCode
-                                                                  .replaceAll(
-                                                                      "#",
-                                                                      "0xff")),
-                                                            )),
+                                                                '${searchList[index].productOption[index].value}}',
+                                                            style: new TextStyle(
+                                                                //       color:
+                                                                //           Color(
+                                                                // int.parse(searchList[
+                                                                //         index]
+                                                                //     .colorCode
+                                                                //     .replaceAll(
+                                                                //         "#",
+                                                                //         "0xff")),
+                                                                // )
+                                                                ),
                                                           ),
                                                         ],
                                                       ),
@@ -421,12 +421,12 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                       borderRadius: BorderRadius.circular(5),
                                       image: DecorationImage(
                                         image: searchList[index]
-                                                .productImage
+                                                .productImages
                                                 .isEmpty
                                             ? NetworkImage(
                                                 "https://www.google.com/imgres?imgurl=https%3A%2F%2Fimage.shutterstock.com%2Fimage-vector%2Fempty-placeholder-image-icon-design-260nw-1366372628.jpg&imgrefurl=https%3A%2F%2Fwww.shutterstock.com%2Fsearch%2Fplaceholder%2Bimage&tbnid=S28DYxXD39mDFM&vet=12ahUKEwisjfyBifTyAhXXe30KHWYkCGIQMygPegUIARDwAQ..i&docid=_eukPVibkcyRgM&w=260&h=280&q=image%20place%20holder%20image&ved=2ahUKEwisjfyBifTyAhXXe30KHWYkCGIQMygPegUIARDwAQ")
                                             : NetworkImage(
-                                                "${searchList[index].productImage[0]}"),
+                                                "${searchList[index].productImages[0]}"),
                                         fit: BoxFit.contain,
                                       )),
                                   // child: Image.asset(
