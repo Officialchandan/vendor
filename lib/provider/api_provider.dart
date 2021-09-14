@@ -273,7 +273,6 @@ class ApiProvider {
     }
   }
 
-
   Future<GetVendorCategoryById> getCategoryByVendorId() async {
     try {
       Map input = HashMap<String, dynamic>();

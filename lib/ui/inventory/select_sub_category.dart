@@ -46,9 +46,7 @@ class _SelectSubCategoryState extends State<SelectSubCategory> {
           actions: [
             TextButton(
                 onPressed: () {
-                  List<SubCategoryModel> subCategory = subCategoryList
-                      .where((element) => element.check)
-                      .toList();
+                  List<SubCategoryModel> subCategory = subCategoryList.where((element) => element.check).toList();
                   Navigator.pop(context, subCategory);
                 },
                 child: Text(
@@ -91,9 +89,7 @@ class _SelectSubCategoryState extends State<SelectSubCategory> {
           padding: EdgeInsets.all(10),
           child: MaterialButton(
             onPressed: () {},
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-                side: BorderSide(color: ColorPrimary, width: 1)),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10), side: BorderSide(color: ColorPrimary, width: 1)),
             height: 45,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -119,8 +115,7 @@ class _SelectSubCategoryState extends State<SelectSubCategory> {
 
   void getSubCategory(String categoryId) async {
     if (await Network.isConnected()) {
-      GetSubCategoryResponse response =
-          await apiProvider.getSubCategory(categoryId);
+      GetSubCategoryResponse response = await apiProvider.getSubCategory(categoryId);
 
       if (response.success) {
         subCategoryList = response.data!;

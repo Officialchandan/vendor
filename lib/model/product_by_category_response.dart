@@ -11,26 +11,20 @@ class ProductByCategoryResponse {
   String message;
   List<ProductModel>? data;
 
-  factory ProductByCategoryResponse.fromJson(String str) =>
-      ProductByCategoryResponse.fromMap(json.decode(str));
+  factory ProductByCategoryResponse.fromJson(String str) => ProductByCategoryResponse.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory ProductByCategoryResponse.fromMap(Map<String, dynamic> json) =>
-      ProductByCategoryResponse(
+  factory ProductByCategoryResponse.fromMap(Map<String, dynamic> json) => ProductByCategoryResponse(
         success: json["success"] == null ? false : json["success"],
         message: json["message"] == null ? "" : json["message"],
-        data: json["data"] == null
-            ? []
-            : List<ProductModel>.from(
-                json["data"].map((x) => ProductModel.fromMap(x))),
+        data: json["data"] == null ? [] : List<ProductModel>.from(json["data"].map((x) => ProductModel.fromMap(x))),
       );
 
   Map<String, dynamic> toMap() => {
         "success": success == null ? null : success,
         "message": message == null ? null : message,
-        "data":
-            data == null ? [] : List<dynamic>.from(data!.map((x) => x.toMap())),
+        "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toMap())),
       };
 }
 
@@ -125,8 +119,7 @@ class SubCategoryId {
   String id;
   String name;
 
-  factory SubCategoryId.fromJson(String str) =>
-      SubCategoryId.fromMap(json.decode(str));
+  factory SubCategoryId.fromJson(String str) => SubCategoryId.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 

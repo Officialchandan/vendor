@@ -166,8 +166,7 @@ class _MyAppState extends State<MyApp> {
             return PageTransition(type: PageTransitionType.fade, child: LoginScreen());
 
           case Routes.HomeScreen:
-            return PageTransition(
-                type: PageTransitionType.fade, child: HomeScreen());
+            return PageTransition(type: PageTransitionType.fade, child: HomeScreen());
           case Routes.BOTTOM_NAVIGATION_HOME:
             int index = route.arguments as int;
             return PageTransition(
