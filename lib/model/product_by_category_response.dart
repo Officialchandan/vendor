@@ -63,7 +63,7 @@ class ProductModel {
   String purchasePrice;
   String mrp;
   String sellingPrice;
-  String stock;
+  int stock;
   String unit;
   String colorName;
   String colorCode;
@@ -100,7 +100,7 @@ class ProductModel {
         sellingPrice: json["selling_price"] == null
             ? "0"
             : json["selling_price"].toString(),
-        stock: json["stock"] == null ? "0" : json["stock"].toString(),
+        stock: json["stock"] == null ? 0 : json["stock"],
         unit: json["unit"] == null ? "0" : json["unit"].toString(),
         colorName: json["color_name"] == null ? "Black" : json["color_name"],
         colorCode: json["color_code"] == null ? "#000000" : json["color_code"],
@@ -109,7 +109,9 @@ class ProductModel {
             ? ""
             : json["earning_coins"].toString(),
         productImage: json["product_images"] == null
-            ? []
+            ? [
+                "https://www.google.com/imgres?imgurl=https%3A%2F%2Fi.stack.imgur.com%2Fy9DpT.jpg&imgrefurl=https%3A%2F%2Fstackoverflow.com%2Fquestions%2F61244854%2Fadd-a-no-image-placeholder-on-elementor-pro-post-element-if-there-is-no-featured&tbnid=gORET_h3X-RiOM&vet=12ahUKEwiLj-6p9fPyAhWVOisKHaK1CsQQMygBegUIARDPAQ..i&docid=QPagImSLC_KOrM&w=900&h=497&q=image%20place%20holder%20image&ved=2ahUKEwiLj-6p9fPyAhWVOisKHaK1CsQQMygBegUIARDPAQ"
+              ]
             : List<String>.from(json["product_images"].map((x) => x)),
         subCategoryId: json["sub_category_id"] == null
             ? []

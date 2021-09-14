@@ -51,3 +51,30 @@ class GetDecrementState extends SearchAllState {
   @override
   List<Object?> get props => [count];
 }
+
+class CategoriesInitialState extends SearchAllState {
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
+}
+
+class CategoriesLoadingState extends SearchAllState {
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
+}
+
+class CategoriesSearchState extends SearchAllState {
+  final String searchword;
+  CategoriesSearchState({required this.searchword});
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [searchword];
+}
+
+class CategoriesClosedState extends SearchAllState {
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
+}

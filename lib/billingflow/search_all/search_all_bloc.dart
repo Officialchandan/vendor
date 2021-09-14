@@ -12,6 +12,7 @@ import '../../main.dart';
 class SearchAllBloc extends Bloc<SearchAllEvent, SearchAllState> {
   SearchAllBloc() : super(SearchAllIntialState());
 
+  ProductByCategoryResponse? result;
   @override
   Stream<SearchAllState> mapEventToState(SearchAllEvent event) async* {
     if (event is GetProductsEvent) {
@@ -35,19 +36,22 @@ class SearchAllBloc extends Bloc<SearchAllEvent, SearchAllState> {
     if (event is GetSelectColorEvent) {
       yield* getSearchAllResponse();
     }
+    if (event is FindCategoriesEvent) {
+      yield CategoriesSearchState(searchword: event.searchkeyword);
+    }
   }
 
   Stream<SearchAllState> getSearchAllResponse() async* {
     if (await Network.isConnected()) {
       yield GetSearchLoadingState();
       try {
-        ProductByCategoryResponse result =
-            await apiProvider.getAllVendorProducts();
+        result = await apiProvider.getAllVendorProducts();
+
         log("$result");
-        if (result.success) {
-          yield GetSearchState(message: result.message, data: result.data);
+        if (result!.success) {
+          yield GetSearchState(message: result!.message, data: result!.data);
         } else {
-          yield GetSearchFailureState(message: result.message);
+          yield GetSearchFailureState(message: result!.message);
         }
       } catch (error) {
         yield GetSearchFailureState(message: "internal Server error");

@@ -44,3 +44,21 @@ class GetSelectColorEvent extends SearchAllEvent {
   final color;
   GetSelectColorEvent({required this.color});
 }
+
+class LoadingSearchCategoriesEvent extends SearchAllEvent {
+  final context;
+
+  LoadingSearchCategoriesEvent({required this.context});
+}
+
+class SuccessSearchCategoriesEvent extends SearchAllEvent {}
+
+class FailureSearchCategoriesEvent extends SearchAllEvent {}
+
+class FindCategoriesEvent extends SearchAllEvent {
+  final searchkeyword;
+
+  FindCategoriesEvent({required this.searchkeyword});
+}
+
+class FindCategoriesClosedEvent extends SearchAllEvent {}
