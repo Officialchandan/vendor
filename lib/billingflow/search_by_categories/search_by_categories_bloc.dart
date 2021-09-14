@@ -1,0 +1,64 @@
+import 'dart:developer';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:vendor/billingflow/search_all/search_all_state.dart';
+import 'package:vendor/billingflow/search_by_categories/search_by_categories_event.dart';
+import 'package:vendor/billingflow/search_by_categories/search_by_categories_state.dart';
+import 'package:vendor/model/product_by_category_response.dart';
+import 'package:vendor/utility/network.dart';
+
+import '../../main.dart';
+
+class SearchByCategoriesBloc
+    extends Bloc<SearchByCategoriesEvents, SearchByCategoriesState> {
+  SearchByCategoriesBloc() : super(SearchByCategoriesIntialState());
+
+  ProductByCategoryResponse? result;
+  @override
+  Stream<SearchByCategoriesState> mapEventToState(
+      SearchByCategoriesEvents event) async* {
+    if (event is GetProductsSearchByCategoriesEvent) {
+      yield* getSearchAllResponse();
+    }
+    if (event is GetCheckBoxSearchByCategoriesEvent) {
+      yield GetSearchByCategoriesCheckBoxState(
+          check: event.check, index: event.index);
+    }
+    if (event is GetIncrementSearchByCategoriesEvent) {
+      yield GetSearchByCategoriesIcrementState(count: event.count);
+    }
+    if (event is GetDecrementSearchByCategoriesEvent) {
+      yield GetSearchByCategoriesDecrementState(count: event.count);
+    }
+    if (event is GetAddSearchByCategoriesEvent) {
+      yield* getSearchAllResponse();
+    }
+
+    if (event is FindSearchByCategoriesEvent) {
+      yield SearchByCategoriesSearchState(searchword: event.searchkeyword);
+    }
+  }
+
+  Stream<SearchByCategoriesState> getSearchAllResponse() async* {
+    if (await Network.isConnected()) {
+      yield SearchByCategoriesLoadingState();
+      try {
+        result = await apiProvider.getAllVendorProducts();
+
+        log("$result");
+        if (result!.success) {
+          yield GetSearchByCategoriesState(
+              message: result!.message, data: result!.data);
+        } else {
+          yield GetSearchByCategoriesFailureState(message: result!.message);
+        }
+      } catch (error) {
+        yield GetSearchByCategoriesFailureState(
+            message: "internal Server error");
+      }
+    } else {
+      Fluttertoast.showToast(msg: "Turn on the internet");
+    }
+  }
+}

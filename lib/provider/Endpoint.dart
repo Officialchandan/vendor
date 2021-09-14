@@ -15,4 +15,5 @@ class Endpoint {
   static const String GET_COLORS = "getColors";
   static const String ADD_VENDOR_PRODUCT = "addVendorProduct";
   static const String ADD_PRODUCT_IMAGE = "addProductImage";
+  static const String GET_SUBCATEGORY_VENDORID = "getAllCategoryByVendorID";
 }

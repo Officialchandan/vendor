@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
-import 'package:vendor/main.dart';
 import 'package:vendor/model/add_sub_category_response.dart';
 import 'package:vendor/model/get_sub_category_response.dart';
 import 'package:vendor/utility/color.dart';
@@ -11,6 +10,8 @@ import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/utility.dart';
 import 'package:vendor/widget/app_button.dart';
+
+import '../../main.dart';
 
 class SelectSubCategory extends StatefulWidget {
   final String categoryId;
@@ -45,7 +46,9 @@ class _SelectSubCategoryState extends State<SelectSubCategory> {
           actions: [
             TextButton(
                 onPressed: () {
-                  List<SubCategoryModel> subCategory = subCategoryList.where((element) => element.check).toList();
+                  List<SubCategoryModel> subCategory = subCategoryList
+                      .where((element) => element.check)
+                      .toList();
                   Navigator.pop(context, subCategory);
                 },
                 child: Text(
@@ -80,27 +83,17 @@ class _SelectSubCategoryState extends State<SelectSubCategory> {
                   });
             }
             return Center(
-              child: Text("Subcategories not found!"),
+              child: Text("Unit not found!"),
             );
           },
         ),
         bottomNavigationBar: Container(
           padding: EdgeInsets.all(10),
           child: MaterialButton(
-            onPressed: () {
-              showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  builder: (context) {
-                    return AddCategoryBottomSheet(
-                        categoryId: widget.categoryId,
-                        onAdd: (subCategory) {
-                          subCategoryList.add(subCategory);
-                          controller.add(subCategoryList);
-                        });
-                  });
-            },
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10), side: BorderSide(color: ColorPrimary, width: 1)),
+            onPressed: () {},
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+                side: BorderSide(color: ColorPrimary, width: 1)),
             height: 45,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -126,7 +119,8 @@ class _SelectSubCategoryState extends State<SelectSubCategory> {
 
   void getSubCategory(String categoryId) async {
     if (await Network.isConnected()) {
-      GetSubCategoryResponse response = await apiProvider.getSubCategory(categoryId);
+      GetSubCategoryResponse response =
+          await apiProvider.getSubCategory(categoryId);
 
       if (response.success) {
         subCategoryList = response.data!;
@@ -226,6 +220,15 @@ class _AddCategoryBottomSheetState extends State<AddCategoryBottomSheet> {
 
       AddSubCategoryResponse response = await apiProvider.addSubCategory(input);
 
+      //   if (response.success) {
+      //     subCategoryList = response.data!;
+      //     controller.add(subCategoryList);
+      //   } else {
+      //     controller.add([]);
+      //   }
+      // } else {
+      //   controller.add([]);
+      //   Utility.showToast(Constant.INTERNET_ALERT_MSG);
       if (response.success) {
         widget.onAdd(response.data!);
         Navigator.pop(context);

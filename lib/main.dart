@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -106,21 +108,6 @@ ThemeData themeData(context) => ThemeData(
       // toolbarTextStyle: Theme.of(context).textTheme.headline6!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       // titleTextStyle: Theme.of(context).textTheme.headline6!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
     ));
-void configLoading() {
-  EasyLoading.instance
-    ..displayDuration = const Duration(milliseconds: 2000)
-    ..indicatorType = EasyLoadingIndicatorType.fadingCircle
-    ..loadingStyle = EasyLoadingStyle.dark
-    ..indicatorSize = 45.0
-    ..radius = 10.0
-    ..progressColor = Colors.yellow
-    ..backgroundColor = Colors.green
-    ..indicatorColor = Colors.yellow
-    ..textColor = Colors.yellow
-    ..maskColor = Colors.blue.withOpacity(0.5)
-    ..userInteractions = true
-    ..dismissOnTap = false;
-}
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -128,9 +115,16 @@ void main() {
     statusBarColor: ColorPrimary,
   ));
 
-  dio.interceptors.add(
-      LogInterceptor(responseBody: true, responseHeader: false, requestBody: true, request: true, requestHeader: true, error: true));
-  configLoading();
+  dio.interceptors.add(LogInterceptor(
+      responseBody: true,
+      responseHeader: false,
+      requestBody: true,
+      request: true,
+      requestHeader: true,
+      error: true,
+      logPrint: (text) {
+        log(text.toString());
+      }));
   runApp(MyApp());
 }
 
@@ -172,7 +166,8 @@ class _MyAppState extends State<MyApp> {
             return PageTransition(type: PageTransitionType.fade, child: LoginScreen());
 
           case Routes.HomeScreen:
-            return PageTransition(type: PageTransitionType.fade, child: HomeScreen());
+            return PageTransition(
+                type: PageTransitionType.fade, child: HomeScreen());
           case Routes.BOTTOM_NAVIGATION_HOME:
             int index = route.arguments as int;
             return PageTransition(

@@ -1,0 +1,56 @@
+import 'package:equatable/equatable.dart';
+
+abstract class CustomerNumberResponseState extends Equatable {}
+
+class CustomerNumberResponseIntialState extends CustomerNumberResponseState {
+  @override
+  List<Object?> get props => [];
+}
+
+class GetCustomerNumberResponseState extends CustomerNumberResponseState {
+  final message;
+  final data;
+  GetCustomerNumberResponseState({this.message, this.data});
+
+  @override
+  List<Object> get props => [message, data];
+}
+
+
+
+class GetCustomerNumberResponseLoadingstate
+    extends CustomerNumberResponseState {
+  // final String message;
+  // GetCustomerNumberResponseLoadingstate({required this.message});
+  @override
+  List<Object?> get props => [];
+}
+
+class GetCustomerNumberResponseFailureState
+    extends CustomerNumberResponseState {
+  final String message;
+  GetCustomerNumberResponseFailureState({required this.message});
+  @override
+  List<Object?> get props => [message];
+}
+
+class GetCategoryByVendorIdLoadingstate extends CustomerNumberResponseState {
+  // final String message;
+  // GetCustomerNumberResponseLoadingstate({required this.message});
+  @override
+  List<Object?> get props => [];
+}
+class GetCategoryByVendorIdState extends CustomerNumberResponseState {
+  final message;
+  final data;
+  GetCategoryByVendorIdState({this.message, this.data});
+
+  @override
+  List<Object> get props => [message, data];
+}
+class GetCategoryByVendorIdFailureState extends CustomerNumberResponseState {
+  final String message;
+  GetCategoryByVendorIdFailureState({required this.message});
+  @override
+  List<Object?> get props => [message];
+}

@@ -7,7 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:vendor/UI/inventory/add_product/bloc/add_product_state.dart';
 import 'package:vendor/model/get_sub_category_response.dart';
+import 'package:vendor/UI/custom_widget/app_bar.dart';
+import 'package:vendor/UI/inventory/add_product/bloc/add_product_bloc.dart';
+import 'package:vendor/UI/inventory/add_product/bloc/add_product_event.dart';
+
+import 'package:vendor/UI/inventory/product_varient/product_varient_screen.dart';
+import 'package:vendor/UI/inventory/select_sub_category.dart';
 import 'package:vendor/model/product_variant.dart';
 import 'package:vendor/model/product_variant_response.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:vendor/billing/billing.dart';
+import 'package:vendor/billingflow/billing/billing.dart';
+
 import 'package:vendor/ui/inventory/inventory_screen.dart';
 import 'package:vendor/utility/color.dart';
 

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:page_transition/page_transition.dart';
@@ -16,7 +17,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<String> name = ["Billing", "Inventory", "Staff Management", "Online Shop", "Performance Tracker", "Account Management"];
+  List<String> name = [
+    "Billing",
+    "Inventory",
+    "Staff Management",
+    "Online Shop",
+    "Performance Tracker",
+    "Account Management"
+  ];
   List<String> description = [
     "Billing description",
     "Inventory description",
@@ -60,7 +68,9 @@ class _HomeScreenState extends State<HomeScreen> {
               right: 15,
             ),
             child: Container(
-              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(5))),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
               child: Row(
                 children: [
                   Icon(
@@ -70,7 +80,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Text(
                     " Share Store  ",
-                    style: TextStyle(color: ColorPrimary, fontWeight: FontWeight.w600, fontSize: 12),
+                    style: TextStyle(
+                        color: ColorPrimary,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 12),
                   )
                 ],
               ),
@@ -116,19 +129,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(name[index],
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16.0,
-                                height: 1.2,
-                                fontWeight: FontWeight.bold,
-                              )),
-                          Text(
-                            description[index],
+                          AutoSizeText(
+                            name[index],
                             style: TextStyle(
-                              fontSize: 13,
                               color: Colors.white,
+                              height: 1.2,
+                              fontWeight: FontWeight.bold,
                             ),
+                            maxFontSize: 15,
+                            minFontSize: 12,
+                          ),
+                          AutoSizeText(
+                            description[index],
+                            style: TextStyle(color: Colors.white, fontSize: 12),
+                            maxFontSize: 12,
+                            minFontSize: 10,
                           ),
                         ],
                       )),
@@ -136,7 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Image.asset(
                     images[index],
                     //height: 70,
-                    width: 70,
+                    width: MediaQuery.of(context).size.height * 0.070,
                   ))
                 ],
               ),
@@ -169,7 +184,8 @@ class _HomeScreenState extends State<HomeScreen> {
   routeManager(index) {
     log("$index");
     index == 0
-        ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: index)
+        ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME,
+            arguments: index)
         : index == 1
             ? Navigator.push(
                 context,

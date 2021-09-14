@@ -24,7 +24,7 @@ class CustomerNumberResponse {
       CustomerNumberResponse(
         success: json["success"],
         message: json["message"],
-        data: CustomerNumberResponseData.fromMap(json["data"]),
+        data: json["data"]==null?null:CustomerNumberResponseData.fromMap(json["data"]),
       );
 
   Map<String, dynamic> toMap() => {
@@ -50,12 +50,13 @@ class CustomerNumberResponseData {
 
   factory CustomerNumberResponseData.fromMap(Map<String, dynamic> json) =>
       CustomerNumberResponseData(
-        id: json["id"],
-        walletBalance: json["wallet_balance"],
+        id: json["id"] == null ? 0 : json["id"],
+        walletBalance:
+            json["wallet_balance"] == null ? "" : json["wallet_balance"],
       );
 
   Map<String, dynamic> toMap() => {
-        "id": id,
-        "wallet_balance": walletBalance,
+        "id": id == null ? 0 : id,
+        "wallet_balance": walletBalance == null ? "" : walletBalance,
       };
 }
