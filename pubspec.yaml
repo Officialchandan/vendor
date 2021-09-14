@@ -62,6 +62,9 @@ dependencies:
   auto_size_text:
 
 
+  flutter_easyloading:
+
+
 
   #share
   share:

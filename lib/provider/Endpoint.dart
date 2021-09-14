@@ -10,4 +10,9 @@ class Endpoint {
   static const String GET_SIZE_BY_CATEGORY = "getSizeByCategoryId";
   static const String GET_SUB_CATEGORY = "getSubCategory";
   static const String ADD_PRODUCT_SUBCATEGORY = "addProductSubCategory";
+  // static const String GET_PRODUCT_VARIANT_TYPE = "getVariantsByCategory";
+  static const String GET_PRODUCT_VARIANT_TYPE = "getVariants";
+  static const String GET_COLORS = "getColors";
+  static const String ADD_VENDOR_PRODUCT = "addVendorProduct";
+  static const String ADD_PRODUCT_IMAGE = "addProductImage";
 }
