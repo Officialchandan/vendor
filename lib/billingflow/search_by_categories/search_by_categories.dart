@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:vendor/billingflow/search_by_categories/search_by_categories_bloc.dart';
 import 'package:vendor/billingflow/search_by_categories/search_by_categories_event.dart';
 import 'package:vendor/billingflow/search_by_categories/search_by_categories_state.dart';
-import 'package:vendor/model/product_by_category_response.dart';
-import 'package:rxdart/rxdart.dart';
+import 'package:vendor/model/product_model.dart';
 import 'package:vendor/utility/color.dart';
 
 class SearchByCategory extends StatefulWidget {
@@ -63,8 +63,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                     hintStyle: GoogleFonts.openSans(
                       fontWeight: FontWeight.w600,
                     ),
-                    contentPadding: const EdgeInsets.only(
-                        left: 14.0, bottom: 8.0, top: 8.0),
+                    contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.white),
                     ),
@@ -74,8 +73,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                     ),
                   ),
                   onChanged: (text) {
-                    searchByCategoriesBloc
-                        .add(FindSearchByCategoriesEvent(searchkeyword: text));
+                    searchByCategoriesBloc.add(FindSearchByCategoriesEvent(searchkeyword: text));
                   },
                 ),
                 leadingWidth: 30,
@@ -90,15 +88,13 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                   BlocConsumer<SearchByCategoriesBloc, SearchByCategoriesState>(
                     listener: (context, state) {
                       if (State is SearchByCategoriesInitialState) {
-                        searchByCategoriesBloc
-                            .add(GetProductsSearchByCategoriesEvent());
+                        searchByCategoriesBloc.add(GetProductsSearchByCategoriesEvent());
                       }
                       if (state is GetSearchByCategoriesState) {
                         log("chal pdi api");
                       }
                       if (state is GetSearchByCategoriesFailureState) {
-                        Fluttertoast.showToast(
-                            msg: state.message, backgroundColor: ColorPrimary);
+                        Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
                       }
                     },
                     builder: (context, state) {
@@ -124,10 +120,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                         } else {
                           List<ProductModel> list = [];
                           for (int i = 0; i < products.length; i++) {
-                            if (products[i]
-                                .productName
-                                .toLowerCase()
-                                .contains(state.searchword.toLowerCase())) {
+                            if (products[i].productName.toLowerCase().contains(state.searchword.toLowerCase())) {
                               list.add(products[i]);
                               log("how much -->${state.searchword}");
                             }
@@ -150,8 +143,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                             children: [
                               Container(
                                 height: 100,
-                                margin: EdgeInsets.only(
-                                    top: 10, bottom: 10, left: 30, right: 10),
+                                margin: EdgeInsets.only(top: 10, bottom: 10, left: 30, right: 10),
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   boxShadow: [
@@ -167,29 +159,21 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                   minLeadingWidth: 20,
                                   contentPadding: EdgeInsets.only(left: 70),
                                   title: Container(
-                                    transform:
-                                        Matrix4.translationValues(0, -2, 0),
+                                    transform: Matrix4.translationValues(0, -2, 0),
                                     padding: EdgeInsets.symmetric(vertical: 10),
                                     child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
                                               "${searchList[index].productName}",
-                                              style: TextStyle(
-                                                  fontSize: 14,
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w600),
+                                              style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w600),
                                             ),
                                             Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
+                                              mainAxisAlignment: MainAxisAlignment.end,
                                               children: [
                                                 Container(
                                                     child: Image.asset(
@@ -198,11 +182,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                                 )),
                                                 Text(
                                                   " ${searchList[index].earningCoins}",
-                                                  style: TextStyle(
-                                                      fontSize: 17,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      color: ColorPrimary),
+                                                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: ColorPrimary),
                                                 ),
                                                 SizedBox(
                                                   width: 10,
@@ -212,196 +192,138 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                           ],
                                         ),
                                         Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
                                             new RichText(
                                               text: new TextSpan(
-                                                text:
-                                                    '\u20B9 ${searchList[index].sellingPrice}  ',
-                                                style: TextStyle(
-                                                    color: ColorPrimary),
+                                                text: '\u20B9 ${searchList[index].sellingPrice}  ',
+                                                style: TextStyle(color: ColorPrimary),
                                                 children: <TextSpan>[
                                                   new TextSpan(
-                                                    text:
-                                                        '\u20B9${searchList[index].mrp}',
+                                                    text: '\u20B9${searchList[index].mrp}',
                                                     style: new TextStyle(
                                                       color: Colors.grey,
-                                                      decoration: TextDecoration
-                                                          .lineThrough,
+                                                      decoration: TextDecoration.lineThrough,
                                                     ),
                                                   ),
                                                 ],
                                               ),
                                             ),
-                                            Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
-                                                children: [
-                                                  Text(
-                                                    "Size : ${searchList[index].productOption[index].value}",
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        color:
-                                                            ColorTextPrimary),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 10,
-                                                  ),
-                                                ]),
+                                            Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                                              Text(
+                                                "Size : ${searchList[index].productOption[index].value}",
+                                                style: TextStyle(fontSize: 15, color: ColorTextPrimary),
+                                              ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                            ]),
                                           ],
                                         ),
-                                        Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                    // color: Colors.amber,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            25),
-                                                    border: Border.all(
-                                                        color: Colors.black)),
-                                                height: 20,
-                                                // width: 90,
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  children: [
-                                                    BlocBuilder<
-                                                        SearchByCategoriesBloc,
-                                                        SearchByCategoriesState>(
-                                                      builder:
-                                                          (context, state) {
-                                                        if (state
-                                                            is GetSearchByCategoriesDecrementState) {
-                                                          searchList[index]
-                                                                  .count =
-                                                              state.count;
-                                                        }
-                                                        return Container(
-                                                          height: 20,
-                                                          width: 30,
-                                                          child: IconButton(
-                                                              padding:
-                                                                  EdgeInsets
-                                                                      .all(0),
-                                                              onPressed: () {
-                                                                log("true===>$count");
-                                                                searchList[index]
-                                                                            .count >
-                                                                        1
-                                                                    ? searchByCategoriesBloc.add(
-                                                                        GetIncrementSearchByCategoriesEvent(
-                                                                            count: searchList[index]
-                                                                                .count--))
-                                                                    : Fluttertoast
-                                                                        .showToast(
-                                                                            msg:
-                                                                                "Product cant be in negative");
-                                                              },
-                                                              iconSize: 20,
-                                                              splashRadius: 10,
-                                                              icon: Icon(
-                                                                Icons.remove,
-                                                              )),
-                                                        );
-                                                      },
-                                                    ),
-                                                    Container(
-                                                      width: 20,
+                                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                                // color: Colors.amber,
+                                                borderRadius: BorderRadius.circular(25),
+                                                border: Border.all(color: Colors.black)),
+                                            height: 20,
+                                            // width: 90,
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                BlocBuilder<SearchByCategoriesBloc, SearchByCategoriesState>(
+                                                  builder: (context, state) {
+                                                    if (state is GetSearchByCategoriesDecrementState) {
+                                                      searchList[index].count = state.count;
+                                                    }
+                                                    return Container(
                                                       height: 20,
-                                                      color: ColorPrimary,
-                                                      child: Center(
-                                                        child: Text(
-                                                          "${searchList[index].count}",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 14),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    BlocBuilder<
-                                                        SearchByCategoriesBloc,
-                                                        SearchByCategoriesState>(
-                                                      builder:
-                                                          (context, state) {
-                                                        if (state
-                                                            is GetSearchByCategoriesDecrementState) {
-                                                          searchList[index]
-                                                                  .count =
-                                                              state.count;
-                                                        }
-                                                        return Container(
-                                                          height: 20,
-                                                          width: 30,
-                                                          child: IconButton(
-                                                              padding:
-                                                                  EdgeInsets
-                                                                      .all(0),
-                                                              onPressed: () {
-                                                                log("true===>$count");
-                                                                searchList[index]
-                                                                            .count <
-                                                                        searchList[index]
-                                                                            .stock
-                                                                    ? searchByCategoriesBloc.add(
-                                                                        GetIncrementSearchByCategoriesEvent(
-                                                                            count: searchList[index]
-                                                                                .count++))
-                                                                    : Fluttertoast.showToast(
-                                                                        msg:
-                                                                            "Stock Limit reached",
-                                                                        backgroundColor:
-                                                                            ColorPrimary);
-                                                              },
-                                                              iconSize: 20,
-                                                              splashRadius: 10,
-                                                              icon: Icon(
-                                                                Icons.add,
-                                                              )),
-                                                        );
-                                                      },
-                                                    ),
-                                                  ],
+                                                      width: 30,
+                                                      child: IconButton(
+                                                          padding: EdgeInsets.all(0),
+                                                          onPressed: () {
+                                                            log("true===>$count");
+                                                            searchList[index].count > 1
+                                                                ? searchByCategoriesBloc.add(GetIncrementSearchByCategoriesEvent(
+                                                                    count: searchList[index].count--))
+                                                                : Fluttertoast.showToast(msg: "Product cant be in negative");
+                                                          },
+                                                          iconSize: 20,
+                                                          splashRadius: 10,
+                                                          icon: Icon(
+                                                            Icons.remove,
+                                                          )),
+                                                    );
+                                                  },
                                                 ),
+                                                Container(
+                                                  width: 20,
+                                                  height: 20,
+                                                  color: ColorPrimary,
+                                                  child: Center(
+                                                    child: Text(
+                                                      "${searchList[index].count}",
+                                                      style: TextStyle(color: Colors.white, fontSize: 14),
+                                                    ),
+                                                  ),
+                                                ),
+                                                BlocBuilder<SearchByCategoriesBloc, SearchByCategoriesState>(
+                                                  builder: (context, state) {
+                                                    if (state is GetSearchByCategoriesDecrementState) {
+                                                      searchList[index].count = state.count;
+                                                    }
+                                                    return Container(
+                                                      height: 20,
+                                                      width: 30,
+                                                      child: IconButton(
+                                                          padding: EdgeInsets.all(0),
+                                                          onPressed: () {
+                                                            log("true===>$count");
+                                                            searchList[index].count < searchList[index].stock
+                                                                ? searchByCategoriesBloc.add(GetIncrementSearchByCategoriesEvent(
+                                                                    count: searchList[index].count++))
+                                                                : Fluttertoast.showToast(
+                                                                    msg: "Stock Limit reached", backgroundColor: ColorPrimary);
+                                                          },
+                                                          iconSize: 20,
+                                                          splashRadius: 10,
+                                                          icon: Icon(
+                                                            Icons.add,
+                                                          )),
+                                                    );
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                                            RichText(
+                                              text: new TextSpan(
+                                                text: ' Color : ',
+                                                style: TextStyle(color: ColorTextPrimary),
+                                                children: <TextSpan>[
+                                                  new TextSpan(
+                                                    text: '${searchList[index].productOption[index].value}}',
+                                                    style: new TextStyle(
+                                                        //       color:
+                                                        //           Color(
+                                                        // int.parse(searchList[
+                                                        //         index]
+                                                        //     .colorCode
+                                                        //     .replaceAll(
+                                                        //         "#",
+                                                        //         "0xff")),
+                                                        // )
+                                                        ),
+                                                  ),
+                                                ],
                                               ),
-                                              Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.end,
-                                                  children: [
-                                                    RichText(
-                                                      text: new TextSpan(
-                                                        text: ' Color : ',
-                                                        style: TextStyle(
-                                                            color:
-                                                                ColorTextPrimary),
-                                                        children: <TextSpan>[
-                                                          new TextSpan(
-                                                            text:
-                                                                '${searchList[index].productOption[index].value}}',
-                                                            style: new TextStyle(
-                                                                //       color:
-                                                                //           Color(
-                                                                // int.parse(searchList[
-                                                                //         index]
-                                                                //     .colorCode
-                                                                //     .replaceAll(
-                                                                //         "#",
-                                                                //         "0xff")),
-                                                                // )
-                                                                ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                  ]),
-                                            ]),
+                                            ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                          ]),
+                                        ]),
                                       ],
                                     ),
                                   ),
@@ -411,8 +333,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                 top: 25,
                                 left: 0,
                                 child: Container(
-                                  margin: EdgeInsets.only(
-                                      left: 10, right: 30, bottom: 10),
+                                  margin: EdgeInsets.only(left: 10, right: 30, bottom: 10),
 
                                   height: 70,
                                   width: 70,
@@ -420,13 +341,10 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                       color: Colors.grey.shade200,
                                       borderRadius: BorderRadius.circular(5),
                                       image: DecorationImage(
-                                        image: searchList[index]
-                                                .productImages
-                                                .isEmpty
+                                        image: searchList[index].productImages.isEmpty
                                             ? NetworkImage(
                                                 "https://www.google.com/imgres?imgurl=https%3A%2F%2Fimage.shutterstock.com%2Fimage-vector%2Fempty-placeholder-image-icon-design-260nw-1366372628.jpg&imgrefurl=https%3A%2F%2Fwww.shutterstock.com%2Fsearch%2Fplaceholder%2Bimage&tbnid=S28DYxXD39mDFM&vet=12ahUKEwisjfyBifTyAhXXe30KHWYkCGIQMygPegUIARDwAQ..i&docid=_eukPVibkcyRgM&w=260&h=280&q=image%20place%20holder%20image&ved=2ahUKEwisjfyBifTyAhXXe30KHWYkCGIQMygPegUIARDwAQ")
-                                            : NetworkImage(
-                                                "${searchList[index].productImages[0]}"),
+                                            : NetworkImage("${searchList[index].productImages[0]}"),
                                         fit: BoxFit.contain,
                                       )),
                                   // child: Image.asset(
@@ -440,26 +358,19 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                               Positioned(
                                 top: -10,
                                 right: 10,
-                                child: BlocBuilder<SearchByCategoriesBloc,
-                                    SearchByCategoriesState>(
+                                child: BlocBuilder<SearchByCategoriesBloc, SearchByCategoriesState>(
                                   builder: (context, state) {
-                                    if (state
-                                        is GetSearchByCategoriesCheckBoxState) {
-                                      searchList[state.index].check =
-                                          state.check;
+                                    if (state is GetSearchByCategoriesCheckBoxState) {
+                                      searchList[state.index].check = state.check;
                                     }
                                     return Checkbox(
-                                      materialTapTargetSize:
-                                          MaterialTapTargetSize.shrinkWrap,
+                                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                       // checkColor: Colors.indigo,
                                       value: searchList[index].check,
                                       activeColor: ColorPrimary,
                                       onChanged: (newvalue) {
                                         log("true===>");
-                                        searchByCategoriesBloc.add(
-                                            GetCheckBoxSearchByCategoriesEvent(
-                                                check: newvalue!,
-                                                index: index));
+                                        searchByCategoriesBloc.add(GetCheckBoxSearchByCategoriesEvent(check: newvalue!, index: index));
                                       },
                                     );
                                   },

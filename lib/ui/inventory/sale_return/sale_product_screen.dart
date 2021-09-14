@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:vendor/model/product_by_category_response.dart';
+import 'package:vendor/model/product_model.dart';
 
 class SaleProductScreen extends StatefulWidget {
   @override
