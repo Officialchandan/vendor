@@ -30,7 +30,8 @@ class ApiProvider {
   Future<LoginOtpResponse> login(mobile) async {
     log("chl gyi");
     try {
-      Response res = await dio.post(Endpoint.GENERATE_OTP, data: {"mobile": mobile});
+      Response res =
+          await dio.post(Endpoint.GENERATE_OTP, data: {"mobile": mobile});
       print("${res.data}");
       return LoginOtpResponse.fromJson(res.toString());
     } catch (error, stacktrace) {
@@ -49,7 +50,8 @@ class ApiProvider {
   Future<LoginResponse> verifyOtp(mobile, otp) async {
     log("chl gyi ${mobile + otp}");
     try {
-      Response res = await dio.post(Endpoint.VERIFY_OTP, data: {"mobile": mobile, "otp": otp});
+      Response res = await dio
+          .post(Endpoint.VERIFY_OTP, data: {"mobile": mobile, "otp": otp});
       log("chl gyi 2${res}");
 
       return LoginResponse.fromJson(res.toString());
@@ -95,7 +97,8 @@ class ApiProvider {
     try {
       Map input = HashMap<String, dynamic>();
 
-      input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      input["vendor_id"] =
+          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       Response res = await dio.post(
         Endpoint.GET_ALL_CATEGORY,
@@ -116,11 +119,13 @@ class ApiProvider {
     }
   }
 
-  Future<ProductByCategoryResponse> getProductByCategories(String categoryId) async {
+  Future<ProductByCategoryResponse> getProductByCategories(
+      int categoryId) async {
     try {
       Map input = HashMap<String, dynamic>();
 
-      input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      input["vendor_id"] =
+          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
       input["category_id"] = categoryId;
 
       Response res = await dio.post(
@@ -146,7 +151,8 @@ class ApiProvider {
     try {
       Map input = HashMap<String, dynamic>();
 
-      input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      input["vendor_id"] =
+          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       Response res = await dio.post(
         Endpoint.GET_ALL_VENDOR_PRODUCTS,
@@ -217,12 +223,13 @@ class ApiProvider {
     }
   }
 
-  Future<GetSubCategoryResponse> getSubCategory(String categoryId) async {
+  Future<GetSubCategoryResponse> getSubCategory(int categoryId) async {
     try {
       Map input = HashMap<String, dynamic>();
 
       input["category_id"] = categoryId;
-      input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      input["vendor_id"] =
+          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       Response res = await dio.post(
         Endpoint.GET_SUB_CATEGORY,
@@ -248,7 +255,8 @@ class ApiProvider {
       // Map input = HashMap<String, dynamic>();
       //
       // input["category_id"] = categoryId;
-      input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      input["vendor_id"] =
+          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       Response res = await dio.post(
         Endpoint.ADD_PRODUCT_SUBCATEGORY,
@@ -269,12 +277,12 @@ class ApiProvider {
     }
   }
 
-
   Future<GetVendorCategoryById> getCategoryByVendorId() async {
     try {
       Map input = HashMap<String, dynamic>();
 
-      input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      input["vendor_id"] =
+          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
       //input["category_id"] = categoryId;
 
       Response res = await dio.post(

@@ -12,6 +12,7 @@ import 'package:vendor/billingflow/billing/billing_event.dart';
 import 'package:vendor/billingflow/billing/billing_state.dart';
 import 'package:vendor/billingflow/billingPproducts/billing_products.dart';
 import 'package:vendor/billingflow/search_all/search_all_product.dart';
+import 'package:vendor/billingflow/search_by_categories/search_by_categories.dart';
 
 import 'package:vendor/model/get_vendorcategory_id.dart';
 
@@ -320,7 +321,10 @@ class _BillingScreenState extends State<BillingScreen> {
               Navigator.push(
                   context,
                   PageTransition(
-                      child: BillingProducts(), type: PageTransitionType.fade));
+                      child: SearchByCategory(
+                        catid: category[index].categoryId.toString(),
+                      ),
+                      type: PageTransitionType.fade));
             },
             child: Container(
               // padding: EdgeInsets.all(10),

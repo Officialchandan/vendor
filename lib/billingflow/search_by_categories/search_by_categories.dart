@@ -9,16 +9,19 @@ import 'package:vendor/billingflow/search_by_categories/search_by_categories_eve
 import 'package:vendor/billingflow/search_by_categories/search_by_categories_state.dart';
 import 'package:vendor/model/product_by_category_response.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:vendor/provider/api_provider.dart';
 import 'package:vendor/utility/color.dart';
 
 class SearchByCategory extends StatefulWidget {
-  SearchByCategory({Key? key}) : super(key: key);
+  String catid;
+  SearchByCategory({required this.catid});
 
   @override
-  _SearchByCategoryState createState() => _SearchByCategoryState();
+  _SearchByCategoryState createState() => _SearchByCategoryState(this.catid);
 }
 
 class _SearchByCategoryState extends State<SearchByCategory> {
+  _SearchByCategoryState(String catid);
   int count = 1;
   List<ProductModel> products = [];
   List<ProductModel> searchList = [];
@@ -37,8 +40,8 @@ class _SearchByCategoryState extends State<SearchByCategory> {
   @override
   void initState() {
     super.initState();
-    searchByCategoriesBloc.add(GetProductsSearchByCategoriesEvent());
-    // ApiProvider().getAllVendorProducts();
+    //searchByCategoriesBloc.add(GetProductsSearchByCategoriesEvent());
+    ApiProvider().getProductByCategories(int.parse(widget.catid));
   }
 
   @override
@@ -238,13 +241,24 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.end,
                                                 children: [
-                                                  Text(
-                                                    "Size : ${searchList[index].productOption[index].value}",
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        color:
-                                                            ColorTextPrimary),
-                                                  ),
+                                                  searchList[index]
+                                                              .productOption
+                                                              .length >=
+                                                          1
+                                                      ? Text(
+                                                          "${searchList[index].productOption[0].optionName} ${searchList[index].productOption[0].value}",
+                                                          style: TextStyle(
+                                                              fontSize: 15,
+                                                              color:
+                                                                  ColorTextPrimary),
+                                                        )
+                                                      : Text(
+                                                          "${searchList[index].productOption.length}",
+                                                          style: TextStyle(
+                                                              fontSize: 15,
+                                                              color:
+                                                                  ColorTextPrimary),
+                                                        ),
                                                   SizedBox(
                                                     width: 10,
                                                   ),
@@ -372,31 +386,24 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.end,
                                                   children: [
-                                                    RichText(
-                                                      text: new TextSpan(
-                                                        text: ' Color : ',
-                                                        style: TextStyle(
-                                                            color:
-                                                                ColorTextPrimary),
-                                                        children: <TextSpan>[
-                                                          new TextSpan(
-                                                            text:
-                                                                '${searchList[index].productOption[index].value}}',
-                                                            style: new TextStyle(
-                                                                //       color:
-                                                                //           Color(
-                                                                // int.parse(searchList[
-                                                                //         index]
-                                                                //     .colorCode
-                                                                //     .replaceAll(
-                                                                //         "#",
-                                                                //         "0xff")),
-                                                                // )
-                                                                ),
+                                                    searchList[index]
+                                                                .productOption
+                                                                .length >=
+                                                            2
+                                                        ? Text(
+                                                            "${searchList[index].productOption[1].optionName} ${searchList[index].productOption[1].value}",
+                                                            style: TextStyle(
+                                                                fontSize: 15,
+                                                                color:
+                                                                    ColorTextPrimary),
+                                                          )
+                                                        : Text(
+                                                            "${searchList[index].productOption.length}",
+                                                            style: TextStyle(
+                                                                fontSize: 15,
+                                                                color:
+                                                                    ColorTextPrimary),
                                                           ),
-                                                        ],
-                                                      ),
-                                                    ),
                                                     SizedBox(
                                                       width: 10,
                                                     ),
