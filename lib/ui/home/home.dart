@@ -196,13 +196,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   type: PageTransitionType.fade,
                 ))
             : index == 2
-                ? Navigator.pop(context)
+                ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: index)
                 : index == 3
-                    ? Navigator.pop(context)
+                    ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: index)
                     : index == 4
-                        ? Navigator.pop(context)
+                        ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: index)
                         : index == 5
-                            ? Navigator.pop(context)
-                            : Navigator.pop(context);
+                            ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: index)
+                            : Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: index);
   }
 }

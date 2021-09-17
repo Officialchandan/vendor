@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/model/product_by_category_response.dart';
+import 'package:vendor/model/product_model.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/network.dart';
@@ -105,17 +106,39 @@ class _SearchProductScreenState extends State<SearchProductScreen> {
                   itemBuilder: (context, index) {
                     ProductModel product = snapshot.data![index];
 
+                    String variantName = "";
+
+                    if (product.productOption.isNotEmpty) {
+                      for (int i = 0; i < product.productOption.length; i++) {
+                        if (product.productOption.length - 1 == i)
+                          variantName +=
+                              product.productOption[i].value.toString();
+                        else
+                          variantName +=
+                              product.productOption[i].value.toString() + ", ";
+                      }
+                    }
+
                     return ListTile(
                       contentPadding: EdgeInsets.all(20),
                       leading: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
-                        child: Image(
-                          height: 60,
-                          width: 60,
-                          fit: BoxFit.contain,
-                          image: NetworkImage(
-                              snapshot.data![index].productImages.first),
-                        ),
+                        child: product.productImages.isNotEmpty
+                            ? Image(
+                                height: 60,
+                                width: 60,
+                                fit: BoxFit.contain,
+                                image: NetworkImage(snapshot.data![index]
+                                    .productImages[0].productImage),
+                              )
+                            : Image(
+                                image: AssetImage(
+                                  "assets/images/placeholder.webp",
+                                ),
+                                height: 60,
+                                width: 60,
+                                fit: BoxFit.cover,
+                              ),
                       ),
                       title: Container(
                           child: Column(
@@ -123,7 +146,7 @@ class _SearchProductScreenState extends State<SearchProductScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text("${product.productName}"),
+                          Text("${product.productName} ($variantName)"),
                           const SizedBox(
                             height: 10,
                           ),

@@ -2,9 +2,12 @@ import 'dart:collection';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:vendor/model/add_product_response.dart';
 import 'package:vendor/model/add_sub_category_response.dart';
+import 'package:vendor/model/common_response.dart';
 import 'package:vendor/model/customer_number_response.dart';
 import 'package:vendor/model/get_categories_response.dart';
+import 'package:vendor/model/get_colors_response.dart';
 import 'package:vendor/model/get_size_response.dart';
 import 'package:vendor/model/get_sub_category_response.dart';
 import 'package:vendor/model/get_unit_response.dart';
@@ -12,6 +15,7 @@ import 'package:vendor/model/get_vendorcategory_id.dart';
 import 'package:vendor/model/login_otp.dart';
 import 'package:vendor/model/login_response.dart';
 import 'package:vendor/model/product_by_category_response.dart';
+import 'package:vendor/model/product_variant_response.dart';
 import 'package:vendor/provider/Endpoint.dart';
 import 'package:vendor/provider/server_error.dart';
 import 'package:vendor/utility/sharedpref.dart';
@@ -120,7 +124,7 @@ class ApiProvider {
   }
 
   Future<ProductByCategoryResponse> getProductByCategories(
-      int categoryId) async {
+      String categoryId) async {
     try {
       Map input = HashMap<String, dynamic>();
 
@@ -223,7 +227,7 @@ class ApiProvider {
     }
   }
 
-  Future<GetSubCategoryResponse> getSubCategory(int categoryId) async {
+  Future<GetSubCategoryResponse> getSubCategory(String categoryId) async {
     try {
       Map input = HashMap<String, dynamic>();
 
@@ -301,6 +305,87 @@ class ApiProvider {
       }
       print("Exception occurred: $message stackTrace: $error");
       return GetVendorCategoryById(success: false, message: message);
+    }
+  }
+
+  Future<ProductVariantResponse> getProductVariantType(
+      String categoryId) async {
+    try {
+      Map input = HashMap<String, dynamic>();
+      input["category_id"] = categoryId;
+
+      Response res = await dio.get(
+        Endpoint.GET_PRODUCT_VARIANT_TYPE,
+        // data: input,
+      );
+
+      return ProductVariantResponse.fromJson(res.toString());
+    } catch (error, stacktrace) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return ProductVariantResponse(success: false, message: message);
+    }
+  }
+
+  Future<GetColorsResponse> getColors() async {
+    try {
+      Response res = await dio.get(Endpoint.GET_COLORS);
+
+      return GetColorsResponse.fromJson(res.toString());
+    } catch (error, stacktrace) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return GetColorsResponse(success: false, message: message);
+    }
+  }
+
+  Future<AddProductResponse> addProduct(Map<String, dynamic> input) async {
+    try {
+      Response res = await dio.post(Endpoint.ADD_VENDOR_PRODUCT, data: input);
+
+      return AddProductResponse.fromJson(res.toString());
+    } catch (error, stacktrace) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return AddProductResponse(success: false, message: message);
+    }
+  }
+
+  Future<CommonResponse> addProductImage(FormData input) async {
+    try {
+      Response res = await dio.post(Endpoint.ADD_PRODUCT_IMAGE,
+          data: input,
+          options: Options(sendTimeout: 10000, receiveTimeout: 10000));
+
+      return CommonResponse.fromJson(res.toString());
+    } catch (error, stacktrace) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return CommonResponse(success: false, message: message);
     }
   }
 }

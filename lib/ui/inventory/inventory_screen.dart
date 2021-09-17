@@ -5,6 +5,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
 import 'package:vendor/ui/inventory/add_product/add_product_screen.dart';
 import 'package:vendor/ui/inventory/sale_return/sale_return_screen.dart';
+import 'package:vendor/ui/inventory/suggested_product/suggested_product.dart';
 import 'package:vendor/ui/inventory/view_product/select_category.dart';
 
 class InventoryScreen extends StatefulWidget {
@@ -13,13 +14,15 @@ class InventoryScreen extends StatefulWidget {
 }
 
 class _InventoryScreenState extends State<InventoryScreen> {
-  CustomAppBar customAppBar = CustomAppBar();
+  CustomAppBar customAppBar = CustomAppBar(
+    title: "Inventory",
+  );
   final options = [
-    {"title": "Add Product", "subTitle": "click here to add product", "image": "assets/images/category1.png", "id": 1},
-    {"title": "View Product", "subTitle": "click here to add product", "image": "assets/images/category1.png", "id": 2},
-    {"title": "Sale Return", "subTitle": "click here to add product", "image": "assets/images/category1.png", "id": 3},
-    {"title": "Purchase Return", "subTitle": "click here to add product", "image": "assets/images/category1.png", "id": 4},
-    {"title": "Purchase Order Entry", "subTitle": "click here to add product", "image": "assets/images/category1.png", "id": 5},
+    {"title": "Add Product", "subTitle": "click here to add product", "image": "assets/images/inventory.png", "id": 1},
+    {"title": "View Product", "subTitle": "click here to add product", "image": "assets/images/inventory-h2.png", "id": 2},
+    {"title": "Sale Return", "subTitle": "click here to add product", "image": "assets/images/inventory-h3.png", "id": 3},
+    {"title": "Purchase Return", "subTitle": "click here to add product", "image": "assets/images/inventory-h4.png", "id": 4},
+    {"title": "Purchase Order Entry", "subTitle": "click here to add product", "image": "assets/images/inventory-h5.png", "id": 5},
     // {"title": "Add Product", "subTitle": "click here to add product", "image": "assets/images/category1.png", "id": 6},
   ];
 
@@ -48,13 +51,20 @@ class _InventoryScreenState extends State<InventoryScreen> {
                     onTap: () {
                       if (options[index]["id"] == 2) {
                         Navigator.push(context, PageTransition(child: ViewCategoryScreen(), type: PageTransitionType.fade));
-                      } else if (options[index]["id"] == 3) {
+                      }
+                      if (options[index]["id"] == 3) {
                         Navigator.push(context, PageTransition(child: SaleReturnScreen(), type: PageTransitionType.fade));
-                      } else {
-                        Navigator.push(context, PageTransition(child: AddProductScreen(), type: PageTransitionType.fade));
+                      }
+                      if (options[index]["id"] == 1) {
+                        showSheet(context);
                       }
                     },
-                    leading: Icon(Icons.print),
+                    leading: Image(
+                      image: AssetImage("${options[index]["image"]}"),
+                      height: 30,
+                      width: 30,
+                      fit: BoxFit.contain,
+                    ),
                     title: Text("${options[index]["title"]}"),
                     subtitle: Text("${options[index]["subTitle"]}"),
                   ),
@@ -76,5 +86,44 @@ class _InventoryScreenState extends State<InventoryScreen> {
         itemCount: options.length,
       ),
     );
+  }
+
+  void showSheet(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return IntrinsicHeight(
+            child: Column(
+              children: [
+                ListTile(
+                  leading: Image(
+                    image: AssetImage("assets/images/plus.png"),
+                    width: 30,
+                    height: 30,
+                    fit: BoxFit.contain,
+                  ),
+                  title: Text("Add One Product"),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(context, PageTransition(child: AddProductScreen(), type: PageTransitionType.fade));
+                  },
+                ),
+                ListTile(
+                  leading: Image(
+                    image: AssetImage("assets/images/suggested.png"),
+                    width: 30,
+                    height: 30,
+                    fit: BoxFit.contain,
+                  ),
+                  title: Text("Add Suggested Product"),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(context, PageTransition(child: SuggestedProductScreen(), type: PageTransitionType.fade));
+                  },
+                ),
+              ],
+            ),
+          );
+        });
   }
 }

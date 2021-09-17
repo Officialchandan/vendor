@@ -7,6 +7,7 @@ import 'package:vendor/model/get_sub_category_response.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/network.dart';
+import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/utility.dart';
 import 'package:vendor/widget/app_button.dart';
 
@@ -45,9 +46,7 @@ class _SelectSubCategoryState extends State<SelectSubCategory> {
           actions: [
             TextButton(
                 onPressed: () {
-                  List<SubCategoryModel> subCategory = subCategoryList
-                      .where((element) => element.check)
-                      .toList();
+                  List<SubCategoryModel> subCategory = subCategoryList.where((element) => element.check).toList();
                   Navigator.pop(context, subCategory);
                 },
                 child: Text(
@@ -90,9 +89,7 @@ class _SelectSubCategoryState extends State<SelectSubCategory> {
           padding: EdgeInsets.all(10),
           child: MaterialButton(
             onPressed: () {},
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-                side: BorderSide(color: ColorPrimary, width: 1)),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10), side: BorderSide(color: ColorPrimary, width: 1)),
             height: 45,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -118,8 +115,7 @@ class _SelectSubCategoryState extends State<SelectSubCategory> {
 
   void getSubCategory(String categoryId) async {
     if (await Network.isConnected()) {
-      GetSubCategoryResponse response =
-          await apiProvider.getSubCategory(categoryId);
+      GetSubCategoryResponse response = await apiProvider.getSubCategory(categoryId);
 
       if (response.success) {
         subCategoryList = response.data!;
@@ -136,8 +132,9 @@ class _SelectSubCategoryState extends State<SelectSubCategory> {
 
 class AddCategoryBottomSheet extends StatefulWidget {
   final Function(SubCategoryModel subCategoryModel) onAdd;
+  final String categoryId;
 
-  AddCategoryBottomSheet({required this.onAdd});
+  AddCategoryBottomSheet({required this.categoryId, required this.onAdd});
 
   @override
   _AddCategoryBottomSheetState createState() => _AddCategoryBottomSheetState();
@@ -145,27 +142,76 @@ class AddCategoryBottomSheet extends StatefulWidget {
 
 class _AddCategoryBottomSheetState extends State<AddCategoryBottomSheet> {
   TextEditingController editText = TextEditingController();
+  TextEditingController editDescription = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text("Add new subcategory"),
-        TextFormField(
-          controller: editText,
-          decoration: InputDecoration(hintText: "Subcategory name"),
-        ),
-        AppButton(
-          title: "ADD",
-          onPressed: () {},
-        )
-      ],
+    return Padding(
+      // padding: EdgeInsets.all(15),
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom, right: 15, left: 15),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Add new subcategory",
+                style: TextStyle(color: ColorPrimary, fontSize: 18),
+              ),
+              IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(
+                    Icons.cancel,
+                    color: ColorPrimary,
+                  ))
+            ],
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          TextFormField(
+            controller: editText,
+            decoration: InputDecoration(hintText: "Subcategory name"),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          TextFormField(
+            controller: editDescription,
+            decoration: InputDecoration(hintText: "description"),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          AppButton(
+            title: "ADD",
+            onPressed: () {
+              if (editText.text.trim().isEmpty)
+                Utility.showToast("Please enter category name");
+              else
+                addSubCategory(widget.categoryId);
+            },
+          ),
+          SizedBox(
+            height: 15,
+          ),
+        ],
+      ),
     );
   }
 
   void addSubCategory(String categoryId) async {
     if (await Network.isConnected()) {
       Map input = HashMap<String, dynamic>();
+      input["category_id"] = categoryId;
+      input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      input["sub_cat_name"] = editText.text.trim();
+      input["description"] = editDescription.text.trim();
 
       AddSubCategoryResponse response = await apiProvider.addSubCategory(input);
 
@@ -178,6 +224,14 @@ class _AddCategoryBottomSheetState extends State<AddCategoryBottomSheet> {
       // } else {
       //   controller.add([]);
       //   Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      if (response.success) {
+        widget.onAdd(response.data!);
+        Navigator.pop(context);
+      } else {
+        Utility.showToast(response.message);
+      }
+    } else {
+      Utility.showToast(Constant.INTERNET_ALERT_MSG);
     }
   }
 }
