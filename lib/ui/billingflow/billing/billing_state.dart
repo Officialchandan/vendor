@@ -10,13 +10,12 @@ class CustomerNumberResponseIntialState extends CustomerNumberResponseState {
 class GetCustomerNumberResponseState extends CustomerNumberResponseState {
   final message;
   final data;
-  GetCustomerNumberResponseState({this.message, this.data});
+  final succes;
+  GetCustomerNumberResponseState({this.message, this.data, this.succes});
 
   @override
-  List<Object> get props => [message, data];
+  List<Object> get props => [message, data, succes];
 }
-
-
 
 class GetCustomerNumberResponseLoadingstate
     extends CustomerNumberResponseState {
@@ -29,9 +28,11 @@ class GetCustomerNumberResponseLoadingstate
 class GetCustomerNumberResponseFailureState
     extends CustomerNumberResponseState {
   final String message;
-  GetCustomerNumberResponseFailureState({required this.message});
+  final succes;
+  GetCustomerNumberResponseFailureState(
+      {required this.message, required this.succes});
   @override
-  List<Object?> get props => [message];
+  List<Object?> get props => [message, succes];
 }
 
 class GetCategoryByVendorIdLoadingstate extends CustomerNumberResponseState {
@@ -40,6 +41,7 @@ class GetCategoryByVendorIdLoadingstate extends CustomerNumberResponseState {
   @override
   List<Object?> get props => [];
 }
+
 class GetCategoryByVendorIdState extends CustomerNumberResponseState {
   final message;
   final data;
@@ -48,6 +50,7 @@ class GetCategoryByVendorIdState extends CustomerNumberResponseState {
   @override
   List<Object> get props => [message, data];
 }
+
 class GetCategoryByVendorIdFailureState extends CustomerNumberResponseState {
   final String message;
   GetCategoryByVendorIdFailureState({required this.message});

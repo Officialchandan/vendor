@@ -10,7 +10,8 @@ import 'package:rxdart/rxdart.dart';
 
 import 'package:vendor/model/product_model.dart';
 import 'package:vendor/provider/api_provider.dart';
-import 'package:vendor/ui/billingflow/billingPproducts/billing_products.dart';
+
+import 'package:vendor/ui/billingflow/billingproducts/billing_products.dart';
 import 'package:vendor/ui/billingflow/search_by_categories/search_by_categories_bloc.dart';
 import 'package:vendor/ui/billingflow/search_by_categories/search_by_categories_event.dart';
 import 'package:vendor/ui/billingflow/search_by_categories/search_by_categories_state.dart';
@@ -18,16 +19,20 @@ import 'package:vendor/utility/color.dart';
 
 class SearchByCategory extends StatefulWidget {
   String catid;
-  SearchByCategory({required this.catid});
+  var mobile;
+  var coin;
+  SearchByCategory(
+      {required this.catid, required this.mobile, required this.coin});
 
   @override
-  _SearchByCategoryState createState() => _SearchByCategoryState(this.catid);
+  _SearchByCategoryState createState() =>
+      _SearchByCategoryState(this.catid, this.mobile, this.coin);
 }
 
 class _SearchByCategoryState extends State<SearchByCategory> {
   TextEditingController _textFieldController = TextEditingController();
 
-  _SearchByCategoryState(String catid);
+  _SearchByCategoryState(String catid, mobile, coin);
   int count = 1;
   List<ProductModel> products = [];
   List<ProductModel> searchList = [];
@@ -540,6 +545,8 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                         PageTransition(
                                             child: BillingProducts(
                                               billingItemList: product,
+                                              mobile: widget.mobile,
+                                              coin: widget.coin,
                                             ),
                                             type: PageTransitionType.fade));
                                   }

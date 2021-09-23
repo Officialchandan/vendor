@@ -38,13 +38,16 @@ class CustomerNumberResponseBloc
         log("$result");
         if (result.success) {
           yield GetCustomerNumberResponseState(
-              message: result.message, data: result.data!.walletBalance);
+              message: result.message,
+              data: result.data!.walletBalance,
+              succes: result.success);
         } else {
-          yield GetCustomerNumberResponseFailureState(message: result.message);
+          yield GetCustomerNumberResponseFailureState(
+              message: result.message, succes: result.success);
         }
       } catch (error) {
         yield GetCustomerNumberResponseFailureState(
-            message: "internal Server error");
+            message: "internal Server error", succes: false);
       }
     } else {
       Fluttertoast.showToast(msg: "Turn on the internet");

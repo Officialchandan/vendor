@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/UI/inventory/add_product/add_product_screen.dart';
-import 'package:vendor/UI/inventory/view_product/select_category.dart';
+
 import 'package:vendor/model/get_vendorcategory_id.dart';
 import 'package:vendor/ui/billingflow/billing/billing_bloc.dart';
 import 'package:vendor/ui/billingflow/billing/billing_event.dart';
@@ -29,7 +29,9 @@ class _BillingScreenState extends State<BillingScreen> {
       CustomerNumberResponseBloc();
   TextEditingController mobileController = TextEditingController();
   List<GetVendorCategoryByIdData> category = [];
+  var check;
   var coins;
+  var message;
   @override
   void initState() {
     super.initState();
@@ -79,12 +81,19 @@ class _BillingScreenState extends State<BillingScreen> {
                         listener: (context, state) {
                           if (state is GetCustomerNumberResponseState) {
                             log("number chl gya");
+                            check = state.succes;
+                            coins = state.data;
+                            log("======>$check");
+                            log("======>$coins");
                             // Fluttertoast.showToast(
                             //     backgroundColor: ColorPrimary,
                             //     textColor: Colors.white,
                             //     msg: state.message);
                           }
                           if (state is GetCustomerNumberResponseFailureState) {
+                            check = state.succes;
+                            log("======>$check");
+                            message = state.message;
                             Fluttertoast.showToast(
                                 msg: state.message,
                                 backgroundColor: ColorPrimary);
@@ -118,6 +127,7 @@ class _BillingScreenState extends State<BillingScreen> {
                               ],
                             );
                           }
+
                           if (state is GetCustomerNumberResponseLoadingstate) {
                             return Container(
                               height: 40,
@@ -197,10 +207,25 @@ class _BillingScreenState extends State<BillingScreen> {
                       ),
                       InkWell(
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SearchAllProduct()));
+                          if (mobileController.text.length == 10) {
+                            if (check == true) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SearchAllProduct(
+                                            mobile: mobileController.text,
+                                            coin: coins,
+                                          )));
+                            } else {
+                              Fluttertoast.showToast(
+                                  msg: "$message",
+                                  backgroundColor: ColorPrimary);
+                            }
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: "Please Enter vailid Number first",
+                                backgroundColor: ColorPrimary);
+                          }
                         },
                         child: Container(
                           width: MediaQuery.of(context).size.width,
@@ -258,7 +283,7 @@ class _BillingScreenState extends State<BillingScreen> {
                             return Container(
                               height: 40,
                               child: CircularProgressIndicator(
-                              backgroundColor: ColorPrimary,
+                                backgroundColor: ColorPrimary,
                               ),
                             );
                           }
@@ -316,13 +341,26 @@ class _BillingScreenState extends State<BillingScreen> {
         itemBuilder: (context, index) {
           return InkWell(
             onTap: () {
-              Navigator.push(
-                  context,
-                  PageTransition(
-                      child: SearchByCategory(
-                        catid: category[index].categoryId.toString(),
-                      ),
-                      type: PageTransitionType.fade));
+              if (mobileController.text.length == 10) {
+                if (check == true) {
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          child: SearchByCategory(
+                            catid: category[index].categoryId.toString(),
+                            mobile: mobileController.text,
+                            coin: coins,
+                          ),
+                          type: PageTransitionType.fade));
+                } else {
+                  Fluttertoast.showToast(
+                      msg: "$message", backgroundColor: ColorPrimary);
+                }
+              } else {
+                Fluttertoast.showToast(
+                    msg: "Please Enter Vailid Number first",
+                    backgroundColor: ColorPrimary);
+              }
             },
             child: Container(
               // padding: EdgeInsets.all(10),

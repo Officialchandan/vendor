@@ -7,7 +7,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:vendor/model/product_model.dart';
-import 'package:vendor/ui/billingflow/billingPproducts/billing_products.dart';
+import 'package:vendor/ui/billingflow/billingproducts/billing_products.dart';
+
 import 'package:vendor/ui/billingflow/search_all/search_all_event.dart';
 import 'package:vendor/ui/billingflow/search_all/search_all_state.dart';
 import 'package:vendor/utility/color.dart';
@@ -15,13 +16,17 @@ import 'package:vendor/utility/color.dart';
 import 'search_all_bloc.dart';
 
 class SearchAllProduct extends StatefulWidget {
-  SearchAllProduct({Key? key}) : super(key: key);
+  String mobile;
+  String coin;
+  SearchAllProduct({required this.mobile, required this.coin});
 
   @override
-  _SearchAllProductState createState() => _SearchAllProductState();
+  _SearchAllProductState createState() =>
+      _SearchAllProductState(this.mobile, this.coin);
 }
 
 class _SearchAllProductState extends State<SearchAllProduct> {
+  _SearchAllProductState(mobile, coin);
   int count = 1;
   SearchAllBloc searchAllBloc = SearchAllBloc();
   List<ProductModel> products = [];
@@ -644,6 +649,8 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                         PageTransition(
                                             child: BillingProducts(
                                               billingItemList: product,
+                                              mobile: widget.mobile,
+                                              coin: widget.coin,
                                             ),
                                             type: PageTransitionType.fade));
                                   }
