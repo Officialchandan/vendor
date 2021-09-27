@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vendor/ui/account_management/account_management_screen/account_management_screen.dart';
 import 'package:vendor/ui/billingflow/billing/billing.dart';
 
 import 'package:vendor/ui/inventory/inventory_screen.dart';
@@ -48,9 +49,7 @@ class _BottomNavigationHomeState extends State<BottomNavigationHome>
             Center(
               child: Text("Performance"),
             ),
-            Center(
-              child: Text("Account"),
-            ),
+            AccountManagementScreen(),
           ],
         ),
         // bottomNavigationBar: BottomBar(

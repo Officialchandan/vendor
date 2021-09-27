@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:vendor/model/add_product_response.dart';
 import 'package:vendor/model/add_sub_category_response.dart';
+import 'package:vendor/model/billing_product_response.dart';
 import 'package:vendor/model/common_response.dart';
 import 'package:vendor/model/customer_number_response.dart';
 import 'package:vendor/model/get_categories_response.dart';
@@ -387,5 +388,24 @@ class ApiProvider {
       print("Exception occurred: $message stackTrace: $error");
       return CommonResponse(success: false, message: message);
     }
+  }
+}
+
+Future<BillingProductResponse> billingProducts(
+    Map<String, dynamic> input) async {
+  try {
+    Response res = await dio.post(Endpoint.GET_BILLING_PRODUCT, data: input);
+
+    return BillingProductResponse.fromJson(res.toString());
+  } catch (error, stacktrace) {
+    String message = "";
+    if (error is DioError) {
+      ServerError e = ServerError.withError(error: error);
+      message = e.getErrorMessage();
+    } else {
+      message = "Please try again later!";
+    }
+    print("Exception occurred: $message stackTrace: $error");
+    return BillingProductResponse(success: false, message: message);
   }
 }

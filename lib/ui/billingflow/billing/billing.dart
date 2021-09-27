@@ -368,13 +368,15 @@ class _BillingScreenState extends State<BillingScreen> {
               margin: EdgeInsets.only(top: 10, bottom: 10, left: 5, right: 5),
               decoration: BoxDecoration(
                 color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey,
-                    offset: Offset(0.0, 1.0), //(x,y)
-                    blurRadius: 6.0,
-                  ),
-                ],
+                border: Border.all(color: Colors.grey.shade300, width: 1),
+
+                // boxShadow: [
+                //   BoxShadow(
+                //     color: Colors.grey,
+                //     offset: Offset(0.0, 1.0), //(x,y)
+                //     //blurRadius: 6.0,
+                //   ),
+                // ],
                 borderRadius: BorderRadius.circular(10),
               ),
               child: ListTile(
@@ -383,21 +385,13 @@ class _BillingScreenState extends State<BillingScreen> {
                 leading: CachedNetworkImage(
                   imageUrl: "${category[index].image}",
                   imageBuilder: (context, imageProvider) {
-                    return Container(
-                      padding: EdgeInsets.all(5),
-                      height: 30,
-                      width: 30,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
-                      ),
-                      child: Image(
-                          image: imageProvider,
-                          //color: ColorPrimary,
-                          height: 20,
-                          width: 20,
-                          //colorBlendMode: BlendMode.clear,
-                          fit: BoxFit.contain),
-                    );
+                    return Image(
+                        image: imageProvider,
+                        color: ColorPrimary,
+                        height: 20,
+                        width: 20,
+                        //colorBlendMode: BlendMode.clear,
+                        fit: BoxFit.contain);
                   },
                   progressIndicatorBuilder: (context, url, downloadProgress) =>
                       Icon(
