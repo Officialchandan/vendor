@@ -3,9 +3,11 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/model/get_sub_category_response.dart';
 import 'package:vendor/model/product_variant.dart';
@@ -20,6 +22,7 @@ import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/utility.dart';
 import 'package:vendor/widget/UnitBottomSheet.dart';
 import 'package:vendor/widget/category_bottom_sheet.dart';
+import 'package:vendor/widget/select_image_bottom_sheet.dart';
 import 'package:vendor/widget/selection_bottom_sheet.dart';
 import 'package:vendor/widget/varient_type_bottom_sheet.dart';
 
@@ -70,11 +73,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
             imageList.add(state.image);
             imgController.add(imageList);
           }
-
           if (state is AddProductFailureState) {
             variantImage.clear();
           }
-
           if (state is UploadImageFailureState) {
             print("variant image 4-> $variantImage");
             variantImage.removeAt(0);
@@ -130,7 +131,16 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         decoration: BoxDecoration(color: Colors.grey.shade100, borderRadius: BorderRadius.circular(5)),
                         child: IconButton(
                           onPressed: () {
-                            addProductBloc.add(SelectImageEvent(context: context));
+                            showCupertinoModalPopup(
+                                context: context,
+                                builder: (context) => SelectImageBottomSheet(
+                                      openGallery: () {
+                                        addProductBloc.add(SelectImageEvent(context: context, source: ImageSource.gallery));
+                                      },
+                                      openCamera: () {
+                                        addProductBloc.add(SelectImageEvent(context: context, source: ImageSource.camera));
+                                      },
+                                    ));
                           },
                           icon: Icon(Icons.linked_camera),
                         ),
@@ -378,6 +388,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           builder: (context) {
                             return VariantTypeBottomSheet(
                               categoryId: categoryId,
+                              selectedVariants: variantType,
                               onSelect: (List<VariantType> variants) async {
                                 print("on variant type select -> $variants");
 

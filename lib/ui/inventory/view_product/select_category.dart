@@ -3,7 +3,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/model/get_categories_response.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
-import 'package:vendor/ui/inventory/view_product/search_product.dart';
+import 'package:vendor/ui/inventory/view_product/view_product.dart';
 import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/utility.dart';
@@ -30,7 +30,7 @@ class _ViewCategoryScreenState extends State<ViewCategoryScreen> {
             Navigator.push(
                 context,
                 PageTransition(
-                    child: SearchProductScreen(
+                    child: ViewProductScreen(
                       categoryId: categoryId,
                     ),
                     type: PageTransitionType.fade));

@@ -67,8 +67,10 @@ class _SelectCategoryWidgetState extends State<SelectCategoryWidget> {
               return Column(
                 children: List.generate(snap.data!.length, (index) {
                   return Container(
-                    decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
+                    margin: EdgeInsets.all(10),
                     child: ListTile(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10), side: BorderSide(color: Colors.grey.shade300, width: 1)),
                       onTap: () {
                         widget.onSelect(snap.data![index].id.toString());
                         // Navigator.push(

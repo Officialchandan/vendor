@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:vendor/model/product_variant.dart';
 
 class AddProductEvent extends Equatable {
@@ -11,11 +12,12 @@ class AddProductEvent extends Equatable {
 
 class SelectImageEvent extends AddProductEvent {
   final BuildContext context;
+  final ImageSource source;
 
-  SelectImageEvent({required this.context});
+  SelectImageEvent({required this.context, this.source = ImageSource.camera});
 
   @override
-  List<Object?> get props => [context];
+  List<Object?> get props => [context, source];
 }
 
 class ShowOnlineShopEvent extends AddProductEvent {

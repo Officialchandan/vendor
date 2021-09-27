@@ -4,6 +4,7 @@ class ProductModel {
   ProductModel({
     required this.id,
     required this.productId,
+    required this.categoryName,
     required this.categoryId,
     required this.vendorId,
     required this.productName,
@@ -23,6 +24,7 @@ class ProductModel {
   String id;
   String productId;
   String categoryId;
+  String categoryName;
   String vendorId;
   String productName;
   String description;
@@ -35,7 +37,7 @@ class ProductModel {
   String redeemCoins;
   String unit;
   List<ProductOption> productOption;
-  List<String> productImages;
+  List<ProductImage> productImages;
 
   bool check = false;
   int count = 1;
@@ -48,6 +50,7 @@ class ProductModel {
         id: json["id"] == null ? "0" : json["id"].toString(),
         productId: json["product_id"] == null ? "0" : json["product_id"].toString(),
         categoryId: json["category_id"] == null ? "0" : json["category_id"].toString(),
+        categoryName: json["category_name"] == null ? "0" : json["category_name"].toString(),
         vendorId: json["vendor_id"] == null ? "0" : json["vendor_id"].toString(),
         productName: json["product_name"] == null ? "" : json["product_name"].toString(),
         description: json["description"] == null ? "" : json["description"].toString(),
@@ -62,17 +65,15 @@ class ProductModel {
         productOption: json["product_option"] == null
             ? []
             : List<ProductOption>.from(json["product_option"].map((x) => ProductOption.fromMap(x))),
-        productImages: json["product_images"] == null
-            ? [
-                "https://www.google.com/imgres?imgurl=https%3A%2F%2Fi.stack.imgur.com%2Fy9DpT.jpg&imgrefurl=https%3A%2F%2Fstackoverflow.com%2Fquestions%2F61244854%2Fadd-a-no-image-placeholder-on-elementor-pro-post-element-if-there-is-no-featured&tbnid=gORET_h3X-RiOM&vet=12ahUKEwiLj-6p9fPyAhWVOisKHaK1CsQQMygBegUIARDPAQ..i&docid=QPagImSLC_KOrM&w=900&h=497&q=image%20place%20holder%20image&ved=2ahUKEwiLj-6p9fPyAhWVOisKHaK1CsQQMygBegUIARDPAQ"
-              ]
-            : List<String>.from(json["product_images"].map((x) => x)),
+        productImages:
+            json["product_images"] == null ? [] : List<ProductImage>.from(json["product_images"].map((x) => ProductImage.fromMap(x))),
       );
 
   Map<String, dynamic> toMap() => {
         "id": id == null ? null : id,
         "product_id": productId == null ? null : productId,
         "category_id": categoryId == null ? null : categoryId,
+        "category_name": categoryName == null ? null : categoryName,
         "vendor_id": vendorId == null ? null : vendorId,
         "product_name": productName == null ? null : productName,
         "description": description == null ? null : description,
@@ -85,8 +86,13 @@ class ProductModel {
         "redeem_coins": redeemCoins == null ? null : redeemCoins,
         "unit": unit == null ? null : unit,
         "product_option": productOption == null ? null : List<dynamic>.from(productOption.map((x) => x.toMap())),
-        "product_images": productImages == null ? null : List<dynamic>.from(productImages.map((x) => x)),
+        "product_images": productImages == null ? null : List<dynamic>.from(productImages.map((x) => x.toMap())),
       };
+
+  @override
+  String toString() {
+    return 'ProductModel{id: $id, productId: $productId, categoryId: $categoryId, categoryName: $categoryName, vendorId: $vendorId, productName: $productName, description: $description, productOptionVariantId: $productOptionVariantId, purchasePrice: $purchasePrice, mrp: $mrp, sellingPrice: $sellingPrice, stock: $stock, earningCoins: $earningCoins, redeemCoins: $redeemCoins, unit: $unit, productOption: $productOption, productImages: $productImages, check: $check, count: $count}';
+  }
 }
 
 class ProductOption {
@@ -114,5 +120,38 @@ class ProductOption {
         "product_option_id": productOptionId == null ? null : productOptionId,
         "option_name": optionName == null ? null : optionName,
         "value": value == null ? null : value,
+      };
+
+  @override
+  String toString() {
+    return 'ProductOption{productOptionId: $productOptionId, optionName: $optionName, value: $value}';
+  }
+}
+
+class ProductImage {
+  ProductImage({
+    this.id = "",
+    this.variantId = "",
+    this.productImage = "",
+  });
+
+  String id;
+  String variantId;
+  String productImage;
+
+  factory ProductImage.fromJson(String str) => ProductImage.fromMap(json.decode(str));
+
+  String toJson() => json.encode(toMap());
+
+  factory ProductImage.fromMap(Map<String, dynamic> json) => ProductImage(
+        id: json["id"] == null ? "" : json["id"].toString(),
+        variantId: json["variant_id"] == null ? "" : json["variant_id"].toString(),
+        productImage: json["product_image"] == null ? "" : json["product_image"],
+      );
+
+  Map<String, dynamic> toMap() => {
+        "id": id == null ? null : id,
+        "variant_id": variantId == null ? null : variantId,
+        "product_image": productImage == null ? null : productImage,
       };
 }
