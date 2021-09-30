@@ -1,12 +1,15 @@
 import 'dart:async';
+import 'dart:collection';
 import 'dart:developer';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:share/share.dart';
 import 'package:vendor/model/product_by_category_response.dart';
 import 'package:vendor/model/product_model.dart';
 import 'package:vendor/ui/billingflow/billing/billing.dart';
@@ -15,6 +18,7 @@ import 'package:vendor/ui/billingflow/billingproducts/biliing_products_event.dar
 import 'package:vendor/ui/billingflow/billingproducts/biliing_products_state.dart';
 
 import 'package:vendor/utility/color.dart';
+import 'package:vendor/utility/sharedpref.dart';
 
 class BillingProducts extends StatefulWidget {
   final List<ProductModel> billingItemList;
@@ -35,6 +39,7 @@ class _BillingProductsState extends State<BillingProducts> {
   _BillingProductsState(List<ProductModel> billingItemList, mobile, coin);
   ProductModel? selectedProductList;
   List<ProductModel> ProductList = [];
+
   BillingProductsBloc billingProductsBloc = BillingProductsBloc();
 
   @override
@@ -42,14 +47,9 @@ class _BillingProductsState extends State<BillingProducts> {
     // TODO: implement initState
     super.initState();
     // log("${widget.billingItemList.length}");
+    ProductList = widget.billingItemList;
 
     billingProductsBloc.add(TotalPayAmountBillingProductsEvent(mrp: totalpay1));
-  }
-
-  @override
-  void didUpdateWidget(covariant BillingProducts oldWidget) {
-    log("didUpdateWidget${oldWidget.billingItemList}");
-    super.didUpdateWidget(oldWidget);
   }
 
   _DialogState d = _DialogState();
@@ -58,6 +58,8 @@ class _BillingProductsState extends State<BillingProducts> {
 
   double reddemcoins1 = 0;
   var x;
+  var message;
+  var status;
 
   double earncoins1 = 0;
   earningPrice(var price) {
@@ -128,12 +130,11 @@ class _BillingProductsState extends State<BillingProducts> {
                           if (state is DeleteBillingProductstate) {
                             ProductList.remove(ProductList[state.index]);
                           }
-                          if (state is IntitalBillingProductstate) {
-                            ProductList = widget.billingItemList;
-                          }
+                          if (state is IntitalBillingProductstate) {}
                           return ListView.builder(
                             itemCount: ProductList.length,
                             itemBuilder: (context, index) {
+                              totalpay1 = 0;
                               String variantName = "";
                               ProductModel product = ProductList[index];
                               log("=====>${int.parse(ProductList[index].sellingPrice)}");
@@ -149,7 +150,7 @@ class _BillingProductsState extends State<BillingProducts> {
                               log("=====>${int.parse(ProductList[index].redeemCoins)}");
                               log("=====>${ProductList[index].count}");
                               log("=====>$index");
-
+                              reddemcoins1 = 0;
                               reddemcoins1 += double.parse(widget
                                       .billingItemList[index].redeemCoins) *
                                   ProductList[index].count;
@@ -158,7 +159,7 @@ class _BillingProductsState extends State<BillingProducts> {
                               log("=====>${int.parse(ProductList[index].earningCoins)}");
                               log("=====>${ProductList[index].count}");
                               log("=====>$index");
-
+                              earncoins1 = 0;
                               earncoins1 += double.parse(widget
                                       .billingItemList[index].earningCoins) *
                                   ProductList[index].count;
@@ -600,32 +601,87 @@ class _BillingProductsState extends State<BillingProducts> {
                   ],
                 ),
               ),
-              Positioned(
-                  bottom: 0,
-                  child: InkWell(
-                    onTap: () {
-                      log("==>${_textFieldController.text}");
-                      _displayDialog(
-                          context, 0, 1, "Please Enter OTP", "Enter OTP");
-                    },
-                    child: Container(
-                      width: width,
-                      color: ColorPrimary,
-                      child: Center(
-                        child: Text(
-                          "SUBMIT",
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
+              BlocConsumer<BillingProductsBloc, BillingProductsState>(
+                listener: (context, state) {
+                  if (state is PayBillingProductsState) {
+                    message = state.message;
+                    status = state.data;
+                    _displayDialog(
+                        context, 0, 1, "Please Enter OTP", "Enter OTP");
+                  }
+                  if (state is PayBillingProductsStateFailureState) {
+                    message = state.message;
+                    Fluttertoast.showToast(
+                        msg: state.message, backgroundColor: ColorPrimary);
+                  }
+                  if (state is PayBillingProductsStateLoadingstate) {
+                    log("number chl gya");
+                  }
+                },
+                builder: (context, state) {
+                  return Positioned(
+                      bottom: 0,
+                      child: InkWell(
+                        onTap: () {
+                          log("==>${_textFieldController.text}");
+                          billingProducts(context);
+                          // billingProductsBloc.add(PayBillingProductsEvent(
+                          //     input: widget.billingItemList));
+                        },
+                        child: Container(
+                          width: width,
+                          color: ColorPrimary,
+                          child: Center(
+                            child: Text(
+                              "SUBMIT",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          height: height * 0.07,
                         ),
-                      ),
-                      height: height * 0.07,
-                    ),
-                  )),
+                      ));
+                },
+              ),
             ]),
           );
         },
       ),
     );
+  }
+
+  Future<void> billingProducts(BuildContext context) async {
+    Map<String, dynamic> input = HashMap<String, dynamic>();
+    input["vendor_id"] =
+        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    input["mobile"] = widget.mobile;
+    input["address_id"] = "";
+    input["payment_method"] = "cash";
+    input["payment_code"] = "COD";
+    input["total_pay"] = totalpay1;
+    input["total_redeem"] = reddemcoins1;
+    input["order_status"] = "1";
+
+    List<Map<String, dynamic>> billingProductList = [];
+
+    for (int i = 0; i < widget.billingItemList.length; i++) {
+      Map<String, dynamic> billingProduct = Map<String, dynamic>();
+
+      billingProduct["product_id"] = widget.billingItemList[i].id;
+      billingProduct["product_name"] = widget.billingItemList[i].productName;
+      billingProduct["qty"] = widget.billingItemList[i].count.toString();
+      billingProduct["price"] = widget.billingItemList[i].sellingPrice;
+      billingProduct["total"] =
+          double.parse(ProductList[i].sellingPrice) * ProductList[i].count;
+
+      billingProduct["product_redeem"] = widget.billingItemList[i].redeemCoins;
+
+      billingProductList.add(billingProduct);
+    }
+    input["product"] = billingProductList;
+    log("=====? $input");
+    billingProductsBloc.add(PayBillingProductsEvent(input: input));
   }
 
   TextEditingController _textFieldController = TextEditingController();

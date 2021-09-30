@@ -6,6 +6,7 @@ import 'package:vendor/model/product_model.dart';
 import 'package:vendor/ui/billingflow/billingproducts/biliing_products_event.dart';
 import 'package:vendor/ui/billingflow/billingproducts/biliing_products_state.dart';
 import 'package:vendor/utility/network.dart';
+import 'package:vendor/utility/utility.dart';
 
 class BillingProductsBloc
     extends Bloc<BillingProductsEvent, BillingProductsState> {
@@ -35,21 +36,29 @@ class BillingProductsBloc
     if (event is TotalEarnCoinBillingProductsEvent) {
       yield TotalEarnCoinBillingProductsState(coin: event.coin);
     }
+    if (event is PayBillingProductsEvent) {
+      yield* billingProductApi(event.input);
+    }
   }
 }
 
-// Stream<BillingProductsState> addProductApi(Map<String, dynamic> input) async* {
-//   if (await Network.isConnected()) {
-//     EasyLoading.show();
-//     BillingProductResponse response = await apiProvider.b;
-//     // EasyLoading.dismiss();
-//     if (response.success) {
-//       yield AddProductSuccessState(responseData: response.data!);
-//     } else {
-//       EasyLoading.dismiss();
-//       Utility.showToast(response.message);
-//     }
-//   } else {
-//     Utility.showToast("Please check your internet connection");
-//   }
-// }
+Stream<BillingProductsState> billingProductApi(
+    Map<String, dynamic> input) async* {
+  if (await Network.isConnected()) {
+    EasyLoading.show();
+    BillingProductResponse response =
+        await apiProvider.getBillingProducts(input);
+    EasyLoading.dismiss();
+    if (response.success) {
+      yield PayBillingProductsState(
+          message: response.message,
+          data: response.data!,
+          succes: response.success);
+    } else {
+      EasyLoading.dismiss();
+      Utility.showToast(response.message);
+    }
+  } else {
+    Utility.showToast("Please check your internet connection");
+  }
+}

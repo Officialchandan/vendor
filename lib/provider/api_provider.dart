@@ -17,6 +17,7 @@ import 'package:vendor/model/login_otp.dart';
 import 'package:vendor/model/login_response.dart';
 import 'package:vendor/model/product_by_category_response.dart';
 import 'package:vendor/model/product_variant_response.dart';
+import 'package:vendor/model/verify_otp.dart';
 import 'package:vendor/provider/Endpoint.dart';
 import 'package:vendor/provider/server_error.dart';
 import 'package:vendor/utility/sharedpref.dart';
@@ -389,23 +390,44 @@ class ApiProvider {
       return CommonResponse(success: false, message: message);
     }
   }
-}
 
-Future<BillingProductResponse> billingProducts(
-    Map<String, dynamic> input) async {
-  try {
-    Response res = await dio.post(Endpoint.GET_BILLING_PRODUCT, data: input);
+  Future<BillingProductResponse> getBillingProducts(
+      Map<String, dynamic> input) async {
+    // try {
+    Response res =
+        await dio.post(Endpoint.GET_PRODUCT_VARIANT_TYPE, data: input);
 
     return BillingProductResponse.fromJson(res.toString());
-  } catch (error, stacktrace) {
-    String message = "";
-    if (error is DioError) {
-      ServerError e = ServerError.withError(error: error);
-      message = e.getErrorMessage();
-    } else {
-      message = "Please try again later!";
+    // } catch (error, stacktrace) {
+    //   String message = "";
+    //   if (error is DioError) {
+    //     ServerError e = ServerError.withError(error: error);
+    //     message = e.getErrorMessage();
+    //   } else {
+    //     message = "Please try again later!";
+    //   }
+    //   print("Exception occurred: $message stackTrace: $error");
+    //   return BillingProductResponse(success: false, message: message);
+    // }
+  }
+
+  Future<VerifyEarningCoinsOtpResponse> getVerifyEarningCoinOtp(
+      Map<String, dynamic> input) async {
+    try {
+      Response res = await dio
+          .post(Endpoint.GET_VERIFY_EARNING_COINOTP_VENDORID, data: input);
+
+      return VerifyEarningCoinsOtpResponse.fromJson(res.toString());
+    } catch (error, stacktrace) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return VerifyEarningCoinsOtpResponse(success: false, message: message);
     }
-    print("Exception occurred: $message stackTrace: $error");
-    return BillingProductResponse(success: false, message: message);
   }
 }

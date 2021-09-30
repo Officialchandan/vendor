@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:vendor/model/billing_product_response.dart';
 import 'package:vendor/model/product_model.dart';
 
 class BillingProductsEvent extends Equatable {
@@ -59,4 +60,11 @@ class TotalEarnCoinBillingProductsEvent extends BillingProductsEvent {
 
   @override
   List<Object> get props => [coin];
+}
+
+class PayBillingProductsEvent extends BillingProductsEvent {
+  final Map<String, dynamic> input;
+  PayBillingProductsEvent({required this.input});
+  @override
+  List<Object> get props => [input];
 }

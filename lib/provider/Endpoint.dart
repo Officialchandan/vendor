@@ -16,4 +16,6 @@ class Endpoint {
   static const String ADD_VENDOR_PRODUCT = "addVendorProduct";
   static const String ADD_PRODUCT_IMAGE = "addProductImage";
   static const String GET_SUBCATEGORY_VENDORID = "getAllCategoryByVendorID";
+  static const String GET_VERIFY_EARNING_COINOTP_VENDORID =
+      "verifyEarningCoinsByOTP";
 }

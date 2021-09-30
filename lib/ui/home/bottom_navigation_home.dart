@@ -3,6 +3,7 @@ import 'package:vendor/ui/account_management/account_management_screen/account_m
 import 'package:vendor/ui/billingflow/billing/billing.dart';
 
 import 'package:vendor/ui/inventory/inventory_screen.dart';
+import 'package:vendor/ui/performanceandreports/Trackerandreports/tracker_and_performance.dart';
 import 'package:vendor/utility/color.dart';
 
 class BottomNavigationHome extends StatefulWidget {
@@ -46,9 +47,7 @@ class _BottomNavigationHomeState extends State<BottomNavigationHome>
             Center(
               child: Text("Staff"),
             ),
-            Center(
-              child: Text("Performance"),
-            ),
+            TrackerReportsScreen(),
             AccountManagementScreen(),
           ],
         ),
