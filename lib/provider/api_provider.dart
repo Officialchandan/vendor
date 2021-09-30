@@ -76,7 +76,6 @@ class ApiProvider {
   }
 
   Future<CustomerNumberResponse> getCustomerCoins(mobile) async {
-    log("chl gyi ${mobile}");
     try {
       var token = await SharedPref.getStringPreference('token');
 
@@ -84,7 +83,6 @@ class ApiProvider {
         Endpoint.GET_CUSTOMER_COINS,
         data: {"mobile": mobile},
       );
-      log("chl gyi 2${res}");
 
       return CustomerNumberResponse.fromJson(res.toString());
     } catch (error, stacktrace) {
@@ -224,6 +222,48 @@ class ApiProvider {
     }
   }
 
+  Future<CommonResponse> saleReturnApi(Map input) async {
+    try {
+      Response res = await dio.post(
+        Endpoint.SALES_RETURN,
+        data: input,
+      );
+
+      return CommonResponse.fromJson(res.toString());
+    } catch (error, stacktrace) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return CommonResponse(success: false, message: message);
+    }
+  }
+
+  Future<CommonResponse> saleReturnOtpApi(Map input) async {
+    try {
+      Response res = await dio.post(
+        Endpoint.SALES_RETURN_OTP,
+        data: input,
+      );
+
+      return CommonResponse.fromJson(res.toString());
+    } catch (error, stacktrace) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return CommonResponse(success: false, message: message);
+    }
+  }
+
   Future<AddSuggestedProductResponse> addSuggestedProduct(String id) async {
     try {
       Map input = HashMap<String, dynamic>();
@@ -258,6 +298,31 @@ class ApiProvider {
 
       Response res = await dio.post(
         Endpoint.GET_ALL_VENDOR_PRODUCTS,
+        data: input,
+      );
+
+      return ProductByCategoryResponse.fromJson(res.toString());
+    } catch (error, stacktrace) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return ProductByCategoryResponse(success: false, message: message);
+    }
+  }
+
+  Future<ProductByCategoryResponse> getAllProducts(String categoryId) async {
+    try {
+      Map input = HashMap<String, dynamic>();
+
+      input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+
+      Response res = await dio.post(
+        Endpoint.GET_ALL__PRODUCTS,
         data: input,
       );
 
@@ -516,6 +581,23 @@ class ApiProvider {
     }
   }
 
+  Future<CommonResponse> purchaseReturnApi(Map input) async {
+    try {
+      Response res = await dio.post(Endpoint.PURCHASE_RETURN, data: input);
+      return CommonResponse.fromJson(res.toString());
+    } catch (error, stacktrace) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return CommonResponse(success: false, message: message);
+    }
+  }
+
   updateProduct(Map<String, dynamic> input) async {
     try {
       Response res = await dio.post(Endpoint.EDIT_VENDOR_PRODUCT, data: input);
@@ -553,8 +635,7 @@ class ApiProvider {
   }
 }
 
-Future<BillingProductResponse> billingProducts(
-    Map<String, dynamic> input) async {
+Future<BillingProductResponse> billingProducts(Map<String, dynamic> input) async {
   try {
     Response res = await dio.post(Endpoint.GET_BILLING_PRODUCT, data: input);
 

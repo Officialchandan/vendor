@@ -112,7 +112,7 @@ class _SearchProductScreenState extends State<SearchProductScreen> {
                                 height: 60,
                                 width: 60,
                                 fit: BoxFit.contain,
-                                image: NetworkImage(snapshot.data![index].productImages.first),
+                                image: NetworkImage(product.productImages.first.productImage),
                               )
                             : Image(
                                 image: AssetImage(

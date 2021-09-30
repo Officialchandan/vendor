@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
 import 'package:vendor/ui/inventory/add_product/add_product_screen.dart';
+import 'package:vendor/ui/inventory/purchase_order_entry/purchase_entry.dart';
+import 'package:vendor/ui/inventory/purchase_return/purchase_return_screen.dart';
 import 'package:vendor/ui/inventory/sale_return/sale_return_screen.dart';
 import 'package:vendor/ui/inventory/suggested_product/suggested_product.dart';
 import 'package:vendor/ui/inventory/view_product/select_category.dart';
@@ -54,6 +56,11 @@ class _InventoryScreenState extends State<InventoryScreen> {
                       }
                       if (options[index]["id"] == 3) {
                         Navigator.push(context, PageTransition(child: SaleReturnScreen(), type: PageTransitionType.fade));
+                      }
+                      if (options[index]["id"] == 4) {
+                        Navigator.push(context, PageTransition(child: PurchaseReturnScreen(), type: PageTransitionType.fade));
+                      } if (options[index]["id"] == 5) {
+                        Navigator.push(context, PageTransition(child: PurchaseEntry(), type: PageTransitionType.fade));
                       }
                       if (options[index]["id"] == 1) {
                         showSheet(context);

@@ -72,7 +72,7 @@ class _SaleProductScreenState extends State<SaleProductScreen> {
         ),
       ),
       body: StreamBuilder<List<PurchaseProductModel>>(
-        initialData: widget.products,
+        initialData: products,
         stream: streamController.stream,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
@@ -91,7 +91,7 @@ class _SaleProductScreenState extends State<SaleProductScreen> {
                           Padding(
                             padding: const EdgeInsets.only(left: 40),
                             child: Card(
-                              elevation: 5,
+                              elevation: 1,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -110,51 +110,13 @@ class _SaleProductScreenState extends State<SaleProductScreen> {
                                     RichText(
                                         text: TextSpan(children: [
                                       TextSpan(text: "₹ ${product.price}\t", style: TextStyle(color: ColorPrimary)),
-                                      TextSpan(
-                                          text: "₹ ${product.total}",
-                                          style: TextStyle(color: Colors.black, decoration: TextDecoration.lineThrough))
+                                      // TextSpan(
+                                      //     text: "₹ ${product.total}",
+                                      //     style: TextStyle(color: Colors.black, decoration: TextDecoration.lineThrough))
                                     ])),
                                     const SizedBox(
                                       height: 10,
                                     ),
-                                    // IntrinsicWidth(
-                                    //   child: Container(
-                                    //     height: 30,
-                                    //     decoration: BoxDecoration(
-                                    //         borderRadius: BorderRadius.circular(20),
-                                    //         border: Border.all(color: Colors.black, width: 1)),
-                                    //     child: Row(
-                                    //       children: [
-                                    //         IconButton(
-                                    //           onPressed: () {},
-                                    //           icon: Icon(Icons.remove),
-                                    //           padding: EdgeInsets.zero,
-                                    //           splashRadius: 13,
-                                    //           iconSize: 25,
-                                    //           constraints: BoxConstraints(maxHeight: 35, minWidth: 40),
-                                    //         ),
-                                    //         Container(
-                                    //           child: Center(
-                                    //               child: Text(
-                                    //             "1",
-                                    //             style: TextStyle(color: Colors.white),
-                                    //           )),
-                                    //           color: ColorPrimary,
-                                    //           height: 30,
-                                    //           width: 30,
-                                    //         ),
-                                    //         IconButton(
-                                    //           onPressed: () {},
-                                    //           icon: Icon(Icons.add),
-                                    //           padding: EdgeInsets.zero,
-                                    //           constraints: BoxConstraints(maxHeight: 35, minWidth: 40),
-                                    //           splashRadius: 13,
-                                    //           iconSize: 25,
-                                    //         ),
-                                    //       ],
-                                    //     ),
-                                    //   ),
-                                    // ),
                                     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                                       Container(
                                         decoration: BoxDecoration(
@@ -171,7 +133,12 @@ class _SaleProductScreenState extends State<SaleProductScreen> {
                                               width: 30,
                                               child: IconButton(
                                                   padding: EdgeInsets.all(0),
-                                                  onPressed: () {},
+                                                  onPressed: () {
+                                                    if (product.returnQty > 1) {
+                                                      product.returnQty = product.returnQty - 1;
+                                                      streamController.add(products);
+                                                    }
+                                                  },
                                                   iconSize: 20,
                                                   splashRadius: 10,
                                                   icon: Icon(
@@ -184,7 +151,7 @@ class _SaleProductScreenState extends State<SaleProductScreen> {
                                               color: ColorPrimary,
                                               child: Center(
                                                 child: Text(
-                                                  "${product.qty}",
+                                                  "${product.returnQty}",
                                                   style: TextStyle(color: Colors.white, fontSize: 14),
                                                 ),
                                               ),
@@ -194,7 +161,12 @@ class _SaleProductScreenState extends State<SaleProductScreen> {
                                               width: 30,
                                               child: IconButton(
                                                   padding: EdgeInsets.all(0),
-                                                  onPressed: () {},
+                                                  onPressed: () {
+                                                    if (product.returnQty < product.qty) {
+                                                      product.returnQty = product.returnQty + 1;
+                                                      streamController.add(products);
+                                                    }
+                                                  },
                                                   iconSize: 20,
                                                   splashRadius: 10,
                                                   icon: Icon(
@@ -208,39 +180,43 @@ class _SaleProductScreenState extends State<SaleProductScreen> {
                                   ],
                                 )),
                                 trailing: Checkbox(
-                                  value: false,
-                                  onChanged: (value) {},
+                                  value: product.checked,
+                                  onChanged: (value) {
+                                    product.checked = value!;
+
+                                    streamController.add(products);
+                                  },
                                 ),
                               ),
                             ),
                           ),
-                          // Positioned(
-                          //   child: Container(
-                          //     child: Center(
-                          //       child: ClipRRect(
-                          //         borderRadius: BorderRadius.circular(10),
-                          //         child: product.productImages.isNotEmpty
-                          //             ? Image(
-                          //                 height: 60,
-                          //                 width: 60,
-                          //                 fit: BoxFit.contain,
-                          //                 image: NetworkImage(snapshot.data![index].productImages.first.productImage),
-                          //               )
-                          //             : Image(
-                          //                 image: AssetImage(
-                          //                   "assets/images/placeholder.webp",
-                          //                 ),
-                          //                 height: 60,
-                          //                 width: 60,
-                          //                 fit: BoxFit.cover,
-                          //               ),
-                          //       ),
-                          //     ),
-                          //   ),
-                          //   left: 20,
-                          //   top: 0,
-                          //   bottom: 0,
-                          // )
+                          Positioned(
+                            child: Container(
+                              child: Center(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: product.productImages.isNotEmpty
+                                      ? Image(
+                                          height: 60,
+                                          width: 60,
+                                          fit: BoxFit.contain,
+                                          image: NetworkImage(snapshot.data![index].productImages.first),
+                                        )
+                                      : Image(
+                                          image: AssetImage(
+                                            "assets/images/placeholder.webp",
+                                          ),
+                                          height: 60,
+                                          width: 60,
+                                          fit: BoxFit.cover,
+                                        ),
+                                ),
+                              ),
+                            ),
+                            left: 20,
+                            top: 0,
+                            bottom: 0,
+                          )
                         ],
                       ),
                     ),
@@ -253,6 +229,23 @@ class _SaleProductScreenState extends State<SaleProductScreen> {
           }
           return Container();
         },
+      ),
+      bottomNavigationBar: Container(
+        child: MaterialButton(
+          elevation: 0,
+          onPressed: () {
+            List<PurchaseProductModel> returnProductList = products.where((element) => element.checked).toList();
+            Navigator.of(context).pop(returnProductList);
+
+            print("returnProductList-->$returnProductList");
+          },
+          color: ColorPrimary,
+          shape: RoundedRectangleBorder(),
+          disabledColor: Colors.grey,
+          height: 50,
+          disabledTextColor: Colors.white,
+          child: Text("DONE"),
+        ),
       ),
     );
   }

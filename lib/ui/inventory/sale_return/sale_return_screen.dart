@@ -1,7 +1,12 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:vendor/localization/app_translations.dart';
 import 'package:vendor/model/get_purchased_product_response.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
 import 'package:vendor/ui/inventory/sale_return/bloc/sale_return_bloc.dart';
@@ -9,6 +14,9 @@ import 'package:vendor/ui/inventory/sale_return/bloc/sale_return_event.dart';
 import 'package:vendor/ui/inventory/sale_return/bloc/sale_return_state.dart';
 import 'package:vendor/ui/inventory/sale_return/sale_product_screen.dart';
 import 'package:vendor/ui/inventory/view_product/view_product.dart';
+import 'package:vendor/utility/color.dart';
+import 'package:vendor/utility/sharedpref.dart';
+import 'package:vendor/utility/utility.dart';
 import 'package:vendor/widget/app_button.dart';
 import 'package:vendor/widget/show_catagories_widget.dart';
 
@@ -20,8 +28,10 @@ class SaleReturnScreen extends StatefulWidget {
 class _SaleReturnScreenState extends State<SaleReturnScreen> {
   TextEditingController edtMobile = TextEditingController();
   TextEditingController edtProducts = TextEditingController();
+  TextEditingController _textFieldController = TextEditingController();
   TextEditingController edtReason = TextEditingController();
   List<PurchaseProductModel> purchasedList = [];
+  List<PurchaseProductModel> returnProductList = [];
 
   SaleReturnBloc saleReturnBloc = SaleReturnBloc();
 
@@ -33,6 +43,13 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
         listener: (context, state) {
           if (state is GetProductSuccessState) {
             purchasedList = state.purchaseList;
+          }
+          if (state is ProductReturnSuccessState) {
+            _displayDialog(context, state.input);
+          }
+          if (state is VerifyOtpSuccessState) {
+            Utility.showToast(state.message);
+            Navigator.pop(context);
           }
         },
         child: Scaffold(
@@ -62,14 +79,19 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                 TextFormField(
                   controller: edtProducts,
                   readOnly: true,
-                  onTap: () {
-                    Navigator.push(context, PageTransition(child: SaleProductScreen(purchasedList), type: PageTransitionType.fade));
+                  onTap: () async {
+                    var result = await Navigator.push(
+                        context, PageTransition(child: SaleProductScreen(purchasedList), type: PageTransitionType.fade));
+
+                    if (result != null) {
+                      List<PurchaseProductModel> list = result as List<PurchaseProductModel>;
+                      saleReturnBloc.add(SelectProductEvent(returnProductList: list));
+                    }
+
                     // selectProduct(context);
                   },
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  maxLength: 10,
                   onChanged: (text) {},
-                  autofocus: true,
+                  autofocus: false,
                   keyboardType: TextInputType.phone,
                   decoration: InputDecoration(
                       hintText: "Choose Product",
@@ -81,22 +103,117 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                 ),
                 TextFormField(
                   controller: edtReason,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  maxLength: 10,
                   onChanged: (text) {},
                   autofocus: true,
-                  keyboardType: TextInputType.phone,
+                  minLines: 1,
+                  maxLines: 5,
+                  keyboardType: TextInputType.multiline,
                   decoration: InputDecoration(
-                    counterText: "",
                     labelText: "Reason (Optional)",
                   ),
                 ),
                 const SizedBox(
                   height: 30,
                 ),
+                BlocBuilder<SaleReturnBloc, SaleReturnState>(
+                  builder: (context, state) {
+                    if (state is SelectProductState) {
+                      returnProductList = state.returnProductList;
+                    }
+
+                    if (returnProductList.isNotEmpty) {
+                      return Column(
+                        children: List.generate(returnProductList.length, (index) {
+                          PurchaseProductModel product = returnProductList[index];
+                          return Container(
+                            margin: const EdgeInsets.only(bottom: 5, top: 5, right: 10),
+                            child: Stack(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 40),
+                                  child: Card(
+                                    elevation: 1,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: ListTile(
+                                      contentPadding: EdgeInsets.only(left: 50, right: 5, top: 5, bottom: 5),
+                                      title: Container(
+                                          child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text("${product.productName}"),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          RichText(
+                                              text: TextSpan(children: [
+                                            TextSpan(text: "₹ ${product.price}\t", style: TextStyle(color: ColorPrimary)),
+                                            // TextSpan(
+                                            //     text: "₹ ${product.total}",
+                                            //     style: TextStyle(color: Colors.black, decoration: TextDecoration.lineThrough))
+                                          ])),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          Text(
+                                            "qty :  ${product.returnQty}",
+                                            style: TextStyle(color: Colors.black, fontSize: 14),
+                                          )
+                                        ],
+                                      )),
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  child: Container(
+                                    child: Center(
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: product.productImages.isNotEmpty
+                                            ? Image(
+                                                height: 60,
+                                                width: 60,
+                                                fit: BoxFit.contain,
+                                                image: NetworkImage(product.productImages.first),
+                                              )
+                                            : Image(
+                                                image: AssetImage(
+                                                  "assets/images/placeholder.webp",
+                                                ),
+                                                height: 60,
+                                                width: 60,
+                                                fit: BoxFit.cover,
+                                              ),
+                                      ),
+                                    ),
+                                  ),
+                                  left: 20,
+                                  top: 0,
+                                  bottom: 0,
+                                )
+                              ],
+                            ),
+                          );
+                          return ListTile(
+                            title: Text(returnProductList[index].productName),
+                          );
+                        }),
+                      );
+                    }
+                    return Container();
+                  },
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
                 AppButton(
                   title: "SUBMIT",
-                  onPressed: () {},
+                  onPressed: () {
+                    submit();
+                  },
                 )
               ],
             ),
@@ -118,6 +235,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
               children: [
                 Container(
                     height: 300,
+                    margin: EdgeInsets.only(bottom: 50),
                     child: ListView(
                       children: [
                         SelectCategoryWidget(
@@ -133,30 +251,151 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                         ),
                       ],
                     )),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          "Cancel",
-                          style: TextStyle(),
-                        )),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          "Done",
-                          style: TextStyle(),
-                        )),
-                  ],
+                Container(
+                  color: Colors.white,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            "Cancel",
+                            style: TextStyle(),
+                          )),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            "Done",
+                            style: TextStyle(),
+                          )),
+                    ],
+                  ),
                 )
               ],
             ),
           ));
+        });
+  }
+
+  void submit() async {
+    if (edtMobile.text.isEmpty) {
+      Utility.showToast("Please enter customer mobile number");
+    } else if (edtReason.text.trim().isEmpty) {
+      Utility.showToast("Please enter reason ");
+    } else {
+      String productId = "";
+      String qty = "";
+
+      for (int i = 0; i < returnProductList.length; i++) {
+        if (i == returnProductList.length - 1) {
+          productId += returnProductList[i].productId.toString();
+          qty += returnProductList[i].returnQty.toString();
+        } else {
+          productId += returnProductList[i].productId.toString() + ",";
+          qty += returnProductList[i].returnQty.toString() + ",";
+        }
+      }
+
+      Map input = HashMap<String, dynamic>();
+      input["mobile"] = edtMobile.text.trim();
+      input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      input["product_id"] = productId;
+      input["qty"] = qty;
+      input["reason"] = edtReason.text.trim();
+
+      saleReturnBloc.add(SaleReturnApiEvent(input: input));
+    }
+  }
+
+  _displayDialog(BuildContext context, Map input) async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 400),
+            child: AlertDialog(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              title: RichText(
+                text: TextSpan(
+                  text: "${AppTranslations.of(context)!.text("otp_verification_key")}\n",
+                  style: GoogleFonts.openSans(
+                    fontSize: 25.0,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: "${AppTranslations.of(context)!.text("please_verify_your_otp_on_key")} ${input["mobile"]}",
+                      style: GoogleFonts.openSans(
+                        fontSize: 14.0,
+                        color: ColorTextPrimary,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              content: TextFormField(
+                controller: _textFieldController,
+                cursorColor: ColorPrimary,
+                keyboardType: TextInputType.number,
+                inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+                decoration: InputDecoration(
+                  filled: true,
+
+                  // fillColor: Colors.black,
+                  hintText: "${AppTranslations.of(context)!.text("enter_otp_key")}",
+                  hintStyle: GoogleFonts.openSans(
+                    fontWeight: FontWeight.w600,
+                  ),
+                  contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+              actions: <Widget>[
+                Center(
+                  child: MaterialButton(
+                    minWidth: MediaQuery.of(context).size.width * 0.60,
+                    height: 50,
+                    padding: const EdgeInsets.all(8.0),
+                    textColor: Colors.white,
+                    color: ColorPrimary,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    onPressed: () {
+                      if (_textFieldController.text.isEmpty) {
+                        Fluttertoast.showToast(msg: "Please enter otp", backgroundColor: ColorPrimary);
+                      } else {
+                        input["otp"] = _textFieldController.text.trim();
+                        saleReturnBloc.add(VerifyOtpEvent(input: input));
+                        Navigator.pop(context);
+                      }
+                      // loginApiCall(
+                      //     mobileController.text, _textFieldController.text);
+                    },
+                    child: new Text(
+                      "${AppTranslations.of(context)!.text("verify_key")}",
+                      style: GoogleFonts.openSans(fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
+                    ),
+                  ),
+                ),
+                Container(
+                  height: 20,
+                  width: MediaQuery.of(context).size.width * 0.95,
+                  color: Colors.transparent,
+                )
+              ],
+            ),
+          );
         });
   }
 }

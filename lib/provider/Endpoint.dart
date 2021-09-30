@@ -8,6 +8,7 @@ class Endpoint {
   static const String GET_SUGGESTED_PRODUCTS = "getSuggestedProducts";
   static const String ADD_SUGGESTED_PRODUCTS = "addSuggestedProducts";
   static const String GET_ALL_VENDOR_PRODUCTS = "getAllVendorProducts";
+  static const String GET_ALL__PRODUCTS = "getAllProducts";
   static const String GET_UNITS_BY_CATEGORY = "getUnitsByCategoryId";
   static const String GET_SIZE_BY_CATEGORY = "getSizeByCategoryId";
   static const String GET_SUB_CATEGORY = "getSubCategory";
@@ -23,4 +24,7 @@ class Endpoint {
   static const String DELETE_PRODUCT_VARIANT = "deleteProductVariant";
   static const String GET_BRANDS = "getBrands";
   static const String GET_PURCHASED_PRODUCTS = "getCustomerPurchasedProducts";
+  static const String SALES_RETURN = "salesReturn";
+  static const String SALES_RETURN_OTP = "verifySalesReturnByOTP";
+  static const String PURCHASE_RETURN = "purchaseReturn";
 }

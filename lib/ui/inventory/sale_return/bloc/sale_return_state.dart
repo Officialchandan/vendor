@@ -20,6 +20,30 @@ class GetProductSuccessState extends SaleReturnState {
   List<Object?> get props => [purchaseList];
 }
 
-class ProductReturnSuccessState extends SaleReturnState {}
+class ProductReturnSuccessState extends SaleReturnState {
+  final message;
+  final Map input;
 
-class VerifyOtpSuccessState extends SaleReturnState {}
+  ProductReturnSuccessState({this.message, required this.input});
+
+  @override
+  List<Object?> get props => [message, input];
+}
+
+class VerifyOtpSuccessState extends SaleReturnState {
+  final message;
+
+  VerifyOtpSuccessState({this.message});
+
+  @override
+  List<Object?> get props => [message];
+}
+
+class SelectProductState extends SaleReturnState {
+  final List<PurchaseProductModel> returnProductList;
+
+  SelectProductState({required this.returnProductList});
+
+  @override
+  List<Object?> get props => [returnProductList];
+}
