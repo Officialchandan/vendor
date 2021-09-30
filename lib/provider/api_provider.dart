@@ -635,11 +635,11 @@ class ApiProvider {
       print("Exception occurred: $message stackTrace: $error");
       return GetBrandsResponse(success: false, message: message);
     }
-  }
+
 }
 
-Future<BillingProductResponse> billingProducts(Map<String, dynamic> input) async {
-  try {
+Future<BillingProductResponse> getBillingProducts(Map<String, dynamic> input) async {
+  // try {
     Response res = await dio.post(Endpoint.GET_BILLING_PRODUCT, data: input);
 
     return BillingProductResponse.fromJson(res.toString());
