@@ -14,8 +14,9 @@ import 'package:vendor/utility/utility.dart';
 
 class ViewProductScreen extends StatefulWidget {
   final categoryId;
+  final from;
 
-  ViewProductScreen({this.categoryId});
+  ViewProductScreen({this.categoryId, this.from = ""});
 
   @override
   _ViewProductScreenState createState() => _ViewProductScreenState();
@@ -207,7 +208,11 @@ class _ViewProductScreenState extends State<ViewProductScreen> {
       if (widget.categoryId == null) {
         response = await apiProvider.getAllVendorProducts();
       } else {
-        response = await apiProvider.getProductByCategories(widget.categoryId.toString());
+        if (widget.from == "purchase_order_entry") {
+          response = await apiProvider.getAllProducts(widget.categoryId.toString());
+        } else {
+          response = await apiProvider.getProductByCategories(widget.categoryId.toString());
+        }
       }
 
       if (response.success) {

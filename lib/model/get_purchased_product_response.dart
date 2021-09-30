@@ -43,7 +43,10 @@ class PurchaseProductModel {
     required this.total,
     required this.redeemCoins,
     required this.earningCoins,
-  });
+    required this.productImages,
+  }) {
+    returnQty = qty;
+  }
 
   String productId;
   String vendorId;
@@ -54,6 +57,10 @@ class PurchaseProductModel {
   String total;
   String redeemCoins;
   String earningCoins;
+  List<String> productImages;
+
+  bool checked = false;
+  int returnQty = 1;
 
   factory PurchaseProductModel.fromJson(String str) => PurchaseProductModel.fromMap(json.decode(str));
 
@@ -69,6 +76,7 @@ class PurchaseProductModel {
         total: json["total"] == null ? "" : json["total"].toString(),
         redeemCoins: json["redeem_coins"] == null ? "" : json["redeem_coins"].toString(),
         earningCoins: json["earning_coins"] == null ? "" : json["earning_coins"].toString(),
+        productImages: json["product_images"] == null ? [] : List<String>.from(json["product_images"].map((x) => x)),
       );
 
   Map<String, dynamic> toMap() => {
@@ -81,5 +89,6 @@ class PurchaseProductModel {
         "total": total == null ? null : total,
         "redeem_coins": redeemCoins == null ? null : redeemCoins,
         "earning_coins": earningCoins == null ? null : earningCoins,
+        "product_images": productImages == null ? null : List<dynamic>.from(productImages.map((x) => x)),
       };
 }

@@ -19,7 +19,9 @@ class ProductModel {
     required this.unit,
     required this.productOption,
     required this.productImages,
-  });
+  }) {
+    this.returnQty = stock;
+  }
 
   String id;
   String productId;
@@ -42,9 +44,9 @@ class ProductModel {
   bool check = false;
   bool billingcheck = false;
   int count = 1;
+  int returnQty = 1;
 
-  factory ProductModel.fromJson(String str) =>
-      ProductModel.fromMap(json.decode(str));
+  factory ProductModel.fromJson(String str) => ProductModel.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
@@ -52,31 +54,23 @@ class ProductModel {
         id: json["id"] == null ? "0" : json["id"].toString(),
         productId: json["product_id"] == null ? "0" : json["product_id"].toString(),
         categoryId: json["category_id"] == null ? "0" : json["category_id"].toString(),
+        categoryName: json["category_name"] == null ? "" : json["category_name"].toString(),
         vendorId: json["vendor_id"] == null ? "0" : json["vendor_id"].toString(),
         productName: json["product_name"] == null ? "" : json["product_name"].toString(),
         description: json["description"] == null ? "" : json["description"].toString(),
         productOptionVariantId: json["product_option_variant_id"] == null ? "" : json["product_option_variant_id"].toString(),
         purchasePrice: json["purchase_price"] == null ? "" : json["purchase_price"].toString(),
         mrp: json["mrp"] == null ? "0" : json["mrp"].toString(),
-        sellingPrice: json["selling_price"] == null
-            ? "0"
-            : json["selling_price"].toString(),
+        sellingPrice: json["selling_price"] == null ? "0" : json["selling_price"].toString(),
         stock: json["stock"] == null ? 0 : json["stock"],
-        earningCoins: json["earning_coins"] == null
-            ? "0"
-            : json["earning_coins"].toString(),
-        redeemCoins: json["redeem_coins"] == null
-            ? "0"
-            : json["redeem_coins"].toString(),
+        earningCoins: json["earning_coins"] == null ? "0" : json["earning_coins"].toString(),
+        redeemCoins: json["redeem_coins"] == null ? "0" : json["redeem_coins"].toString(),
         unit: json["unit"] == null ? "0" : json["unit"].toString(),
         productOption: json["product_option"] == null
             ? []
-            : List<ProductOption>.from(
-                json["product_option"].map((x) => ProductOption.fromMap(x))),
-        productImages: json["product_images"] == null
-            ? []
-            : List<ProductImage>.from(
-                json["product_images"].map((x) => ProductImage.fromMap(x))),
+            : List<ProductOption>.from(json["product_option"].map((x) => ProductOption.fromMap(x))),
+        productImages:
+            json["product_images"] == null ? [] : List<ProductImage>.from(json["product_images"].map((x) => ProductImage.fromMap(x))),
       );
 
   Map<String, dynamic> toMap() => {
@@ -86,8 +80,7 @@ class ProductModel {
         "vendor_id": vendorId == null ? null : vendorId,
         "product_name": productName == null ? null : productName,
         "description": description == null ? null : description,
-        "product_option_variant_id":
-            productOptionVariantId == null ? null : productOptionVariantId,
+        "product_option_variant_id": productOptionVariantId == null ? null : productOptionVariantId,
         "purchase_price": purchasePrice == null ? null : purchasePrice,
         "mrp": mrp == null ? null : mrp,
         "selling_price": sellingPrice == null ? null : sellingPrice,
@@ -98,41 +91,6 @@ class ProductModel {
         "product_option": productOption == null ? null : List<dynamic>.from(productOption.map((x) => x.toMap())),
         "product_images": productImages == null ? null : List<dynamic>.from(productImages.map((x) => x)),
       };
-}
-
-class ProductOption {
-  ProductOption({
-    required this.productOptionId,
-    required this.optionName,
-    required this.value,
-  });
-
-  int productOptionId;
-  String optionName;
-  String value;
-
-  factory ProductOption.fromJson(String str) =>
-      ProductOption.fromMap(json.decode(str));
-
-  String toJson() => json.encode(toMap());
-
-  factory ProductOption.fromMap(Map<String, dynamic> json) => ProductOption(
-        productOptionId:
-            json["product_option_id"] == null ? "0" : json["product_option_id"],
-        optionName: json["option_name"] == null ? "kala" : json["option_name"],
-        value: json["value"] == null ? null : json["value"],
-      );
-
-  Map<String, dynamic> toMap() => {
-        "product_option_id": productOptionId == null ? null : productOptionId,
-        "option_name": optionName == null ? null : optionName,
-        "value": value == null ? null : value,
-      };
-
-  @override
-  String toString() {
-    return 'ProductOption{productOptionId: $productOptionId, optionName: $optionName, value: $value}';
-  }
 }
 
 class ProductImage {
@@ -161,4 +119,37 @@ class ProductImage {
         "variant_id": variantId == null ? null : variantId,
         "product_image": productImage == null ? null : productImage,
       };
+}
+
+class ProductOption {
+  ProductOption({
+    required this.productOptionId,
+    required this.optionName,
+    required this.value,
+  });
+
+  int productOptionId;
+  String optionName;
+  String value;
+
+  factory ProductOption.fromJson(String str) => ProductOption.fromMap(json.decode(str));
+
+  String toJson() => json.encode(toMap());
+
+  factory ProductOption.fromMap(Map<String, dynamic> json) => ProductOption(
+        productOptionId: json["product_option_id"] == null ? "0" : json["product_option_id"],
+        optionName: json["option_name"] == null ? "kala" : json["option_name"],
+        value: json["value"] == null ? null : json["value"],
+      );
+
+  Map<String, dynamic> toMap() => {
+        "product_option_id": productOptionId == null ? null : productOptionId,
+        "option_name": optionName == null ? null : optionName,
+        "value": value == null ? null : value,
+      };
+
+  @override
+  String toString() {
+    return 'ProductOption{productOptionId: $productOptionId, optionName: $optionName, value: $value}';
+  }
 }

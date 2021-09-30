@@ -210,7 +210,7 @@ class _MyAppState extends State<MyApp> {
 
   init() async {
     var lang = await SharedPref.getStringPreference(SharedPref.SELECTEDLANG);
-    print("${lang}");
+    print("$lang");
     _newLocaleDelegate = AppTranslationsDelegate(newLocale: Locale(lang.isEmpty ? "en" : lang, ""));
     setState(() {});
     application.onLocaleChanged = onLocaleChange;
