@@ -65,3 +65,29 @@ class TotalEarnCoinBillingProductsState extends BillingProductsState {
   @override
   List<Object> get props => [coin];
 }
+
+class PayBillingProductsState extends BillingProductsState {
+  final message;
+  final data;
+  final succes;
+  PayBillingProductsState({this.message, this.data, this.succes});
+
+  @override
+  List<Object> get props => [message, data, succes];
+}
+
+class PayBillingProductsStateLoadingstate extends BillingProductsState {
+  // final String message;
+  // GetCustomerNumberResponseLoadingstate({required this.message});
+  @override
+  List<Object?> get props => [];
+}
+
+class PayBillingProductsStateFailureState extends BillingProductsState {
+  final String message;
+  final succes;
+  PayBillingProductsStateFailureState(
+      {required this.message, required this.succes});
+  @override
+  List<Object?> get props => [message, succes];
+}

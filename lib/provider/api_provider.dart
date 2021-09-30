@@ -20,6 +20,7 @@ import 'package:vendor/model/login_otp.dart';
 import 'package:vendor/model/login_response.dart';
 import 'package:vendor/model/product_by_category_response.dart';
 import 'package:vendor/model/product_variant_response.dart';
+import 'package:vendor/model/verify_otp.dart';
 import 'package:vendor/model/upload_image_response.dart';
 import 'package:vendor/provider/Endpoint.dart';
 import 'package:vendor/provider/server_error.dart';
@@ -76,6 +77,7 @@ class ApiProvider {
   }
 
   Future<CustomerNumberResponse> getCustomerCoins(mobile) async {
+    log("chl gyi ${mobile}");
     try {
       var token = await SharedPref.getStringPreference('token');
 
@@ -83,6 +85,7 @@ class ApiProvider {
         Endpoint.GET_CUSTOMER_COINS,
         data: {"mobile": mobile},
       );
+      log("chl gyi 2${res}");
 
       return CustomerNumberResponse.fromJson(res.toString());
     } catch (error, stacktrace) {
@@ -632,23 +635,44 @@ class ApiProvider {
       print("Exception occurred: $message stackTrace: $error");
       return GetBrandsResponse(success: false, message: message);
     }
-  }
+
 }
 
-Future<BillingProductResponse> billingProducts(Map<String, dynamic> input) async {
-  try {
+Future<BillingProductResponse> getBillingProducts(Map<String, dynamic> input) async {
+  // try {
     Response res = await dio.post(Endpoint.GET_BILLING_PRODUCT, data: input);
 
     return BillingProductResponse.fromJson(res.toString());
-  } catch (error, stacktrace) {
-    String message = "";
-    if (error is DioError) {
-      ServerError e = ServerError.withError(error: error);
-      message = e.getErrorMessage();
-    } else {
-      message = "Please try again later!";
+    // } catch (error, stacktrace) {
+    //   String message = "";
+    //   if (error is DioError) {
+    //     ServerError e = ServerError.withError(error: error);
+    //     message = e.getErrorMessage();
+    //   } else {
+    //     message = "Please try again later!";
+    //   }
+    //   print("Exception occurred: $message stackTrace: $error");
+    //   return BillingProductResponse(success: false, message: message);
+    // }
+  }
+
+  Future<VerifyEarningCoinsOtpResponse> getVerifyEarningCoinOtp(
+      Map<String, dynamic> input) async {
+    try {
+      Response res = await dio
+          .post(Endpoint.GET_VERIFY_EARNING_COINOTP_VENDORID, data: input);
+
+      return VerifyEarningCoinsOtpResponse.fromJson(res.toString());
+    } catch (error, stacktrace) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return VerifyEarningCoinsOtpResponse(success: false, message: message);
     }
-    print("Exception occurred: $message stackTrace: $error");
-    return BillingProductResponse(success: false, message: message);
   }
 }

@@ -27,4 +27,6 @@ class Endpoint {
   static const String SALES_RETURN = "salesReturn";
   static const String SALES_RETURN_OTP = "verifySalesReturnByOTP";
   static const String PURCHASE_RETURN = "purchaseReturn";
+  static const String GET_VERIFY_EARNING_COINOTP_VENDORID =
+      "verifyEarningCoinsByOTP";
 }

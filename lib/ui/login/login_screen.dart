@@ -406,58 +406,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                               decoration: TextDecoration.none),
                                         ),
                                       ),
-
-                                      // Row(
-                                      //   mainAxisAlignment: MainAxisAlignment.center,
-                                      //   children: [
-                                      //     Container(
-                                      //       height: 2,
-                                      //       width: 80,
-                                      //       color: Colors.grey,
-                                      //     ),
-                                      //     Text(
-                                      //       "  or Login with  ",
-                                      //       style: GoogleFonts.openSans(
-                                      //           fontSize: 15,
-                                      //           color: ColorTextPrimary,
-                                      //           fontWeight: FontWeight.w600,
-                                      //           decoration: TextDecoration.none),
-                                      //     ),
-                                      //     Container(
-                                      //       height: 2,
-                                      //       width: 80,
-                                      //       color: Colors.grey,
-                                      //     ),
-                                      //   ],
-                                      // ),
-
-                                      // MaterialButton(
-                                      //     minWidth: 220,
-                                      //     height: 50,
-                                      //     padding: const EdgeInsets.all(8.0),
-                                      //     textColor: Colors.white,
-                                      //     color: Colors.red,
-                                      //     shape: RoundedRectangleBorder(
-                                      //         borderRadius: BorderRadius.circular(25)),
-                                      //     onPressed: () {
-                                      //       _displayDialog(context, mobileController.text);
-                                      //     },
-                                      //     child: Row(
-                                      //         mainAxisAlignment: MainAxisAlignment.center,
-                                      //         children: [
-                                      //           Image.asset(
-                                      //             'assets/images/3x/google.png',
-                                      //             height: 25,
-                                      //             width: 25,
-                                      //           ),
-                                      //           Text(
-                                      //             "   Login with Google",
-                                      //             style: GoogleFonts.openSans(
-                                      //                 fontSize: 17,
-                                      //                 fontWeight: FontWeight.w600,
-                                      //                 decoration: TextDecoration.none),
-                                      //           ),
-                                      //         ])),
                                     ]),
                               ),
                             ]),
