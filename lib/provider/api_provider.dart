@@ -4,11 +4,14 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:vendor/model/add_product_response.dart';
 import 'package:vendor/model/add_sub_category_response.dart';
+import 'package:vendor/model/add_suggested_product_response.dart';
 import 'package:vendor/model/billing_product_response.dart';
 import 'package:vendor/model/common_response.dart';
 import 'package:vendor/model/customer_number_response.dart';
+import 'package:vendor/model/get_brands_response.dart';
 import 'package:vendor/model/get_categories_response.dart';
 import 'package:vendor/model/get_colors_response.dart';
+import 'package:vendor/model/get_purchased_product_response.dart';
 import 'package:vendor/model/get_size_response.dart';
 import 'package:vendor/model/get_sub_category_response.dart';
 import 'package:vendor/model/get_unit_response.dart';
@@ -18,6 +21,7 @@ import 'package:vendor/model/login_response.dart';
 import 'package:vendor/model/product_by_category_response.dart';
 import 'package:vendor/model/product_variant_response.dart';
 import 'package:vendor/model/verify_otp.dart';
+import 'package:vendor/model/upload_image_response.dart';
 import 'package:vendor/provider/Endpoint.dart';
 import 'package:vendor/provider/server_error.dart';
 import 'package:vendor/utility/sharedpref.dart';
@@ -150,6 +154,105 @@ class ApiProvider {
       }
       print("Exception occurred: $message stackTrace: $error");
       return ProductByCategoryResponse(success: false, message: message);
+    }
+  }
+
+  // Future<ProductByCategoryResponse> getProductByBrand(String brand) async {
+  //   try {
+  //     Map input = HashMap<String, dynamic>();
+  //
+  //     // input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+  //     input["brand_name"] = brand;
+  //
+  //     Response res = await dio.post(
+  //       Endpoint.GET_SUGGESTED_PRODUCTS,
+  //       data: input,
+  //     );
+  //
+  //     return ProductByCategoryResponse.fromJson(res.toString());
+  //   } catch (error, stacktrace) {
+  //     String message = "";
+  //     if (error is DioError) {
+  //       ServerError e = ServerError.withError(error: error);
+  //       message = e.getErrorMessage();
+  //     } else {
+  //       message = "Please try again later!";
+  //     }
+  //     print("Exception occurred: $message stackTrace: $error");
+  //     return ProductByCategoryResponse(success: false, message: message);
+  //   }
+  // }
+
+  Future<ProductByCategoryResponse> getSuggestedProduct(String brand) async {
+    try {
+      Map input = HashMap<String, dynamic>();
+
+      input["brand_name"] = brand;
+      // input["category_id"] = categoryId;
+
+      Response res = await dio.post(
+        Endpoint.GET_SUGGESTED_PRODUCTS,
+        data: input,
+      );
+
+      return ProductByCategoryResponse.fromJson(res.toString());
+    } catch (error, stacktrace) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return ProductByCategoryResponse(success: false, message: message);
+    }
+  }
+
+  Future<GetPurchasedProductResponse> getPurchasedProduct(Map input) async {
+    try {
+      Response res = await dio.post(
+        Endpoint.GET_PURCHASED_PRODUCTS,
+        data: input,
+      );
+
+      return GetPurchasedProductResponse.fromJson(res.toString());
+    } catch (error, stacktrace) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return GetPurchasedProductResponse(success: false, message: message);
+    }
+  }
+
+  Future<AddSuggestedProductResponse> addSuggestedProduct(String id) async {
+    try {
+      Map input = HashMap<String, dynamic>();
+
+      input["id"] = id;
+      input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+
+      Response res = await dio.post(
+        Endpoint.ADD_SUGGESTED_PRODUCTS,
+        data: input,
+      );
+
+      return AddSuggestedProductResponse.fromJson(res.toString());
+    } catch (error, stacktrace) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return AddSuggestedProductResponse(success: false, message: message);
     }
   }
 
@@ -371,12 +474,28 @@ class ApiProvider {
     }
   }
 
-  Future<CommonResponse> addProductImage(FormData input) async {
+  Future<UploadImageResponse> addProductImage(FormData input) async {
     try {
-      Response res = await dio.post(Endpoint.ADD_PRODUCT_IMAGE,
-          data: input,
-          options: Options(sendTimeout: 10000, receiveTimeout: 10000));
+      Response res =
+          await dio.post(Endpoint.ADD_PRODUCT_IMAGE, data: input, options: Options(sendTimeout: 10000, receiveTimeout: 10000));
 
+      return UploadImageResponse.fromJson(res.toString());
+    } catch (error, stacktrace) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return UploadImageResponse(success: false, message: message);
+    }
+  }
+
+  Future<CommonResponse> deleteProductImage(Map input) async {
+    try {
+      Response res = await dio.post(Endpoint.DELETE_PRODUCT_IMAGE, data: input);
       return CommonResponse.fromJson(res.toString());
     } catch (error, stacktrace) {
       String message = "";
@@ -390,6 +509,24 @@ class ApiProvider {
       return CommonResponse(success: false, message: message);
     }
   }
+
+  Future<CommonResponse> deleteProduct(Map input) async {
+    try {
+      Response res = await dio.post(Endpoint.DELETE_PRODUCT_VARIANT, data: input);
+      return CommonResponse.fromJson(res.toString());
+    } catch (error, stacktrace) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return CommonResponse(success: false, message: message);
+    }
+  }
+
 
   Future<BillingProductResponse> getBillingProducts(
       Map<String, dynamic> input) async {

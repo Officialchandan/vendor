@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:equatable/equatable.dart';
 import 'package:vendor/model/add_product_response.dart';
 import 'package:vendor/model/product_variant.dart';
+import 'package:vendor/model/upload_image_response.dart';
 
 class AddProductState extends Equatable {
   @override
@@ -96,10 +97,12 @@ class AddProductFailureState extends AddProductState {
 }
 
 class UploadImageSuccessState extends AddProductState {
-  UploadImageSuccessState();
+  final List<ImageData> image;
+
+  UploadImageSuccessState({required this.image});
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [image];
 }
 
 class UploadImageFailureState extends AddProductState {

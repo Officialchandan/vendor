@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -9,7 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
 import 'package:vendor/main.dart';
 import 'package:vendor/model/add_product_response.dart';
-import 'package:vendor/model/common_response.dart';
+import 'package:vendor/model/upload_image_response.dart';
 import 'package:vendor/ui/inventory/add_product/bloc/add_product_event.dart';
 import 'package:vendor/ui/inventory/add_product/bloc/add_product_state.dart';
 import 'package:vendor/utility/network.dart';
@@ -22,7 +23,7 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
   Stream<AddProductState> mapEventToState(AddProductEvent event) async* {
     if (event is SelectImageEvent) {
       yield ImageLoadingState();
-      yield* selectImage(event.context);
+      yield* selectImage(event);
     }
     if (event is ShowOnlineShopEvent) {
       yield ShowOnlineShopState(online: event.online);
@@ -63,9 +64,9 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
     }
   }
 
-  Stream<AddProductState> selectImage(BuildContext context) async* {
+  Stream<AddProductState> selectImage(SelectImageEvent event) async* {
     try {
-      XFile? image = await imagePicker.pickImage(source: ImageSource.camera);
+      XFile? image = await imagePicker.pickImage(source: event.source);
       if (image != null) {
         print(image.path);
         yield SelectImageState(image: File(image.path));
@@ -122,9 +123,9 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
       print("upload image input -> $input");
       print("upload image input -> ${formData.files}");
 
-      CommonResponse response = await apiProvider.addProductImage(formData);
+      UploadImageResponse response = await apiProvider.addProductImage(formData);
       if (response.success) {
-        yield UploadImageSuccessState();
+        yield UploadImageSuccessState(image: response.data!);
       } else {
         yield UploadImageFailureState();
       }

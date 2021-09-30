@@ -8,11 +8,13 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 import 'package:vendor/provider/Endpoint.dart';
 import 'package:vendor/provider/NavigationService.dart';
 import 'package:vendor/provider/api_provider.dart';
 import 'package:vendor/ui/home/bottom_navigation_home.dart';
 import 'package:vendor/ui/home/home.dart';
+import 'package:vendor/ui/inventory/suggested_product/SuggestedProductProvider.dart';
 import 'package:vendor/ui/language/select_language.dart';
 import 'package:vendor/ui/login/login_screen.dart';
 import 'package:vendor/ui/splash/splash_screen.dart';
@@ -60,6 +62,7 @@ ThemeData themeData(context) => ThemeData(
       opacity: 1,
     ),
     // accentTextTheme: Theme.of(context).textTheme,
+    unselectedWidgetColor: Colors.black,
     fontFamily: GoogleFonts.openSans().fontFamily,
     primaryColor: ColorPrimary,
     primaryColorDark: ColorPrimary,
@@ -146,48 +149,55 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     // FlutterStatusbarcolor.setStatusBarColor(Color(0xff493ad6));
-    return MaterialApp(
-      title: 'Vendor',
-      theme: themeData(context),
-      debugShowCheckedModeBanner: false,
-      navigatorKey: navigationService.navigatorKey,
-      builder: EasyLoading.init(),
-      onGenerateRoute: (route) {
-        switch (route.name) {
-          case "/":
-            return PageTransition(type: PageTransitionType.fade, child: SplashScreen());
-
-          case Routes.SplashScreen:
-            return PageTransition(type: PageTransitionType.fade, child: SplashScreen());
-          case Routes.SelectLanguage:
-            return PageTransition(type: PageTransitionType.fade, child: SelectLanguage());
-
-          case Routes.LoginScreen:
-            return PageTransition(type: PageTransitionType.fade, child: LoginScreen());
-
-          case Routes.HomeScreen:
-            return PageTransition(type: PageTransitionType.fade, child: HomeScreen());
-          case Routes.BOTTOM_NAVIGATION_HOME:
-            int index = route.arguments as int;
-            return PageTransition(
-                type: PageTransitionType.fade,
-                child: BottomNavigationHome(
-                  index: index,
-                ));
-        }
-      },
-      home: SplashScreen(),
-      localizationsDelegates: [
-        _newLocaleDelegate!,
-        //provides localised strings
-        GlobalMaterialLocalizations.delegate,
-        //provides RTL support
-        GlobalWidgetsLocalizations.delegate,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(
+          value: SuggestedProductProvider(),
+        ),
       ],
-      supportedLocales: [
-        const Locale("en", ""),
-        const Locale("hi", ""),
-      ],
+      child: MaterialApp(
+        title: 'Vendor',
+        theme: themeData(context),
+        debugShowCheckedModeBanner: false,
+        navigatorKey: navigationService.navigatorKey,
+        builder: EasyLoading.init(),
+        onGenerateRoute: (route) {
+          switch (route.name) {
+            case "/":
+              return PageTransition(type: PageTransitionType.fade, child: SplashScreen());
+
+            case Routes.SplashScreen:
+              return PageTransition(type: PageTransitionType.fade, child: SplashScreen());
+            case Routes.SelectLanguage:
+              return PageTransition(type: PageTransitionType.fade, child: SelectLanguage());
+
+            case Routes.LoginScreen:
+              return PageTransition(type: PageTransitionType.fade, child: LoginScreen());
+
+            case Routes.HomeScreen:
+              return PageTransition(type: PageTransitionType.fade, child: HomeScreen());
+            case Routes.BOTTOM_NAVIGATION_HOME:
+              int index = route.arguments as int;
+              return PageTransition(
+                  type: PageTransitionType.fade,
+                  child: BottomNavigationHome(
+                    index: index,
+                  ));
+          }
+        },
+        home: SplashScreen(),
+        localizationsDelegates: [
+          _newLocaleDelegate!,
+          //provides localised strings
+          GlobalMaterialLocalizations.delegate,
+          //provides RTL support
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale("en", ""),
+          const Locale("hi", ""),
+        ],
+      ),
     );
   }
 

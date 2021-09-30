@@ -3,9 +3,11 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/model/get_sub_category_response.dart';
 import 'package:vendor/model/product_variant.dart';
@@ -20,6 +22,7 @@ import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/utility.dart';
 import 'package:vendor/widget/UnitBottomSheet.dart';
 import 'package:vendor/widget/category_bottom_sheet.dart';
+import 'package:vendor/widget/select_image_bottom_sheet.dart';
 import 'package:vendor/widget/selection_bottom_sheet.dart';
 import 'package:vendor/widget/varient_type_bottom_sheet.dart';
 
@@ -70,20 +73,16 @@ class _AddProductScreenState extends State<AddProductScreen> {
             imageList.add(state.image);
             imgController.add(imageList);
           }
-
           if (state is AddProductFailureState) {
             variantImage.clear();
           }
-
           if (state is UploadImageFailureState) {
             print("variant image 4-> $variantImage");
             variantImage.removeAt(0);
             print("variant image 5-> $variantImage");
             if (variantImage.isNotEmpty) {
               addProductBloc.add(UploadImageEvent(
-                  variantId: variantImage.first.variantId!,
-                  images: variantImage.first.images!,
-                  productId: productId));
+                  variantId: variantImage.first.variantId!, images: variantImage.first.images!, productId: productId));
             } else {
               EasyLoading.dismiss();
             }
@@ -94,9 +93,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
             print("variant image 3-> $variantImage");
             if (variantImage.isNotEmpty) {
               addProductBloc.add(UploadImageEvent(
-                  variantId: variantImage.first.variantId!,
-                  images: variantImage.first.images!,
-                  productId: productId));
+                  variantId: variantImage.first.variantId!, images: variantImage.first.images!, productId: productId));
             } else {
               EasyLoading.dismiss();
             }
@@ -110,10 +107,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
             print("variant image 1-> $variantImage");
 
-            addProductBloc.add(UploadImageEvent(
-                variantId: variantImage.first.variantId!,
-                images: variantImage.first.images!,
-                productId: productId));
+            addProductBloc.add(
+                UploadImageEvent(variantId: variantImage.first.variantId!, images: variantImage.first.images!, productId: productId));
           }
         },
         child: Scaffold(
@@ -133,13 +128,19 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       Container(
                         width: 80,
                         height: 80,
-                        decoration: BoxDecoration(
-                            color: Colors.grey.shade100,
-                            borderRadius: BorderRadius.circular(5)),
+                        decoration: BoxDecoration(color: Colors.grey.shade100, borderRadius: BorderRadius.circular(5)),
                         child: IconButton(
                           onPressed: () {
-                            addProductBloc
-                                .add(SelectImageEvent(context: context));
+                            showCupertinoModalPopup(
+                                context: context,
+                                builder: (context) => SelectImageBottomSheet(
+                                      openGallery: () {
+                                        addProductBloc.add(SelectImageEvent(context: context, source: ImageSource.gallery));
+                                      },
+                                      openCamera: () {
+                                        addProductBloc.add(SelectImageEvent(context: context, source: ImageSource.camera));
+                                      },
+                                    ));
                           },
                           icon: Icon(Icons.linked_camera),
                         ),
@@ -153,14 +154,12 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         builder: (context, snap) {
                           if (snap.hasData && snap.data!.isNotEmpty) {
                             return Row(
-                              children:
-                                  List.generate(snap.data!.length, (index) {
+                              children: List.generate(snap.data!.length, (index) {
                                 return Stack(children: [
                                   Container(
                                     width: 80,
                                     height: 80,
-                                    margin: EdgeInsets.symmetric(
-                                        vertical: 10, horizontal: 10),
+                                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(5),
                                         image: DecorationImage(
@@ -177,9 +176,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                       child: Container(
                                           width: 25,
                                           padding: EdgeInsets.all(3),
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: ColorPrimary),
+                                          decoration: BoxDecoration(shape: BoxShape.circle, color: ColorPrimary),
                                           child: Icon(
                                             Icons.delete,
                                             color: Colors.white,
@@ -187,8 +184,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                           )),
                                       onTap: () {
                                         imageList.removeAt(index);
-                                        variantModel.productImages
-                                            .removeAt(index);
+                                        variantModel.productImages.removeAt(index);
                                         imgController.add(imageList);
                                       },
                                     ),
@@ -249,11 +245,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       labelText: "Category",
                       hintText: "Select category",
                       suffixIcon: Icon(Icons.keyboard_arrow_right_sharp),
-                      suffixIconConstraints: BoxConstraints(
-                          minWidth: 20,
-                          maxWidth: 21,
-                          minHeight: 20,
-                          maxHeight: 21)),
+                      suffixIconConstraints: BoxConstraints(minWidth: 20, maxWidth: 21, minHeight: 20, maxHeight: 21)),
                 ),
                 const SizedBox(
                   height: 15,
@@ -301,8 +293,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   children: [
                     Expanded(
                       child: TextFormField(
-                        decoration:
-                            InputDecoration(labelText: "Purchase price"),
+                        decoration: InputDecoration(labelText: "Purchase price"),
                         onChanged: (text) {
                           variantModel.purchasePrice = text;
                         },
@@ -376,11 +367,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         decoration: InputDecoration(
                             labelText: "Unit",
                             suffixIcon: Icon(Icons.keyboard_arrow_right_sharp),
-                            suffixIconConstraints: BoxConstraints(
-                                minWidth: 20,
-                                maxWidth: 21,
-                                minHeight: 20,
-                                maxHeight: 21)),
+                            suffixIconConstraints: BoxConstraints(minWidth: 20, maxWidth: 21, minHeight: 20, maxHeight: 21)),
                       ),
                       flex: 2,
                     ),
@@ -401,35 +388,29 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           builder: (context) {
                             return VariantTypeBottomSheet(
                               categoryId: categoryId,
+                              selectedVariants: variantType,
                               onSelect: (List<VariantType> variants) async {
                                 print("on variant type select -> $variants");
 
                                 if (variants.isEmpty) {
-                                  Utility.showToast(
-                                      "Please select at least one option");
+                                  Utility.showToast("Please select at least one option");
                                 } else {
                                   variantType = variants;
                                   List<VariantOption> options = [];
                                   String variantName = "";
                                   for (int i = 0; i < variantType.length; i++) {
-                                    options.add(VariantOption(
-                                        name: variantType[i].variantName,
-                                        value: ""));
+                                    options.add(VariantOption(name: variantType[i].variantName, value: ""));
 
                                     if (i == variantType.length - 1)
-                                      variantName = variantName +
-                                          variantType[i].variantName;
+                                      variantName = variantName + variantType[i].variantName;
                                     else
-                                      variantName = variantName +
-                                          variantType[i].variantName +
-                                          " / ";
+                                      variantName = variantName + variantType[i].variantName + " / ";
                                   }
                                   ProductVariantModel model = variantModel;
                                   model.option = options;
                                   edtOptions.text = variantName;
                                   print(model.toString());
-                                  addProductBloc.add(
-                                      SelectVariantOptionEvent(variant: model));
+                                  addProductBloc.add(SelectVariantOptionEvent(variant: model));
                                 }
                               },
                             );
@@ -439,11 +420,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       labelText: "options",
                       hintText: "Select options",
                       suffixIcon: Icon(Icons.keyboard_arrow_right),
-                      suffixIconConstraints: BoxConstraints(
-                          minWidth: 20,
-                          maxWidth: 21,
-                          minHeight: 20,
-                          maxHeight: 21)),
+                      suffixIconConstraints: BoxConstraints(minWidth: 20, maxWidth: 21, minHeight: 20, maxHeight: 21)),
                 ),
                 const SizedBox(
                   height: 15,
@@ -467,8 +444,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       variantModel = state.variant;
                     }
                     return Column(
-                      children:
-                          List.generate(variantModel.option.length, (index) {
+                      children: List.generate(variantModel.option.length, (index) {
                         return VariantOptionWidget(variantModel.option[index]);
                       }),
                     );
@@ -500,12 +476,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     if (productVariant.isEmpty) {
                       return ListTile(
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            side: BorderSide(color: Colors.black, width: 1)),
+                            borderRadius: BorderRadius.circular(10), side: BorderSide(color: Colors.black, width: 1)),
                         onTap: () async {
                           if (variantType.isEmpty) {
-                            Utility.showToast(
-                                "Please select at least one option");
+                            Utility.showToast("Please select at least one option");
                           } else {
                             var result = await Navigator.push(
                                 context,
@@ -518,11 +492,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                         add: false),
                                     type: PageTransitionType.bottomToTop));
                             if (result != null) {
-                              List<ProductVariantModel> variants =
-                                  result as List<ProductVariantModel>;
+                              List<ProductVariantModel> variants = result as List<ProductVariantModel>;
 
-                              addProductBloc.add(AddProductVariantEvent(
-                                  productVariant: variants));
+                              addProductBloc.add(AddProductVariantEvent(productVariant: variants));
                             }
                           }
                         },
@@ -534,83 +506,60 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     } else {
                       return Column(
                         children: [
-                          Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    "Product Variants",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16),
-                                  ),
-                                ),
-                                IconButton(
-                                  onPressed: () {
-                                    showBottomSheet(
-                                        context: context,
-                                        builder: (context) {
-                                          return SelectionBottomSheet(
-                                              onEdit: () async {
-                                            var result = await Navigator.push(
-                                                context,
-                                                PageTransition(
-                                                    child: ProductVariantScreen(
-                                                        variantType:
-                                                            variantType,
-                                                        categoryId: categoryId,
-                                                        productVariant:
-                                                            productVariant,
-                                                        edit: true,
-                                                        add: false),
-                                                    type: PageTransitionType
-                                                        .bottomToTop));
-                                            if (result != null) {
-                                              List<ProductVariantModel>
-                                                  variants = result as List<
-                                                      ProductVariantModel>;
+                          Row(mainAxisSize: MainAxisSize.max, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                            Expanded(
+                              child: Text(
+                                "Product Variants",
+                                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                showBottomSheet(
+                                    context: context,
+                                    builder: (context) {
+                                      return SelectionBottomSheet(onEdit: () async {
+                                        var result = await Navigator.push(
+                                            context,
+                                            PageTransition(
+                                                child: ProductVariantScreen(
+                                                    variantType: variantType,
+                                                    categoryId: categoryId,
+                                                    productVariant: productVariant,
+                                                    edit: true,
+                                                    add: false),
+                                                type: PageTransitionType.bottomToTop));
+                                        if (result != null) {
+                                          List<ProductVariantModel> variants = result as List<ProductVariantModel>;
 
-                                              addProductBloc.add(
-                                                  UpdateProductVariantEvent(
-                                                      productVariant:
-                                                          variants));
-                                            }
-                                          }, onAdd: () async {
-                                            var result = await Navigator.push(
-                                                context,
-                                                PageTransition(
-                                                  child: ProductVariantScreen(
-                                                      variantType: variantType,
-                                                      categoryId: categoryId,
-                                                      productVariant:
-                                                          productVariant,
-                                                      edit: false,
-                                                      add: true),
-                                                  type: PageTransitionType
-                                                      .bottomToTop,
-                                                ));
-                                            if (result != null) {
-                                              List<ProductVariantModel>
-                                                  variants = result as List<
-                                                      ProductVariantModel>;
-                                              addProductBloc.add(
-                                                  AddProductVariantEvent(
-                                                      productVariant:
-                                                          variants));
-                                            }
-                                          });
-                                        });
-                                  },
-                                  padding: EdgeInsets.all(0),
-                                  icon: Icon(Icons.more_vert),
-                                  splashRadius: 12,
-                                  iconSize: 20,
-                                  constraints: BoxConstraints(
-                                      maxHeight: 20, maxWidth: 20),
-                                ),
-                              ]),
+                                          addProductBloc.add(UpdateProductVariantEvent(productVariant: variants));
+                                        }
+                                      }, onAdd: () async {
+                                        var result = await Navigator.push(
+                                            context,
+                                            PageTransition(
+                                              child: ProductVariantScreen(
+                                                  variantType: variantType,
+                                                  categoryId: categoryId,
+                                                  productVariant: productVariant,
+                                                  edit: false,
+                                                  add: true),
+                                              type: PageTransitionType.bottomToTop,
+                                            ));
+                                        if (result != null) {
+                                          List<ProductVariantModel> variants = result as List<ProductVariantModel>;
+                                          addProductBloc.add(AddProductVariantEvent(productVariant: variants));
+                                        }
+                                      });
+                                    });
+                              },
+                              padding: EdgeInsets.all(0),
+                              icon: Icon(Icons.more_vert),
+                              splashRadius: 12,
+                              iconSize: 20,
+                              constraints: BoxConstraints(maxHeight: 20, maxWidth: 20),
+                            ),
+                          ]),
                           SizedBox(
                             height: 15,
                           ),
@@ -619,19 +568,13 @@ class _AddProductScreenState extends State<AddProductScreen> {
                               shrinkWrap: true,
                               itemCount: productVariant.length,
                               itemBuilder: (context, index) {
-                                ProductVariantModel variant =
-                                    productVariant[index];
+                                ProductVariantModel variant = productVariant[index];
                                 String variantName = "";
-                                for (int i = 0;
-                                    i < variant.option.length;
-                                    i++) {
+                                for (int i = 0; i < variant.option.length; i++) {
                                   if (i == variant.option.length - 1)
-                                    variantName =
-                                        variantName + variant.option[i].value;
+                                    variantName = variantName + variant.option[i].value;
                                   else
-                                    variantName = variantName +
-                                        variant.option[i].value +
-                                        " / ";
+                                    variantName = variantName + variant.option[i].value + " / ";
                                 }
 
                                 return Container(
@@ -641,29 +584,19 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                   child: Stack(
                                     children: [
                                       Container(
-                                        padding: EdgeInsets.only(
-                                            left: 50,
-                                            right: 10,
-                                            bottom: 10,
-                                            top: 10),
+                                        padding: EdgeInsets.only(left: 50, right: 10, bottom: 10, top: 10),
                                         margin: EdgeInsets.only(left: 20),
-                                        constraints:
-                                            BoxConstraints(minHeight: 80),
+                                        constraints: BoxConstraints(minHeight: 80),
                                         decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            border: Border.all(
-                                                color: Colors.black, width: 1)),
+                                            borderRadius: BorderRadius.circular(10),
+                                            border: Border.all(color: Colors.black, width: 1)),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
                                             Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
                                                 Text(
                                                   "$variantName",
@@ -678,39 +611,25 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                             ),
                                             Row(
                                               mainAxisSize: MainAxisSize.min,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
                                                 IconButton(
                                                     onPressed: () async {
-                                                      var result =
-                                                          await Navigator.push(
-                                                              context,
-                                                              PageTransition(
-                                                                child: ProductVariantScreen(
-                                                                    variantType:
-                                                                        variantType,
-                                                                    categoryId:
-                                                                        categoryId,
-                                                                    productVariant: [
-                                                                      variant
-                                                                    ],
-                                                                    edit: true,
-                                                                    add: false),
-                                                                type: PageTransitionType
-                                                                    .bottomToTop,
-                                                              ));
+                                                      var result = await Navigator.push(
+                                                          context,
+                                                          PageTransition(
+                                                            child: ProductVariantScreen(
+                                                                variantType: variantType,
+                                                                categoryId: categoryId,
+                                                                productVariant: [variant],
+                                                                edit: true,
+                                                                add: false),
+                                                            type: PageTransitionType.bottomToTop,
+                                                          ));
                                                       if (result != null) {
-                                                        List<ProductVariantModel>
-                                                            variants =
-                                                            result as List<
-                                                                ProductVariantModel>;
-                                                        addProductBloc.add(
-                                                            UpdateSingleProductVariantEvent(
-                                                                productVariant:
-                                                                    variants
-                                                                        .first,
-                                                                index: index));
+                                                        List<ProductVariantModel> variants = result as List<ProductVariantModel>;
+                                                        addProductBloc.add(UpdateSingleProductVariantEvent(
+                                                            productVariant: variants.first, index: index));
                                                       }
                                                     },
                                                     padding: EdgeInsets.all(0),
@@ -724,10 +643,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                                     )),
                                                 IconButton(
                                                     onPressed: () {
-                                                      addProductBloc.add(
-                                                          DeleteProductVariantEvent(
-                                                              productVariant:
-                                                                  variant));
+                                                      addProductBloc.add(DeleteProductVariantEvent(productVariant: variant));
                                                     },
                                                     padding: EdgeInsets.all(0),
                                                     splashRadius: 15,
@@ -749,15 +665,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                         bottom: 0,
                                         child: Center(
                                           child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            child: productVariant[index]
-                                                    .productImages
-                                                    .isNotEmpty
+                                            borderRadius: BorderRadius.circular(5),
+                                            child: productVariant[index].productImages.isNotEmpty
                                                 ? Image.file(
-                                                    productVariant[index]
-                                                        .productImages
-                                                        .first,
+                                                    productVariant[index].productImages.first,
                                                     width: 60,
                                                     height: 60,
                                                     fit: BoxFit.contain,
@@ -842,8 +753,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
     Map<String, dynamic> input = HashMap<String, dynamic>();
 
-    input["vendor_id"] =
-        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     input["category_id"] = categoryId;
     input["product_name"] = edtProductName.text.trim();
     input["unit"] = unitId;

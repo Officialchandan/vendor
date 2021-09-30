@@ -9,9 +9,10 @@ import 'package:vendor/utility/utility.dart';
 
 class VariantTypeBottomSheet extends StatefulWidget {
   final String categoryId;
+  final List<VariantType> selectedVariants;
   final Function(List<VariantType>) onSelect;
 
-  VariantTypeBottomSheet({required this.categoryId, required this.onSelect});
+  VariantTypeBottomSheet({required this.categoryId, required this.onSelect, required this.selectedVariants});
 
   @override
   _VariantTypeBottomSheetState createState() => _VariantTypeBottomSheetState();
@@ -99,6 +100,11 @@ class _VariantTypeBottomSheetState extends State<VariantTypeBottomSheet> {
 
       if (response.success) {
         variantList = response.data!;
+
+        for (VariantType v in widget.selectedVariants) {
+          variantList.singleWhere((element) => element.id == v.id).checked = true;
+        }
+
         controller.add(variantList);
       } else {
         controller.add(variantList);
