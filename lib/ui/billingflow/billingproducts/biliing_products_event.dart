@@ -1,6 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:vendor/model/billing_product_response.dart';
-import 'package:vendor/model/product_model.dart';
 
 class BillingProductsEvent extends Equatable {
   @override
@@ -8,27 +6,31 @@ class BillingProductsEvent extends Equatable {
 }
 
 class EditBillingProductsEvent extends BillingProductsEvent {
-  ProductModel billingItemList;
-  int index;
-  EditBillingProductsEvent(
-      {required this.billingItemList, required this.index});
+  final int index;
+  final double price;
+  final double earningCoin;
+
+  EditBillingProductsEvent({required this.price, required this.earningCoin, required this.index});
+
   @override
-  List<Object?> get props => [billingItemList, index];
+  List<Object?> get props => [price, index];
 }
 
 class DeleteBillingProductsEvent extends BillingProductsEvent {
-  ProductModel billingItemList;
-  int index;
-  DeleteBillingProductsEvent(
-      {required this.billingItemList, required this.index});
+  final int index;
+
+  DeleteBillingProductsEvent({required this.index});
+
   @override
-  List<Object?> get props => [billingItemList, index];
+  List<Object?> get props => [index];
 }
 
 class CheckedBillingProductsEvent extends BillingProductsEvent {
   final bool check;
   final int index;
+
   CheckedBillingProductsEvent({required this.check, required this.index});
+
   @override
   List<Object?> get props => [check, index];
 }
@@ -64,14 +66,18 @@ class TotalEarnCoinBillingProductsEvent extends BillingProductsEvent {
 
 class PayBillingProductsEvent extends BillingProductsEvent {
   final Map<String, dynamic> input;
+
   PayBillingProductsEvent({required this.input});
+
   @override
   List<Object> get props => [input];
 }
 
 class OtpVerifyEvent extends BillingProductsEvent {
   final Map<String, dynamic> input;
+
   OtpVerifyEvent({required this.input});
+
   @override
   List<Object> get props => [input];
 }

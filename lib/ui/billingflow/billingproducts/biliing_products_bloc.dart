@@ -2,27 +2,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/model/billing_product_response.dart';
-import 'package:vendor/model/product_model.dart';
 import 'package:vendor/model/verify_otp.dart';
 import 'package:vendor/ui/billingflow/billingproducts/biliing_products_event.dart';
 import 'package:vendor/ui/billingflow/billingproducts/biliing_products_state.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/utility.dart';
 
-class BillingProductsBloc
-    extends Bloc<BillingProductsEvent, BillingProductsState> {
+class BillingProductsBloc extends Bloc<BillingProductsEvent, BillingProductsState> {
   BillingProductsBloc() : super(IntitalBillingProductstate());
   @override
-  Stream<BillingProductsState> mapEventToState(
-      BillingProductsEvent event) async* {
+  Stream<BillingProductsState> mapEventToState(BillingProductsEvent event) async* {
     if (event is EditBillingProductsEvent) {
-      yield EditBillingProductstate(
-          billingItemList: event.billingItemList, index: event.index);
+      print("EditBillingProductsEvent");
+      yield EditBillingProductState(price: event.price, index: event.index, earningCoin: event.earningCoin);
     }
 
     if (event is DeleteBillingProductsEvent) {
-      yield DeleteBillingProductstate(
-          billingItemList: event.billingItemList, index: event.index);
+      yield DeleteBillingProductState(index: event.index);
     }
     if (event is CheckedBillingProductsEvent) {
       yield CheckerBillingProductstate(check: event.check, index: event.index);
@@ -46,18 +42,13 @@ class BillingProductsBloc
   }
 }
 
-Stream<BillingProductsState> billingProductApi(
-    Map<String, dynamic> input) async* {
+Stream<BillingProductsState> billingProductApi(Map<String, dynamic> input) async* {
   if (await Network.isConnected()) {
     EasyLoading.show();
-    BillingProductResponse response =
-        await apiProvider.getBillingProducts(input);
+    BillingProductResponse response = await apiProvider.getBillingProducts(input);
     EasyLoading.dismiss();
     if (response.success) {
-      yield PayBillingProductsState(
-          message: response.message,
-          data: response.data!,
-          succes: response.success);
+      yield PayBillingProductsState(message: response.message, data: response.data!, succes: response.success);
     } else {
       EasyLoading.dismiss();
       Utility.showToast(response.message);
@@ -70,14 +61,10 @@ Stream<BillingProductsState> billingProductApi(
 Stream<BillingProductsState> verifyOtp(Map<String, dynamic> input) async* {
   if (await Network.isConnected()) {
     EasyLoading.show();
-    VerifyEarningCoinsOtpResponse response =
-        await apiProvider.getVerifyEarningCoinOtp(input);
+    VerifyEarningCoinsOtpResponse response = await apiProvider.getVerifyEarningCoinOtp(input);
     EasyLoading.dismiss();
     if (response.success) {
-      yield VerifyOtpState(
-          message: response.message,
-          data: response.data!,
-          succes: response.success);
+      yield VerifyOtpState(message: response.message, data: response.data!, succes: response.success);
     } else {
       EasyLoading.dismiss();
       Utility.showToast(response.message);

@@ -1,35 +1,35 @@
 import 'package:equatable/equatable.dart';
-import 'package:vendor/model/product_model.dart';
 
 abstract class BillingProductsState extends Equatable {}
 
 class CheckerBillingProductstate extends BillingProductsState {
   final bool check;
   final int index;
+
   CheckerBillingProductstate({required this.check, required this.index});
 
   @override
   List<Object?> get props => [check, index];
 }
 
-class DeleteBillingProductstate extends BillingProductsState {
-  ProductModel billingItemList;
-  int index;
+class DeleteBillingProductState extends BillingProductsState {
+  final int index;
 
-  DeleteBillingProductstate(
-      {required this.billingItemList, required this.index});
+  DeleteBillingProductState({required this.index});
 
   @override
-  List<Object?> get props => [billingItemList, index];
+  List<Object?> get props => [index];
 }
 
-class EditBillingProductstate extends BillingProductsState {
-  ProductModel billingItemList;
-  int index;
-  EditBillingProductstate({required this.billingItemList, required this.index});
+class EditBillingProductState extends BillingProductsState {
+  final double price;
+  final int index;
+  final double earningCoin;
+
+  EditBillingProductState({required this.price, required this.index, required this.earningCoin});
 
   @override
-  List<Object?> get props => [billingItemList, index];
+  List<Object?> get props => [price, index, earningCoin];
 }
 
 class IntitalBillingProductstate extends BillingProductsState {
@@ -70,6 +70,7 @@ class PayBillingProductsState extends BillingProductsState {
   final message;
   final data;
   final succes;
+
   PayBillingProductsState({this.message, this.data, this.succes});
 
   @override
@@ -86,8 +87,9 @@ class PayBillingProductsStateLoadingstate extends BillingProductsState {
 class PayBillingProductsStateFailureState extends BillingProductsState {
   final String message;
   final succes;
-  PayBillingProductsStateFailureState(
-      {required this.message, required this.succes});
+
+  PayBillingProductsStateFailureState({required this.message, required this.succes});
+
   @override
   List<Object?> get props => [message, succes];
 }
@@ -96,6 +98,7 @@ class VerifyOtpState extends BillingProductsState {
   final message;
   final data;
   final succes;
+
   VerifyOtpState({this.message, this.data, this.succes});
 
   @override
@@ -112,7 +115,9 @@ class VerifyOtpStateLoadingstate extends BillingProductsState {
 class VerifyOtpStateFailureState extends BillingProductsState {
   final String message;
   final succes;
+
   VerifyOtpStateFailureState({required this.message, required this.succes});
+
   @override
   List<Object?> get props => [message, succes];
 }

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:vendor/ui/account_management/account_management_screen/account_management_screen.dart';
 import 'package:vendor/ui/billingflow/billing/billing.dart';
-
 import 'package:vendor/ui/inventory/inventory_screen.dart';
-import 'package:vendor/ui/performanceandreports/Trackerandreports/tracker_and_performance.dart';
+import 'package:vendor/ui/performance_tracker/tracker_report_screen.dart';
 import 'package:vendor/utility/color.dart';
 
 class BottomNavigationHome extends StatefulWidget {
@@ -15,8 +14,7 @@ class BottomNavigationHome extends StatefulWidget {
   _BottomNavigationHomeState createState() => _BottomNavigationHomeState();
 }
 
-class _BottomNavigationHomeState extends State<BottomNavigationHome>
-    with TickerProviderStateMixin {
+class _BottomNavigationHomeState extends State<BottomNavigationHome> with TickerProviderStateMixin {
   TabController? _tabController;
 
   @override
@@ -47,7 +45,7 @@ class _BottomNavigationHomeState extends State<BottomNavigationHome>
             Center(
               child: Text("Staff"),
             ),
-            TrackerReportsScreen(),
+            TrackerReportDashboard(),
             AccountManagementScreen(),
           ],
         ),
@@ -95,9 +93,7 @@ class _BottomBarState extends State<BottomBar> {
     return TabBar(
       controller: widget.tabController,
       indicator: UnderlineTabIndicator(
-          borderSide: BorderSide(
-              width: 3, color: ColorPrimary, style: BorderStyle.solid),
-          insets: EdgeInsets.fromLTRB(30, 0, 30, 54)),
+          borderSide: BorderSide(width: 3, color: ColorPrimary, style: BorderStyle.solid), insets: EdgeInsets.fromLTRB(30, 0, 30, 54)),
       labelColor: ColorPrimary,
       unselectedLabelColor: Colors.grey.shade500,
       physics: NeverScrollableScrollPhysics(),

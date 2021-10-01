@@ -52,10 +52,17 @@ dependencies:
   url_launcher:
 
 
+  #date range picker
+  syncfusion_flutter_datepicker:
+  intl:
+
   #  picker provider permission check
   permission_handler:
   path_provider:
   image_picker:
+  modal_bottom_sheet:
+
+
 
 
   expandable: ^5.0.1
