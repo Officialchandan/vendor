@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
+import 'package:vendor/ui/performance_tracker/report/ViewReportScreen.dart';
+
+import 'money_due_upi/money_due_screen.dart';
 
 class TrackerReportDashboard extends StatefulWidget {
   @override
@@ -8,9 +12,9 @@ class TrackerReportDashboard extends StatefulWidget {
 
 class _TrackerReportDashboardState extends State<TrackerReportDashboard> {
   final options = [
-    {"title": "Performance tracker", "subTitle": "click here to add product", "image": "assets/images/inventory.png", "id": 1},
-    {"title": "Reports", "subTitle": "click here to add product", "image": "assets/images/inventory-h2.png", "id": 2},
-    {"title": "Money due - UPI", "subTitle": "click here to add product", "image": "assets/images/inventory-h3.png", "id": 3},
+    {"title": "Performance tracker", "subTitle": "click here to add product", "image": "assets/images/tr-ic1.png", "id": 1},
+    {"title": "Reports", "subTitle": "click here to add product", "image": "assets/images/tr-ic2.png", "id": 2},
+    {"title": "Money due - UPI", "subTitle": "click here to add product", "image": "assets/images/tr-ic3.png", "id": 3},
   ];
   @override
   Widget build(BuildContext context) {
@@ -32,13 +36,13 @@ class _TrackerReportDashboardState extends State<TrackerReportDashboard> {
                   ),
                   child: ListTile(
                     onTap: () {
-                      // if (options[index]["id"] == 2) {
-                      //   Navigator.push(context, PageTransition(child: ViewCategoryScreen(), type: PageTransitionType.fade));
-                      // }
-                      // if (options[index]["id"] == 3) {
-                      //   Navigator.push(context, PageTransition(child: SaleReturnScreen(), type: PageTransitionType.fade));
-                      // }
-                      //
+                      if (options[index]["id"] == 2) {
+                        Navigator.push(context, PageTransition(child: ViewReportScreen(), type: PageTransitionType.fade));
+                      }
+                      if (options[index]["id"] == 3) {
+                        Navigator.push(context, PageTransition(child: MoneyDueScreen(), type: PageTransitionType.fade));
+                      }
+
                       // if (options[index]["id"] == 1) {
                       //   Navigator.push(context, PageTransition(child: ViewCategoryScreen(), type: PageTransitionType.fade));
                       // }
