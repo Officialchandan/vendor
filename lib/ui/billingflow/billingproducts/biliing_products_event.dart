@@ -68,3 +68,10 @@ class PayBillingProductsEvent extends BillingProductsEvent {
   @override
   List<Object> get props => [input];
 }
+
+class OtpVerifyEvent extends BillingProductsEvent {
+  final Map<String, dynamic> input;
+  OtpVerifyEvent({required this.input});
+  @override
+  List<Object> get props => [input];
+}
