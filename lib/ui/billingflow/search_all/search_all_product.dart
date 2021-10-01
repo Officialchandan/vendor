@@ -235,13 +235,13 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                             new RichText(
                                               text: new TextSpan(
                                                 text:
-                                                    '\u20B9 ${int.parse(searchList[index].sellingPrice) * searchList[index].count}  ',
+                                                    '\u20B9 ${double.parse(searchList[index].sellingPrice) * searchList[index].count}  ',
                                                 style: TextStyle(
                                                     color: ColorPrimary),
                                                 children: <TextSpan>[
                                                   new TextSpan(
                                                     text:
-                                                        '\u20B9${int.parse(searchList[index].mrp) * searchList[index].count}',
+                                                        '\u20B9${double.parse(searchList[index].mrp) * searchList[index].count}',
                                                     style: new TextStyle(
                                                       color: Colors.grey,
                                                       decoration: TextDecoration
@@ -446,7 +446,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                     scale: 2.5,
                                                   )),
                                                   Text(
-                                                    " ${int.parse(searchList[index].earningCoins) * searchList[index].count}",
+                                                    " ${double.parse(searchList[index].earningCoins) * searchList[index].count}",
                                                     style: TextStyle(
                                                         fontSize: 17,
                                                         fontWeight:
