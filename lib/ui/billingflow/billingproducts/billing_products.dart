@@ -851,11 +851,13 @@ class _DialogState extends State<Dialog> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
                     onPressed: () {
-                      Navigator.push(
+                      Navigator.pushAndRemoveUntil(
                           context,
                           PageTransition(
-                              child: BillingScreen(),
-                              type: PageTransitionType.fade));
+                            child: BillingScreen(),
+                            type: PageTransitionType.fade,
+                          ),
+                          (route) => false);
                     },
                     child: new Text(
                       "DONE",
