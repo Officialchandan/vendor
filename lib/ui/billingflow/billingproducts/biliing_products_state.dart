@@ -91,3 +91,28 @@ class PayBillingProductsStateFailureState extends BillingProductsState {
   @override
   List<Object?> get props => [message, succes];
 }
+
+class VerifyOtpState extends BillingProductsState {
+  final message;
+  final data;
+  final succes;
+  VerifyOtpState({this.message, this.data, this.succes});
+
+  @override
+  List<Object> get props => [message, data, succes];
+}
+
+class VerifyOtpStateLoadingstate extends BillingProductsState {
+  // final String message;
+  // GetCustomerNumberResponseLoadingstate({required this.message});
+  @override
+  List<Object?> get props => [];
+}
+
+class VerifyOtpStateFailureState extends BillingProductsState {
+  final String message;
+  final succes;
+  VerifyOtpStateFailureState({required this.message, required this.succes});
+  @override
+  List<Object?> get props => [message, succes];
+}

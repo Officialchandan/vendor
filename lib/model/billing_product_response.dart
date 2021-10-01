@@ -55,7 +55,7 @@ class BillingProductData {
   String vendorId;
   String totalPay;
   String redeemCoins;
-  int earningCoins;
+  String earningCoins;
 
   factory BillingProductData.fromJson(String str) =>
       BillingProductData.fromMap(json.decode(str));
@@ -71,8 +71,7 @@ class BillingProductData {
         vendorId: json["vendor_id"].toString(),
         totalPay: json["total_pay"].toString(),
         redeemCoins: json["redeem_coins"].toString(),
-        earningCoins:
-            json["earning_coins"] == null ? null : json["earning_coins"],
+        earningCoins: json["earning_coins"].toString(),
       );
 
   Map<String, dynamic> toMap() => {

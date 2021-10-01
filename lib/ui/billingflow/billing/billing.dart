@@ -290,7 +290,7 @@ class _BillingScreenState extends State<BillingScreen> {
                           return Container(
                               color: Colors.transparent,
                               padding: EdgeInsets.only(bottom: 80),
-                              height: MediaQuery.of(context).size.height * 0.55,
+                              height: MediaQuery.of(context).size.height * 0.62,
                               child: categoryListWidget(category));
                         },
                       ),
@@ -298,7 +298,7 @@ class _BillingScreenState extends State<BillingScreen> {
                   ),
                 ),
                 Positioned(
-                  bottom: 20,
+                  bottom: 10,
                   left: 15,
                   right: 15,
                   child: InkWell(

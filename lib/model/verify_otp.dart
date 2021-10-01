@@ -67,10 +67,9 @@ class VerifyEarningCoinsOtpData {
         orderId: json["order_id"] == null ? null : json["order_id"],
         customerId: json["customer_id"] == null ? null : json["customer_id"],
         mobile: json["mobile"] == null ? null : json["mobile"],
-        vendorId: json["vendor_id"] == null ? null : json["vendor_id"],
-        redeemCoins: json["redeem_coins"] == null ? null : json["redeem_coins"],
-        earningCoins:
-            json["earning_coins"] == null ? null : json["earning_coins"],
+        vendorId: json["vendor_id"].toString(),
+        redeemCoins: json["redeem_coins"].toString(),
+        earningCoins: json["earning_coins"].toString(),
         walletBalance: json["wallet_balance"] == null
             ? null
             : json["wallet_balance"].toDouble(),

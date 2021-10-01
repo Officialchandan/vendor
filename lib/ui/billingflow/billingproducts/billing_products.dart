@@ -10,12 +10,14 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:share/share.dart';
+import 'package:vendor/model/billing_product_response.dart';
 import 'package:vendor/model/product_by_category_response.dart';
 import 'package:vendor/model/product_model.dart';
 import 'package:vendor/ui/billingflow/billing/billing.dart';
 import 'package:vendor/ui/billingflow/billingproducts/biliing_products_bloc.dart';
 import 'package:vendor/ui/billingflow/billingproducts/biliing_products_event.dart';
 import 'package:vendor/ui/billingflow/billingproducts/biliing_products_state.dart';
+import 'package:vendor/ui/inventory/sale_return/bloc/sale_return_event.dart';
 
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
@@ -39,6 +41,7 @@ class _BillingProductsState extends State<BillingProducts> {
   _BillingProductsState(List<ProductModel> billingItemList, mobile, coin);
   ProductModel? selectedProductList;
   List<ProductModel> ProductList = [];
+  BillingProductData? otpVerifyList;
 
   BillingProductsBloc billingProductsBloc = BillingProductsBloc();
 
@@ -57,7 +60,7 @@ class _BillingProductsState extends State<BillingProducts> {
   double totalpay1 = 0;
 
   double reddemcoins1 = 0;
-  var x;
+  var x, i = 0;
   var message;
   var status;
 
@@ -121,6 +124,7 @@ class _BillingProductsState extends State<BillingProducts> {
             ),
             body: Stack(children: [
               Container(
+                height: MediaQuery.of(context).size.height,
                 child: Column(
                   children: [
                     Container(
@@ -134,36 +138,41 @@ class _BillingProductsState extends State<BillingProducts> {
                           return ListView.builder(
                             itemCount: ProductList.length,
                             itemBuilder: (context, index) {
-                              totalpay1 = 0;
+                              //totalpay1 = 0;
                               String variantName = "";
+
                               ProductModel product = ProductList[index];
+                              // if (i < ProductList.length) {
                               log("=====>${int.parse(ProductList[index].sellingPrice)}");
                               log("=====>${ProductList[index].count}");
                               log("=====>$index");
-                              //if (ProductList[index].count == 1) {
 
                               totalpay1 += double.parse(widget
                                       .billingItemList[index].sellingPrice) *
                                   ProductList[index].count;
                               log("---$totalpay1");
-
+                              // }
+                              // if (i < ProductList.length) {
                               log("=====>${int.parse(ProductList[index].redeemCoins)}");
                               log("=====>${ProductList[index].count}");
                               log("=====>$index");
-                              reddemcoins1 = 0;
+                              //reddemcoins1 = 0;
                               reddemcoins1 += double.parse(widget
                                       .billingItemList[index].redeemCoins) *
                                   ProductList[index].count;
                               log("---$reddemcoins1");
-
+                              // }
+                              // if (i < ProductList.length) {
+                              // i++;
                               log("=====>${int.parse(ProductList[index].earningCoins)}");
                               log("=====>${ProductList[index].count}");
                               log("=====>$index");
-                              earncoins1 = 0;
+                              //earncoins1 = 0;
                               earncoins1 += double.parse(widget
                                       .billingItemList[index].earningCoins) *
                                   ProductList[index].count;
                               log("---$earncoins1");
+                              // }
 
                               if (product.productOption.isNotEmpty) {
                                 for (int i = 0;
@@ -275,6 +284,7 @@ class _BillingProductsState extends State<BillingProducts> {
                                                                     ColorPrimary)),
                                                         InkWell(
                                                           onTap: () {
+                                                            // i = 0;
                                                             _displayDialog(
                                                                 context,
                                                                 index,
@@ -465,12 +475,10 @@ class _BillingProductsState extends State<BillingProducts> {
                                     child: InkWell(
                                       onTap: () {
                                         log("${ProductList[index]}");
-                                        // totalpay1 -= totalpay1 -
-                                        //     int.parse(widget
-                                        //             .billingItemList[index]
-                                        //             .sellingPrice) *
-                                        //         ProductList[index]
-                                        //             .count;
+                                        i = 0;
+
+                                        totalpay1 = 0;
+
                                         // earncoins1 -= earncoins1 -
                                         //     int.parse(widget
                                         //             .billingItemList[index]
@@ -605,7 +613,9 @@ class _BillingProductsState extends State<BillingProducts> {
                 listener: (context, state) {
                   if (state is PayBillingProductsState) {
                     message = state.message;
-                    status = state.data;
+                    status = state.succes;
+                    otpVerifyList = state.data;
+                    log("${otpVerifyList!.otp}");
                     _displayDialog(
                         context, 0, 1, "Please Enter OTP", "Enter OTP");
                   }
@@ -616,6 +626,22 @@ class _BillingProductsState extends State<BillingProducts> {
                   }
                   if (state is PayBillingProductsStateLoadingstate) {
                     log("number chl gya");
+                  }
+
+                  if (state is VerifyOtpState) {
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => BillingScreen()));
+                    d._displayCoinDialog(context);
+                  }
+                  if (state is VerifyOtpStateLoadingstate) {
+                    log("number chl gya");
+                  }
+                  if (state is VerifyOtpStateFailureState) {
+                    message = state.message;
+                    Fluttertoast.showToast(
+                        msg: state.message, backgroundColor: ColorPrimary);
                   }
                 },
                 builder: (context, state) {
@@ -742,19 +768,17 @@ class _BillingProductsState extends State<BillingProducts> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
                     onPressed: () {
-                      // if (status == 1) {
-                      //   _displayCoinDialog(context);
-                      // } else {
-                      //   Navigator.pop(context);
-                      //   _textFieldController.clear();
-                      // }
-                      ProductList[index].sellingPrice =
-                          _textFieldController.text;
-                      double y = double.parse(_textFieldController.text);
+                      if (status == 0) {
+                        ProductList[index].sellingPrice =
+                            _textFieldController.text;
+                        double y = double.parse(_textFieldController.text);
 
-                      earningPrice(y);
-                      Navigator.pop(context);
-                      _textFieldController.clear();
+                        earningPrice(y);
+                        Navigator.pop(context);
+                        _textFieldController.clear();
+                      } else {
+                        verifyOtp(context);
+                      }
                     },
                     child: new Text(
                       "DONE",
@@ -774,6 +798,21 @@ class _BillingProductsState extends State<BillingProducts> {
             ),
           );
         });
+  }
+
+  Future<void> verifyOtp(BuildContext context) async {
+    Map<String, dynamic> input = HashMap<String, dynamic>();
+    input["vendor_id"] =
+        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    input["mobile"] = widget.mobile;
+    input["order_id"] = "${otpVerifyList!.orderId}";
+    input["customer_id"] = "${otpVerifyList!.customerId}";
+    input["otp"] = "${_textFieldController.text}";
+    input["total_redeem"] = totalpay1;
+    input["total_earning"] = earncoins1;
+
+    log("=====? $input");
+    billingProductsBloc.add(OtpVerifyEvent(input: input));
   }
 }
 
