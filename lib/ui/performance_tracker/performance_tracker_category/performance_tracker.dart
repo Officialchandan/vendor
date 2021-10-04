@@ -1,35 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
-import 'package:vendor/ui/performance_tracker/performance_tracker_category/performance_tracker.dart';
+import 'package:vendor/ui/performance_tracker/performance_tracker_category/sale_amount/sale_amount.dart';
 import 'package:vendor/ui/performance_tracker/report/ViewReportScreen.dart';
 import 'package:vendor/utility/color.dart';
 
-import 'money_due_upi/money_due_screen.dart';
-
-class TrackerReportDashboard extends StatefulWidget {
+class PerformanceTrackerByCategory extends StatefulWidget {
   @override
-  _TrackerReportDashboardState createState() => _TrackerReportDashboardState();
+  _PerformanceTrackerByCategoryState createState() =>
+      _PerformanceTrackerByCategoryState();
 }
 
-class _TrackerReportDashboardState extends State<TrackerReportDashboard> {
+class _PerformanceTrackerByCategoryState
+    extends State<PerformanceTrackerByCategory> {
   final options = [
     {
-      "title": "Performance tracker",
-      "subTitle": "click here to add product",
-      "image": "assets/images/tr-ic1.png",
+      "title": "Sale amount",
+      "subTitle": "click here to see Sale amount",
+      "image": "assets/images/performance-ic1.png",
       "id": 1
     },
     {
-      "title": "Reports",
-      "subTitle": "click here to add product",
-      "image": "assets/images/tr-ic2.png",
+      "title": "Earning till now",
+      "subTitle": "Deduction after 20% of sale amount",
+      "image": "assets/images/performance-ic2.png",
       "id": 2
     },
     {
-      "title": "Money due - UPI",
-      "subTitle": "click here to add product",
-      "image": "assets/images/tr-ic3.png",
+      "title": "Walk Ins",
+      "subTitle": "click here to sell Walikins",
+      "image": "assets/images/performance-ic3.png",
       "id": 3
     },
   ];
@@ -61,18 +61,18 @@ class _TrackerReportDashboardState extends State<TrackerReportDashboard> {
                                 type: PageTransitionType.fade));
                       }
                       if (options[index]["id"] == 3) {
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                                child: MoneyDueScreen(),
-                                type: PageTransitionType.fade));
+                        // Navigator.push(
+                        //     context,
+                        //     PageTransition(
+                        //         child: MoneyDueScreen(),
+                        //         type: PageTransitionType.fade));
                       }
 
                       if (options[index]["id"] == 1) {
                         Navigator.push(
                             context,
                             PageTransition(
-                                child: PerformanceTrackerByCategory(),
+                                child: SaleAmount(),
                                 type: PageTransitionType.fade));
                       }
                     },

@@ -284,7 +284,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Stack(
                   children: [
                     Container(
-                        // height: deviceHeight,
+                        // height: deviceHeight,Ftex
                         //width: 400,
                         child: Image.asset(
                       "assets/images/bg.png",

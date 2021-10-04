@@ -8,6 +8,7 @@ import 'package:vendor/model/add_suggested_product_response.dart';
 import 'package:vendor/model/billing_product_response.dart';
 import 'package:vendor/model/common_response.dart';
 import 'package:vendor/model/customer_number_response.dart';
+import 'package:vendor/model/daily_sale_amount.dart';
 import 'package:vendor/model/get_brands_response.dart';
 import 'package:vendor/model/get_categories_response.dart';
 import 'package:vendor/model/get_colors_response.dart';
@@ -18,6 +19,7 @@ import 'package:vendor/model/get_unit_response.dart';
 import 'package:vendor/model/get_vendorcategory_id.dart';
 import 'package:vendor/model/login_otp.dart';
 import 'package:vendor/model/login_response.dart';
+import 'package:vendor/model/monthly_sale_amount.dart';
 import 'package:vendor/model/product_by_category_response.dart';
 import 'package:vendor/model/product_variant_response.dart';
 import 'package:vendor/model/verify_otp.dart';
@@ -689,5 +691,57 @@ class ApiProvider {
     //   print("Exception occurred: $message stackTrace: $error");
     //   return VerifyEarningCoinsOtpResponse(success: false, message: message);
     // }
+  }
+
+  Future<DailySellAmountResponse> getDailySaleAmount() async {
+    try {
+      Map input = HashMap<String, dynamic>();
+      log("------->res");
+      input["vendor_id"] =
+          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+
+      Response res = await dio.post(
+        Endpoint.GET_DAILY_SALE_AMOUNT,
+        data: input,
+      );
+      log("------->$res");
+      return DailySellAmountResponse.fromJson(res.toString());
+    } catch (error, stacktrace) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return DailySellAmountResponse(success: false, message: message);
+    }
+  }
+
+  Future<MonthlySellAmountResponse> getMonthlySaleAmount() async {
+    try {
+      Map input = HashMap<String, dynamic>();
+      log("------->res");
+      input["vendor_id"] =
+          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+
+      Response res = await dio.post(
+        Endpoint.GET_MONTHLY_SAIE_AMOUNT,
+        data: input,
+      );
+      log("------->$res");
+      return MonthlySellAmountResponse.fromJson(res.toString());
+    } catch (error, stacktrace) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return MonthlySellAmountResponse(success: false, message: message);
+    }
   }
 }
