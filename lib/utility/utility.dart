@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:vendor/utility/color.dart';
 
@@ -31,8 +34,9 @@ class Utility {
   static showToast(String msg) {
     Fluttertoast.showToast(msg: msg, textColor: Colors.white, backgroundColor: ColorPrimary, gravity: ToastGravity.BOTTOM);
   }
-}
 
-showToast1(String msg) {
-  Fluttertoast.showToast(msg: msg, textColor: Colors.white, backgroundColor: ColorPrimary, gravity: ToastGravity.BOTTOM);
+  static Future<String> findLocalPath() async {
+    final directory = Platform.isAndroid ? await getTemporaryDirectory() : await getApplicationDocumentsDirectory();
+    return directory.path;
+  }
 }

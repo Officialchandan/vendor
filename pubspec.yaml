@@ -72,6 +72,9 @@ dependencies:
 
   flutter_easyloading:
 
+  syncfusion_flutter_xlsio:
+  open_file:
+
 
 
   #share

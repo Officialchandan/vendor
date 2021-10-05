@@ -93,7 +93,6 @@ class _BillingProductsState extends State<BillingProducts> {
           if (state is EditBillingProductState) {
             productList[state.index].sellingPrice = state.price.toStringAsFixed(2);
 
-            print("productList[state.index].sellingPrice-->${productList[state.index].sellingPrice}");
             productList[state.index].earningCoins = state.earningCoin.toStringAsFixed(2);
 
             calculateAmounts(productList);
@@ -532,7 +531,7 @@ class _BillingProductsState extends State<BillingProducts> {
                 controller: _textFieldController,
                 cursorColor: ColorPrimary,
                 keyboardType: TextInputType.number,
-                inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+                // inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
                 decoration: InputDecoration(
                   // filled: true,
 
