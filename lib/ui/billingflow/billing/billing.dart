@@ -24,7 +24,8 @@ class BillingScreen extends StatefulWidget {
 }
 
 class _BillingScreenState extends State<BillingScreen> {
-  CustomerNumberResponseBloc customerNumberResponseBloc = CustomerNumberResponseBloc();
+  CustomerNumberResponseBloc customerNumberResponseBloc =
+      CustomerNumberResponseBloc();
   TextEditingController mobileController = TextEditingController();
   List<GetVendorCategoryByIdData> category = [];
 
@@ -41,7 +42,8 @@ class _BillingScreenState extends State<BillingScreen> {
   Widget build(BuildContext context) {
     return BlocProvider<CustomerNumberResponseBloc>(
       create: (context) => customerNumberResponseBloc,
-      child: BlocConsumer<CustomerNumberResponseBloc, CustomerNumberResponseState>(
+      child:
+          BlocConsumer<CustomerNumberResponseBloc, CustomerNumberResponseState>(
         listener: (context, state) {},
         builder: (context, state) {
           return Scaffold(
@@ -75,7 +77,8 @@ class _BillingScreenState extends State<BillingScreen> {
                     //mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      BlocConsumer<CustomerNumberResponseBloc, CustomerNumberResponseState>(
+                      BlocConsumer<CustomerNumberResponseBloc,
+                          CustomerNumberResponseState>(
                         listener: (context, state) {
                           if (state is GetCustomerNumberResponseState) {
                             log("number chl gya");
@@ -92,7 +95,9 @@ class _BillingScreenState extends State<BillingScreen> {
                             check = state.succes;
                             log("======>$check");
                             message = state.message;
-                            Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
+                            Fluttertoast.showToast(
+                                msg: state.message,
+                                backgroundColor: ColorPrimary);
                           }
                         },
                         builder: (context, state) {
@@ -108,22 +113,25 @@ class _BillingScreenState extends State<BillingScreen> {
                                 mobileController.text.length == 10
                                     ? Text(
                                         "  ${state.data}",
-                                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: ColorPrimary),
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w700,
+                                            color: ColorPrimary),
                                       )
                                     : Text(
                                         "  0.0",
-                                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: ColorPrimary),
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w700,
+                                            color: ColorPrimary),
                                       ),
                               ],
                             );
                           }
 
                           if (state is GetCustomerNumberResponseLoadingstate) {
-                            return Container(
-                              height: 40,
-                              child: CircularProgressIndicator(
-                                backgroundColor: ColorPrimary,
-                              ),
+                            return CircularProgressIndicator(
+                              backgroundColor: ColorPrimary,
                             );
                           }
                           return Row(
@@ -136,22 +144,30 @@ class _BillingScreenState extends State<BillingScreen> {
                               )),
                               Text(
                                 "  0.0",
-                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: ColorPrimary),
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                    color: ColorPrimary),
                               ),
                             ],
                           );
                         },
                       ),
-                      BlocConsumer<CustomerNumberResponseBloc, CustomerNumberResponseState>(
+                      BlocConsumer<CustomerNumberResponseBloc,
+                          CustomerNumberResponseState>(
                         listener: (context, state) {},
                         builder: (context, state) {
                           return Container(
                             child: TextFormField(
                                 controller: mobileController,
                                 keyboardType: TextInputType.number,
-                                validator: (numb) => Validator.validateMobile(numb!, context),
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
-                                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                validator: (numb) =>
+                                    Validator.validateMobile(numb!, context),
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
                                 maxLength: 10,
                                 decoration: const InputDecoration(
                                   hintText: 'Enter Customer phone number',
@@ -159,16 +175,26 @@ class _BillingScreenState extends State<BillingScreen> {
                                   counterText: "",
                                   contentPadding: EdgeInsets.all(0),
                                   fillColor: Colors.transparent,
-                                  enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: ColorTextPrimary, width: 1.5)),
-                                  focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
-                                  border: UnderlineInputBorder(borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
+                                  enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: ColorTextPrimary, width: 1.5)),
+                                  focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: ColorPrimary, width: 1.5)),
+                                  border: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: ColorPrimary, width: 1.5)),
                                 ),
                                 onChanged: (length) {
                                   if (mobileController.text.length == 10) {
-                                    customerNumberResponseBloc.add(GetCustomerNumberResponseEvent(mobile: mobileController.text));
+                                    customerNumberResponseBloc.add(
+                                        GetCustomerNumberResponseEvent(
+                                            mobile: mobileController.text));
                                   }
                                   if (mobileController.text.length == 9) {
-                                    customerNumberResponseBloc.add(GetCustomerNumberResponseEvent(mobile: mobileController.text));
+                                    customerNumberResponseBloc.add(
+                                        GetCustomerNumberResponseEvent(
+                                            mobile: mobileController.text));
                                   }
                                 }),
                           );
@@ -189,10 +215,14 @@ class _BillingScreenState extends State<BillingScreen> {
                                             coin: coins,
                                           )));
                             } else {
-                              Fluttertoast.showToast(msg: "$message", backgroundColor: ColorPrimary);
+                              Fluttertoast.showToast(
+                                  msg: "$message",
+                                  backgroundColor: ColorPrimary);
                             }
                           } else {
-                            Fluttertoast.showToast(msg: "Please Enter vailid Number first", backgroundColor: ColorPrimary);
+                            Fluttertoast.showToast(
+                                msg: "Please Enter vailid Number first",
+                                backgroundColor: ColorPrimary);
                           }
                         },
                         child: Container(
@@ -205,7 +235,8 @@ class _BillingScreenState extends State<BillingScreen> {
                               Icon(Icons.search),
                               Text(
                                 "  Search All Products",
-                                style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                                style: TextStyle(
+                                    fontSize: 17, fontWeight: FontWeight.bold),
                               )
                             ],
                           ),
@@ -216,12 +247,14 @@ class _BillingScreenState extends State<BillingScreen> {
                       ),
                       Text(
                         "Search By Category",
-                        style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 17, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
                         height: 10,
                       ),
-                      BlocConsumer<CustomerNumberResponseBloc, CustomerNumberResponseState>(
+                      BlocConsumer<CustomerNumberResponseBloc,
+                          CustomerNumberResponseState>(
                         listener: (context, state) {
                           if (state is GetCategoryByVendorIdState) {
                             log("category chl gya");
@@ -231,12 +264,15 @@ class _BillingScreenState extends State<BillingScreen> {
                             //     msg: state.message);
                           }
                           if (state is GetCategoryByVendorIdFailureState) {
-                            Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
+                            Fluttertoast.showToast(
+                                msg: state.message,
+                                backgroundColor: ColorPrimary);
                           }
                         },
                         builder: (context, state) {
                           if (state is CustomerNumberResponseIntialState) {
-                            customerNumberResponseBloc.add(GetVendorCategoryEvent());
+                            customerNumberResponseBloc
+                                .add(GetVendorCategoryEvent());
                           }
                           if (state is GetCategoryByVendorIdState) {
                             category = state.data!;
@@ -265,7 +301,11 @@ class _BillingScreenState extends State<BillingScreen> {
                   right: 15,
                   child: InkWell(
                     onTap: () {
-                      Navigator.push(context, PageTransition(child: AddProductScreen(), type: PageTransitionType.fade));
+                      Navigator.push(
+                          context,
+                          PageTransition(
+                              child: AddProductScreen(),
+                              type: PageTransitionType.fade));
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width,
@@ -277,7 +317,10 @@ class _BillingScreenState extends State<BillingScreen> {
                       child: Center(
                           child: Text(
                         "+ Add New Product",
-                        style: TextStyle(color: ColorPrimary, fontSize: 18, fontWeight: FontWeight.w600),
+                        style: TextStyle(
+                            color: ColorPrimary,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600),
                       )),
                     ),
                   ),
@@ -308,10 +351,13 @@ class _BillingScreenState extends State<BillingScreen> {
                           ),
                           type: PageTransitionType.fade));
                 } else {
-                  Fluttertoast.showToast(msg: "$message", backgroundColor: ColorPrimary);
+                  Fluttertoast.showToast(
+                      msg: "$message", backgroundColor: ColorPrimary);
                 }
               } else {
-                Fluttertoast.showToast(msg: "Please Enter Vailid Number first", backgroundColor: ColorPrimary);
+                Fluttertoast.showToast(
+                    msg: "Please Enter Vailid Number first",
+                    backgroundColor: ColorPrimary);
               }
             },
             child: Container(
@@ -345,7 +391,8 @@ class _BillingScreenState extends State<BillingScreen> {
                         //colorBlendMode: BlendMode.clear,
                         fit: BoxFit.contain);
                   },
-                  progressIndicatorBuilder: (context, url, downloadProgress) => Icon(
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      Icon(
                     Icons.image,
                     color: ColorPrimary,
                   ),
@@ -356,7 +403,10 @@ class _BillingScreenState extends State<BillingScreen> {
                   transform: Matrix4.translationValues(0, -2, 0),
                   child: Text(
                     "${category[index].categoryName}",
-                    style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600),
                   ),
                 ),
                 // trailing: ButtonTheme(

@@ -102,7 +102,8 @@ class _BillingProductsState extends State<BillingProducts> {
           }
           if (state is EditBillingProductState) {
             productList[state.index].sellingPrice =
-                state.price.toStringAsFixed(2);
+                ((state.price) / widget.billingItemList[state.index].count)
+                    .toStringAsFixed(2);
 
             print(
                 "productList[state.index].sellingPrice-->${productList[state.index].sellingPrice}");
@@ -262,16 +263,16 @@ class _BillingProductsState extends State<BillingProducts> {
                                                   "assets/images/edit.png"),
                                             ),
                                           ),
-                                          Text(
-                                            " \u20B9",
-                                          ),
-                                          Text(
-                                              "${double.parse(productList[index].mrp) * productList[index].count}",
-                                              style: TextStyle(
-                                                  color: Colors.grey,
-                                                  decoration: TextDecoration
-                                                      .lineThrough,
-                                                  fontSize: 14)),
+                                          // Text(
+                                          //   " \u20B9",
+                                          // ),
+                                          // Text(
+                                          //     "${double.parse(productList[index].mrp) * productList[index].count}",
+                                          //     style: TextStyle(
+                                          //         color: Colors.grey,
+                                          //         decoration: TextDecoration
+                                          //             .lineThrough,
+                                          //         fontSize: 14)),
                                         ]),
                                   ),
                                   Row(
@@ -285,11 +286,14 @@ class _BillingProductsState extends State<BillingProducts> {
                                           child: Image.asset(
                                               "assets/images/point.png"),
                                         ),
-                                        Text(
-                                            " ${double.parse(productList[index].earningCoins) * productList[index].count}",
-                                            style: TextStyle(
-                                                color: ColorPrimary,
-                                                fontSize: 15)),
+                                        AutoSizeText(
+                                          " ${(double.parse(productList[index].earningCoins) * productList[index].count).toStringAsFixed(2)}",
+                                          style: TextStyle(
+                                            color: ColorPrimary,
+                                          ),
+                                          maxFontSize: 15,
+                                          minFontSize: 12,
+                                        ),
                                         SizedBox(
                                           width: 5,
                                         )

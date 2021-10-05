@@ -10,7 +10,8 @@ class EditBillingProductsEvent extends BillingProductsEvent {
   final double price;
   final double earningCoin;
 
-  EditBillingProductsEvent({required this.price, required this.earningCoin, required this.index});
+  EditBillingProductsEvent(
+      {required this.price, required this.earningCoin, required this.index});
 
   @override
   List<Object?> get props => [price, index];

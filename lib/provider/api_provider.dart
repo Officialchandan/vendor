@@ -17,6 +17,7 @@ import 'package:vendor/model/get_size_response.dart';
 import 'package:vendor/model/get_sub_category_response.dart';
 import 'package:vendor/model/get_unit_response.dart';
 import 'package:vendor/model/get_vendorcategory_id.dart';
+import 'package:vendor/model/hourly_sale_amount.dart';
 import 'package:vendor/model/login_otp.dart';
 import 'package:vendor/model/login_response.dart';
 import 'package:vendor/model/monthly_sale_amount.dart';
@@ -742,6 +743,32 @@ class ApiProvider {
       }
       print("Exception occurred: $message stackTrace: $error");
       return MonthlySellAmountResponse(success: false, message: message);
+    }
+  }
+
+  Future<HourlySellAmountResponse> getHourlySaleAmount() async {
+    try {
+      Map input = HashMap<String, dynamic>();
+      log("------->res");
+      input["vendor_id"] =
+          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+
+      Response res = await dio.post(
+        Endpoint.GET_HOURLY_SAIE_AMOUNT,
+        data: input,
+      );
+      log("------->$res");
+      return HourlySellAmountResponse.fromJson(res.toString());
+    } catch (error, stacktrace) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return HourlySellAmountResponse(success: false, message: message);
     }
   }
 }

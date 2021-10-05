@@ -4,6 +4,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:vendor/model/daily_sale_amount.dart';
+import 'package:vendor/model/hourly_sale_amount.dart';
 import 'package:vendor/model/monthly_sale_amount.dart';
 import 'package:vendor/provider/api_provider.dart';
 import 'package:vendor/utility/color.dart';
@@ -755,7 +756,7 @@ class _SaleAmountState extends State<SaleAmount> {
     final List<GDPDatas> chartData = [
       GDPDatas(
         '${data!.month}',
-        double.parse(data!.saleAmount.toString()),
+        double.parse(data.saleAmount.toString()),
       ),
       GDPDatas(' ', 0),
       GDPDatas(
@@ -766,11 +767,11 @@ class _SaleAmountState extends State<SaleAmount> {
     return chartData;
   }
 
-  List<GDPDatass> getChartDatass(MonthlySellAmountData? data) {
+  List<GDPDatass> getChartDatass(HourlySellAmountData? data) {
     final List<GDPDatass> chartData = [
       GDPDatass(
-        '${data!.month}',
-        double.parse(data.saleAmount.toString()),
+        '${data!.saleAmount[0].hourCreatedAt}',
+        double.parse(data.saleAmount[0].sumTotal.toString()),
       ),
       GDPDatass(' ', 0),
       GDPDatass(
