@@ -656,7 +656,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                             child: BillingProducts(
                                               billingItemList: product,
                                               mobile: widget.mobile,
-                                              coin: widget.coin,
+                                              coin: double.parse(widget.coin),
                                             ),
                                             type: PageTransitionType.fade));
                                   }
