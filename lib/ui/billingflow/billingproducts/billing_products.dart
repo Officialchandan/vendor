@@ -105,6 +105,7 @@ class _BillingProductsState extends State<BillingProducts> {
                 ((state.price) / widget.billingItemList[state.index].count)
                     .toStringAsFixed(2);
 
+            productList[state.index].earningCoins = state.earningCoin.toStringAsFixed(2);
             print(
                 "productList[state.index].sellingPrice-->${productList[state.index].sellingPrice}");
             productList[state.index].earningCoins =
@@ -612,8 +613,7 @@ class _BillingProductsState extends State<BillingProducts> {
 
   Future<void> billingProducts(BuildContext context) async {
     Map<String, dynamic> input = HashMap<String, dynamic>();
-    input["vendor_id"] =
-        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     input["mobile"] = widget.mobile;
     input["address_id"] = "";
     input["payment_method"] = "cash";
@@ -811,8 +811,7 @@ class _DialogState extends State<Dialog> {
                     padding: const EdgeInsets.all(8.0),
                     textColor: Colors.white,
                     color: ColorPrimary,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                     onPressed: () {
                       Navigator.push(
                           context,

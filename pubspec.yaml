@@ -71,6 +71,10 @@ dependencies:
   auto_size_text: ^3.0.0-nullsafety.0
 #LOADER
   flutter_easyloading:
+
+  syncfusion_flutter_xlsio:
+  open_file:
+
 #GRAFH
   syncfusion_flutter_charts: ^19.2.48
 
