@@ -19,9 +19,14 @@ class CustomerNumberResponseBloc
   Stream<CustomerNumberResponseState> mapEventToState(
       CustomerNumberResponseEvent event) async* {
     if (event is GetCustomerNumberResponseEvent) {
-      yield* getCustomerNumberResponse(
-        event.mobile,
-      );
+      if (event.mobile.length != 10) {
+        yield GetCustomerNumberResponseFailureState(
+            message: "Mobile Number Invalid", succes: false);
+      } else {
+        yield* getCustomerNumberResponse(
+          event.mobile,
+        );
+      }
     }
     if (event is GetVendorCategoryEvent) {
       yield* getVendorCategoryByIdResponse();

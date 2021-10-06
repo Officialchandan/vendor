@@ -6,7 +6,7 @@ class CustomerNumberResponseEvent extends Equatable {
 }
 
 class GetCustomerNumberResponseEvent extends CustomerNumberResponseEvent {
-  final mobile;
+  final String mobile;
   GetCustomerNumberResponseEvent({required this.mobile});
 }
 

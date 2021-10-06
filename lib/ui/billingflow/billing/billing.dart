@@ -38,6 +38,24 @@ class _BillingScreenState extends State<BillingScreen> {
     super.initState();
   }
 
+  Widget show() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Container(
+            child: Image.asset(
+          "assets/images/point.png",
+          scale: 2,
+        )),
+        Text(
+          "  0.0",
+          style: TextStyle(
+              fontSize: 20, fontWeight: FontWeight.w700, color: ColorPrimary),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider<CustomerNumberResponseBloc>(
@@ -147,25 +165,8 @@ class _BillingScreenState extends State<BillingScreen> {
                                 ),
                               ],
                             );
-                            ;
                           }
-                          return Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Container(
-                                  child: Image.asset(
-                                "assets/images/point.png",
-                                scale: 2,
-                              )),
-                              Text(
-                                "  0.0",
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700,
-                                    color: ColorPrimary),
-                              ),
-                            ],
-                          );
+                          return show();
                         },
                       ),
                       BlocConsumer<CustomerNumberResponseBloc,
@@ -206,11 +207,11 @@ class _BillingScreenState extends State<BillingScreen> {
                                         GetCustomerNumberResponseEvent(
                                             mobile: mobileController.text));
                                   }
-                                  // if (mobileController.text.length == 9) {
-                                  //   customerNumberResponseBloc.add(
-                                  //       GetCustomerNumberResponseEvent(
-                                  //           mobile: mobileController.text));
-                                  // }
+                                  if (mobileController.text.length == 9) {
+                                    customerNumberResponseBloc.add(
+                                        GetCustomerNumberResponseEvent(
+                                            mobile: mobileController.text));
+                                  }
                                 }),
                           );
                         },
@@ -300,46 +301,50 @@ class _BillingScreenState extends State<BillingScreen> {
                               ),
                             );
                           }
-                          return Container(
-                              color: Colors.transparent,
-                              padding: EdgeInsets.only(bottom: 80),
-                              height: MediaQuery.of(context).size.height * 0.62,
-                              child: categoryListWidget(category));
+                          return Stack(children: [
+                            Container(
+                                color: Colors.transparent,
+                                padding: EdgeInsets.only(bottom: 80),
+                                height:
+                                    MediaQuery.of(context).size.height * 0.62,
+                                child: categoryListWidget(category)),
+                            Positioned(
+                              bottom: 110,
+                              left: 15,
+                              right: 15,
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      PageTransition(
+                                          child: AddProductScreen(),
+                                          type: PageTransitionType.fade));
+                                },
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                          width: 2, color: ColorPrimary),
+                                      color: Colors.white),
+                                  child: Center(
+                                      child: Text(
+                                    "+ Add New Product",
+                                    style: TextStyle(
+                                        color: ColorPrimary,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600),
+                                  )),
+                                ),
+                              ),
+                            )
+                          ]);
                         },
                       ),
                     ],
                   ),
                 ),
-                Positioned(
-                  bottom: 10,
-                  left: 15,
-                  right: 15,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          PageTransition(
-                              child: AddProductScreen(),
-                              type: PageTransitionType.fade));
-                    },
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 50,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(width: 2, color: ColorPrimary),
-                          color: Colors.white),
-                      child: Center(
-                          child: Text(
-                        "+ Add New Product",
-                        style: TextStyle(
-                            color: ColorPrimary,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600),
-                      )),
-                    ),
-                  ),
-                )
               ]),
             ),
           );
@@ -350,10 +355,11 @@ class _BillingScreenState extends State<BillingScreen> {
 
   Widget categoryListWidget(List<GetVendorCategoryByIdData> category) {
     return ListView.builder(
+        padding: EdgeInsets.only(bottom: 80),
         itemCount: category.length,
         itemBuilder: (context, index) {
           return InkWell(
-            focusColor: Colors.transparent,
+            //focusColor: Colors.transparent,
             hoverColor: Colors.transparent,
             highlightColor: Colors.transparent,
             splashColor: Colors.transparent,

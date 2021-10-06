@@ -38,4 +38,5 @@ class Endpoint {
   static const String GENERATE_REPORT = "generateReports";
   static const String GET_HOURLY_SAIE_AMOUNT = "hourlySaleAmount";
   static const String GET_LOG_OUT = "logout";
+  static const String GET_VENDOR_PROFILE = "getVendorDetails";
 }

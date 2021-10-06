@@ -25,6 +25,7 @@ import 'package:vendor/model/monthly_sale_amount.dart';
 import 'package:vendor/model/product_by_category_response.dart';
 import 'package:vendor/model/product_variant_response.dart';
 import 'package:vendor/model/upload_image_response.dart';
+import 'package:vendor/model/vendor_profile_response.dart';
 import 'package:vendor/model/verify_otp.dart';
 import 'package:vendor/provider/Endpoint.dart';
 import 'package:vendor/provider/server_error.dart';
@@ -770,6 +771,30 @@ class ApiProvider {
       }
       print("Exception occurred: $message stackTrace: $error");
       return LogOutResponse(success: false);
+    }
+  }
+  Future<VendorDetailResponse> getVendorProfileDetail() async {
+    try {
+      Map input = HashMap<String, dynamic>();
+
+      input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+
+      Response res = await dio.post(
+        Endpoint.GET_VENDOR_PROFILE,
+        data: input,
+      );
+
+      return VendorDetailResponse.fromJson(res.toString());
+    } catch (error, stacktrace) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return VendorDetailResponse(success: false, message: message);
     }
   }
 }
