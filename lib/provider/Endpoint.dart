@@ -32,4 +32,5 @@ class Endpoint {
   static const String GET_DAILY_SALE_AMOUNT = "dailySaleAmount";
   static const String GET_MONTHLY_SAIE_AMOUNT = "monthlySaleAmount";
   static const String GET_HOURLY_SAIE_AMOUNT = "hourlySaleAmount";
+  static const String GET_LOG_OUT = "logout";
 }

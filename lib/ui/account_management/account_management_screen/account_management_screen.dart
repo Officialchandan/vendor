@@ -1,5 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:vendor/model/log_out.dart';
+import 'package:vendor/provider/api_provider.dart';
 import 'package:vendor/ui/account_management/delivery_setting/delivery_setting.dart';
 import 'package:vendor/ui/account_management/discount_codes/discounts_codes.dart';
 import 'package:vendor/ui/account_management/settings/settings.dart';
@@ -8,6 +14,8 @@ import 'package:vendor/ui/home/home.dart';
 import 'package:vendor/ui/inventory/add_product/add_product_screen.dart';
 import 'package:vendor/ui/login/login_screen.dart';
 import 'package:vendor/utility/color.dart';
+import 'package:vendor/utility/network.dart';
+import 'package:vendor/utility/sharedpref.dart';
 
 // ignore: camel_case_types
 class AccountManagementScreen extends StatefulWidget {
@@ -226,11 +234,32 @@ logoutDialog(context) {
               child: Text("Logout",
                   style: TextStyle(
                       color: Color(0xfff4511e), fontWeight: FontWeight.w600)),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
-                );
+              onPressed: () async {
+                log("ndndnd");
+                LogOutResponse logoutData = await ApiProvider().getLogOut();
+                print("kai kroge +${logoutData.success}");
+                await SharedPref.setBooleanPreference(SharedPref.LOGIN, false);
+                print("kai kroge +${logoutData.success}");
+                if (await Network.isConnected()) {
+                  SystemChannels.textInput.invokeMethod("TextInput.hide");
+                  print("kai kroge +");
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()),
+                      ModalRoute.withName("/"));
+
+                  Fluttertoast.showToast(
+                      backgroundColor: ColorPrimary,
+                      textColor: Colors.white,
+                      msg: "Logout Successfully"
+                      // timeInSecForIos: 3
+                      );
+                } else {
+                  Fluttertoast.showToast(
+                      backgroundColor: ColorPrimary,
+                      textColor: Colors.white,
+                      msg: "Please turn on  internet");
+                }
               },
             ),
           ],

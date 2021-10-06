@@ -105,7 +105,8 @@ class _BillingProductsState extends State<BillingProducts> {
                 ((state.price) / widget.billingItemList[state.index].count)
                     .toStringAsFixed(2);
 
-            productList[state.index].earningCoins = state.earningCoin.toStringAsFixed(2);
+            productList[state.index].earningCoins =
+                state.earningCoin.toStringAsFixed(2);
             print(
                 "productList[state.index].sellingPrice-->${productList[state.index].sellingPrice}");
             productList[state.index].earningCoins =
@@ -442,168 +443,171 @@ class _BillingProductsState extends State<BillingProducts> {
             );
           }),
           bottomNavigationBar: Container(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                BlocBuilder<BillingProductsBloc, BillingProductsState>(
-                    builder: (context, state) {
-                  if (state is IntitalBillingProductstate) {
-                    calculateAmounts(productList);
-                  }
-                  return Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 10.0, right: 10.0, top: 15, bottom: 5),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Total Pay Amount",
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w700),
-                              ),
-                              Row(
-                                children: [
-                                  Text("\u20B9 ",
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w700,
-                                          color: ColorPrimary)),
-                                  Text("$totalPay",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w700,
-                                          color: ColorPrimary)),
-                                ],
-                              ),
-                            ]),
-                      ),
-                      Divider(
-                        height: 1,
-                        color: ColorTextPrimary,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 10.0, right: 10.0, top: 15, bottom: 5),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Redeem Coins",
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w700),
-                              ),
-                              Row(
-                                children: [
-                                  Container(
-                                      child: Image.asset(
-                                    "assets/images/point.png",
-                                    scale: 2.5,
-                                  )),
-                                  Text(" $redeemCoins",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w700,
-                                          color: ColorPrimary)),
-                                ],
-                              ),
-                            ]),
-                      ),
-                      Divider(
-                        height: 1,
-                        color: ColorTextPrimary,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 10.0, right: 10.0, top: 15, bottom: 5),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Earn Coins",
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w700),
-                              ),
-                              Row(
-                                children: [
-                                  Container(
-                                      child: Image.asset(
-                                    "assets/images/point.png",
-                                    scale: 2.5,
-                                  )),
-                                  Text(" $earnCoins",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w700,
-                                          color: ColorPrimary)),
-                                ],
-                              ),
-                            ]),
-                      ),
-                    ],
-                  );
-                }),
-                BlocConsumer<BillingProductsBloc, BillingProductsState>(
-                  listener: (context, state) {
-                    if (state is PayBillingProductsState) {
-                      message = state.message;
-                      status = state.succes;
-                      otpVerifyList = state.data;
-                      log("${otpVerifyList!.otp}");
-                      _displayDialog(
-                          context, 0, 1, "Please Enter OTP", "Enter OTP");
+            child: IntrinsicHeight(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  BlocBuilder<BillingProductsBloc, BillingProductsState>(
+                      builder: (context, state) {
+                    if (state is IntitalBillingProductstate) {
+                      calculateAmounts(productList);
                     }
-                    if (state is PayBillingProductsStateFailureState) {
-                      message = state.message;
-                      Fluttertoast.showToast(
-                          msg: state.message, backgroundColor: ColorPrimary);
-                    }
-                    if (state is PayBillingProductsStateLoadingstate) {
-                      log("number chl gya");
-                    }
+                    return Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 10.0, right: 10.0, top: 15, bottom: 5),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Total Pay Amount",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                Row(
+                                  children: [
+                                    Text("\u20B9 ",
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w700,
+                                            color: ColorPrimary)),
+                                    Text("$totalPay",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w700,
+                                            color: ColorPrimary)),
+                                  ],
+                                ),
+                              ]),
+                        ),
+                        Divider(
+                          height: 1,
+                          color: ColorTextPrimary,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 10.0, right: 10.0, top: 15, bottom: 5),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Redeem Coins",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                Row(
+                                  children: [
+                                    Container(
+                                        child: Image.asset(
+                                      "assets/images/point.png",
+                                      scale: 2.5,
+                                    )),
+                                    Text(" $redeemCoins",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w700,
+                                            color: ColorPrimary)),
+                                  ],
+                                ),
+                              ]),
+                        ),
+                        Divider(
+                          height: 1,
+                          color: ColorTextPrimary,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 10.0, right: 10.0, top: 15, bottom: 5),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Earn Coins",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                Row(
+                                  children: [
+                                    Container(
+                                        child: Image.asset(
+                                      "assets/images/point.png",
+                                      scale: 2.5,
+                                    )),
+                                    Text(" $earnCoins",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w700,
+                                            color: ColorPrimary)),
+                                  ],
+                                ),
+                              ]),
+                        ),
+                      ],
+                    );
+                  }),
+                  BlocConsumer<BillingProductsBloc, BillingProductsState>(
+                    listener: (context, state) {
+                      if (state is PayBillingProductsState) {
+                        message = state.message;
+                        status = state.succes;
+                        otpVerifyList = state.data;
+                        log("${otpVerifyList!.otp}");
+                        _displayDialog(
+                            context, 0, 1, "Please Enter OTP", "Enter OTP");
+                      }
+                      if (state is PayBillingProductsStateFailureState) {
+                        message = state.message;
+                        Fluttertoast.showToast(
+                            msg: state.message, backgroundColor: ColorPrimary);
+                      }
+                      if (state is PayBillingProductsStateLoadingstate) {
+                        log("number chl gya");
+                      }
 
-                    if (state is VerifyOtpState) {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => BillingScreen()));
-                      d._displayCoinDialog(context);
-                    }
-                    if (state is VerifyOtpStateLoadingstate) {
-                      log("number chl gya");
-                    }
-                    if (state is VerifyOtpStateFailureState) {
-                      message = state.message;
-                      Fluttertoast.showToast(
-                          msg: state.message, backgroundColor: ColorPrimary);
-                    }
-                  },
-                  builder: (context, state) {
-                    return Positioned(
-                        bottom: 0,
-                        child: InkWell(
-                          onTap: () {
-                            log("==>${_textFieldController.text}");
-                            billingProducts(context);
-                          },
-                          child: Container(
-                            width: width,
-                            color: ColorPrimary,
-                            child: Center(
-                              child: Text(
-                                "SUBMIT",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              ),
+                      if (state is VerifyOtpState) {
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => BillingScreen()));
+                        d._displayCoinDialog(context);
+                      }
+                      if (state is VerifyOtpStateLoadingstate) {
+                        log("number chl gya");
+                      }
+                      if (state is VerifyOtpStateFailureState) {
+                        message = state.message;
+                        Fluttertoast.showToast(
+                            msg: state.message, backgroundColor: ColorPrimary);
+                      }
+                    },
+                    builder: (context, state) {
+                      return InkWell(
+                        onTap: () {
+                          log("==>${_textFieldController.text}");
+                          billingProducts(context);
+                        },
+                        child: Container(
+                          width: width,
+                          color: ColorPrimary,
+                          child: Center(
+                            child: Text(
+                              "SUBMIT",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
                             ),
-                            height: height * 0.07,
                           ),
-                        ));
-                  },
-                ),
-              ],
+                          height: height * 0.07,
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -613,7 +617,8 @@ class _BillingProductsState extends State<BillingProducts> {
 
   Future<void> billingProducts(BuildContext context) async {
     Map<String, dynamic> input = HashMap<String, dynamic>();
-    input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    input["vendor_id"] =
+        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     input["mobile"] = widget.mobile;
     input["address_id"] = "";
     input["payment_method"] = "cash";
@@ -755,7 +760,6 @@ class _BillingProductsState extends State<BillingProducts> {
       log("=====>${double.parse(product.sellingPrice)}");
       log("=====>${product.count}");
 
-      totalPay += double.parse(product.sellingPrice) * product.count;
       log("---$totalPay");
 
       log("=====>${double.parse(product.redeemCoins)}");
@@ -763,6 +767,10 @@ class _BillingProductsState extends State<BillingProducts> {
 
       if (product.billingcheck) {
         redeemCoins += double.parse(product.redeemCoins) * product.count;
+        log("sellingPrice=====>${double.parse(product.sellingPrice) * product.count}");
+        // totalPay -= double.parse(product.sellingPrice) * product.count;
+      } else {
+        totalPay += double.parse(product.sellingPrice) * product.count;
       }
       // if (product.billingcheck) {
       //   widget.coin -= double.parse(product.redeemCoins) * product.count;
@@ -811,7 +819,8 @@ class _DialogState extends State<Dialog> {
                     padding: const EdgeInsets.all(8.0),
                     textColor: Colors.white,
                     color: ColorPrimary,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
                     onPressed: () {
                       Navigator.push(
                           context,

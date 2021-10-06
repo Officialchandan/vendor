@@ -122,11 +122,8 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                     }
                     if (state is GetSearchLoadingState) {
                       return Center(
-                        child: Container(
-                          height: 40,
-                          child: CircularProgressIndicator(
-                            backgroundColor: ColorPrimary,
-                          ),
+                        child: CircularProgressIndicator(
+                          backgroundColor: ColorPrimary,
                         ),
                       );
                     }

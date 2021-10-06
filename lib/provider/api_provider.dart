@@ -18,6 +18,7 @@ import 'package:vendor/model/get_sub_category_response.dart';
 import 'package:vendor/model/get_unit_response.dart';
 import 'package:vendor/model/get_vendorcategory_id.dart';
 import 'package:vendor/model/hourly_sale_amount.dart';
+import 'package:vendor/model/log_out.dart';
 import 'package:vendor/model/login_otp.dart';
 import 'package:vendor/model/login_response.dart';
 import 'package:vendor/model/monthly_sale_amount.dart';
@@ -769,6 +770,26 @@ class ApiProvider {
       }
       print("Exception occurred: $message stackTrace: $error");
       return HourlySellAmountResponse(success: false, message: message);
+    }
+  }
+
+  Future<LogOutResponse> getLogOut() async {
+    try {
+      Response res = await dio.post(
+        Endpoint.GET_LOG_OUT,
+      );
+      log("------->$res");
+      return LogOutResponse.fromJson(res.toString());
+    } catch (error, stacktrace) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return LogOutResponse(success: false);
     }
   }
 }

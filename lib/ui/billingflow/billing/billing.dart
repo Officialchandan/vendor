@@ -130,9 +130,24 @@ class _BillingScreenState extends State<BillingScreen> {
                           }
 
                           if (state is GetCustomerNumberResponseLoadingstate) {
-                            return CircularProgressIndicator(
-                              backgroundColor: ColorPrimary,
+                            return Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Container(
+                                    child: Image.asset(
+                                  "assets/images/point.png",
+                                  scale: 2,
+                                )),
+                                Text(
+                                  "  0.0",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w700,
+                                      color: ColorPrimary),
+                                ),
+                              ],
                             );
+                            ;
                           }
                           return Row(
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -191,11 +206,11 @@ class _BillingScreenState extends State<BillingScreen> {
                                         GetCustomerNumberResponseEvent(
                                             mobile: mobileController.text));
                                   }
-                                  if (mobileController.text.length == 9) {
-                                    customerNumberResponseBloc.add(
-                                        GetCustomerNumberResponseEvent(
-                                            mobile: mobileController.text));
-                                  }
+                                  // if (mobileController.text.length == 9) {
+                                  //   customerNumberResponseBloc.add(
+                                  //       GetCustomerNumberResponseEvent(
+                                  //           mobile: mobileController.text));
+                                  // }
                                 }),
                           );
                         },
@@ -338,6 +353,11 @@ class _BillingScreenState extends State<BillingScreen> {
         itemCount: category.length,
         itemBuilder: (context, index) {
           return InkWell(
+            focusColor: Colors.transparent,
+            hoverColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            splashColor: Colors.transparent,
+            //  overlayColor: Colors.transparent,
             onTap: () {
               if (mobileController.text.length == 10) {
                 if (check == true) {
