@@ -13,8 +13,12 @@ class Endpoint {
   static const String GET_SIZE_BY_CATEGORY = "getSizeByCategoryId";
   static const String GET_SUB_CATEGORY = "getSubCategory";
   static const String ADD_PRODUCT_SUBCATEGORY = "addProductSubCategory";
-  static const String GET_PRODUCT_VARIANT_TYPE = "billingProducts";
-  static const String GET_BILLING_PRODUCT = "getVariants";
+  // static const String GET_PRODUCT_VARIANT_TYPE = "getProductVariants";
+
+  static const String BILLING_PRODUCT = "billingProducts";
+
+  static const String GET_PRODUCT_VARIANT_TYPE = "getVariants";
+
   static const String GET_COLORS = "getColors";
   static const String ADD_VENDOR_PRODUCT = "addVendorProduct";
   static const String EDIT_VENDOR_PRODUCT = "editVendorProduct";
@@ -27,10 +31,8 @@ class Endpoint {
   static const String SALES_RETURN = "salesReturn";
   static const String SALES_RETURN_OTP = "verifySalesReturnByOTP";
   static const String PURCHASE_RETURN = "purchaseReturn";
-  static const String GET_VERIFY_EARNING_COINOTP_VENDORID =
-      "verifyEarningCoinsByOTP";
+  static const String GET_VERIFY_EARNING_COINOTP_VENDORID = "verifyEarningCoinsByOTP";
   static const String GET_DAILY_SALE_AMOUNT = "dailySaleAmount";
   static const String GET_MONTHLY_SAIE_AMOUNT = "monthlySaleAmount";
-  static const String GET_HOURLY_SAIE_AMOUNT = "hourlySaleAmount";
-  static const String GET_LOG_OUT = "logout";
+  static const String GENERATE_REPORT = "generateReports";
 }
