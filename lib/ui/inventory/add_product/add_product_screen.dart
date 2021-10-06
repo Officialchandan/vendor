@@ -41,6 +41,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
   TextEditingController edtSubCategoryCategory = TextEditingController();
   TextEditingController edtUnit = TextEditingController();
   TextEditingController edtOptions = TextEditingController();
+  TextEditingController edtPurchasePrice = TextEditingController();
+  TextEditingController edtMrp = TextEditingController();
+  TextEditingController edtSellingPrice = TextEditingController();
+  TextEditingController edtStock = TextEditingController();
   String categoryId = "";
   String unitId = "";
   List<SubCategoryModel> subCategories = [];
@@ -95,7 +99,27 @@ class _AddProductScreenState extends State<AddProductScreen> {
               addProductBloc.add(UploadImageEvent(
                   variantId: variantImage.first.variantId!, images: variantImage.first.images!, productId: productId));
             } else {
+              Utility.showToast("Product added successfully!");
               EasyLoading.dismiss();
+              variantImage = [];
+              variantModel = ProductVariantModel();
+              variantType = [];
+              productId = "";
+              imageList = [];
+              productVariant = [];
+              categoryId = "";
+              unitId = "";
+              edtProductName.clear();
+              edtCategory.clear();
+              edtSubCategoryCategory.clear();
+              edtUnit.clear();
+              edtOptions.clear();
+              edtPurchasePrice.clear();
+              edtMrp.clear();
+              edtSellingPrice.clear();
+              edtStock.clear();
+              imgController.add(imageList);
+              // Navigator.pop(context);
             }
           }
 
@@ -233,12 +257,20 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   onTap: () {
                     showModalBottomSheet(
                         context: context,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          topRight: Radius.circular(15),
+                        )),
+                        isDismissible: false,
                         builder: (context) {
                           return CategoryBottomSheet(onSelect: (category) {
                             categoryId = category.id;
                             edtCategory.text = category.categoryName!;
                           });
-                        });
+                        }).then((value) {
+                      print("bottom sheet close");
+                    });
                   },
                   controller: edtCategory,
                   decoration: InputDecoration(
@@ -289,90 +321,99 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 // const SizedBox(
                 //   height: 15,
                 // ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        decoration: InputDecoration(labelText: "Purchase price"),
-                        onChanged: (text) {
-                          variantModel.purchasePrice = text;
-                        },
+                BlocBuilder<AddProductBloc, AddProductState>(builder: (context, state) {
+                  return Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          controller: edtPurchasePrice,
+                          decoration: InputDecoration(labelText: "Purchase price"),
+                          onChanged: (text) {
+                            variantModel.purchasePrice = text;
+                          },
+                        ),
+                        flex: 3,
                       ),
-                      flex: 3,
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    Expanded(
-                      child: TextFormField(
-                        decoration: InputDecoration(labelText: "MRP"),
-                        onChanged: (text) {
-                          variantModel.mrp = text;
-                        },
+                      SizedBox(
+                        width: 15,
                       ),
-                      flex: 2,
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    Expanded(
-                      child: TextFormField(
-                        decoration: InputDecoration(labelText: "Selling price"),
-                        onChanged: (text) {
-                          variantModel.sellingPrice = text;
-                        },
+                      Expanded(
+                        child: TextFormField(
+                          controller: edtMrp,
+                          decoration: InputDecoration(labelText: "MRP"),
+                          onChanged: (text) {
+                            variantModel.mrp = text;
+                          },
+                        ),
+                        flex: 2,
                       ),
-                      flex: 3,
-                    ),
-                  ],
-                ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Expanded(
+                        child: TextFormField(
+                          controller: edtSellingPrice,
+                          decoration: InputDecoration(labelText: "Selling price"),
+                          onChanged: (text) {
+                            variantModel.sellingPrice = text;
+                          },
+                        ),
+                        flex: 3,
+                      ),
+                    ],
+                  );
+                }),
                 const SizedBox(
                   height: 15,
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        decoration: InputDecoration(labelText: "Stock"),
-                        onChanged: (text) {
-                          variantModel.stock = text;
-                        },
+                BlocBuilder<AddProductBloc, AddProductState>(builder: (context, state) {
+                  return Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          controller: edtStock,
+                          decoration: InputDecoration(labelText: "Stock"),
+                          onChanged: (text) {
+                            variantModel.stock = text;
+                          },
+                        ),
+                        flex: 2,
                       ),
-                      flex: 2,
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    Expanded(
-                      child: TextFormField(
-                        readOnly: true,
-                        controller: edtUnit,
-                        onTap: () {
-                          if (categoryId.isEmpty) {
-                            Utility.showToast("Please select category first.");
-                            return;
-                          }
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Expanded(
+                        child: TextFormField(
+                          readOnly: true,
+                          controller: edtUnit,
+                          onTap: () {
+                            if (categoryId.isEmpty) {
+                              Utility.showToast("Please select category first.");
+                              return;
+                            }
 
-                          showModalBottomSheet(
-                              context: context,
-                              builder: (context) {
-                                return UnitBottomSheet(
-                                    categoryId: categoryId,
-                                    onSelect: (unit) {
-                                      unitId = unit.id;
-                                      edtUnit.text = unit.unitName;
-                                    });
-                              });
-                        },
-                        decoration: InputDecoration(
-                            labelText: "Unit",
-                            suffixIcon: Icon(Icons.keyboard_arrow_right_sharp),
-                            suffixIconConstraints: BoxConstraints(minWidth: 20, maxWidth: 21, minHeight: 20, maxHeight: 21)),
+                            showModalBottomSheet(
+                                context: context,
+                                builder: (context) {
+                                  return UnitBottomSheet(
+                                      categoryId: categoryId,
+                                      onSelect: (unit) {
+                                        unitId = unit.id;
+                                        edtUnit.text = unit.unitName;
+                                      });
+                                });
+                          },
+                          decoration: InputDecoration(
+                              labelText: "Unit",
+                              suffixIcon: Icon(Icons.keyboard_arrow_right_sharp),
+                              suffixIconConstraints: BoxConstraints(minWidth: 20, maxWidth: 21, minHeight: 20, maxHeight: 21)),
+                        ),
+                        flex: 2,
                       ),
-                      flex: 2,
-                    ),
-                  ],
-                ),
+                    ],
+                  );
+                }),
+
                 const SizedBox(
                   height: 15,
                 ),
