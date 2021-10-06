@@ -88,7 +88,26 @@ class _AddProductScreenState extends State<AddProductScreen> {
               addProductBloc.add(UploadImageEvent(
                   variantId: variantImage.first.variantId!, images: variantImage.first.images!, productId: productId));
             } else {
+              Utility.showToast("Product added successfully!");
               EasyLoading.dismiss();
+              variantImage = [];
+              variantModel = ProductVariantModel();
+              variantType = [];
+              productId = "";
+              imageList = [];
+              productVariant = [];
+              categoryId = "";
+              unitId = "";
+              edtProductName.clear();
+              edtCategory.clear();
+              edtSubCategoryCategory.clear();
+              edtUnit.clear();
+              edtOptions.clear();
+              edtPurchasePrice.clear();
+              edtMrp.clear();
+              edtSellingPrice.clear();
+              edtStock.clear();
+              imgController.add(imageList);
             }
           }
           if (state is UploadImageSuccessState) {
