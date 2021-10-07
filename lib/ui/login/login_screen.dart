@@ -382,12 +382,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                             loginApiOtpCall(
                                                 mobileController.text);
                                           }
+                                          // _tap = false;
                                           // _displayDialog(
                                           //     context, mobileController.text);
                                         },
                                         child: new Text(
                                           "${AppTranslations.of(context)!.text("login_key")}",
-                                          style: GoogleFonts.openSans(
+                                          style: TextStyle(
                                               fontSize: 17,
                                               fontWeight: FontWeight.w600,
                                               decoration: TextDecoration.none),

@@ -57,8 +57,9 @@ class DailySellAmountData {
   factory DailySellAmountData.fromMap(Map<String, dynamic> json) =>
       DailySellAmountData(
         today: json["today"] == null ? "" : json["today"].toString(),
-        todaySaleAmount:
-            json["today_sale_amount"] == null ? "" : json["today_sale_amount"],
+        todaySaleAmount: json["today_sale_amount"] == null
+            ? ""
+            : json["today_sale_amount"].toString(),
         yesterday:
             json["yesterday"] == null ? "" : json["yesterday"].toString(),
         yesterdaySaleAmount: json["yesterday_sale_amount"] == null

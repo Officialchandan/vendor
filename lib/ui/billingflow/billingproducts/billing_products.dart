@@ -11,10 +11,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/model/billing_product_response.dart';
 import 'package:vendor/model/product_model.dart';
-import 'package:vendor/ui/billingflow/billing/billing.dart';
+
 import 'package:vendor/ui/billingflow/billingproducts/biliing_products_bloc.dart';
 import 'package:vendor/ui/billingflow/billingproducts/biliing_products_event.dart';
 import 'package:vendor/ui/billingflow/billingproducts/biliing_products_state.dart';
+import 'package:vendor/ui/home/bottom_navigation_home.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
 
@@ -822,11 +823,12 @@ class _DialogState extends State<Dialog> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
                     onPressed: () {
-                      Navigator.push(
+                      Navigator.pushAndRemoveUntil(
                           context,
                           PageTransition(
-                              child: BillingScreen(),
-                              type: PageTransitionType.fade));
+                              child: BottomNavigationHome(),
+                              type: PageTransitionType.fade),
+                          ModalRoute.withName("/"));
                     },
                     child: new Text(
                       "DONE",

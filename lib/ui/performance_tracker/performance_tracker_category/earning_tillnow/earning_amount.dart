@@ -5,35 +5,33 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:vendor/model/daily_earning.dart';
 import 'package:vendor/model/daily_sale_amount.dart';
-import 'package:vendor/model/daily_walkin.dart';
 import 'package:vendor/model/hourly_sale_amount.dart';
 import 'package:vendor/model/monthly_earning.dart';
 import 'package:vendor/model/monthly_sale_amount.dart';
-import 'package:vendor/model/monthly_walkin.dart';
 import 'package:vendor/provider/api_provider.dart';
 import 'package:vendor/utility/color.dart';
 
-class WalkInAmount extends StatefulWidget {
-  WalkInAmount({Key? key}) : super(key: key);
+class EarningAmount extends StatefulWidget {
+  EarningAmount({Key? key}) : super(key: key);
 
   @override
-  _WalkInAmountState createState() => _WalkInAmountState();
+  _EarningAmountState createState() => _EarningAmountState();
 }
 
-class _WalkInAmountState extends State<WalkInAmount> {
+class _EarningAmountState extends State<EarningAmount> {
   TooltipBehavior? _tooltipBehavior;
-  DailyWalkinAmountResponse? resultDaily;
-  MonthlyWalkinAmountResponse? resultMonthly;
+  DailyEarningAmountResponse? resultDaily;
+  MonthlyEarningAmountResponse? resultMonthly;
 
   HourlySellAmountResponse? resultHourly;
-  Future<DailyWalkinAmountData> getDhabasDay() async {
-    resultDaily = await ApiProvider().getDailyWalkinAmount();
+  Future<DailyEarningAmountData> getDhabasDay() async {
+    resultDaily = await ApiProvider().getDailyEarningAmount();
     log('${resultDaily!.data}');
     return resultDaily!.data!;
   }
 
-  Future<MonthlyWalkinAmountData> getDhabasMonthly() async {
-    resultMonthly = await ApiProvider().getMonthlyWalkinAmount();
+  Future<MonthlyEarningAmountData> getDhabasMonthly() async {
+    resultMonthly = await ApiProvider().getMonthlyEarningAmount();
     log('${resultMonthly!.data}');
     return resultMonthly!.data!;
   }
@@ -93,7 +91,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                 ),
               ),
             ),
-            title: Text('Walkin Amount'),
+            title: Text('Earning Amount'),
             centerTitle: true,
             leading: IconButton(
                 onPressed: () {
@@ -331,7 +329,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                       borderColor: Colors.grey.shade500,
 
                                       title: ChartTitle(
-                                          text: "Walkin AMT (INR) ",
+                                          text: "Earning AMT (INR) ",
                                           textStyle: TextStyle(
                                               fontSize: 14,
                                               color: Colors.grey.shade600)),
@@ -369,7 +367,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                         //numberFormat: NumberFormat.currency(),
                                         title: AxisTitle(
                                             alignment: ChartAlignment.center,
-                                            text: "Walkin AMT (INR) ",
+                                            text: "Earning AMT (INR) ",
                                             textStyle: TextStyle(
                                                 fontSize: 11,
                                                 color: Colors.grey.shade600)),
@@ -379,7 +377,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                 ]));
                       })),
               SingleChildScrollView(
-                  child: FutureBuilder<DailyWalkinAmountData>(
+                  child: FutureBuilder<DailyEarningAmountData>(
                       future: getDhabasDay(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
@@ -444,7 +442,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: AutoSizeText(
-                                                          "  Walkin",
+                                                          "  Earning",
                                                           style: TextStyle(
                                                               fontSize: 18.0,
                                                               color:
@@ -489,7 +487,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        '  ${snapshot.data!.dailyWalkIns}',
+                                                        '  ${snapshot.data!.dailyEarning}',
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w600,
@@ -513,7 +511,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                       borderColor: Colors.grey.shade500,
 
                                       title: ChartTitle(
-                                          text: "Walkin AMT (INR) ",
+                                          text: "Earning AMT (INR) ",
                                           textStyle: TextStyle(
                                               fontSize: 14,
                                               color: Colors.grey.shade600)),
@@ -551,7 +549,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                         //numberFormat: NumberFormat.currency(),
                                         title: AxisTitle(
                                             alignment: ChartAlignment.center,
-                                            text: "Walkin AMT (INR) ",
+                                            text: "Earning AMT (INR) ",
                                             textStyle: TextStyle(
                                                 fontSize: 11,
                                                 color: Colors.grey.shade600)),
@@ -561,7 +559,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                 ]));
                       })),
               SingleChildScrollView(
-                  child: FutureBuilder<MonthlyWalkinAmountData>(
+                  child: FutureBuilder<MonthlyEarningAmountData>(
                       future: getDhabasMonthly(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
@@ -626,7 +624,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: AutoSizeText(
-                                                          "  Walkin",
+                                                          "  Earning",
                                                           style: TextStyle(
                                                               fontSize: 18.0,
                                                               color:
@@ -671,7 +669,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        '  ${snapshot.data!.monthlyWalkIns}',
+                                                        '  ${snapshot.data!.monthlyEarning}',
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w600,
@@ -695,7 +693,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                       borderColor: Colors.grey.shade500,
 
                                       title: ChartTitle(
-                                          text: "Walkin AMT (INR) ",
+                                          text: "Earning AMT (INR) ",
                                           textStyle: TextStyle(
                                               fontSize: 14,
                                               color: Colors.grey.shade600)),
@@ -733,7 +731,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                         //numberFormat: NumberFormat.currency(),
                                         title: AxisTitle(
                                             alignment: ChartAlignment.center,
-                                            text: "Walkin AMT (INR) ",
+                                            text: "Earning AMT (INR) ",
                                             textStyle: TextStyle(
                                                 fontSize: 11,
                                                 color: Colors.grey.shade600)),
@@ -749,11 +747,11 @@ class _WalkInAmountState extends State<WalkInAmount> {
     );
   }
 
-  List<GDPData> getChartData(DailyWalkinAmountData? data) {
+  List<GDPData> getChartData(DailyEarningAmountData? data) {
     final List<GDPData> chartData = [
       GDPData(
         'TODAY',
-        double.parse(data!.dailyWalkIns.toString()),
+        double.parse(data!.dailyEarning.toString()),
       ),
       GDPData(' ', 0),
       GDPData("", 0),
@@ -761,11 +759,11 @@ class _WalkInAmountState extends State<WalkInAmount> {
     return chartData;
   }
 
-  List<GDPDatas> getChartDatas(MonthlyWalkinAmountData? data) {
+  List<GDPDatas> getChartDatas(MonthlyEarningAmountData? data) {
     final List<GDPDatas> chartData = [
       GDPDatas(
         '${data!.month}',
-        double.parse(data.monthlyWalkIns.toString()),
+        double.parse(data.monthlyEarning.toString()),
       ),
       GDPDatas(' ', 0),
       GDPDatas(

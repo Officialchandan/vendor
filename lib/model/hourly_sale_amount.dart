@@ -38,10 +38,20 @@ class HourlySellAmountResponse {
 
 class HourlySellAmountData {
   HourlySellAmountData({
-    required this.saleAmount,
+    required this.key1,
+    required this.value1,
+    required this.key2,
+    required this.value2,
+    required this.key3,
+    required this.value3,
   });
 
-  List<SaleAmount> saleAmount;
+  String key1;
+  String value1;
+  String key2;
+  String value2;
+  String key3;
+  String value3;
 
   factory HourlySellAmountData.fromJson(String str) =>
       HourlySellAmountData.fromMap(json.decode(str));
@@ -50,41 +60,20 @@ class HourlySellAmountData {
 
   factory HourlySellAmountData.fromMap(Map<String, dynamic> json) =>
       HourlySellAmountData(
-        saleAmount: List<SaleAmount>.from(
-            json["Sale_amount"].map((x) => SaleAmount.fromMap(x))),
+        key1: json["key1"] == null ? "" : json["key1"].toString(),
+        value1: json["value1"] == null ? "" : json["value1"].toString(),
+        key2: json["key2"] == null ? "" : json["key2"].toString(),
+        value2: json["value2"] == null ? "" : json["value2"].toString(),
+        key3: json["key3"] == null ? "" : json["key3"].toString(),
+        value3: json["value3"] == null ? "" : json["value3"].toString(),
       );
 
   Map<String, dynamic> toMap() => {
-        "Sale_amount": saleAmount == null
-            ? null
-            : List<dynamic>.from(saleAmount.map((x) => x.toMap())),
-      };
-}
-
-class SaleAmount {
-  SaleAmount({
-    required this.hourCreatedAt,
-    required this.sumTotal,
-  });
-
-  String hourCreatedAt;
-  String sumTotal;
-
-  factory SaleAmount.fromJson(String str) =>
-      SaleAmount.fromMap(json.decode(str));
-
-  String toJson() => json.encode(toMap());
-
-  factory SaleAmount.fromMap(Map<String, dynamic> json) => SaleAmount(
-        hourCreatedAt: json["hour(created_at)"] == null
-            ? ""
-            : json["hour(created_at)"].toString(),
-        sumTotal:
-            json["sum(total)"] == null ? "" : json["sum(total)"].toString(),
-      );
-
-  Map<String, dynamic> toMap() => {
-        "hour(created_at)": hourCreatedAt == null ? null : hourCreatedAt,
-        "sum(total)": sumTotal == null ? null : sumTotal,
+        "key1": key1 == null ? null : key1,
+        "value1": value1 == null ? null : value1,
+        "key2": key2 == null ? null : key2,
+        "value2": value2 == null ? null : value2,
+        "key3": key3 == null ? null : key3,
+        "value3": value3 == null ? null : value3,
       };
 }

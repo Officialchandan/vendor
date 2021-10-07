@@ -1,25 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
+import 'package:vendor/ui/performance_tracker/performance_tracker_category/earning_tillnow/earning_amount.dart';
 import 'package:vendor/ui/performance_tracker/performance_tracker_category/sale_amount/sale_amount.dart';
+import 'package:vendor/ui/performance_tracker/performance_tracker_category/walk_in/walkin.dart';
 import 'package:vendor/ui/performance_tracker/report/view_report_screen.dart';
 import 'package:vendor/utility/color.dart';
 
 class PerformanceTrackerByCategory extends StatefulWidget {
   @override
-  _PerformanceTrackerByCategoryState createState() => _PerformanceTrackerByCategoryState();
+  _PerformanceTrackerByCategoryState createState() =>
+      _PerformanceTrackerByCategoryState();
 }
 
-class _PerformanceTrackerByCategoryState extends State<PerformanceTrackerByCategory> {
+class _PerformanceTrackerByCategoryState
+    extends State<PerformanceTrackerByCategory> {
   final options = [
-    {"title": "Sale amount", "subTitle": "click here to see Sale amount", "image": "assets/images/performance-ic1.png", "id": 1},
+    {
+      "title": "Sale amount",
+      "subTitle": "click here to see Sale amount",
+      "image": "assets/images/performance-ic1.png",
+      "id": 1
+    },
     {
       "title": "Earning till now",
       "subTitle": "Deduction after 20% of sale amount",
       "image": "assets/images/performance-ic2.png",
       "id": 2
     },
-    {"title": "Walk Ins", "subTitle": "click here to sell Walikins", "image": "assets/images/performance-ic3.png", "id": 3},
+    {
+      "title": "Walk Ins",
+      "subTitle": "click here to sell Walikins",
+      "image": "assets/images/performance-ic3.png",
+      "id": 3
+    },
   ];
   @override
   Widget build(BuildContext context) {
@@ -42,18 +56,26 @@ class _PerformanceTrackerByCategoryState extends State<PerformanceTrackerByCateg
                   child: ListTile(
                     onTap: () {
                       if (options[index]["id"] == 2) {
-                        Navigator.push(context, PageTransition(child: ViewReportScreen(), type: PageTransitionType.fade));
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: EarningAmount(),
+                                type: PageTransitionType.fade));
                       }
                       if (options[index]["id"] == 3) {
-                        // Navigator.push(
-                        //     context,
-                        //     PageTransition(
-                        //         child: MoneyDueScreen(),
-                        //         type: PageTransitionType.fade));
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: WalkInAmount(),
+                                type: PageTransitionType.fade));
                       }
 
                       if (options[index]["id"] == 1) {
-                        Navigator.push(context, PageTransition(child: SaleAmount(), type: PageTransitionType.fade));
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: SaleAmount(),
+                                type: PageTransitionType.fade));
                       }
                     },
                     leading: Image(
@@ -74,7 +96,9 @@ class _PerformanceTrackerByCategoryState extends State<PerformanceTrackerByCateg
                       width: 5,
                       decoration: BoxDecoration(
                           color: ColorPrimary,
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(5),
+                              bottomLeft: Radius.circular(5))),
                     ))
               ],
             ),
