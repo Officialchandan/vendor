@@ -626,7 +626,7 @@ class _BillingProductsState extends State<BillingProducts> {
     input["payment_code"] = "COD";
     input["total_pay"] = totalPay;
     input["total_redeem"] = redeemCoins;
-    input["order_status"] = "1";
+    input["order_status"] = "0";
 
     List<Map<String, dynamic>> billingProductList = [];
 

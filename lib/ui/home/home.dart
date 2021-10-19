@@ -4,6 +4,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:vendor/ui/home/share.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/routs.dart';
 
@@ -67,25 +68,31 @@ class _HomeScreenState extends State<HomeScreen> {
               bottom: 15,
               right: 15,
             ),
-            child: Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(5))),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.share,
-                    color: ColorPrimary,
-                    size: 12,
-                  ),
-                  Text(
-                    " Share Store  ",
-                    style: TextStyle(
-                        color: ColorPrimary,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 12),
-                  )
-                ],
+            child: InkWell(
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => DemoApp()));
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.share,
+                      color: ColorPrimary,
+                      size: 12,
+                    ),
+                    Text(
+                      " Share Store  ",
+                      style: TextStyle(
+                          color: ColorPrimary,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12),
+                    )
+                  ],
+                ),
               ),
             ),
           )
@@ -196,13 +203,22 @@ class _HomeScreenState extends State<HomeScreen> {
                   type: PageTransitionType.fade,
                 ))
             : index == 2
-                ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: index)
+                ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME,
+                    arguments: index)
                 : index == 3
-                    ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: index)
+                    ? Navigator.pushNamed(
+                        context, Routes.BOTTOM_NAVIGATION_HOME,
+                        arguments: index)
                     : index == 4
-                        ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: index)
+                        ? Navigator.pushNamed(
+                            context, Routes.BOTTOM_NAVIGATION_HOME,
+                            arguments: index)
                         : index == 5
-                            ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: index)
-                            : Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: index);
+                            ? Navigator.pushNamed(
+                                context, Routes.BOTTOM_NAVIGATION_HOME,
+                                arguments: index)
+                            : Navigator.pushNamed(
+                                context, Routes.BOTTOM_NAVIGATION_HOME,
+                                arguments: index);
   }
 }

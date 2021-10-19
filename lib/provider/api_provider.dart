@@ -11,6 +11,8 @@ import 'package:vendor/model/customer_number_response.dart';
 import 'package:vendor/model/daily_earning.dart';
 import 'package:vendor/model/daily_sale_amount.dart';
 import 'package:vendor/model/daily_walkin.dart';
+import 'package:vendor/model/direct_billing.dart';
+import 'package:vendor/model/direct_billing_otp.dart';
 import 'package:vendor/model/get_brands_response.dart';
 import 'package:vendor/model/get_categories_response.dart';
 import 'package:vendor/model/get_colors_response.dart';
@@ -19,7 +21,9 @@ import 'package:vendor/model/get_size_response.dart';
 import 'package:vendor/model/get_sub_category_response.dart';
 import 'package:vendor/model/get_unit_response.dart';
 import 'package:vendor/model/get_vendorcategory_id.dart';
+import 'package:vendor/model/hourly_earning.dart';
 import 'package:vendor/model/hourly_sale_amount.dart';
+import 'package:vendor/model/hourly_walkin.dart';
 import 'package:vendor/model/log_out.dart';
 import 'package:vendor/model/login_otp.dart';
 import 'package:vendor/model/login_response.dart';
@@ -751,7 +755,33 @@ class ApiProvider {
     }
   }
 
-  Future<HourlySellAmountResponse> getHourlySaleAmount() async {
+  Future<HourlySaleAmountResponse> getHourlySaleAmount() async {
+    //try {
+    Map input = HashMap<String, dynamic>();
+    log("------->res");
+    input["vendor_id"] =
+        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+
+    Response res = await dio.post(
+      Endpoint.GET_HOURLY_SAIE_AMOUNT,
+      data: input,
+    );
+    log("------->$res");
+    return HourlySaleAmountResponse.fromJson(res.toString());
+    // } catch (error, stacktrace) {
+    //   String message = "";
+    //   if (error is DioError) {
+    //     ServerError e = ServerError.withError(error: error);
+    //     message = e.getErrorMessage();
+    //   } else {
+    //     message = "Please try again later!";
+    //   }
+    //   print("Exception occurred: $message stackTrace: $error");
+    //   return HourlySaleAmountResponse(success: false, message: message);
+    // }
+  }
+
+  Future<HourlyEarningAmountResponse> getHourlyEarningAmount() async {
     try {
       Map input = HashMap<String, dynamic>();
       log("------->res");
@@ -759,11 +789,11 @@ class ApiProvider {
           await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       Response res = await dio.post(
-        Endpoint.GET_HOURLY_SAIE_AMOUNT,
+        Endpoint.GET_HOURLY_EARNING_AMOUNT,
         data: input,
       );
       log("------->$res");
-      return HourlySellAmountResponse.fromJson(res.toString());
+      return HourlyEarningAmountResponse.fromJson(res.toString());
     } catch (error, stacktrace) {
       String message = "";
       if (error is DioError) {
@@ -773,34 +803,60 @@ class ApiProvider {
         message = "Please try again later!";
       }
       print("Exception occurred: $message stackTrace: $error");
-      return HourlySellAmountResponse(success: false, message: message);
+      return HourlyEarningAmountResponse(success: false, message: message);
+    }
+  }
+
+  Future<HourlyWalkinAmountResponse> getHourlyWalkinAmount() async {
+    try {
+      Map input = HashMap<String, dynamic>();
+      log("------->res");
+      input["vendor_id"] =
+          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+
+      Response res = await dio.post(
+        Endpoint.GET_HOURLY_WALKIN_AMOUNT,
+        data: input,
+      );
+      log("------->$res");
+      return HourlyWalkinAmountResponse.fromJson(res.toString());
+    } catch (error, stacktrace) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return HourlyWalkinAmountResponse(success: false, message: message);
     }
   }
 
   Future<DailyEarningAmountResponse> getDailyEarningAmount() async {
-    try {
-      Map input = HashMap<String, dynamic>();
-      log("------->res");
-      input["vendor_id"] =
-          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    //  try {
+    Map input = HashMap<String, dynamic>();
+    log("------->res");
+    input["vendor_id"] =
+        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
-      Response res = await dio.post(
-        Endpoint.GET_DAILY_EARNING_AMOUNT,
-        data: input,
-      );
-      log("------->$res");
-      return DailyEarningAmountResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
-      String message = "";
-      if (error is DioError) {
-        ServerError e = ServerError.withError(error: error);
-        message = e.getErrorMessage();
-      } else {
-        message = "Please try again later!";
-      }
-      print("Exception occurred: $message stackTrace: $error");
-      return DailyEarningAmountResponse(success: false, message: message);
-    }
+    Response res = await dio.post(
+      Endpoint.GET_DAILY_EARNING_AMOUNT,
+      data: input,
+    );
+    log("------->$res");
+    return DailyEarningAmountResponse.fromJson(res.toString());
+    // } catch (error, stacktrace) {
+    //   String message = "";
+    //   if (error is DioError) {
+    //     ServerError e = ServerError.withError(error: error);
+    //     message = e.getErrorMessage();
+    //   } else {
+    //     message = "Please try again later!";
+    //   }
+    //   print("Exception occurred: $message stackTrace: $error");
+    //   return DailyEarningAmountResponse(success: false, message: message);
+    // }
   }
 
   Future<MonthlyEarningAmountResponse> getMonthlyEarningAmount() async {
@@ -924,6 +980,45 @@ class ApiProvider {
       }
       print("Exception occurred: $message stackTrace: $error");
       return VendorDetailResponse(success: false, message: message);
+    }
+  }
+
+  Future<DirectBillingResponse> getDirectBilling(
+      Map<String, dynamic> input) async {
+    try {
+      Response res = await dio.post(Endpoint.GET_DIRECT_BILLING, data: input);
+      log("===>billing$res");
+      return DirectBillingResponse.fromJson(res.toString());
+    } catch (error, stacktrace) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return DirectBillingResponse(success: false, message: message);
+    }
+  }
+
+  Future<DirectBillingOtpResponse> getDirectBillingOtp(
+      Map<String, dynamic> input) async {
+    try {
+      Response res =
+          await dio.post(Endpoint.GET_DIRECT_BILLING_OTP, data: input);
+      log("===>otp$res");
+      return DirectBillingOtpResponse.fromJson(res.toString());
+    } catch (error, stacktrace) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return DirectBillingOtpResponse(success: false, message: message);
     }
   }
 }

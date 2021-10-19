@@ -54,8 +54,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         if (result.success) {
           SharedPref.setBooleanPreference(SharedPref.LOGIN, true);
           SharedPref.setStringPreference(SharedPref.TOKEN, result.token!);
-          SharedPref.setIntegerPreference(SharedPref.VENDORID, result.vendorId!);
-          baseOptions.headers.addAll({"Authorization": "bearer ${result.token!}"});
+          SharedPref.setIntegerPreference(
+              SharedPref.VENDORID, result.vendorId!);
+          SharedPref.setIntegerPreference(
+              SharedPref.USERSTATUS, result.vendorStatus!);
+
+          baseOptions.headers
+              .addAll({"Authorization": "bearer ${result.token!}"});
           yield GetLoginOtpState(result.message);
         } else {
           yield GetLoginFailureState(message: result.message);

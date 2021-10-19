@@ -71,7 +71,6 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                   title: TextFormField(
                     cursorColor: ColorPrimary,
                     controller: _searchController,
-                    keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,

@@ -12,10 +12,12 @@ import 'package:vendor/model/get_vendorcategory_id.dart';
 import 'package:vendor/ui/billingflow/billing/billing_bloc.dart';
 import 'package:vendor/ui/billingflow/billing/billing_event.dart';
 import 'package:vendor/ui/billingflow/billing/billing_state.dart';
+import 'package:vendor/ui/billingflow/direct_billing/direct_billing.dart';
 import 'package:vendor/ui/billingflow/search_all/search_all_product.dart';
 import 'package:vendor/ui/billingflow/search_by_categories/search_by_categories.dart';
 import 'package:vendor/ui/home/home.dart';
 import 'package:vendor/utility/color.dart';
+import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/validator.dart';
 
 class BillingScreen extends StatefulWidget {
@@ -34,7 +36,7 @@ class _BillingScreenState extends State<BillingScreen> {
   var check;
   var coins;
   var message;
-
+  var userStatus;
   @override
   void initState() {
     super.initState();
@@ -72,17 +74,51 @@ class _BillingScreenState extends State<BillingScreen> {
         create: (context) => customerNumberResponseBloc,
         child: BlocConsumer<CustomerNumberResponseBloc,
             CustomerNumberResponseState>(
-          listener: (context, state) {},
+          listener: (context, state) async {
+            userStatus =
+                await SharedPref.getIntegerPreference(SharedPref.USERSTATUS);
+          },
           builder: (context, state) {
             return Scaffold(
               appBar: AppBar(
-                title: Text("Billing"),
-                leading: Text(""),
+                title: Text("Billing",
+                    style: TextStyle(fontWeight: FontWeight.w600)),
+                leadingWidth: 140,
+                leading: userStatus == 1
+                    ? Padding(
+                        padding: const EdgeInsets.only(
+                            top: 15.0, bottom: 15, left: 20),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                PageTransition(
+                                    child: DirectBilling(),
+                                    type: PageTransitionType.fade));
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(5)),
+                            child: Center(
+                              child: Text(
+                                "Direct Billing",
+                                style: TextStyle(
+                                    color: ColorPrimary,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    : Text(""),
                 centerTitle: true,
                 actions: [
                   GestureDetector(
                     onTap: () {
                       Navigator.pop(context);
+                      log("${userStatus}");
+                      log("${SharedPref.getIntegerPreference(SharedPref.VENDORID)}");
                     },
                     child: Container(
                       padding: EdgeInsets.only(right: 10),
@@ -235,11 +271,12 @@ class _BillingScreenState extends State<BillingScreen> {
                               if (check == true) {
                                 Navigator.push(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) => SearchAllProduct(
-                                              mobile: mobileController.text,
-                                              coin: coins,
-                                            )));
+                                    PageTransition(
+                                        child: SearchAllProduct(
+                                          mobile: mobileController.text,
+                                          coin: coins,
+                                        ),
+                                        type: PageTransitionType.fade));
                               } else {
                                 Fluttertoast.showToast(
                                     msg: "$message",

@@ -40,10 +40,14 @@ class DailyWalkinAmountData {
   DailyWalkinAmountData({
     required this.today,
     required this.dailyWalkIns,
+    required this.yesterday,
+    required this.yesterdayWalkIns,
   });
 
   String today;
   String dailyWalkIns;
+  String yesterday;
+  String yesterdayWalkIns;
 
   factory DailyWalkinAmountData.fromJson(String str) =>
       DailyWalkinAmountData.fromMap(json.decode(str));
@@ -52,10 +56,16 @@ class DailyWalkinAmountData {
 
   factory DailyWalkinAmountData.fromMap(Map<String, dynamic> json) =>
       DailyWalkinAmountData(
-        today: json["today"] == null ? "" : json["today"].toString(),
+        today: json["today"] == null ? "TODAY" : json["today"].toString(),
         dailyWalkIns: json["daily_walkIns"] == null
-            ? ""
+            ? "0"
             : json["daily_walkIns"].toString(),
+        yesterday: json["yesterday"] == null
+            ? "YESTERDAY"
+            : json["yesterday"].toString(),
+        yesterdayWalkIns: json["yesterday_walkIns"] == null
+            ? "0"
+            : json["yesterday_walkIns"].toString(),
       );
 
   Map<String, dynamic> toMap() => {

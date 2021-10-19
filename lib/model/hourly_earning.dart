@@ -1,11 +1,11 @@
 // To parse this JSON data, do
 //
-//     final hourlySaleAmountResponse = hourlySaleAmountResponseFromMap(jsonString);
+//     final hourlyEarningAmountResponse = hourlyEarningAmountResponseFromMap(jsonString);
 
 import 'dart:convert';
 
-class HourlySaleAmountResponse {
-  HourlySaleAmountResponse({
+class HourlyEarningAmountResponse {
+  HourlyEarningAmountResponse({
     required this.success,
     required this.message,
     this.data,
@@ -15,13 +15,13 @@ class HourlySaleAmountResponse {
   String message;
   Map<String, String>? data;
 
-  factory HourlySaleAmountResponse.fromJson(String str) =>
-      HourlySaleAmountResponse.fromMap(json.decode(str));
+  factory HourlyEarningAmountResponse.fromJson(String str) =>
+      HourlyEarningAmountResponse.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory HourlySaleAmountResponse.fromMap(Map<String, dynamic> json) =>
-      HourlySaleAmountResponse(
+  factory HourlyEarningAmountResponse.fromMap(Map<String, dynamic> json) =>
+      HourlyEarningAmountResponse(
         success: json["success"] == null ? null : json["success"],
         message: json["message"] == null ? null : json["message"],
         data: json["data"] == null

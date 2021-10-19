@@ -25,7 +25,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
   DailyWalkinAmountResponse? resultDaily;
   MonthlyWalkinAmountResponse? resultMonthly;
 
-  HourlySellAmountResponse? resultHourly;
+  HourlySaleAmountResponse? resultHourly;
   Future<DailyWalkinAmountData> getDhabasDay() async {
     resultDaily = await ApiProvider().getDailyWalkinAmount();
     log('${resultDaily!.data}');
@@ -38,7 +38,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
     return resultMonthly!.data!;
   }
 
-  Future<HourlySellAmountData> getDhabasHourly() async {
+  Future<Map<String, String>> getDhabasHourly() async {
     resultHourly = (await ApiProvider().getHourlySaleAmount());
     log('${resultHourly!.data}');
     return resultHourly!.data!;
@@ -105,7 +105,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
           body: TabBarView(
             children: [
               SingleChildScrollView(
-                  child: FutureBuilder<HourlySellAmountData>(
+                  child: FutureBuilder<Map<String, String>>(
                       future: getDhabasHourly(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
@@ -192,7 +192,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: AutoSizeText(
-                                                      '  ${snapshot.data!.key1}',
+                                                      '  ${snapshot.data!.keys.toList()[0]}',
                                                       style: TextStyle(
                                                           fontWeight:
                                                               FontWeight.w600,
@@ -215,7 +215,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        '  ${snapshot.data!.value1}',
+                                                        '  ${snapshot.data!.values.toList()[0]} ',
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w600,
@@ -238,7 +238,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: AutoSizeText(
-                                                      '  ${snapshot.data!.key2}',
+                                                      '  ${snapshot.data!.keys.toList()[1]}',
                                                       style: TextStyle(
                                                           fontWeight:
                                                               FontWeight.w600,
@@ -261,7 +261,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        '  ${snapshot.data!.value2}',
+                                                        '  ${snapshot.data!.values.toList()[1]}',
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w600,
@@ -284,7 +284,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: AutoSizeText(
-                                                      '  ${snapshot.data!.key3}',
+                                                      '  ${snapshot.data!.keys.toList()[2]}',
                                                       style: TextStyle(
                                                           fontWeight:
                                                               FontWeight.w600,
@@ -307,7 +307,53 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        '  ${snapshot.data!.value3}',
+                                                        '  ${snapshot.data!.values.toList()[2]}',
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            fontSize: 15.0,
+                                                            color:
+                                                                Colors.black)),
+                                                  ))
+                                            ]),
+                                      ]),
+                                      TableRow(children: [
+                                        Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                  height: 50,
+                                                  width: deviceWidth * 0.44,
+                                                  color: Colors.white,
+                                                  child: Align(
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: AutoSizeText(
+                                                      '  ${snapshot.data!.keys.toList()[3]}',
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          fontSize: 14.0,
+                                                          color: Colors.black),
+                                                      maxFontSize: 14,
+                                                      minFontSize: 12,
+                                                    ),
+                                                  ))
+                                            ]),
+                                        Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                  height: 50,
+                                                  width: deviceWidth * 0.44,
+                                                  color: Colors.white,
+                                                  child: Align(
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: Text(
+                                                        '  ${snapshot.data!.values.toList()[3]}',
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w600,
@@ -356,6 +402,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                       primaryXAxis: CategoryAxis(
                                           majorGridLines:
                                               MajorGridLines(width: 0),
+                                          interval: 1,
                                           labelStyle: TextStyle(
                                               fontSize: 10,
                                               fontWeight: FontWeight.w600),
@@ -490,6 +537,52 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                         Alignment.centerLeft,
                                                     child: Text(
                                                         '  ${snapshot.data!.dailyWalkIns}',
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            fontSize: 15.0,
+                                                            color:
+                                                                Colors.black)),
+                                                  ))
+                                            ]),
+                                      ]),
+                                      TableRow(children: [
+                                        Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                  height: 50,
+                                                  width: deviceWidth * 0.44,
+                                                  color: Colors.white,
+                                                  child: Align(
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: AutoSizeText(
+                                                      '  ${snapshot.data!.yesterday}',
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          fontSize: 14.0,
+                                                          color: Colors.black),
+                                                      maxFontSize: 14,
+                                                      minFontSize: 12,
+                                                    ),
+                                                  ))
+                                            ]),
+                                        Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                  height: 50,
+                                                  width: deviceWidth * 0.44,
+                                                  color: Colors.white,
+                                                  child: Align(
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: Text(
+                                                        '  ${snapshot.data!.yesterdayWalkIns}',
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w600,
@@ -756,7 +849,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
         double.parse(data!.dailyWalkIns.toString()),
       ),
       GDPData(' ', 0),
-      GDPData("", 0),
+      GDPData("YESTERDAY", double.parse(data.yesterdayWalkIns.toString())),
     ];
     return chartData;
   }
@@ -776,19 +869,23 @@ class _WalkInAmountState extends State<WalkInAmount> {
     return chartData;
   }
 
-  List<GDPDatass> getChartDatass(HourlySellAmountData? data) {
+  List<GDPDatass> getChartDatass(Map<String, String>? data) {
     final List<GDPDatass> chartData = [
       GDPDatass(
-        '${data!.key1}',
-        double.parse(data.value1.toString()),
+        '${data!.keys.toList()[0]}',
+        double.parse(data.values.toList()[0]),
       ),
       GDPDatass(
-        '${data.key2}',
-        double.parse(data.value2.toString()),
+        '${data.keys.toList()[1]}',
+        double.parse(data.values.toList()[1]),
       ),
       GDPDatass(
-        '${data.key3}',
-        double.parse(data.value3.toString()),
+        '${data.keys.toList()[2]}',
+        double.parse(data.values.toList()[2]),
+      ),
+      GDPDatass(
+        '${data.keys.toList()[3]}',
+        double.parse(data.values.toList()[3]),
       ),
     ];
     return chartData;

@@ -40,10 +40,14 @@ class DailyEarningAmountData {
   DailyEarningAmountData({
     required this.today,
     required this.dailyEarning,
+    required this.yesterday,
+    required this.yesterdayEarning,
   });
 
   String today;
   String dailyEarning;
+  String yesterday;
+  String yesterdayEarning;
 
   factory DailyEarningAmountData.fromJson(String str) =>
       DailyEarningAmountData.fromMap(json.decode(str));
@@ -52,14 +56,22 @@ class DailyEarningAmountData {
 
   factory DailyEarningAmountData.fromMap(Map<String, dynamic> json) =>
       DailyEarningAmountData(
-        today: json["today"] == null ? "" : json["today"].toString(),
+        today: json["today"] == null ? "today" : json["today"].toString(),
         dailyEarning: json["daily_earning"] == null
-            ? ""
+            ? "0"
             : json["daily_earning"].toString(),
+        yesterday: json["yesterday"] == null
+            ? "yesterday"
+            : json["yesterday"].toString(),
+        yesterdayEarning: json["yesterday_earning"] == null
+            ? "0"
+            : json["yesterday_earning"].toString(),
       );
 
   Map<String, dynamic> toMap() => {
         "today": today == null ? null : today,
         "daily_earning": dailyEarning == null ? null : dailyEarning,
+        "yesterday": yesterday == null ? null : yesterday,
+        "yesterday_earning": yesterdayEarning == null ? null : yesterdayEarning,
       };
 }
