@@ -761,7 +761,7 @@ class _BillingProductsState extends State<BillingProducts> {
     double customerCoins = widget.coin;
     double redeem = 0;
     double redeemCoinss = 0;
-    int i = 1;
+
     productList.forEach((product) {
       log("=====>sellingPrice${double.parse(product.sellingPrice)}");
       log("=====>product.count${product.count}");
@@ -792,14 +792,7 @@ class _BillingProductsState extends State<BillingProducts> {
           //   totalPay += amount;
           //   // redeemCoins += customerCoins;
           // } else {
-          redeem = double.parse(product.redeemCoins);
-
-          if (i > 1) {
-            redeemCoins += customerCoins;
-            // redeemCoins = redeemCoins - redeem;
-            // redeemCoins = redeem;
-          }
-          i++;
+          redeemCoins += customerCoins;
           log("redeemCoins ==> $redeemCoins");
           totalPay += amount;
           log("totalPay ==> $totalPay");
