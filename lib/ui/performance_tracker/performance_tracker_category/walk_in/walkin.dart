@@ -3,9 +3,13 @@ import 'dart:developer';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:vendor/model/daily_earning.dart';
 import 'package:vendor/model/daily_sale_amount.dart';
+import 'package:vendor/model/daily_walkin.dart';
 import 'package:vendor/model/hourly_sale_amount.dart';
+import 'package:vendor/model/monthly_earning.dart';
 import 'package:vendor/model/monthly_sale_amount.dart';
+import 'package:vendor/model/monthly_walkin.dart';
 import 'package:vendor/provider/api_provider.dart';
 import 'package:vendor/utility/color.dart';
 
@@ -18,18 +22,26 @@ class WalkInAmount extends StatefulWidget {
 
 class _WalkInAmountState extends State<WalkInAmount> {
   TooltipBehavior? _tooltipBehavior;
-  DailySellAmountResponse? resultDaily;
-  MonthlySellAmountResponse? resultMonthly;
-  Future<DailySellAmountData> getDhabasDay() async {
-    resultDaily = await ApiProvider().getDailySaleAmount();
+  DailyWalkinAmountResponse? resultDaily;
+  MonthlyWalkinAmountResponse? resultMonthly;
+
+  HourlySaleAmountResponse? resultHourly;
+  Future<DailyWalkinAmountData> getDhabasDay() async {
+    resultDaily = await ApiProvider().getDailyWalkinAmount();
     log('${resultDaily!.data}');
     return resultDaily!.data!;
   }
 
-  Future<MonthlySellAmountData> getDhabasMonthly() async {
-    resultMonthly = await ApiProvider().getMonthlySaleAmount();
+  Future<MonthlyWalkinAmountData> getDhabasMonthly() async {
+    resultMonthly = await ApiProvider().getMonthlyWalkinAmount();
     log('${resultMonthly!.data}');
     return resultMonthly!.data!;
+  }
+
+  Future<Map<String, String>> getDhabasHourly() async {
+    resultHourly = (await ApiProvider().getHourlySaleAmount());
+    log('${resultHourly!.data}');
+    return resultHourly!.data!;
   }
 
   @override
@@ -81,7 +93,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                 ),
               ),
             ),
-            title: Text('Sale Amount'),
+            title: Text('Walkin Amount'),
             centerTitle: true,
             leading: IconButton(
                 onPressed: () {
@@ -93,7 +105,328 @@ class _WalkInAmountState extends State<WalkInAmount> {
           body: TabBarView(
             children: [
               SingleChildScrollView(
-                  child: FutureBuilder<DailySellAmountData>(
+                  child: FutureBuilder<Map<String, String>>(
+                      future: getDhabasHourly(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(child: CircularProgressIndicator());
+                        }
+                        if (snapshot.hasError) {
+                          return Center(
+                            child: Text("Data Not Found"),
+                          );
+                        }
+                        return Container(
+                            padding: EdgeInsets.all(20),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // Checkbox(
+                                  //     value: checked,
+                                  //     onChanged: (check) => saleAmountBloc
+                                  //         .add(CheckBoxEvent(checked: check!))),
+
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Table(
+                                    defaultColumnWidth:
+                                        FixedColumnWidth(deviceWidth * 0.44),
+                                    border: TableBorder.all(
+                                        color: Colors.black12,
+                                        style: BorderStyle.solid,
+                                        width: 1),
+                                    children: [
+                                      TableRow(children: [
+                                        Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                  height: 50,
+                                                  width: deviceWidth * 0.44,
+                                                  color: TabBarColor,
+                                                  child: Align(
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: Text("  Hourly",
+                                                        style: TextStyle(
+                                                            fontSize: 20.0,
+                                                            color:
+                                                                ColorPrimary)),
+                                                  ))
+                                            ]),
+                                        Container(
+                                          child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Container(
+                                                    height: 50,
+                                                    width: deviceWidth * 0.44,
+                                                    color: TabBarColor,
+                                                    child: Align(
+                                                      alignment:
+                                                          Alignment.centerLeft,
+                                                      child: AutoSizeText(
+                                                          "  Earning",
+                                                          style: TextStyle(
+                                                              fontSize: 18.0,
+                                                              color:
+                                                                  ColorPrimary)),
+                                                    ))
+                                              ]),
+                                        ),
+                                      ]),
+                                      TableRow(children: [
+                                        Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                  height: 50,
+                                                  width: deviceWidth * 0.44,
+                                                  color: Colors.white,
+                                                  child: Align(
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: AutoSizeText(
+                                                      '  ${snapshot.data!.keys.toList()[0]}',
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          fontSize: 14.0,
+                                                          color: Colors.black),
+                                                      maxFontSize: 14,
+                                                      minFontSize: 12,
+                                                    ),
+                                                  ))
+                                            ]),
+                                        Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                  height: 50,
+                                                  width: deviceWidth * 0.44,
+                                                  color: Colors.white,
+                                                  child: Align(
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: Text(
+                                                        '  ${snapshot.data!.values.toList()[0]} ',
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            fontSize: 15.0,
+                                                            color:
+                                                                Colors.black)),
+                                                  ))
+                                            ]),
+                                      ]),
+                                      TableRow(children: [
+                                        Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                  height: 50,
+                                                  width: deviceWidth * 0.44,
+                                                  color: Colors.white,
+                                                  child: Align(
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: AutoSizeText(
+                                                      '  ${snapshot.data!.keys.toList()[1]}',
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          fontSize: 14.0,
+                                                          color: Colors.black),
+                                                      maxFontSize: 14,
+                                                      minFontSize: 12,
+                                                    ),
+                                                  ))
+                                            ]),
+                                        Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                  height: 50,
+                                                  width: deviceWidth * 0.44,
+                                                  color: Colors.white,
+                                                  child: Align(
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: Text(
+                                                        '  ${snapshot.data!.values.toList()[1]}',
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            fontSize: 15.0,
+                                                            color:
+                                                                Colors.black)),
+                                                  ))
+                                            ]),
+                                      ]),
+                                      TableRow(children: [
+                                        Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                  height: 50,
+                                                  width: deviceWidth * 0.44,
+                                                  color: Colors.white,
+                                                  child: Align(
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: AutoSizeText(
+                                                      '  ${snapshot.data!.keys.toList()[2]}',
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          fontSize: 14.0,
+                                                          color: Colors.black),
+                                                      maxFontSize: 14,
+                                                      minFontSize: 12,
+                                                    ),
+                                                  ))
+                                            ]),
+                                        Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                  height: 50,
+                                                  width: deviceWidth * 0.44,
+                                                  color: Colors.white,
+                                                  child: Align(
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: Text(
+                                                        '  ${snapshot.data!.values.toList()[2]}',
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            fontSize: 15.0,
+                                                            color:
+                                                                Colors.black)),
+                                                  ))
+                                            ]),
+                                      ]),
+                                      TableRow(children: [
+                                        Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                  height: 50,
+                                                  width: deviceWidth * 0.44,
+                                                  color: Colors.white,
+                                                  child: Align(
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: AutoSizeText(
+                                                      '  ${snapshot.data!.keys.toList()[3]}',
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          fontSize: 14.0,
+                                                          color: Colors.black),
+                                                      maxFontSize: 14,
+                                                      minFontSize: 12,
+                                                    ),
+                                                  ))
+                                            ]),
+                                        Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                  height: 50,
+                                                  width: deviceWidth * 0.44,
+                                                  color: Colors.white,
+                                                  child: Align(
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: Text(
+                                                        '  ${snapshot.data!.values.toList()[3]}',
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            fontSize: 15.0,
+                                                            color:
+                                                                Colors.black)),
+                                                  ))
+                                            ]),
+                                      ]),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 30,
+                                  ),
+                                  Container(
+                                    height: 200,
+                                    child: SfCartesianChart(
+                                      plotAreaBorderWidth: 2,
+                                      plotAreaBorderColor: Colors.transparent,
+                                      //palette: <Color>[ColorPrimary],
+                                      borderColor: Colors.grey.shade500,
+
+                                      title: ChartTitle(
+                                          text: "Walkin AMT (INR) ",
+                                          textStyle: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.grey.shade600)),
+                                      // legend: Legend(isVisible: true),
+                                      tooltipBehavior: _tooltipBehavior,
+                                      enableMultiSelection: true,
+
+                                      series: <ChartSeries>[
+                                        BarSeries<GDPDatass, String>(
+                                            color: ColorPrimary,
+
+                                            // name: '',
+                                            dataSource:
+                                                getChartDatass(snapshot.data),
+                                            xValueMapper: (GDPDatass gdp, _) =>
+                                                gdp.continent,
+                                            yValueMapper: (GDPDatass gdp, _) =>
+                                                gdp.sale,
+                                            //  dataLabelSettings: DataLabelSettings(isVisible: true),
+                                            enableTooltip: false)
+                                      ],
+                                      primaryXAxis: CategoryAxis(
+                                          majorGridLines:
+                                              MajorGridLines(width: 0),
+                                          interval: 1,
+                                          labelStyle: TextStyle(
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w600),
+                                          desiredIntervals: 1),
+                                      primaryYAxis: NumericAxis(
+                                        edgeLabelPlacement:
+                                            EdgeLabelPlacement.shift,
+                                        // desiredIntervals: 6,
+                                        // interval: 2000,
+
+                                        //numberFormat: NumberFormat.currency(),
+                                        title: AxisTitle(
+                                            alignment: ChartAlignment.center,
+                                            text: "Walkin AMT (INR) ",
+                                            textStyle: TextStyle(
+                                                fontSize: 11,
+                                                color: Colors.grey.shade600)),
+                                      ),
+                                    ),
+                                  )
+                                ]));
+                      })),
+              SingleChildScrollView(
+                  child: FutureBuilder<DailyWalkinAmountData>(
                       future: getDhabasDay(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
@@ -158,7 +491,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: AutoSizeText(
-                                                          "  Sale",
+                                                          "  Walkin",
                                                           style: TextStyle(
                                                               fontSize: 18.0,
                                                               color:
@@ -203,7 +536,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        '  ${snapshot.data!.todaySaleAmount}',
+                                                        '  ${snapshot.data!.dailyWalkIns}',
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w600,
@@ -249,7 +582,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        '  ${snapshot.data!.yesterdaySaleAmount}',
+                                                        '  ${snapshot.data!.yesterdayWalkIns}',
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w600,
@@ -273,7 +606,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                       borderColor: Colors.grey.shade500,
 
                                       title: ChartTitle(
-                                          text: "SALE AMT (INR) ",
+                                          text: "Walkin AMT (INR) ",
                                           textStyle: TextStyle(
                                               fontSize: 14,
                                               color: Colors.grey.shade600)),
@@ -311,7 +644,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                         //numberFormat: NumberFormat.currency(),
                                         title: AxisTitle(
                                             alignment: ChartAlignment.center,
-                                            text: "SALE AMT (INR) ",
+                                            text: "Walkin AMT (INR) ",
                                             textStyle: TextStyle(
                                                 fontSize: 11,
                                                 color: Colors.grey.shade600)),
@@ -321,235 +654,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                 ]));
                       })),
               SingleChildScrollView(
-                  child: FutureBuilder<DailySellAmountData>(
-                      future: getDhabasDay(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return Center(child: CircularProgressIndicator());
-                        }
-                        if (snapshot.hasError) {
-                          return Center(
-                            child: Text("Data Not Found"),
-                          );
-                        }
-                        return Container(
-                            padding: EdgeInsets.all(20),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  // Checkbox(
-                                  //     value: checked,
-                                  //     onChanged: (check) => saleAmountBloc
-                                  //         .add(CheckBoxEvent(checked: check!))),
-
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Table(
-                                    defaultColumnWidth:
-                                        FixedColumnWidth(deviceWidth * 0.44),
-                                    border: TableBorder.all(
-                                        color: Colors.black12,
-                                        style: BorderStyle.solid,
-                                        width: 1),
-                                    children: [
-                                      TableRow(children: [
-                                        Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                  height: 50,
-                                                  width: deviceWidth * 0.44,
-                                                  color: TabBarColor,
-                                                  child: Align(
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    child: Text("  Day",
-                                                        style: TextStyle(
-                                                            fontSize: 20.0,
-                                                            color:
-                                                                ColorPrimary)),
-                                                  ))
-                                            ]),
-                                        Container(
-                                          child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                    height: 50,
-                                                    width: deviceWidth * 0.44,
-                                                    color: TabBarColor,
-                                                    child: Align(
-                                                      alignment:
-                                                          Alignment.centerLeft,
-                                                      child: AutoSizeText(
-                                                          "  Sale",
-                                                          style: TextStyle(
-                                                              fontSize: 18.0,
-                                                              color:
-                                                                  ColorPrimary)),
-                                                    ))
-                                              ]),
-                                        ),
-                                      ]),
-                                      TableRow(children: [
-                                        Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                  height: 50,
-                                                  width: deviceWidth * 0.44,
-                                                  color: Colors.white,
-                                                  child: Align(
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    child: AutoSizeText(
-                                                      '  ${snapshot.data!.today}',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          fontSize: 14.0,
-                                                          color: Colors.black),
-                                                      maxFontSize: 14,
-                                                      minFontSize: 12,
-                                                    ),
-                                                  ))
-                                            ]),
-                                        Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                  height: 50,
-                                                  width: deviceWidth * 0.44,
-                                                  color: Colors.white,
-                                                  child: Align(
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    child: Text(
-                                                        '  ${snapshot.data!.todaySaleAmount}',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 15.0,
-                                                            color:
-                                                                Colors.black)),
-                                                  ))
-                                            ]),
-                                      ]),
-                                      TableRow(children: [
-                                        Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                  height: 50,
-                                                  width: deviceWidth * 0.44,
-                                                  color: Colors.white,
-                                                  child: Align(
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    child: AutoSizeText(
-                                                      '  ${snapshot.data!.yesterday}',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          fontSize: 14.0,
-                                                          color: Colors.black),
-                                                      maxFontSize: 14,
-                                                      minFontSize: 12,
-                                                    ),
-                                                  ))
-                                            ]),
-                                        Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                  height: 50,
-                                                  width: deviceWidth * 0.44,
-                                                  color: Colors.white,
-                                                  child: Align(
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    child: Text(
-                                                        '  ${snapshot.data!.yesterdaySaleAmount}',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 15.0,
-                                                            color:
-                                                                Colors.black)),
-                                                  ))
-                                            ]),
-                                      ]),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 30,
-                                  ),
-                                  Container(
-                                    height: 200,
-                                    child: SfCartesianChart(
-                                      plotAreaBorderWidth: 2,
-                                      plotAreaBorderColor: Colors.transparent,
-                                      //palette: <Color>[ColorPrimary],
-                                      borderColor: Colors.grey.shade500,
-
-                                      title: ChartTitle(
-                                          text: "SALE AMT (INR) ",
-                                          textStyle: TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.grey.shade600)),
-                                      // legend: Legend(isVisible: true),
-                                      tooltipBehavior: _tooltipBehavior,
-                                      enableMultiSelection: true,
-
-                                      series: <ChartSeries>[
-                                        BarSeries<GDPData, String>(
-                                            color: ColorPrimary,
-
-                                            // name: '',
-                                            dataSource:
-                                                getChartData(snapshot.data),
-                                            xValueMapper: (GDPData gdp, _) =>
-                                                gdp.continent,
-                                            yValueMapper: (GDPData gdp, _) =>
-                                                gdp.sale,
-                                            //  dataLabelSettings: DataLabelSettings(isVisible: true),
-                                            enableTooltip: false)
-                                      ],
-                                      primaryXAxis: CategoryAxis(
-                                          majorGridLines:
-                                              MajorGridLines(width: 0),
-                                          labelStyle: TextStyle(
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w600),
-                                          desiredIntervals: 1),
-                                      primaryYAxis: NumericAxis(
-                                        edgeLabelPlacement:
-                                            EdgeLabelPlacement.shift,
-                                        // desiredIntervals: 6,
-                                        // interval: 2000,
-
-                                        //numberFormat: NumberFormat.currency(),
-                                        title: AxisTitle(
-                                            alignment: ChartAlignment.center,
-                                            text: "SALE AMT (INR) ",
-                                            textStyle: TextStyle(
-                                                fontSize: 11,
-                                                color: Colors.grey.shade600)),
-                                      ),
-                                    ),
-                                  )
-                                ]));
-                      })),
-              SingleChildScrollView(
-                  child: FutureBuilder<MonthlySellAmountData>(
+                  child: FutureBuilder<MonthlyWalkinAmountData>(
                       future: getDhabasMonthly(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
@@ -614,7 +719,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: AutoSizeText(
-                                                          "  Sale",
+                                                          "  Walkin",
                                                           style: TextStyle(
                                                               fontSize: 18.0,
                                                               color:
@@ -659,7 +764,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        '  ${snapshot.data!.saleAmount}',
+                                                        '  ${snapshot.data!.monthlyWalkIns}',
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w600,
@@ -683,7 +788,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                       borderColor: Colors.grey.shade500,
 
                                       title: ChartTitle(
-                                          text: "SALE AMT (INR) ",
+                                          text: "Walkin AMT (INR) ",
                                           textStyle: TextStyle(
                                               fontSize: 14,
                                               color: Colors.grey.shade600)),
@@ -721,7 +826,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                         //numberFormat: NumberFormat.currency(),
                                         title: AxisTitle(
                                             alignment: ChartAlignment.center,
-                                            text: "SALE AMT (INR) ",
+                                            text: "Walkin AMT (INR) ",
                                             textStyle: TextStyle(
                                                 fontSize: 11,
                                                 color: Colors.grey.shade600)),
@@ -737,26 +842,23 @@ class _WalkInAmountState extends State<WalkInAmount> {
     );
   }
 
-  List<GDPData> getChartData(DailySellAmountData? data) {
+  List<GDPData> getChartData(DailyWalkinAmountData? data) {
     final List<GDPData> chartData = [
       GDPData(
         'TODAY',
-        double.parse(data!.todaySaleAmount.toString()),
+        double.parse(data!.dailyWalkIns.toString()),
       ),
       GDPData(' ', 0),
-      GDPData(
-        "YESTERDAy",
-        double.parse(data.yesterdaySaleAmount.toString()),
-      ),
+      GDPData("YESTERDAY", double.parse(data.yesterdayWalkIns.toString())),
     ];
     return chartData;
   }
 
-  List<GDPDatas> getChartDatas(MonthlySellAmountData? data) {
+  List<GDPDatas> getChartDatas(MonthlyWalkinAmountData? data) {
     final List<GDPDatas> chartData = [
       GDPDatas(
         '${data!.month}',
-        double.parse(data.saleAmount.toString()),
+        double.parse(data.monthlyWalkIns.toString()),
       ),
       GDPDatas(' ', 0),
       GDPDatas(
@@ -767,16 +869,23 @@ class _WalkInAmountState extends State<WalkInAmount> {
     return chartData;
   }
 
-  List<GDPDatass> getChartDatass(HourlySellAmountData? data) {
+  List<GDPDatass> getChartDatass(Map<String, String>? data) {
     final List<GDPDatass> chartData = [
       GDPDatass(
-        '${data!.saleAmount[0].hourCreatedAt}',
-        double.parse(data.saleAmount[0].sumTotal.toString()),
+        '${data!.keys.toList()[0]}',
+        double.parse(data.values.toList()[0]),
       ),
-      GDPDatass(' ', 0),
       GDPDatass(
-        "",
-        0,
+        '${data.keys.toList()[1]}',
+        double.parse(data.values.toList()[1]),
+      ),
+      GDPDatass(
+        '${data.keys.toList()[2]}',
+        double.parse(data.values.toList()[2]),
+      ),
+      GDPDatass(
+        '${data.keys.toList()[3]}',
+        double.parse(data.values.toList()[3]),
       ),
     ];
     return chartData;

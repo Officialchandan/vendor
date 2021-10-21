@@ -1,4 +1,17 @@
 {
     "files.autoSave": "onFocusChange",
-    "files.autoSaveDelay": 10
+    "files.autoSaveDelay": 10,
+    "spellright.language": [
+        "en"
+    ],
+    "spellright.documentTypes": [
+        "markdown",
+        "latex",
+        "plaintext"
+    ],
+    "spellright.parserByClass": {
+        "dart": {
+            "parser": "plain"
+        }
+    }
 }

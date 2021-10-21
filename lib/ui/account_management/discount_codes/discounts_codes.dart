@@ -138,11 +138,17 @@ class _DiscountCodesState extends State<DiscountCodes> {
                                 ),
                               ),
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(
                                     Icons.share,
                                     color: Colors.white,
-                                  )
+                                  ),
+                                  Text(
+                                    "Share Coupon",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 17),
+                                  ),
                                 ],
                               )),
                         ],

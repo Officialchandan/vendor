@@ -67,7 +67,6 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                 title: TextFormField(
                   cursorColor: ColorPrimary,
                   controller: _searchController,
-                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,

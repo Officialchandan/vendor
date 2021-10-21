@@ -11,10 +11,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/model/billing_product_response.dart';
 import 'package:vendor/model/product_model.dart';
-import 'package:vendor/ui/billingflow/billing/billing.dart';
+
 import 'package:vendor/ui/billingflow/billingproducts/biliing_products_bloc.dart';
 import 'package:vendor/ui/billingflow/billingproducts/biliing_products_event.dart';
 import 'package:vendor/ui/billingflow/billingproducts/biliing_products_state.dart';
+import 'package:vendor/ui/home/bottom_navigation_home.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
 
@@ -54,9 +55,11 @@ class _BillingProductsState extends State<BillingProducts> {
   _DialogState d = _DialogState();
 
   double totalPay = 0;
+  //double redeem = 0;
   double redeemCoins = 0;
+  //double redeemCoinss = 0;
   double earnCoins = 0;
-  double customerCoins = 0;
+  //double customerCoins = 0;
 
   double x = 0.0;
   var message;
@@ -93,11 +96,11 @@ class _BillingProductsState extends State<BillingProducts> {
           }
           if (state is CheckerBillingProductstate) {
             productList[state.index].billingcheck = state.check;
-            if (productList[state.index].billingcheck) {
-              widget.coin -= double.parse(productList[state.index].redeemCoins);
-            } else {
-              widget.coin += double.parse(productList[state.index].redeemCoins);
-            }
+            // if (productList[state.index].billingcheck) {
+            //   widget.coin -= double.parse(productList[state.index].redeemCoins);
+            // } else {
+            //   widget.coin += double.parse(productList[state.index].redeemCoins);
+            // }
             calculateAmounts(productList);
           }
           if (state is EditBillingProductState) {
@@ -123,6 +126,7 @@ class _BillingProductsState extends State<BillingProducts> {
                   Navigator.pop(context);
                 },
                 icon: Icon(Icons.arrow_back_ios)),
+            centerTitle: false,
             title: Text(
               "Billing Products",
               style: TextStyle(
@@ -142,7 +146,7 @@ class _BillingProductsState extends State<BillingProducts> {
                     if (state is IntitalBillingProductstate) {
                       calculateAmounts(productList);
                     }
-                    return Text(" ${widget.coin}",
+                    return Text(" ${widget.coin.toStringAsFixed(2)} ",
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -473,7 +477,7 @@ class _BillingProductsState extends State<BillingProducts> {
                                             fontSize: 20,
                                             fontWeight: FontWeight.w700,
                                             color: ColorPrimary)),
-                                    Text("$totalPay",
+                                    Text("${totalPay.toStringAsFixed(2)}",
                                         style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w700,
@@ -505,7 +509,7 @@ class _BillingProductsState extends State<BillingProducts> {
                                       "assets/images/point.png",
                                       scale: 2.5,
                                     )),
-                                    Text(" $redeemCoins",
+                                    Text(" ${redeemCoins.toStringAsFixed(2)}",
                                         style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w700,
@@ -537,7 +541,7 @@ class _BillingProductsState extends State<BillingProducts> {
                                       "assets/images/point.png",
                                       scale: 2.5,
                                     )),
-                                    Text(" $earnCoins",
+                                    Text(" ${earnCoins.toStringAsFixed(2)}",
                                         style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w700,
@@ -625,7 +629,7 @@ class _BillingProductsState extends State<BillingProducts> {
     input["payment_code"] = "COD";
     input["total_pay"] = totalPay;
     input["total_redeem"] = redeemCoins;
-    input["order_status"] = "1";
+    input["order_status"] = "0";
 
     List<Map<String, dynamic>> billingProductList = [];
 
@@ -754,22 +758,57 @@ class _BillingProductsState extends State<BillingProducts> {
     totalPay = 0;
     redeemCoins = 0;
     earnCoins = 0;
-    customerCoins = 0;
-
+    double customerCoins = widget.coin;
+    double redeem = 0;
+    double redeemCoinss = 0;
+    int i = 1;
     productList.forEach((product) {
-      log("=====>${double.parse(product.sellingPrice)}");
-      log("=====>${product.count}");
+      log("=====>sellingPrice${double.parse(product.sellingPrice)}");
+      log("=====>product.count${product.count}");
+      log("---totalPay$totalPay");
+      log("=====>redeemCoins==>${double.parse(product.redeemCoins)}");
+      redeemCoinss += double.parse(product.redeemCoins);
+      log("=====>redeemCoinss==>$redeemCoinss");
+      log("=====>product.count${product.count}");
+      product.redeemCoins = (double.parse(product.sellingPrice) * 3).toString();
 
-      log("---$totalPay");
-
-      log("=====>${double.parse(product.redeemCoins)}");
-      log("=====>${product.count}");
-
+      log("=====>product.redeemCoins${product.redeemCoins}");
       if (product.billingcheck) {
-        redeemCoins += double.parse(product.redeemCoins) * product.count;
-        log("sellingPrice=====>${double.parse(product.sellingPrice) * product.count}");
+        if (customerCoins >= double.parse(product.redeemCoins)) {
+          redeemCoins += double.parse(product.redeemCoins) * product.count;
+          customerCoins = customerCoins - redeemCoins;
+          log("sellingPrice=====>${double.parse(product.sellingPrice) * product.count}");
+          log("customerCoins=====>$customerCoins");
+          log("redeemCoins=====>$redeemCoins");
+        } else {
+          var amount = double.parse(product.redeemCoins) - customerCoins;
+          log("customerCoins=====>$customerCoins");
+          log("amount ==> $amount");
+
+          log("customerCoins$customerCoins");
+          amount = amount / 3;
+          log("amount ==> $amount");
+          // if (customerCoins < double.parse(product.redeemCoins)) {
+          //   totalPay += amount;
+          //   // redeemCoins += customerCoins;
+          // } else {
+          redeem = double.parse(product.redeemCoins);
+
+          if (i > 1) {
+            redeemCoins += customerCoins;
+            // redeemCoins = redeemCoins - redeem;
+            // redeemCoins = redeem;
+          }
+          i++;
+          log("redeemCoins ==> $redeemCoins");
+          totalPay += amount;
+          log("totalPay ==> $totalPay");
+          // }
+        }
+
         // totalPay -= double.parse(product.sellingPrice) * product.count;
       } else {
+        log("yha mai aya hu");
         totalPay += double.parse(product.sellingPrice) * product.count;
       }
       // if (product.billingcheck) {
@@ -777,14 +816,46 @@ class _BillingProductsState extends State<BillingProducts> {
       // } else {
       //   widget.coin += double.parse(product.redeemCoins) * product.count;
       // }
-
-      log("=====>${double.parse(product.earningCoins)}");
-      log("=====>${product.count}");
-
+      log("=====>product.earningCoins${double.parse(product.earningCoins)}");
+      log("=====>product.count2${product.count}");
       earnCoins += double.parse(product.earningCoins) * product.count;
-      log("---$earnCoins");
+      log("---earnCoins$earnCoins");
+      log("---totalpay --> $totalPay");
+      log("---redeemCoins --> $redeemCoins");
     });
+    // totalPay = redeemCoinss -
   }
+
+//   void calculateAmounts(List<ProductModel> productList) {
+//     double totalPay = 0;
+//     double redeemCoins = 0;
+//     double earnCoins = 0;
+//     double customerCoins = widget.coin;
+
+//     productList.forEach((product) {
+//       product.redeemCoins = (double.parse(product.sellingPrice) * 3).toString();
+
+//       if (product.billingcheck) {
+//         redeemCoins += double.parse(product.redeemCoins);
+//       }
+
+//       totalPay += double.parse(product.sellingPrice) * product.count;
+//       earnCoins += double.parse(product.earningCoins) * product.count;
+
+//       log("=====>product.earningCoins${double.parse(product.earningCoins)}");
+//       log("=====>product.count2${product.count}");
+//       log("---earnCoins$earnCoins");
+//       log("---totalpay --> $totalPay");
+//       log("---redeemCoins --> $redeemCoins");
+//     });
+
+//     if (customerCoins >= redeemCoins) {
+//       double d = totalPay;
+
+//       double e = redeemCoins*3;
+
+//     } else {}
+//   }
 }
 
 class Dialog extends StatefulWidget {
@@ -822,11 +893,12 @@ class _DialogState extends State<Dialog> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
                     onPressed: () {
-                      Navigator.push(
+                      Navigator.pushAndRemoveUntil(
                           context,
                           PageTransition(
-                              child: BillingScreen(),
-                              type: PageTransitionType.fade));
+                              child: BottomNavigationHome(),
+                              type: PageTransitionType.fade),
+                          ModalRoute.withName("/"));
                     },
                     child: new Text(
                       "DONE",

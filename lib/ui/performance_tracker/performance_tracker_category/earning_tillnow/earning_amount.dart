@@ -3,55 +3,45 @@ import 'dart:developer';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:vendor/model/daily_earning.dart';
 import 'package:vendor/model/daily_sale_amount.dart';
+import 'package:vendor/model/hourly_earning.dart';
 import 'package:vendor/model/hourly_sale_amount.dart';
+import 'package:vendor/model/monthly_earning.dart';
 import 'package:vendor/model/monthly_sale_amount.dart';
 import 'package:vendor/provider/api_provider.dart';
 import 'package:vendor/utility/color.dart';
 
-class SaleAmount extends StatefulWidget {
-  SaleAmount({Key? key}) : super(key: key);
+class EarningAmount extends StatefulWidget {
+  EarningAmount({Key? key}) : super(key: key);
 
   @override
-  _SaleAmountState createState() => _SaleAmountState();
+  _EarningAmountState createState() => _EarningAmountState();
 }
 
-class _SaleAmountState extends State<SaleAmount> {
+class _EarningAmountState extends State<EarningAmount> {
   TooltipBehavior? _tooltipBehavior;
-  DailySellAmountResponse? resultDaily;
-  MonthlySellAmountResponse? resultMonthly;
-  Map<String, String>? resultHourlyMap = {};
+  DailyEarningAmountResponse? resultDaily;
+  MonthlyEarningAmountResponse? resultMonthly;
 
-  HourlySaleAmountResponse? resultHourly;
-  List<String> demo = [];
-
-  Future<DailySellAmountData> getDhabasDay() async {
-    resultDaily = await ApiProvider().getDailySaleAmount();
+  HourlyEarningAmountResponse? resultHourly;
+  Map<String, String>? resultHourlyMap;
+  Future<DailyEarningAmountData> getDhabasDay() async {
+    resultDaily = await ApiProvider().getDailyEarningAmount();
     log('${resultDaily!.data}');
     return resultDaily!.data!;
   }
 
-  Future<MonthlySellAmountData> getDhabasMonthly() async {
-    resultMonthly = await ApiProvider().getMonthlySaleAmount();
+  Future<MonthlyEarningAmountData> getDhabasMonthly() async {
+    resultMonthly = await ApiProvider().getMonthlyEarningAmount();
     log('${resultMonthly!.data}');
     return resultMonthly!.data!;
   }
 
   Future<Map<String, String>> getDhabasHourly() async {
-    resultHourly = (await ApiProvider().getHourlySaleAmount());
+    resultHourly = (await ApiProvider().getHourlyEarningAmount());
     log('${resultHourly!.data}');
-    //resultHourlyMap = resultHourly!.data!;
-    //for (var i = 0; i < resultHourly!.data!.length; i++) {
-    demo = resultHourly!.data!.keys.toList();
-    //}
-
     return resultHourly!.data!;
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    // getDhabasHourly();
   }
 
   @override
@@ -103,7 +93,7 @@ class _SaleAmountState extends State<SaleAmount> {
                 ),
               ),
             ),
-            title: Text('Sale Amount'),
+            title: Text('Earning Amount'),
             centerTitle: true,
             leading: IconButton(
                 onPressed: () {
@@ -118,22 +108,16 @@ class _SaleAmountState extends State<SaleAmount> {
                   child: FutureBuilder<Map<String, String>>(
                       future: getDhabasHourly(),
                       builder: (context, snapshot) {
-                        //  for (var i = 0; i < snapshot.data.length; i++) {
-
-                        //  }
-
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
                           return Center(child: CircularProgressIndicator());
                         }
                         if (snapshot.hasError) {
-                          log("snapshot==>${snapshot.error}");
                           return Center(
                             child: Text("Data Not Found"),
                           );
                         }
                         if (snapshot.hasData) {
-                          log("snapshot==>${snapshot.data}");
                           return Container(
                               padding: EdgeInsets.all(20),
                               child: Column(
@@ -187,7 +171,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                                         alignment: Alignment
                                                             .centerLeft,
                                                         child: AutoSizeText(
-                                                            "  Sale",
+                                                            "  Earning",
                                                             style: TextStyle(
                                                                 fontSize: 18.0,
                                                                 color:
@@ -398,12 +382,11 @@ class _SaleAmountState extends State<SaleAmount> {
                                       child: SfCartesianChart(
                                         plotAreaBorderWidth: 2,
                                         plotAreaBorderColor: Colors.transparent,
-
                                         //palette: <Color>[ColorPrimary],
                                         borderColor: Colors.grey.shade500,
 
                                         title: ChartTitle(
-                                            text: "SALE AMT (INR) ",
+                                            text: "Earning AMT (INR) ",
                                             textStyle: TextStyle(
                                                 fontSize: 14,
                                                 color: Colors.grey.shade600)),
@@ -437,14 +420,14 @@ class _SaleAmountState extends State<SaleAmount> {
                                             desiredIntervals: 1),
                                         primaryYAxis: NumericAxis(
                                           edgeLabelPlacement:
-                                              EdgeLabelPlacement.none,
+                                              EdgeLabelPlacement.shift,
                                           // desiredIntervals: 6,
                                           // interval: 2000,
 
                                           //numberFormat: NumberFormat.currency(),
                                           title: AxisTitle(
                                               alignment: ChartAlignment.center,
-                                              text: "SALE AMT (INR) ",
+                                              text: "Earning AMT (INR) ",
                                               textStyle: TextStyle(
                                                   fontSize: 11,
                                                   color: Colors.grey.shade600)),
@@ -456,7 +439,7 @@ class _SaleAmountState extends State<SaleAmount> {
                         return Container();
                       })),
               SingleChildScrollView(
-                  child: FutureBuilder<DailySellAmountData>(
+                  child: FutureBuilder<DailyEarningAmountData>(
                       future: getDhabasDay(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
@@ -521,7 +504,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: AutoSizeText(
-                                                          "  Sale",
+                                                          "  Earning",
                                                           style: TextStyle(
                                                               fontSize: 18.0,
                                                               color:
@@ -566,7 +549,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        '  ${snapshot.data!.todaySaleAmount}',
+                                                        '  ${snapshot.data!.dailyEarning}',
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w600,
@@ -612,7 +595,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        '  ${snapshot.data!.yesterdaySaleAmount}',
+                                                        '  ${snapshot.data!.yesterdayEarning}',
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w600,
@@ -636,7 +619,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                       borderColor: Colors.grey.shade500,
 
                                       title: ChartTitle(
-                                          text: "SALE AMT (INR) ",
+                                          text: "Earning AMT (INR) ",
                                           textStyle: TextStyle(
                                               fontSize: 14,
                                               color: Colors.grey.shade600)),
@@ -674,7 +657,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                         //numberFormat: NumberFormat.currency(),
                                         title: AxisTitle(
                                             alignment: ChartAlignment.center,
-                                            text: "SALE AMT (INR) ",
+                                            text: "Earning AMT (INR) ",
                                             textStyle: TextStyle(
                                                 fontSize: 11,
                                                 color: Colors.grey.shade600)),
@@ -684,7 +667,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                 ]));
                       })),
               SingleChildScrollView(
-                  child: FutureBuilder<MonthlySellAmountData>(
+                  child: FutureBuilder<MonthlyEarningAmountData>(
                       future: getDhabasMonthly(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
@@ -749,7 +732,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: AutoSizeText(
-                                                          "  Sale",
+                                                          "  Earning",
                                                           style: TextStyle(
                                                               fontSize: 18.0,
                                                               color:
@@ -794,7 +777,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        '  ${snapshot.data!.saleAmount}',
+                                                        '  ${snapshot.data!.monthlyEarning}',
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w600,
@@ -818,7 +801,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                       borderColor: Colors.grey.shade500,
 
                                       title: ChartTitle(
-                                          text: "SALE AMT (INR) ",
+                                          text: "Earning AMT (INR) ",
                                           textStyle: TextStyle(
                                               fontSize: 14,
                                               color: Colors.grey.shade600)),
@@ -856,7 +839,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                         //numberFormat: NumberFormat.currency(),
                                         title: AxisTitle(
                                             alignment: ChartAlignment.center,
-                                            text: "SALE AMT (INR) ",
+                                            text: "Earning AMT (INR) ",
                                             textStyle: TextStyle(
                                                 fontSize: 11,
                                                 color: Colors.grey.shade600)),
@@ -872,26 +855,23 @@ class _SaleAmountState extends State<SaleAmount> {
     );
   }
 
-  List<GDPData> getChartData(DailySellAmountData? data) {
+  List<GDPData> getChartData(DailyEarningAmountData? data) {
     final List<GDPData> chartData = [
       GDPData(
         'TODAY',
-        double.parse(data!.todaySaleAmount.toString()),
+        double.parse(data!.dailyEarning.toString()),
       ),
       GDPData(' ', 0),
-      GDPData(
-        "YESTERDAY",
-        double.parse(data.yesterdaySaleAmount.toString()),
-      ),
+      GDPData("YESTERDAY", double.parse(data.yesterdayEarning.toString())),
     ];
     return chartData;
   }
 
-  List<GDPDatas> getChartDatas(MonthlySellAmountData? data) {
+  List<GDPDatas> getChartDatas(MonthlyEarningAmountData? data) {
     final List<GDPDatas> chartData = [
       GDPDatas(
         '${data!.month}',
-        double.parse(data.saleAmount.toString()),
+        double.parse(data.monthlyEarning.toString()),
       ),
       GDPDatas(' ', 0),
       GDPDatas(
@@ -913,9 +893,13 @@ class _SaleAmountState extends State<SaleAmount> {
         double.parse(data.values.toList()[1]),
       ),
       GDPDatass(
-          '${data.keys.toList()[2]}', double.parse(data.values.toList()[2])),
+        '${data.keys.toList()[2]}',
+        double.parse(data.values.toList()[2]),
+      ),
       GDPDatass(
-          '${data.keys.toList()[3]}', double.parse(data.values.toList()[3])),
+        '${data.keys.toList()[3]}',
+        double.parse(data.values.toList()[3]),
+      ),
     ];
     return chartData;
   }

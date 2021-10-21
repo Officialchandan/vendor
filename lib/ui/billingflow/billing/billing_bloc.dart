@@ -7,6 +7,7 @@ import 'package:vendor/main.dart';
 import 'package:vendor/model/customer_number_response.dart';
 import 'package:vendor/model/get_vendorcategory_id.dart';
 import 'package:vendor/ui/billingflow/billing/billing_event.dart';
+import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
 
 import 'billing_state.dart';
@@ -47,6 +48,8 @@ class CustomerNumberResponseBloc
               data: result.data!.walletBalance,
               succes: result.success);
         } else {
+          Fluttertoast.showToast(
+              msg: result.message, backgroundColor: ColorPrimary);
           yield GetCustomerNumberResponseFailureState(
               message: result.message, succes: result.success);
         }

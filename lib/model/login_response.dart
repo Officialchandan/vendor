@@ -7,10 +7,11 @@ import 'dart:convert';
 class LoginResponse {
   LoginResponse({
     required this.success,
-     this.vendorId,
-     this.token,
-     this.tokenType,
-     required this.message,
+    this.vendorId,
+    this.token,
+    this.tokenType,
+    required this.message,
+    this.vendorStatus,
   });
 
   bool success;
@@ -19,6 +20,7 @@ class LoginResponse {
   String? tokenType;
 
   String message;
+  int? vendorStatus;
 
   factory LoginResponse.fromJson(String str) =>
       LoginResponse.fromMap(json.decode(str));
@@ -31,6 +33,7 @@ class LoginResponse {
         token: json["token"] ?? "",
         tokenType: json["token_type"] ?? "",
         message: json["message"] ?? "",
+        vendorStatus: json["vendor_status"] == null ? 0 : json["vendor_status"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -39,5 +42,6 @@ class LoginResponse {
         "token": token,
         "token_type": tokenType,
         "message": message,
+        "vendor_status": vendorStatus == null ? null : vendorStatus,
       };
 }

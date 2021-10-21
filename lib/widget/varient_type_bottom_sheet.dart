@@ -13,7 +13,10 @@ class VariantTypeBottomSheet extends StatefulWidget {
   final List<VariantType> selectedVariants;
   final Function(List<VariantType>) onSelect;
 
-  VariantTypeBottomSheet({required this.categoryId, required this.onSelect, required this.selectedVariants});
+  VariantTypeBottomSheet(
+      {required this.categoryId,
+      required this.onSelect,
+      required this.selectedVariants});
 
   @override
   _VariantTypeBottomSheetState createState() => _VariantTypeBottomSheetState();
@@ -97,7 +100,9 @@ class _VariantTypeBottomSheetState extends State<VariantTypeBottomSheet> {
                   )),
               TextButton(
                   onPressed: () {
-                    List<VariantType> variants = variantList.where((element) => element.checked).toList();
+                    List<VariantType> variants = variantList
+                        .where((element) => element.checked)
+                        .toList();
                     Navigator.pop(context);
                     widget.onSelect(variants);
                   },
@@ -114,13 +119,15 @@ class _VariantTypeBottomSheetState extends State<VariantTypeBottomSheet> {
 
   void getVariant() async {
     if (await Network.isConnected()) {
-      ProductVariantResponse response = await apiProvider.getProductVariantType(widget.categoryId);
+      ProductVariantResponse response =
+          await apiProvider.getProductVariantType(widget.categoryId);
 
       if (response.success) {
         variantList = response.data!;
 
         for (VariantType v in widget.selectedVariants) {
-          variantList.singleWhere((element) => element.id == v.id).checked = true;
+          variantList.singleWhere((element) => element.id == v.id).checked =
+              true;
         }
 
         controller.add(variantList);
