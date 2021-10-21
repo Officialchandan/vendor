@@ -26,10 +26,6 @@ class ViewReportScreen extends StatefulWidget {
 }
 
 class _ViewReportScreenState extends State<ViewReportScreen> {
-  String _selectedDate = '';
-  String _dateCount = '';
-  String _range = '';
-  String _rangeCount = '';
   int groupValue = 1;
   String startDate = "";
   String endDate = "";

@@ -3,7 +3,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
 import 'package:vendor/ui/performance_tracker/performance_tracker_category/earning_tillnow/earning_amount.dart';
 import 'package:vendor/ui/performance_tracker/performance_tracker_category/sale_amount/sale_amount.dart';
-import 'package:vendor/ui/performance_tracker/report/view_report_screen.dart';
+import 'package:vendor/ui/performance_tracker/performance_tracker_category/walk_in/walkin.dart';
 import 'package:vendor/utility/color.dart';
 
 class PerformanceTrackerByCategory extends StatefulWidget {
@@ -43,14 +43,10 @@ class _PerformanceTrackerByCategoryState extends State<PerformanceTrackerByCateg
                   child: ListTile(
                     onTap: () {
                       if (options[index]["id"] == 2) {
-                        Navigator.push(context, PageTransition(child: ViewReportScreen(), type: PageTransitionType.fade));
+                        Navigator.push(context, PageTransition(child: EarningAmount(), type: PageTransitionType.fade));
                       }
                       if (options[index]["id"] == 3) {
-                        // Navigator.push(
-                        //     context,
-                        //     PageTransition(
-                        //         child: MoneyDueScreen(),
-                        //         type: PageTransitionType.fade));
+                        Navigator.push(context, PageTransition(child: WalkInAmount(), type: PageTransitionType.fade));
                       }
 
                       if (options[index]["id"] == 1) {
