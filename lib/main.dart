@@ -36,6 +36,20 @@ Dio dio = Dio(baseOptions);
 ApiProvider apiProvider = ApiProvider();
 ImagePicker imagePicker = ImagePicker();
 NavigationService navigationService = NavigationService();
+configEasyLoading() {
+  EasyLoading.instance
+    ..indicatorType = EasyLoadingIndicatorType.fadingCircle
+    ..loadingStyle = EasyLoadingStyle.dark
+    ..indicatorSize = 45.0
+    ..radius = 10.0
+    ..progressColor = Colors.yellow
+    ..backgroundColor = Colors.green
+    ..indicatorColor = Colors.yellow
+    ..textColor = Colors.yellow
+    ..maskColor = Colors.blue.withOpacity(0.5)
+    ..userInteractions = false
+    ..dismissOnTap = false;
+}
 
 ThemeData themeData(context) => ThemeData(
 
@@ -85,6 +99,7 @@ ThemeData themeData(context) => ThemeData(
           // color: ColorPrimary,
           fontSize: 13,
         ),
+
         // border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
         // enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
         // disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
@@ -114,6 +129,9 @@ ThemeData themeData(context) => ThemeData(
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+
+  configEasyLoading();
+
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: ColorPrimary,
   ));
@@ -128,6 +146,7 @@ void main() {
       logPrint: (text) {
         log(text.toString());
       }));
+
   runApp(MyApp());
 }
 
@@ -208,7 +227,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void onLocaleChange(Locale locale) {
-    print("${locale}");
+    print("$locale");
     setState(() {
       _newLocaleDelegate = AppTranslationsDelegate(newLocale: locale);
     });

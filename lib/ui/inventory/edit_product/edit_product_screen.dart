@@ -109,7 +109,7 @@ class EditProductScreenState extends State<EditProductScreen> {
             listener: (context, state) {
               if (state is SelectImageState) {
                 addProductBloc
-                    .add(UploadImageEvent(productId: widget.product.productId, variantId: widget.product.id, images: [state.image]));
+                    .add(UploadImageEvent(productId: widget.product.productId, variantId: widget.product.id, images: state.image));
               }
               if (state is UploadImageSuccessState) {
                 state.image.forEach((element) {

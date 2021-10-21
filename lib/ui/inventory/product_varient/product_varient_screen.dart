@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,8 +11,10 @@ import 'package:vendor/model/product_variant.dart';
 import 'package:vendor/model/product_variant_response.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
 import 'package:vendor/utility/color.dart';
+import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/utility.dart';
 import 'package:vendor/widget/color_bottom_sheet.dart';
+import 'package:vendor/widget/select_image_bottom_sheet.dart';
 
 class ProductVariantScreen extends StatefulWidget {
   final List<VariantType> variantType;
@@ -204,11 +207,14 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
   StreamController<List<File>> imgController = StreamController();
   ProductVariantModel variantModel = ProductVariantModel();
 
+  List<File> imageList = [];
+
   // Map variant = HashMap<String,dynamic>();
 
   @override
   void initState() {
     variantModel = widget.variant;
+    imageList.addAll(widget.variant.productImages);
     // variant.addAll(widget.variant.option);
     // this.variant = widget.variant;
     super.initState();
@@ -242,7 +248,7 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
                     width: MediaQuery.of(context).size.width - 140,
                     child: StreamBuilder<List<File>>(
                       stream: imgController.stream,
-                      initialData: [],
+                      initialData: imageList,
                       builder: (context, snap) {
                         if (snap.hasData && snap.data!.isNotEmpty) {
                           return ListView.builder(
@@ -277,8 +283,8 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
                                           size: 15,
                                         )),
                                     onTap: () {
-                                      widget.variant.productImages.removeAt(index);
-                                      imgController.add(widget.variant.productImages);
+                                      imageList.removeAt(index);
+                                      imgController.add(imageList);
                                     },
                                   ),
                                 )
@@ -324,7 +330,10 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
               Expanded(
                 child: TextFormField(
                   initialValue: variantModel.mrp.toString(),
-                  decoration: InputDecoration(labelText: "MRP"),
+                  keyboardType: priceKeyboardType,
+                  maxLength: PRICE_TEXT_LENGTH,
+                  inputFormatters: priceInputFormatter,
+                  decoration: InputDecoration(labelText: "MRP", counter: Container()),
                   onChanged: (text) {
                     variantModel.mrp = text.trim();
                   },
@@ -337,7 +346,10 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
               Expanded(
                 child: TextFormField(
                   initialValue: variantModel.sellingPrice.toString(),
-                  decoration: InputDecoration(labelText: "Selling price"),
+                  keyboardType: priceKeyboardType,
+                  maxLength: PRICE_TEXT_LENGTH,
+                  inputFormatters: priceInputFormatter,
+                  decoration: InputDecoration(labelText: "Selling price", counter: Container()),
                   onChanged: (text) {
                     variantModel.sellingPrice = text.trim();
                   },
@@ -350,10 +362,11 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
             height: 10,
           ),
           TextFormField(
+            keyboardType: priceKeyboardType,
+            maxLength: PRICE_TEXT_LENGTH,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-            keyboardType: TextInputType.number,
             initialValue: variantModel.stock.toString(),
-            decoration: InputDecoration(labelText: "Stock"),
+            decoration: InputDecoration(labelText: "Stock", counter: Container()),
             onChanged: (text) {
               variantModel.stock = text.trim();
             },
@@ -364,13 +377,40 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
   }
 
   selectImage(BuildContext context, List<File> productImages) async {
+    showCupertinoModalPopup(
+        context: context,
+        builder: (context) => SelectImageBottomSheet(
+              openGallery: () {
+                pickImage(context, ImageSource.gallery, productImages);
+              },
+              openCamera: () {
+                pickImage(context, ImageSource.camera, productImages);
+              },
+            ));
+  }
+
+  pickImage(BuildContext context, ImageSource source, List<File> productImages) async {
     try {
-      XFile? image = await imagePicker.pickImage(source: ImageSource.camera);
-      if (image != null) {
-        print(image.path);
-        List<File> images = productImages;
-        images.add(File(image.path));
-        imgController.add(images);
+      List<XFile> imgList = [];
+      if (source == ImageSource.gallery) {
+        List<XFile>? images = await imagePicker.pickMultiImage();
+        if (images != null) {
+          imgList = images;
+        }
+      } else {
+        XFile? image = await imagePicker.pickImage(source: source);
+        if (image != null) {
+          imgList = [image];
+        }
+      }
+      if (imgList.isNotEmpty) {
+        // files.addAll(productImages);
+        imgList.forEach((element) {
+          imageList.add(File(element.path));
+          print(element.path);
+        });
+
+        imgController.add(imageList);
       }
     } catch (exception) {
       debugPrint("exception-->$exception");

@@ -15,7 +15,7 @@ class AddProductInitialState extends AddProductState {}
 class ImageLoadingState extends AddProductState {}
 
 class SelectImageState extends AddProductState {
-  final File image;
+  final List<File> image;
 
   SelectImageState({required this.image});
 
