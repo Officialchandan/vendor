@@ -34,7 +34,12 @@ class _DirectBillingState extends State<DirectBilling> {
   var value = true;
   var message = "";
   bool? status, redeem = false;
-  var coins = "0.0";
+  bool valuefirst = false;
+  String coins = "0.0";
+
+  String coinss = "0.0";
+
+  String amount = "0.0";
   var billing;
   DirectBillingData? datas;
 
@@ -191,6 +196,7 @@ class _DirectBillingState extends State<DirectBilling> {
                         maxLength: 10,
                         decoration: const InputDecoration(
                           hintText: 'Amount spent here',
+                          labelText: 'Amount',
                           counterText: "",
                           contentPadding: EdgeInsets.all(0),
                           fillColor: Colors.transparent,
@@ -204,7 +210,29 @@ class _DirectBillingState extends State<DirectBilling> {
                               borderSide:
                                   BorderSide(color: ColorPrimary, width: 1.5)),
                         ),
-                        onChanged: (length) {}),
+                        onChanged: (length) {
+                          if (length.isEmpty) {
+                            log("if$length");
+                            log("if$coins");
+                            coinss = 0.toString();
+                          } else {
+                            log("else$length");
+                            calculaton(length);
+                          }
+                          setState(() {});
+                        }),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    child: Text("Total Payable Amount $amount"),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    child: Text("Total Coin Deducted $coinss"),
                   ),
                   SizedBox(
                     height: 20,
@@ -218,15 +246,35 @@ class _DirectBillingState extends State<DirectBilling> {
                         child: Checkbox(
                           materialTapTargetSize:
                               MaterialTapTargetSize.shrinkWrap,
-                          value: redeem,
-                          // checkColor: Colors.indigo,
+                          value: this.redeem,
+                          checkColor: Colors.white,
                           // value: widget
                           //     .billingItemList[index]
                           //     .billingcheck,
                           activeColor: ColorPrimary,
-                          onChanged: (redeem) {
+                          onChanged: (redeems) {
                             log("true===>");
-                            redeem = redeem;
+                            redeem = false;
+
+                            if (mobileController.text.length == 10) {
+                              if (amountController.text.length > 0) {
+                                calculaton(amountController.text);
+                                setState(() {
+                                  redeem = redeems;
+                                });
+                              } else {
+                                Fluttertoast.showToast(
+                                    msg: "Please enter First",
+                                    backgroundColor: ColorPrimary);
+                              }
+                            } else {
+                              Fluttertoast.showToast(
+                                  msg: "Please enter 10 digits number",
+                                  backgroundColor: ColorPrimary);
+                            }
+                            calculaton(amountController.text.isEmpty
+                                ? "0"
+                                : amountController.text);
                           },
                         ),
                       ),
@@ -279,6 +327,32 @@ class _DirectBillingState extends State<DirectBilling> {
         },
       ),
     );
+  }
+
+  calculaton(String length) {
+    if (redeem == true) {
+      if (double.parse(coins) >= double.parse(length) * 3) {
+        double amounts = double.parse(length) * 3;
+        log("amount1===>$amounts");
+        coinss = amounts.toStringAsFixed(2);
+        amount = 0.toString();
+        log("coins1===>$coins");
+      } else {
+        int i = 1;
+        var rs;
+        if (1 == i) {
+          rs = double.parse(coins) / 3;
+          log("==>rs$rs");
+          coinss = coins.toString();
+          log("==>controller${length}");
+          amount = (double.parse(length) - rs).toStringAsFixed(2);
+          log("===>amount${length}");
+        }
+      }
+    } else {
+      coinss = 0.toString();
+      amount = 0.toString();
+    }
   }
 
   Future<void> directBilling(BuildContext context) async {
