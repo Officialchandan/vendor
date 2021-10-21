@@ -63,8 +63,6 @@ dependencies:
   modal_bottom_sheet:
 
 
-
-
   expandable: ^5.0.1
   #image view
   cached_network_image:
@@ -72,8 +70,12 @@ dependencies:
 #LOADER
   flutter_easyloading:
 
+#sycnfussion
   syncfusion_flutter_xlsio:
   open_file:
+  syncfusion_flutter_datagrid:
+  syncfusion_flutter_datagrid_export:
+  syncfusion_flutter_pdf:
 
 #GRAFH
   syncfusion_flutter_charts: ^19.2.48
@@ -83,6 +85,9 @@ dependencies:
   share:
 
   provider:
+
+#  downloads_path_provider_28: ^0.1.2
+
 
  
 

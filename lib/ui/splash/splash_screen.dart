@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
     var lang = await SharedPref.getStringPreference(SharedPref.SELECTEDLANG);
     if (lang.isEmpty) {
       Timer(Duration(seconds: 3), () => Navigator.pushNamedAndRemoveUntil(context, Routes.SelectLanguage, ModalRoute.withName("/")));
-    } else if (log == true) {
+    } else if (log) {
       String token = await SharedPref.getStringPreference(SharedPref.TOKEN);
       int vendorId = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
       print("token-->$token");

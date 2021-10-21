@@ -66,10 +66,27 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
 
   Stream<AddProductState> selectImage(SelectImageEvent event) async* {
     try {
-      XFile? image = await imagePicker.pickImage(source: event.source);
-      if (image != null) {
-        print(image.path);
-        yield SelectImageState(image: File(image.path));
+      List<XFile> imgList = [];
+      if (event.source == ImageSource.gallery) {
+        List<XFile>? images = await imagePicker.pickMultiImage();
+        if (images != null) {
+          imgList = images;
+        }
+      } else {
+        XFile? image = await imagePicker.pickImage(source: event.source);
+
+        if (image != null) {
+          imgList = [image];
+        }
+      }
+
+      if (imgList.isNotEmpty) {
+        List<File> fileList = [];
+        imgList.forEach((element) {
+          File file = File(element.path);
+          fileList.add(file);
+        });
+        yield SelectImageState(image: fileList);
       }
     } catch (exception) {
       debugPrint("exception-->$exception");

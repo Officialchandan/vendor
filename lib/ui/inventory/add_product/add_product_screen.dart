@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
@@ -18,6 +19,7 @@ import 'package:vendor/ui/inventory/add_product/bloc/add_product_event.dart';
 import 'package:vendor/ui/inventory/add_product/bloc/add_product_state.dart';
 import 'package:vendor/ui/inventory/product_varient/product_varient_screen.dart';
 import 'package:vendor/utility/color.dart';
+import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/utility.dart';
 import 'package:vendor/widget/UnitBottomSheet.dart';
@@ -73,8 +75,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
         listener: (context, state) {
           print("add product bloc state-->$state");
           if (state is SelectImageState) {
+            imageList.addAll(state.image);
             variantModel.productImages = imageList;
-            imageList.add(state.image);
             imgController.add(imageList);
           }
           if (state is AddProductFailureState) {
@@ -203,14 +205,24 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                     width: 80,
                                     height: 80,
                                     margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        image: DecorationImage(
-                                          image: FileImage(
-                                            snap.data![index],
-                                          ),
-                                          fit: BoxFit.cover,
-                                        )),
+                                    // decoration: BoxDecoration(
+                                    //     borderRadius: BorderRadius.circular(5),
+                                    //     image: DecorationImage(
+                                    //       image: FileImage(
+                                    //         snap.data![index],
+                                    //       ),
+                                    //       fit: BoxFit.cover,
+                                    //     )),
+
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(5),
+                                      child: Image(
+                                        image: FileImage(
+                                          snap.data![index],
+                                        ),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
                                   ),
                                   Positioned(
                                     right: 0,
@@ -226,9 +238,13 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                             size: 15,
                                           )),
                                       onTap: () {
+                                        debugPrint("index $index");
+
                                         imageList.removeAt(index);
-                                        variantModel.productImages.removeAt(index);
+
+                                        debugPrint("imageList $imageList");
                                         imgController.add(imageList);
+                                        variantModel.productImages = imageList;
                                       },
                                     ),
                                   )
@@ -346,7 +362,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       Expanded(
                         child: TextFormField(
                           controller: edtPurchasePrice,
-                          decoration: InputDecoration(labelText: "Purchase price"),
+                          decoration: InputDecoration(labelText: "Purchase price", counter: Container()),
+                          keyboardType: priceKeyboardType,
+                          maxLength: PRICE_TEXT_LENGTH,
+                          inputFormatters: priceInputFormatter,
                           onChanged: (text) {
                             variantModel.purchasePrice = text;
                           },
@@ -359,7 +378,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       Expanded(
                         child: TextFormField(
                           controller: edtMrp,
-                          decoration: InputDecoration(labelText: "MRP"),
+                          keyboardType: priceKeyboardType,
+                          maxLength: PRICE_TEXT_LENGTH,
+                          inputFormatters: priceInputFormatter,
+                          decoration: InputDecoration(labelText: "MRP", counter: Container()),
                           onChanged: (text) {
                             variantModel.mrp = text;
                           },
@@ -372,7 +394,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       Expanded(
                         child: TextFormField(
                           controller: edtSellingPrice,
-                          decoration: InputDecoration(labelText: "Selling price"),
+                          keyboardType: priceKeyboardType,
+                          maxLength: PRICE_TEXT_LENGTH,
+                          inputFormatters: priceInputFormatter,
+                          decoration: InputDecoration(labelText: "Selling price", counter: Container()),
                           onChanged: (text) {
                             variantModel.sellingPrice = text;
                           },
@@ -391,6 +416,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       Expanded(
                         child: TextFormField(
                           controller: edtStock,
+                          keyboardType: TextInputType.phone,
+                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                           decoration: InputDecoration(labelText: "Stock"),
                           onChanged: (text) {
                             variantModel.stock = text;
@@ -445,6 +472,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     else
                       showModalBottomSheet(
                           context: context,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15))),
                           builder: (context) {
                             return VariantTypeBottomSheet(
                               categoryId: categoryId,
@@ -575,6 +604,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             ),
                             IconButton(
                               onPressed: () {
+                                SystemChannels.textInput.invokeMethod("TextInput.hide");
+
                                 showBottomSheet(
                                     context: context,
                                     builder: (context) {
@@ -624,128 +655,126 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             height: 15,
                           ),
                           Column(),
-                          ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: productVariant.length,
-                              itemBuilder: (context, index) {
-                                ProductVariantModel variant = productVariant[index];
-                                String variantName = "";
-                                for (int i = 0; i < variant.option.length; i++) {
-                                  if (i == variant.option.length - 1)
-                                    variantName = variantName + variant.option[i].value;
-                                  else
-                                    variantName = variantName + variant.option[i].value + " / ";
-                                }
+                          Column(
+                            children: List.generate(productVariant.length, (index) {
+                              ProductVariantModel variant = productVariant[index];
+                              String variantName = "";
+                              for (int i = 0; i < variant.option.length; i++) {
+                                if (i == variant.option.length - 1)
+                                  variantName = variantName + variant.option[i].value;
+                                else
+                                  variantName = variantName + variant.option[i].value + " / ";
+                              }
 
-                                return Container(
-                                  margin: EdgeInsets.only(bottom: 15),
-                                  width: MediaQuery.of(context).size.width,
-                                  // height: 100,
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.only(left: 50, right: 10, bottom: 10, top: 10),
-                                        margin: EdgeInsets.only(left: 20),
-                                        constraints: BoxConstraints(minHeight: 80),
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(10),
-                                            border: Border.all(color: Colors.black, width: 1)),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  "$variantName",
-                                                ),
-                                                Text(
-                                                  "₹ ${variant.sellingPrice}",
-                                                ),
-                                                Text(
-                                                  "Stock : ${variant.stock}",
+                              return Container(
+                                margin: EdgeInsets.only(bottom: 15),
+                                width: MediaQuery.of(context).size.width,
+                                // height: 100,
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.only(left: 50, right: 10, bottom: 10, top: 10),
+                                      margin: EdgeInsets.only(left: 20),
+                                      constraints: BoxConstraints(minHeight: 80),
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10), border: Border.all(color: Colors.black, width: 1)),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "$variantName",
+                                              ),
+                                              Text(
+                                                "₹ ${variant.sellingPrice}",
+                                              ),
+                                              Text(
+                                                "Stock : ${variant.stock}",
+                                              )
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              IconButton(
+                                                  onPressed: () async {
+                                                    var result = await Navigator.push(
+                                                        context,
+                                                        PageTransition(
+                                                          child: ProductVariantScreen(
+                                                              variantType: variantType,
+                                                              categoryId: categoryId,
+                                                              productVariant: [variant],
+                                                              edit: true,
+                                                              add: false),
+                                                          type: PageTransitionType.bottomToTop,
+                                                        ));
+                                                    if (result != null) {
+                                                      List<ProductVariantModel> variants = result as List<ProductVariantModel>;
+                                                      addProductBloc.add(UpdateSingleProductVariantEvent(
+                                                          productVariant: variants.first, index: index));
+                                                    }
+                                                  },
+                                                  padding: EdgeInsets.all(0),
+                                                  splashRadius: 15,
+                                                  iconSize: 20,
+                                                  icon: Image.asset(
+                                                    "assets/images/edit.png",
+                                                    fit: BoxFit.contain,
+                                                    width: 20,
+                                                    height: 20,
+                                                  )),
+                                              IconButton(
+                                                  onPressed: () {
+                                                    addProductBloc.add(DeleteProductVariantEvent(productVariant: variant));
+                                                  },
+                                                  padding: EdgeInsets.all(0),
+                                                  splashRadius: 15,
+                                                  iconSize: 20,
+                                                  icon: Image.asset(
+                                                    "assets/images/delete.png",
+                                                    fit: BoxFit.contain,
+                                                    width: 20,
+                                                    height: 20,
+                                                  )),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    Positioned(
+                                      left: 0,
+                                      top: 0,
+                                      bottom: 0,
+                                      child: Center(
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(5),
+                                          child: productVariant[index].productImages.isNotEmpty
+                                              ? Image.file(
+                                                  productVariant[index].productImages.first,
+                                                  width: 60,
+                                                  height: 60,
+                                                  fit: BoxFit.contain,
                                                 )
-                                              ],
-                                            ),
-                                            Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                IconButton(
-                                                    onPressed: () async {
-                                                      var result = await Navigator.push(
-                                                          context,
-                                                          PageTransition(
-                                                            child: ProductVariantScreen(
-                                                                variantType: variantType,
-                                                                categoryId: categoryId,
-                                                                productVariant: [variant],
-                                                                edit: true,
-                                                                add: false),
-                                                            type: PageTransitionType.bottomToTop,
-                                                          ));
-                                                      if (result != null) {
-                                                        List<ProductVariantModel> variants = result as List<ProductVariantModel>;
-                                                        addProductBloc.add(UpdateSingleProductVariantEvent(
-                                                            productVariant: variants.first, index: index));
-                                                      }
-                                                    },
-                                                    padding: EdgeInsets.all(0),
-                                                    splashRadius: 15,
-                                                    iconSize: 20,
-                                                    icon: Image.asset(
-                                                      "assets/images/edit.png",
-                                                      fit: BoxFit.contain,
-                                                      width: 20,
-                                                      height: 20,
-                                                    )),
-                                                IconButton(
-                                                    onPressed: () {
-                                                      addProductBloc.add(DeleteProductVariantEvent(productVariant: variant));
-                                                    },
-                                                    padding: EdgeInsets.all(0),
-                                                    splashRadius: 15,
-                                                    iconSize: 20,
-                                                    icon: Image.asset(
-                                                      "assets/images/delete.png",
-                                                      fit: BoxFit.contain,
-                                                      width: 20,
-                                                      height: 20,
-                                                    )),
-                                              ],
-                                            )
-                                          ],
+                                              : Image.asset(
+                                                  "assets/images/suggested.png",
+                                                  width: 60,
+                                                  height: 60,
+                                                  fit: BoxFit.contain,
+                                                ),
                                         ),
                                       ),
-                                      Positioned(
-                                        left: 0,
-                                        top: 0,
-                                        bottom: 0,
-                                        child: Center(
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(5),
-                                            child: productVariant[index].productImages.isNotEmpty
-                                                ? Image.file(
-                                                    productVariant[index].productImages.first,
-                                                    width: 60,
-                                                    height: 60,
-                                                    fit: BoxFit.contain,
-                                                  )
-                                                : Image.asset(
-                                                    "assets/images/suggested.png",
-                                                    width: 60,
-                                                    height: 60,
-                                                    fit: BoxFit.contain,
-                                                  ),
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                );
-                              })
+                                    )
+                                  ],
+                                ),
+                              );
+                            }),
+                          ),
                         ],
                       );
                     }
@@ -756,6 +785,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
             ),
           ),
           bottomNavigationBar: Container(
+            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
             child: MaterialButton(
               onPressed: () {
                 addProduct(context);

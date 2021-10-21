@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vendor/localization/app_translations.dart';
@@ -28,6 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController mobileController = TextEditingController();
   bool _passwordVisible = true;
   LoginBloc loginBloc = LoginBloc();
+
   // void _toggle() {
   //   setState(() {
   //     _passwordVisible = !_passwordVisible;
@@ -53,6 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   TextEditingController _textFieldController = TextEditingController();
+
   onTouchKeyBoard() {
     return GestureDetector(onTap: () {
       FocusScopeNode currentFocus = FocusScope.of(context);
@@ -70,12 +73,10 @@ class _LoginScreenState extends State<LoginScreen> {
           return ConstrainedBox(
             constraints: BoxConstraints(maxWidth: 400),
             child: AlertDialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
               title: RichText(
                 text: TextSpan(
-                  text:
-                      "${AppTranslations.of(context)!.text("otp_verification_key")}\n",
+                  text: "${AppTranslations.of(context)!.text("otp_verification_key")}\n",
                   style: GoogleFonts.openSans(
                     fontSize: 25.0,
                     color: Colors.black,
@@ -83,8 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   children: [
                     TextSpan(
-                      text:
-                          "${AppTranslations.of(context)!.text("please_verify_your_otp_on_key")} ${mobile}",
+                      text: "${AppTranslations.of(context)!.text("please_verify_your_otp_on_key")} ${mobile}",
                       style: GoogleFonts.openSans(
                         fontSize: 14.0,
                         color: ColorTextPrimary,
@@ -103,13 +103,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   filled: true,
 
                   // fillColor: Colors.black,
-                  hintText:
-                      "${AppTranslations.of(context)!.text("enter_otp_key")}",
+                  hintText: "${AppTranslations.of(context)!.text("enter_otp_key")}",
                   hintStyle: GoogleFonts.openSans(
                     fontWeight: FontWeight.w600,
                   ),
-                  contentPadding:
-                      const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                  contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.white),
                   ),
@@ -127,27 +125,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: const EdgeInsets.all(8.0),
                     textColor: Colors.white,
                     color: ColorPrimary,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                     onPressed: () {
                       if (_textFieldController.text.isEmpty) {
-                        Fluttertoast.showToast(
-                            msg: "Please enter otp",
-                            backgroundColor: ColorPrimary);
+                        Fluttertoast.showToast(msg: "Please enter otp", backgroundColor: ColorPrimary);
                       } else {
-                        loginBloc.add(GetLoginOtpEvent(
-                            mobile: mobileController.text,
-                            otp: _textFieldController.text));
+                        loginBloc.add(GetLoginOtpEvent(mobile: mobileController.text, otp: _textFieldController.text));
                       }
                       // loginApiCall(
                       //     mobileController.text, _textFieldController.text);
                     },
                     child: new Text(
                       "${AppTranslations.of(context)!.text("verify_key")}",
-                      style: GoogleFonts.openSans(
-                          fontSize: 17,
-                          fontWeight: FontWeight.w600,
-                          decoration: TextDecoration.none),
+                      style: GoogleFonts.openSans(fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
                     ),
                   ),
                 ),
@@ -167,19 +157,12 @@ class _LoginScreenState extends State<LoginScreen> {
       Fluttertoast.showToast(
           backgroundColor: ColorPrimary,
           textColor: Colors.white,
-          msg:
-              "${AppTranslations.of(context)!.text("please_enter_username_key")}");
-      _tap = true;
+          msg: "${AppTranslations.of(context)!.text("please_enter_username_key")}");
     } else if (mobileController.text.length != 10) {
-      Fluttertoast.showToast(
-          backgroundColor: ColorPrimary,
-          textColor: Colors.white,
-          msg: "PLease enter valid mobile number");
-      _tap = true;
+      Fluttertoast.showToast(backgroundColor: ColorPrimary, textColor: Colors.white, msg: "PLease enter valid mobile number");
     } else {
+      EasyLoading.show();
       loginBloc.add(GetLoginEvent(mobile: mobileController.text));
-
-      _tap = true;
     }
   }
 
@@ -190,13 +173,9 @@ class _LoginScreenState extends State<LoginScreen> {
           textColor: Colors.white,
           msg: "${AppTranslations.of(context)!.text("please_enter_password")}");
     } else if (_textFieldController.text.length != 6) {
-      Fluttertoast.showToast(
-          backgroundColor: ColorPrimary,
-          textColor: Colors.white,
-          msg: "Please enter 6 digit valid otp");
+      Fluttertoast.showToast(backgroundColor: ColorPrimary, textColor: Colors.white, msg: "Please enter 6 digit valid otp");
     } else {
-      loginBloc.add(GetLoginOtpEvent(
-          mobile: mobileController.text, otp: _textFieldController.text));
+      loginBloc.add(GetLoginOtpEvent(mobile: mobileController.text, otp: _textFieldController.text));
     }
   }
 
@@ -215,8 +194,7 @@ class _LoginScreenState extends State<LoginScreen> {
         filled: true,
         fillColor: Color.fromRGBO(242, 242, 242, 1),
         counterText: "",
-        hintText:
-            "${AppTranslations.of(context)!.text("please_enter_mobile_number_key")}",
+        hintText: "${AppTranslations.of(context)!.text("please_enter_mobile_number_key")}",
         prefixIcon: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -232,26 +210,13 @@ class _LoginScreenState extends State<LoginScreen> {
             )
           ],
         ),
-        border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide.none),
-        enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide.none),
-        disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide.none),
-        focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide.none),
-        errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide.none),
-        focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide.none),
-        prefixIconConstraints: BoxConstraints(
-            minWidth: 50, minHeight: 25, maxWidth: 51, maxHeight: 25),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+        disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+        errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+        focusedErrorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+        prefixIconConstraints: BoxConstraints(minWidth: 50, minHeight: 25, maxWidth: 51, maxHeight: 25),
         // errorText: Validator.validateMobile(edtMobile.text, context),
       ),
     );
@@ -266,15 +231,11 @@ class _LoginScreenState extends State<LoginScreen> {
           }
 
           if (state is GetLoginOtpState) {
-            Navigator.pushNamedAndRemoveUntil(
-                context, Routes.HomeScreen, ModalRoute.withName("/"));
+            Navigator.pushNamedAndRemoveUntil(context, Routes.HomeScreen, ModalRoute.withName("/"));
           }
 
           if (state is GetLoginFailureState) {
-            Fluttertoast.showToast(
-                backgroundColor: ColorPrimary,
-                textColor: Colors.white,
-                msg: state.message);
+            Fluttertoast.showToast(backgroundColor: ColorPrimary, textColor: Colors.white, msg: state.message);
           }
         },
         builder: (context, state) {
@@ -284,8 +245,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Stack(
                   children: [
                     Container(
-                        // height: deviceHeight,Ftex
-                        //width: 400,
                         child: Image.asset(
                       "assets/images/bg.png",
                       height: deviceHeight,
@@ -298,117 +257,61 @@ class _LoginScreenState extends State<LoginScreen> {
                       top: deviceHeight * 0.17,
                       child: Container(
                         width: 500,
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // Center(
-                              //   child: RichText(
-                              //     text: TextSpan(
-                              //         text: 'Don\'t have an Account?',
-                              //         style: TextStyle(
-                              //             color: ColorTextPrimary,
-                              //             fontWeight: FontWeight.w600,
-                              //             fontSize: 18),
-                              //         children: <TextSpan>[
-                              //           TextSpan(
-                              //               text: ' Sign up',
-                              //               style: TextStyle(
-                              //                   fontWeight: FontWeight.w600,
-                              //                   color: ColorPrimary,
-                              //                   fontSize: 18),
-                              //               recognizer: TapGestureRecognizer()
-                              //                 ..onTap = () {
-                              //                   Navigator.push(
-                              //                       context,
-                              //                       MaterialPageRoute(
-                              //                           builder: (context) =>
-                              //                               SignUp()));
-                              //                 })
-                              //         ]),
-                              //   ),
-                              // ),
-                              // SizedBox(
-                              //   height: 35,
-                              // ),
-                              Text(
-                                "${AppTranslations.of(context)!.text("login_key")}",
-                                style: GoogleFonts.openSans(
-                                    fontSize: 28,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w600,
-                                    decoration: TextDecoration.none),
+                        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                          Text(
+                            "${AppTranslations.of(context)!.text("login_key")}",
+                            style: GoogleFonts.openSans(
+                                fontSize: 28, color: Colors.black, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            "${AppTranslations.of(context)!.text("add_your_details_to_login_key")}",
+                            style: GoogleFonts.openSans(
+                                fontSize: 17, color: ColorTextPrimary, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
+                          ),
+                          SizedBox(
+                            height: 40,
+                          ),
+                          mobileNumber,
+                          SizedBox(
+                            height: 80,
+                          ),
+                          Center(
+                            child: Column(children: [
+                              MaterialButton(
+                                minWidth: deviceWidth * 0.65,
+                                height: 50,
+                                padding: const EdgeInsets.all(8.0),
+                                textColor: Colors.white,
+                                color: ColorPrimary,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                onPressed: () {
+                                  loginApiOtpCall(mobileController.text);
+                                },
+                                child: new Text(
+                                  "${AppTranslations.of(context)!.text("login_key")}",
+                                  style:
+                                      GoogleFonts.openSans(fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
+                                ),
                               ),
                               SizedBox(
-                                height: 15,
-                              ),
-                              Text(
-                                "${AppTranslations.of(context)!.text("add_your_details_to_login_key")}",
-                                style: GoogleFonts.openSans(
-                                    fontSize: 17,
-                                    color: ColorTextPrimary,
-                                    fontWeight: FontWeight.w600,
-                                    decoration: TextDecoration.none),
-                              ),
-                              SizedBox(
-                                height: 40,
-                              ),
-                              mobileNumber,
-                              SizedBox(
-                                height: 80,
+                                height: 25,
                               ),
                               Center(
-                                child: Column(
-                                    // mainAxisAlignment: MainAxisAlignment.center,
-                                    // crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      MaterialButton(
-                                        minWidth: deviceWidth * 0.65,
-                                        height: 50,
-                                        padding: const EdgeInsets.all(8.0),
-                                        textColor: Colors.white,
-                                        color: ColorPrimary,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        onPressed: () {
-                                          _textFieldController.clear();
-
-                                          print(
-                                              "kuch to ${mobileController.text}");
-                                          // loginApiCall(
-                                          //     nameController.text, passwordController.text);
-                                          if (_tap == true) {
-                                            _tap = false;
-                                            loginApiOtpCall(
-                                                mobileController.text);
-                                          }
-                                          // _displayDialog(
-                                          //     context, mobileController.text);
-                                        },
-                                        child: new Text(
-                                          "${AppTranslations.of(context)!.text("login_key")}",
-                                          style: GoogleFonts.openSans(
-                                              fontSize: 17,
-                                              fontWeight: FontWeight.w600,
-                                              decoration: TextDecoration.none),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 25,
-                                      ),
-                                      Center(
-                                        child: Text(
-                                          "${AppTranslations.of(context)!.text("forget_your_password_key")}",
-                                          style: GoogleFonts.openSans(
-                                              fontSize: 17,
-                                              color: ColorTextPrimary,
-                                              fontWeight: FontWeight.w600,
-                                              decoration: TextDecoration.none),
-                                        ),
-                                      ),
-                                    ]),
+                                child: Text(
+                                  "${AppTranslations.of(context)!.text("forget_your_password_key")}",
+                                  style: GoogleFonts.openSans(
+                                      fontSize: 17,
+                                      color: ColorTextPrimary,
+                                      fontWeight: FontWeight.w600,
+                                      decoration: TextDecoration.none),
+                                ),
                               ),
                             ]),
+                          ),
+                        ]),
                       ),
                     ),
                   ],

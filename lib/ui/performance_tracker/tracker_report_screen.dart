@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
 import 'package:vendor/ui/performance_tracker/performance_tracker_category/performance_tracker.dart';
-import 'package:vendor/ui/performance_tracker/report/view_report_screen.dart';
+import 'package:vendor/ui/performance_tracker/report/select_report_types.dart';
 import 'package:vendor/utility/color.dart';
 
 import 'money_due_upi/money_due_screen.dart';
+import 'my_customers/MyCustomrScreen.dart';
 
 class TrackerReportDashboard extends StatefulWidget {
   @override
@@ -17,6 +18,7 @@ class _TrackerReportDashboardState extends State<TrackerReportDashboard> {
     {"title": "Performance tracker", "subTitle": "click here to add product", "image": "assets/images/tr-ic1.png", "id": 1},
     {"title": "Reports", "subTitle": "click here to add product", "image": "assets/images/tr-ic2.png", "id": 2},
     {"title": "Money due - UPI", "subTitle": "click here to add product", "image": "assets/images/tr-ic3.png", "id": 3},
+    {"title": "My Customers", "subTitle": "click here to view customer", "image": "assets/images/tr-ic3.png", "id": 4},
   ];
   @override
   Widget build(BuildContext context) {
@@ -39,10 +41,12 @@ class _TrackerReportDashboardState extends State<TrackerReportDashboard> {
                   child: ListTile(
                     onTap: () {
                       if (options[index]["id"] == 2) {
-                        Navigator.push(context, PageTransition(child: ViewReportScreen(), type: PageTransitionType.fade));
+                        Navigator.push(context, PageTransition(child: SelectReportTypeScreen(), type: PageTransitionType.fade));
                       }
                       if (options[index]["id"] == 3) {
                         Navigator.push(context, PageTransition(child: MoneyDueScreen(), type: PageTransitionType.fade));
+                      } if (options[index]["id"] == 4) {
+                        Navigator.push(context, PageTransition(child: MyCustomerScreen(), type: PageTransitionType.fade));
                       }
 
                       if (options[index]["id"] == 1) {

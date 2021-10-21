@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/model/login_otp.dart';
@@ -22,6 +23,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       );
     }
     if (event is GetLoginOtpEvent) {
+      yield LoadingState();
       yield* getLoginOtp(
         event.mobile,
         event.otp,
@@ -31,18 +33,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   Stream<LoginState> getLogin(mobile) async* {
     if (await Network.isConnected()) {
-      // try {
       LoginOtpResponse result = await apiProvider.login(mobile);
+      EasyLoading.dismiss();
       log("$result");
       if (result.success) {
         yield GetLoginState(result);
       } else {
         yield GetLoginFailureState(message: result.message);
       }
-      // } catch (error) {
-      //   yield GetLoginFailureState(message: "internal sever error");
-      // }
     } else {
+      EasyLoading.dismiss();
       Fluttertoast.showToast(msg: "Turn on the internet");
     }
   }

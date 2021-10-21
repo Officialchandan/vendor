@@ -5,35 +5,33 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart' as xls;
 import 'package:vendor/main.dart';
+import 'package:vendor/model/get_categories_response.dart';
 import 'package:vendor/provider/Endpoint.dart';
 import 'package:vendor/provider/server_error.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/utility.dart';
+import 'package:vendor/widget/category_bottom_sheet.dart';
 import 'package:vendor/widget/custom_bottom_sheet.dart';
 
-class ViewReportScreen extends StatefulWidget {
-  final Map<String, dynamic> option;
-  ViewReportScreen(this.option);
+class ProductRedeemReport extends StatefulWidget {
+  const ProductRedeemReport({Key? key}) : super(key: key);
 
   @override
-  _ViewReportScreenState createState() => _ViewReportScreenState();
+  _ProductRedeemReportState createState() => _ProductRedeemReportState();
 }
 
-class _ViewReportScreenState extends State<ViewReportScreen> {
-  String _selectedDate = '';
-  String _dateCount = '';
-  String _range = '';
-  String _rangeCount = '';
+class _ProductRedeemReportState extends State<ProductRedeemReport> {
   int groupValue = 1;
   String startDate = "";
   String endDate = "";
-
+  CategoryModel? categoryModel;
   Option? days;
   DateRangePickerController dateRangePickerController = DateRangePickerController();
 
@@ -43,11 +41,6 @@ class _ViewReportScreenState extends State<ViewReportScreen> {
   TextEditingController edtReportType = TextEditingController();
 
   List<Map<String, dynamic>> reportList = [];
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -210,12 +203,6 @@ class _ViewReportScreenState extends State<ViewReportScreen> {
   }
 
   void selectCategory(BuildContext context) async {
-    final List<Option> options = [
-      Option(optionName: "Footwear", optionId: "1"),
-      Option(optionName: "Cloths", optionId: "2"),
-      Option(optionName: "Furniture", optionId: "3"),
-      Option(optionName: "Electronics", optionId: "4"),
-    ];
     showModalBottomSheet(
         context: context,
         isDismissible: true,
@@ -224,11 +211,11 @@ class _ViewReportScreenState extends State<ViewReportScreen> {
         backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(25), topLeft: Radius.circular(25))),
         builder: (context) {
-          return CustomBottomSheet(
-            onOptionSelect: (Option option) {
-              edtCategory.text = option.optionName;
+          return CategoryBottomSheet(
+            onSelect: (CategoryModel option) {
+              edtCategory.text = option.categoryName!;
+              categoryModel = option;
             },
-            options: options,
           );
         });
   }
@@ -241,11 +228,11 @@ class _ViewReportScreenState extends State<ViewReportScreen> {
       String url = "";
 
       if (groupValue == 1) {
-        url = Endpoint.GET_GENERATE_COIN_REPORT_BY_DATE;
+        url = Endpoint.GET_PRODUCT_REDEEM_REPORT_BY_DATE;
         input["from_date"] = startDate;
         input["to_date"] = endDate;
       } else {
-        url = Endpoint.GET_GENERATE_COIN_REPORT_BY_DATE;
+        url = Endpoint.GET_PRODUCT_REDEEM_REPORT_BY_DAY;
         if (days == null) {
           Utility.showToast("Please select days");
           return;
@@ -253,7 +240,7 @@ class _ViewReportScreenState extends State<ViewReportScreen> {
           input["days"] = days!.optionId;
         }
       }
-      input["category_id"] = "7";
+      input["category_id"] = categoryModel == null ? "" : categoryModel!.id;
       input["product_id"] = "";
       EasyLoading.show();
 
@@ -287,7 +274,7 @@ class _ViewReportScreenState extends State<ViewReportScreen> {
     print("exportReport");
     final xls.Workbook workbook = xls.Workbook(0);
     //Adding a Sheet with name to workbook.
-    final xls.Worksheet sheet1 = workbook.worksheets.addWithName('Report');
+    final xls.Worksheet sheet1 = workbook.worksheets.addWithName('Product Redeem Report');
     sheet1.showGridlines = true;
 
     int columnIndex = 1;
@@ -296,6 +283,20 @@ class _ViewReportScreenState extends State<ViewReportScreen> {
     double total = 0.0;
     double totalMrp = 0.0;
     double totalPurchasePrice = 0.0;
+    double redeemCoins = 0.0;
+    double qty = 0.0;
+
+    sheet1.getRangeByIndex(1, 1, 1, reportList.first.keys.length).merge();
+    if (groupValue == 1) {
+      sheet1.getRangeByIndex(rowIndex, columnIndex).value = "Product Redeem Report ($startDate to $endDate)";
+    } else {
+      sheet1.getRangeByIndex(rowIndex, columnIndex).value = "Product Redeem Report (${days!.optionName})";
+    }
+
+    sheet1.getRangeByIndex(rowIndex, columnIndex).rowHeight = 30;
+    sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign = xls.HAlignType.center;
+    sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign = xls.VAlignType.center;
+    rowIndex = rowIndex + 1;
 
     reportList.first.keys.forEach((element) {
       sheet1.getRangeByIndex(rowIndex, columnIndex).value = element.toString();
@@ -325,12 +326,23 @@ class _ViewReportScreenState extends State<ViewReportScreen> {
         if (key == "mrp") {
           print("mrp - >$value");
           print("totalMrp - >$totalMrp");
-          totalMrp = double.parse(value.toString()) + totalMrp;
+          totalMrp = double.parse(value == null || value == "" ? "0" : value.toString()) + totalMrp;
         }
         if (key == "purchase_price") {
           print("purchase_price - >$value");
           print("totalPurchasePrice - >$totalPurchasePrice");
-          totalPurchasePrice = double.parse(value.toString()) + totalPurchasePrice;
+          totalPurchasePrice = double.parse(value == null || value == "" ? "0" : value.toString()) + totalPurchasePrice;
+        }
+        if (key == "qty") {
+          print("purchase_price - >$value");
+          print("totalPurchasePrice - >$totalPurchasePrice");
+          qty = double.parse(value == null || value == "" ? "0" : value.toString()) + qty;
+        }
+
+        if (key == "redeem_coins") {
+          print("purchase_price - >$value");
+          print("redeemCoins - >$redeemCoins");
+          redeemCoins = double.parse(value == null || value == "" ? "0" : value.toString()) + redeemCoins;
         }
       });
     });
@@ -338,10 +350,7 @@ class _ViewReportScreenState extends State<ViewReportScreen> {
     print("total - >$total");
     print("totalPurchasePrice - >$totalPurchasePrice");
     print("totalMrp - >$totalMrp");
-
-    sheet1.getRangeByIndex(rowIndex + 1, 1).value = "Total";
-    sheet1.getRangeByIndex(rowIndex + 1, 1).cellStyle.hAlign = xls.HAlignType.center;
-    sheet1.getRangeByIndex(rowIndex + 1, 1).cellStyle.vAlign = xls.VAlignType.center;
+    print("qty - >$qty");
 
     final xls.Style style = workbook.styles.add('Style1');
     style.backColorRgb = Colors.red;
@@ -350,22 +359,30 @@ class _ViewReportScreenState extends State<ViewReportScreen> {
     style.fontColorRgb = Colors.white;
     style.bold = true;
 
-    int index = reportList.first.keys.toList().indexWhere((element) => element == "total");
-    if (index != -1) {
-      sheet1.getRangeByIndex(rowIndex + 1, index + 1).value = total;
-      sheet1.getRangeByIndex(rowIndex + 1, index + 1).cellStyle = style;
-    }
-    int purchaseIndex = reportList.first.keys.toList().indexWhere((element) => element == "purchase_price");
-    if (purchaseIndex != -1) {
-      sheet1.getRangeByIndex(rowIndex + 1, purchaseIndex + 1).value = totalPurchasePrice;
-      sheet1.getRangeByIndex(rowIndex + 1, purchaseIndex + 1).cellStyle = style;
-    }
-
-    int mrpIndex = reportList.first.keys.toList().indexWhere((element) => element == "mrp");
-    if (purchaseIndex != -1) {
-      sheet1.getRangeByIndex(rowIndex + 1, mrpIndex + 1).value = totalMrp;
-      sheet1.getRangeByIndex(rowIndex + 1, mrpIndex + 1).cellStyle = style;
-    }
+    columnIndex = 1;
+    rowIndex = rowIndex + 1;
+    reportList.first.forEach((key, value) {
+      sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle = style;
+      if (columnIndex == 1) {
+        sheet1.getRangeByIndex(rowIndex, 1).value = "Total";
+      }
+      if (key == "total") {
+        sheet1.getRangeByIndex(rowIndex, columnIndex).value = total;
+      }
+      if (key == "purchase_price") {
+        sheet1.getRangeByIndex(rowIndex, columnIndex).value = totalPurchasePrice;
+      }
+      if (key == "mrp") {
+        sheet1.getRangeByIndex(rowIndex, columnIndex).value = totalMrp;
+      }
+      if (key == "qty") {
+        sheet1.getRangeByIndex(rowIndex, columnIndex).value = qty;
+      }
+      if (key == "redeem_coins") {
+        sheet1.getRangeByIndex(rowIndex, columnIndex).value = redeemCoins;
+      }
+      columnIndex = columnIndex + 1;
+    });
 
     final List<int> bytes = workbook.saveAsStream();
     String? path;
@@ -385,7 +402,12 @@ class _ViewReportScreenState extends State<ViewReportScreen> {
       savedDir.create();
     }
 
-    String fileName = "vendor_report_" + DateTime.now().millisecondsSinceEpoch.toString() + ".xlsx";
+    String fileName = "product_redeem_report_";
+    if (groupValue == 1) {
+      fileName += "${startDate}_to_$endDate" + ".xlsx";
+    } else {
+      fileName += "${days!.optionName}" + ".xlsx";
+    }
 
     final File file = File(Platform.isWindows ? '$path\\$fileName' : '$path/$fileName');
     await file.writeAsBytes(bytes, flush: true).whenComplete(() {
@@ -396,6 +418,6 @@ class _ViewReportScreenState extends State<ViewReportScreen> {
 
     workbook.dispose();
 
-    // OpenFile.open(file.path);
+    OpenFile.open(file.path);
   }
 }

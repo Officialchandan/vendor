@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/model/product_variant_response.dart';
+import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/utility.dart';
@@ -38,8 +39,15 @@ class _VariantTypeBottomSheetState extends State<VariantTypeBottomSheet> {
   Widget build(BuildContext context) {
     return IntrinsicHeight(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Select variant options"),
+          ListTile(
+            contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+            title: Text(
+              "Select variant options",
+              style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),
+            ),
+          ),
           Container(
             height: MediaQuery.of(context).size.height * 0.40,
             child: StreamBuilder<List<VariantType>>(
@@ -51,7 +59,10 @@ class _VariantTypeBottomSheetState extends State<VariantTypeBottomSheet> {
                   );
                 }
                 if (snap.hasData && snap.data!.isNotEmpty) {
-                  return ListView.builder(
+                  return ListView.separated(
+                      separatorBuilder: (context, index) {
+                        return Divider();
+                      },
                       itemCount: snap.data!.length,
                       itemBuilder: (context, index) {
                         VariantType variant = snap.data![index];
@@ -74,19 +85,26 @@ class _VariantTypeBottomSheetState extends State<VariantTypeBottomSheet> {
             ),
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               TextButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text("Cancel")),
+                  child: Text(
+                    "Cancel",
+                    style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+                  )),
               TextButton(
                   onPressed: () {
                     List<VariantType> variants = variantList.where((element) => element.checked).toList();
                     Navigator.pop(context);
                     widget.onSelect(variants);
                   },
-                  child: Text("Done")),
+                  child: Text(
+                    "Done",
+                    style: TextStyle(color: ColorPrimary, fontSize: 16, fontWeight: FontWeight.bold),
+                  )),
             ],
           )
         ],
