@@ -18,6 +18,7 @@ import 'package:vendor/ui/inventory/suggested_product/SuggestedProductProvider.d
 import 'package:vendor/ui/language/select_language.dart';
 import 'package:vendor/ui/login/login_screen.dart';
 import 'package:vendor/ui/splash/splash_screen.dart';
+import 'package:vendor/ui_without_inventory/home/home.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/routs.dart';
 import 'package:vendor/utility/sharedpref.dart';
@@ -157,8 +158,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  AppTranslationsDelegate? _newLocaleDelegate =
-      AppTranslationsDelegate(newLocale: Locale("en", ""));
+  AppTranslationsDelegate? _newLocaleDelegate = AppTranslationsDelegate(newLocale: Locale("en", ""));
 
   @override
   void initState() {
@@ -184,23 +184,22 @@ class _MyAppState extends State<MyApp> {
         onGenerateRoute: (route) {
           switch (route.name) {
             case "/":
-              return PageTransition(
-                  type: PageTransitionType.fade, child: SplashScreen());
+              return PageTransition(type: PageTransitionType.fade, child: SplashScreen());
 
             case Routes.SplashScreen:
-              return PageTransition(
-                  type: PageTransitionType.fade, child: SplashScreen());
+              return PageTransition(type: PageTransitionType.fade, child: SplashScreen());
             case Routes.SelectLanguage:
-              return PageTransition(
-                  type: PageTransitionType.fade, child: SelectLanguage());
+              return PageTransition(type: PageTransitionType.fade, child: SelectLanguage());
 
             case Routes.LoginScreen:
-              return PageTransition(
-                  type: PageTransitionType.fade, child: LoginScreen());
+              return PageTransition(type: PageTransitionType.fade, child: LoginScreen());
 
             case Routes.HomeScreen:
-              return PageTransition(
-                  type: PageTransitionType.fade, child: HomeScreen());
+              return PageTransition(type: PageTransitionType.fade, child: HomeScreen());
+
+            case Routes.HomeScreenWithoutInventory:
+              return PageTransition(type: PageTransitionType.fade, child: HomeScreenWithoutInventory());
+
             case Routes.BOTTOM_NAVIGATION_HOME:
               int index = route.arguments as int;
               return PageTransition(
@@ -236,8 +235,7 @@ class _MyAppState extends State<MyApp> {
   init() async {
     var lang = await SharedPref.getStringPreference(SharedPref.SELECTEDLANG);
     print("$lang");
-    _newLocaleDelegate = AppTranslationsDelegate(
-        newLocale: Locale(lang.isEmpty ? "en" : lang, ""));
+    _newLocaleDelegate = AppTranslationsDelegate(newLocale: Locale(lang.isEmpty ? "en" : lang, ""));
     setState(() {});
     application.onLocaleChanged = onLocaleChange;
   }

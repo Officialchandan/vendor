@@ -1,0 +1,340 @@
+[
+  {
+    "header": {
+      "content_type": "image",
+      "height_ratio": "0.41",
+      "image": "https://s3-ap-southeast-1.amazonaws.com/ondoorimage1/image/catalog/Adword/ondoor-banner.png",
+      "search_term": "",
+      "sort_order": "1",
+      "key": "4",
+      "value": "salt",
+      "name": "tata",
+      "weburl": ""
+    }
+  },
+  {
+    "header": {
+      "content_type": "text",
+      "height_ratio": "0.42",
+      "image": "https://s3-ap-southeast-1.amazonaws.com/ondoorimage1/image/catalog/test9.jpeg",
+      "search_term": "",
+      "sort_order": "2",
+      "text": "Brand",
+      "key": "2",
+      "value": "123",
+      "name": "allo",
+      "weburl": "",
+      "header_color": "#FF0000",
+      "text_color": "#FFFFFF"
+    }
+  },
+  {
+    "grid": {
+      "grid_type": "beauty_offer",
+      "grid_count": "2",
+      "height_ratio": "0.6",
+      "grid_data": [
+        [
+          {
+            "id": "590",
+            "height_ratio": "0.5",
+            "parent_id": "0",
+            "name": "Offers",
+            "description": "&lt;p&gt;&lt;br&gt;&lt;/p&gt;",
+            "image": "https://d1s2zprapij148.cloudfront.net/image/cache/mobile/category/offers-new-500x500.png",
+            "filter_groups": [
+            ],
+            "sub_categories": [
+            ]
+          },
+          {
+            "id": "590",
+            "height_ratio": "0.5",
+            "parent_id": "0",
+            "name": "Offers",
+            "description": "&lt;p&gt;&lt;br&gt;&lt;/p&gt;",
+            "image": "https://d1s2zprapij148.cloudfront.net/image/cache/mobile/category/offers-new-500x500.png",
+            "filter_groups": [
+            ],
+            "sub_categories": [
+            ]
+          },
+          {
+            "id": "590",
+            "height_ratio": "0.5",
+            "parent_id": "0",
+            "name": "Offers",
+            "description": "&lt;p&gt;&lt;br&gt;&lt;/p&gt;",
+            "image": "https://d1s2zprapij148.cloudfront.net/image/cache/mobile/category/offers-new-500x500.png",
+            "filter_groups": [
+            ],
+            "sub_categories": [
+            ]
+          },
+          {
+            "id": "590",
+            "height_ratio": "0.5",
+            "parent_id": "0",
+            "name": "Offers",
+            "description": "&lt;p&gt;&lt;br&gt;&lt;/p&gt;",
+            "image": "https://d1s2zprapij148.cloudfront.net/image/cache/mobile/category/offers-new-500x500.png",
+            "filter_groups": [
+            ],
+            "sub_categories": [
+            ]
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "sliding_banners": [
+      {
+        "link": "link",
+        "image": "http://ondoorapp.tekzee.in/ondoor-footer-banner.png",
+        "sort_order": "5",
+        "search_term": "immunesection",
+        "key": "4",
+        "value": "immunesection",
+        "name": "Health & Immunity",
+        "is_adword": 0,
+        "weburl": "",
+        "header_title": "Health & Immunity"
+      },
+      {
+        "link": "link",
+        "image": "http://ondoorapp.tekzee.in/ondoor-footer-banner.png",
+        "sort_order": "5",
+        "search_term": "immunesection",
+        "key": "4",
+        "value": "immunesection",
+        "name": "Health & Immunity",
+        "is_adword": 0,
+        "weburl": "",
+        "header_title": "Health & Immunity"
+      },
+      {
+        "link": "link",
+        "image": "http://ondoorapp.tekzee.in/ondoor-footer-banner.png",
+        "sort_order": "5",
+        "search_term": "immunesection",
+        "key": "4",
+        "value": "immunesection",
+        "name": "Health & Immunity",
+        "is_adword": 0,
+        "weburl": "",
+        "header_title": "Health & Immunity"
+      }
+    ]
+  },
+  {
+    "header": {
+      "content_type": "text",
+      "height_ratio": "0.42",
+      "image": "https://s3-ap-southeast-1.amazonaws.com/ondoorimage1/image/catalog/test9.jpeg",
+      "search_term": "",
+      "sort_order": "2",
+      "text": "Brand",
+      "key": "2",
+      "value": "123",
+      "name": "allo",
+      "weburl": "",
+      "header_color": "#FF0000",
+      "text_color": "#FFFFFF"
+    }
+  },
+
+  {
+    "grid": {
+      "grid_type": "best_seller",
+      "grid_count": "3",
+      "height_ratio": "1",
+      "grid_data": [
+        {
+          "id": "590",
+          "height_ratio": "1",
+          "parent_id": "0",
+          "name": "Offers",
+          "description": "&lt;p&gt;&lt;br&gt;&lt;/p&gt;",
+          "image": "https://d1s2zprapij148.cloudfront.net/image/cache/mobile/category/offers-new-500x500.png",
+          "filter_groups": [
+          ],
+          "sub_categories": [
+          ]
+        },
+        {
+          "id": "590",
+          "height_ratio": "1",
+          "parent_id": "0",
+          "name": "Offers",
+          "description": "&lt;p&gt;&lt;br&gt;&lt;/p&gt;",
+          "image": "https://d1s2zprapij148.cloudfront.net/image/cache/mobile/category/offers-new-500x500.png",
+          "filter_groups": [
+          ],
+          "sub_categories": [
+          ]
+        },
+        {
+          "id": "590",
+          "height_ratio": "1",
+          "parent_id": "0",
+          "name": "Offers",
+          "description": "&lt;p&gt;&lt;br&gt;&lt;/p&gt;",
+          "image": "https://d1s2zprapij148.cloudfront.net/image/cache/mobile/category/offers-new-500x500.png",
+          "filter_groups": [
+          ],
+          "sub_categories": [
+          ]
+        },
+        {
+          "id": "590",
+          "height_ratio": "1",
+          "parent_id": "0",
+          "name": "Offers",
+          "description": "&lt;p&gt;&lt;br&gt;&lt;/p&gt;",
+          "image": "https://d1s2zprapij148.cloudfront.net/image/cache/mobile/category/offers-new-500x500.png",
+          "filter_groups": [
+          ],
+          "sub_categories": [
+          ]
+        },
+        {
+          "id": "590",
+          "height_ratio": "1",
+          "parent_id": "0",
+          "name": "Offers",
+          "description": "&lt;p&gt;&lt;br&gt;&lt;/p&gt;",
+          "image": "https://d1s2zprapij148.cloudfront.net/image/cache/mobile/category/offers-new-500x500.png",
+          "filter_groups": [
+          ],
+          "sub_categories": [
+          ]
+        },
+        {
+          "id": "590",
+          "height_ratio": "1",
+          "parent_id": "0",
+          "name": "Offers",
+          "description": "&lt;p&gt;&lt;br&gt;&lt;/p&gt;",
+          "image": "https://d1s2zprapij148.cloudfront.net/image/cache/mobile/category/offers-new-500x500.png",
+          "filter_groups": [
+          ],
+          "sub_categories": [
+          ]
+        }
+      ]
+    }
+  },
+
+  {
+    "header": {
+      "content_type": "image",
+      "height_ratio": "0.41",
+      "image": "https://s3-ap-southeast-1.amazonaws.com/ondoorimage1/image/catalog/Adword/ondoor-banner.png",
+      "search_term": "",
+      "sort_order": "1",
+      "key": "4",
+      "value": "salt",
+      "name": "tata",
+      "weburl": ""
+    }
+  },
+
+  {
+    "header": {
+      "content_type": "text",
+      "height_ratio": "0.42",
+      "image": "https://s3-ap-southeast-1.amazonaws.com/ondoorimage1/image/catalog/test9.jpeg",
+      "search_term": "",
+      "sort_order": "2",
+      "text": "Brand",
+      "key": "2",
+      "value": "123",
+      "name": "allo",
+      "weburl": "",
+      "header_color": "#FF0000",
+      "text_color": "#FFFFFF"
+    }
+  },
+  {
+    "grid": {
+      "grid_type": "brand",
+      "grid_count": "3",
+      "height_ratio": "1",
+      "grid_data": [
+        {
+          "id": "590",
+          "height_ratio": "1",
+          "parent_id": "0",
+          "name": "Offers",
+          "description": "&lt;p&gt;&lt;br&gt;&lt;/p&gt;",
+          "image": "https://d1s2zprapij148.cloudfront.net/image/cache/mobile/category/offers-new-500x500.png",
+          "filter_groups": [
+          ],
+          "sub_categories": [
+          ]
+        },
+        {
+          "id": "590",
+          "height_ratio": "1",
+          "parent_id": "0",
+          "name": "Offers",
+          "description": "&lt;p&gt;&lt;br&gt;&lt;/p&gt;",
+          "image": "https://d1s2zprapij148.cloudfront.net/image/cache/mobile/category/offers-new-500x500.png",
+          "filter_groups": [
+          ],
+          "sub_categories": [
+          ]
+        },
+        {
+          "id": "590",
+          "height_ratio": "1",
+          "parent_id": "0",
+          "name": "Offers",
+          "description": "&lt;p&gt;&lt;br&gt;&lt;/p&gt;",
+          "image": "https://d1s2zprapij148.cloudfront.net/image/cache/mobile/category/offers-new-500x500.png",
+          "filter_groups": [
+          ],
+          "sub_categories": [
+          ]
+        },
+        {
+          "id": "590",
+          "height_ratio": "1",
+          "parent_id": "0",
+          "name": "Offers",
+          "description": "&lt;p&gt;&lt;br&gt;&lt;/p&gt;",
+          "image": "https://d1s2zprapij148.cloudfront.net/image/cache/mobile/category/offers-new-500x500.png",
+          "filter_groups": [
+          ],
+          "sub_categories": [
+          ]
+        },
+        {
+          "id": "590",
+          "height_ratio": "1",
+          "parent_id": "0",
+          "name": "Offers",
+          "description": "&lt;p&gt;&lt;br&gt;&lt;/p&gt;",
+          "image": "https://d1s2zprapij148.cloudfront.net/image/cache/mobile/category/offers-new-500x500.png",
+          "filter_groups": [
+          ],
+          "sub_categories": [
+          ]
+        },
+        {
+          "id": "590",
+          "height_ratio": "1",
+          "parent_id": "0",
+          "name": "Offers",
+          "description": "&lt;p&gt;&lt;br&gt;&lt;/p&gt;",
+          "image": "https://d1s2zprapij148.cloudfront.net/image/cache/mobile/category/offers-new-500x500.png",
+          "filter_groups": [
+          ],
+          "sub_categories": [
+          ]
+        }
+      ]
+    }
+  }
+]
