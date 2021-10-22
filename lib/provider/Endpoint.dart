@@ -57,8 +57,7 @@ class Endpoint {
 
   static const String PURCHASE_RETURN = "purchaseReturn";
 
-  static const String GET_VERIFY_EARNING_COINOTP_VENDORID =
-      "verifyEarningCoinsByOTP";
+  static const String GET_VERIFY_EARNING_COINOTP_VENDORID = "verifyEarningCoinsByOTP";
 
   static const String GET_DAILY_SALE_AMOUNT = "dailySaleAmount";
 
@@ -102,4 +101,9 @@ class Endpoint {
   static const String GET_DIRECT_BILLING = "directBilling";
 
   static const String GET_DIRECT_BILLING_OTP = "confirmBillingByOtp";
+
+  static const String GET_MY_CUSTOMER = "getAllCustomersByVendorID";
+
+  static const String GET_CUSTOMER_PRODUCT = "getAllCustomerProductByID";
+  static const String GET_TOTAL_MONEY_DUE = "getTotalMoneyDue";
 }

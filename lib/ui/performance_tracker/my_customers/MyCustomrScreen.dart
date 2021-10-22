@@ -1,7 +1,16 @@
+import 'dart:async';
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:vendor/main.dart';
+import 'package:vendor/model/get_my_customer_response.dart';
 import 'package:vendor/ui/performance_tracker/my_customers/customer_detail_screen.dart';
 import 'package:vendor/utility/color.dart';
+import 'package:vendor/utility/constant.dart';
+import 'package:vendor/utility/network.dart';
+import 'package:vendor/utility/sharedpref.dart';
+import 'package:vendor/utility/utility.dart';
 import 'package:vendor/widget/calendar_bottom_sheet.dart';
 
 class MyCustomerScreen extends StatefulWidget {
@@ -12,10 +21,24 @@ class MyCustomerScreen extends StatefulWidget {
 }
 
 class _MyCustomerScreenState extends State<MyCustomerScreen> {
+  TextEditingController txtSearch = TextEditingController();
+  List<Customer> customerList = [];
+  StreamController<List<Customer>> streamController = StreamController();
+
+  @override
+  void initState() {
+    getCustomer();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    streamController.close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    TextEditingController txtSearch = TextEditingController();
-
     return Scaffold(
       appBar: AppBar(
         title: Text("My Customers"),
@@ -47,6 +70,21 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
         child: Column(
           children: [
             TextFormField(
+              onChanged: (text) {
+                if (text.isNotEmpty) {
+                  List<Customer> searchList = [];
+
+                  customerList.forEach((element) {
+                    if (element.customerName.toLowerCase().contains(text.trim().toLowerCase())) {
+                      searchList.add(element);
+                    }
+                  });
+
+                  streamController.add(searchList);
+                } else {
+                  streamController.add(customerList);
+                }
+              },
               decoration: InputDecoration(
                   prefixIcon: Padding(
                     padding: const EdgeInsets.all(10.0),
@@ -67,65 +105,101 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
               height: 20,
             ),
             Expanded(
-                child: ListView.separated(
-              separatorBuilder: (context, index) {
-                return SizedBox(
-                  height: 15,
+                child: StreamBuilder<List<Customer>>(
+              stream: streamController.stream,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+
+                if (snapshot.hasData) {
+                  return ListView.separated(
+                    separatorBuilder: (context, index) {
+                      return SizedBox(
+                        height: 15,
+                      );
+                    },
+                    keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                    itemBuilder: (context, index) {
+                      Customer customer = snapshot.data![index];
+
+                      return InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context, PageTransition(child: CustomerDetailScreen(customer: customer), type: PageTransitionType.fade));
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5), border: Border.all(color: Colors.grey.shade200, width: 1)),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                      child: Text(
+                                    customer.customerName,
+                                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
+                                  )),
+                                  Text(
+                                    Utility.getFormatDate1(customer.date),
+                                    style: TextStyle(color: Colors.black, fontSize: 14),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                      child: Text(
+                                    "+91 ${customer.mobile}",
+                                    style: TextStyle(color: Colors.black, fontSize: 14),
+                                  )),
+                                  Text(
+                                    "Qty : ${customer.qty}",
+                                    style: TextStyle(color: ColorPrimary, fontWeight: FontWeight.bold, fontSize: 14),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                    itemCount: snapshot.data!.length,
+                  );
+                }
+                return Center(
+                  child: Text("Customer not found!"),
                 );
               },
-              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    Navigator.push(context, PageTransition(child: CustomerDetailScreen(), type: PageTransitionType.fade));
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5), border: Border.all(color: Colors.grey.shade200, width: 1)),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                                child: Text(
-                              "Customer name",
-                              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
-                            )),
-                            Text(
-                              "7 oct 2021 - 04:50 PM",
-                              style: TextStyle(color: Colors.black, fontSize: 14),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                                child: Text(
-                              "+91 1231231231",
-                              style: TextStyle(color: Colors.black, fontSize: 14),
-                            )),
-                            Text(
-                              "Qty : 5",
-                              style: TextStyle(color: ColorPrimary, fontWeight: FontWeight.bold, fontSize: 14),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                );
-              },
-              itemCount: 10,
             ))
           ],
         ),
       ),
     );
+  }
+
+  void getCustomer() async {
+    if (await Network.isConnected()) {
+      Map<String, dynamic> input = HashMap<String, dynamic>();
+
+      input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+
+      GetMyCustomerResponse response = await apiProvider.getMyCustomer(input);
+
+      if (response.success) {
+        customerList = response.data!;
+        streamController.add(response.data!);
+      }
+    } else {
+      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+    }
   }
 }

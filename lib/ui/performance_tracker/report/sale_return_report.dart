@@ -46,7 +46,7 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "Reports",
+        title: "Sale Return Reports",
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(15),

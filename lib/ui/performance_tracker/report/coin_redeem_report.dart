@@ -48,7 +48,7 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "Reports",
+        title: "Coin Redeemed Reports",
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(15),
@@ -198,6 +198,7 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
           return CustomBottomSheet(
             onOptionSelect: (Option option) {
               edtDays.text = option.optionName;
+              days = option;
             },
             options: options,
           );

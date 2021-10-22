@@ -46,7 +46,7 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "Reports",
+        title: "Product Redeem Reports",
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(15),
@@ -196,6 +196,7 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
           return CustomBottomSheet(
             onOptionSelect: (Option option) {
               edtDays.text = option.optionName;
+              days = option;
             },
             options: options,
           );

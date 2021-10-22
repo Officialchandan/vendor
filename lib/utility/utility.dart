@@ -46,6 +46,12 @@ class Utility {
     debugPrint("date--> $date");
     return date;
   }
+
+  static String getFormatDate1(DateTime dateTime) {
+    String date = DateFormat('dd-MMM-yyyy - ').add_jm().format(dateTime).toString();
+    debugPrint("date--> $date");
+    return date;
+  }
 }
 
 // class CurrencyData{

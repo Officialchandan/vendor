@@ -1,14 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:vendor/main.dart';
+import 'package:vendor/model/get_customer_product_response.dart';
+import 'package:vendor/model/get_my_customer_response.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
+import 'package:vendor/utility/color.dart';
+import 'package:vendor/utility/network.dart';
+import 'package:vendor/utility/sharedpref.dart';
+import 'package:vendor/utility/utility.dart';
 
 class CustomerDetailScreen extends StatefulWidget {
-  const CustomerDetailScreen({Key? key}) : super(key: key);
+  final Customer customer;
+
+  const CustomerDetailScreen({required this.customer, Key? key}) : super(key: key);
 
   @override
   _CustomerDetailScreenState createState() => _CustomerDetailScreenState();
 }
 
 class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
+  double totalPay = 0.0;
+  double redeemedCoin = 0.0;
+  double earnCoin = 0.0;
+  double total = 0.0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,6 +30,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
         title: "Details",
       ),
       body: SingleChildScrollView(
+        padding: const EdgeInsets.all(15),
         child: Column(
           children: [
             Container(
@@ -23,17 +38,18 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
               decoration:
                   BoxDecoration(borderRadius: BorderRadius.circular(5), border: Border.all(color: Colors.grey.shade200, width: 1)),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
                           child: Text(
-                        "Customer name",
+                        widget.customer.customerName,
                         style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
                       )),
                       Text(
-                        "7 oct 2021 - 04:50 PM",
+                        Utility.getFormatDate1(widget.customer.date),
                         style: TextStyle(color: Colors.black, fontSize: 14),
                       ),
                     ],
@@ -42,7 +58,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                     height: 10,
                   ),
                   Text(
-                    "+91 1231231231",
+                    "+91 ${widget.customer.mobile}",
                     style: TextStyle(color: Colors.black, fontSize: 14),
                   )
                 ],
@@ -51,94 +67,216 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
             const SizedBox(
               height: 20,
             ),
-            Container(
-              padding: const EdgeInsets.all(10),
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(5), border: Border.all(color: Colors.grey.shade200, width: 1)),
-              child: Column(
-                children: [
-                  const Text(
-                    "All items",
-                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
-                  ),
-                  Column(
-                    children: List.generate(
-                        5,
-                        (index) => Container(
-                              padding: const EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5), border: Border.all(color: Colors.grey.shade200, width: 1)),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.center,
+            FutureBuilder<List<CustomerProduct>>(
+                future: getCustomerProduct(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  }
+                  if (snapshot.hasData) {
+                    return Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5), border: Border.all(color: Colors.grey.shade200, width: 1)),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "All items",
+                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
+                          ),
+                          Column(
+                            children: List.generate(
+                                snapshot.data!.length,
+                                (index) => Stack(
+                                      children: [
+                                        Container(
+                                          padding: const EdgeInsets.all(10),
+                                          margin: EdgeInsets.symmetric(vertical: 10),
+                                          decoration:
+                                              BoxDecoration(borderRadius: BorderRadius.circular(5), color: Colors.grey.shade100),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              Image(
+                                                image: NetworkImage(snapshot.data![index].productImages.isNotEmpty
+                                                    ? snapshot.data![index].productImages.first.productImage
+                                                    : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDIC2m4o5Ff_s_BOIL0-y7uq8m_Kqrn0Yq1Q&usqp=CAU"),
+                                                height: 70,
+                                                width: 70,
+                                                fit: BoxFit.contain,
+                                              ),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              Expanded(
+                                                child: Container(
+                                                  child: Column(
+                                                    children: [
+                                                      Row(
+                                                        mainAxisSize: MainAxisSize.max,
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          Text(
+                                                            "${snapshot.data![index].productName}",
+                                                            style: TextStyle(
+                                                                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
+                                                          ),
+                                                          Text(
+                                                            "${snapshot.data![index].total}",
+                                                            style: TextStyle(color: Colors.black, fontSize: 14),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          Text(
+                                                            "${snapshot.data![index].qty} x ${snapshot.data![index].price}",
+                                                            style: TextStyle(
+                                                                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              Image(
+                                                                image: AssetImage("assets/images/point.png"),
+                                                                width: 15,
+                                                                height: 15,
+                                                              ),
+                                                              Text(
+                                                                "${snapshot.data![index].earningCoins}",
+                                                                style: TextStyle(color: Colors.black, fontSize: 14),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        snapshot.data![index].redeemCoins.isEmpty || snapshot.data![index].redeemCoins == "0"
+                                            ? Container()
+                                            : Positioned(
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    color: ColorPrimary.withOpacity(0.2),
+                                                    borderRadius: BorderRadius.circular(10),
+                                                  ),
+                                                  child: Text(
+                                                    "\tRedeemed\t",
+                                                    style: TextStyle(color: ColorPrimary),
+                                                  ),
+                                                ),
+                                                top: 0,
+                                                right: 15,
+                                              )
+                                      ],
+                                    )),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Total Amount",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Text("₹ ${total.toStringAsFixed(2)}"),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Redeemed Amount",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Text("₹ ${redeemedCoin.toStringAsFixed(2)}"),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Earn Coins",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Image(
-                                    image: NetworkImage(
-                                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDIC2m4o5Ff_s_BOIL0-y7uq8m_Kqrn0Yq1Q&usqp=CAU"),
-                                    height: 80,
-                                    width: 80,
-                                    fit: BoxFit.contain,
+                                    image: AssetImage("assets/images/point.png"),
+                                    width: 15,
+                                    height: 15,
                                   ),
-                                  Expanded(
-                                    child: Container(
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                "Product Name",
-                                                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
-                                              ),
-                                              Text(
-                                                "₹ 2000",
-                                                style: TextStyle(color: Colors.black, fontSize: 14),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: 5,
-                                          ),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                "5 * ₹400",
-                                                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Image(
-                                                    image: AssetImage("assets/images/point.png"),
-                                                    width: 15,
-                                                    height: 15,
-                                                  ),
-                                                  Text(
-                                                    "500",
-                                                    style: TextStyle(color: Colors.black, fontSize: 14),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
+                                  Text("${earnCoin.toStringAsFixed(2)}"),
                                 ],
                               ),
-                            )),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                ],
-              ),
-            )
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Pay Amount",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Text("₹ ${totalPay.toStringAsFixed(2)}"),
+                            ],
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                  return Container();
+                })
           ],
         ),
       ),
     );
+  }
+
+  Future<List<CustomerProduct>> getCustomerProduct() async {
+    if (await Network.isConnected()) {
+      Map<String, dynamic> input = {
+        "customer_id": widget.customer.customerId,
+        "vendor_id": await SharedPref.getIntegerPreference(SharedPref.VENDORID)
+      };
+
+      GetCustomerProductResponse response = await apiProvider.getCustomerProduct(input);
+      if (response.success) {
+        response.data!.forEach((product) {
+          totalPay += double.parse(product.total);
+          total += double.parse(product.price);
+          redeemedCoin += double.parse(product.redeemCoins);
+          earnCoin += double.parse(product.earningCoins);
+        });
+
+        return response.data!;
+      } else {
+        return [];
+      }
+    } else {
+      return [];
+    }
   }
 }
