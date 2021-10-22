@@ -358,9 +358,11 @@ class _DirectBillingState extends State<DirectBilling> {
   Future<void> directBilling(BuildContext context) async {
     Map<String, dynamic> input = HashMap<String, dynamic>();
     input["mobile"] = mobileController.text;
-    input["total"] = amountController.text;
+    input["bill_amount"] = amountController.text;
     input["vendor_id"] =
         await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    input["total_pay"] = amount;
+    input["coin_deducted"] = coinss;
 
     log("=====? $input");
     directBillingCustomerNumberResponseBloc
@@ -374,6 +376,7 @@ class _DirectBillingState extends State<DirectBilling> {
     input["bill_id"] = datas!.billId;
 
     input["otp"] = otpController.text;
+    input["coin_deducted"] = datas!.coinDeducted;
     input["earning_coins"] = datas!.earningCoins;
 
     log("=====? $input");
@@ -383,6 +386,7 @@ class _DirectBillingState extends State<DirectBilling> {
 
   _displayDialog(BuildContext context, index, text, hinttext) async {
     return showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (context) {
           return ConstrainedBox(
@@ -433,9 +437,8 @@ class _DirectBillingState extends State<DirectBilling> {
 
                         // directBillingCustomerNumberResponseBloc.add((
                         //     price: y, index: index, earningCoin: earningCoin));
-
-                        Navigator.pop(context);
                         otpController.clear();
+                        Navigator.pop(context);
                       } else {
                         verifyOtp(context);
                       }
@@ -457,6 +460,6 @@ class _DirectBillingState extends State<DirectBilling> {
               ],
             ),
           );
-        });
+        }).then((value) => otpController.clear());
   }
 }

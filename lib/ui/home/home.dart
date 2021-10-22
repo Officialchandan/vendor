@@ -4,6 +4,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:share/share.dart';
 import 'package:vendor/ui/home/share.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/routs.dart';
@@ -43,6 +44,10 @@ class _HomeScreenState extends State<HomeScreen> {
     "assets/images/home5.png",
     "assets/images/home6.png"
   ];
+  _onShareWithEmptyOrigin(BuildContext context) async {
+    await Share.share(
+        "https://play.google.com/store/apps/details?id=com.tencent.ig");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,8 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             child: InkWell(
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => DemoApp()));
+                _onShareWithEmptyOrigin(context);
               },
               child: Container(
                 decoration: BoxDecoration(
