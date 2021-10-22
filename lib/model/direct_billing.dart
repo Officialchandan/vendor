@@ -1,6 +1,6 @@
 // To parse this JSON data, do
 //
-//     final directBillingResponse = directBillingResponseFromMap(jsonString);
+//     final directBillingOtpResponse = directBillingOtpResponseFromMap(jsonString);
 
 import 'dart:convert';
 
@@ -38,18 +38,24 @@ class DirectBillingResponse {
 
 class DirectBillingData {
   DirectBillingData({
+    required this.vendorId,
     required this.billId,
     required this.customerId,
     required this.mobile,
-    required this.total,
+    required this.billAmount,
+    required this.totalPay,
+    required this.coinDeducted,
     required this.earningCoins,
   });
 
+  int vendorId;
   int billId;
   int customerId;
   String mobile;
-  String total;
-  double earningCoins;
+  String billAmount;
+  String totalPay;
+  String coinDeducted;
+  String earningCoins;
 
   factory DirectBillingData.fromJson(String str) =>
       DirectBillingData.fromMap(json.decode(str));
@@ -58,20 +64,29 @@ class DirectBillingData {
 
   factory DirectBillingData.fromMap(Map<String, dynamic> json) =>
       DirectBillingData(
+        vendorId: json["vendor_id"] == null ? null : json["vendor_id"],
         billId: json["bill_id"] == null ? null : json["bill_id"],
         customerId: json["customer_id"] == null ? null : json["customer_id"],
-        mobile: json["mobile"] == null ? null : json["mobile"],
-        total: json["total"] == null ? null : json["total"],
+        mobile: json["mobile"] == null ? "" : json["mobile"].toString(),
+        billAmount:
+            json["bill_amount"] == null ? "" : json["bill_amount"].toString(),
+        totalPay: json["total_pay"] == null ? "" : json["total_pay"].toString(),
+        coinDeducted: json["coin_deducted"] == null
+            ? ""
+            : json["coin_deducted"].toString(),
         earningCoins: json["earning_coins"] == null
-            ? null
-            : json["earning_coins"].toDouble(),
+            ? ""
+            : json["earning_coins"].toString(),
       );
 
   Map<String, dynamic> toMap() => {
+        "vendor_id": vendorId == null ? null : vendorId,
         "bill_id": billId == null ? null : billId,
         "customer_id": customerId == null ? null : customerId,
         "mobile": mobile == null ? null : mobile,
-        "total": total == null ? null : total,
+        "bill_amount": billAmount == null ? null : billAmount,
+        "total_pay": totalPay == null ? null : totalPay,
+        "coin_deducted": coinDeducted == null ? null : coinDeducted,
         "earning_coins": earningCoins == null ? null : earningCoins,
       };
 }

@@ -259,45 +259,69 @@ class _BillingProductsState extends State<BillingProducts> {
                                   ])
                                 ],
                               ),
-                              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                  BlocBuilder<BillingProductsBloc, BillingProductsState>(
-                                    builder: (context, state) {
-                                      return Container(
-                                        height: 18,
-                                        width: 18,
-                                        color: Colors.white,
-                                        child: Checkbox(
-                                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          BlocBuilder<BillingProductsBloc,
+                                              BillingProductsState>(
+                                            builder: (context, state) {
+                                              return Container(
+                                                height: 18,
+                                                width: 18,
+                                                color: Colors.white,
+                                                child: Checkbox(
+                                                  materialTapTargetSize:
+                                                      MaterialTapTargetSize
+                                                          .shrinkWrap,
 
-                                          // checkColor: Colors.indigo,
-                                          value: widget.billingItemList[index].billingcheck,
-                                          activeColor: ColorPrimary,
-                                          onChanged: (newvalue) {
-                                            log("true===>");
-                                            billingProductsBloc.add(CheckedBillingProductsEvent(check: newvalue!, index: index));
-                                            selectedProductList = productList[index];
-                                          },
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                  Text(" Redeem", style: TextStyle(fontSize: 14)),
-                                ]),
-                                Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                                  Text("Redeem ", style: TextStyle(fontSize: 14)),
-                                  Container(
-                                    height: 17,
-                                    width: 17,
-                                    child: Image.asset("assets/images/point.png"),
-                                  ),
-                                  Text(" ${double.parse(productList[index].redeemCoins) * productList[index].count}",
-                                      style: TextStyle(color: ColorPrimary, fontSize: 15)),
-                                  SizedBox(
-                                    width: 5,
-                                  )
-                                ])
-                              ])
+                                                  // checkColor: Colors.indigo,
+                                                  value: widget
+                                                      .billingItemList[index]
+                                                      .billingcheck,
+                                                  activeColor: ColorPrimary,
+                                                  onChanged: (newvalue) {
+                                                    log("true===>");
+                                                    billingProductsBloc.add(
+                                                        CheckedBillingProductsEvent(
+                                                            check: newvalue!,
+                                                            index: index));
+                                                    selectedProductList =
+                                                        productList[index];
+                                                  },
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                          Text(" Redeem",
+                                              style: TextStyle(fontSize: 14)),
+                                        ]),
+                                    Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          Text("Redeem ",
+                                              style: TextStyle(fontSize: 14)),
+                                          Container(
+                                            height: 17,
+                                            width: 17,
+                                            child: Image.asset(
+                                                "assets/images/point.png"),
+                                          ),
+                                          Text(
+                                              " ${double.parse(productList[index].redeemCoins) * productList[index].count}",
+                                              style: TextStyle(
+                                                  color: ColorPrimary,
+                                                  fontSize: 15)),
+                                          SizedBox(
+                                            width: 5,
+                                          )
+                                        ])
+                                  ])
                             ],
                           ),
                         ),
@@ -319,7 +343,8 @@ class _BillingProductsState extends State<BillingProducts> {
                                   height: 60,
                                   width: 60,
                                   fit: BoxFit.contain,
-                                  image: NetworkImage("${productList[index].productImages[0].productImage}"),
+                                  image: NetworkImage(
+                                      "${productList[index].productImages[0].productImage}"),
                                 )
                               : Image(
                                   image: AssetImage(
@@ -352,9 +377,11 @@ class _BillingProductsState extends State<BillingProducts> {
                           //             .redeemCoins) *
                           //         2;
 
-                          billingProductsBloc.add(DeleteBillingProductsEvent(index: index));
+                          billingProductsBloc
+                              .add(DeleteBillingProductsEvent(index: index));
                         },
-                        child: BlocBuilder<BillingProductsBloc, BillingProductsState>(
+                        child: BlocBuilder<BillingProductsBloc,
+                            BillingProductsState>(
                           builder: (context, state) {
                             return Container(
                               height: 20,
@@ -383,44 +410,64 @@ class _BillingProductsState extends State<BillingProducts> {
                     return Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 15, bottom: 5),
-                          child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                            Text(
-                              "Total Pay Amount",
-                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-                            ),
-                            Row(
+                          padding: const EdgeInsets.only(
+                              left: 10.0, right: 10.0, top: 15, bottom: 5),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text("\u20B9 ", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: ColorPrimary)),
-                                Text("${totalPay.toStringAsFixed(2)}",
-                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: ColorPrimary)),
-                              ],
-                            ),
-                          ]),
+                                Text(
+                                  "Total Pay Amount",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                Row(
+                                  children: [
+                                    Text("\u20B9 ",
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w700,
+                                            color: ColorPrimary)),
+                                    Text("${totalPay.toStringAsFixed(2)}",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w700,
+                                            color: ColorPrimary)),
+                                  ],
+                                ),
+                              ]),
                         ),
                         Divider(
                           height: 1,
                           color: ColorTextPrimary,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 15, bottom: 5),
-                          child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                            Text(
-                              "Redeem Coins",
-                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-                            ),
-                            Row(
+                          padding: const EdgeInsets.only(
+                              left: 10.0, right: 10.0, top: 15, bottom: 5),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Container(
-                                    child: Image.asset(
-                                  "assets/images/point.png",
-                                  scale: 2.5,
-                                )),
-                                Text(" ${redeemCoins.toStringAsFixed(2)}",
-                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: ColorPrimary)),
-                              ],
-                            ),
-                          ]),
+                                Text(
+                                  "Redeem Coins",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                Row(
+                                  children: [
+                                    Container(
+                                        child: Image.asset(
+                                      "assets/images/point.png",
+                                      scale: 2.5,
+                                    )),
+                                    Text(" ${redeemCoins.toStringAsFixed(2)}",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w700,
+                                            color: ColorPrimary)),
+                                  ],
+                                ),
+                              ]),
                         ),
                         Divider(
                           height: 1,
@@ -456,11 +503,13 @@ class _BillingProductsState extends State<BillingProducts> {
                         status = state.succes;
                         otpVerifyList = state.data;
                         log("${otpVerifyList!.otp}");
-                        _displayDialog(context, 0, 1, "Please Enter OTP", "Enter OTP");
+                        _displayDialog(
+                            context, 0, 1, "Please Enter OTP", "Enter OTP");
                       }
                       if (state is PayBillingProductsStateFailureState) {
                         message = state.message;
-                        Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
+                        Fluttertoast.showToast(
+                            msg: state.message, backgroundColor: ColorPrimary);
                       }
                       if (state is PayBillingProductsStateLoadingstate) {
                         log("number chl gya");
@@ -478,7 +527,8 @@ class _BillingProductsState extends State<BillingProducts> {
                       }
                       if (state is VerifyOtpStateFailureState) {
                         message = state.message;
-                        Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
+                        Fluttertoast.showToast(
+                            msg: state.message, backgroundColor: ColorPrimary);
                       }
                     },
                     builder: (context, state) {
@@ -493,7 +543,9 @@ class _BillingProductsState extends State<BillingProducts> {
                           child: Center(
                             child: Text(
                               "SUBMIT",
-                              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
                             ),
                           ),
                           height: height * 0.07,
@@ -512,7 +564,8 @@ class _BillingProductsState extends State<BillingProducts> {
 
   Future<void> billingProducts(BuildContext context) async {
     Map<String, dynamic> input = HashMap<String, dynamic>();
-    input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    input["vendor_id"] =
+        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     input["mobile"] = widget.mobile;
     input["address_id"] = "";
     input["payment_method"] = "cash";
@@ -530,7 +583,8 @@ class _BillingProductsState extends State<BillingProducts> {
       billingProduct["product_name"] = widget.billingItemList[i].productName;
       billingProduct["qty"] = widget.billingItemList[i].count.toString();
       billingProduct["price"] = widget.billingItemList[i].sellingPrice;
-      billingProduct["total"] = double.parse(productList[i].sellingPrice) * productList[i].count;
+      billingProduct["total"] =
+          double.parse(productList[i].sellingPrice) * productList[i].count;
 
       billingProduct["product_redeem"] = widget.billingItemList[i].redeemCoins;
 
@@ -548,7 +602,8 @@ class _BillingProductsState extends State<BillingProducts> {
           return ConstrainedBox(
             constraints: BoxConstraints(maxWidth: 400),
             child: AlertDialog(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
               title: RichText(
                 text: TextSpan(
                   text: "$text",
@@ -572,7 +627,8 @@ class _BillingProductsState extends State<BillingProducts> {
                   hintStyle: GoogleFonts.openSans(
                     fontWeight: FontWeight.w600,
                   ),
-                  contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                  contentPadding:
+                      const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
                 ),
               ),
               actions: <Widget>[
@@ -583,19 +639,22 @@ class _BillingProductsState extends State<BillingProducts> {
                     padding: const EdgeInsets.all(8.0),
                     textColor: Colors.white,
                     color: ColorPrimary,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
                     onPressed: () {
                       if (status == 0) {
                         log("onPressed->$status");
                         // productList[index].sellingPrice = _textFieldController.text;
-                        double y = double.parse(_textFieldController.text.trim());
+                        double y =
+                            double.parse(_textFieldController.text.trim());
                         log("y->$y");
                         double earningCoin = earningPrice(y);
 
                         log("index->$index");
                         log("earningCoin->$earningCoin");
 
-                        billingProductsBloc.add(EditBillingProductsEvent(price: y, index: index, earningCoin: earningCoin));
+                        billingProductsBloc.add(EditBillingProductsEvent(
+                            price: y, index: index, earningCoin: earningCoin));
 
                         Navigator.pop(context);
                         _textFieldController.clear();
@@ -605,7 +664,10 @@ class _BillingProductsState extends State<BillingProducts> {
                     },
                     child: new Text(
                       "DONE",
-                      style: GoogleFonts.openSans(fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
+                      style: GoogleFonts.openSans(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w600,
+                          decoration: TextDecoration.none),
                     ),
                   ),
                 ),
@@ -622,7 +684,8 @@ class _BillingProductsState extends State<BillingProducts> {
 
   Future<void> verifyOtp(BuildContext context) async {
     Map<String, dynamic> input = HashMap<String, dynamic>();
-    input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    input["vendor_id"] =
+        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     input["mobile"] = widget.mobile;
     input["order_id"] = "${otpVerifyList!.orderId}";
     input["customer_id"] = "${otpVerifyList!.customerId}";

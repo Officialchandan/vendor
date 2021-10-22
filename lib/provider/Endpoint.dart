@@ -65,17 +65,25 @@ class Endpoint {
 
   static const String GENERATE_REPORT = "generateReports";
 
-  static const String GET_GENERATE_COIN_REPORT_BY_DAY = "getGenerateCoinReportByDay";
-  static const String GET_GENERATE_COIN_REPORT_BY_DATE = "getGenerateCoinReportByDate";
+  static const String GET_GENERATE_COIN_REPORT_BY_DAY =
+      "getGenerateCoinReportByDay";
+  static const String GET_GENERATE_COIN_REPORT_BY_DATE =
+      "getGenerateCoinReportByDate";
 
-  static const String GET_SALE_RETURN_REPORT_BY_DATE = "getSaleReturnReportbyDate";
-  static const String GET_SALE_RETURN_REPORT_BY_DAY = "getSaleReturnReportbyDay";
+  static const String GET_SALE_RETURN_REPORT_BY_DATE =
+      "getSaleReturnReportbyDate";
+  static const String GET_SALE_RETURN_REPORT_BY_DAY =
+      "getSaleReturnReportbyDay";
 
-  static const String GET_PRODUCT_REDEEM_REPORT_BY_DATE = "getProductRedeemReportByDate";
-  static const String GET_PRODUCT_REDEEM_REPORT_BY_DAY = "getProductRedeemReportByDay";
+  static const String GET_PRODUCT_REDEEM_REPORT_BY_DATE =
+      "getProductRedeemReportByDate";
+  static const String GET_PRODUCT_REDEEM_REPORT_BY_DAY =
+      "getProductRedeemReportByDay";
 
-  static const String GET_COIN_REDEEM_REPORT_BY_DATE = "getCoinRedeemedReportByDate";
-  static const String GET_COIN_REDEEM_REPORT_BY_DAY = "getCoinRedeemedReportByDay";
+  static const String GET_COIN_REDEEM_REPORT_BY_DATE =
+      "getCoinRedeemedReportByDate";
+  static const String GET_COIN_REDEEM_REPORT_BY_DAY =
+      "getCoinRedeemedReportByDay";
   static const String GET_READY_STOCK_REPORT = "getReadyStockReport";
 
   static const String GET_DAILY_REPORT = "getDailyReport";
