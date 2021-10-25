@@ -489,7 +489,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                   String variantName = "";
                                   for (int i = 0; i < variantType.length; i++) {
                                     options.add(VariantOption(name: variantType[i].variantName, value: ""));
-
                                     if (i == variantType.length - 1)
                                       variantName = variantName + variantType[i].variantName;
                                     else

@@ -24,6 +24,8 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
   TextEditingController txtSearch = TextEditingController();
   List<Customer> customerList = [];
   StreamController<List<Customer>> streamController = StreamController();
+  String startDate = "";
+  String endDate = "";
 
   @override
   void initState() {
@@ -49,8 +51,11 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                   context: context,
                   builder: (context) {
                     return CalendarBottomSheet(onSelect: (startDate, endDate) {
+                      this.startDate = startDate;
+                      this.endDate = endDate;
                       print("startDate->$startDate");
                       print("endDate->$endDate");
+                      getCustomer();
                     });
                   });
             },
@@ -191,6 +196,8 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
       Map<String, dynamic> input = HashMap<String, dynamic>();
 
       input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      input["from_date"] = startDate;
+      input["to_date"] = endDate;
 
       GetMyCustomerResponse response = await apiProvider.getMyCustomer(input);
 
