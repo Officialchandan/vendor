@@ -16,14 +16,7 @@
     "header": {
       "content_type": "text",
       "height_ratio": "0.42",
-      "image": "https://s3-ap-southeast-1.amazonaws.com/ondoorimage1/image/catalog/test9.jpeg",
-      "search_term": "",
-      "sort_order": "2",
-      "text": "Brand",
-      "key": "2",
-      "value": "123",
-      "name": "allo",
-      "weburl": "",
+      "text": "Beauty Offer",
       "header_color": "#FF0000",
       "text_color": "#FFFFFF"
     }
@@ -131,19 +124,11 @@
     "header": {
       "content_type": "text",
       "height_ratio": "0.42",
-      "image": "https://s3-ap-southeast-1.amazonaws.com/ondoorimage1/image/catalog/test9.jpeg",
-      "search_term": "",
-      "sort_order": "2",
-      "text": "Brand",
-      "key": "2",
-      "value": "123",
-      "name": "allo",
-      "weburl": "",
+      "text": "Best Seller",
       "header_color": "#FF0000",
       "text_color": "#FFFFFF"
     }
   },
-
   {
     "grid": {
       "grid_type": "best_seller",
@@ -225,7 +210,6 @@
       ]
     }
   },
-
   {
     "header": {
       "content_type": "image",
@@ -239,19 +223,11 @@
       "weburl": ""
     }
   },
-
   {
     "header": {
       "content_type": "text",
       "height_ratio": "0.42",
-      "image": "https://s3-ap-southeast-1.amazonaws.com/ondoorimage1/image/catalog/test9.jpeg",
-      "search_term": "",
-      "sort_order": "2",
       "text": "Brand",
-      "key": "2",
-      "value": "123",
-      "name": "allo",
-      "weburl": "",
       "header_color": "#FF0000",
       "text_color": "#FFFFFF"
     }
