@@ -17,7 +17,6 @@ import 'package:vendor/ui/performance_tracker/report/daily_report.dart';
 import 'package:vendor/ui/performance_tracker/report/generated_coin_report.dart';
 import 'package:vendor/ui/performance_tracker/report/product_redeem_report.dart';
 import 'package:vendor/ui/performance_tracker/report/sale_return_report.dart';
-import 'package:vendor/ui/performance_tracker/report/view_report_screen.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/utility.dart';
@@ -76,10 +75,7 @@ class _SelectReportTypeScreenState extends State<SelectReportTypeScreen> {
                         Navigator.push(context, PageTransition(child: ProductRedeemReport(), type: PageTransitionType.fade));
                       } else if (options[index]["id"] == 8) {
                         Navigator.push(context, PageTransition(child: CoinRedeemReport(), type: PageTransitionType.fade));
-                      } else {
-                        Navigator.push(
-                            context, PageTransition(child: ViewReportScreen(options[index]), type: PageTransitionType.fade));
-                      }
+                      } else {}
                     },
                     title: Text("${options[index]["title"]}"),
                     trailing: Icon(Icons.keyboard_arrow_right_outlined),

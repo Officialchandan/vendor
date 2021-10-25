@@ -6,16 +6,20 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:open_file/open_file.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart' as xls;
 import 'package:vendor/main.dart';
 import 'package:vendor/model/get_categories_response.dart';
+import 'package:vendor/model/product_model.dart';
 import 'package:vendor/provider/Endpoint.dart';
 import 'package:vendor/provider/server_error.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
+import 'package:vendor/ui/performance_tracker/report/product_list_screen.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
+import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/utility.dart';
 import 'package:vendor/widget/category_bottom_sheet.dart';
 import 'package:vendor/widget/custom_bottom_sheet.dart';
@@ -41,6 +45,7 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
   TextEditingController edtReportType = TextEditingController();
 
   List<Map<String, dynamic>> reportList = [];
+  List<ProductModel> productList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -140,7 +145,9 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
             ),
             TextFormField(
               controller: edtProducts,
-              onTap: () {},
+              onTap: () {
+                selectProduct(context);
+              },
               readOnly: true,
               decoration: InputDecoration(
                   hintText: "Choose product",
@@ -221,11 +228,35 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
         });
   }
 
+  void selectProduct(BuildContext context) async {
+    productList = await Navigator.push(
+        context,
+        PageTransition(
+            child: ProductListScreen(
+              categoryId: categoryModel == null ? "" : categoryModel!.id,
+            ),
+            type: PageTransitionType.fade));
+
+    String text = "";
+
+    for (int i = 0; i < productList.length; i++) {
+      if (i == productList.length - 1) {
+        text += productList[i].productName;
+      } else {
+        text += productList[i].productName + ",";
+      }
+    }
+
+    edtProducts.text = text;
+
+    print("selected product->$productList");
+  }
+
   void getReport(BuildContext context) async {
     if (await Network.isConnected()) {
       Map input = HashMap<String, dynamic>();
-      // input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
-      input["vendor_id"] = "1";
+      input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      // input["vendor_id"] = "1";
       String url = "";
 
       if (groupValue == 1) {
@@ -242,7 +273,20 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
         }
       }
       input["category_id"] = categoryModel == null ? "" : categoryModel!.id;
-      input["product_id"] = "";
+      if (productList.isEmpty) {
+        input["product_id"] = "";
+      } else {
+        String text = "";
+
+        for (int i = 0; i < productList.length; i++) {
+          if (i == productList.length - 1) {
+            text += productList[i].id;
+          } else {
+            text += productList[i].id + ",";
+          }
+        }
+        input["product_id"] = text;
+      }
       EasyLoading.show();
 
       try {

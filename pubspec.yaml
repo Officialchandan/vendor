@@ -85,6 +85,8 @@ dependencies:
   share:
 
   provider:
+  flutter_html:
+  html:
 
 #  downloads_path_provider_28: ^0.1.2
 
