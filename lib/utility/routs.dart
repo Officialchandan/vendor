@@ -9,4 +9,6 @@ class Routes {
   static const HomeScreenWithoutInventory = "/home_screen_with_inventory";
   static const BillingScreen = "/billing_screen";
   static const BOTTOM_NAVIGATION_HOME = "/bottom_navigation_home";
+  static const BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY =
+      "/BottomNavigationHomeWithOutInventory";
 }
