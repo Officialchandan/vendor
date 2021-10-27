@@ -11,4 +11,9 @@ class Routes {
   static const BOTTOM_NAVIGATION_HOME = "/bottom_navigation_home";
   static const BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY =
       "/BottomNavigationHomeWithOutInventory";
+  static const BILLING_WITHOUTINVENTORY = "/ChatPapdiBilling";
+  static const ACCOUNT_WITHOUTINVENTORY =
+      "/AccountManagementWithoutInventoryScreen";
+  static const Performance_WITHOUTINVENTORY =
+      "/PerformanceTrackerWithoutInventory";
 }

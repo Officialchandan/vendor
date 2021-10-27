@@ -18,6 +18,7 @@ import 'package:vendor/ui/inventory/suggested_product/SuggestedProductProvider.d
 import 'package:vendor/ui/language/select_language.dart';
 import 'package:vendor/ui/login/login_screen.dart';
 import 'package:vendor/ui/splash/splash_screen.dart';
+import 'package:vendor/ui_without_inventory/home/bottom_navigation_bar.dart';
 import 'package:vendor/ui_without_inventory/home/home.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/routs.dart';
@@ -219,7 +220,7 @@ class _MyAppState extends State<MyApp> {
               int index = route.arguments as int;
               return PageTransition(
                   type: PageTransitionType.fade,
-                  child: BottomNavigationHome(
+                  child: BottomNavigationHomeWithOutInventory(
                     index: index,
                   ));
           }
