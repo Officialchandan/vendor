@@ -59,7 +59,7 @@ class ApiProvider {
       Response res = await dio.post(Endpoint.GENERATE_OTP, data: {"mobile": mobile});
       print("${res.data}");
       return LoginOtpResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -67,7 +67,7 @@ class ApiProvider {
       } else {
         message = "Something Went wrong";
       }
-      print("Exception occurred: $message stackTrace: $stacktrace");
+      print("Exception occurred: $message");
       return LoginOtpResponse(success: false, message: message);
     }
   }
@@ -79,7 +79,7 @@ class ApiProvider {
       log("chl gyi 2${res}");
 
       return LoginResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -95,8 +95,6 @@ class ApiProvider {
   Future<CustomerNumberResponse> getCustomerCoins(mobile) async {
     log("chl gyi ${mobile}");
     try {
-      var token = await SharedPref.getStringPreference('token');
-
       Response res = await dio.post(
         Endpoint.GET_CUSTOMER_COINS,
         data: {"mobile": mobile},
@@ -104,7 +102,7 @@ class ApiProvider {
       log("chl gyi 2${res}");
 
       return CustomerNumberResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -129,7 +127,7 @@ class ApiProvider {
       );
 
       return GetCategoriesResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -155,7 +153,7 @@ class ApiProvider {
       );
 
       return ProductByCategoryResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -181,7 +179,7 @@ class ApiProvider {
   //     );
   //
   //     return ProductByCategoryResponse.fromJson(res.toString());
-  //   } catch (error, stacktrace) {
+  //   } catch (error) {
   //     String message = "";
   //     if (error is DioError) {
   //       ServerError e = ServerError.withError(error: error);
@@ -207,7 +205,7 @@ class ApiProvider {
       );
 
       return ProductByCategoryResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -228,7 +226,7 @@ class ApiProvider {
       );
 
       return GetPurchasedProductResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -249,7 +247,7 @@ class ApiProvider {
       );
 
       return CommonResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -270,7 +268,7 @@ class ApiProvider {
       );
 
       return CommonResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -296,7 +294,7 @@ class ApiProvider {
       );
 
       return AddSuggestedProductResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -321,7 +319,7 @@ class ApiProvider {
       );
 
       return ProductByCategoryResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -346,7 +344,7 @@ class ApiProvider {
       );
 
       return ProductByCategoryResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -371,7 +369,7 @@ class ApiProvider {
       );
 
       return GetUnitResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -396,7 +394,7 @@ class ApiProvider {
       );
 
       return GetSizeResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -422,7 +420,7 @@ class ApiProvider {
       );
 
       return GetSubCategoryResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -448,7 +446,7 @@ class ApiProvider {
       );
 
       return AddSubCategoryResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -474,7 +472,7 @@ class ApiProvider {
       );
 
       return GetVendorCategoryById.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -498,7 +496,7 @@ class ApiProvider {
       );
 
       return ProductVariantResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -516,7 +514,7 @@ class ApiProvider {
       Response res = await dio.get(Endpoint.GET_COLORS);
 
       return GetColorsResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -534,7 +532,7 @@ class ApiProvider {
       Response res = await dio.post(Endpoint.ADD_VENDOR_PRODUCT, data: input);
 
       return AddProductResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -553,7 +551,7 @@ class ApiProvider {
           await dio.post(Endpoint.ADD_PRODUCT_IMAGE, data: input, options: Options(sendTimeout: 10000, receiveTimeout: 10000));
 
       return UploadImageResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -570,7 +568,7 @@ class ApiProvider {
     try {
       Response res = await dio.post(Endpoint.DELETE_PRODUCT_IMAGE, data: input);
       return CommonResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -587,7 +585,7 @@ class ApiProvider {
     try {
       Response res = await dio.post(Endpoint.DELETE_PRODUCT_VARIANT, data: input);
       return CommonResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -604,7 +602,7 @@ class ApiProvider {
     try {
       Response res = await dio.post(Endpoint.PURCHASE_RETURN, data: input);
       return CommonResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -622,7 +620,7 @@ class ApiProvider {
       Response res = await dio.post(Endpoint.EDIT_VENDOR_PRODUCT, data: input);
 
       return AddProductResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -640,7 +638,7 @@ class ApiProvider {
       Response res = await dio.get(Endpoint.GET_BRANDS);
 
       return GetBrandsResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -658,7 +656,7 @@ class ApiProvider {
       Response res = await dio.post(Endpoint.BILLING_PRODUCT, data: input);
 
       return BillingProductResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -676,7 +674,7 @@ class ApiProvider {
       Response res = await dio.post(Endpoint.GET_VERIFY_EARNING_COINOTP_VENDORID, data: input);
 
       return VerifyEarningCoinsOtpResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -701,7 +699,7 @@ class ApiProvider {
       );
       log("------->$res");
       return DailySellAmountResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -726,7 +724,7 @@ class ApiProvider {
       );
       log("------->$res");
       return MonthlySellAmountResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -751,7 +749,7 @@ class ApiProvider {
     );
     log("------->$res");
     return HourlySaleAmountResponse.fromJson(res.toString());
-    // } catch (error, stacktrace) {
+    // } catch (error) {
     //   String message = "";
     //   if (error is DioError) {
     //     ServerError e = ServerError.withError(error: error);
@@ -776,7 +774,7 @@ class ApiProvider {
       );
       log("------->$res");
       return HourlyEarningAmountResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -801,7 +799,7 @@ class ApiProvider {
       );
       log("------->$res");
       return HourlyWalkinAmountResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -826,7 +824,7 @@ class ApiProvider {
     );
     log("------->$res");
     return DailyEarningAmountResponse.fromJson(res.toString());
-    // } catch (error, stacktrace) {
+    // } catch (error) {
     //   String message = "";
     //   if (error is DioError) {
     //     ServerError e = ServerError.withError(error: error);
@@ -851,7 +849,7 @@ class ApiProvider {
       );
       log("------->$res");
       return MonthlyEarningAmountResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -876,7 +874,7 @@ class ApiProvider {
       );
       log("------->$res");
       return DailyWalkinAmountResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -901,7 +899,7 @@ class ApiProvider {
       );
       log("------->$res");
       return MonthlyWalkinAmountResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -921,7 +919,7 @@ class ApiProvider {
       );
       log("------->$res");
       return LogOutResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -946,7 +944,7 @@ class ApiProvider {
       );
 
       return VendorDetailResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -964,7 +962,7 @@ class ApiProvider {
       Response res = await dio.post(Endpoint.GET_DIRECT_BILLING, data: input);
       log("===>billing$res");
       return DirectBillingResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -982,7 +980,7 @@ class ApiProvider {
       Response res = await dio.post(Endpoint.GET_DIRECT_BILLING_OTP, data: input);
       log("===>otp$res");
       return DirectBillingOtpResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -1000,7 +998,7 @@ class ApiProvider {
       Response res = await dio.post(Endpoint.GET_MY_CUSTOMER, data: input);
       log("===>otp$res");
       return GetMyCustomerResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -1018,7 +1016,7 @@ class ApiProvider {
       Response res = await dio.post(Endpoint.GET_CUSTOMER_PRODUCT, data: input);
       log("===>otp$res");
       return GetCustomerProductResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);
@@ -1037,7 +1035,7 @@ class ApiProvider {
       Response res = await dio.post(Endpoint.GET_TOTAL_MONEY_DUE, data: input);
       log("===>otp$res");
       return GetDueAmountResponse.fromJson(res.toString());
-    } catch (error, stacktrace) {
+    } catch (error) {
       String message = "";
       if (error is DioError) {
         ServerError e = ServerError.withError(error: error);

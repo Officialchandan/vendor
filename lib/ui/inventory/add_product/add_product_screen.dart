@@ -17,7 +17,7 @@ import 'package:vendor/ui/custom_widget/app_bar.dart';
 import 'package:vendor/ui/inventory/add_product/bloc/add_product_bloc.dart';
 import 'package:vendor/ui/inventory/add_product/bloc/add_product_event.dart';
 import 'package:vendor/ui/inventory/add_product/bloc/add_product_state.dart';
-import 'package:vendor/ui/inventory/product_varient/product_varient_screen.dart';
+import 'package:vendor/ui/inventory/product_variant/product_variant_screen.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/sharedpref.dart';
@@ -26,7 +26,7 @@ import 'package:vendor/widget/UnitBottomSheet.dart';
 import 'package:vendor/widget/category_bottom_sheet.dart';
 import 'package:vendor/widget/select_image_bottom_sheet.dart';
 import 'package:vendor/widget/selection_bottom_sheet.dart';
-import 'package:vendor/widget/varient_type_bottom_sheet.dart';
+import 'package:vendor/widget/variant_type_bottom_sheet.dart';
 
 class AddProductScreen extends StatefulWidget {
   @override

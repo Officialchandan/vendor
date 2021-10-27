@@ -46,7 +46,6 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
 
   List<Map<String, dynamic>> reportList = [];
   List<ProductModel> productList = [];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -177,7 +176,6 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
 
   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
     print(args.value);
-
     if (args.value is PickerDateRange) {
       startDate = Utility.getFormatDate(args.value.startDate);
       endDate = Utility.getFormatDate(args.value.endDate ?? args.value.startDate);

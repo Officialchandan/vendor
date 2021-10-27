@@ -24,7 +24,6 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   FocusNode focusNode = new FocusNode();
-  TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController mobileController = TextEditingController();
   bool _passwordVisible = true;
@@ -83,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   children: [
                     TextSpan(
-                      text: "${AppTranslations.of(context)!.text("please_verify_your_otp_on_key")} ${mobile}",
+                      text: "${AppTranslations.of(context)!.text("please_verify_your_otp_on_key")} $mobile",
                       style: GoogleFonts.openSans(
                         fontSize: 14.0,
                         color: ColorTextPrimary,
@@ -97,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 controller: _textFieldController,
                 cursorColor: ColorPrimary,
                 keyboardType: TextInputType.number,
-                inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 decoration: InputDecoration(
                   filled: true,
 

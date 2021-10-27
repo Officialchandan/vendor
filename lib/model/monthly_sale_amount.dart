@@ -15,23 +15,19 @@ class MonthlySellAmountResponse {
   String message;
   MonthlySellAmountData? data;
 
-  factory MonthlySellAmountResponse.fromJson(String str) =>
-      MonthlySellAmountResponse.fromMap(json.decode(str));
+  factory MonthlySellAmountResponse.fromJson(String str) => MonthlySellAmountResponse.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory MonthlySellAmountResponse.fromMap(Map<String, dynamic> json) =>
-      MonthlySellAmountResponse(
+  factory MonthlySellAmountResponse.fromMap(Map<String, dynamic> json) => MonthlySellAmountResponse(
         success: json["success"] == null ? null : json["success"],
         message: json["message"] == null ? null : json["message"],
-        data: json["data"] == null
-            ? null
-            : MonthlySellAmountData.fromMap(json["data"]),
+        data: json["data"] == null ? null : MonthlySellAmountData.fromMap(json["data"]),
       );
 
   Map<String, dynamic> toMap() => {
-        "success": success == null ? null : success,
-        "message": message == null ? null : message,
+        "success": success,
+        "message": message,
         "data": data == null ? null : data!.toMap(),
       };
 }
@@ -45,16 +41,13 @@ class MonthlySellAmountData {
   String month;
   String saleAmount;
 
-  factory MonthlySellAmountData.fromJson(String str) =>
-      MonthlySellAmountData.fromMap(json.decode(str));
+  factory MonthlySellAmountData.fromJson(String str) => MonthlySellAmountData.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory MonthlySellAmountData.fromMap(Map<String, dynamic> json) =>
-      MonthlySellAmountData(
+  factory MonthlySellAmountData.fromMap(Map<String, dynamic> json) => MonthlySellAmountData(
         month: json["Month"] == null ? "" : json["Month"].toString(),
-        saleAmount:
-            json["Sale_amount"] == null ? "" : json["Sale_amount"].toString(),
+        saleAmount: json["Sale_amount"] == null ? "" : json["Sale_amount"].toString(),
       );
 
   Map<String, dynamic> toMap() => {

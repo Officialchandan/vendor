@@ -15,23 +15,19 @@ class MonthlyEarningAmountResponse {
   String message;
   MonthlyEarningAmountData? data;
 
-  factory MonthlyEarningAmountResponse.fromJson(String str) =>
-      MonthlyEarningAmountResponse.fromMap(json.decode(str));
+  factory MonthlyEarningAmountResponse.fromJson(String str) => MonthlyEarningAmountResponse.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory MonthlyEarningAmountResponse.fromMap(Map<String, dynamic> json) =>
-      MonthlyEarningAmountResponse(
+  factory MonthlyEarningAmountResponse.fromMap(Map<String, dynamic> json) => MonthlyEarningAmountResponse(
         success: json["success"] == null ? null : json["success"],
         message: json["message"] == null ? null : json["message"],
-        data: json["data"] == null
-            ? null
-            : MonthlyEarningAmountData.fromMap(json["data"]),
+        data: json["data"] == null ? null : MonthlyEarningAmountData.fromMap(json["data"]),
       );
 
   Map<String, dynamic> toMap() => {
-        "success": success == null ? null : success,
-        "message": message == null ? null : message,
+        "success": success,
+        "message": message,
         "data": data == null ? null : data!.toMap(),
       };
 }
@@ -45,17 +41,13 @@ class MonthlyEarningAmountData {
   String month;
   String monthlyEarning;
 
-  factory MonthlyEarningAmountData.fromJson(String str) =>
-      MonthlyEarningAmountData.fromMap(json.decode(str));
+  factory MonthlyEarningAmountData.fromJson(String str) => MonthlyEarningAmountData.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory MonthlyEarningAmountData.fromMap(Map<String, dynamic> json) =>
-      MonthlyEarningAmountData(
+  factory MonthlyEarningAmountData.fromMap(Map<String, dynamic> json) => MonthlyEarningAmountData(
         month: json["Month"] == null ? "" : json["Month"].toString(),
-        monthlyEarning: json["monthly_earning"] == null
-            ? ""
-            : json["monthly_earning"].toString(),
+        monthlyEarning: json["monthly_earning"] == null ? "" : json["monthly_earning"].toString(),
       );
 
   Map<String, dynamic> toMap() => {

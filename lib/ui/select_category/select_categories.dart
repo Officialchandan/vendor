@@ -93,7 +93,7 @@ class _SelectCategoriesScreenState extends State<SelectCategoriesScreen> {
                       },
                       leading: Radio(
                         groupValue: groupId,
-                        value: snap.data![index].id!,
+                        value: snap.data![index].id,
                         onChanged: (value) {
                           print(value);
                           groupId = value as int;
@@ -122,7 +122,7 @@ class _SelectCategoriesScreenState extends State<SelectCategoriesScreen> {
                   width: double.infinity,
                   onPressed: () {
                     if (groupId != -1) {
-                      CategoryModel categoryModel = categoryList.singleWhere((element) => element.id == groupId);
+                      CategoryModel categoryModel = categoryList.singleWhere((element) => element.id == groupId.toString());
 
                       // Navigator.pushNamed(context, Routs.VENDOR_LIST_SCREEN, arguments: categoryModel);
                     } else {

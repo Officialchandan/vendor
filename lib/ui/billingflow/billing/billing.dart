@@ -101,7 +101,7 @@ class _BillingScreenState extends State<BillingScreen> {
                   GestureDetector(
                     onTap: () {
                       Navigator.pop(context);
-                      log("${userStatus}");
+                      log("$userStatus");
                       log("${SharedPref.getIntegerPreference(SharedPref.VENDORID)}");
                     },
                     child: Container(

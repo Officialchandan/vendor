@@ -15,27 +15,20 @@ class VendorDetailResponse {
   String message;
   List<VendorDetailData>? data;
 
-  factory VendorDetailResponse.fromJson(String str) =>
-      VendorDetailResponse.fromMap(json.decode(str));
+  factory VendorDetailResponse.fromJson(String str) => VendorDetailResponse.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory VendorDetailResponse.fromMap(Map<String, dynamic> json) =>
-      VendorDetailResponse(
+  factory VendorDetailResponse.fromMap(Map<String, dynamic> json) => VendorDetailResponse(
         success: json["success"] == null ? null : json["success"],
         message: json["message"] == null ? null : json["message"],
-        data: json["data"] == null
-            ? null
-            : List<VendorDetailData>.from(
-                json["data"].map((x) => VendorDetailData.fromMap(x))),
+        data: json["data"] == null ? null : List<VendorDetailData>.from(json["data"].map((x) => VendorDetailData.fromMap(x))),
       );
 
   Map<String, dynamic> toMap() => {
-        "success": success == null ? null : success,
-        "message": message == null ? null : message,
-        "data": data == null
-            ? null
-            : List<dynamic>.from(data!.map((x) => x.toMap())),
+        "success": success,
+        "message": message,
+        "data": data == null ? null : List<dynamic>.from(data!.map((x) => x.toMap())),
       };
 }
 
@@ -60,13 +53,11 @@ class VendorDetailData {
   String commission;
   int offer;
 
-  factory VendorDetailData.fromJson(String str) =>
-      VendorDetailData.fromMap(json.decode(str));
+  factory VendorDetailData.fromJson(String str) => VendorDetailData.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory VendorDetailData.fromMap(Map<String, dynamic> json) =>
-      VendorDetailData(
+  factory VendorDetailData.fromMap(Map<String, dynamic> json) => VendorDetailData(
         id: json["id"] == null ? null : json["id"],
         uniqueId: json["unique_id"] == null ? null : json["unique_id"],
         shopName: json["shop_name"] == null ? null : json["shop_name"],

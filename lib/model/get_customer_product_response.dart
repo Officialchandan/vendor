@@ -68,12 +68,12 @@ class CustomerProduct {
       );
 
   Map<String, dynamic> toMap() => {
-        "order_id": orderId == null ? null : orderId,
-        "product_name": productName == null ? null : productName,
-        "qty": qty == null ? null : qty,
-        "price": price == null ? null : price,
-        "total": total == null ? null : total,
-        "redeem_coins": redeemCoins == null ? null : redeemCoins,
-        "earning_coins": earningCoins == null ? null : earningCoins,
+        "order_id": orderId,
+        "product_name": productName,
+        "qty": qty,
+        "price": price,
+        "total": total,
+        "redeem_coins": redeemCoins,
+        "earning_coins": earningCoins,
       };
 }

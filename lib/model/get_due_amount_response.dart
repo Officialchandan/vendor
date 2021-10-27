@@ -26,8 +26,8 @@ class GetDueAmountResponse {
       );
 
   Map<String, dynamic> toMap() => {
-        "success": success == null ? null : success,
-        "message": message == null ? null : message,
-        "total_due": totalDue == null ? null : totalDue,
+        "success": success,
+        "message": message,
+        "total_due": totalDue,
       };
 }

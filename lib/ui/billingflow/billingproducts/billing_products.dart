@@ -24,7 +24,7 @@ class BillingProducts extends StatefulWidget {
   BillingProducts({required this.billingItemList, required this.mobile, required this.coin});
 
   final List<ProductModel> searchList = [];
-  double coin;
+  final double coin;
   final mobile;
 
   @override
@@ -618,7 +618,7 @@ class _BillingProductsState extends State<BillingProducts> {
                 controller: _textFieldController,
                 cursorColor: ColorPrimary,
                 keyboardType: TextInputType.number,
-                inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 decoration: InputDecoration(
                   // filled: true,
 

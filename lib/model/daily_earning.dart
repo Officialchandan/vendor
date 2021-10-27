@@ -30,8 +30,8 @@ class DailyEarningAmountResponse {
       );
 
   Map<String, dynamic> toMap() => {
-        "success": success == null ? null : success,
-        "message": message == null ? null : message,
+        "success":  success,
+        "message":  message,
         "data": data == null ? null : data!.toMap(),
       };
 }
@@ -69,9 +69,9 @@ class DailyEarningAmountData {
       );
 
   Map<String, dynamic> toMap() => {
-        "today": today == null ? null : today,
-        "daily_earning": dailyEarning == null ? null : dailyEarning,
-        "yesterday": yesterday == null ? null : yesterday,
-        "yesterday_earning": yesterdayEarning == null ? null : yesterdayEarning,
+        "today":  today,
+        "daily_earning":  dailyEarning,
+        "yesterday":  yesterday,
+        "yesterday_earning":  yesterdayEarning,
       };
 }

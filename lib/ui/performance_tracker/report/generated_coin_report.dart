@@ -33,10 +33,6 @@ class GeneratedCoinReport extends StatefulWidget {
 }
 
 class _GeneratedCoinReportState extends State<GeneratedCoinReport> {
-  String _selectedDate = '';
-  String _dateCount = '';
-  String _range = '';
-  String _rangeCount = '';
   int groupValue = 1;
   String startDate = "";
   String endDate = "";

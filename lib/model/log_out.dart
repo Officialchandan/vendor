@@ -13,8 +13,7 @@ class LogOutResponse {
   bool success;
   LogOutData? data;
 
-  factory LogOutResponse.fromJson(String str) =>
-      LogOutResponse.fromMap(json.decode(str));
+  factory LogOutResponse.fromJson(String str) => LogOutResponse.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
@@ -24,7 +23,7 @@ class LogOutResponse {
       );
 
   Map<String, dynamic> toMap() => {
-        "success": success == null ? null : success,
+        "success": success,
         "data": data == null ? null : data!.toMap(),
       };
 }
@@ -36,8 +35,7 @@ class LogOutData {
 
   String message;
 
-  factory LogOutData.fromJson(String str) =>
-      LogOutData.fromMap(json.decode(str));
+  factory LogOutData.fromJson(String str) => LogOutData.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
@@ -46,6 +44,6 @@ class LogOutData {
       );
 
   Map<String, dynamic> toMap() => {
-        "message": message == null ? null : message,
+        "message": message,
       };
 }

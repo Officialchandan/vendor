@@ -134,7 +134,7 @@ class _ViewProductScreenState extends State<ViewProductScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Text("${product.productName} ($variantName)"),
+                                      Text(product.productName + (variantName.isNotEmpty ? "($variantName)" : "")),
                                       const SizedBox(
                                         height: 10,
                                       ),
@@ -147,19 +147,30 @@ class _ViewProductScreenState extends State<ViewProductScreen> {
                                       ]))
                                     ],
                                   )),
-                                  trailing: IconButton(
-                                    onPressed: () {
-                                      deleteProduct(product, index);
-                                    },
-                                    padding: EdgeInsets.all(2),
-                                    splashRadius: 15,
-                                    iconSize: 25,
-                                    icon: Image(
-                                      image: AssetImage("assets/images/delete.png"),
-                                      height: 25,
-                                      width: 25,
-                                    ),
-                                  ),
+                                  trailing: widget.from! == "purchase_order_entry"
+                                      ? SizedBox(
+                                          height: 0,
+                                          width: 0,
+                                        )
+                                      : IconButton(
+                                          onPressed: () {
+                                            Utility.showSingleAlert(
+                                              context,
+                                              "Are you sure you want to delete this product?",
+                                              onOk: () => deleteProduct(product, index),
+                                              title: product.productName + (variantName.isNotEmpty ? "($variantName)" : ""),
+                                              okText: "Delete",
+                                            );
+                                          },
+                                          padding: EdgeInsets.all(2),
+                                          splashRadius: 15,
+                                          iconSize: 25,
+                                          icon: Image(
+                                            image: AssetImage("assets/images/delete.png"),
+                                            height: 25,
+                                            width: 25,
+                                          ),
+                                        ),
                                 ),
                               ),
                             ),

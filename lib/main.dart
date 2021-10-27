@@ -57,21 +57,6 @@ ThemeData themeData(context) => ThemeData(
     // backgroundColor: Colors.white,
     scaffoldBackgroundColor: Colors.white,
     splashColor: Colors.black,
-    primarySwatch: MaterialColor(
-      ColorPrimary.value,
-      <int, Color>{
-        50: Color(0xFFFFFFFF),
-        100: Color(0xFFD4D1FD),
-        200: Color(0xFFABA2F6),
-        300: Color(0xFF887BFC),
-        400: Color(0xFF796AFF),
-        500: Color(ColorPrimary.value),
-        600: Color(0xFF5344F8),
-        700: Color(0xFF4530FC),
-        800: Color(0xFF2C17FF),
-        900: Color(0xFF1500F5),
-      },
-    ),
     iconTheme: IconThemeData(
       color: ColorPrimary,
       opacity: 1,
@@ -81,7 +66,6 @@ ThemeData themeData(context) => ThemeData(
     fontFamily: GoogleFonts.openSans().fontFamily,
     primaryColor: ColorPrimary,
     primaryColorDark: ColorPrimary,
-    accentColor: ColorPrimary,
     buttonTheme: ButtonThemeData(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       buttonColor: ColorPrimary,
@@ -126,7 +110,23 @@ ThemeData themeData(context) => ThemeData(
       ),
       // toolbarTextStyle: Theme.of(context).textTheme.headline6!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       // titleTextStyle: Theme.of(context).textTheme.headline6!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-    ));
+    ),
+    colorScheme: ColorScheme.fromSwatch(
+        primarySwatch: MaterialColor(
+      ColorPrimary.value,
+      <int, Color>{
+        50: Color(0xFFFFFFFF),
+        100: Color(0xFFD4D1FD),
+        200: Color(0xFFABA2F6),
+        300: Color(0xFF887BFC),
+        400: Color(0xFF796AFF),
+        500: Color(ColorPrimary.value),
+        600: Color(0xFF5344F8),
+        700: Color(0xFF4530FC),
+        800: Color(0xFF2C17FF),
+        900: Color(0xFF1500F5),
+      },
+    )).copyWith(secondary: ColorPrimary).copyWith(secondary: ColorPrimary));
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -158,8 +158,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  AppTranslationsDelegate? _newLocaleDelegate =
-      AppTranslationsDelegate(newLocale: Locale("en", ""));
+  AppTranslationsDelegate? _newLocaleDelegate = AppTranslationsDelegate(newLocale: Locale("en", ""));
 
   @override
   void initState() {
@@ -185,28 +184,21 @@ class _MyAppState extends State<MyApp> {
         onGenerateRoute: (route) {
           switch (route.name) {
             case "/":
-              return PageTransition(
-                  type: PageTransitionType.fade, child: SplashScreen());
+              return PageTransition(type: PageTransitionType.fade, child: SplashScreen());
 
             case Routes.SplashScreen:
-              return PageTransition(
-                  type: PageTransitionType.fade, child: SplashScreen());
+              return PageTransition(type: PageTransitionType.fade, child: SplashScreen());
             case Routes.SelectLanguage:
-              return PageTransition(
-                  type: PageTransitionType.fade, child: SelectLanguage());
+              return PageTransition(type: PageTransitionType.fade, child: SelectLanguage());
 
             case Routes.LoginScreen:
-              return PageTransition(
-                  type: PageTransitionType.fade, child: LoginScreen());
+              return PageTransition(type: PageTransitionType.fade, child: LoginScreen());
 
             case Routes.HomeScreen:
-              return PageTransition(
-                  type: PageTransitionType.fade, child: HomeScreen());
+              return PageTransition(type: PageTransitionType.fade, child: HomeScreen());
 
             case Routes.HomeScreenWithoutInventory:
-              return PageTransition(
-                  type: PageTransitionType.fade,
-                  child: HomeScreenWithoutInventory());
+              return PageTransition(type: PageTransitionType.fade, child: HomeScreenWithoutInventory());
 
             case Routes.BOTTOM_NAVIGATION_HOME:
               int index = route.arguments as int;
@@ -250,8 +242,7 @@ class _MyAppState extends State<MyApp> {
   init() async {
     var lang = await SharedPref.getStringPreference(SharedPref.SELECTEDLANG);
     print("$lang");
-    _newLocaleDelegate = AppTranslationsDelegate(
-        newLocale: Locale(lang.isEmpty ? "en" : lang, ""));
+    _newLocaleDelegate = AppTranslationsDelegate(newLocale: Locale(lang.isEmpty ? "en" : lang, ""));
     setState(() {});
     application.onLocaleChanged = onLocaleChange;
   }

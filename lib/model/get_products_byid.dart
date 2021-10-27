@@ -15,27 +15,13 @@ class GetProductById {
   String message;
   List<GetProductByIdData>? data;
 
-  factory GetProductById.fromJson(String str) =>
-      GetProductById.fromMap(json.decode(str));
-
-  String toJson() => json.encode(toMap());
+  factory GetProductById.fromJson(String str) => GetProductById.fromMap(json.decode(str));
 
   factory GetProductById.fromMap(Map<String, dynamic> json) => GetProductById(
         success: json["success"] == null ? null : json["success"],
         message: json["message"] == null ? null : json["message"],
-        data: json["data"] == null
-            ? null
-            : List<GetProductByIdData>.from(
-                json["data"].map((x) => GetProductByIdData.fromMap(x))),
+        data: json["data"] == null ? null : List<GetProductByIdData>.from(json["data"].map((x) => GetProductByIdData.fromMap(x))),
       );
-
-  Map<String, dynamic> toMap() => {
-        "success": success == null ? null : success,
-        "message": message == null ? null : message,
-        "data": data == null
-            ? null
-            : List<dynamic>.from(data!.map((x) => x.toMap())),
-      };
 }
 
 class GetProductByIdData {
@@ -73,54 +59,25 @@ class GetProductByIdData {
   List<SubCategoryId> subCategoryId;
   List<String> productImages;
 
-  factory GetProductByIdData.fromJson(String str) =>
-      GetProductByIdData.fromMap(json.decode(str));
+  factory GetProductByIdData.fromJson(String str) => GetProductByIdData.fromMap(json.decode(str));
 
-  String toJson() => json.encode(toMap());
-
-  factory GetProductByIdData.fromMap(Map<String, dynamic> json) =>
-      GetProductByIdData(
+  factory GetProductByIdData.fromMap(Map<String, dynamic> json) => GetProductByIdData(
         id: json["id"] == null ? null : json["id"],
         vendorId: json["vendor_id"] == null ? null : json["vendor_id"],
         categoryId: json["category_id"] == null ? null : json["category_id"],
         productName: json["product_name"] == null ? null : json["product_name"],
         description: json["description"] == null ? null : json["description"],
-        purchasePrice:
-            json["purchase_price"] == null ? null : json["purchase_price"],
+        purchasePrice: json["purchase_price"] == null ? null : json["purchase_price"],
         mrp: json["mrp"] == null ? null : json["mrp"],
-        sellingPrice:
-            json["selling_price"] == null ? null : json["selling_price"],
+        sellingPrice: json["selling_price"] == null ? null : json["selling_price"],
         stock: json["stock"] == null ? null : json["stock"],
         unit: json["unit"] == null ? null : json["unit"],
         color: json["color"] == null ? null : json["color"],
         size: json["size"] == null ? null : json["size"],
-        earningCoins:
-            json["earning_coins"] == null ? null : json["earning_coins"],
+        earningCoins: json["earning_coins"] == null ? null : json["earning_coins"],
         subCategoryId: json["sub_category_id"],
         productImages: json["product_images"],
       );
-
-  Map<String, dynamic> toMap() => {
-        "id": id == null ? null : id,
-        "vendor_id": vendorId == null ? null : vendorId,
-        "category_id": categoryId == null ? null : categoryId,
-        "product_name": productName == null ? null : productName,
-        "description": description == null ? null : description,
-        "purchase_price": purchasePrice == null ? null : purchasePrice,
-        "mrp": mrp == null ? null : mrp,
-        "selling_price": sellingPrice == null ? null : sellingPrice,
-        "stock": stock == null ? null : stock,
-        "unit": unit == null ? null : unit,
-        "color": color == null ? null : color,
-        "size": size == null ? null : size,
-        "earning_coins": earningCoins == null ? null : earningCoins,
-        "sub_category_id": subCategoryId == null
-            ? null
-            : List<dynamic>.from(subCategoryId.map((x) => x.toMap())),
-        "product_images": productImages == null
-            ? null
-            : List<dynamic>.from(productImages.map((x) => x)),
-      };
 }
 
 class SubCategoryId {
@@ -132,8 +89,7 @@ class SubCategoryId {
   int id;
   String name;
 
-  factory SubCategoryId.fromJson(String str) =>
-      SubCategoryId.fromMap(json.decode(str));
+  factory SubCategoryId.fromJson(String str) => SubCategoryId.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 

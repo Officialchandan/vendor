@@ -15,23 +15,19 @@ class VerifyEarningCoinsOtpResponse {
   String message;
   VerifyEarningCoinsOtpData? data;
 
-  factory VerifyEarningCoinsOtpResponse.fromJson(String str) =>
-      VerifyEarningCoinsOtpResponse.fromMap(json.decode(str));
+  factory VerifyEarningCoinsOtpResponse.fromJson(String str) => VerifyEarningCoinsOtpResponse.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory VerifyEarningCoinsOtpResponse.fromMap(Map<String, dynamic> json) =>
-      VerifyEarningCoinsOtpResponse(
+  factory VerifyEarningCoinsOtpResponse.fromMap(Map<String, dynamic> json) => VerifyEarningCoinsOtpResponse(
         success: json["success"] == null ? null : json["success"],
         message: json["message"] == null ? null : json["message"],
-        data: json["data"] == null
-            ? null
-            : VerifyEarningCoinsOtpData.fromMap(json["data"]),
+        data: json["data"] == null ? null : VerifyEarningCoinsOtpData.fromMap(json["data"]),
       );
 
   Map<String, dynamic> toMap() => {
-        "success": success == null ? null : success,
-        "message": message == null ? null : message,
+        "success": success,
+        "message": message,
         "data": data == null ? null : data!.toMap(),
       };
 }
@@ -57,22 +53,18 @@ class VerifyEarningCoinsOtpData {
   double walletBalance;
   DateTime orderDate;
 
-  factory VerifyEarningCoinsOtpData.fromJson(String str) =>
-      VerifyEarningCoinsOtpData.fromMap(json.decode(str));
+  factory VerifyEarningCoinsOtpData.fromJson(String str) => VerifyEarningCoinsOtpData.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory VerifyEarningCoinsOtpData.fromMap(Map<String, dynamic> json) =>
-      VerifyEarningCoinsOtpData(
+  factory VerifyEarningCoinsOtpData.fromMap(Map<String, dynamic> json) => VerifyEarningCoinsOtpData(
         orderId: json["order_id"] == null ? null : json["order_id"],
         customerId: json["customer_id"] == null ? null : json["customer_id"],
         mobile: json["mobile"] == null ? null : json["mobile"],
         vendorId: json["vendor_id"].toString(),
         redeemCoins: json["redeem_coins"].toString(),
         earningCoins: json["earning_coins"].toString(),
-        walletBalance: json["wallet_balance"] == null
-            ? null
-            : json["wallet_balance"].toDouble(),
+        walletBalance: json["wallet_balance"] == null ? null : json["wallet_balance"].toDouble(),
         orderDate: DateTime.parse(json["order_date"]),
       );
 

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -9,6 +7,7 @@ import 'package:vendor/utility/color.dart';
 
 class TabContainer extends StatefulWidget {
   final int page;
+
   TabContainer(this.page);
 
   @override
@@ -19,8 +18,11 @@ class _TabContainerState extends State<TabContainer> with TickerProviderStateMix
   late List<Widget> listScreens;
 
   late TabController _tabController;
+
   _TabContainerState(page);
+
   int selectedTab = 0;
+
   @override
   void initState() {
     _tabController = TabController(length: 3, vsync: this, initialIndex: 0);
@@ -46,6 +48,7 @@ class _TabContainerState extends State<TabContainer> with TickerProviderStateMix
   }
 
   late DateTime currentBackPressTime;
+
   Future<bool> onWillPop() {
     DateTime now = DateTime.now();
     if (now.difference(currentBackPressTime) > Duration(seconds: 2)) {

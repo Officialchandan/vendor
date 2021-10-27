@@ -12,7 +12,7 @@ import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/sharedpref.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc() : super(LoginIntialState());
+  LoginBloc() : super(LoginInitialState());
 
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
@@ -54,13 +54,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         if (result.success) {
           SharedPref.setBooleanPreference(SharedPref.LOGIN, true);
           SharedPref.setStringPreference(SharedPref.TOKEN, result.token!);
-          SharedPref.setIntegerPreference(
-              SharedPref.VENDORID, result.vendorId!);
-          SharedPref.setIntegerPreference(
-              SharedPref.USERSTATUS, result.vendorStatus!);
+          SharedPref.setIntegerPreference(SharedPref.VENDORID, result.vendorId!);
+          SharedPref.setIntegerPreference(SharedPref.USERSTATUS, result.vendorStatus!);
 
-          baseOptions.headers
-              .addAll({"Authorization": "bearer ${result.token!}"});
+          baseOptions.headers.addAll({"Authorization": "bearer ${result.token!}"});
           yield GetLoginOtpState(result.message);
         } else {
           yield GetLoginFailureState(message: result.message);

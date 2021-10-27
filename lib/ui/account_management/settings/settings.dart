@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 import 'package:vendor/ui/account_management/settings/about_us/about_us.dart';
-import 'package:vendor/ui/inventory/add_product/add_product_screen.dart';
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
@@ -17,7 +16,7 @@ ChangeLanguageRadio? _character = ChangeLanguageRadio.English;
 //change-language
 
 class _SettingsState extends State<Settings> {
-  List<String> TextList = ["Change language", "About us", "Rate us", "Share app"];
+  List<String> textList = ["Change language", "About us", "Rate us", "Share app"];
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +33,7 @@ class _SettingsState extends State<Settings> {
           title: Text("Settings"),
         ),
         body: ListView(
-          children: List.generate(TextList.length, (index) {
+          children: List.generate(textList.length, (index) {
             return GestureDetector(
                 child: Container(
                   padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
@@ -47,7 +46,7 @@ class _SettingsState extends State<Settings> {
                       Image.asset("assets/images/setting-ic${index + 1}.png", width: 24),
                       SizedBox(width: 17),
                       Expanded(
-                        child: Text(TextList[index], style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600)),
+                        child: Text(textList[index], style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600)),
                       ),
                       Icon(Icons.arrow_forward_ios, color: Colors.black, size: 15),
                     ],
@@ -63,7 +62,7 @@ class _SettingsState extends State<Settings> {
   }
 }
 
-//ontap-function
+//on tap-function
 Future<void> onClick(BuildContext context, int currentIndex) async {
   switch (currentIndex) {
     case 0:
@@ -76,10 +75,10 @@ Future<void> onClick(BuildContext context, int currentIndex) async {
       );
       break;
     case 2:
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => AddProductScreen()),
-      );
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => AddProductScreen()),
+      // );
       break;
     case 3:
       shareApp();
@@ -169,4 +168,3 @@ void languageUpdateSheet(BuildContext context) {
         );
       });
 }
-//ontap-function

@@ -60,9 +60,9 @@ class Customer {
       );
 
   Map<String, dynamic> toMap() => {
-        "customer_id": customerId == null ? null : customerId,
-        "customer_name": customerName == null ? null : customerName,
-        "mobile": mobile == null ? null : mobile,
-        "qty": qty == null ? null : qty,
+        "customer_id": customerId,
+        "customer_name": customerName,
+        "mobile": mobile,
+        "qty": qty,
       };
 }

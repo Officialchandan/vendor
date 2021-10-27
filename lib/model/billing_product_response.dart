@@ -15,23 +15,19 @@ class BillingProductResponse {
   String message;
   BillingProductData? data;
 
-  factory BillingProductResponse.fromJson(String str) =>
-      BillingProductResponse.fromMap(json.decode(str));
+  factory BillingProductResponse.fromJson(String str) => BillingProductResponse.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory BillingProductResponse.fromMap(Map<String, dynamic> json) =>
-      BillingProductResponse(
+  factory BillingProductResponse.fromMap(Map<String, dynamic> json) => BillingProductResponse(
         success: json["success"] == null ? null : json["success"],
         message: json["message"] == null ? null : json["message"],
-        data: json["data"] == null
-            ? null
-            : BillingProductData.fromMap(json["data"]),
+        data: json["data"] == null ? null : BillingProductData.fromMap(json["data"]),
       );
 
   Map<String, dynamic> toMap() => {
-        "success": success == null ? null : success,
-        "message": message == null ? null : message,
+        "success": success,
+        "message": message,
         "data": data == null ? null : data!.toMap(),
       };
 }
@@ -57,13 +53,11 @@ class BillingProductData {
   String redeemCoins;
   String earningCoins;
 
-  factory BillingProductData.fromJson(String str) =>
-      BillingProductData.fromMap(json.decode(str));
+  factory BillingProductData.fromJson(String str) => BillingProductData.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory BillingProductData.fromMap(Map<String, dynamic> json) =>
-      BillingProductData(
+  factory BillingProductData.fromMap(Map<String, dynamic> json) => BillingProductData(
         orderId: json["order_id"] == null ? null : json["order_id"],
         customerId: json["customer_id"] == null ? null : json["customer_id"],
         mobile: json["mobile"] == null ? null : json["mobile"],
@@ -75,13 +69,13 @@ class BillingProductData {
       );
 
   Map<String, dynamic> toMap() => {
-        "order_id": orderId == null ? null : orderId,
-        "customer_id": customerId == null ? null : customerId,
-        "mobile": mobile == null ? null : mobile,
-        "otp": otp == null ? null : otp,
-        "vendor_id": vendorId == null ? null : vendorId,
-        "total_pay": totalPay == null ? null : totalPay,
-        "redeem_coins": redeemCoins == null ? null : redeemCoins,
-        "earning_coins": earningCoins == null ? null : earningCoins,
+        "order_id": orderId,
+        "customer_id": customerId,
+        "mobile": mobile,
+        "otp": otp,
+        "vendor_id": vendorId,
+        "total_pay": totalPay,
+        "redeem_coins": redeemCoins,
+        "earning_coins": earningCoins,
       };
 }
