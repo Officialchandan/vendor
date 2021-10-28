@@ -2,7 +2,9 @@ import 'dart:developer';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:share/share.dart';
+import 'package:vendor/ui/home/bottom_navigation_home.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/routs.dart';
 

@@ -15,14 +15,18 @@ class BillingProductResponse {
   String message;
   BillingProductData? data;
 
-  factory BillingProductResponse.fromJson(String str) => BillingProductResponse.fromMap(json.decode(str));
+  factory BillingProductResponse.fromJson(String str) =>
+      BillingProductResponse.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory BillingProductResponse.fromMap(Map<String, dynamic> json) => BillingProductResponse(
+  factory BillingProductResponse.fromMap(Map<String, dynamic> json) =>
+      BillingProductResponse(
         success: json["success"] == null ? null : json["success"],
         message: json["message"] == null ? null : json["message"],
-        data: json["data"] == null ? null : BillingProductData.fromMap(json["data"]),
+        data: json["data"] == null
+            ? null
+            : BillingProductData.fromMap(json["data"]),
       );
 
   Map<String, dynamic> toMap() => {
@@ -42,6 +46,8 @@ class BillingProductData {
     required this.totalPay,
     required this.redeemCoins,
     required this.earningCoins,
+    required this.myprofitrevenue,
+    required this.orderDate,
   });
 
   int orderId;
@@ -52,12 +58,16 @@ class BillingProductData {
   String totalPay;
   String redeemCoins;
   String earningCoins;
+  String myprofitrevenue;
+  String orderDate;
 
-  factory BillingProductData.fromJson(String str) => BillingProductData.fromMap(json.decode(str));
+  factory BillingProductData.fromJson(String str) =>
+      BillingProductData.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory BillingProductData.fromMap(Map<String, dynamic> json) => BillingProductData(
+  factory BillingProductData.fromMap(Map<String, dynamic> json) =>
+      BillingProductData(
         orderId: json["order_id"] == null ? null : json["order_id"],
         customerId: json["customer_id"] == null ? null : json["customer_id"],
         mobile: json["mobile"] == null ? null : json["mobile"],
@@ -66,6 +76,11 @@ class BillingProductData {
         totalPay: json["total_pay"].toString(),
         redeemCoins: json["redeem_coins"].toString(),
         earningCoins: json["earning_coins"].toString(),
+        myprofitrevenue: json["myprofit_revenue"] == null
+            ? ""
+            : json["myprofit_revenue"].toString(),
+        orderDate:
+            json["order_date"] == null ? "" : json["order_date"].toString(),
       );
 
   Map<String, dynamic> toMap() => {
@@ -77,5 +92,7 @@ class BillingProductData {
         "total_pay": totalPay,
         "redeem_coins": redeemCoins,
         "earning_coins": earningCoins,
+        "myprofit_revenue": myprofitrevenue,
+        "order_date": orderDate,
       };
 }

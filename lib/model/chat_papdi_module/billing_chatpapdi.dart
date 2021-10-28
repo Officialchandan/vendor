@@ -44,16 +44,18 @@ class ChatPapdiData {
     required this.totalPay,
     required this.coinDeducted,
     required this.earningCoins,
+    required this.myProfitRevenu,
   });
 
   String vendorId;
-  int billId;
-  int customerId;
+  String billId;
+  String customerId;
   String mobile;
   String billAmount;
   String totalPay;
   String coinDeducted;
   String earningCoins;
+  String myProfitRevenu;
 
   factory ChatPapdiData.fromJson(String str) =>
       ChatPapdiData.fromMap(json.decode(str));
@@ -61,17 +63,23 @@ class ChatPapdiData {
   String toJson() => json.encode(toMap());
 
   factory ChatPapdiData.fromMap(Map<String, dynamic> json) => ChatPapdiData(
-        vendorId: json["vendor_id"] == null ? null : json["vendor_id"],
-        billId: json["bill_id"] == null ? null : json["bill_id"],
-        customerId: json["customer_id"] == null ? null : json["customer_id"],
-        mobile: json["mobile"] == null ? null : json["mobile"],
-        billAmount: json["bill_amount"] == null ? null : json["bill_amount"],
-        totalPay: json["total_pay"] == null ? null : json["total_pay"],
-        coinDeducted:
-            json["coin_deducted"] == null ? null : json["coin_deducted"],
+        vendorId: json["vendor_id"] == null ? "" : json["vendor_id"].toString(),
+        billId: json["bill_id"] == null ? "" : json["bill_id"].toString(),
+        customerId:
+            json["customer_id"] == null ? "" : json["customer_id"].toString(),
+        mobile: json["mobile"] == null ? "" : json["mobile"].toString(),
+        billAmount:
+            json["bill_amount"] == null ? "" : json["bill_amount"].toString(),
+        totalPay: json["total_pay"] == null ? "" : json["total_pay"].toString(),
+        coinDeducted: json["coin_deducted"] == null
+            ? ""
+            : json["coin_deducted"].toString(),
         earningCoins: json["earning_coins"] == null
             ? ""
             : json["earning_coins"].toString(),
+        myProfitRevenu: json["myProfit_revenu"] == null
+            ? ""
+            : json["myProfit_revenu"].toString(),
       );
 
   Map<String, dynamic> toMap() => {
@@ -83,5 +91,6 @@ class ChatPapdiData {
         "total_pay": totalPay == null ? null : totalPay,
         "coin_deducted": coinDeducted == null ? null : coinDeducted,
         "earning_coins": earningCoins == null ? null : earningCoins,
+        "myProfit_revenu": myProfitRevenu == null ? null : myProfitRevenu
       };
 }

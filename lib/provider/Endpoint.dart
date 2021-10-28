@@ -61,7 +61,7 @@ class Endpoint {
 
   static const String GET_DAILY_SALE_AMOUNT = "dailySaleAmount";
 
-  static const String GET_MONTHLY_SAIE_AMOUNT = "monthlySaleAmount";
+  static const String GET_MONTHLY_SALE_AMOUNT = "monthlySaleAmount";
 
   static const String GENERATE_REPORT = "generateReports";
 
@@ -85,7 +85,7 @@ class Endpoint {
   static const String GET_DAILY_REPORT = "getDailyReport";
   static const String GET_DAILY_REPORT_CHAT_PAPDI = "getChatPapdiDailyReport";
 
-  static const String GET_HOURLY_SAIE_AMOUNT = "hourlySaleAmount";
+  static const String GET_HOURLY_SALE_AMOUNT = "hourlySaleAmount";
 
   static const String GET_HOURLY_EARNING_AMOUNT = "hourlyEarningAmount";
 
@@ -113,4 +113,33 @@ class Endpoint {
   static const String GET_TOTAL_MONEY_DUE = "getTotalMoneyDue";
 
   static const String GET_CHATPAPDI_BILLING = "chatPapdiBilling";
+
+  static const String GET_CHATPAPDI_BILLING_OTP =
+      "confirmChatPapdiBillingByOtp";
+
+  static const String GET_CHATPAPDI_DAILY_REPORT = "chatPapdiDailySaleAmount";
+
+  static const String GET_CHATPAPDI_HOURLY_SALE_AMOUNT =
+      "chatPapdiHourlySaleAmount";
+
+  static const String GET_CHATPAPDI_MONTHLY_SALE_AMOUNT =
+      "chatPapdiMonthlySaleAmount";
+
+  static const String GET_CHATPAPDI_HOURLY_WALKIN_AMOUNT =
+      "chatPapdiHourlyWalkIns";
+
+  static const String GET_CHATPAPDI_DAILY_WALKIN_AMOUNT =
+      "chatPapdiDailyWalkIns";
+
+  static const String GET_CHATPAPDI_MONTHLY_WALKIN_AMOUNT =
+      "chatPapdiMonthlyWalkIns";
+
+  static const String GET_CHATPAPDI_HOURLY_EARNING_AMOUNT =
+      "chatPapdiHourlyEarningAmount";
+
+  static const String GET_CHATPAPDI_DAILY_EARNING_AMOUNT =
+      "chatPapdiDailyEarningAmount";
+
+  static const String GET_CHATPAPDI_MONTHLY_EARNING_AMOUNT =
+      "monthlyEarningAmount";
 }

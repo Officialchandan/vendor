@@ -3,9 +3,10 @@ import 'dart:developer';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:vendor/model/daily_walkin.dart';
-import 'package:vendor/model/hourly_sale_amount.dart';
-import 'package:vendor/model/monthly_walkin.dart';
+import 'package:vendor/model/chat_papdi_module/without_inventory_Daily_walkin.dart';
+import 'package:vendor/model/chat_papdi_module/without_inventory_Hourly_walkin.dart';
+import 'package:vendor/model/chat_papdi_module/without_inventory_Monthly_walkin.dart';
+
 import 'package:vendor/provider/api_provider.dart';
 import 'package:vendor/utility/color.dart';
 
@@ -18,25 +19,25 @@ class WalkInAmount extends StatefulWidget {
 
 class _WalkInAmountState extends State<WalkInAmount> {
   TooltipBehavior? _tooltipBehavior;
-  DailyWalkinAmountResponse? resultDaily;
-  MonthlyWalkinAmountResponse? resultMonthly;
+  WithoutInventoryDailyWalkinResponse? resultDaily;
+  WithoutInventoryMonthlyWalkinResponse? resultMonthly;
 
-  HourlySaleAmountResponse? resultHourly;
+  WithoutInventoryHourlyWalkinResponse? resultHourly;
 
-  Future<DailyWalkinAmountData> getDhabasDay() async {
-    resultDaily = await ApiProvider().getDailyWalkinAmount();
+  Future<WithoutInventoryDailyWalkinData> getDhabasDay() async {
+    resultDaily = await ApiProvider().getChatPapdiDailyWalkinAmount();
     log('${resultDaily!.data}');
     return resultDaily!.data!;
   }
 
-  Future<MonthlyWalkinAmountData> getDhabasMonthly() async {
-    resultMonthly = await ApiProvider().getMonthlyWalkinAmount();
+  Future<WithoutInventoryMonthlyWalkinData> getDhabasMonthly() async {
+    resultMonthly = await ApiProvider().getChatPapdiMonthlyWalkinAmount();
     log('${resultMonthly!.data}');
     return resultMonthly!.data!;
   }
 
   Future<Map<String, String>> getDhabasHourly() async {
-    resultHourly = (await ApiProvider().getHourlySaleAmount());
+    resultHourly = (await ApiProvider().getChatPapdiHourlyWalkinAmount());
     log('${resultHourly!.data}');
     return resultHourly!.data!;
   }
@@ -423,7 +424,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                 ]));
                       })),
               SingleChildScrollView(
-                  child: FutureBuilder<DailyWalkinAmountData>(
+                  child: FutureBuilder<WithoutInventoryDailyWalkinData>(
                       future: getDhabasDay(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
@@ -533,7 +534,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        '  ${snapshot.data!.dailyWalkIns}',
+                                                        '  ${snapshot.data!.todayWalkIns}',
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w600,
@@ -651,7 +652,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                 ]));
                       })),
               SingleChildScrollView(
-                  child: FutureBuilder<MonthlyWalkinAmountData>(
+                  child: FutureBuilder<WithoutInventoryMonthlyWalkinData>(
                       future: getDhabasMonthly(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
@@ -839,11 +840,11 @@ class _WalkInAmountState extends State<WalkInAmount> {
     );
   }
 
-  List<GDPData> getChartData(DailyWalkinAmountData? data) {
+  List<GDPData> getChartData(WithoutInventoryDailyWalkinData? data) {
     final List<GDPData> chartData = [
       GDPData(
         'TODAY',
-        double.parse(data!.dailyWalkIns.toString()),
+        double.parse(data!.todayWalkIns.toString()),
       ),
       GDPData(' ', 0),
       GDPData("YESTERDAY", double.parse(data.yesterdayWalkIns.toString())),
@@ -851,7 +852,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
     return chartData;
   }
 
-  List<GDPDatas> getChartDatas(MonthlyWalkinAmountData? data) {
+  List<GDPDatas> getChartDatas(WithoutInventoryMonthlyWalkinData? data) {
     final List<GDPDatas> chartData = [
       GDPDatas(
         '${data!.month}',
