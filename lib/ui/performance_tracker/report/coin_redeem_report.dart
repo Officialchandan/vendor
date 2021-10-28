@@ -26,7 +26,9 @@ import 'package:vendor/widget/custom_bottom_sheet.dart';
 import '../../../main.dart';
 
 class CoinRedeemReport extends StatefulWidget {
-  const CoinRedeemReport({Key? key}) : super(key: key);
+  final int? chatPapdi;
+
+  const CoinRedeemReport({this.chatPapdi = 0, Key? key}) : super(key: key);
 
   @override
   _CoinRedeemReportState createState() => _CoinRedeemReportState();
@@ -127,37 +129,41 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
             SizedBox(
               height: 10,
             ),
-            TextFormField(
-              controller: edtCategory,
-              onTap: () {
-                selectCategory(context);
-              },
-              readOnly: true,
-              decoration: InputDecoration(
-                  hintText: "Choose category",
-                  suffixIcon: Icon(
-                    Icons.keyboard_arrow_right_sharp,
-                    color: ColorPrimary,
+            widget.chatPapdi == 1
+                ? Container()
+                : TextFormField(
+                    controller: edtCategory,
+                    onTap: () {
+                      selectCategory(context);
+                    },
+                    readOnly: true,
+                    decoration: InputDecoration(
+                        hintText: "Choose category",
+                        suffixIcon: Icon(
+                          Icons.keyboard_arrow_right_sharp,
+                          color: ColorPrimary,
+                        ),
+                        suffixIconConstraints: BoxConstraints(maxWidth: 20, maxHeight: 20)),
                   ),
-                  suffixIconConstraints: BoxConstraints(maxWidth: 20, maxHeight: 20)),
-            ),
             SizedBox(
               height: 10,
             ),
-            TextFormField(
-              controller: edtProducts,
-              onTap: () {
-                selectProduct(context);
-              },
-              readOnly: true,
-              decoration: InputDecoration(
-                  hintText: "Choose product",
-                  suffixIcon: Icon(
-                    Icons.keyboard_arrow_right_sharp,
-                    color: ColorPrimary,
+            widget.chatPapdi == 1
+                ? Container()
+                : TextFormField(
+                    controller: edtProducts,
+                    onTap: () {
+                      selectProduct(context);
+                    },
+                    readOnly: true,
+                    decoration: InputDecoration(
+                        hintText: "Choose product",
+                        suffixIcon: Icon(
+                          Icons.keyboard_arrow_right_sharp,
+                          color: ColorPrimary,
+                        ),
+                        suffixIconConstraints: BoxConstraints(maxWidth: 20, maxHeight: 20)),
                   ),
-                  suffixIconConstraints: BoxConstraints(maxWidth: 20, maxHeight: 20)),
-            ),
           ],
         ),
       ),
@@ -261,11 +267,11 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
       String url = "";
 
       if (groupValue == 1) {
-        url = Endpoint.GET_COIN_REDEEM_REPORT_BY_DATE;
+        url = widget.chatPapdi == 0 ? Endpoint.GET_COIN_REDEEM_REPORT_BY_DATE : Endpoint.GET_COIN_REDEEM_REPORT_BY_DATE_OF_CHAT_PAPDI;
         input["from_date"] = startDate;
         input["to_date"] = endDate;
       } else {
-        url = Endpoint.GET_COIN_REDEEM_REPORT_BY_DAY;
+        url = widget.chatPapdi == 0 ? Endpoint.GET_COIN_REDEEM_REPORT_BY_DAY : Endpoint.GET_COIN_REDEEM_REPORT_BY_DAY_OF_CHAT_PAPDI;
         if (days == null) {
           Utility.showToast("Please select days");
           return;
@@ -273,21 +279,25 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
           input["days"] = days!.optionId;
         }
       }
-      input["category_id"] = categoryModel == null ? "" : categoryModel!.id;
-      if (productList.isEmpty) {
-        input["product_id"] = "";
-      } else {
-        String text = "";
 
-        for (int i = 0; i < productList.length; i++) {
-          if (i == productList.length - 1) {
-            text += productList[i].id;
-          } else {
-            text += productList[i].id + ",";
+      if (widget.chatPapdi == 0) {
+        input["category_id"] = categoryModel == null ? "" : categoryModel!.id;
+        if (productList.isEmpty) {
+          input["product_id"] = "";
+        } else {
+          String text = "";
+
+          for (int i = 0; i < productList.length; i++) {
+            if (i == productList.length - 1) {
+              text += productList[i].id;
+            } else {
+              text += productList[i].id + ",";
+            }
           }
+          input["product_id"] = text;
         }
-        input["product_id"] = text;
       }
+
       EasyLoading.show();
 
       try {

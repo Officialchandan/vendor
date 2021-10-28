@@ -26,7 +26,9 @@ import 'package:vendor/widget/custom_bottom_sheet.dart';
 import '../../../main.dart';
 
 class GeneratedCoinReport extends StatefulWidget {
-  const GeneratedCoinReport({Key? key}) : super(key: key);
+  final int? chatPapdi;
+
+  const GeneratedCoinReport({this.chatPapdi = 0, Key? key}) : super(key: key);
 
   @override
   _GeneratedCoinReportState createState() => _GeneratedCoinReportState();
@@ -127,37 +129,41 @@ class _GeneratedCoinReportState extends State<GeneratedCoinReport> {
             SizedBox(
               height: 10,
             ),
-            TextFormField(
-              controller: edtCategory,
-              onTap: () {
-                selectCategory(context);
-              },
-              readOnly: true,
-              decoration: InputDecoration(
-                  hintText: "Choose category",
-                  suffixIcon: Icon(
-                    Icons.keyboard_arrow_right_sharp,
-                    color: ColorPrimary,
+            widget.chatPapdi == 1
+                ? Container()
+                : TextFormField(
+                    controller: edtCategory,
+                    onTap: () {
+                      selectCategory(context);
+                    },
+                    readOnly: true,
+                    decoration: InputDecoration(
+                        hintText: "Choose category",
+                        suffixIcon: Icon(
+                          Icons.keyboard_arrow_right_sharp,
+                          color: ColorPrimary,
+                        ),
+                        suffixIconConstraints: BoxConstraints(maxWidth: 20, maxHeight: 20)),
                   ),
-                  suffixIconConstraints: BoxConstraints(maxWidth: 20, maxHeight: 20)),
-            ),
             SizedBox(
               height: 10,
             ),
-            TextFormField(
-              controller: edtProducts,
-              onTap: () {
-                selectProduct(context);
-              },
-              readOnly: true,
-              decoration: InputDecoration(
-                  hintText: "Choose product",
-                  suffixIcon: Icon(
-                    Icons.keyboard_arrow_right_sharp,
-                    color: ColorPrimary,
+            widget.chatPapdi == 1
+                ? Container()
+                : TextFormField(
+                    controller: edtProducts,
+                    onTap: () {
+                      selectProduct(context);
+                    },
+                    readOnly: true,
+                    decoration: InputDecoration(
+                        hintText: "Choose product",
+                        suffixIcon: Icon(
+                          Icons.keyboard_arrow_right_sharp,
+                          color: ColorPrimary,
+                        ),
+                        suffixIconConstraints: BoxConstraints(maxWidth: 20, maxHeight: 20)),
                   ),
-                  suffixIconConstraints: BoxConstraints(maxWidth: 20, maxHeight: 20)),
-            ),
           ],
         ),
       ),
@@ -261,11 +267,14 @@ class _GeneratedCoinReportState extends State<GeneratedCoinReport> {
       String url = "";
 
       if (groupValue == 1) {
-        url = Endpoint.GET_GENERATE_COIN_REPORT_BY_DATE;
+        url = widget.chatPapdi == 0
+            ? Endpoint.GET_GENERATE_COIN_REPORT_BY_DATE
+            : Endpoint.GET_GENERATE_COIN_REPORT_BY_DATE_OF_CHAT_PAPDI;
         input["from_date"] = startDate;
         input["to_date"] = endDate;
       } else {
-        url = Endpoint.GET_GENERATE_COIN_REPORT_BY_DAY;
+        url =
+            widget.chatPapdi == 0 ? Endpoint.GET_GENERATE_COIN_REPORT_BY_DAY : Endpoint.GET_GENERATE_COIN_REPORT_BY_DAY_OF_CHAT_PAPDI;
         if (days == null) {
           Utility.showToast("Please select days");
           return;
@@ -273,21 +282,23 @@ class _GeneratedCoinReportState extends State<GeneratedCoinReport> {
           input["days"] = days!.optionId;
         }
       }
-      input["category_id"] = categoryModel == null ? "" : categoryModel!.id;
+      if (widget.chatPapdi == 0) {
+        input["category_id"] = categoryModel == null ? "" : categoryModel!.id;
 
-      if (productList.isEmpty) {
-        input["product_id"] = "";
-      } else {
-        String text = "";
+        if (productList.isEmpty) {
+          input["product_id"] = "";
+        } else {
+          String text = "";
 
-        for (int i = 0; i < productList.length; i++) {
-          if (i == productList.length - 1) {
-            text += productList[i].id;
-          } else {
-            text += productList[i].id + ",";
+          for (int i = 0; i < productList.length; i++) {
+            if (i == productList.length - 1) {
+              text += productList[i].id;
+            } else {
+              text += productList[i].id + ",";
+            }
           }
+          input["product_id"] = text;
         }
-        input["product_id"] = text;
       }
       EasyLoading.show();
 
@@ -367,34 +378,21 @@ class _GeneratedCoinReportState extends State<GeneratedCoinReport> {
         columnIndex = columnIndex + 1;
 
         if (key == "total") {
-          print("value - >$value");
-          print("total - >$total");
           total = double.parse(value == null || value == "" ? "0" : value.toString()) + total;
         }
         if (key == "mrp") {
-          print("mrp - >$value");
-          print("totalMrp - >$totalMrp");
           totalMrp = double.parse(value == null || value == "" ? "0" : value.toString()) + totalMrp;
         }
         if (key == "purchase_price") {
-          print("purchase_price - >$value");
-          print("totalPurchasePrice - >$totalPurchasePrice");
           totalPurchasePrice = double.parse(value == null || value == "" ? "0" : value.toString()) + totalPurchasePrice;
         }
-
         if (key == "qty") {
-          print("qty - >$value");
-          print("qty - >$qty");
           qty = double.parse(value == null || value == "" ? "0" : value.toString()) + qty;
         }
         if (key == "monetary_value") {
-          print("monetary_value - >$value");
-          print("monetaryValue - >$monetaryValue");
           monetaryValue = double.parse(value == null || value == "" ? "0" : value.toString()) + monetaryValue;
         }
         if (key == "earning_coins") {
-          print("earning_coins - >$value");
-          print("earnCoins - >$earnCoins");
           earnCoins = double.parse(value == null || value == "" ? "0" : value.toString()) + earnCoins;
         }
       });

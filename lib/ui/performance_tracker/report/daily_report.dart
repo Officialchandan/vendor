@@ -28,7 +28,9 @@ import 'package:vendor/widget/category_bottom_sheet.dart';
 import '../../../main.dart';
 
 class DailyReport extends StatefulWidget {
-  const DailyReport({Key? key}) : super(key: key);
+  final int? chatPapdi;
+
+  DailyReport({this.chatPapdi = 0, Key? key}) : super(key: key);
 
   @override
   _DailyReportState createState() => _DailyReportState();
@@ -93,37 +95,41 @@ class _DailyReportState extends State<DailyReport> {
             SizedBox(
               height: 10,
             ),
-            TextFormField(
-              controller: edtCategory,
-              onTap: () {
-                selectCategory(context);
-              },
-              readOnly: true,
-              decoration: InputDecoration(
-                  hintText: "Choose category",
-                  suffixIcon: Icon(
-                    Icons.keyboard_arrow_right_sharp,
-                    color: ColorPrimary,
+            widget.chatPapdi == 1
+                ? Container()
+                : TextFormField(
+                    controller: edtCategory,
+                    onTap: () {
+                      selectCategory(context);
+                    },
+                    readOnly: true,
+                    decoration: InputDecoration(
+                        hintText: "Choose category",
+                        suffixIcon: Icon(
+                          Icons.keyboard_arrow_right_sharp,
+                          color: ColorPrimary,
+                        ),
+                        suffixIconConstraints: BoxConstraints(maxWidth: 20, maxHeight: 20)),
                   ),
-                  suffixIconConstraints: BoxConstraints(maxWidth: 20, maxHeight: 20)),
-            ),
             SizedBox(
               height: 10,
             ),
-            TextFormField(
-              controller: edtProducts,
-              onTap: () {
-                selectProduct(context);
-              },
-              readOnly: true,
-              decoration: InputDecoration(
-                  hintText: "Choose product",
-                  suffixIcon: Icon(
-                    Icons.keyboard_arrow_right_sharp,
-                    color: ColorPrimary,
+            widget.chatPapdi == 1
+                ? Container()
+                : TextFormField(
+                    controller: edtProducts,
+                    onTap: () {
+                      selectProduct(context);
+                    },
+                    readOnly: true,
+                    decoration: InputDecoration(
+                        hintText: "Choose product",
+                        suffixIcon: Icon(
+                          Icons.keyboard_arrow_right_sharp,
+                          color: ColorPrimary,
+                        ),
+                        suffixIconConstraints: BoxConstraints(maxWidth: 20, maxHeight: 20)),
                   ),
-                  suffixIconConstraints: BoxConstraints(maxWidth: 20, maxHeight: 20)),
-            ),
             // reportList.isNotEmpty
             //     ? Container(
             //         height: 300,
@@ -220,36 +226,53 @@ class _DailyReportState extends State<DailyReport> {
 
   void getReport(BuildContext context) async {
     if (await Network.isConnected()) {
+      String url = widget.chatPapdi == 1 ? Endpoint.GET_DAILY_REPORT_CHAT_PAPDI : Endpoint.GET_DAILY_REPORT;
       Map input = HashMap<String, dynamic>();
       input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
       // input["vendor_id"] = "1";
       input["date"] = selectedDate;
-      input["category_id"] = categoryModel == null ? "" : categoryModel!.id;
 
-      if (productList.isEmpty) {
-        input["product_id"] = "";
-      } else {
-        String text = "";
+      if (widget.chatPapdi == 0) {
+        input["category_id"] = categoryModel == null ? "" : categoryModel!.id;
+        if (productList.isEmpty) {
+          input["product_id"] = "";
+        } else {
+          String text = "";
 
-        for (int i = 0; i < productList.length; i++) {
-          if (i == productList.length - 1) {
-            text += productList[i].id;
-          } else {
-            text += productList[i].id + ",";
+          for (int i = 0; i < productList.length; i++) {
+            if (i == productList.length - 1) {
+              text += productList[i].id;
+            } else {
+              text += productList[i].id + ",";
+            }
           }
+          input["product_id"] = text;
         }
-        input["product_id"] = text;
       }
+
       EasyLoading.show();
 
       try {
-        Response response = await dio.post(Endpoint.GET_DAILY_REPORT, data: input);
+        Response response = await dio.post(url, data: input);
         Map<String, dynamic> result = json.decode(response.toString());
         EasyLoading.dismiss();
         print("result-->$result");
         if (result["success"]) {
           List<Map<String, dynamic>> report = List<Map<String, dynamic>>.from(result["data"]!.map((x) => x));
-          reportList = report;
+
+          report.forEach((element) {
+            element.remove("created_at");
+            element.remove("time");
+            element["total"] = element["total_pay"];
+            element.remove("total_pay");
+
+            debugPrint("element-->$element");
+
+            reportList.add(element);
+          });
+
+          // reportList = report;
+
           // employeeDataSource = EmployeeDataSource(employeeData: reportList);
           //
           // setState(() {});
@@ -317,33 +340,23 @@ class _DailyReportState extends State<DailyReport> {
         sheet1.getRangeByIndex(rowIndex, columnIndex).rowHeight = 20;
         sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign = xls.HAlignType.center;
         sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign = xls.VAlignType.center;
-        columnIndex = columnIndex + 1;
 
         if (key == "total") {
-          print("value - >$value");
-          print("total - >$total");
           total = double.parse(value == null ? "0.0" : value.toString()) + total;
         }
         if (key == "mrp") {
-          print("mrp - >$value");
-          print("totalMrp - >$totalMrp");
           totalMrp = double.parse(value == null ? "0.0" : value.toString()) + totalMrp;
         }
         if (key == "purchase_price") {
-          print("purchase_price - >$value");
-          print("totalPurchasePrice - >$totalPurchasePrice");
           totalPurchasePrice = double.parse(value == null || value == "" ? "0.0" : value.toString()) + totalPurchasePrice;
         }
         if (key == "earning_coins") {
-          print("earning_coins - >$value");
-          print("earningCoins - >$earningCoins");
           earningCoins = double.parse(value == null || value == "" ? "0.0" : value.toString()) + earningCoins;
         }
         if (key == "redeem_coins") {
-          print("redeem_coins - >$value");
-          print("redeemCoins - >$redeemCoins");
           redeemCoins = double.parse(value == null || value == "" ? "0.0" : value.toString()) + redeemCoins;
         }
+        columnIndex = columnIndex + 1;
       });
     });
 
@@ -412,7 +425,7 @@ class _DailyReportState extends State<DailyReport> {
       savedDir.create();
     }
 
-    String fileName = "Daily_Report_$selectedDate" + ".xlsx";
+    String fileName = "Daily_Report_${selectedDate}_${DateTime.now().millisecondsSinceEpoch.toString()}" + ".xlsx";
 
     final File file = File(Platform.isWindows ? '$path\\$fileName' : '$path/$fileName');
     await file.writeAsBytes(bytes, flush: true).whenComplete(() {

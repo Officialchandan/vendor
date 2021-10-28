@@ -823,6 +823,12 @@ class _AddProductScreenState extends State<AddProductScreen> {
       Utility.showToast("Please enter mrp");
       return;
     }
+
+    if (double.parse(variantModel.sellingPrice.trim()) > double.parse(variantModel.mrp.trim())) {
+      Utility.showToast("Selling Price cannot be more than MRP");
+      return;
+    }
+
     if (edtUnit.text.isEmpty) {
       Utility.showToast("Please select unit");
       return;

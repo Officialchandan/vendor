@@ -2,9 +2,7 @@ import 'dart:developer';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:share/share.dart';
-import 'package:vendor/ui/home/bottom_navigation_home.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/routs.dart';
 
@@ -127,14 +125,7 @@ class _HomeScreenWithoutInventoryState extends State<HomeScreenWithoutInventory>
     index == 0
         ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY, arguments: index)
         : index == 1
-            ? Navigator.push(
-                context,
-                PageTransition(
-                  child: BottomNavigationHome(
-                    index: 1,
-                  ),
-                  type: PageTransitionType.fade,
-                ))
+            ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY, arguments: index)
             : index == 2
                 ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY, arguments: index)
                 : Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY, arguments: index);

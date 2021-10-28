@@ -143,6 +143,11 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
                       Utility.showToast("Please enter selling price");
                       return;
                     }
+                    if (double.parse(productVariant[j].sellingPrice.trim()) > double.parse(productVariant[j].mrp.trim())) {
+                      Utility.showToast("Selling Price cannot be more than MRP");
+                      return;
+                    }
+
                     if (productVariant[j].stock.isEmpty) {
                       Utility.showToast("Please enter stock");
                       return;
