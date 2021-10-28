@@ -8,6 +8,15 @@ import 'package:vendor/model/add_suggested_product_response.dart';
 import 'package:vendor/model/billing_product_response.dart';
 import 'package:vendor/model/chat_papdi_module/billing_chatpapdi.dart';
 import 'package:vendor/model/chat_papdi_module/billing_chatpapdi_otp.dart';
+import 'package:vendor/model/chat_papdi_module/without_inventory_Daily_Earning.dart';
+import 'package:vendor/model/chat_papdi_module/without_inventory_Daily_Sale.dart';
+import 'package:vendor/model/chat_papdi_module/without_inventory_Daily_walkin.dart';
+import 'package:vendor/model/chat_papdi_module/without_inventory_Hourly_Earning.dart';
+import 'package:vendor/model/chat_papdi_module/without_inventory_Hourly_Sale.dart';
+import 'package:vendor/model/chat_papdi_module/without_inventory_Hourly_walkin.dart';
+import 'package:vendor/model/chat_papdi_module/without_inventory_Monthly_Earning.dart';
+import 'package:vendor/model/chat_papdi_module/without_inventory_Monthly_Sale.dart';
+import 'package:vendor/model/chat_papdi_module/without_inventory_Monthly_walkin.dart';
 import 'package:vendor/model/common_response.dart';
 import 'package:vendor/model/customer_number_response.dart';
 import 'package:vendor/model/daily_earning.dart';
@@ -740,7 +749,7 @@ class ApiProvider {
           await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       Response res = await dio.post(
-        Endpoint.GET_MONTHLY_SAIE_AMOUNT,
+        Endpoint.GET_MONTHLY_SALE_AMOUNT,
         data: input,
       );
       log("------->$res");
@@ -759,29 +768,29 @@ class ApiProvider {
   }
 
   Future<HourlySaleAmountResponse> getHourlySaleAmount() async {
-    //try {
-    Map input = HashMap<String, dynamic>();
-    log("------->res");
-    input["vendor_id"] =
-        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    try {
+      Map input = HashMap<String, dynamic>();
+      log("------->res");
+      input["vendor_id"] =
+          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
-    Response res = await dio.post(
-      Endpoint.GET_HOURLY_SAIE_AMOUNT,
-      data: input,
-    );
-    log("------->$res");
-    return HourlySaleAmountResponse.fromJson(res.toString());
-    // } catch (error) {
-    //   String message = "";
-    //   if (error is DioError) {
-    //     ServerError e = ServerError.withError(error: error);
-    //     message = e.getErrorMessage();
-    //   } else {
-    //     message = "Please try again later!";
-    //   }
-    //   print("Exception occurred: $message stackTrace: $error");
-    //   return HourlySaleAmountResponse(success: false, message: message);
-    // }
+      Response res = await dio.post(
+        Endpoint.GET_HOURLY_SALE_AMOUNT,
+        data: input,
+      );
+      log("------->$res");
+      return HourlySaleAmountResponse.fromJson(res.toString());
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return HourlySaleAmountResponse(success: false, message: message);
+    }
   }
 
   Future<HourlyEarningAmountResponse> getHourlyEarningAmount() async {
@@ -837,32 +846,6 @@ class ApiProvider {
   }
 
   Future<DailyEarningAmountResponse> getDailyEarningAmount() async {
-    //  try {
-    Map input = HashMap<String, dynamic>();
-    log("------->res");
-    input["vendor_id"] =
-        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
-
-    Response res = await dio.post(
-      Endpoint.GET_DAILY_EARNING_AMOUNT,
-      data: input,
-    );
-    log("------->$res");
-    return DailyEarningAmountResponse.fromJson(res.toString());
-    // } catch (error) {
-    //   String message = "";
-    //   if (error is DioError) {
-    //     ServerError e = ServerError.withError(error: error);
-    //     message = e.getErrorMessage();
-    //   } else {
-    //     message = "Please try again later!";
-    //   }
-    //   print("Exception occurred: $message stackTrace: $error");
-    //   return DailyEarningAmountResponse(success: false, message: message);
-    // }
-  }
-
-  Future<MonthlyEarningAmountResponse> getMonthlyEarningAmount() async {
     try {
       Map input = HashMap<String, dynamic>();
       log("------->res");
@@ -870,11 +853,11 @@ class ApiProvider {
           await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       Response res = await dio.post(
-        Endpoint.GET_MONTHLY_EARNING_AMOUNT,
+        Endpoint.GET_DAILY_EARNING_AMOUNT,
         data: input,
       );
       log("------->$res");
-      return MonthlyEarningAmountResponse.fromJson(res.toString());
+      return DailyEarningAmountResponse.fromJson(res.toString());
     } catch (error) {
       String message = "";
       if (error is DioError) {
@@ -884,8 +867,34 @@ class ApiProvider {
         message = "Please try again later!";
       }
       print("Exception occurred: $message stackTrace: $error");
-      return MonthlyEarningAmountResponse(success: false, message: message);
+      return DailyEarningAmountResponse(success: false, message: message);
     }
+  }
+
+  Future<MonthlyEarningAmountResponse> getMonthlyEarningAmount() async {
+    // try {
+    Map input = HashMap<String, dynamic>();
+    log("------->res");
+    input["vendor_id"] =
+        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+
+    Response res = await dio.post(
+      Endpoint.GET_MONTHLY_EARNING_AMOUNT,
+      data: input,
+    );
+    log("------->$res");
+    return MonthlyEarningAmountResponse.fromJson(res.toString());
+    // } catch (error) {
+    //   String message = "";
+    //   if (error is DioError) {
+    //     ServerError e = ServerError.withError(error: error);
+    //     message = e.getErrorMessage();
+    //   } else {
+    //     message = "Please try again later!";
+    //   }
+    //   print("Exception occurred: $message stackTrace: $error");
+    //   return MonthlyEarningAmountResponse(success: false, message: message);
+    // }
   }
 
   Future<DailyWalkinAmountResponse> getDailyWalkinAmount() async {
@@ -1109,7 +1118,7 @@ class ApiProvider {
       Map<String, dynamic> input) async {
     try {
       Response res =
-          await dio.post(Endpoint.GET_DIRECT_BILLING_OTP, data: input);
+          await dio.post(Endpoint.GET_CHATPAPDI_BILLING_OTP, data: input);
       log("===>otp$res");
       return ChatPapdiOtpResponse.fromJson(res.toString());
     } catch (error, stacktrace) {
@@ -1123,5 +1132,257 @@ class ApiProvider {
       print("Exception occurred: $message stackTrace: $error");
       return ChatPapdiOtpResponse(success: false, message: message);
     }
+  }
+
+  Future<WithoutInventoryDailySaleResponse>
+      getChatPapdiDailySaleAmount() async {
+    try {
+      Map input = HashMap<String, dynamic>();
+      log("------->res");
+      input["vendor_id"] =
+          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+
+      Response res = await dio.post(
+        Endpoint.GET_CHATPAPDI_DAILY_REPORT,
+        data: input,
+      );
+      log("------->$res");
+      return WithoutInventoryDailySaleResponse.fromJson(res.toString());
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return WithoutInventoryDailySaleResponse(
+          success: false, message: message);
+    }
+  }
+
+  Future<WithoutInventoryMonthlySaleResponse>
+      getChatPapdiMonthlySaleAmount() async {
+    try {
+      Map input = HashMap<String, dynamic>();
+      log("------->res");
+      input["vendor_id"] =
+          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+
+      Response res = await dio.post(
+        Endpoint.GET_CHATPAPDI_MONTHLY_SALE_AMOUNT,
+        data: input,
+      );
+      log("------->$res");
+      return WithoutInventoryMonthlySaleResponse.fromJson(res.toString());
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return WithoutInventoryMonthlySaleResponse(
+          success: false, message: message);
+    }
+  }
+
+  Future<WithoutInventoryHourlySaleResponse>
+      getChatPapdiHourlySaleAmount() async {
+    try {
+      Map input = HashMap<String, dynamic>();
+      log("------->res");
+      input["vendor_id"] =
+          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+
+      Response res = await dio.post(
+        Endpoint.GET_CHATPAPDI_HOURLY_SALE_AMOUNT,
+        data: input,
+      );
+      log("------->$res");
+      return WithoutInventoryHourlySaleResponse.fromJson(res.toString());
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return WithoutInventoryHourlySaleResponse(
+          success: false, message: message);
+    }
+  }
+
+  Future<WithoutInventoryHourlyEarningResponse>
+      getChatPapdiHourlyEarningAmount() async {
+    try {
+      Map input = HashMap<String, dynamic>();
+      log("------->res");
+      input["vendor_id"] =
+          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+
+      Response res = await dio.post(
+        Endpoint.GET_CHATPAPDI_HOURLY_EARNING_AMOUNT,
+        data: input,
+      );
+      log("------->$res");
+      return WithoutInventoryHourlyEarningResponse.fromJson(res.toString());
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return WithoutInventoryHourlyEarningResponse(
+          success: false, message: message);
+    }
+  }
+
+  Future<WithoutInventoryDailyEarningResponse>
+      getChatPapdiDailyEarningAmount() async {
+    try {
+      Map input = HashMap<String, dynamic>();
+      log("------->res");
+      input["vendor_id"] =
+          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+
+      Response res = await dio.post(
+        Endpoint.GET_CHATPAPDI_DAILY_EARNING_AMOUNT,
+        data: input,
+      );
+      log("------->$res");
+      return WithoutInventoryDailyEarningResponse.fromJson(res.toString());
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return WithoutInventoryDailyEarningResponse(
+          success: false, message: message);
+    }
+  }
+
+  Future<WithoutInventoryMonthlyEarningResponse>
+      getChatPapdiMonthlyEarningAmount() async {
+    try {
+      Map input = HashMap<String, dynamic>();
+      log("------->res");
+      input["vendor_id"] =
+          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+
+      Response res = await dio.post(
+        Endpoint.GET_CHATPAPDI_MONTHLY_EARNING_AMOUNT,
+        data: input,
+      );
+      log("------->$res");
+      return WithoutInventoryMonthlyEarningResponse.fromJson(res.toString());
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return WithoutInventoryMonthlyEarningResponse(
+          success: false, message: message);
+    }
+  }
+
+  Future<WithoutInventoryHourlyWalkinResponse>
+      getChatPapdiHourlyWalkinAmount() async {
+    //try {
+    Map input = HashMap<String, dynamic>();
+    log("------->res");
+    input["vendor_id"] =
+        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+
+    Response res = await dio.post(
+      Endpoint.GET_CHATPAPDI_HOURLY_WALKIN_AMOUNT,
+      data: input,
+    );
+    log("------->$res");
+    return WithoutInventoryHourlyWalkinResponse.fromJson(res.toString());
+    // } catch (error) {
+    //   String message = "";
+    //   if (error is DioError) {
+    //     ServerError e = ServerError.withError(error: error);
+    //     message = e.getErrorMessage();
+    //   } else {
+    //     message = "Please try again later!";
+    //   }
+    //   print("Exception occurred: $message stackTrace: $error");
+    //   return WithoutInventoryHourlyWalkinResponse(
+    //       success: false, message: message);
+    // }
+  }
+
+  Future<WithoutInventoryDailyWalkinResponse>
+      getChatPapdiDailyWalkinAmount() async {
+    //try {
+    Map input = HashMap<String, dynamic>();
+    log("------->res");
+    input["vendor_id"] =
+        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+
+    Response res = await dio.post(
+      Endpoint.GET_CHATPAPDI_DAILY_WALKIN_AMOUNT,
+      data: input,
+    );
+    log("------->$res");
+    return WithoutInventoryDailyWalkinResponse.fromJson(res.toString());
+    // } catch (error) {
+    //   String message = "";
+    //   if (error is DioError) {
+    //     ServerError e = ServerError.withError(error: error);
+    //     message = e.getErrorMessage();
+    //   } else {
+    //     message = "Please try again later!";
+    //   }
+    //   print("Exception occurred: $message stackTrace: $error");
+    //   return WithoutInventoryDailyWalkinResponse(
+    //       success: false, message: message);
+    // }
+  }
+
+  Future<WithoutInventoryMonthlyWalkinResponse>
+      getChatPapdiMonthlyWalkinAmount() async {
+    //try {
+    Map input = HashMap<String, dynamic>();
+    log("------->res");
+    input["vendor_id"] =
+        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+
+    Response res = await dio.post(
+      Endpoint.GET_CHATPAPDI_MONTHLY_WALKIN_AMOUNT,
+      data: input,
+    );
+    log("------->$res");
+    return WithoutInventoryMonthlyWalkinResponse.fromJson(res.toString());
+    //   } catch (error) {
+    //     String message = "";
+    //     if (error is DioError) {
+    //       ServerError e = ServerError.withError(error: error);
+    //       message = e.getErrorMessage();
+    //     } else {
+    //       message = "Please try again later!";
+    //     }
+    //     print("Exception occurred: $message stackTrace: $error");
+    //     return WithoutInventoryMonthlyWalkinResponse(
+    //         success: false, message: message);
+    //   }
   }
 }

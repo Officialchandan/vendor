@@ -375,8 +375,10 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
     input["bill_id"] = datas!.billId;
 
     input["otp"] = otpController.text;
+    input["total_pay"] = datas!.totalPay;
     input["coin_deducted"] = datas!.coinDeducted;
     input["earning_coins"] = datas!.earningCoins;
+    input["myprofit_revenue"] = datas!.myProfitRevenu;
 
     log("=====? $input");
     directBillingCustomerNumberResponseBloc

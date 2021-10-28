@@ -12,17 +12,32 @@ class HomeScreenWithoutInventory extends StatefulWidget {
   HomeScreenWithoutInventory({Key? key}) : super(key: key);
 
   @override
-  _HomeScreenWithoutInventoryState createState() => _HomeScreenWithoutInventoryState();
+  _HomeScreenWithoutInventoryState createState() =>
+      _HomeScreenWithoutInventoryState();
 }
 
-class _HomeScreenWithoutInventoryState extends State<HomeScreenWithoutInventory> {
-  List<String> name = ["Billing", "Performance Tracker + Reports", "Account Management"];
-  List<String> description = ["Billing description", "Performance Tracker description", "Account Management description"];
+class _HomeScreenWithoutInventoryState
+    extends State<HomeScreenWithoutInventory> {
+  List<String> name = [
+    "Billing",
+    "Performance Tracker + Reports",
+    "Account Management"
+  ];
+  List<String> description = [
+    "Billing description",
+    "Performance Tracker description",
+    "Account Management description"
+  ];
 
-  List<String> images = ["assets/images/home1.png", "assets/images/home5.png", "assets/images/home6.png"];
+  List<String> images = [
+    "assets/images/home1.png",
+    "assets/images/home5.png",
+    "assets/images/home6.png"
+  ];
 
   _onShareWithEmptyOrigin(BuildContext context) async {
-    await Share.share("https://play.google.com/store/apps/details?id=com.tencent.ig");
+    await Share.share(
+        "https://play.google.com/store/apps/details?id=com.tencent.ig");
   }
 
   @override
@@ -48,7 +63,9 @@ class _HomeScreenWithoutInventoryState extends State<HomeScreenWithoutInventory>
                 _onShareWithEmptyOrigin(context);
               },
               child: Container(
-                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(5))),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(5))),
                 child: Row(
                   children: [
                     Icon(
@@ -58,7 +75,10 @@ class _HomeScreenWithoutInventoryState extends State<HomeScreenWithoutInventory>
                     ),
                     Text(
                       " Share Store  ",
-                      style: TextStyle(color: ColorPrimary, fontWeight: FontWeight.w600, fontSize: 12),
+                      style: TextStyle(
+                          color: ColorPrimary,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12),
                     )
                   ],
                 ),
@@ -125,18 +145,19 @@ class _HomeScreenWithoutInventoryState extends State<HomeScreenWithoutInventory>
   routeManager(index) {
     log("$index");
     index == 0
-        ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY, arguments: index)
+        ? Navigator.pushNamed(
+            context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY,
+            arguments: index)
         : index == 1
-            ? Navigator.push(
-                context,
-                PageTransition(
-                  child: BottomNavigationHome(
-                    index: 1,
-                  ),
-                  type: PageTransitionType.fade,
-                ))
+            ? Navigator.pushNamed(
+                context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY,
+                arguments: index)
             : index == 2
-                ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY, arguments: index)
-                : Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY, arguments: index);
+                ? Navigator.pushNamed(
+                    context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY,
+                    arguments: index)
+                : Navigator.pushNamed(
+                    context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY,
+                    arguments: index);
   }
 }

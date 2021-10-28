@@ -33,6 +33,15 @@ class _AccountManagementWithoutInventoryScreenState
     "Add business hours",
     "Logout"
   ];
+
+  List<String> ImageList = [
+    "assets/images/account-ic2.png",
+    "assets/images/account-ic4.png",
+    "assets/images/account-ic5.png",
+    "assets/images/account-ic6.png",
+    "assets/images/account-ic7.png",
+    "assets/images/account-ic8.png"
+  ];
   var message;
   bool? status;
   List<VendorDetailData>? data;
@@ -158,8 +167,7 @@ class _AccountManagementWithoutInventoryScreenState
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Image.asset("assets/images/account-ic${index + 1}.png",
-                            width: 24),
+                        Image.asset("${ImageList[index]}", width: 24),
                         SizedBox(width: 17),
                         Expanded(
                           child: Text(TextList[index],

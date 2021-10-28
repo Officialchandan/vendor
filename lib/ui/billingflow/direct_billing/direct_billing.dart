@@ -26,7 +26,9 @@ class _DirectBillingState extends State<DirectBilling> {
   TextEditingController mobileController = TextEditingController();
   TextEditingController amountController = TextEditingController();
   TextEditingController otpController = TextEditingController();
-  DirectBillingCustomerNumberResponseBloc directBillingCustomerNumberResponseBloc = DirectBillingCustomerNumberResponseBloc();
+  DirectBillingCustomerNumberResponseBloc
+      directBillingCustomerNumberResponseBloc =
+      DirectBillingCustomerNumberResponseBloc();
   var value = true;
   var message = "";
   bool? status, redeem = false;
@@ -50,7 +52,8 @@ class _DirectBillingState extends State<DirectBilling> {
         )),
         Text(
           "  $coins",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: ColorPrimary),
+          style: TextStyle(
+              fontSize: 20, fontWeight: FontWeight.w700, color: ColorPrimary),
         ),
       ],
     );
@@ -60,12 +63,14 @@ class _DirectBillingState extends State<DirectBilling> {
   Widget build(BuildContext context) {
     return BlocProvider<DirectBillingCustomerNumberResponseBloc>(
       create: (context) => directBillingCustomerNumberResponseBloc,
-      child: BlocConsumer<DirectBillingCustomerNumberResponseBloc, DirectBillingCustomerNumberResponseState>(
+      child: BlocConsumer<DirectBillingCustomerNumberResponseBloc,
+          DirectBillingCustomerNumberResponseState>(
         listener: (context, state) {},
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
-              title: Text("Billing", style: TextStyle(fontWeight: FontWeight.w600)),
+              title: Text("Billing",
+                  style: TextStyle(fontWeight: FontWeight.w600)),
               leading: IconButton(
                 icon: Icon(Icons.arrow_back_ios),
                 onPressed: () {
@@ -78,7 +83,8 @@ class _DirectBillingState extends State<DirectBilling> {
               padding: EdgeInsets.only(left: 15, right: 15, top: 10),
               child: Column(
                 children: [
-                  BlocConsumer<DirectBillingCustomerNumberResponseBloc, DirectBillingCustomerNumberResponseState>(
+                  BlocConsumer<DirectBillingCustomerNumberResponseBloc,
+                      DirectBillingCustomerNumberResponseState>(
                     listener: (context, state) {
                       if (state is DirectBillingCustomerNumberResponseState) {
                         log("number chl gya");
@@ -89,7 +95,8 @@ class _DirectBillingState extends State<DirectBilling> {
                         //     textColor: Colors.white,
                         //     msg: state.message);
                       }
-                      if (state is GetDirectBillingCustomerNumberResponseFailureState) {
+                      if (state
+                          is GetDirectBillingCustomerNumberResponseFailureState) {
                         message = state.message;
                         status = state.succes;
                       }
@@ -98,27 +105,35 @@ class _DirectBillingState extends State<DirectBilling> {
                         message = state.message;
                         status = state.succes;
                         datas = state.data;
-                        _displayDialog(context, 1, "Please Enter OTP", "Enter OTP");
+                        _displayDialog(
+                            context, 1, "Please Enter OTP", "Enter OTP");
                       }
 
                       if (state is GetDirectBillingLoadingstate) {}
 
                       if (state is GetDirectBillingFailureState) {
                         message = state.message;
-                        Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
+                        Fluttertoast.showToast(
+                            msg: state.message, backgroundColor: ColorPrimary);
                       }
                       if (state is GetDirectBillingOtpState) {
-                        Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
+                        Fluttertoast.showToast(
+                            msg: state.message, backgroundColor: ColorPrimary);
                         Navigator.pushReplacement(
-                            context, MaterialPageRoute(builder: (BuildContext context) => BottomNavigationHome()));
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    BottomNavigationHome()));
                       }
                       if (state is GetDirectBillingOtpLoadingstate) {}
                       if (state is GetDirectBillingOtpFailureState) {
-                        Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
+                        Fluttertoast.showToast(
+                            msg: state.message, backgroundColor: ColorPrimary);
                       }
                     },
                     builder: (context, state) {
-                      if (state is GetDirectBillingCustomerNumberResponseState) {
+                      if (state
+                          is GetDirectBillingCustomerNumberResponseState) {
                         coins = state.data.toString();
                       }
 
@@ -129,9 +144,12 @@ class _DirectBillingState extends State<DirectBilling> {
                     child: TextFormField(
                         controller: mobileController,
                         keyboardType: TextInputType.number,
-                        validator: (numb) => Validator.validateMobile(numb!, context),
+                        validator: (numb) =>
+                            Validator.validateMobile(numb!, context),
                         autovalidateMode: AutovalidateMode.onUserInteraction,
-                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         maxLength: 10,
                         decoration: const InputDecoration(
                           hintText: 'Enter Customer phone number',
@@ -139,18 +157,26 @@ class _DirectBillingState extends State<DirectBilling> {
                           counterText: "",
                           contentPadding: EdgeInsets.all(0),
                           fillColor: Colors.transparent,
-                          enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: ColorTextPrimary, width: 1.5)),
-                          focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
-                          border: UnderlineInputBorder(borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
+                          enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: ColorTextPrimary, width: 1.5)),
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: ColorPrimary, width: 1.5)),
+                          border: UnderlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: ColorPrimary, width: 1.5)),
                         ),
                         onChanged: (length) {
                           if (mobileController.text.length == 10) {
-                            directBillingCustomerNumberResponseBloc
-                                .add(GetDirectBillingCustomerNumberResponseEvent(mobile: mobileController.text));
+                            directBillingCustomerNumberResponseBloc.add(
+                                GetDirectBillingCustomerNumberResponseEvent(
+                                    mobile: mobileController.text));
                           }
                           if (mobileController.text.length == 9) {
-                            directBillingCustomerNumberResponseBloc
-                                .add(GetDirectBillingCustomerNumberResponseEvent(mobile: mobileController.text));
+                            directBillingCustomerNumberResponseBloc.add(
+                                GetDirectBillingCustomerNumberResponseEvent(
+                                    mobile: mobileController.text));
                           }
                         }),
                   ),
@@ -162,7 +188,9 @@ class _DirectBillingState extends State<DirectBilling> {
                         controller: amountController,
                         keyboardType: TextInputType.number,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
-                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         maxLength: 10,
                         decoration: const InputDecoration(
                           hintText: 'Amount spent here',
@@ -170,9 +198,15 @@ class _DirectBillingState extends State<DirectBilling> {
                           counterText: "",
                           contentPadding: EdgeInsets.all(0),
                           fillColor: Colors.transparent,
-                          enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: ColorTextPrimary, width: 1.5)),
-                          focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
-                          border: UnderlineInputBorder(borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
+                          enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: ColorTextPrimary, width: 1.5)),
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: ColorPrimary, width: 1.5)),
+                          border: UnderlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: ColorPrimary, width: 1.5)),
                         ),
                         onChanged: (length) {
                           if (length.isEmpty) {
@@ -208,7 +242,8 @@ class _DirectBillingState extends State<DirectBilling> {
                         width: 18,
                         color: Colors.white,
                         child: Checkbox(
-                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          materialTapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
                           value: this.redeem,
                           checkColor: Colors.white,
                           // value: widget
@@ -226,12 +261,18 @@ class _DirectBillingState extends State<DirectBilling> {
                                   redeem = redeems;
                                 });
                               } else {
-                                Fluttertoast.showToast(msg: "Please enter First", backgroundColor: ColorPrimary);
+                                Fluttertoast.showToast(
+                                    msg: "Please enter First",
+                                    backgroundColor: ColorPrimary);
                               }
                             } else {
-                              Fluttertoast.showToast(msg: "Please enter 10 digits number", backgroundColor: ColorPrimary);
+                              Fluttertoast.showToast(
+                                  msg: "Please enter 10 digits number",
+                                  backgroundColor: ColorPrimary);
                             }
-                            calculaton(amountController.text.isEmpty ? "0" : amountController.text);
+                            calculaton(amountController.text.isEmpty
+                                ? "0"
+                                : amountController.text);
                           },
                         ),
                       ),
@@ -251,18 +292,28 @@ class _DirectBillingState extends State<DirectBilling> {
                           if (amountController.text.length >= 0) {
                             directBilling(context);
                           } else {
-                            Fluttertoast.showToast(msg: "Please enter amount", backgroundColor: ColorPrimary);
+                            Fluttertoast.showToast(
+                                msg: "Please enter amount",
+                                backgroundColor: ColorPrimary);
                           }
                         } else {
-                          Fluttertoast.showToast(msg: "Please enter 10 digit mobile number", backgroundColor: ColorPrimary);
+                          Fluttertoast.showToast(
+                              msg: "Please enter 10 digit mobile number",
+                              backgroundColor: ColorPrimary);
                         }
                       },
                       child: Container(
                         height: 50,
-                        decoration: BoxDecoration(color: ColorPrimary, borderRadius: BorderRadius.circular(10)),
+                        decoration: BoxDecoration(
+                            color: ColorPrimary,
+                            borderRadius: BorderRadius.circular(10)),
                         width: 250,
                         child: Center(
-                          child: Text("SUBMIT", style: TextStyle(fontSize: 17, color: Colors.white, fontWeight: FontWeight.w600)),
+                          child: Text("SUBMIT",
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600)),
                         ),
                       ),
                     ),
@@ -306,25 +357,31 @@ class _DirectBillingState extends State<DirectBilling> {
     Map<String, dynamic> input = HashMap<String, dynamic>();
     input["mobile"] = mobileController.text;
     input["bill_amount"] = amountController.text;
-    input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    input["vendor_id"] =
+        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     input["total_pay"] = amount;
     input["coin_deducted"] = coinss;
 
     log("=====? $input");
-    directBillingCustomerNumberResponseBloc.add(GetDirectBillingEvent(input: input));
+    directBillingCustomerNumberResponseBloc
+        .add(GetDirectBillingEvent(input: input));
   }
 
   Future<void> verifyOtp(BuildContext context) async {
     Map<String, dynamic> input = HashMap<String, dynamic>();
-    input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    input["vendor_id"] =
+        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     input["bill_id"] = datas!.billId;
 
     input["otp"] = otpController.text;
+    input["total_pay"] = datas!.totalPay;
     input["coin_deducted"] = datas!.coinDeducted;
     input["earning_coins"] = datas!.earningCoins;
+    input["myprofit_revenue"] = datas!.myprofitRevenue;
 
     log("=====? $input");
-    directBillingCustomerNumberResponseBloc.add(GetDirectBillingOtpEvent(input: input));
+    directBillingCustomerNumberResponseBloc
+        .add(GetDirectBillingOtpEvent(input: input));
   }
 
   _displayDialog(BuildContext context, index, text, hinttext) async {
@@ -335,7 +392,8 @@ class _DirectBillingState extends State<DirectBilling> {
           return ConstrainedBox(
             constraints: BoxConstraints(maxWidth: 400),
             child: AlertDialog(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
               title: RichText(
                 text: TextSpan(
                   text: "$text",
@@ -359,7 +417,8 @@ class _DirectBillingState extends State<DirectBilling> {
                   hintStyle: GoogleFonts.openSans(
                     fontWeight: FontWeight.w600,
                   ),
-                  contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                  contentPadding:
+                      const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
                 ),
               ),
               actions: <Widget>[
@@ -370,7 +429,8 @@ class _DirectBillingState extends State<DirectBilling> {
                     padding: const EdgeInsets.all(8.0),
                     textColor: Colors.white,
                     color: ColorPrimary,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
                     onPressed: () {
                       if (status == 0) {
                         log("index->$index");
@@ -385,7 +445,10 @@ class _DirectBillingState extends State<DirectBilling> {
                     },
                     child: new Text(
                       "DONE",
-                      style: GoogleFonts.openSans(fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
+                      style: GoogleFonts.openSans(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w600,
+                          decoration: TextDecoration.none),
                     ),
                   ),
                 ),
