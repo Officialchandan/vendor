@@ -3,10 +3,10 @@ import 'dart:developer';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:vendor/api/api_provider.dart';
 import 'package:vendor/model/daily_earning.dart';
 import 'package:vendor/model/hourly_earning.dart';
 import 'package:vendor/model/monthly_earning.dart';
-import 'package:vendor/provider/api_provider.dart';
 import 'package:vendor/utility/color.dart';
 
 class EarningAmount extends StatefulWidget {

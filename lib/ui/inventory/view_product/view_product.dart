@@ -103,10 +103,14 @@ class _ViewProductScreenState extends State<ViewProductScreen> {
 
                     if (product.productOption.isNotEmpty) {
                       for (int i = 0; i < product.productOption.length; i++) {
-                        if (product.productOption.length - 1 == i)
-                          variantName += product.productOption[i].value.toString();
-                        else
-                          variantName += product.productOption[i].value.toString() + ", ";
+                        if (product.productOption[i].optionName.isNotEmpty) {
+                          if (product.productOption.length - 1 == i)
+                            variantName += product.productOption[i].value.toString();
+                          else
+                            variantName += product.productOption[i].value.toString() + ", ";
+                        } else {
+                          product.productOption.removeAt(i);
+                        }
                       }
                     }
 
@@ -220,7 +224,7 @@ class _ViewProductScreenState extends State<ViewProductScreen> {
         response = await apiProvider.getAllVendorProducts();
       } else {
         if (widget.from == "purchase_order_entry") {
-          response = await apiProvider.getAllProducts(widget.categoryId.toString());
+          response = await apiProvider.getAllVendorProducts();
         } else {
           response = await apiProvider.getProductByCategories(widget.categoryId.toString());
         }

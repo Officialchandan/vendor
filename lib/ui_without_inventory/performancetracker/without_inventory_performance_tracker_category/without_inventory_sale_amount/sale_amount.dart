@@ -7,7 +7,7 @@ import 'package:vendor/model/chat_papdi_module/without_inventory_Daily_Sale.dart
 import 'package:vendor/model/chat_papdi_module/without_inventory_Hourly_Sale.dart';
 import 'package:vendor/model/chat_papdi_module/without_inventory_Monthly_Sale.dart';
 
-import 'package:vendor/provider/api_provider.dart';
+import 'package:vendor/api/api_provider.dart';
 import 'package:vendor/utility/color.dart';
 
 class SaleAmount extends StatefulWidget {

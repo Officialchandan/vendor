@@ -39,11 +39,13 @@ class Customer {
     required this.mobile,
     required this.qty,
     required this.date,
+    required this.amountSpend,
   });
 
   String customerId;
   String customerName;
   String mobile;
+  String amountSpend;
   String qty;
   DateTime date;
 
@@ -56,6 +58,7 @@ class Customer {
         customerName: json["customer_name"] == null ? "" : json["customer_name"].toString(),
         mobile: json["mobile"] == null ? "" : json["mobile"].toString(),
         qty: json["qty"] == null ? "" : json["qty"].toString(),
+        amountSpend: json["amount_spend"] == null ? "0" : json["amount_spend"].toString(),
         date: json["date"] == null ? DateTime.now() : DateTime.parse(json["date"]),
       );
 

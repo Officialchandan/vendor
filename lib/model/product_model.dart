@@ -138,8 +138,8 @@ class ProductOption {
 
   factory ProductOption.fromMap(Map<String, dynamic> json) => ProductOption(
         productOptionId: json["product_option_id"] == null ? "0" : json["product_option_id"],
-        optionName: json["option_name"] == null ? "kala" : json["option_name"],
-        value: json["value"] == null ? null : json["value"],
+        optionName: json["option_name"] == null ? "" : json["option_name"],
+        value: json["value"] == null ? "" : json["value"],
       );
 
   Map<String, dynamic> toMap() => {

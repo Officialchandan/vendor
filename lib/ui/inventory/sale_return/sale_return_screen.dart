@@ -1,12 +1,12 @@
 import 'dart:collection';
 
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:vendor/localization/app_translations.dart';
 import 'package:vendor/model/get_purchased_product_response.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
 import 'package:vendor/ui/inventory/sale_return/bloc/sale_return_bloc.dart';
@@ -321,7 +321,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
               title: RichText(
                 text: TextSpan(
-                  text: "${AppTranslations.of(context)!.text("otp_verification_key")}\n",
+                  text: "otp_verification_key".tr(),
                   style: GoogleFonts.openSans(
                     fontSize: 25.0,
                     color: Colors.black,
@@ -329,7 +329,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                   ),
                   children: [
                     TextSpan(
-                      text: "${AppTranslations.of(context)!.text("please_verify_your_otp_on_key")} ${input["mobile"]}",
+                      text: "please_verify_your_otp_on_key".tr() + "${input["mobile"]}",
                       style: GoogleFonts.openSans(
                         fontSize: 14.0,
                         color: ColorTextPrimary,
@@ -348,7 +348,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                   filled: true,
 
                   // fillColor: Colors.black,
-                  hintText: "${AppTranslations.of(context)!.text("enter_otp_key")}",
+                  hintText: "enter_otp_key".tr(),
                   hintStyle: GoogleFonts.openSans(
                     fontWeight: FontWeight.w600,
                   ),
@@ -383,7 +383,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                       //     mobileController.text, _textFieldController.text);
                     },
                     child: new Text(
-                      "${AppTranslations.of(context)!.text("verify_key")}",
+                      "verify_key".tr(),
                       style: GoogleFonts.openSans(fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
                     ),
                   ),

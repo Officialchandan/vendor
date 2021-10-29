@@ -10,10 +10,10 @@ import 'package:page_transition/page_transition.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart' as xls;
+import 'package:vendor/api/Endpoint.dart';
+import 'package:vendor/api/server_error.dart';
 import 'package:vendor/model/get_categories_response.dart';
 import 'package:vendor/model/product_model.dart';
-import 'package:vendor/provider/Endpoint.dart';
-import 'package:vendor/provider/server_error.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
 import 'package:vendor/ui/performance_tracker/report/product_list_screen.dart';
 import 'package:vendor/utility/color.dart';
@@ -187,6 +187,7 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
 
     if (args.value is PickerDateRange) {
       startDate = Utility.getFormatDate(args.value.startDate);
+
       endDate = Utility.getFormatDate(args.value.endDate ?? args.value.startDate);
     }
   }
@@ -269,7 +270,9 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
       if (groupValue == 1) {
         url = widget.chatPapdi == 0 ? Endpoint.GET_COIN_REDEEM_REPORT_BY_DATE : Endpoint.GET_COIN_REDEEM_REPORT_BY_DATE_OF_CHAT_PAPDI;
         input["from_date"] = startDate;
-        input["to_date"] = endDate;
+        DateTime dateTime = DateTime.parse(endDate);
+
+        input["to_date"] = Utility.getFormatDate(DateTime(dateTime.year, dateTime.month, dateTime.day + 1));
       } else {
         url = widget.chatPapdi == 0 ? Endpoint.GET_COIN_REDEEM_REPORT_BY_DAY : Endpoint.GET_COIN_REDEEM_REPORT_BY_DAY_OF_CHAT_PAPDI;
         if (days == null) {

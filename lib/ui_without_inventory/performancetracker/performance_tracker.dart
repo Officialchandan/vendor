@@ -1,40 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
+import 'package:vendor/ui_without_inventory/performancetracker/report/report_type_screen.dart';
+import 'package:vendor/ui_without_inventory/performancetracker/upi/due_amount_screen.dart';
+import 'package:vendor/ui_without_inventory/performancetracker/without_inventory_performance_tracker_category/performance_tracker.dart';
 import 'package:vendor/utility/color.dart';
+
+import 'my_customer/customers_screen.dart';
 
 class PerformanceTrackerWithoutInventory extends StatefulWidget {
   @override
-  _PerformanceTrackerWithoutInventoryState createState() =>
-      _PerformanceTrackerWithoutInventoryState();
+  _PerformanceTrackerWithoutInventoryState createState() => _PerformanceTrackerWithoutInventoryState();
 }
 
-class _PerformanceTrackerWithoutInventoryState
-    extends State<PerformanceTrackerWithoutInventory> {
+class _PerformanceTrackerWithoutInventoryState extends State<PerformanceTrackerWithoutInventory> {
   final options = [
-    {
-      "title": "Performance tracker",
-      "subTitle": "click here to add product",
-      "image": "assets/images/tr-ic1.png",
-      "id": 1
-    },
-    {
-      "title": "Reports",
-      "subTitle": "click here to add product",
-      "image": "assets/images/tr-ic2.png",
-      "id": 2
-    },
-    {
-      "title": "Money due - UPI",
-      "subTitle": "click here to add product",
-      "image": "assets/images/tr-ic3.png",
-      "id": 3
-    },
-    {
-      "title": "My Customers",
-      "subTitle": "click here to view customer",
-      "image": "assets/images/tr-ic3.png",
-      "id": 4
-    },
+    {"title": "Performance tracker", "subTitle": "click here to add product", "image": "assets/images/tr-ic1.png", "id": 1},
+    {"title": "Reports", "subTitle": "click here to add product", "image": "assets/images/tr-ic2.png", "id": 2},
+    {"title": "Money due - UPI", "subTitle": "click here to add product", "image": "assets/images/tr-ic3.png", "id": 3},
+    {"title": "My Customers", "subTitle": "click here to view customer", "image": "assets/images/tr-ic3.png", "id": 4},
   ];
   @override
   Widget build(BuildContext context) {
@@ -62,17 +46,13 @@ class _PerformanceTrackerWithoutInventoryState
                       if (options[index]["id"] == 3) {
                         Navigator.push(context, PageTransition(child: DueAmountScreen(), type: PageTransitionType.fade));
                       }
-                      // if (options[index]["id"] == 4) {
-                      //   Navigator.push(context, PageTransition(child: MyCustomerScreen(), type: PageTransitionType.fade));
-                      // }
+                      if (options[index]["id"] == 4) {
+                        Navigator.push(context, PageTransition(child: CustomerScreen(), type: PageTransitionType.fade));
+                      }
 
                       if (options[index]["id"] == 1) {
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                                child:
-                                    WithoutInventoryPerformanceTrackerByCategory(),
-                                type: PageTransitionType.fade));
+                        Navigator.push(context,
+                            PageTransition(child: WithoutInventoryPerformanceTrackerByCategory(), type: PageTransitionType.fade));
                       }
                     },
                     leading: Image(
@@ -93,9 +73,7 @@ class _PerformanceTrackerWithoutInventoryState
                       width: 5,
                       decoration: BoxDecoration(
                           color: ColorPrimary,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(5),
-                              bottomLeft: Radius.circular(5))),
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
                     ))
               ],
             ),
