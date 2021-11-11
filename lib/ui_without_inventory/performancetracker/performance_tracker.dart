@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
+import 'package:vendor/ui_without_inventory/performancetracker/report/report_type_screen.dart';
+import 'package:vendor/ui_without_inventory/performancetracker/upi/due_amount_screen.dart';
+import 'package:vendor/ui_without_inventory/performancetracker/without_inventory_performance_tracker_category/performance_tracker.dart';
 import 'package:vendor/utility/color.dart';
 
 class PerformanceTrackerWithoutInventory extends StatefulWidget {
@@ -57,10 +61,18 @@ class _PerformanceTrackerWithoutInventoryState
                   child: ListTile(
                     onTap: () {
                       if (options[index]["id"] == 2) {
-                        Navigator.push(context, PageTransition(child: ReportTypeScreen(), type: PageTransitionType.fade));
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: ReportTypeScreen(),
+                                type: PageTransitionType.fade));
                       }
                       if (options[index]["id"] == 3) {
-                        Navigator.push(context, PageTransition(child: DueAmountScreen(), type: PageTransitionType.fade));
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: DueAmountScreen(),
+                                type: PageTransitionType.fade));
                       }
                       // if (options[index]["id"] == 4) {
                       //   Navigator.push(context, PageTransition(child: MyCustomerScreen(), type: PageTransitionType.fade));

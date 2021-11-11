@@ -25,6 +25,8 @@ class ChatPapdiBilling extends StatefulWidget {
 
 class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
   TextEditingController mobileController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+
   TextEditingController amountController = TextEditingController();
   TextEditingController otpController = TextEditingController();
   ChatPapdiBillingCustomerNumberResponseBloc
@@ -35,11 +37,12 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
   bool? status, redeem = false;
   bool valuefirst = false;
   String coins = "0.0";
+  var status1;
 
   String coinss = "0.0";
 
   String amount = "0.0";
-  var billing;
+  var billing, succes;
   ChatPapdiData? datas;
 
   Widget show(var coins) {
@@ -88,14 +91,16 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                       ChatPapdiBillingCustomerNumberResponseState>(
                     listener: (context, state) {
                       if (state
-                          is ChatPapdiBillingCustomerNumberResponseState) {
-                        log("number chl gya");
+                          is GetChatPapdiBillingCustomerNumberResponseState) {
+                        coins = state.data.toString();
+                        status1 = state.status;
+                        log("staus=>$status1}");
+                      }
 
-                        //coins = state.data;
-                        // Fluttertoast.showToast(
-                        //     backgroundColor: ColorPrimary,
-                        //     textColor: Colors.white,
-                        //     msg: state.message);
+                      if (state
+                          is GetChatPapdiBillingCustomerNumberResponseFailureState) {
+                        status1 = state.status;
+                        log("staus=>$status1}");
                       }
                       if (state is GetChatPapdiBillingFailureState) {
                         message = state.message;
@@ -131,55 +136,85 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                         Fluttertoast.showToast(
                             msg: state.message, backgroundColor: ColorPrimary);
                       }
-                    },
-                    builder: (context, state) {
-                      if (state
-                          is GetChatPapdiBillingCustomerNumberResponseState) {
-                        coins = state.data.toString();
+                      if (state is GetChatPapdiPartialUserState) {
+                        succes = state.succes;
+                        directBilling(context);
                       }
 
+                      if (state is GetChatPapdiPartialUserFailureState) {
+                        succes = state.succes;
+                      }
+                    },
+                    builder: (context, state) {
                       return show(coins);
                     },
                   ),
                   Container(
-                    child: TextFormField(
-                        controller: mobileController,
-                        keyboardType: TextInputType.number,
-                        validator: (numb) =>
-                            Validator.validateMobile(numb!, context),
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly
-                        ],
-                        maxLength: 10,
-                        decoration: const InputDecoration(
-                          hintText: 'Enter Customer phone number',
-                          labelText: 'Mobile Number',
-                          counterText: "",
-                          contentPadding: EdgeInsets.all(0),
-                          fillColor: Colors.transparent,
-                          enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: ColorTextPrimary, width: 1.5)),
-                          focusedBorder: UnderlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: ColorPrimary, width: 1.5)),
-                          border: UnderlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: ColorPrimary, width: 1.5)),
-                        ),
-                        onChanged: (length) {
-                          if (mobileController.text.length == 10) {
-                            directBillingCustomerNumberResponseBloc.add(
-                                GetChatPapdiBillingCustomerNumberResponseEvent(
-                                    mobile: mobileController.text));
-                          }
-                          if (mobileController.text.length == 9) {
-                            directBillingCustomerNumberResponseBloc.add(
-                                GetChatPapdiBillingCustomerNumberResponseEvent(
-                                    mobile: mobileController.text));
-                          }
-                        }),
+                    child: Column(children: [
+                      TextFormField(
+                          controller: mobileController,
+                          keyboardType: TextInputType.number,
+                          validator: (numb) =>
+                              Validator.validateMobile(numb!, context),
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
+                          maxLength: 10,
+                          decoration: const InputDecoration(
+                            hintText: 'Enter Customer phone number',
+                            labelText: 'Mobile Number',
+                            counterText: "",
+                            contentPadding: EdgeInsets.all(0),
+                            fillColor: Colors.transparent,
+                            enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: ColorTextPrimary, width: 1.5)),
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: ColorPrimary, width: 1.5)),
+                            border: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: ColorPrimary, width: 1.5)),
+                          ),
+                          onChanged: (length) {
+                            if (mobileController.text.length == 10) {
+                              directBillingCustomerNumberResponseBloc.add(
+                                  GetChatPapdiBillingCustomerNumberResponseEvent(
+                                      mobile: mobileController.text));
+                            }
+                            if (mobileController.text.length == 9) {
+                              directBillingCustomerNumberResponseBloc.add(
+                                  GetChatPapdiBillingCustomerNumberResponseEvent(
+                                      mobile: mobileController.text));
+                              coins = "0";
+                            }
+                          }),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      status1 == 0
+                          ? TextFormField(
+                              controller: nameController,
+                              decoration: const InputDecoration(
+                                hintText: 'Enter Customer Name',
+                                labelText: 'Full Name',
+                                counterText: "",
+                                contentPadding: EdgeInsets.all(0),
+                                fillColor: Colors.transparent,
+                                enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: ColorTextPrimary, width: 1.5)),
+                                focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: ColorPrimary, width: 1.5)),
+                                border: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: ColorPrimary, width: 1.5)),
+                              ),
+                              onChanged: (length) {})
+                          : Container(),
+                    ]),
                   ),
                   SizedBox(
                     height: 20,
@@ -210,6 +245,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                                   BorderSide(color: ColorPrimary, width: 1.5)),
                         ),
                         onChanged: (length) {
+                          log("$status1  ===>");
                           if (length.isEmpty) {
                             log("if$length");
                             log("if$coins");
@@ -263,7 +299,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                                 });
                               } else {
                                 Fluttertoast.showToast(
-                                    msg: "Please enter First",
+                                    msg: "Please enter Full Name",
                                     backgroundColor: ColorPrimary);
                               }
                             } else {
@@ -289,18 +325,42 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                   Center(
                     child: InkWell(
                       onTap: () {
-                        if (mobileController.text.length == 10) {
-                          if (amountController.text.length >= 0) {
-                            directBilling(context);
+                        if (status1 == 0) {
+                          if (mobileController.text.length == 10) {
+                            if (amountController.text.length >= 0) {
+                              if (nameController.text.length > 1) {
+                                userRegister(context);
+                                log("====>$succes");
+                                if (succes == true) {}
+                              } else {
+                                Fluttertoast.showToast(
+                                    msg: "Please enter Name ",
+                                    backgroundColor: ColorPrimary);
+                              }
+                            } else {
+                              Fluttertoast.showToast(
+                                  msg: "Please enter amount",
+                                  backgroundColor: ColorPrimary);
+                            }
                           } else {
                             Fluttertoast.showToast(
-                                msg: "Please enter amount",
+                                msg: "Please enter 10 digit mobile number",
                                 backgroundColor: ColorPrimary);
                           }
                         } else {
-                          Fluttertoast.showToast(
-                              msg: "Please enter 10 digit mobile number",
-                              backgroundColor: ColorPrimary);
+                          if (mobileController.text.length == 10) {
+                            if (amountController.text.length >= 0) {
+                              directBilling(context);
+                            } else {
+                              Fluttertoast.showToast(
+                                  msg: "Please enter amount",
+                                  backgroundColor: ColorPrimary);
+                            }
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: "Please enter 10 digit mobile number",
+                                backgroundColor: ColorPrimary);
+                          }
                         }
                       },
                       child: Container(
@@ -354,6 +414,16 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
     }
   }
 
+  Future<void> userRegister(BuildContext context) async {
+    Map<String, dynamic> input = HashMap<String, dynamic>();
+    input["mobile"] = mobileController.text;
+    input["first_name"] = nameController.text;
+
+    log("=====? $input");
+    directBillingCustomerNumberResponseBloc
+        .add(GetChatPapdiPartialUserRegisterEvent(input: input));
+  }
+
   Future<void> directBilling(BuildContext context) async {
     Map<String, dynamic> input = HashMap<String, dynamic>();
     input["mobile"] = mobileController.text;
@@ -378,9 +448,10 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
     input["total_pay"] = datas!.totalPay;
     input["coin_deducted"] = datas!.coinDeducted;
     input["earning_coins"] = datas!.earningCoins;
-    input["myprofit_revenue"] = datas!.myProfitRevenu;
+    input["myprofit_revenue"] = datas!.myProfitRevenue;
 
     log("=====? $input");
+
     directBillingCustomerNumberResponseBloc
         .add(GetChatPapdiBillingOtpEvent(input: input));
   }
@@ -433,12 +504,18 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
                     onPressed: () {
-                      if (status == 0) {
+                      if (status1 == 0) {
                         log("index->$index");
 
                         // directBillingCustomerNumberResponseBloc.add((
                         //     price: y, index: index, earningCoin: earningCoin));
                         otpController.clear();
+                        mobileController.clear();
+                        nameController.clear();
+                        amountController.clear();
+                        redeem = false;
+                        FocusScope.of(context).unfocus();
+
                         Navigator.pop(context);
                       } else {
                         verifyOtp(context);

@@ -30,3 +30,12 @@ class GetChatPapdiBillingOtpEvent
   @override
   List<Object> get props => [input];
 }
+
+class GetChatPapdiPartialUserRegisterEvent
+    extends ChatPapdiBillingCustomerNumberResponseEvent {
+  final Map<String, dynamic> input;
+
+  GetChatPapdiPartialUserRegisterEvent({required this.input});
+  @override
+  List<Object> get props => [input];
+}

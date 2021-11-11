@@ -8,6 +8,7 @@ import 'package:vendor/main.dart';
 import 'package:vendor/model/chat_papdi_module/billing_chatpapdi.dart';
 import 'package:vendor/model/chat_papdi_module/billing_chatpapdi_otp.dart';
 import 'package:vendor/model/customer_number_response.dart';
+import 'package:vendor/model/partial_user_register.dart';
 import 'package:vendor/ui_without_inventory/chatpapdi_billing/chatpapdi_event.dart';
 import 'package:vendor/ui_without_inventory/chatpapdi_billing/chatpapdi_state.dart';
 
@@ -41,6 +42,10 @@ class ChatPapdiBillingCustomerNumberResponseBloc extends Bloc<
     if (event is GetChatPapdiBillingOtpEvent) {
       yield* getChatPapdiBillingOtp(event.input);
     }
+
+    if (event is GetChatPapdiPartialUserRegisterEvent) {
+      yield* getChatPapdiPartialUserRegister(event.input);
+    }
   }
 
   Stream<ChatPapdiBillingCustomerNumberResponseState>
@@ -57,12 +62,15 @@ class ChatPapdiBillingCustomerNumberResponseBloc extends Bloc<
           yield GetChatPapdiBillingCustomerNumberResponseState(
               message: result.message,
               data: result.data!.walletBalance,
-              succes: result.success);
+              succes: result.success,
+              status: result.status);
         } else {
           Fluttertoast.showToast(
               msg: result.message, backgroundColor: ColorPrimary);
           yield GetChatPapdiBillingCustomerNumberResponseFailureState(
-              message: result.message, succes: result.success);
+              message: result.message,
+              succes: result.success,
+              status: result.status);
         }
       } catch (error) {
         yield GetChatPapdiBillingCustomerNumberResponseFailureState(
@@ -120,6 +128,33 @@ class ChatPapdiBillingCustomerNumberResponseBloc extends Bloc<
         }
       } catch (error) {
         yield GetChatPapdiBillingOtpFailureState(
+            message: "internal Server error", succes: false);
+      }
+    } else {
+      Fluttertoast.showToast(msg: "Turn on the internet");
+    }
+  }
+
+  Stream<ChatPapdiBillingCustomerNumberResponseState>
+      getChatPapdiPartialUserRegister(input) async* {
+    if (await Network.isConnected()) {
+      try {
+        PartialUserRegisterResponse result =
+            await apiProvider.getChatPapdiPatialUserRegister(input);
+        log("$result");
+        if (result.success) {
+          yield GetChatPapdiPartialUserState(
+              message: result.message,
+              data: result.message,
+              succes: result.success);
+        } else {
+          Fluttertoast.showToast(
+              msg: result.message, backgroundColor: ColorPrimary);
+          yield GetChatPapdiPartialUserFailureState(
+              message: result.message, succes: result.success);
+        }
+      } catch (error) {
+        yield GetChatPapdiPartialUserFailureState(
             message: "internal Server error", succes: false);
       }
     } else {

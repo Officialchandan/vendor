@@ -16,6 +16,7 @@ import 'package:vendor/ui/billingflow/billingproducts/biliing_products_event.dar
 import 'package:vendor/ui/billingflow/billingproducts/biliing_products_state.dart';
 import 'package:vendor/ui/home/bottom_navigation_home.dart';
 import 'package:vendor/utility/color.dart';
+import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/sharedpref.dart';
 
 class BillingProducts extends StatefulWidget {
@@ -27,7 +28,7 @@ class BillingProducts extends StatefulWidget {
       required this.coin});
 
   final List<ProductModel> searchList = [];
-  final double coin;
+  final coin;
   final mobile;
 
   @override
@@ -40,6 +41,7 @@ class _BillingProductsState extends State<BillingProducts> {
 
   ProductModel? selectedProductList;
   List<ProductModel> productList = [];
+  List index = [];
   BillingProductData? otpVerifyList;
   TextEditingController _textFieldController = TextEditingController();
   BillingProductsBloc billingProductsBloc = BillingProductsBloc();
@@ -91,6 +93,9 @@ class _BillingProductsState extends State<BillingProducts> {
           print("state-->$state");
           if (state is DeleteBillingProductState) {
             productList.remove(productList[state.index]);
+            index.add(state.index);
+            widget.billingItemList[state.index].check = false;
+
             calculateAmounts(productList);
           }
           if (state is CheckerBillingProductstate) {
@@ -122,7 +127,8 @@ class _BillingProductsState extends State<BillingProducts> {
             leadingWidth: 30,
             leading: IconButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  //log("===>${index[0]}");
+                  Navigator.pop(context, index);
                 },
                 icon: Icon(Icons.arrow_back_ios)),
             centerTitle: false,
@@ -211,25 +217,33 @@ class _BillingProductsState extends State<BillingProducts> {
                                     Container(
                                       width: MediaQuery.of(context).size.width *
                                           0.58,
-                                      height: 20,
                                       child: AutoSizeText(
                                         "${productList[index].productName} ($variantName)",
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                             color: Colors.black,
                                             fontWeight: FontWeight.w600),
-                                        maxFontSize: 14,
-                                        minFontSize: 11,
+                                        maxFontSize: 13,
+                                        minFontSize: 10,
                                       ),
                                     ),
                                     Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.end,
                                         children: [
-                                          Text(
+                                          Container(
+                                            width: 50,
+                                            child: AutoSizeText(
                                               "Qty: ${productList[index].count} ",
+                                              maxLines: 1,
                                               style: TextStyle(
-                                                  color: Colors.grey,
-                                                  fontSize: 15)),
+                                                color: Colors.grey,
+                                              ),
+                                              maxFontSize: 15,
+                                              minFontSize: 10,
+                                            ),
+                                          ),
                                           SizedBox(
                                             width: 5,
                                           )
@@ -244,23 +258,38 @@ class _BillingProductsState extends State<BillingProducts> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text("\u20B9",
-                                              style: TextStyle(
-                                                  color: ColorPrimary,
-                                                  fontSize: 18)),
-                                          Text(
-                                              " ${(double.parse(productList[index].sellingPrice) * productList[index].count).toStringAsFixed(2)} ",
-                                              style: TextStyle(
-                                                  color: ColorPrimary)),
+                                          AutoSizeText(
+                                            "\u20B9",
+                                            style: TextStyle(
+                                              color: ColorPrimary,
+                                            ),
+                                            maxFontSize: 17,
+                                            minFontSize: 13,
+                                          ),
+                                          AutoSizeText(
+                                            " ${(double.parse(productList[index].sellingPrice) * productList[index].count).toStringAsFixed(2)} ",
+                                            style:
+                                                TextStyle(color: ColorPrimary),
+                                            maxFontSize: 15,
+                                            minFontSize: 11,
+                                          ),
                                           InkWell(
-                                            onTap: () {
+                                            onTap: () async {
                                               // i = 0;
-                                              _displayDialog(
-                                                  context,
-                                                  index,
-                                                  0,
-                                                  "Edit Amount",
-                                                  "Enter Amount");
+                                              if (await Network.isConnected()) {
+                                                _displayDialog(
+                                                    context,
+                                                    index,
+                                                    0,
+                                                    "Edit Amount",
+                                                    "Enter Amount");
+                                              } else {
+                                                Fluttertoast.showToast(
+                                                    msg:
+                                                        "Please turn on Internet",
+                                                    backgroundColor:
+                                                        ColorPrimary);
+                                              }
                                             },
                                             child: Container(
                                               height: 20,
@@ -283,8 +312,11 @@ class _BillingProductsState extends State<BillingProducts> {
                                   Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        Text("Earning ",
-                                            style: TextStyle(fontSize: 14)),
+                                        AutoSizeText(
+                                          "Earning ",
+                                          maxFontSize: 15,
+                                          minFontSize: 11,
+                                        ),
                                         Container(
                                           height: 17,
                                           width: 17,
@@ -297,7 +329,7 @@ class _BillingProductsState extends State<BillingProducts> {
                                             color: ColorPrimary,
                                           ),
                                           maxFontSize: 15,
-                                          minFontSize: 12,
+                                          minFontSize: 11,
                                         ),
                                         SizedBox(
                                           width: 5,
@@ -330,14 +362,23 @@ class _BillingProductsState extends State<BillingProducts> {
                                                       .billingItemList[index]
                                                       .billingcheck,
                                                   activeColor: ColorPrimary,
-                                                  onChanged: (newvalue) {
+                                                  onChanged: (newvalue) async {
                                                     log("true===>");
-                                                    billingProductsBloc.add(
-                                                        CheckedBillingProductsEvent(
-                                                            check: newvalue!,
-                                                            index: index));
-                                                    selectedProductList =
-                                                        productList[index];
+                                                    if (await Network
+                                                        .isConnected()) {
+                                                      billingProductsBloc.add(
+                                                          CheckedBillingProductsEvent(
+                                                              check: newvalue!,
+                                                              index: index));
+                                                      selectedProductList =
+                                                          productList[index];
+                                                    } else {
+                                                      Fluttertoast.showToast(
+                                                          msg:
+                                                              "Please turn on Internet",
+                                                          backgroundColor:
+                                                              ColorPrimary);
+                                                    }
                                                   },
                                                 ),
                                               );
@@ -408,8 +449,8 @@ class _BillingProductsState extends State<BillingProducts> {
                       top: 0,
                       right: 20,
                       child: InkWell(
-                        onTap: () {
-                          log("${productList[index]}");
+                        onTap: () async {
+                          log("===>${productList[index]}");
                           // i = 0;
 
                           // totalPay = 0;
@@ -423,9 +464,14 @@ class _BillingProductsState extends State<BillingProducts> {
                           //             .billingItemList[index]
                           //             .redeemCoins) *
                           //         2;
-
-                          billingProductsBloc
-                              .add(DeleteBillingProductsEvent(index: index));
+                          if (await Network.isConnected()) {
+                            billingProductsBloc
+                                .add(DeleteBillingProductsEvent(index: index));
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: "Please turn on Internet",
+                                backgroundColor: ColorPrimary);
+                          }
                         },
                         child: BlocBuilder<BillingProductsBloc,
                             BillingProductsState>(
@@ -589,9 +635,16 @@ class _BillingProductsState extends State<BillingProducts> {
                     },
                     builder: (context, state) {
                       return InkWell(
-                        onTap: () {
+                        onTap: () async {
                           log("==>${_textFieldController.text}");
-                          billingProducts(context);
+                          if (await Network.isConnected()) {
+                            billingProducts(context)
+                                .then((value) => _textFieldController.clear());
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: "Please turn on Internet",
+                                backgroundColor: ColorPrimary);
+                          }
                         },
                         child: Container(
                           width: width,
@@ -654,6 +707,7 @@ class _BillingProductsState extends State<BillingProducts> {
   _displayDialog(BuildContext context, index, status, text, hinttext) async {
     return showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (context) {
           return ConstrainedBox(
             constraints: BoxConstraints(maxWidth: 400),
@@ -674,9 +728,11 @@ class _BillingProductsState extends State<BillingProducts> {
                 controller: _textFieldController,
                 cursorColor: ColorPrimary,
                 keyboardType: TextInputType.number,
+                maxLength: 6,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 decoration: InputDecoration(
                   // filled: true,
+                  counterText: "",
 
                   // fillColor: Colors.black,
                   hintText: "$hinttext`",
@@ -699,21 +755,29 @@ class _BillingProductsState extends State<BillingProducts> {
                         borderRadius: BorderRadius.circular(10)),
                     onPressed: () {
                       if (status == 0) {
-                        log("onPressed->$status");
-                        // productList[index].sellingPrice = _textFieldController.text;
-                        double y =
-                            double.parse(_textFieldController.text.trim());
-                        log("y->$y");
-                        double earningCoin = earningPrice(y);
+                        if (_textFieldController.text.isNotEmpty) {
+                          log("onPressed->$status");
+                          // productList[index].sellingPrice = _textFieldController.text;
+                          double y =
+                              double.parse(_textFieldController.text.trim());
+                          log("y->$y");
+                          double earningCoin = earningPrice(y);
 
-                        log("index->$index");
-                        log("earningCoin->$earningCoin");
+                          log("index->$index");
+                          log("earningCoin->$earningCoin");
 
-                        billingProductsBloc.add(EditBillingProductsEvent(
-                            price: y, index: index, earningCoin: earningCoin));
+                          billingProductsBloc.add(EditBillingProductsEvent(
+                              price: y,
+                              index: index,
+                              earningCoin: earningCoin));
 
-                        Navigator.pop(context);
-                        _textFieldController.clear();
+                          Navigator.pop(context);
+                          _textFieldController.clear();
+                        } else {
+                          Fluttertoast.showToast(
+                              msg: "Please Enter Amount",
+                              backgroundColor: ColorPrimary);
+                        }
                       } else {
                         verifyOtp(context);
                       }

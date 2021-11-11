@@ -44,6 +44,7 @@ import 'package:vendor/model/login_response.dart';
 import 'package:vendor/model/monthly_earning.dart';
 import 'package:vendor/model/monthly_sale_amount.dart';
 import 'package:vendor/model/monthly_walkin.dart';
+import 'package:vendor/model/partial_user_register.dart';
 import 'package:vendor/model/product_by_category_response.dart';
 import 'package:vendor/model/product_variant_response.dart';
 import 'package:vendor/model/upload_image_response.dart';
@@ -678,21 +679,21 @@ class ApiProvider {
 
   Future<BillingProductResponse> getBillingProducts(
       Map<String, dynamic> input) async {
-    try {
-      Response res = await dio.post(Endpoint.BILLING_PRODUCT, data: input);
+    //try {
+    Response res = await dio.post(Endpoint.BILLING_PRODUCT, data: input);
 
-      return BillingProductResponse.fromJson(res.toString());
-    } catch (error) {
-      String message = "";
-      if (error is DioError) {
-        ServerError e = ServerError.withError(error: error);
-        message = e.getErrorMessage();
-      } else {
-        message = "Please try again later!";
-      }
-      print("Exception occurred: $message stackTrace: $error");
-      return BillingProductResponse(success: false, message: message);
-    }
+    return BillingProductResponse.fromJson(res.toString());
+    // } catch (error) {
+    //   String message = "";
+    //   if (error is DioError) {
+    //     ServerError e = ServerError.withError(error: error);
+    //     message = e.getErrorMessage();
+    //   } else {
+    //     message = "Please try again later!";
+    //   }
+    //   print("Exception occurred: $message stackTrace: $error");
+    //   return BillingProductResponse(success: false, message: message);
+    // }
   }
 
   Future<VerifyEarningCoinsOtpResponse> getVerifyEarningCoinOtp(
@@ -1304,85 +1305,111 @@ class ApiProvider {
 
   Future<WithoutInventoryHourlyWalkinResponse>
       getChatPapdiHourlyWalkinAmount() async {
-    //try {
-    Map input = HashMap<String, dynamic>();
-    log("------->res");
-    input["vendor_id"] =
-        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    try {
+      Map input = HashMap<String, dynamic>();
+      log("------->res");
+      input["vendor_id"] =
+          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
-    Response res = await dio.post(
-      Endpoint.GET_CHATPAPDI_HOURLY_WALKIN_AMOUNT,
-      data: input,
-    );
-    log("------->$res");
-    return WithoutInventoryHourlyWalkinResponse.fromJson(res.toString());
-    // } catch (error) {
-    //   String message = "";
-    //   if (error is DioError) {
-    //     ServerError e = ServerError.withError(error: error);
-    //     message = e.getErrorMessage();
-    //   } else {
-    //     message = "Please try again later!";
-    //   }
-    //   print("Exception occurred: $message stackTrace: $error");
-    //   return WithoutInventoryHourlyWalkinResponse(
-    //       success: false, message: message);
-    // }
+      Response res = await dio.post(
+        Endpoint.GET_CHATPAPDI_HOURLY_WALKIN_AMOUNT,
+        data: input,
+      );
+      log("------->$res");
+      return WithoutInventoryHourlyWalkinResponse.fromJson(res.toString());
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return WithoutInventoryHourlyWalkinResponse(
+          success: false, message: message);
+    }
   }
 
   Future<WithoutInventoryDailyWalkinResponse>
       getChatPapdiDailyWalkinAmount() async {
-    //try {
-    Map input = HashMap<String, dynamic>();
-    log("------->res");
-    input["vendor_id"] =
-        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    try {
+      Map input = HashMap<String, dynamic>();
+      log("------->res");
+      input["vendor_id"] =
+          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
-    Response res = await dio.post(
-      Endpoint.GET_CHATPAPDI_DAILY_WALKIN_AMOUNT,
-      data: input,
-    );
-    log("------->$res");
-    return WithoutInventoryDailyWalkinResponse.fromJson(res.toString());
-    // } catch (error) {
-    //   String message = "";
-    //   if (error is DioError) {
-    //     ServerError e = ServerError.withError(error: error);
-    //     message = e.getErrorMessage();
-    //   } else {
-    //     message = "Please try again later!";
-    //   }
-    //   print("Exception occurred: $message stackTrace: $error");
-    //   return WithoutInventoryDailyWalkinResponse(
-    //       success: false, message: message);
-    // }
+      Response res = await dio.post(
+        Endpoint.GET_CHATPAPDI_DAILY_WALKIN_AMOUNT,
+        data: input,
+      );
+      log("------->$res");
+      return WithoutInventoryDailyWalkinResponse.fromJson(res.toString());
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return WithoutInventoryDailyWalkinResponse(
+          success: false, message: message);
+    }
   }
 
   Future<WithoutInventoryMonthlyWalkinResponse>
       getChatPapdiMonthlyWalkinAmount() async {
-    //try {
-    Map input = HashMap<String, dynamic>();
-    log("------->res");
-    input["vendor_id"] =
-        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    try {
+      Map input = HashMap<String, dynamic>();
+      log("------->res");
+      input["vendor_id"] =
+          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
-    Response res = await dio.post(
-      Endpoint.GET_CHATPAPDI_MONTHLY_WALKIN_AMOUNT,
-      data: input,
-    );
-    log("------->$res");
-    return WithoutInventoryMonthlyWalkinResponse.fromJson(res.toString());
-    //   } catch (error) {
-    //     String message = "";
-    //     if (error is DioError) {
-    //       ServerError e = ServerError.withError(error: error);
-    //       message = e.getErrorMessage();
-    //     } else {
-    //       message = "Please try again later!";
-    //     }
-    //     print("Exception occurred: $message stackTrace: $error");
-    //     return WithoutInventoryMonthlyWalkinResponse(
-    //         success: false, message: message);
-    //   }
+      Response res = await dio.post(
+        Endpoint.GET_CHATPAPDI_MONTHLY_WALKIN_AMOUNT,
+        data: input,
+      );
+      log("------->$res");
+      return WithoutInventoryMonthlyWalkinResponse.fromJson(res.toString());
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return WithoutInventoryMonthlyWalkinResponse(
+          success: false, message: message);
+    }
+  }
+
+  Future<PartialUserRegisterResponse> getChatPapdiPatialUserRegister(
+      Map<String, dynamic> input) async {
+    try {
+      log("------->res");
+      // input["vendor_id"] =
+      //     await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+
+      Response res = await dio.post(
+        Endpoint.GET_CHATPAPDI_PARTIAL_USER_REGISTER,
+        data: input,
+      );
+      log("------->$res");
+      return PartialUserRegisterResponse.fromJson(res.toString());
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return PartialUserRegisterResponse(success: false, message: message);
+    }
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -12,6 +13,7 @@ import 'package:vendor/ui/billingflow/billingproducts/billing_products.dart';
 import 'package:vendor/ui/billingflow/search_all/search_all_event.dart';
 import 'package:vendor/ui/billingflow/search_all/search_all_state.dart';
 import 'package:vendor/utility/color.dart';
+import 'package:vendor/utility/network.dart';
 
 import 'search_all_bloc.dart';
 
@@ -215,13 +217,20 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Text(
-                                                "${searchList[index].productName} ($variantName)",
-                                                style: TextStyle(
-                                                    fontSize: 14,
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.w600),
+                                              Container(
+                                                width: width * 0.66,
+                                                child: AutoSizeText(
+                                                  "${searchList[index].productName} ($variantName)",
+                                                  maxLines: 2,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                  maxFontSize: 14,
+                                                  minFontSize: 11,
+                                                ),
                                               ),
                                             ]),
                                         Row(
@@ -311,20 +320,30 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                               padding:
                                                                   EdgeInsets
                                                                       .all(0),
-                                                              onPressed: () {
+                                                              onPressed:
+                                                                  () async {
                                                                 log("true===>$count");
-                                                                searchList[index]
-                                                                            .count >
-                                                                        1
-                                                                    ? searchAllBloc.add(
-                                                                        GetIncrementEvent(
-                                                                            count: searchList[index]
-                                                                                .count--))
-                                                                    : Fluttertoast.showToast(
-                                                                        msg:
-                                                                            "Product cant be in negative",
-                                                                        backgroundColor:
-                                                                            ColorPrimary);
+                                                                if (await Network
+                                                                    .isConnected()) {
+                                                                  searchList[index]
+                                                                              .count >
+                                                                          1
+                                                                      ? searchAllBloc.add(
+                                                                          GetIncrementEvent(
+                                                                              count: searchList[index]
+                                                                                  .count--))
+                                                                      : Fluttertoast.showToast(
+                                                                          msg:
+                                                                              "Product cant be in negative",
+                                                                          backgroundColor:
+                                                                              ColorPrimary);
+                                                                } else {
+                                                                  Fluttertoast.showToast(
+                                                                      msg:
+                                                                          "Please turn on Internet",
+                                                                      backgroundColor:
+                                                                          ColorPrimary);
+                                                                }
                                                               },
                                                               iconSize: 20,
                                                               splashRadius: 10,
@@ -339,12 +358,13 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                       height: 20,
                                                       color: ColorPrimary,
                                                       child: Center(
-                                                        child: Text(
+                                                        child: AutoSizeText(
                                                           "${searchList[index].count}",
                                                           style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 14),
+                                                            color: Colors.white,
+                                                          ),
+                                                          maxFontSize: 14,
+                                                          minFontSize: 10,
                                                         ),
                                                       ),
                                                     ),
@@ -365,21 +385,32 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                               padding:
                                                                   EdgeInsets
                                                                       .all(0),
-                                                              onPressed: () {
+                                                              onPressed:
+                                                                  () async {
                                                                 log("true===>$count");
-                                                                searchList[index]
-                                                                            .count <
-                                                                        searchList[index]
-                                                                            .stock
-                                                                    ? searchAllBloc.add(
-                                                                        GetIncrementEvent(
-                                                                            count: searchList[index]
-                                                                                .count++))
-                                                                    : Fluttertoast.showToast(
-                                                                        msg:
-                                                                            "Stock Limit reached",
-                                                                        backgroundColor:
-                                                                            ColorPrimary);
+                                                                if (await Network
+                                                                    .isConnected()) {
+                                                                  // searchList[index].count <
+                                                                  //         searchList[index]
+                                                                  //             .stock
+                                                                  //     ?
+
+                                                                  searchAllBloc.add(
+                                                                      GetIncrementEvent(
+                                                                          count:
+                                                                              searchList[index].count++));
+                                                                  // : Fluttertoast.showToast(
+                                                                  //     msg:
+                                                                  //         "Stock Limit reached",
+                                                                  //     backgroundColor:
+                                                                  //         ColorPrimary);
+                                                                } else {
+                                                                  Fluttertoast.showToast(
+                                                                      msg:
+                                                                          "Please turn on Internet",
+                                                                      backgroundColor:
+                                                                          ColorPrimary);
+                                                                }
                                                               },
                                                               iconSize: 20,
                                                               splashRadius: 10,
@@ -587,7 +618,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                 // ),
                               ),
                               Positioned(
-                                top: 0,
+                                top: 15,
                                 right: 20,
                                 child:
                                     BlocBuilder<SearchAllBloc, SearchAllState>(
@@ -607,12 +638,19 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                         // checkColor: Colors.indigo,
                                         value: searchList[index].check,
                                         activeColor: ColorPrimary,
-                                        onChanged: (newvalue) {
-                                          log("true===>");
-                                          searchAllBloc.add(GetCheckBoxEvent(
-                                              check: newvalue!, index: index));
-                                          selectedProductList =
-                                              searchList[index];
+                                        onChanged: (newvalue) async {
+                                          if (await Network.isConnected()) {
+                                            log("true===>");
+                                            searchAllBloc.add(GetCheckBoxEvent(
+                                                check: newvalue!,
+                                                index: index));
+                                            selectedProductList =
+                                                searchList[index];
+                                          } else {
+                                            Fluttertoast.showToast(
+                                                msg: "Please turn on Internet",
+                                                backgroundColor: ColorPrimary);
+                                          }
                                         },
                                       ),
                                     );
@@ -634,27 +672,39 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                           : Positioned(
                               bottom: 0,
                               child: GestureDetector(
-                                onTap: () {
+                                onTap: () async {
                                   List<ProductModel> product = searchList
                                       .where((element) => element.check)
                                       .toList();
                                   log("$product");
-
-                                  // Navigator.pop(context);
-                                  if (product.length == 0) {
-                                    Fluttertoast.showToast(
-                                        msg: "Please select atlest one product",
-                                        backgroundColor: ColorPrimary);
+                                  if (await Network.isConnected()) {
+                                    // Navigator.pop(context);
+                                    if (product.length == 0) {
+                                      Fluttertoast.showToast(
+                                          msg:
+                                              "Please select atlest one product",
+                                          backgroundColor: ColorPrimary);
+                                    } else {
+                                      Navigator.push(
+                                              context,
+                                              PageTransition(
+                                                  child: BillingProducts(
+                                                    billingItemList: product,
+                                                    mobile: widget.mobile,
+                                                    coin: double.parse(
+                                                        widget.coin),
+                                                  ),
+                                                  type:
+                                                      PageTransitionType.fade))
+                                          .then((value) {
+                                        log("==>[$value]");
+                                        log("===>${value}");
+                                      });
+                                    }
                                   } else {
-                                    Navigator.push(
-                                        context,
-                                        PageTransition(
-                                            child: BillingProducts(
-                                              billingItemList: product,
-                                              mobile: widget.mobile,
-                                              coin: double.parse(widget.coin),
-                                            ),
-                                            type: PageTransitionType.fade));
+                                    Fluttertoast.showToast(
+                                        msg: "Please turn on Internet",
+                                        backgroundColor: ColorPrimary);
                                   }
                                 },
                                 child: Container(
