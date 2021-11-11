@@ -44,14 +44,13 @@ import 'package:vendor/model/login_response.dart';
 import 'package:vendor/model/monthly_earning.dart';
 import 'package:vendor/model/monthly_sale_amount.dart';
 import 'package:vendor/model/monthly_walkin.dart';
-import 'package:vendor/model/partial_user_register.dart';
 import 'package:vendor/model/product_by_category_response.dart';
 import 'package:vendor/model/product_variant_response.dart';
 import 'package:vendor/model/upload_image_response.dart';
 import 'package:vendor/model/vendor_profile_response.dart';
 import 'package:vendor/model/verify_otp.dart';
-import 'package:vendor/provider/Endpoint.dart';
-import 'package:vendor/provider/server_error.dart';
+import 'package:vendor/api/Endpoint.dart';
+import 'package:vendor/api/server_error.dart';
 import 'package:vendor/utility/sharedpref.dart';
 
 import '../main.dart';
@@ -334,32 +333,6 @@ class ApiProvider {
 
       Response res = await dio.post(
         Endpoint.GET_ALL_VENDOR_PRODUCTS,
-        data: input,
-      );
-
-      return ProductByCategoryResponse.fromJson(res.toString());
-    } catch (error) {
-      String message = "";
-      if (error is DioError) {
-        ServerError e = ServerError.withError(error: error);
-        message = e.getErrorMessage();
-      } else {
-        message = "Please try again later!";
-      }
-      print("Exception occurred: $message stackTrace: $error");
-      return ProductByCategoryResponse(success: false, message: message);
-    }
-  }
-
-  Future<ProductByCategoryResponse> getAllProducts(String categoryId) async {
-    try {
-      Map input = HashMap<String, dynamic>();
-
-      input["vendor_id"] =
-          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
-
-      Response res = await dio.post(
-        Endpoint.GET_ALL__PRODUCTS,
         data: input,
       );
 
@@ -679,21 +652,21 @@ class ApiProvider {
 
   Future<BillingProductResponse> getBillingProducts(
       Map<String, dynamic> input) async {
-    //try {
-    Response res = await dio.post(Endpoint.BILLING_PRODUCT, data: input);
+    try {
+      Response res = await dio.post(Endpoint.BILLING_PRODUCT, data: input);
 
-    return BillingProductResponse.fromJson(res.toString());
-    // } catch (error) {
-    //   String message = "";
-    //   if (error is DioError) {
-    //     ServerError e = ServerError.withError(error: error);
-    //     message = e.getErrorMessage();
-    //   } else {
-    //     message = "Please try again later!";
-    //   }
-    //   print("Exception occurred: $message stackTrace: $error");
-    //   return BillingProductResponse(success: false, message: message);
-    // }
+      return BillingProductResponse.fromJson(res.toString());
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return BillingProductResponse(success: false, message: message);
+    }
   }
 
   Future<VerifyEarningCoinsOtpResponse> getVerifyEarningCoinOtp(
@@ -1054,8 +1027,25 @@ class ApiProvider {
     }
   }
 
-  Future<GetCustomerProductResponse> getCustomerProduct(
-      Map<String, dynamic> input) async {
+  Future<GetMyCustomerResponse> getChatPapdiCustomer(Map<String, dynamic> input) async {
+    try {
+      Response res = await dio.post(Endpoint.GET_CUSTOMER_OF_CHAT_PAPDI, data: input);
+      log("===>otp$res");
+      return GetMyCustomerResponse.fromJson(res.toString());
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return GetMyCustomerResponse(success: false, message: message);
+    }
+  }
+
+  Future<GetCustomerProductResponse> getCustomerProduct(Map<String, dynamic> input) async {
     try {
       Response res = await dio.post(Endpoint.GET_CUSTOMER_PRODUCT, data: input);
       log("===>otp$res");
@@ -1305,11 +1295,11 @@ class ApiProvider {
 
   Future<WithoutInventoryHourlyWalkinResponse>
       getChatPapdiHourlyWalkinAmount() async {
-    try {
-      Map input = HashMap<String, dynamic>();
-      log("------->res");
-      input["vendor_id"] =
-          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    //try {
+    Map input = HashMap<String, dynamic>();
+    log("------->res");
+    input["vendor_id"] =
+        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       Response res = await dio.post(
         Endpoint.GET_CHATPAPDI_HOURLY_WALKIN_AMOUNT,
@@ -1361,11 +1351,11 @@ class ApiProvider {
 
   Future<WithoutInventoryMonthlyWalkinResponse>
       getChatPapdiMonthlyWalkinAmount() async {
-    try {
-      Map input = HashMap<String, dynamic>();
-      log("------->res");
-      input["vendor_id"] =
-          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    //try {
+    Map input = HashMap<String, dynamic>();
+    log("------->res");
+    input["vendor_id"] =
+        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       Response res = await dio.post(
         Endpoint.GET_CHATPAPDI_MONTHLY_WALKIN_AMOUNT,

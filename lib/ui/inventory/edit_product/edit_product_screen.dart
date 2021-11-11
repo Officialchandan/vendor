@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:collection';
-import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -509,9 +508,6 @@ class EditProductScreenState extends State<EditProductScreen> {
 
     input["product_variants"] = productVariantList;
 
-    print("input add product api -> ${jsonEncode(input)}");
-
-    print("AddProductApiEvent-->");
     editProductBloc.add(EditProductApiEvent(input: input));
   }
 }

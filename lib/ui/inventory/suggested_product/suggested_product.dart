@@ -133,7 +133,7 @@ class _SuggestedProductScreenState extends State<SuggestedProductScreen> with Ti
                             }
                           });
 
-                          print("selected products-> $products");
+
 
                           String id = "";
                           for (int i = 0; i < products.length; i++) {
@@ -143,7 +143,7 @@ class _SuggestedProductScreenState extends State<SuggestedProductScreen> with Ti
                               id += products[i].id + ",";
                             }
                           }
-                          print("selected products id-> $id");
+
 
                           if (id.isNotEmpty) {
                             suggestedProductBloc.add(AddProductApiEvent(id: id));

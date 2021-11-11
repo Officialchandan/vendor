@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:share/share.dart';
 import 'package:vendor/ui/account_management/settings/about_us/about_us.dart';
+import 'package:vendor/widget/language_bottom_sheet.dart';
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
@@ -9,11 +11,6 @@ class Settings extends StatefulWidget {
   @override
   _SettingsState createState() => _SettingsState();
 }
-
-//change-language
-enum ChangeLanguageRadio { English, Hindi }
-ChangeLanguageRadio? _character = ChangeLanguageRadio.English;
-//change-language
 
 class _SettingsState extends State<Settings> {
   List<String> textList = ["Change language", "About us", "Rate us", "Share app"];
@@ -91,80 +88,15 @@ void shareApp() async {
 }
 
 void languageUpdateSheet(BuildContext context) {
-  showModalBottomSheet<dynamic>(
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
+  showMaterialModalBottomSheet(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+        topRight: Radius.circular(15),
+        topLeft: Radius.circular(15),
+      )),
       context: context,
+      // barrierColor: Colors.transparent,
       builder: (context) {
-        return SingleChildScrollView(
-          child: Wrap(
-            children: [
-              StatefulBuilder(
-                builder: (context, setState) {
-                  var requestRadioGlobal;
-                  return Container(
-                    width: MediaQuery.of(context).size.width,
-                    padding: EdgeInsets.symmetric(vertical: 6),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(25),
-                          topRight: Radius.circular(25),
-                        )),
-                    child: Column(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                            border: Border(bottom: BorderSide(width: 1, color: Color(0xffa2a2a2))),
-                          ),
-                          child: RadioListTile<ChangeLanguageRadio>(
-                            contentPadding: EdgeInsets.all(0),
-                            title: Text("English", style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w500)),
-                            value: ChangeLanguageRadio.English,
-                            groupValue: _character,
-                            onChanged: (ChangeLanguageRadio? value) {
-                              setState(() {
-                                _character = value;
-                              });
-                            },
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                            border: Border(bottom: BorderSide(width: 1, color: Color(0xffa2a2a2))),
-                          ),
-                          child: RadioListTile<ChangeLanguageRadio>(
-                            contentPadding: EdgeInsets.all(0),
-                            title: Text("हिन्दी", style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500)),
-                            value: ChangeLanguageRadio.Hindi,
-                            groupValue: _character,
-                            onChanged: (ChangeLanguageRadio? value) {
-                              setState(() {
-                                _character = value;
-                              });
-                            },
-                          ),
-                        ),
-                        GestureDetector(
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-                            child:
-                                Text("Cancel", style: TextStyle(color: Color(0xffbe1919), fontSize: 16, fontWeight: FontWeight.w500)),
-                          ),
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              )
-            ],
-          ),
-        );
+        return LanguageBottomSheet();
       });
 }

@@ -59,7 +59,8 @@ class _InventoryScreenState extends State<InventoryScreen> {
                       }
                       if (options[index]["id"] == 4) {
                         Navigator.push(context, PageTransition(child: PurchaseReturnScreen(), type: PageTransitionType.fade));
-                      } if (options[index]["id"] == 5) {
+                      }
+                      if (options[index]["id"] == 5) {
                         Navigator.push(context, PageTransition(child: PurchaseEntry(), type: PageTransitionType.fade));
                       }
                       if (options[index]["id"] == 1) {
@@ -109,7 +110,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                     height: 30,
                     fit: BoxFit.contain,
                   ),
-                  title: Text("Add One Product"),
+                  title: Text("Add Own Product"),
                   onTap: () {
                     Navigator.pop(context);
                     Navigator.push(context, PageTransition(child: AddProductScreen(), type: PageTransitionType.fade));

@@ -76,7 +76,6 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
                 }
               });
 
-              print("searchList->$searchList");
               streamController.add(searchList);
             } else {
               streamController.add(products);
@@ -89,7 +88,6 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
         initialData: [],
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            print("data-->${snapshot.data}");
             if (snapshot.data!.isEmpty) {
               return Center(
                 child: Image(
@@ -261,8 +259,6 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
             List<ProductModel> returnProductList = products.where((element) => element.check).toList();
 
             purchaseReturn(returnProductList);
-
-            print("returnProductList-->$returnProductList");
           },
           color: ColorPrimary,
           shape: RoundedRectangleBorder(),

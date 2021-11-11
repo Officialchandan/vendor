@@ -1,5 +1,5 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
-import 'package:vendor/localization/app_translations.dart';
 
 class Validator {
   static RegExp emailRegex = new RegExp(
@@ -23,11 +23,11 @@ class Validator {
     String patttern = r'(^[0-9]*$)';
     RegExp regExp = new RegExp(patttern);
     if (value.length == 0) {
-      return "${AppTranslations.of(context)!.text("please_enter_mobile_number_key")}";
+      return "please_enter_mobile_number_key".tr();
     } else if (value.length != 10) {
-      return "${AppTranslations.of(context)!.text("Mobile_number_must_10_digits_key")}";
+      return "Mobile_number_must_10_digits_key".tr();
     } else if (!regExp.hasMatch(value)) {
-      return "${AppTranslations.of(context)!.text("Mobile_number_must_be_digits_key")}";
+      return "Mobile_number_must_be_digits_key".tr();
     }
     return null;
   }

@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:vendor/api/api_provider.dart';
 import 'package:vendor/model/log_out.dart';
 import 'package:vendor/model/vendor_profile_response.dart';
 import 'package:vendor/provider/api_provider.dart';
@@ -14,7 +15,6 @@ import 'package:vendor/ui_without_inventory/accountmanagement/account_management
 import 'package:vendor/ui_without_inventory/accountmanagement/account_management_without_inventory_event.dart';
 import 'package:vendor/ui_without_inventory/accountmanagement/account_management_without_inventory_state.dart';
 import 'package:vendor/ui_without_inventory/home/home.dart';
-
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/sharedpref.dart';
@@ -24,20 +24,11 @@ class AccountManagementWithoutInventoryScreen extends StatefulWidget {
   const AccountManagementWithoutInventoryScreen({Key? key}) : super(key: key);
 
   @override
-  _AccountManagementWithoutInventoryScreenState createState() =>
-      _AccountManagementWithoutInventoryScreenState();
+  _AccountManagementWithoutInventoryScreenState createState() => _AccountManagementWithoutInventoryScreenState();
 }
 
-class _AccountManagementWithoutInventoryScreenState
-    extends State<AccountManagementWithoutInventoryScreen> {
-  List<String> TextList = [
-    "Settings",
-    "Video tutorials",
-    "Share store link",
-    "Get store QR code",
-    "Add business hours",
-    "Logout"
-  ];
+class _AccountManagementWithoutInventoryScreenState extends State<AccountManagementWithoutInventoryScreen> {
+  List<String> TextList = ["Settings", "Video tutorials", "Share store link", "Get store QR code", "Add business hours", "Logout"];
 
   List<String> ImageList = [
     "assets/images/account-ic2.png",
@@ -199,6 +190,10 @@ class _AccountManagementWithoutInventoryScreenState
         },
       ),
     );
+    //       },
+    //     ),
+    //   );
+    // }
   }
 
 //ontap-function
@@ -250,35 +245,23 @@ class _AccountManagementWithoutInventoryScreenState
         builder: (context) {
           return AlertDialog(
             contentPadding: EdgeInsets.fromLTRB(25, 10, 0, 0),
-            title: Text("Logout",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600)),
+            title: Text("Logout", style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w600)),
             content: Text("Are you sure you want to logout?",
-                style: TextStyle(
-                    color: Color.fromRGBO(85, 85, 85, 1),
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500)),
+                style: TextStyle(color: Color.fromRGBO(85, 85, 85, 1), fontSize: 15, fontWeight: FontWeight.w500)),
             actions: [
               MaterialButton(
-                child: Text("Cancel",
-                    style: TextStyle(
-                        color: Colors.grey, fontWeight: FontWeight.w600)),
+                child: Text("Cancel", style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w600)),
                 onPressed: () {
                   Navigator.pop(context);
                 },
               ),
               MaterialButton(
-                child: Text("Logout",
-                    style: TextStyle(
-                        color: Color(0xfff4511e), fontWeight: FontWeight.w600)),
+                child: Text("Logout", style: TextStyle(color: Color(0xfff4511e), fontWeight: FontWeight.w600)),
                 onPressed: () async {
                   log("ndndnd");
                   LogOutResponse logoutData = await ApiProvider().getLogOut();
                   print("kai kroge +${logoutData.success}");
-                  await SharedPref.setBooleanPreference(
-                      SharedPref.LOGIN, false);
+                  await SharedPref.setBooleanPreference(SharedPref.LOGIN, false);
                   print("kai kroge +${logoutData.success}");
                   if (await Network.isConnected()) {
                     SystemChannels.textInput.invokeMethod("TextInput.hide");
@@ -288,17 +271,11 @@ class _AccountManagementWithoutInventoryScreenState
                         MaterialPageRoute(builder: (context) => LoginScreen()),
                         ModalRoute.withName("/"));
 
-                    Fluttertoast.showToast(
-                        backgroundColor: ColorPrimary,
-                        textColor: Colors.white,
-                        msg: "Logout Successfully"
+                    Fluttertoast.showToast(backgroundColor: ColorPrimary, textColor: Colors.white, msg: "Logout Successfully"
                         // timeInSecForIos: 3
                         );
                   } else {
-                    Fluttertoast.showToast(
-                        backgroundColor: ColorPrimary,
-                        textColor: Colors.white,
-                        msg: "Please turn on  internet");
+                    Fluttertoast.showToast(backgroundColor: ColorPrimary, textColor: Colors.white, msg: "Please turn on  internet");
                   }
                 },
               ),

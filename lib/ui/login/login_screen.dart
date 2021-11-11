@@ -1,12 +1,12 @@
 import 'dart:developer';
 
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:vendor/localization/app_translations.dart';
 import 'package:vendor/ui/login/login_bloc.dart';
 import 'package:vendor/ui/login/login_event.dart';
 import 'package:vendor/ui/login/login_state.dart';
@@ -74,7 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
               title: RichText(
                 text: TextSpan(
-                  text: "${AppTranslations.of(context)!.text("otp_verification_key")}\n",
+                  text: "${"otp_verification_key".tr()}\n",
                   style: GoogleFonts.openSans(
                     fontSize: 25.0,
                     color: Colors.black,
@@ -82,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   children: [
                     TextSpan(
-                      text: "${AppTranslations.of(context)!.text("please_verify_your_otp_on_key")} $mobile",
+                      text: "${"please_verify_your_otp_on_key".tr()} $mobile",
                       style: GoogleFonts.openSans(
                         fontSize: 14.0,
                         color: ColorTextPrimary,
@@ -101,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   filled: true,
 
                   // fillColor: Colors.black,
-                  hintText: "${AppTranslations.of(context)!.text("enter_otp_key")}",
+                  hintText: "enter_otp_key".tr(),
                   hintStyle: GoogleFonts.openSans(
                     fontWeight: FontWeight.w600,
                   ),
@@ -134,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       //     mobileController.text, _textFieldController.text);
                     },
                     child: new Text(
-                      "${AppTranslations.of(context)!.text("verify_key")}",
+                      "verify_key".tr(),
                       style: GoogleFonts.openSans(fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
                     ),
                   ),
@@ -152,10 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   loginApiOtpCall(mobile) async {
     if (mobileController.text.isEmpty) {
-      Fluttertoast.showToast(
-          backgroundColor: ColorPrimary,
-          textColor: Colors.white,
-          msg: "${AppTranslations.of(context)!.text("please_enter_username_key")}");
+      Fluttertoast.showToast(backgroundColor: ColorPrimary, textColor: Colors.white, msg: "please_enter_username_key".tr());
       _tap = true;
     } else if (mobileController.text.length != 10) {
       Fluttertoast.showToast(backgroundColor: ColorPrimary, textColor: Colors.white, msg: "PLease enter valid mobile number");
@@ -170,10 +167,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   loginApiCall(mobile, otp) async {
     if (_textFieldController.text.isEmpty) {
-      Fluttertoast.showToast(
-          backgroundColor: ColorPrimary,
-          textColor: Colors.white,
-          msg: "${AppTranslations.of(context)!.text("please_enter_password")}");
+      Fluttertoast.showToast(backgroundColor: ColorPrimary, textColor: Colors.white, msg: "please_enter_password".tr());
     } else if (_textFieldController.text.length != 6) {
       Fluttertoast.showToast(backgroundColor: ColorPrimary, textColor: Colors.white, msg: "Please enter 6 digit valid otp");
     } else {
@@ -196,7 +190,7 @@ class _LoginScreenState extends State<LoginScreen> {
         filled: true,
         fillColor: Color.fromRGBO(242, 242, 242, 1),
         counterText: "",
-        hintText: "${AppTranslations.of(context)!.text("please_enter_mobile_number_key")}",
+        hintText: "please_enter_mobile_number_key".tr(),
         prefixIcon: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -297,7 +291,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           //   height: 35,
                           // ),
                           Text(
-                            "${AppTranslations.of(context)!.text("login_key")}",
+                            "login_key".tr(),
                             style: GoogleFonts.openSans(
                                 fontSize: 28, color: Colors.black, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
                           ),
@@ -305,7 +299,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: 15,
                           ),
                           Text(
-                            "${AppTranslations.of(context)!.text("add_your_details_to_login_key")}",
+                            "add_your_details_to_login_key".tr(),
                             style: GoogleFonts.openSans(
                                 fontSize: 17, color: ColorTextPrimary, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
                           ),
@@ -342,7 +336,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       //     context, mobileController.text);
                                     },
                                     child: new Text(
-                                      "${AppTranslations.of(context)!.text("login_key")}",
+                                      "login_key".tr(),
                                       style: GoogleFonts.openSans(
                                           fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
                                     ),
@@ -352,7 +346,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                   Center(
                                     child: Text(
-                                      "${AppTranslations.of(context)!.text("forget_your_password_key")}",
+                                      "forget_your_password_key".tr(),
                                       style: GoogleFonts.openSans(
                                           fontSize: 17,
                                           color: ColorTextPrimary,

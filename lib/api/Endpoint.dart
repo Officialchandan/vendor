@@ -9,15 +9,11 @@ class Endpoint {
 
   static const String GET_ALL_CATEGORY = "getAllCategoryByVendorID";
 
-  static const String GET_PRODUCT_BY_CATEGORY = "getVendorProductByCategory";
+  static const String GET_ALL_VENDOR_PRODUCTS = "getAllVendorProducts";
+  static const String GET_VENDOR_PRODUCT_BY_CATEGORY = "getVendorProductByCategory";
 
   static const String GET_SUGGESTED_PRODUCTS = "getSuggestedProducts";
-
   static const String ADD_SUGGESTED_PRODUCTS = "addSuggestedProducts";
-
-  static const String GET_ALL_VENDOR_PRODUCTS = "getAllVendorProducts";
-
-  static const String GET_ALL__PRODUCTS = "getAllProducts";
 
   static const String GET_UNITS_BY_CATEGORY = "getUnitsByCategoryId";
 
@@ -57,8 +53,7 @@ class Endpoint {
 
   static const String PURCHASE_RETURN = "purchaseReturn";
 
-  static const String GET_VERIFY_EARNING_COINOTP_VENDORID =
-      "verifyEarningCoinsByOTP";
+  static const String GET_VERIFY_EARNING_COINOTP_VENDORID = "verifyEarningCoinsByOTP";
 
   static const String GET_DAILY_SALE_AMOUNT = "dailySaleAmount";
 
@@ -132,13 +127,14 @@ class Endpoint {
 
   static const String GET_MY_CUSTOMER = "getAllCustomersByVendorID";
 
+  static const String GET_CUSTOMER_OF_CHAT_PAPDI = "getAllChatPapdiCustomersByVendorID";
+
   static const String GET_CUSTOMER_PRODUCT = "getAllProductByCustomerID";
   static const String GET_TOTAL_MONEY_DUE = "getTotalMoneyDue";
 
   static const String GET_CHATPAPDI_BILLING = "chatPapdiBilling";
 
-  static const String GET_CHATPAPDI_BILLING_OTP =
-      "confirmChatPapdiBillingByOtp";
+  static const String GET_CHATPAPDI_BILLING_OTP = "confirmChatPapdiBillingByOtp";
 
   static const String GET_CHATPAPDI_DAILY_REPORT = "chatPapdiDailySaleAmount";
 

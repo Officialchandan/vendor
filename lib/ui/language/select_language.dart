@@ -1,6 +1,6 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:vendor/localization/app_translations.dart';
 import 'package:vendor/utility/routs.dart';
 import 'package:vendor/utility/sharedpref.dart';
 
@@ -70,10 +70,10 @@ class _SelectLanguageState extends State<SelectLanguage> {
                               width: 100,
                             ),
                             onTap: () {
-                              AppTranslations.load(Locale("en")).then((value) {
-                                SharedPref.setStringPreference(SharedPref.SELECTEDLANG, "en");
-                                Navigator.pushNamed(context, Routes.LoginScreen);
-                              });
+                              context.locale = Locale('en');
+
+                              SharedPref.setStringPreference(SharedPref.SELECTEDLANG, "en");
+                              Navigator.pushNamed(context, Routes.LoginScreen);
                             }),
                       ),
                       SizedBox(
@@ -101,10 +101,10 @@ class _SelectLanguageState extends State<SelectLanguage> {
                               width: 100,
                             ),
                             onTap: () {
-                              AppTranslations.load(Locale("hi")).then((value) {
-                                SharedPref.setStringPreference(SharedPref.SELECTEDLANG, "hi");
-                                Navigator.pushNamed(context, Routes.LoginScreen);
-                              });
+                              context.locale = Locale('hi');
+
+                              SharedPref.setStringPreference(SharedPref.SELECTEDLANG, "hi");
+                              Navigator.pushNamed(context, Routes.LoginScreen);
                             }),
                       ),
                     ],

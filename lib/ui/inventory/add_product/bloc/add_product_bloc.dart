@@ -13,6 +13,7 @@ import 'package:vendor/model/add_product_response.dart';
 import 'package:vendor/model/upload_image_response.dart';
 import 'package:vendor/ui/inventory/add_product/bloc/add_product_event.dart';
 import 'package:vendor/ui/inventory/add_product/bloc/add_product_state.dart';
+import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/utility.dart';
 
@@ -105,7 +106,7 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
         Utility.showToast(response.message);
       }
     } else {
-      Utility.showToast("Please check your internet connection");
+      Utility.showToast(Constant.INTERNET_ALERT_MSG);
     }
   }
 
@@ -137,9 +138,6 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
       //   formData.files.add(MapEntry("product_image", await MultipartFile.fromFile(image.path, filename: path.basename(image.path))));
       // }
 
-      print("upload image input -> $input");
-      print("upload image input -> ${formData.files}");
-
       UploadImageResponse response = await apiProvider.addProductImage(formData);
       if (response.success) {
         yield UploadImageSuccessState(image: response.data!);
@@ -147,7 +145,7 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
         yield UploadImageFailureState();
       }
     } else {
-      Utility.showToast("Please check your internet connection");
+      Utility.showToast(Constant.INTERNET_ALERT_MSG);
     }
   }
 }

@@ -34,6 +34,18 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
           ],
         ),
       ),
+      bottomNavigationBar: Container(
+        child: MaterialButton(
+          onPressed: () {},
+          height: 50,
+          shape: RoundedRectangleBorder(),
+          color: Colors.white,
+          child: Text(
+            "UPI - TRANSFER",
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          ),
+        ),
+      ),
     );
   }
 }

@@ -63,7 +63,6 @@ class _SaleProductScreenState extends State<SaleProductScreen> {
                 }
               });
 
-              print("searchList->$searchList");
               streamController.add(searchList);
             } else {
               streamController.add(products);
@@ -236,8 +235,6 @@ class _SaleProductScreenState extends State<SaleProductScreen> {
           onPressed: () {
             List<PurchaseProductModel> returnProductList = products.where((element) => element.checked).toList();
             Navigator.of(context).pop(returnProductList);
-
-            print("returnProductList-->$returnProductList");
           },
           color: ColorPrimary,
           shape: RoundedRectangleBorder(),

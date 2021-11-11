@@ -4,6 +4,7 @@ import 'package:vendor/model/common_response.dart';
 import 'package:vendor/model/get_purchased_product_response.dart';
 import 'package:vendor/ui/inventory/sale_return/bloc/sale_return_event.dart';
 import 'package:vendor/ui/inventory/sale_return/bloc/sale_return_state.dart';
+import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/utility.dart';
 
@@ -37,7 +38,7 @@ class SaleReturnBloc extends Bloc<SaleReturnEvent, SaleReturnState> {
         Utility.showToast(response.message);
       }
     } else {
-      Utility.showToast("Please check your internet connection");
+      Utility.showToast(Constant.INTERNET_ALERT_MSG);
     }
   }
 
@@ -51,7 +52,7 @@ class SaleReturnBloc extends Bloc<SaleReturnEvent, SaleReturnState> {
         Utility.showToast(response.message);
       }
     } else {
-      Utility.showToast("Please check your internet connection");
+      Utility.showToast(Constant.INTERNET_ALERT_MSG);
     }
   }
 
@@ -65,7 +66,7 @@ class SaleReturnBloc extends Bloc<SaleReturnEvent, SaleReturnState> {
         Utility.showToast(response.message);
       }
     } else {
-      Utility.showToast("Please check your internet connection");
+      Utility.showToast(Constant.INTERNET_ALERT_MSG);
     }
   }
 }

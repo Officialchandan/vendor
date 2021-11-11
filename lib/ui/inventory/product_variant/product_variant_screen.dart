@@ -233,7 +233,7 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       child: Column(
         children: [
-          Text("Add Image"),
+          Text("Add Product Image"),
           Container(
             height: 100,
             child: Row(

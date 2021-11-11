@@ -1,17 +1,17 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
-import 'package:vendor/provider/Endpoint.dart';
-import 'package:vendor/provider/NavigationService.dart';
-import 'package:vendor/provider/api_provider.dart';
+import 'package:vendor/api/Endpoint.dart';
+import 'package:vendor/api/NavigationService.dart';
+import 'package:vendor/api/api_provider.dart';
 import 'package:vendor/ui/home/bottom_navigation_home.dart';
 import 'package:vendor/ui/home/home.dart';
 import 'package:vendor/ui/inventory/suggested_product/SuggestedProductProvider.dart';
@@ -21,11 +21,8 @@ import 'package:vendor/ui/splash/splash_screen.dart';
 import 'package:vendor/ui_without_inventory/home/bottom_navigation_bar.dart';
 import 'package:vendor/ui_without_inventory/home/home.dart';
 import 'package:vendor/utility/color.dart';
+import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/routs.dart';
-import 'package:vendor/utility/sharedpref.dart';
-
-import 'localization/app_translations_delegate.dart';
-import 'localization/application.dart';
 
 BaseOptions baseOptions = BaseOptions(
   baseUrl: Endpoint.BASE_URL,
@@ -38,6 +35,7 @@ Dio dio = Dio(baseOptions);
 ApiProvider apiProvider = ApiProvider();
 ImagePicker imagePicker = ImagePicker();
 NavigationService navigationService = NavigationService();
+
 configEasyLoading() {
   EasyLoading.instance
     ..indicatorType = EasyLoadingIndicatorType.fadingCircle
@@ -129,8 +127,9 @@ ThemeData themeData(context) => ThemeData(
       },
     )).copyWith(secondary: ColorPrimary).copyWith(secondary: ColorPrimary));
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
 
   configEasyLoading();
 
@@ -148,8 +147,10 @@ void main() {
       logPrint: (text) {
         log(text.toString());
       }));
-
-  runApp(MyApp());
+  // assets/locale
+  runApp(
+    EasyLocalization(supportedLocales: Constant.language, path: 'assets/locale', fallbackLocale: Locale('en'), child: MyApp()),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -159,8 +160,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  AppTranslationsDelegate? _newLocaleDelegate = AppTranslationsDelegate(newLocale: Locale("en", ""));
-
   @override
   void initState() {
     super.initState();
@@ -178,6 +177,9 @@ class _MyAppState extends State<MyApp> {
       ],
       child: MaterialApp(
         title: 'Vendor',
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
         theme: themeData(context),
         debugShowCheckedModeBanner: false,
         navigatorKey: navigationService.navigatorKey,
@@ -189,6 +191,7 @@ class _MyAppState extends State<MyApp> {
 
             case Routes.SplashScreen:
               return PageTransition(type: PageTransitionType.fade, child: SplashScreen());
+
             case Routes.SelectLanguage:
               return PageTransition(type: PageTransitionType.fade, child: SelectLanguage());
 
@@ -208,6 +211,7 @@ class _MyAppState extends State<MyApp> {
                   child: BottomNavigationHome(
                     index: index,
                   ));
+
             case Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY:
               int index = route.arguments as int;
               return PageTransition(
@@ -218,33 +222,11 @@ class _MyAppState extends State<MyApp> {
           }
         },
         home: SplashScreen(),
-        localizationsDelegates: [
-          _newLocaleDelegate!,
-          //provides localised strings
-          GlobalMaterialLocalizations.delegate,
-          //provides RTL support
-          GlobalWidgetsLocalizations.delegate,
-        ],
-        supportedLocales: [
-          const Locale("en", ""),
-          const Locale("hi", ""),
-        ],
       ),
     );
   }
 
-  void onLocaleChange(Locale locale) {
-    print("$locale");
-    setState(() {
-      _newLocaleDelegate = AppTranslationsDelegate(newLocale: locale);
-    });
-  }
+  void onLocaleChange(Locale locale) {}
 
-  init() async {
-    var lang = await SharedPref.getStringPreference(SharedPref.SELECTEDLANG);
-    print("$lang");
-    _newLocaleDelegate = AppTranslationsDelegate(newLocale: Locale(lang.isEmpty ? "en" : lang, ""));
-    setState(() {});
-    application.onLocaleChanged = onLocaleChange;
-  }
+  init() async {}
 }

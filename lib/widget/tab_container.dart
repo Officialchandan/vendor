@@ -1,8 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:vendor/localization/app_translations.dart';
 import 'package:vendor/utility/color.dart';
 
 class TabContainer extends StatefulWidget {
@@ -62,9 +62,9 @@ class _TabContainerState extends State<TabContainer> with TickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     var titleList = [
-      "${AppTranslations.of(context)!.text("billing_dashboard_key")}",
-      "${AppTranslations.of(context)!.text("performance_tracker_key")}",
-      "${AppTranslations.of(context)!.text("outstanding_amount_key")}"
+      tr("billing_dashboard_key"),
+      tr("performance_tracker_key"),
+      tr("outstanding_amount_key"),
     ];
     return WillPopScope(
       onWillPop: () {
@@ -125,7 +125,7 @@ class _TabContainerState extends State<TabContainer> with TickerProviderStateMix
             unselectedLabelColor: Colors.grey.shade500,
             tabs: [
               Tab(
-                text: "${AppTranslations.of(context)!.text("billing_key")}",
+                text: "${tr("billing_key")}",
                 icon: selectedTab == 0
                     ? Image.asset(
                         "assets/images/f2-b (7).png",
@@ -137,7 +137,7 @@ class _TabContainerState extends State<TabContainer> with TickerProviderStateMix
                       ),
               ),
               Tab(
-                text: "${AppTranslations.of(context)!.text("performance__key")}",
+                text: "${tr("performance__key")}",
                 icon: selectedTab == 1
                     ? Image.asset(
                         "assets/images/f2-b (1).png",
@@ -149,7 +149,7 @@ class _TabContainerState extends State<TabContainer> with TickerProviderStateMix
                       ),
               ),
               Tab(
-                text: "${AppTranslations.of(context)!.text("outstanding_key")}",
+                text: "${tr("outstanding_key")}",
                 icon: selectedTab == 2
                     ? Image.asset(
                         "assets/images/f2-b (3).png",
