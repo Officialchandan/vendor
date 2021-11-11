@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,6 +20,7 @@ import 'package:vendor/ui/login/login_screen.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/sharedpref.dart';
+import 'package:vendor/utility/string.dart';
 
 import 'account_management_event.dart';
 
@@ -32,19 +34,20 @@ class AccountManagementScreen extends StatefulWidget {
 
 class _AccountManagementScreenState extends State<AccountManagementScreen> {
   List<String> textList = [
-    "Discount codes",
-    "Settings",
-    "Delivery Settings",
-    "Video tutorials",
-    "Share store link",
-    "Get store QR code",
-    "Add business hours",
-    "Logout"
+    tr(MString.discount_codes),
+    tr(MString.settings),
+    tr(MString.delivery_settings),
+    tr(MString.video_tutorials),
+    tr(MString.share_store_link),
+    tr(MString.get_store_qr_code),
+    tr(MString.add_business_hours),
+    tr(MString.logout),
   ];
   var message;
   bool? status;
   List<VendorDetailData>? data;
   AccountManagementBloc accountManagementBloc = AccountManagementBloc(AccountManagementIntialState());
+
   @override
   void initState() {
     super.initState();

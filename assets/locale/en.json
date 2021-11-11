@@ -77,5 +77,15 @@
   "thanks_for_login_key": "Thanks for login",
   "please_enter_valid_mobile_key": "Please enter valid mobile number",
   "logout_successfully_key": "Logout Successfully",
-  "scanner_key": "Scanner"
+  "scanner_key": "Scanner",
+  "discount_codes": "Discount codes",
+  "settings": "Settings",
+  "delivery_settings": "Delivery Settings",
+  "video_tutorials": "Video tutorials",
+  "share_store_link": "Share store link",
+  "get_store_qr_code": "Get store QR code",
+  "add_business_hours": "Add business hours",
+  "logout": "Logout",
+  "product_added_successfully": "Product added successfully!",
+  "add_product" : "Add Product"
 }

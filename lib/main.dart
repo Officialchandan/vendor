@@ -191,6 +191,7 @@ class _MyAppState extends State<MyApp> {
 
             case Routes.SplashScreen:
               return PageTransition(type: PageTransitionType.fade, child: SplashScreen());
+
             case Routes.SelectLanguage:
               return PageTransition(type: PageTransitionType.fade, child: SelectLanguage());
 
@@ -210,6 +211,7 @@ class _MyAppState extends State<MyApp> {
                   child: BottomNavigationHome(
                     index: index,
                   ));
+
             case Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY:
               int index = route.arguments as int;
               return PageTransition(

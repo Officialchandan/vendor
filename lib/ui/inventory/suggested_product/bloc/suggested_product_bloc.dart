@@ -6,6 +6,7 @@ import 'package:vendor/model/get_brands_response.dart';
 import 'package:vendor/model/product_by_category_response.dart';
 import 'package:vendor/ui/inventory/suggested_product/bloc/suggested_product_event.dart';
 import 'package:vendor/ui/inventory/suggested_product/bloc/suggested_product_state.dart';
+import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/utility.dart';
 
@@ -49,7 +50,7 @@ class SuggestedProductBloc extends Bloc<SuggestedProductEvent, SuggestedProductS
         Utility.showToast(response.message);
       }
     } else {
-      Utility.showToast("Please check your internet connection");
+      Utility.showToast(Constant.INTERNET_ALERT_MSG);
     }
   }
 
@@ -64,7 +65,7 @@ class SuggestedProductBloc extends Bloc<SuggestedProductEvent, SuggestedProductS
         Utility.showToast(response.message);
       }
     } else {
-      Utility.showToast("Please check your internet connection");
+      Utility.showToast(Constant.INTERNET_ALERT_MSG);
     }
   }
 
@@ -79,7 +80,7 @@ class SuggestedProductBloc extends Bloc<SuggestedProductEvent, SuggestedProductS
         Utility.showToast(response.message);
       }
     } else {
-      Utility.showToast("Please check your internet connection");
+      Utility.showToast(Constant.INTERNET_ALERT_MSG);
     }
   }
 }

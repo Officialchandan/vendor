@@ -67,7 +67,6 @@ class _SearchProductScreenState extends State<SearchProductScreen> {
                   }
                 });
 
-                print("searchList->$searchList");
                 streamController.add(searchList);
               } else {
                 streamController.add(products);
@@ -80,7 +79,6 @@ class _SearchProductScreenState extends State<SearchProductScreen> {
           initialData: [],
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              print("data-->${snapshot.data}");
               if (snapshot.data!.isEmpty) {
                 return Center(
                   child: Image(

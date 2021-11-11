@@ -23,25 +23,43 @@ class _SelectCategoryWidgetState extends State<SelectCategoryWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        TextFormField(
-          readOnly: true,
-          onTap: () {
-            widget.onSelect(null);
-            // Navigator.push(context, PageTransition(child: SearchProductScreen(), type: PageTransitionType.fade));
-          },
-          decoration: InputDecoration(
-              filled: true,
-              fillColor: Color.fromRGBO(242, 242, 242, 1),
-              hintText: "Search products",
-              contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-              disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-              focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-              errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-              focusedErrorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-              prefixIcon: Icon(Icons.search)),
+        Container(
+          margin: EdgeInsets.all(10),
+          child: ListTile(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10), side: BorderSide(color: Colors.grey.shade300, width: 1)),
+            onTap: () {
+              widget.onSelect(null);
+            },
+            leading: Image(
+              image: AssetImage("assets/images/f3.png"),
+              height: 30,
+              width: 30,
+              color: ColorPrimary,
+              fit: BoxFit.contain,
+            ),
+            title: Text("View All Product"),
+          ),
         ),
+        // TextFormField(
+        //   readOnly: true,
+        //   onTap: () {
+        //     widget.onSelect(null);
+        //     // Navigator.push(context, PageTransition(child: SearchProductScreen(), type: PageTransitionType.fade));
+        //   },
+        //   decoration: InputDecoration(
+        //       filled: true,
+        //       fillColor: Color.fromRGBO(242, 242, 242, 1),
+        //       hintText: "Search products",
+        //       contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+        //       border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+        //       enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+        //       disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+        //       focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+        //       errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+        //       focusedErrorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+        //       prefixIcon: Icon(Icons.search)),
+        // ),
         SizedBox(
           height: 10,
         ),

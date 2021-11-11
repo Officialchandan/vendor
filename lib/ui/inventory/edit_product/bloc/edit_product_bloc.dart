@@ -6,6 +6,7 @@ import 'package:vendor/model/common_response.dart';
 import 'package:vendor/model/product_model.dart';
 import 'package:vendor/ui/inventory/edit_product/bloc/edit_product_event.dart';
 import 'package:vendor/ui/inventory/edit_product/bloc/edit_product_state.dart';
+import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/utility.dart';
 
@@ -37,7 +38,7 @@ class EditProductBloc extends Bloc<EditProductEvent, EditProductState> {
         Utility.showToast(response.message);
       }
     } else {
-      Utility.showToast("Please check your internet connection");
+      Utility.showToast(Constant.INTERNET_ALERT_MSG);
     }
   }
 
@@ -54,7 +55,7 @@ class EditProductBloc extends Bloc<EditProductEvent, EditProductState> {
         Utility.showToast(response.message);
       }
     } else {
-      Utility.showToast("Please check your internet connection");
+      Utility.showToast(Constant.INTERNET_ALERT_MSG);
     }
   }
 }

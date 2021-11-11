@@ -77,5 +77,15 @@
   "thanks_for_login_key": "लॉग इन करने के लिए धन्यवाद",
   "please_enter_valid_mobile_key": "कृपया मान्य मोबाइल नंबर दर्ज करें",
   "logout_successfully_key": "लॉगआउट सफलतापूर्वक",
-  "scanner_key": "चित्रान्वीक्षक"
+  "scanner_key": "चित्रान्वीक्षक",
+  "discount_codes": "Discount codes",
+  "settings": "Settings",
+  "delivery_settings": "Delivery Settings",
+  "video_tutorials": "Video tutorials",
+  "share_store_link": "Share store link",
+  "get_store_qr_code": "Get store QR code",
+  "add_business_hours": "Add business hours",
+  "logout": "Logout",
+  "product_added_successfully": "Product added successfully!",
+  "add_product" : "Add Product"
 }

@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:collection';
-import 'dart:convert';
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,6 +21,7 @@ import 'package:vendor/ui/inventory/product_variant/product_variant_screen.dart'
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/sharedpref.dart';
+import 'package:vendor/utility/string.dart';
 import 'package:vendor/utility/utility.dart';
 import 'package:vendor/widget/UnitBottomSheet.dart';
 import 'package:vendor/widget/category_bottom_sheet.dart';
@@ -73,7 +74,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
       create: (context) => addProductBloc,
       child: BlocListener<AddProductBloc, AddProductState>(
         listener: (context, state) {
-          print("add product bloc state-->$state");
           if (state is SelectImageState) {
             imageList.addAll(state.image);
             variantModel.productImages = imageList;
@@ -83,14 +83,13 @@ class _AddProductScreenState extends State<AddProductScreen> {
             variantImage.clear();
           }
           if (state is UploadImageFailureState) {
-            print("variant image 4-> $variantImage");
             variantImage.removeAt(0);
-            print("variant image 5-> $variantImage");
+
             if (variantImage.isNotEmpty) {
               addProductBloc.add(UploadImageEvent(
                   variantId: variantImage.first.variantId!, images: variantImage.first.images!, productId: productId));
             } else {
-              Utility.showToast("Product added successfully!");
+              Utility.showToast(tr(MString.product_added_successfully));
               EasyLoading.dismiss();
               variantImage = [];
               variantModel = ProductVariantModel();
@@ -113,14 +112,13 @@ class _AddProductScreenState extends State<AddProductScreen> {
             }
           }
           if (state is UploadImageSuccessState) {
-            print("variant image 2-> $variantImage");
             variantImage.removeAt(0);
-            print("variant image 3-> $variantImage");
+
             if (variantImage.isNotEmpty) {
               addProductBloc.add(UploadImageEvent(
                   variantId: variantImage.first.variantId!, images: variantImage.first.images!, productId: productId));
             } else {
-              Utility.showToast("Product added successfully!");
+              Utility.showToast(tr(MString.product_added_successfully));
               EasyLoading.dismiss();
               variantImage = [];
               variantModel = ProductVariantModel();
@@ -150,15 +148,13 @@ class _AddProductScreenState extends State<AddProductScreen> {
               variantImage[i].variantId = state.responseData.variantId[i];
             }
 
-            print("variant image 1-> $variantImage");
-
             addProductBloc.add(
                 UploadImageEvent(variantId: variantImage.first.variantId!, images: variantImage.first.images!, productId: productId));
           }
         },
         child: Scaffold(
           appBar: CustomAppBar(
-            title: "Add Product",
+            title: tr(MString.add_product),
           ),
           body: SingleChildScrollView(
             padding: EdgeInsets.all(20),
@@ -303,9 +299,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             categoryId = category.id;
                             edtCategory.text = category.categoryName!;
                           });
-                        }).then((value) {
-                      print("bottom sheet close");
-                    });
+                        }).then((value) {});
                   },
                   controller: edtCategory,
                   decoration: InputDecoration(
@@ -479,8 +473,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
                               categoryId: categoryId,
                               selectedVariants: variantType,
                               onSelect: (List<VariantType> variants) async {
-                                print("on variant type select -> $variants");
-
                                 if (variants.isEmpty) {
                                   Utility.showToast("Please select at least one option");
                                 } else {
@@ -904,14 +896,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
     }
     input["product_variants"] = productVariantList;
 
-    print("input add product api -> ${jsonEncode(input)}");
-
     variantImage.add(VariantImage(images: variantModel.productImages));
     productVariant.forEach((element) {
       variantImage.add(VariantImage(images: element.productImages));
     });
 
-    print("AddProductApiEvent-->");
     addProductBloc.add(AddProductApiEvent(input: input));
   }
 }
