@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'dart:developer';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -133,7 +134,7 @@ class _BillingProductsState extends State<BillingProducts> {
                 icon: Icon(Icons.arrow_back_ios)),
             centerTitle: false,
             title: Text(
-              "Billing Products",
+              "Billing_Products_key".tr(),
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
@@ -235,7 +236,8 @@ class _BillingProductsState extends State<BillingProducts> {
                                           Container(
                                             width: 50,
                                             child: AutoSizeText(
-                                              "Qty: ${productList[index].count} ",
+                                              "Qty_key: ${productList[index].count} "
+                                                  .tr(),
                                               maxLines: 1,
                                               style: TextStyle(
                                                 color: Colors.grey,
@@ -281,12 +283,13 @@ class _BillingProductsState extends State<BillingProducts> {
                                                     context,
                                                     index,
                                                     0,
-                                                    "Edit Amount",
-                                                    "Enter Amount");
+                                                    "Edit_Amount_key".tr(),
+                                                    "Enter_Amount_key".tr());
                                               } else {
                                                 Fluttertoast.showToast(
                                                     msg:
-                                                        "Please turn on Internet",
+                                                        "Please_turn_on_Internet_key"
+                                                            .tr(),
                                                     backgroundColor:
                                                         ColorPrimary);
                                               }
@@ -375,7 +378,8 @@ class _BillingProductsState extends State<BillingProducts> {
                                                     } else {
                                                       Fluttertoast.showToast(
                                                           msg:
-                                                              "Please turn on Internet",
+                                                              "please_turn_on_internet_key"
+                                                                  .tr(),
                                                           backgroundColor:
                                                               ColorPrimary);
                                                     }
@@ -384,14 +388,14 @@ class _BillingProductsState extends State<BillingProducts> {
                                               );
                                             },
                                           ),
-                                          Text(" Redeem",
+                                          Text(" Redeem_key".tr(),
                                               style: TextStyle(fontSize: 14)),
                                         ]),
                                     Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.end,
                                         children: [
-                                          Text("Redeem ",
+                                          Text("Redeem_key ".tr(),
                                               style: TextStyle(fontSize: 14)),
                                           Container(
                                             height: 17,
@@ -469,7 +473,7 @@ class _BillingProductsState extends State<BillingProducts> {
                                 .add(DeleteBillingProductsEvent(index: index));
                           } else {
                             Fluttertoast.showToast(
-                                msg: "Please turn on Internet",
+                                msg: "Please_turn_on_Internet_key".tr(),
                                 backgroundColor: ColorPrimary);
                           }
                         },
@@ -510,7 +514,7 @@ class _BillingProductsState extends State<BillingProducts> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Total Pay Amount",
+                                  "Total_Pay_Amount_key".tr(),
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w700),
@@ -542,7 +546,7 @@ class _BillingProductsState extends State<BillingProducts> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Redeem Coins",
+                                  "Redeem_Coins_key".tr(),
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w700),
@@ -574,7 +578,7 @@ class _BillingProductsState extends State<BillingProducts> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Earn Coins",
+                                  "Earn_Coins_key".tr(),
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w700),
@@ -606,7 +610,11 @@ class _BillingProductsState extends State<BillingProducts> {
                         otpVerifyList = state.data;
                         log("${otpVerifyList!.otp}");
                         _displayDialog(
-                            context, 0, 1, "Please Enter OTP", "Enter OTP");
+                            context,
+                            0,
+                            1,
+                            "please_enter_password_key".tr(),
+                            "enter_otp_key".tr());
                       }
                       if (state is PayBillingProductsStateFailureState) {
                         message = state.message;
@@ -642,7 +650,7 @@ class _BillingProductsState extends State<BillingProducts> {
                                 .then((value) => _textFieldController.clear());
                           } else {
                             Fluttertoast.showToast(
-                                msg: "Please turn on Internet",
+                                msg: "Please_turn_on_Internet_key".tr(),
                                 backgroundColor: ColorPrimary);
                           }
                         },
@@ -651,7 +659,7 @@ class _BillingProductsState extends State<BillingProducts> {
                           color: ColorPrimary,
                           child: Center(
                             child: Text(
-                              "SUBMIT",
+                              "submit_button_key".tr(),
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
@@ -775,7 +783,7 @@ class _BillingProductsState extends State<BillingProducts> {
                           _textFieldController.clear();
                         } else {
                           Fluttertoast.showToast(
-                              msg: "Please Enter Amount",
+                              msg: "please_enter_amount_key".tr(),
                               backgroundColor: ColorPrimary);
                         }
                       } else {
@@ -783,7 +791,7 @@ class _BillingProductsState extends State<BillingProducts> {
                       }
                     },
                     child: new Text(
-                      "DONE",
+                      "DONE_key".tr(),
                       style: GoogleFonts.openSans(
                           fontSize: 17,
                           fontWeight: FontWeight.w600,
@@ -945,7 +953,8 @@ class _DialogState extends State<Dialog> {
                 child:
                     Image.asset("assets/images/coins.png", fit: BoxFit.contain),
               ),
-              content: Text("Coins generated successfully in customer Wallet"),
+              content: Text(
+                  "Coins_generated_successfully_in_customer_Wallet_key".tr()),
               actions: <Widget>[
                 Center(
                   child: MaterialButton(
@@ -965,7 +974,7 @@ class _DialogState extends State<Dialog> {
                           ModalRoute.withName("/"));
                     },
                     child: new Text(
-                      "DONE",
+                      "DONE_key".tr(),
                       style: GoogleFonts.openSans(
                           fontSize: 17,
                           fontWeight: FontWeight.w600,

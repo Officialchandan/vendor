@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:collection';
 
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/main.dart';
@@ -43,7 +44,7 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("My Customers"),
+        title: Text("My_Customers_key".tr()),
         actions: [
           InkWell(
             onTap: () {
@@ -62,7 +63,7 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
             splashColor: Colors.transparent,
             child: Row(
               mainAxisSize: MainAxisSize.min,
-              children: [Icon(Icons.filter_alt_sharp), Text("Filter")],
+              children: [Icon(Icons.filter_alt_sharp), Text("Filter_key".tr())],
             ),
           ),
           const SizedBox(
@@ -80,7 +81,9 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                   List<Customer> searchList = [];
 
                   customerList.forEach((element) {
-                    if (element.customerName.toLowerCase().contains(text.trim().toLowerCase())) {
+                    if (element.customerName
+                        .toLowerCase()
+                        .contains(text.trim().toLowerCase())) {
                       searchList.add(element);
                     }
                   });
@@ -99,11 +102,14 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                     ),
                   ),
                   contentPadding: const EdgeInsets.all(10),
-                  prefixIconConstraints: BoxConstraints(maxHeight: 50, maxWidth: 50),
+                  prefixIconConstraints:
+                      BoxConstraints(maxHeight: 50, maxWidth: 50),
                   fillColor: Colors.grey.shade200,
                   filled: true,
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: BorderSide.none),
-                  hintText: "Search Customer",
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      borderSide: BorderSide.none),
+                  hintText: "Search_Customer_key".tr(),
                   hintStyle: TextStyle(fontWeight: FontWeight.bold)),
             ),
             const SizedBox(
@@ -126,32 +132,44 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                         height: 15,
                       );
                     },
-                    keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                    keyboardDismissBehavior:
+                        ScrollViewKeyboardDismissBehavior.onDrag,
                     itemBuilder: (context, index) {
                       Customer customer = snapshot.data![index];
 
                       return InkWell(
                         onTap: () {
                           Navigator.push(
-                              context, PageTransition(child: CustomerDetailScreen(customer: customer), type: PageTransitionType.fade));
+                              context,
+                              PageTransition(
+                                  child:
+                                      CustomerDetailScreen(customer: customer),
+                                  type: PageTransitionType.fade));
                         },
                         child: Container(
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5), border: Border.all(color: Colors.grey.shade200, width: 1)),
+                              borderRadius: BorderRadius.circular(5),
+                              border: Border.all(
+                                  color: Colors.grey.shade200, width: 1)),
                           child: Column(
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Expanded(
                                       child: Text(
                                     customer.customerName,
-                                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
                                   )),
                                   Text(
                                     Utility.getFormatDate1(customer.date),
-                                    style: TextStyle(color: Colors.black, fontSize: 14),
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 14),
                                   ),
                                 ],
                               ),
@@ -159,16 +177,21 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                                 height: 10,
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Expanded(
                                       child: Text(
                                     "+91 ${customer.mobile}",
-                                    style: TextStyle(color: Colors.black, fontSize: 14),
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 14),
                                   )),
                                   Text(
-                                    "Qty : ${customer.qty}",
-                                    style: TextStyle(color: ColorPrimary, fontWeight: FontWeight.bold, fontSize: 14),
+                                    "Qty_key : ${customer.qty}".tr(),
+                                    style: TextStyle(
+                                        color: ColorPrimary,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14),
                                   ),
                                 ],
                               )
@@ -181,7 +204,7 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                   );
                 }
                 return Center(
-                  child: Text("Customer not found!"),
+                  child: Text("Customer_not_found_key".tr()),
                 );
               },
             ))
@@ -195,7 +218,8 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
     if (await Network.isConnected()) {
       Map<String, dynamic> input = HashMap<String, dynamic>();
 
-      input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      input["vendor_id"] =
+          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
       input["from_date"] = startDate;
       input["to_date"] = endDate;
 

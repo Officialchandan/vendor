@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:vendor/main.dart';
@@ -38,10 +39,10 @@ class AccountManagementBloc
         }
       } catch (error) {
         yield GetAccountManagementFailureState(
-            message: "internal Server error", succes: false);
+            message: "internal_Server_error_key".tr(), succes: false);
       }
     } else {
-      Fluttertoast.showToast(msg: "Turn on the internet");
+      Fluttertoast.showToast(msg: "Turn_on_the_internet_key".tr());
     }
   }
 }

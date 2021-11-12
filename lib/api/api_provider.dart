@@ -44,6 +44,7 @@ import 'package:vendor/model/login_response.dart';
 import 'package:vendor/model/monthly_earning.dart';
 import 'package:vendor/model/monthly_sale_amount.dart';
 import 'package:vendor/model/monthly_walkin.dart';
+import 'package:vendor/model/partial_user_register.dart';
 import 'package:vendor/model/product_by_category_response.dart';
 import 'package:vendor/model/product_variant_response.dart';
 import 'package:vendor/model/upload_image_response.dart';
@@ -68,7 +69,7 @@ class ApiProvider {
     log("chl gyi");
     try {
       Response res =
-          await dio.post(Endpoint.GENERATE_OTP, data: {"mobile": mobile});
+      await dio.post(Endpoint.GENERATE_OTP, data: {"mobile": mobile});
       print("${res.data}");
       return LoginOtpResponse.fromJson(res.toString());
     } catch (error) {
@@ -133,7 +134,7 @@ class ApiProvider {
       Map input = HashMap<String, dynamic>();
 
       input["vendor_id"] =
-          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       Response res = await dio.post(
         Endpoint.GET_ALL_CATEGORY,
@@ -154,17 +155,16 @@ class ApiProvider {
     }
   }
 
-  Future<ProductByCategoryResponse> getProductByCategories(
-      String categoryId) async {
+  Future<ProductByCategoryResponse> getProductByCategories(String categoryId) async {
     try {
       Map input = HashMap<String, dynamic>();
 
       input["vendor_id"] =
-          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      await SharedPref.getIntegerPreference(SharedPref.VENDORID);
       input["category_id"] = categoryId;
 
       Response res = await dio.post(
-        Endpoint.GET_PRODUCT_BY_CATEGORY,
+        Endpoint.GET_VENDOR_PRODUCT_BY_CATEGORY,
         data: input,
       );
 
@@ -303,7 +303,7 @@ class ApiProvider {
 
       input["id"] = id;
       input["vendor_id"] =
-          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       Response res = await dio.post(
         Endpoint.ADD_SUGGESTED_PRODUCTS,
@@ -329,7 +329,7 @@ class ApiProvider {
       Map input = HashMap<String, dynamic>();
 
       input["vendor_id"] =
-          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       Response res = await dio.post(
         Endpoint.GET_ALL_VENDOR_PRODUCTS,
@@ -406,7 +406,7 @@ class ApiProvider {
 
       input["category_id"] = categoryId;
       input["vendor_id"] =
-          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       Response res = await dio.post(
         Endpoint.GET_SUB_CATEGORY,
@@ -433,7 +433,7 @@ class ApiProvider {
       //
       // input["category_id"] = categoryId;
       input["vendor_id"] =
-          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       Response res = await dio.post(
         Endpoint.ADD_PRODUCT_SUBCATEGORY,
@@ -459,7 +459,7 @@ class ApiProvider {
       Map input = HashMap<String, dynamic>();
 
       input["vendor_id"] =
-          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      await SharedPref.getIntegerPreference(SharedPref.VENDORID);
       //input["category_id"] = categoryId;
 
       Response res = await dio.post(
@@ -481,8 +481,7 @@ class ApiProvider {
     }
   }
 
-  Future<ProductVariantResponse> getProductVariantType(
-      String categoryId) async {
+  Future<ProductVariantResponse> getProductVariantType(String categoryId) async {
     try {
       Map input = HashMap<String, dynamic>();
       // input["category_id"] = categoryId;
@@ -582,7 +581,7 @@ class ApiProvider {
   Future<CommonResponse> deleteProduct(Map input) async {
     try {
       Response res =
-          await dio.post(Endpoint.DELETE_PRODUCT_VARIANT, data: input);
+      await dio.post(Endpoint.DELETE_PRODUCT_VARIANT, data: input);
       return CommonResponse.fromJson(res.toString());
     } catch (error) {
       String message = "";
@@ -650,8 +649,7 @@ class ApiProvider {
     }
   }
 
-  Future<BillingProductResponse> getBillingProducts(
-      Map<String, dynamic> input) async {
+  Future<BillingProductResponse> getBillingProducts(Map<String, dynamic> input) async {
     try {
       Response res = await dio.post(Endpoint.BILLING_PRODUCT, data: input);
 
@@ -669,8 +667,7 @@ class ApiProvider {
     }
   }
 
-  Future<VerifyEarningCoinsOtpResponse> getVerifyEarningCoinOtp(
-      Map<String, dynamic> input) async {
+  Future<VerifyEarningCoinsOtpResponse> getVerifyEarningCoinOtp(Map<String, dynamic> input) async {
     try {
       Response res = await dio
           .post(Endpoint.GET_VERIFY_EARNING_COINOTP_VENDORID, data: input);
@@ -694,7 +691,7 @@ class ApiProvider {
       Map input = HashMap<String, dynamic>();
       log("------->res");
       input["vendor_id"] =
-          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       Response res = await dio.post(
         Endpoint.GET_DAILY_SALE_AMOUNT,
@@ -720,7 +717,7 @@ class ApiProvider {
       Map input = HashMap<String, dynamic>();
       log("------->res");
       input["vendor_id"] =
-          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       Response res = await dio.post(
         Endpoint.GET_MONTHLY_SALE_AMOUNT,
@@ -746,7 +743,7 @@ class ApiProvider {
       Map input = HashMap<String, dynamic>();
       log("------->res");
       input["vendor_id"] =
-          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       Response res = await dio.post(
         Endpoint.GET_HOURLY_SALE_AMOUNT,
@@ -772,7 +769,7 @@ class ApiProvider {
       Map input = HashMap<String, dynamic>();
       log("------->res");
       input["vendor_id"] =
-          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       Response res = await dio.post(
         Endpoint.GET_HOURLY_EARNING_AMOUNT,
@@ -798,7 +795,7 @@ class ApiProvider {
       Map input = HashMap<String, dynamic>();
       log("------->res");
       input["vendor_id"] =
-          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       Response res = await dio.post(
         Endpoint.GET_HOURLY_WALKIN_AMOUNT,
@@ -824,7 +821,7 @@ class ApiProvider {
       Map input = HashMap<String, dynamic>();
       log("------->res");
       input["vendor_id"] =
-          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       Response res = await dio.post(
         Endpoint.GET_DAILY_EARNING_AMOUNT,
@@ -850,7 +847,7 @@ class ApiProvider {
     Map input = HashMap<String, dynamic>();
     log("------->res");
     input["vendor_id"] =
-        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
     Response res = await dio.post(
       Endpoint.GET_MONTHLY_EARNING_AMOUNT,
@@ -876,7 +873,7 @@ class ApiProvider {
       Map input = HashMap<String, dynamic>();
       log("------->res");
       input["vendor_id"] =
-          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       Response res = await dio.post(
         Endpoint.GET_DAILY_WALKIN_AMOUNT,
@@ -902,7 +899,7 @@ class ApiProvider {
       Map input = HashMap<String, dynamic>();
       log("------->res");
       input["vendor_id"] =
-          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       Response res = await dio.post(
         Endpoint.GET_MONTHLY_WALKIN_AMOUNT,
@@ -948,7 +945,7 @@ class ApiProvider {
       Map input = HashMap<String, dynamic>();
 
       input["vendor_id"] =
-          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       Response res = await dio.post(
         Endpoint.GET_VENDOR_PROFILE,
@@ -969,8 +966,7 @@ class ApiProvider {
     }
   }
 
-  Future<DirectBillingResponse> getDirectBilling(
-      Map<String, dynamic> input) async {
+  Future<DirectBillingResponse> getDirectBilling(Map<String, dynamic> input) async {
     try {
       Response res = await dio.post(Endpoint.GET_DIRECT_BILLING, data: input);
       log("===>billing$res");
@@ -988,11 +984,10 @@ class ApiProvider {
     }
   }
 
-  Future<DirectBillingOtpResponse> getDirectBillingOtp(
-      Map<String, dynamic> input) async {
+  Future<DirectBillingOtpResponse> getDirectBillingOtp(Map<String, dynamic> input) async {
     try {
       Response res =
-          await dio.post(Endpoint.GET_DIRECT_BILLING_OTP, data: input);
+      await dio.post(Endpoint.GET_DIRECT_BILLING_OTP, data: input);
       log("===>otp$res");
       return DirectBillingOtpResponse.fromJson(res.toString());
     } catch (error) {
@@ -1008,8 +1003,7 @@ class ApiProvider {
     }
   }
 
-  Future<GetMyCustomerResponse> getMyCustomer(
-      Map<String, dynamic> input) async {
+  Future<GetMyCustomerResponse> getMyCustomer(Map<String, dynamic> input) async {
     try {
       Response res = await dio.post(Endpoint.GET_MY_CUSTOMER, data: input);
       log("===>otp$res");
@@ -1085,11 +1079,10 @@ class ApiProvider {
     }
   }
 
-  Future<ChatPapdiResponse> getChatPapdiBilling(
-      Map<String, dynamic> input) async {
+  Future<ChatPapdiResponse> getChatPapdiBilling(Map<String, dynamic> input) async {
     try {
       Response res =
-          await dio.post(Endpoint.GET_CHATPAPDI_BILLING, data: input);
+      await dio.post(Endpoint.GET_CHATPAPDI_BILLING, data: input);
       log("===>billing$res");
       return ChatPapdiResponse.fromJson(res.toString());
     } catch (error, stacktrace) {
@@ -1105,11 +1098,10 @@ class ApiProvider {
     }
   }
 
-  Future<ChatPapdiOtpResponse> getChatPapdiOtp(
-      Map<String, dynamic> input) async {
+  Future<ChatPapdiOtpResponse> getChatPapdiOtp(Map<String, dynamic> input) async {
     try {
       Response res =
-          await dio.post(Endpoint.GET_CHATPAPDI_BILLING_OTP, data: input);
+      await dio.post(Endpoint.GET_CHATPAPDI_BILLING_OTP, data: input);
       log("===>otp$res");
       return ChatPapdiOtpResponse.fromJson(res.toString());
     } catch (error, stacktrace) {
@@ -1126,12 +1118,12 @@ class ApiProvider {
   }
 
   Future<WithoutInventoryDailySaleResponse>
-      getChatPapdiDailySaleAmount() async {
+  getChatPapdiDailySaleAmount() async {
     try {
       Map input = HashMap<String, dynamic>();
       log("------->res");
       input["vendor_id"] =
-          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       Response res = await dio.post(
         Endpoint.GET_CHATPAPDI_DAILY_REPORT,
@@ -1154,12 +1146,12 @@ class ApiProvider {
   }
 
   Future<WithoutInventoryMonthlySaleResponse>
-      getChatPapdiMonthlySaleAmount() async {
+  getChatPapdiMonthlySaleAmount() async {
     try {
       Map input = HashMap<String, dynamic>();
       log("------->res");
       input["vendor_id"] =
-          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       Response res = await dio.post(
         Endpoint.GET_CHATPAPDI_MONTHLY_SALE_AMOUNT,
@@ -1182,12 +1174,12 @@ class ApiProvider {
   }
 
   Future<WithoutInventoryHourlySaleResponse>
-      getChatPapdiHourlySaleAmount() async {
+  getChatPapdiHourlySaleAmount() async {
     try {
       Map input = HashMap<String, dynamic>();
       log("------->res");
       input["vendor_id"] =
-          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       Response res = await dio.post(
         Endpoint.GET_CHATPAPDI_HOURLY_SALE_AMOUNT,
@@ -1210,12 +1202,12 @@ class ApiProvider {
   }
 
   Future<WithoutInventoryHourlyEarningResponse>
-      getChatPapdiHourlyEarningAmount() async {
+  getChatPapdiHourlyEarningAmount() async {
     try {
       Map input = HashMap<String, dynamic>();
       log("------->res");
       input["vendor_id"] =
-          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       Response res = await dio.post(
         Endpoint.GET_CHATPAPDI_HOURLY_EARNING_AMOUNT,
@@ -1238,12 +1230,12 @@ class ApiProvider {
   }
 
   Future<WithoutInventoryDailyEarningResponse>
-      getChatPapdiDailyEarningAmount() async {
+  getChatPapdiDailyEarningAmount() async {
     try {
       Map input = HashMap<String, dynamic>();
       log("------->res");
       input["vendor_id"] =
-          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       Response res = await dio.post(
         Endpoint.GET_CHATPAPDI_DAILY_EARNING_AMOUNT,
@@ -1266,12 +1258,12 @@ class ApiProvider {
   }
 
   Future<WithoutInventoryMonthlyEarningResponse>
-      getChatPapdiMonthlyEarningAmount() async {
+  getChatPapdiMonthlyEarningAmount() async {
     try {
       Map input = HashMap<String, dynamic>();
       log("------->res");
       input["vendor_id"] =
-          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       Response res = await dio.post(
         Endpoint.GET_CHATPAPDI_MONTHLY_EARNING_AMOUNT,
@@ -1294,12 +1286,12 @@ class ApiProvider {
   }
 
   Future<WithoutInventoryHourlyWalkinResponse>
-      getChatPapdiHourlyWalkinAmount() async {
-    //try {
-    Map input = HashMap<String, dynamic>();
-    log("------->res");
-    input["vendor_id"] =
-        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+  getChatPapdiHourlyWalkinAmount() async {
+    try {
+      Map input = HashMap<String, dynamic>();
+      log("------->res");
+      input["vendor_id"] =
+      await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       Response res = await dio.post(
         Endpoint.GET_CHATPAPDI_HOURLY_WALKIN_AMOUNT,
@@ -1322,12 +1314,12 @@ class ApiProvider {
   }
 
   Future<WithoutInventoryDailyWalkinResponse>
-      getChatPapdiDailyWalkinAmount() async {
+  getChatPapdiDailyWalkinAmount() async {
     try {
       Map input = HashMap<String, dynamic>();
       log("------->res");
       input["vendor_id"] =
-          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       Response res = await dio.post(
         Endpoint.GET_CHATPAPDI_DAILY_WALKIN_AMOUNT,
@@ -1350,12 +1342,12 @@ class ApiProvider {
   }
 
   Future<WithoutInventoryMonthlyWalkinResponse>
-      getChatPapdiMonthlyWalkinAmount() async {
-    //try {
-    Map input = HashMap<String, dynamic>();
-    log("------->res");
-    input["vendor_id"] =
-        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+  getChatPapdiMonthlyWalkinAmount() async {
+    try {
+      Map input = HashMap<String, dynamic>();
+      log("------->res");
+      input["vendor_id"] =
+      await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       Response res = await dio.post(
         Endpoint.GET_CHATPAPDI_MONTHLY_WALKIN_AMOUNT,
@@ -1377,8 +1369,7 @@ class ApiProvider {
     }
   }
 
-  Future<PartialUserRegisterResponse> getChatPapdiPatialUserRegister(
-      Map<String, dynamic> input) async {
+  Future<PartialUserRegisterResponse> getChatPapdiPatialUserRegister(Map<String, dynamic> input) async {
     try {
       log("------->res");
       // input["vendor_id"] =
@@ -1402,4 +1393,6 @@ class ApiProvider {
       return PartialUserRegisterResponse(success: false, message: message);
     }
   }
+
+
 }

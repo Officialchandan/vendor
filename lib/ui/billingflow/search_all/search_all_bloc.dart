@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:vendor/model/product_by_category_response.dart';
@@ -54,10 +55,10 @@ class SearchAllBloc extends Bloc<SearchAllEvent, SearchAllState> {
           yield GetSearchFailureState(message: result!.message);
         }
       } catch (error) {
-        yield GetSearchFailureState(message: "internal Server error");
+        yield GetSearchFailureState(message: "internal_Server_error_key".tr());
       }
     } else {
-      Fluttertoast.showToast(msg: "Turn on the internet");
+      Fluttertoast.showToast(msg: "Turn_on_the_internet_key".tr());
     }
   }
 }

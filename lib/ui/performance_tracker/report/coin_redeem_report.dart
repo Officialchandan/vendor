@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:open_file/open_file.dart';
@@ -41,7 +42,8 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
   CategoryModel? categoryModel;
 
   Option? days;
-  DateRangePickerController dateRangePickerController = DateRangePickerController();
+  DateRangePickerController dateRangePickerController =
+      DateRangePickerController();
 
   TextEditingController edtCategory = TextEditingController();
   TextEditingController edtDays = TextEditingController();
@@ -54,18 +56,18 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "Coin Redeemed Reports",
+        title: "Coin_Redeemed_Reports_key",
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(15),
         child: Column(
           children: [
-            Text("View report by"),
+            Text("View_report_by_key".tr()),
             Row(
               children: [
                 Expanded(
                   child: RadioListTile(
-                      title: Text("Date wise"),
+                      title: Text("Date_wise_key".tr()),
                       value: 1,
                       groupValue: groupValue,
                       onChanged: (value) {
@@ -104,7 +106,8 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
                     headerStyle: DateRangePickerHeaderStyle(
                       textStyle: TextStyle(color: ColorPrimary),
                     ),
-                    yearCellStyle: DateRangePickerYearCellStyle(textStyle: TextStyle(color: Colors.black)),
+                    yearCellStyle: DateRangePickerYearCellStyle(
+                        textStyle: TextStyle(color: Colors.black)),
                     // showActionButtons: true,
                     showNavigationArrow: false,
                     selectionMode: DateRangePickerSelectionMode.range,
@@ -124,7 +127,8 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
                           Icons.keyboard_arrow_right_sharp,
                           color: ColorPrimary,
                         ),
-                        suffixIconConstraints: BoxConstraints(maxWidth: 20, maxHeight: 20)),
+                        suffixIconConstraints:
+                            BoxConstraints(maxWidth: 20, maxHeight: 20)),
                   ),
             SizedBox(
               height: 10,
@@ -143,7 +147,8 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
                           Icons.keyboard_arrow_right_sharp,
                           color: ColorPrimary,
                         ),
-                        suffixIconConstraints: BoxConstraints(maxWidth: 20, maxHeight: 20)),
+                        suffixIconConstraints:
+                            BoxConstraints(maxWidth: 20, maxHeight: 20)),
                   ),
             SizedBox(
               height: 10,
@@ -162,7 +167,8 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
                           Icons.keyboard_arrow_right_sharp,
                           color: ColorPrimary,
                         ),
-                        suffixIconConstraints: BoxConstraints(maxWidth: 20, maxHeight: 20)),
+                        suffixIconConstraints:
+                            BoxConstraints(maxWidth: 20, maxHeight: 20)),
                   ),
           ],
         ),
@@ -188,7 +194,8 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
     if (args.value is PickerDateRange) {
       startDate = Utility.getFormatDate(args.value.startDate);
 
-      endDate = Utility.getFormatDate(args.value.endDate ?? args.value.startDate);
+      endDate =
+          Utility.getFormatDate(args.value.endDate ?? args.value.startDate);
     }
   }
 
@@ -206,7 +213,9 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
         enableDrag: true,
         isScrollControlled: true,
         backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(25), topLeft: Radius.circular(25))),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(25), topLeft: Radius.circular(25))),
         builder: (context) {
           return CustomBottomSheet(
             onOptionSelect: (Option option) {
@@ -225,7 +234,9 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
         enableDrag: true,
         isScrollControlled: true,
         backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(25), topLeft: Radius.circular(25))),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(25), topLeft: Radius.circular(25))),
         builder: (context) {
           return CategoryBottomSheet(
             onSelect: (CategoryModel option) {
@@ -263,18 +274,24 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
   void getReport(BuildContext context) async {
     if (await Network.isConnected()) {
       Map input = HashMap<String, dynamic>();
-      input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      input["vendor_id"] =
+          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
       // input["vendor_id"] = "1";
       String url = "";
 
       if (groupValue == 1) {
-        url = widget.chatPapdi == 0 ? Endpoint.GET_COIN_REDEEM_REPORT_BY_DATE : Endpoint.GET_COIN_REDEEM_REPORT_BY_DATE_OF_CHAT_PAPDI;
+        url = widget.chatPapdi == 0
+            ? Endpoint.GET_COIN_REDEEM_REPORT_BY_DATE
+            : Endpoint.GET_COIN_REDEEM_REPORT_BY_DATE_OF_CHAT_PAPDI;
         input["from_date"] = startDate;
         DateTime dateTime = DateTime.parse(endDate);
 
-        input["to_date"] = Utility.getFormatDate(DateTime(dateTime.year, dateTime.month, dateTime.day + 1));
+        input["to_date"] = Utility.getFormatDate(
+            DateTime(dateTime.year, dateTime.month, dateTime.day + 1));
       } else {
-        url = widget.chatPapdi == 0 ? Endpoint.GET_COIN_REDEEM_REPORT_BY_DAY : Endpoint.GET_COIN_REDEEM_REPORT_BY_DAY_OF_CHAT_PAPDI;
+        url = widget.chatPapdi == 0
+            ? Endpoint.GET_COIN_REDEEM_REPORT_BY_DAY
+            : Endpoint.GET_COIN_REDEEM_REPORT_BY_DAY_OF_CHAT_PAPDI;
         if (days == null) {
           Utility.showToast("Please select days");
           return;
@@ -309,7 +326,8 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
         EasyLoading.dismiss();
         print("result-->$result");
         if (result["success"]) {
-          List<Map<String, dynamic>> report = List<Map<String, dynamic>>.from(result["data"]!.map((x) => x));
+          List<Map<String, dynamic>> report =
+              List<Map<String, dynamic>>.from(result["data"]!.map((x) => x));
           reportList = report;
           print("report-->$report");
           exportReport(context);
@@ -333,7 +351,8 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
     print("exportReport");
     final xls.Workbook workbook = xls.Workbook(0);
     //Adding a Sheet with name to workbook.
-    final xls.Worksheet sheet1 = workbook.worksheets.addWithName('Coin Redeem Report');
+    final xls.Worksheet sheet1 =
+        workbook.worksheets.addWithName('Coin Redeem Report');
     sheet1.showGridlines = true;
 
     int columnIndex = 1;
@@ -345,22 +364,29 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
 
     sheet1.getRangeByIndex(1, 1, 1, reportList.first.keys.length).merge();
     if (groupValue == 1) {
-      sheet1.getRangeByIndex(rowIndex, columnIndex).value = "Coin Redeem Report ($startDate to $endDate)";
+      sheet1.getRangeByIndex(rowIndex, columnIndex).value =
+          "Coin Redeem Report ($startDate to $endDate)";
     } else {
-      sheet1.getRangeByIndex(rowIndex, columnIndex).value = "Coin Redeem Report (${days!.optionName})";
+      sheet1.getRangeByIndex(rowIndex, columnIndex).value =
+          "Coin Redeem Report (${days!.optionName})";
     }
 
     sheet1.getRangeByIndex(rowIndex, columnIndex).rowHeight = 30;
-    sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign = xls.HAlignType.center;
-    sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign = xls.VAlignType.center;
+    sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign =
+        xls.HAlignType.center;
+    sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign =
+        xls.VAlignType.center;
     rowIndex = rowIndex + 1;
 
     reportList.first.keys.forEach((element) {
-      sheet1.getRangeByIndex(rowIndex, columnIndex).value = element.toString().replaceAll("_", " ").toUpperCase();
+      sheet1.getRangeByIndex(rowIndex, columnIndex).value =
+          element.toString().replaceAll("_", " ").toUpperCase();
       sheet1.getRangeByIndex(rowIndex, columnIndex).columnWidth = 25;
       sheet1.getRangeByIndex(rowIndex, columnIndex).rowHeight = 20;
-      sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign = xls.HAlignType.center;
-      sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign = xls.VAlignType.center;
+      sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign =
+          xls.HAlignType.center;
+      sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign =
+          xls.VAlignType.center;
       columnIndex = columnIndex + 1;
     });
 
@@ -371,8 +397,10 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
         sheet1.getRangeByIndex(rowIndex, columnIndex).value = value;
         sheet1.getRangeByIndex(rowIndex, columnIndex).columnWidth = 25;
         sheet1.getRangeByIndex(rowIndex, columnIndex).rowHeight = 20;
-        sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign = xls.HAlignType.center;
-        sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign = xls.VAlignType.center;
+        sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign =
+            xls.HAlignType.center;
+        sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign =
+            xls.VAlignType.center;
         columnIndex = columnIndex + 1;
 
         if (key == "redeem_coins") {
@@ -386,8 +414,10 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
     print("total - >$total");
 
     sheet1.getRangeByIndex(rowIndex + 1, 1).value = "Total";
-    sheet1.getRangeByIndex(rowIndex + 1, 1).cellStyle.hAlign = xls.HAlignType.center;
-    sheet1.getRangeByIndex(rowIndex + 1, 1).cellStyle.vAlign = xls.VAlignType.center;
+    sheet1.getRangeByIndex(rowIndex + 1, 1).cellStyle.hAlign =
+        xls.HAlignType.center;
+    sheet1.getRangeByIndex(rowIndex + 1, 1).cellStyle.vAlign =
+        xls.VAlignType.center;
 
     final xls.Style style = workbook.styles.add('Style1');
     style.backColorRgb = Colors.red;
@@ -401,7 +431,9 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
       columnIndex = columnIndex + 1;
     });
 
-    int index = reportList.first.keys.toList().indexWhere((element) => element == "redeem_coins");
+    int index = reportList.first.keys
+        .toList()
+        .indexWhere((element) => element == "redeem_coins");
     if (index != -1) {
       sheet1.getRangeByIndex(rowIndex + 1, index + 1).value = total;
     }
@@ -428,12 +460,14 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
 
     if (groupValue == 1) {
       fileName += "$startDate to $endDate" + ".xlsx";
-      sheet1.getRangeByIndex(rowIndex, columnIndex).value = "Coin Redeem Report ($startDate to $endDate)";
+      sheet1.getRangeByIndex(rowIndex, columnIndex).value =
+          "Coin Redeem Report ($startDate to $endDate)";
     } else {
       fileName += "${days!.optionName}" + ".xlsx";
     }
 
-    final File file = File(Platform.isWindows ? '$path\\$fileName' : '$path/$fileName');
+    final File file =
+        File(Platform.isWindows ? '$path\\$fileName' : '$path/$fileName');
     await file.writeAsBytes(bytes, flush: true).whenComplete(() {
       print("completed");
       Utility.showToast("Report saved at below location \n${file.path}");

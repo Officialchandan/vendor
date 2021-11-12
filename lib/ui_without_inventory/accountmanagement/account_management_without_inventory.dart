@@ -9,7 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:vendor/api/api_provider.dart';
 import 'package:vendor/model/log_out.dart';
 import 'package:vendor/model/vendor_profile_response.dart';
-import 'package:vendor/provider/api_provider.dart';
+
 import 'package:vendor/ui/login/login_screen.dart';
 import 'package:vendor/ui_without_inventory/accountmanagement/account_management_without_inventory_bloc.dart';
 import 'package:vendor/ui_without_inventory/accountmanagement/account_management_without_inventory_event.dart';

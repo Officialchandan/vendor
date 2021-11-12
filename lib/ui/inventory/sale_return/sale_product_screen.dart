@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:vendor/model/get_purchased_product_response.dart';
 import 'package:vendor/utility/color.dart';
@@ -17,7 +18,8 @@ class _SaleProductScreenState extends State<SaleProductScreen> {
   TextEditingController txtSearch = TextEditingController();
   List<PurchaseProductModel> products = [];
 
-  StreamController<List<PurchaseProductModel>> streamController = StreamController();
+  StreamController<List<PurchaseProductModel>> streamController =
+      StreamController();
 
   @override
   void initState() {
@@ -44,21 +46,35 @@ class _SaleProductScreenState extends State<SaleProductScreen> {
           decoration: InputDecoration(
             filled: true,
             fillColor: Color.fromRGBO(242, 242, 242, 1),
-            hintText: "Search products",
+            hintText: "Search_products_key".tr(),
             contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-            enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-            disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-            focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-            errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-            focusedErrorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide.none),
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide.none),
+            disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide.none),
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide.none),
+            errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide.none),
+            focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide.none),
           ),
           onChanged: (text) {
             if (text.isNotEmpty) {
               List<PurchaseProductModel> searchList = [];
 
               products.forEach((element) {
-                if (element.productName.toLowerCase().contains(text.trim().toLowerCase())) {
+                if (element.productName
+                    .toLowerCase()
+                    .contains(text.trim().toLowerCase())) {
                   searchList.add(element);
                 }
               });
@@ -84,7 +100,8 @@ class _SaleProductScreenState extends State<SaleProductScreen> {
                       // getProducts();
                     },
                     child: Container(
-                      margin: const EdgeInsets.only(bottom: 5, top: 5, right: 10),
+                      margin:
+                          const EdgeInsets.only(bottom: 5, top: 5, right: 10),
                       child: Stack(
                         children: [
                           Padding(
@@ -95,10 +112,12 @@ class _SaleProductScreenState extends State<SaleProductScreen> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: ListTile(
-                                contentPadding: EdgeInsets.only(left: 50, right: 5, top: 5, bottom: 5),
+                                contentPadding: EdgeInsets.only(
+                                    left: 50, right: 5, top: 5, bottom: 5),
                                 title: Container(
                                     child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
@@ -108,7 +127,10 @@ class _SaleProductScreenState extends State<SaleProductScreen> {
                                     ),
                                     RichText(
                                         text: TextSpan(children: [
-                                      TextSpan(text: "₹ ${product.price}\t", style: TextStyle(color: ColorPrimary)),
+                                      TextSpan(
+                                          text: "₹ ${product.price}\t",
+                                          style:
+                                              TextStyle(color: ColorPrimary)),
                                       // TextSpan(
                                       //     text: "₹ ${product.total}",
                                       //     style: TextStyle(color: Colors.black, decoration: TextDecoration.lineThrough))
@@ -116,66 +138,83 @@ class _SaleProductScreenState extends State<SaleProductScreen> {
                                     const SizedBox(
                                       height: 10,
                                     ),
-                                    Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                            // color: Colors.amber,
-                                            borderRadius: BorderRadius.circular(25),
-                                            border: Border.all(color: Colors.black)),
-                                        height: 25,
-                                        // width: 90,
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Container(
-                                              height: 25,
-                                              width: 30,
-                                              child: IconButton(
-                                                  padding: EdgeInsets.all(0),
-                                                  onPressed: () {
-                                                    if (product.returnQty > 1) {
-                                                      product.returnQty = product.returnQty - 1;
-                                                      streamController.add(products);
-                                                    }
-                                                  },
-                                                  iconSize: 20,
-                                                  splashRadius: 10,
-                                                  icon: Icon(
-                                                    Icons.remove,
-                                                  )),
-                                            ),
-                                            Container(
-                                              width: 20,
-                                              height: 25,
-                                              color: ColorPrimary,
-                                              child: Center(
-                                                child: Text(
-                                                  "${product.returnQty}",
-                                                  style: TextStyle(color: Colors.white, fontSize: 14),
+                                    Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                                // color: Colors.amber,
+                                                borderRadius:
+                                                    BorderRadius.circular(25),
+                                                border: Border.all(
+                                                    color: Colors.black)),
+                                            height: 25,
+                                            // width: 90,
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Container(
+                                                  height: 25,
+                                                  width: 30,
+                                                  child: IconButton(
+                                                      padding:
+                                                          EdgeInsets.all(0),
+                                                      onPressed: () {
+                                                        if (product.returnQty >
+                                                            1) {
+                                                          product.returnQty =
+                                                              product.returnQty -
+                                                                  1;
+                                                          streamController
+                                                              .add(products);
+                                                        }
+                                                      },
+                                                      iconSize: 20,
+                                                      splashRadius: 10,
+                                                      icon: Icon(
+                                                        Icons.remove,
+                                                      )),
                                                 ),
-                                              ),
+                                                Container(
+                                                  width: 20,
+                                                  height: 25,
+                                                  color: ColorPrimary,
+                                                  child: Center(
+                                                    child: Text(
+                                                      "${product.returnQty}",
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 14),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Container(
+                                                  height: 25,
+                                                  width: 30,
+                                                  child: IconButton(
+                                                      padding:
+                                                          EdgeInsets.all(0),
+                                                      onPressed: () {
+                                                        if (product.returnQty <
+                                                            product.qty) {
+                                                          product.returnQty =
+                                                              product.returnQty +
+                                                                  1;
+                                                          streamController
+                                                              .add(products);
+                                                        }
+                                                      },
+                                                      iconSize: 20,
+                                                      splashRadius: 10,
+                                                      icon: Icon(
+                                                        Icons.add,
+                                                      )),
+                                                )
+                                              ],
                                             ),
-                                            Container(
-                                              height: 25,
-                                              width: 30,
-                                              child: IconButton(
-                                                  padding: EdgeInsets.all(0),
-                                                  onPressed: () {
-                                                    if (product.returnQty < product.qty) {
-                                                      product.returnQty = product.returnQty + 1;
-                                                      streamController.add(products);
-                                                    }
-                                                  },
-                                                  iconSize: 20,
-                                                  splashRadius: 10,
-                                                  icon: Icon(
-                                                    Icons.add,
-                                                  )),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ]),
+                                          ),
+                                        ]),
                                   ],
                                 )),
                                 trailing: Checkbox(
@@ -199,7 +238,10 @@ class _SaleProductScreenState extends State<SaleProductScreen> {
                                           height: 60,
                                           width: 60,
                                           fit: BoxFit.contain,
-                                          image: NetworkImage(snapshot.data![index].productImages.first),
+                                          image: NetworkImage(snapshot
+                                              .data![index]
+                                              .productImages
+                                              .first),
                                         )
                                       : Image(
                                           image: AssetImage(
@@ -233,7 +275,8 @@ class _SaleProductScreenState extends State<SaleProductScreen> {
         child: MaterialButton(
           elevation: 0,
           onPressed: () {
-            List<PurchaseProductModel> returnProductList = products.where((element) => element.checked).toList();
+            List<PurchaseProductModel> returnProductList =
+                products.where((element) => element.checked).toList();
             Navigator.of(context).pop(returnProductList);
           },
           color: ColorPrimary,
@@ -241,7 +284,7 @@ class _SaleProductScreenState extends State<SaleProductScreen> {
           disabledColor: Colors.grey,
           height: 50,
           disabledTextColor: Colors.white,
-          child: Text("DONE"),
+          child: Text("DONE_key".tr()),
         ),
       ),
     );

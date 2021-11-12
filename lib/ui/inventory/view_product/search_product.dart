@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/model/product_by_category_response.dart';
@@ -48,21 +49,35 @@ class _SearchProductScreenState extends State<SearchProductScreen> {
             decoration: InputDecoration(
               filled: true,
               fillColor: Color.fromRGBO(242, 242, 242, 1),
-              hintText: "Search products",
+              hintText: "Search_products_key".tr(),
               contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-              disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-              focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-              errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-              focusedErrorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide.none),
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide.none),
+              disabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide.none),
+              focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide.none),
+              errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide.none),
+              focusedErrorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide.none),
             ),
             onChanged: (text) {
               if (text.isNotEmpty) {
                 List<ProductModel> searchList = [];
 
                 products.forEach((element) {
-                  if (element.productName.toLowerCase().contains(text.trim().toLowerCase())) {
+                  if (element.productName
+                      .toLowerCase()
+                      .contains(text.trim().toLowerCase())) {
                     searchList.add(element);
                   }
                 });
@@ -95,9 +110,11 @@ class _SearchProductScreenState extends State<SearchProductScreen> {
                     if (product.productOption.isNotEmpty) {
                       for (int i = 0; i < product.productOption.length; i++) {
                         if (product.productOption.length - 1 == i)
-                          variantName += product.productOption[i].value.toString();
+                          variantName +=
+                              product.productOption[i].value.toString();
                         else
-                          variantName += product.productOption[i].value.toString() + ", ";
+                          variantName +=
+                              product.productOption[i].value.toString() + ", ";
                       }
                     }
 
@@ -110,7 +127,8 @@ class _SearchProductScreenState extends State<SearchProductScreen> {
                                 height: 60,
                                 width: 60,
                                 fit: BoxFit.contain,
-                                image: NetworkImage(product.productImages.first.productImage),
+                                image: NetworkImage(
+                                    product.productImages.first.productImage),
                               )
                             : Image(
                                 image: AssetImage(
@@ -133,10 +151,14 @@ class _SearchProductScreenState extends State<SearchProductScreen> {
                           ),
                           RichText(
                               text: TextSpan(children: [
-                            TextSpan(text: "₹ ${product.sellingPrice}\t", style: TextStyle(color: ColorPrimary)),
+                            TextSpan(
+                                text: "₹ ${product.sellingPrice}\t",
+                                style: TextStyle(color: ColorPrimary)),
                             TextSpan(
                                 text: "₹ ${product.mrp}",
-                                style: TextStyle(color: Colors.black, decoration: TextDecoration.lineThrough))
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    decoration: TextDecoration.lineThrough))
                           ]))
                         ],
                       )),
@@ -150,7 +172,9 @@ class _SearchProductScreenState extends State<SearchProductScreen> {
                             onTap: () {},
                             child: Container(
                               padding: EdgeInsets.all(2),
-                              decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(15)),
+                              decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(15)),
                               child: Icon(
                                 Icons.delete,
                                 size: 16,
@@ -162,8 +186,11 @@ class _SearchProductScreenState extends State<SearchProductScreen> {
                             height: 10,
                           ),
                           Container(
-                            padding: EdgeInsets.symmetric(vertical: 3, horizontal: 5),
-                            decoration: BoxDecoration(color: ColorPrimary, borderRadius: BorderRadius.circular(20)),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 3, horizontal: 5),
+                            decoration: BoxDecoration(
+                                color: ColorPrimary,
+                                borderRadius: BorderRadius.circular(20)),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -176,7 +203,7 @@ class _SearchProductScreenState extends State<SearchProductScreen> {
                                   width: 5,
                                 ),
                                 Text(
-                                  "Share",
+                                  "Share_key".tr(),
                                   style: TextStyle(
                                     fontSize: 10,
                                     color: Colors.white,
@@ -205,7 +232,8 @@ class _SearchProductScreenState extends State<SearchProductScreen> {
       if (widget.categoryId == null) {
         response = await apiProvider.getAllVendorProducts();
       } else {
-        response = await apiProvider.getProductByCategories(widget.categoryId.toString());
+        response = await apiProvider
+            .getProductByCategories(widget.categoryId.toString());
       }
 
       if (response.success) {

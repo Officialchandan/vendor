@@ -1,3 +1,4 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:vendor/utility/color.dart';
@@ -23,7 +24,7 @@ class _StoreQRCodeState extends State<StoreQRCode> {
               Navigator.pop(context);
             },
           ),
-          title: Text("Get Store QR Code"),
+          title: Text("Get_Store_QR_Code_key".tr()),
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -44,18 +45,29 @@ class _StoreQRCodeState extends State<StoreQRCode> {
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(70),
-                            child: Image.asset("assets/images/user.png", width: 35, height: 35, fit: BoxFit.cover),
+                            child: Image.asset("assets/images/user.png",
+                                width: 35, height: 35, fit: BoxFit.cover),
                           ),
                           SizedBox(width: 10),
-                          Text("Alexa Parker", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600)),
+                          Text("Alexa_Parker_key".tr(),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600)),
                         ],
                       ),
                       SizedBox(height: 10),
-                      Text("myprofitstore.com/alexa",
-                          style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w600)),
+                      Text("myprofitstore.com/alexa_key".tr(),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600)),
                       SizedBox(height: 12),
-                      Text("Scan QR to check our products",
-                          style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w600)),
+                      Text("Scan_QR_to_check_our_products_key".tr(),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600)),
                     ],
                   ),
                 ),
@@ -68,7 +80,8 @@ class _StoreQRCodeState extends State<StoreQRCode> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: Image.asset("assets/images/qr-code.png", width: 160, fit: BoxFit.contain),
+                    child: Image.asset("assets/images/qr-code.png",
+                        width: 160, fit: BoxFit.contain),
                   ),
                 ),
               ],
@@ -87,7 +100,9 @@ class _StoreQRCodeState extends State<StoreQRCode> {
                       padding: EdgeInsets.symmetric(vertical: 10),
                       color: ColorPrimary,
                       textColor: Colors.white,
-                      child: Text("Download QR".toUpperCase(), style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
+                      child: Text("Download_QR_key".tr().toUpperCase(),
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w600)),
                       onPressed: () {},
                     ),
                   ),
@@ -102,7 +117,9 @@ class _StoreQRCodeState extends State<StoreQRCode> {
                       padding: EdgeInsets.symmetric(vertical: 10),
                       color: Colors.white,
                       textColor: ColorPrimary,
-                      child: Text("Share".toUpperCase(), style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
+                      child: Text("Share_key".tr().toUpperCase(),
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w600)),
                       onPressed: () {},
                     ),
                   ),

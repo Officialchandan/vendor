@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -76,7 +77,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
-                      hintText: "Search",
+                      hintText: "Search_key".tr(),
                       hintStyle: GoogleFonts.openSans(
                         fontWeight: FontWeight.w600,
                       ),
@@ -333,14 +334,14 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                                               count: searchList[index]
                                                                                   .count--))
                                                                       : Fluttertoast.showToast(
-                                                                          msg:
-                                                                              "Product cant be in negative",
+                                                                          msg: "Product_cant_be_in_negative_key"
+                                                                              .tr(),
                                                                           backgroundColor:
                                                                               ColorPrimary);
                                                                 } else {
                                                                   Fluttertoast.showToast(
-                                                                      msg:
-                                                                          "Please turn on Internet",
+                                                                      msg: "please_turn_on_internet_key"
+                                                                          .tr(),
                                                                       backgroundColor:
                                                                           ColorPrimary);
                                                                 }
@@ -406,8 +407,8 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                                   //         ColorPrimary);
                                                                 } else {
                                                                   Fluttertoast.showToast(
-                                                                      msg:
-                                                                          "Please turn on Internet",
+                                                                      msg: "please_turn_on_internet_key"
+                                                                          .tr(),
                                                                       backgroundColor:
                                                                           ColorPrimary);
                                                                 }
@@ -648,7 +649,9 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                 searchList[index];
                                           } else {
                                             Fluttertoast.showToast(
-                                                msg: "Please turn on Internet",
+                                                msg:
+                                                    "please_turn_on_internet_key"
+                                                        .tr(),
                                                 backgroundColor: ColorPrimary);
                                           }
                                         },
@@ -681,8 +684,8 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                     // Navigator.pop(context);
                                     if (product.length == 0) {
                                       Fluttertoast.showToast(
-                                          msg:
-                                              "Please select atlest one product",
+                                          msg: "Please_atleast_one_product_key"
+                                              .tr(),
                                           backgroundColor: ColorPrimary);
                                     } else {
                                       Navigator.push(
@@ -703,7 +706,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                     }
                                   } else {
                                     Fluttertoast.showToast(
-                                        msg: "Please turn on Internet",
+                                        msg: "please_turn_on_internet_key",
                                         backgroundColor: ColorPrimary);
                                   }
                                 },
@@ -712,7 +715,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                   color: ColorPrimary,
                                   child: Center(
                                     child: Text(
-                                      "DONE",
+                                      "DONE_key".tr(),
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold),
@@ -762,7 +765,7 @@ class _SizeColorBottomSheetState extends State<SizeColorBottomSheet> {
           Padding(
             padding: const EdgeInsets.only(left: 20, top: 20, bottom: 20),
             child: Text(
-              "Size",
+              "Size_key".tr(),
               style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
             ),
           ),
@@ -782,7 +785,7 @@ class _SizeColorBottomSheetState extends State<SizeColorBottomSheet> {
                       decoration: BoxDecoration(
                           color: Colors.amber,
                           borderRadius: BorderRadius.circular(50)),
-                      child: Center(child: Text("M")),
+                      child: Center(child: Text("M_key".tr())),
                     ),
                   ]);
                 }),
@@ -790,7 +793,7 @@ class _SizeColorBottomSheetState extends State<SizeColorBottomSheet> {
           Padding(
             padding: const EdgeInsets.only(left: 20, top: 20, bottom: 20),
             child: Text(
-              "Color",
+              "Color_key".tr(),
               style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
             ),
           ),
@@ -829,12 +832,12 @@ class _SizeColorBottomSheetState extends State<SizeColorBottomSheet> {
                     Navigator.pop(context);
                   },
                   child: Text(
-                    "Cancel",
+                    "Cancel_key".tr(),
                     style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Text(
-                  "Done",
+                  "Done_key".tr(),
                   style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.bold,

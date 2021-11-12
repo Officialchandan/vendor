@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
@@ -17,14 +18,39 @@ class InventoryScreen extends StatefulWidget {
 
 class _InventoryScreenState extends State<InventoryScreen> {
   CustomAppBar customAppBar = CustomAppBar(
-    title: "Inventory",
+    title: "Inventory_key".tr(),
   );
   final options = [
-    {"title": "Add Product", "subTitle": "click here to add product", "image": "assets/images/inventory.png", "id": 1},
-    {"title": "View Product", "subTitle": "click here to add product", "image": "assets/images/inventory-h2.png", "id": 2},
-    {"title": "Sale Return", "subTitle": "click here to add product", "image": "assets/images/inventory-h3.png", "id": 3},
-    {"title": "Purchase Return", "subTitle": "click here to add product", "image": "assets/images/inventory-h4.png", "id": 4},
-    {"title": "Purchase Order Entry", "subTitle": "click here to add product", "image": "assets/images/inventory-h5.png", "id": 5},
+    {
+      "title": "Add_Product_key".tr(),
+      "subTitle": "click_here_to_add_product_key".tr(),
+      "image": "assets/images/inventory.png",
+      "id": 1
+    },
+    {
+      "title": "View_Product_key".tr(),
+      "subTitle": "click_here_to_add_product_key".tr(),
+      "image": "assets/images/inventory-h2.png",
+      "id": 2
+    },
+    {
+      "title": "Sale_Return_key".tr(),
+      "subTitle": "click_here_to_add_product_key".tr(),
+      "image": "assets/images/inventory-h3.png",
+      "id": 3
+    },
+    {
+      "title": "Purchase_Return_key".tr(),
+      "subTitle": "click_here_to_add_product_key".tr(),
+      "image": "assets/images/inventory-h4.png",
+      "id": 4
+    },
+    {
+      "title": "Purchase_Order_Entry_key".tr(),
+      "subTitle": "click_here_to_add_product_key".tr(),
+      "image": "assets/images/inventory-h5.png",
+      "id": 5
+    },
     // {"title": "Add Product", "subTitle": "click here to add product", "image": "assets/images/category1.png", "id": 6},
   ];
 
@@ -52,16 +78,32 @@ class _InventoryScreenState extends State<InventoryScreen> {
                   child: ListTile(
                     onTap: () {
                       if (options[index]["id"] == 2) {
-                        Navigator.push(context, PageTransition(child: ViewCategoryScreen(), type: PageTransitionType.fade));
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: ViewCategoryScreen(),
+                                type: PageTransitionType.fade));
                       }
                       if (options[index]["id"] == 3) {
-                        Navigator.push(context, PageTransition(child: SaleReturnScreen(), type: PageTransitionType.fade));
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: SaleReturnScreen(),
+                                type: PageTransitionType.fade));
                       }
                       if (options[index]["id"] == 4) {
-                        Navigator.push(context, PageTransition(child: PurchaseReturnScreen(), type: PageTransitionType.fade));
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: PurchaseReturnScreen(),
+                                type: PageTransitionType.fade));
                       }
                       if (options[index]["id"] == 5) {
-                        Navigator.push(context, PageTransition(child: PurchaseEntry(), type: PageTransitionType.fade));
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: PurchaseEntry(),
+                                type: PageTransitionType.fade));
                       }
                       if (options[index]["id"] == 1) {
                         showSheet(context);
@@ -85,7 +127,9 @@ class _InventoryScreenState extends State<InventoryScreen> {
                       width: 5,
                       decoration: BoxDecoration(
                           color: Colors.blue,
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(5),
+                              bottomLeft: Radius.circular(5))),
                     ))
               ],
             ),
@@ -110,10 +154,14 @@ class _InventoryScreenState extends State<InventoryScreen> {
                     height: 30,
                     fit: BoxFit.contain,
                   ),
-                  title: Text("Add Own Product"),
+                  title: Text("Add_Own_Product_key".tr()),
                   onTap: () {
                     Navigator.pop(context);
-                    Navigator.push(context, PageTransition(child: AddProductScreen(), type: PageTransitionType.fade));
+                    Navigator.push(
+                        context,
+                        PageTransition(
+                            child: AddProductScreen(),
+                            type: PageTransitionType.fade));
                   },
                 ),
                 ListTile(
@@ -123,10 +171,14 @@ class _InventoryScreenState extends State<InventoryScreen> {
                     height: 30,
                     fit: BoxFit.contain,
                   ),
-                  title: Text("Add Suggested Product"),
+                  title: Text("Add_Suggested_Product_key".tr()),
                   onTap: () {
                     Navigator.pop(context);
-                    Navigator.push(context, PageTransition(child: SuggestedProductScreen(), type: PageTransitionType.fade));
+                    Navigator.push(
+                        context,
+                        PageTransition(
+                            child: SuggestedProductScreen(),
+                            type: PageTransitionType.fade));
                   },
                 ),
               ],

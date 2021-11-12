@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -72,7 +73,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
-                    hintText: "Search",
+                    hintText: "Search_key".tr(),
                     hintStyle: GoogleFonts.openSans(
                       fontWeight: FontWeight.w600,
                     ),
@@ -331,11 +332,11 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                                                                 .count--))
                                                                         : Fluttertoast.showToast(
                                                                             msg:
-                                                                                "Product cant be in negative");
+                                                                                "Product_cant_be_in_negative_key".tr());
                                                                   } else {
                                                                     Fluttertoast.showToast(
                                                                         msg:
-                                                                            "Please turn on Internet",
+                                                                            "please_turn_on_internet_key",
                                                                         backgroundColor:
                                                                             ColorPrimary);
                                                                   }
@@ -405,7 +406,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                                                   } else {
                                                                     Fluttertoast.showToast(
                                                                         msg:
-                                                                            "Please turn on Internet",
+                                                                            "please_turn_on_internet_key",
                                                                         backgroundColor:
                                                                             ColorPrimary);
                                                                   }
@@ -538,7 +539,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                             } else {
                                               Fluttertoast.showToast(
                                                   msg:
-                                                      "Please turn on Internet",
+                                                      "please_turn_on_internet_key",
                                                   backgroundColor:
                                                       ColorPrimary);
                                             }
@@ -574,7 +575,8 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                     if (product.length == 0) {
                                       Fluttertoast.showToast(
                                           msg:
-                                              "Please select atlest one product",
+                                              "Please_select_atlest_one_product_key"
+                                                  .tr(),
                                           backgroundColor: ColorPrimary);
                                     } else {
                                       Navigator.push(
@@ -589,7 +591,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                     }
                                   } else {
                                     Fluttertoast.showToast(
-                                        msg: "Please turn on Internet",
+                                        msg: "please_turn_on_internet_key",
                                         backgroundColor: ColorPrimary);
                                   }
                                 },
@@ -598,7 +600,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                   color: ColorPrimary,
                                   child: Center(
                                     child: Text(
-                                      "DONE",
+                                      "DONE_key".tr(),
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold),

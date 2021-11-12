@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:vendor/model/chat_papdi_module/without_inventory_Daily_Sale.dart';
@@ -130,7 +131,7 @@ class _SaleAmountState extends State<SaleAmount> {
                         if (snapshot.hasError) {
                           log("snapshot==>${snapshot.error}");
                           return Center(
-                            child: Text("Data Not Found"),
+                            child: Text("Data_Not_Found_key".tr()),
                           );
                         }
                         if (snapshot.hasData) {
@@ -404,7 +405,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                         borderColor: Colors.grey.shade500,
 
                                         title: ChartTitle(
-                                            text: "SALE AMT (INR) ",
+                                            text: "sale_amt_inr_key  ".tr(),
                                             textStyle: TextStyle(
                                                 fontSize: 14,
                                                 color: Colors.grey.shade600)),
@@ -445,7 +446,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                           //numberFormat: NumberFormat.currency(),
                                           title: AxisTitle(
                                               alignment: ChartAlignment.center,
-                                              text: "SALE AMT (INR) ",
+                                              text: "sale_amt_inr_key  ".tr(),
                                               textStyle: TextStyle(
                                                   fontSize: 11,
                                                   color: Colors.grey.shade600)),
@@ -466,7 +467,7 @@ class _SaleAmountState extends State<SaleAmount> {
                         }
                         if (snapshot.hasError) {
                           return Center(
-                            child: Text("Data Not Found"),
+                            child: Text("Data_Not_Found_key".tr()),
                           );
                         }
                         return Container(
@@ -637,7 +638,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                       borderColor: Colors.grey.shade500,
 
                                       title: ChartTitle(
-                                          text: "SALE AMT (INR) ",
+                                          text: "sale_amt_inr_key  ".tr(),
                                           textStyle: TextStyle(
                                               fontSize: 14,
                                               color: Colors.grey.shade600)),
@@ -675,7 +676,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                         //numberFormat: NumberFormat.currency(),
                                         title: AxisTitle(
                                             alignment: ChartAlignment.center,
-                                            text: "SALE AMT (INR) ",
+                                            text: "sale_amt_inr_key  ".tr(),
                                             textStyle: TextStyle(
                                                 fontSize: 11,
                                                 color: Colors.grey.shade600)),
@@ -694,7 +695,7 @@ class _SaleAmountState extends State<SaleAmount> {
                         }
                         if (snapshot.hasError) {
                           return Center(
-                            child: Text("Data Not Found"),
+                            child: Text("Data_Not_Found_key".tr()),
                           );
                         }
                         return Container(
@@ -819,7 +820,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                       borderColor: Colors.grey.shade500,
 
                                       title: ChartTitle(
-                                          text: "SALE AMT (INR) ",
+                                          text: "sale_amt_inr_key  ".tr(),
                                           textStyle: TextStyle(
                                               fontSize: 14,
                                               color: Colors.grey.shade600)),
@@ -857,7 +858,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                         //numberFormat: NumberFormat.currency(),
                                         title: AxisTitle(
                                             alignment: ChartAlignment.center,
-                                            text: "SALE AMT (INR) ",
+                                            text: "sale_amt_inr_key  ".tr(),
                                             textStyle: TextStyle(
                                                 fontSize: 11,
                                                 color: Colors.grey.shade600)),

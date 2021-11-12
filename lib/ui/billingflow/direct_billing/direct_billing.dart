@@ -1,6 +1,7 @@
 import 'dart:collection';
 import 'dart:developer';
 
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -71,7 +72,7 @@ class _DirectBillingState extends State<DirectBilling> {
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
-              title: Text("Billing",
+              title: Text("billing_key".tr(),
                   style: TextStyle(fontWeight: FontWeight.w600)),
               leading: IconButton(
                 icon: Icon(Icons.arrow_back_ios),
@@ -110,7 +111,10 @@ class _DirectBillingState extends State<DirectBilling> {
                         datas = state.data;
 
                         _displayDialog(
-                            context, 1, "Please Enter OTP", "Enter OTP");
+                            context,
+                            1,
+                            "please_enter_password_key".tr(),
+                            "enter_otp_key".tr());
                       }
 
                       if (state is GetDirectBillingLoadingstate) {}
@@ -167,9 +171,9 @@ class _DirectBillingState extends State<DirectBilling> {
                               FilteringTextInputFormatter.digitsOnly
                             ],
                             maxLength: 10,
-                            decoration: const InputDecoration(
-                              hintText: 'Enter Customer phone number',
-                              labelText: 'Mobile Number',
+                            decoration: InputDecoration(
+                              hintText: 'Enter_Customer_phone_number_key'.tr(),
+                              labelText: 'Mobile_Number_key'.tr(),
                               counterText: "",
                               contentPadding: EdgeInsets.all(0),
                               fillColor: Colors.transparent,
@@ -200,9 +204,9 @@ class _DirectBillingState extends State<DirectBilling> {
                                 padding: const EdgeInsets.only(top: 8.0),
                                 child: TextFormField(
                                     controller: nameController,
-                                    decoration: const InputDecoration(
-                                      hintText: 'Enter Customer Name',
-                                      labelText: 'Full Name',
+                                    decoration: InputDecoration(
+                                      hintText: 'Enter_Customer_Name_key'.tr(),
+                                      labelText: 'Full_Name_key'.tr(),
                                       counterText: "",
                                       contentPadding: EdgeInsets.all(0),
                                       fillColor: Colors.transparent,
@@ -241,9 +245,9 @@ class _DirectBillingState extends State<DirectBilling> {
                           FilteringTextInputFormatter.digitsOnly
                         ],
                         maxLength: 10,
-                        decoration: const InputDecoration(
-                          hintText: 'Amount spent here',
-                          labelText: 'Amount',
+                        decoration: InputDecoration(
+                          hintText: 'amount_spent_here_key'.tr(),
+                          labelText: 'Amount_key'.tr(),
                           counterText: "",
                           contentPadding: EdgeInsets.all(0),
                           fillColor: Colors.transparent,
@@ -274,13 +278,13 @@ class _DirectBillingState extends State<DirectBilling> {
                     height: 20,
                   ),
                   Container(
-                    child: Text("Total Payable Amount $amount"),
+                    child: Text("Total_Payable_Amount_key $amount".tr()),
                   ),
                   SizedBox(
                     height: 20,
                   ),
                   Container(
-                    child: Text("Total Coin Deducted $coinss"),
+                    child: Text("Total_Coin_Deducted_key $coinss".tr()),
                   ),
                   SizedBox(
                     height: 20,
@@ -312,12 +316,12 @@ class _DirectBillingState extends State<DirectBilling> {
                                 });
                               } else {
                                 Fluttertoast.showToast(
-                                    msg: "Please enter First",
+                                    msg: "Please_enter_number_First_key".tr(),
                                     backgroundColor: ColorPrimary);
                               }
                             } else {
                               Fluttertoast.showToast(
-                                  msg: "Please enter 10 digits number",
+                                  msg: "Please_enter_10_digits_number_key".tr(),
                                   backgroundColor: ColorPrimary);
                             }
                             calculaton(amountController.text.isEmpty
@@ -327,7 +331,7 @@ class _DirectBillingState extends State<DirectBilling> {
                         ),
                       ),
                       Text(
-                        "  Redeemed Coins",
+                        "  Redeemed_Coins_key".tr(),
                         style: TextStyle(fontSize: 17),
                       ),
                     ],
@@ -345,17 +349,17 @@ class _DirectBillingState extends State<DirectBilling> {
                                 userRegister(context);
                               } else {
                                 Fluttertoast.showToast(
-                                    msg: "Please enter Name ",
+                                    msg: "Please_enter_Name_key ".tr(),
                                     backgroundColor: ColorPrimary);
                               }
                             } else {
                               Fluttertoast.showToast(
-                                  msg: "Please enter amount",
+                                  msg: "please_enter_amount_key".tr(),
                                   backgroundColor: ColorPrimary);
                             }
                           } else {
                             Fluttertoast.showToast(
-                                msg: "Please enter 10 digit mobile number",
+                                msg: "Please_enter_10_digits_number_key".tr(),
                                 backgroundColor: ColorPrimary);
                           }
                         } else {
@@ -364,12 +368,12 @@ class _DirectBillingState extends State<DirectBilling> {
                               directBilling(context);
                             } else {
                               Fluttertoast.showToast(
-                                  msg: "Please enter amount",
+                                  msg: "please_enter_amount_key".tr(),
                                   backgroundColor: ColorPrimary);
                             }
                           } else {
                             Fluttertoast.showToast(
-                                msg: "Please enter 10 digit mobile number",
+                                msg: "Please_enter_10_digits_number_key".tr(),
                                 backgroundColor: ColorPrimary);
                           }
                         }
@@ -381,7 +385,7 @@ class _DirectBillingState extends State<DirectBilling> {
                             borderRadius: BorderRadius.circular(10)),
                         width: 250,
                         child: Center(
-                          child: Text("SUBMIT",
+                          child: Text("submit_button_key".tr(),
                               style: TextStyle(
                                   fontSize: 17,
                                   color: Colors.white,
@@ -526,7 +530,7 @@ class _DirectBillingState extends State<DirectBilling> {
                       }
                     },
                     child: new Text(
-                      "DONE",
+                      "DONE_key".tr(),
                       style: GoogleFonts.openSans(
                           fontSize: 17,
                           fontWeight: FontWeight.w600,

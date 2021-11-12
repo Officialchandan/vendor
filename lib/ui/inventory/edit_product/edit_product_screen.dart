@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:collection';
 
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -80,8 +81,9 @@ class EditProductScreenState extends State<EditProductScreen> {
             categoryName: widget.product.productOption[i].optionName,
             variantName: widget.product.productOption[i].optionName);
 
-        VariantOption variantOption =
-            VariantOption(name: widget.product.productOption[i].optionName, value: widget.product.productOption[i].value);
+        VariantOption variantOption = VariantOption(
+            name: widget.product.productOption[i].optionName,
+            value: widget.product.productOption[i].value);
         variantType.add(variant);
         variantOptions.add(variantOption);
         if (i == widget.product.productOption.length - 1) {
@@ -107,8 +109,10 @@ class EditProductScreenState extends State<EditProductScreen> {
           BlocListener<AddProductBloc, AddProductState>(
             listener: (context, state) {
               if (state is SelectImageState) {
-                addProductBloc
-                    .add(UploadImageEvent(productId: widget.product.productId, variantId: widget.product.id, images: state.image));
+                addProductBloc.add(UploadImageEvent(
+                    productId: widget.product.productId,
+                    variantId: widget.product.id,
+                    images: state.image));
               }
               if (state is UploadImageSuccessState) {
                 state.image.forEach((element) {
@@ -141,7 +145,7 @@ class EditProductScreenState extends State<EditProductScreen> {
         ],
         child: Scaffold(
           appBar: CustomAppBar(
-            title: "Edit Product",
+            title: "Edit_Product_key".tr(),
           ),
           body: SingleChildScrollView(
             padding: EdgeInsets.all(15),
@@ -155,17 +159,23 @@ class EditProductScreenState extends State<EditProductScreen> {
                       Container(
                         width: 80,
                         height: 80,
-                        decoration: BoxDecoration(color: Colors.grey.shade100, borderRadius: BorderRadius.circular(5)),
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade100,
+                            borderRadius: BorderRadius.circular(5)),
                         child: IconButton(
                           onPressed: () {
                             showCupertinoModalPopup(
                                 context: context,
                                 builder: (context) => SelectImageBottomSheet(
                                       openGallery: () {
-                                        addProductBloc.add(SelectImageEvent(context: context, source: ImageSource.gallery));
+                                        addProductBloc.add(SelectImageEvent(
+                                            context: context,
+                                            source: ImageSource.gallery));
                                       },
                                       openCamera: () {
-                                        addProductBloc.add(SelectImageEvent(context: context, source: ImageSource.camera));
+                                        addProductBloc.add(SelectImageEvent(
+                                            context: context,
+                                            source: ImageSource.camera));
                                       },
                                     ));
                           },
@@ -181,12 +191,14 @@ class EditProductScreenState extends State<EditProductScreen> {
                         builder: (context, snap) {
                           if (snap.hasData && snap.data!.isNotEmpty) {
                             return Row(
-                              children: List.generate(snap.data!.length, (index) {
+                              children:
+                                  List.generate(snap.data!.length, (index) {
                                 return Stack(children: [
                                   Container(
                                     width: 80,
                                     height: 80,
-                                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                                    margin: EdgeInsets.symmetric(
+                                        vertical: 10, horizontal: 10),
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(5),
                                         image: DecorationImage(
@@ -203,14 +215,17 @@ class EditProductScreenState extends State<EditProductScreen> {
                                       child: Container(
                                           width: 25,
                                           padding: EdgeInsets.all(3),
-                                          decoration: BoxDecoration(shape: BoxShape.circle, color: ColorPrimary),
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: ColorPrimary),
                                           child: Icon(
                                             Icons.delete,
                                             color: Colors.white,
                                             size: 15,
                                           )),
                                       onTap: () {
-                                        editProductBloc.add(DeleteImageEvent(image: snap.data![index]));
+                                        editProductBloc.add(DeleteImageEvent(
+                                            image: snap.data![index]));
                                       },
                                     ),
                                   )
@@ -231,7 +246,7 @@ class EditProductScreenState extends State<EditProductScreen> {
                 TextFormField(
                   controller: edtProductName,
                   decoration: InputDecoration(
-                    labelText: "Product name",
+                    labelText: "Product_name_key".tr(),
                   ),
                 ),
                 const SizedBox(
@@ -251,10 +266,14 @@ class EditProductScreenState extends State<EditProductScreen> {
                   },
                   controller: edtCategory,
                   decoration: InputDecoration(
-                      labelText: "Category",
-                      hintText: "Select category",
+                      labelText: "Category_key".tr(),
+                      hintText: "Select_Category_key".tr(),
                       suffixIcon: Icon(Icons.keyboard_arrow_right_sharp),
-                      suffixIconConstraints: BoxConstraints(minWidth: 20, maxWidth: 21, minHeight: 20, maxHeight: 21)),
+                      suffixIconConstraints: BoxConstraints(
+                          minWidth: 20,
+                          maxWidth: 21,
+                          minHeight: 20,
+                          maxHeight: 21)),
                 ),
                 const SizedBox(
                   height: 15,
@@ -264,7 +283,8 @@ class EditProductScreenState extends State<EditProductScreen> {
                     Expanded(
                       child: TextFormField(
                         initialValue: widget.product.purchasePrice,
-                        decoration: InputDecoration(labelText: "Purchase price"),
+                        decoration: InputDecoration(
+                            labelText: "Purchase_price_key".tr()),
                         onChanged: (text) {
                           widget.product.purchasePrice = text;
                         },
@@ -277,7 +297,7 @@ class EditProductScreenState extends State<EditProductScreen> {
                     Expanded(
                       child: TextFormField(
                         initialValue: widget.product.mrp,
-                        decoration: InputDecoration(labelText: "MRP"),
+                        decoration: InputDecoration(labelText: "MRP_key".tr()),
                         onChanged: (text) {
                           widget.product.mrp = text;
                         },
@@ -290,7 +310,8 @@ class EditProductScreenState extends State<EditProductScreen> {
                     Expanded(
                       child: TextFormField(
                         initialValue: widget.product.sellingPrice,
-                        decoration: InputDecoration(labelText: "Selling price"),
+                        decoration: InputDecoration(
+                            labelText: "Selling_price_key".tr()),
                         onChanged: (text) {
                           widget.product.sellingPrice = text;
                         },
@@ -307,7 +328,8 @@ class EditProductScreenState extends State<EditProductScreen> {
                     Expanded(
                       child: TextFormField(
                         initialValue: widget.product.stock.toString(),
-                        decoration: InputDecoration(labelText: "Stock"),
+                        decoration:
+                            InputDecoration(labelText: "Stock_key".tr()),
                         onChanged: (text) {
                           widget.product.stock = int.parse(text);
                         },
@@ -323,7 +345,8 @@ class EditProductScreenState extends State<EditProductScreen> {
                         controller: edtUnit,
                         onTap: () {
                           if (categoryId.isEmpty) {
-                            Utility.showToast("Please select category first.");
+                            Utility.showToast(
+                                "Please_select_category_first_key".tr());
                             return;
                           }
 
@@ -339,9 +362,13 @@ class EditProductScreenState extends State<EditProductScreen> {
                               });
                         },
                         decoration: InputDecoration(
-                            labelText: "Unit",
+                            labelText: "Unit_key".tr(),
                             suffixIcon: Icon(Icons.keyboard_arrow_right_sharp),
-                            suffixIconConstraints: BoxConstraints(minWidth: 20, maxWidth: 21, minHeight: 20, maxHeight: 21)),
+                            suffixIconConstraints: BoxConstraints(
+                                minWidth: 20,
+                                maxWidth: 21,
+                                minHeight: 20,
+                                maxHeight: 21)),
                       ),
                       flex: 2,
                     ),
@@ -355,7 +382,7 @@ class EditProductScreenState extends State<EditProductScreen> {
                   controller: edtOptions,
                   onTap: () {
                     if (edtCategory.text.isEmpty)
-                      Utility.showToast("Please select category");
+                      Utility.showToast("Please_select_category_key".tr());
                     else
                       showModalBottomSheet(
                           context: context,
@@ -367,34 +394,46 @@ class EditProductScreenState extends State<EditProductScreen> {
                                 print("on variant type select -> $variants");
 
                                 if (variants.isEmpty) {
-                                  Utility.showToast("Please select at least one option");
+                                  Utility.showToast(
+                                      "Please_select_at_least_one_option_key"
+                                          .tr());
                                 } else {
                                   variantType = variants;
                                   List<VariantOption> options = [];
                                   String variantName = "";
                                   for (int i = 0; i < variantType.length; i++) {
-                                    options.add(VariantOption(name: variantType[i].variantName, value: ""));
+                                    options.add(VariantOption(
+                                        name: variantType[i].variantName,
+                                        value: ""));
 
                                     if (i == variantType.length - 1)
-                                      variantName = variantName + variantType[i].variantName;
+                                      variantName = variantName +
+                                          variantType[i].variantName;
                                     else
-                                      variantName = variantName + variantType[i].variantName + " / ";
+                                      variantName = variantName +
+                                          variantType[i].variantName +
+                                          " / ";
                                   }
                                   ProductVariantModel model = variantModel;
                                   model.option = options;
                                   edtOptions.text = variantName;
                                   print(model.toString());
-                                  addProductBloc.add(SelectVariantOptionEvent(variant: model));
+                                  addProductBloc.add(
+                                      SelectVariantOptionEvent(variant: model));
                                 }
                               },
                             );
                           });
                   },
                   decoration: InputDecoration(
-                      labelText: "options",
-                      hintText: "Select options",
+                      labelText: "options_key".tr(),
+                      hintText: "Select_options_key".tr(),
                       suffixIcon: Icon(Icons.keyboard_arrow_right),
-                      suffixIconConstraints: BoxConstraints(minWidth: 20, maxWidth: 21, minHeight: 20, maxHeight: 21)),
+                      suffixIconConstraints: BoxConstraints(
+                          minWidth: 20,
+                          maxWidth: 21,
+                          minHeight: 20,
+                          maxHeight: 21)),
                 ),
                 const SizedBox(
                   height: 15,
@@ -405,7 +444,8 @@ class EditProductScreenState extends State<EditProductScreen> {
                       variantModel = state.variant;
                     }
                     return Column(
-                      children: List.generate(variantModel.option.length, (index) {
+                      children:
+                          List.generate(variantModel.option.length, (index) {
                         return VariantOptionWidget(variantModel.option[index]);
                       }),
                     );
@@ -422,7 +462,7 @@ class EditProductScreenState extends State<EditProductScreen> {
               height: 50,
               shape: RoundedRectangleBorder(),
               color: ColorPrimary,
-              child: Text("UPDATE"),
+              child: Text("update_button_key".tr()),
             ),
           ),
         ),
@@ -432,49 +472,52 @@ class EditProductScreenState extends State<EditProductScreen> {
 
   void update(BuildContext context) async {
     if (edtProductName.text.trim().isEmpty) {
-      Utility.showToast("Please enter product name");
+      Utility.showToast("Please_enter_product_name_key".tr());
       return;
     }
     if (edtCategory.text.isEmpty || categoryId.isEmpty) {
-      Utility.showToast("Please select product category");
+      Utility.showToast("Please_select_product_category_key".tr());
       return;
     }
 
     if (variantModel.purchasePrice.isEmpty) {
-      Utility.showToast("Please enter purchase price");
+      Utility.showToast("Please_enter_purchase_price_key".tr());
       return;
     }
     if (variantModel.sellingPrice.isEmpty) {
-      Utility.showToast("Please enter selling price");
+      Utility.showToast("Please_enter_selling_price_key".tr());
       return;
     }
     if (variantModel.mrp.isEmpty) {
-      Utility.showToast("Please enter mrp");
+      Utility.showToast("please_enter_mrp_key".tr());
       return;
     }
-    if (double.parse(variantModel.sellingPrice.trim()) > double.parse(variantModel.mrp.trim())) {
-      Utility.showToast("Selling Price cannot be more than MRP");
+    if (double.parse(variantModel.sellingPrice.trim()) >
+        double.parse(variantModel.mrp.trim())) {
+      Utility.showToast("Selling_Price_cannot_be_more_than_MRP_key".tr());
       return;
     }
     if (edtUnit.text.isEmpty) {
-      Utility.showToast("Please select unit");
+      Utility.showToast("please_select_unit_key".tr());
       return;
     }
     if (variantModel.stock.isEmpty) {
-      Utility.showToast("Stock can not be empty");
+      Utility.showToast("stock_can_not_be_empty_key".tr());
       return;
     }
     if (variantModel.option.isNotEmpty) {
       for (int i = 0; i < variantModel.option.length; i++) {
         if (variantModel.option[i].value.isEmpty) {
-          Utility.showToast("Please enter ${variantModel.option[i].name}");
+          Utility.showToast(
+              "Please_enter_key ${variantModel.option[i].name}".tr());
           return;
         }
       }
     }
 
     Map<String, dynamic> input = HashMap<String, dynamic>();
-    input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    input["vendor_id"] =
+        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     input["id"] = widget.product.id;
     input["product_id"] = widget.product.productId;
     input["category_id"] = categoryId;

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/model/get_categories_response.dart';
@@ -48,8 +49,9 @@ class _SelectCategoriesScreenState extends State<SelectCategoriesScreen> {
           ),
           title: AutoSizeText(
             // "${AppTranslations.of(context)!.text(StringConst.all_categories)}",
-            "Select Category",
-            style: Theme.of(context).textTheme.headline6!.merge(TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+            "Select_Category_key".tr(),
+            style: Theme.of(context).textTheme.headline6!.merge(
+                TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
             maxFontSize: 25,
             minFontSize: 15,
           ),
@@ -82,7 +84,9 @@ class _SelectCategoriesScreenState extends State<SelectCategoriesScreen> {
                 itemBuilder: (context, index) {
                   return Container(
                     margin: EdgeInsets.all(10),
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.grey.shade100),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.grey.shade100),
                     child: ListTile(
                       tileColor: Colors.grey.shade100,
                       shape: RoundedRectangleBorder(
@@ -118,15 +122,16 @@ class _SelectCategoriesScreenState extends State<SelectCategoriesScreen> {
               return Container(
                 margin: EdgeInsets.all(10),
                 child: AppButton(
-                  title: "DONE",
+                  title: "DONE_key".tr(),
                   width: double.infinity,
                   onPressed: () {
                     if (groupId != -1) {
-                      CategoryModel categoryModel = categoryList.singleWhere((element) => element.id == groupId.toString());
+                      CategoryModel categoryModel = categoryList.singleWhere(
+                          (element) => element.id == groupId.toString());
 
                       // Navigator.pushNamed(context, Routs.VENDOR_LIST_SCREEN, arguments: categoryModel);
                     } else {
-                      Utility.showToast("Please select a category");
+                      Utility.showToast("Please_select_category_key".tr());
                     }
                   },
                 ),

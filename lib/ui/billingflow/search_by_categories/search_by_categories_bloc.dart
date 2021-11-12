@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:vendor/model/product_by_category_response.dart';
@@ -52,10 +53,10 @@ class SearchByCategoriesBloc
         }
       } catch (error) {
         yield GetSearchByCategoriesFailureState(
-            message: "internal Server error");
+            message: "internal_Server_error_key".tr());
       }
     } else {
-      Fluttertoast.showToast(msg: "Turn on the internet");
+      Fluttertoast.showToast(msg: "Turn_on_the_internet_key".tr());
     }
   }
 }

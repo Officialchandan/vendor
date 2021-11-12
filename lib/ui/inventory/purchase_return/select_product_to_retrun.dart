@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:collection';
 
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:vendor/main.dart';
@@ -53,14 +54,26 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
           decoration: InputDecoration(
             filled: true,
             fillColor: Color.fromRGBO(242, 242, 242, 1),
-            hintText: "Search products",
+            hintText: "Search_products_key".tr(),
             contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-            enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-            disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-            focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-            errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-            focusedErrorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide.none),
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide.none),
+            disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide.none),
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide.none),
+            errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide.none),
+            focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide.none),
           ),
           onChanged: (text) {
             if (text.isNotEmpty) {
@@ -105,9 +118,11 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
                   if (product.productOption.isNotEmpty) {
                     for (int i = 0; i < product.productOption.length; i++) {
                       if (product.productOption.length - 1 == i)
-                        variantName += product.productOption[i].value.toString();
+                        variantName +=
+                            product.productOption[i].value.toString();
                       else
-                        variantName += product.productOption[i].value.toString() + ", ";
+                        variantName +=
+                            product.productOption[i].value.toString() + ", ";
                     }
                   }
 
@@ -123,10 +138,12 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: ListTile(
-                              contentPadding: EdgeInsets.only(left: 50, right: 5, top: 20, bottom: 20),
+                              contentPadding: EdgeInsets.only(
+                                  left: 50, right: 5, top: 20, bottom: 20),
                               title: Container(
                                   child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
@@ -136,74 +153,94 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
                                   ),
                                   RichText(
                                       text: TextSpan(children: [
-                                    TextSpan(text: "₹ ${product.sellingPrice}\t", style: TextStyle(color: ColorPrimary)),
+                                    TextSpan(
+                                        text: "₹ ${product.sellingPrice}\t",
+                                        style: TextStyle(color: ColorPrimary)),
                                     TextSpan(
                                         text: "₹ ${product.mrp}",
-                                        style: TextStyle(color: Colors.black, decoration: TextDecoration.lineThrough))
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            decoration:
+                                                TextDecoration.lineThrough))
                                   ])),
                                   const SizedBox(
                                     height: 10,
                                   ),
-                                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          // color: Colors.amber,
-                                          borderRadius: BorderRadius.circular(25),
-                                          border: Border.all(color: Colors.black)),
-                                      height: 25,
-                                      // width: 90,
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Container(
-                                            height: 25,
-                                            width: 30,
-                                            child: IconButton(
-                                                padding: EdgeInsets.all(0),
-                                                onPressed: () {
-                                                  if (product.returnQty > 1) {
-                                                    product.returnQty = product.returnQty - 1;
-                                                    streamController.add(products);
-                                                  }
-                                                },
-                                                iconSize: 20,
-                                                splashRadius: 10,
-                                                icon: Icon(
-                                                  Icons.remove,
-                                                )),
-                                          ),
-                                          Container(
-                                            width: 20,
-                                            height: 25,
-                                            color: ColorPrimary,
-                                            child: Center(
-                                              child: Text(
-                                                "${product.returnQty}",
-                                                style: TextStyle(color: Colors.white, fontSize: 14),
+                                  Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                              // color: Colors.amber,
+                                              borderRadius:
+                                                  BorderRadius.circular(25),
+                                              border: Border.all(
+                                                  color: Colors.black)),
+                                          height: 25,
+                                          // width: 90,
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Container(
+                                                height: 25,
+                                                width: 30,
+                                                child: IconButton(
+                                                    padding: EdgeInsets.all(0),
+                                                    onPressed: () {
+                                                      if (product.returnQty >
+                                                          1) {
+                                                        product.returnQty =
+                                                            product.returnQty -
+                                                                1;
+                                                        streamController
+                                                            .add(products);
+                                                      }
+                                                    },
+                                                    iconSize: 20,
+                                                    splashRadius: 10,
+                                                    icon: Icon(
+                                                      Icons.remove,
+                                                    )),
                                               ),
-                                            ),
+                                              Container(
+                                                width: 20,
+                                                height: 25,
+                                                color: ColorPrimary,
+                                                child: Center(
+                                                  child: Text(
+                                                    "${product.returnQty}",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 14),
+                                                  ),
+                                                ),
+                                              ),
+                                              Container(
+                                                height: 25,
+                                                width: 30,
+                                                child: IconButton(
+                                                    padding: EdgeInsets.all(0),
+                                                    onPressed: () {
+                                                      if (product.returnQty <
+                                                          product.stock) {
+                                                        product.returnQty =
+                                                            product.returnQty +
+                                                                1;
+                                                        streamController
+                                                            .add(products);
+                                                      }
+                                                    },
+                                                    iconSize: 20,
+                                                    splashRadius: 10,
+                                                    icon: Icon(
+                                                      Icons.add,
+                                                    )),
+                                              )
+                                            ],
                                           ),
-                                          Container(
-                                            height: 25,
-                                            width: 30,
-                                            child: IconButton(
-                                                padding: EdgeInsets.all(0),
-                                                onPressed: () {
-                                                  if (product.returnQty < product.stock) {
-                                                    product.returnQty = product.returnQty + 1;
-                                                    streamController.add(products);
-                                                  }
-                                                },
-                                                iconSize: 20,
-                                                splashRadius: 10,
-                                                icon: Icon(
-                                                  Icons.add,
-                                                )),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ]),
+                                        ),
+                                      ]),
                                 ],
                               )),
                               trailing: Checkbox(
@@ -226,7 +263,11 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
                                         height: 60,
                                         width: 60,
                                         fit: BoxFit.contain,
-                                        image: NetworkImage(snapshot.data![index].productImages.first.productImage),
+                                        image: NetworkImage(snapshot
+                                            .data![index]
+                                            .productImages
+                                            .first
+                                            .productImage),
                                       )
                                     : Image(
                                         image: AssetImage(
@@ -256,7 +297,8 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
         child: MaterialButton(
           elevation: 0,
           onPressed: () {
-            List<ProductModel> returnProductList = products.where((element) => element.check).toList();
+            List<ProductModel> returnProductList =
+                products.where((element) => element.check).toList();
 
             purchaseReturn(returnProductList);
           },
@@ -265,7 +307,7 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
           disabledColor: Colors.grey,
           height: 50,
           disabledTextColor: Colors.white,
-          child: Text("DONE"),
+          child: Text("DONE_key".tr()),
         ),
       ),
     );
@@ -275,7 +317,8 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
     if (await Network.isConnected()) {
       Map input = HashMap<String, dynamic>();
 
-      input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      input["vendor_id"] =
+          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       String id = "";
       String stock = "";
@@ -314,7 +357,8 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
       if (widget.categoryId == null) {
         response = await apiProvider.getAllVendorProducts();
       } else {
-        response = await apiProvider.getProductByCategories(widget.categoryId.toString());
+        response = await apiProvider
+            .getProductByCategories(widget.categoryId.toString());
       }
 
       if (response.success) {

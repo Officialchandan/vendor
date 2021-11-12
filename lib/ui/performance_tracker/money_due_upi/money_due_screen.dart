@@ -1,3 +1,4 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vendor/ui/performance_tracker/money_due_upi/bloc/money_due_bloc.dart';
@@ -25,7 +26,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
       create: (context) => moneyDueBloc,
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Money Due - UPI"),
+          title: Text("Money_Due_UPI_key".tr()),
           elevation: 0,
         ),
         body: SingleChildScrollView(
@@ -52,12 +53,15 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
 
                         return Text(
                           "₹ $dueAmount",
-                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
                         );
                       },
                     ),
                     Text(
-                      "Company due amount",
+                      "Company_due_amount_key".tr(),
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,

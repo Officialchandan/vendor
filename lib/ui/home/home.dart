@@ -1,11 +1,12 @@
 import 'dart:developer';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:share/share.dart';
-import 'package:vendor/ui/home/share.dart';
+
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/routs.dart';
 
@@ -20,20 +21,20 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<String> name = [
-    "Billing",
-    "Inventory",
-    "Staff Management",
-    "Online Shop",
-    "Performance Tracker",
-    "Account Management"
+    "billing_key".tr(),
+    "Inventory_key".tr(),
+    "Staff_Management_key".tr(),
+    "Online_Shop_key".tr(),
+    "performance_tracker_key".tr(),
+    "Account_Management_key".tr()
   ];
   List<String> description = [
-    "Billing description",
-    "Inventory description",
-    "Staff Management description",
-    "Online Shop description",
-    "Performance Tracker description",
-    "Account Management description"
+    "Billing_description_key".tr(),
+    "Inventory_description_key".tr(),
+    "Staff_Management_description_key".tr(),
+    "Online_Shop_description_key".tr(),
+    "Performance_Tracker_description_key".tr(),
+    "Account_Management_description_key".tr()
   ];
 
   List<String> images = [
@@ -60,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Home",
+          "home_key".tr(),
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         leading: Text(""),
@@ -89,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       size: 12,
                     ),
                     Text(
-                      " Share Store  ",
+                      " Share_Store_key  ".tr(),
                       style: TextStyle(
                           color: ColorPrimary,
                           fontWeight: FontWeight.w600,

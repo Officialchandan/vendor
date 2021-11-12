@@ -1,3 +1,4 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
@@ -14,7 +15,7 @@ class _PurchaseReturnScreenState extends State<PurchaseReturnScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "Purchase Return",
+        title: "Purchase_Return_key".tr(),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(15),
@@ -29,9 +30,13 @@ class _PurchaseReturnScreenState extends State<PurchaseReturnScreen> {
               autofocus: false,
               keyboardType: TextInputType.phone,
               decoration: InputDecoration(
-                  hintText: "Choose Product",
+                  hintText: "Choose_Product_key".tr(),
                   suffixIcon: Icon(Icons.keyboard_arrow_right_sharp),
-                  suffixIconConstraints: BoxConstraints(maxWidth: 15, minWidth: 10, maxHeight: 15, minHeight: 10)),
+                  suffixIconConstraints: BoxConstraints(
+                      maxWidth: 15,
+                      minWidth: 10,
+                      maxHeight: 15,
+                      minHeight: 10)),
             ),
           ],
         ),
@@ -42,7 +47,9 @@ class _PurchaseReturnScreenState extends State<PurchaseReturnScreen> {
   void selectCategory(BuildContext context) async {
     showModalBottomSheet(
         context: context,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15))),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15), topRight: Radius.circular(15))),
         builder: (context) {
           return IntrinsicHeight(
               child: Padding(
@@ -80,7 +87,7 @@ class _PurchaseReturnScreenState extends State<PurchaseReturnScreen> {
                             Navigator.pop(context);
                           },
                           child: Text(
-                            "Close",
+                            "Close_key".tr(),
                             style: TextStyle(),
                           )),
                     ],

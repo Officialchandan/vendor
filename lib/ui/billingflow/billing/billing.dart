@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -85,7 +86,7 @@ class _BillingScreenState extends State<BillingScreen> {
           builder: (context, state) {
             return Scaffold(
               appBar: AppBar(
-                title: Text("Billing",
+                title: Text("billing_key".tr(),
                     style: TextStyle(fontWeight: FontWeight.w600)),
                 leadingWidth: 140,
                 leading: userStatus == 1
@@ -106,7 +107,7 @@ class _BillingScreenState extends State<BillingScreen> {
                                 borderRadius: BorderRadius.circular(5)),
                             child: Center(
                               child: Text(
-                                "Direct Billing",
+                                "Direct_Billing_key".tr(),
                                 style: TextStyle(
                                     color: ColorPrimary,
                                     fontWeight: FontWeight.bold),
@@ -245,9 +246,11 @@ class _BillingScreenState extends State<BillingScreen> {
                                       FilteringTextInputFormatter.digitsOnly
                                     ],
                                     maxLength: 10,
-                                    decoration: const InputDecoration(
-                                      hintText: 'Enter Customer phone number',
-                                      labelText: 'Mobile Number',
+                                    decoration: InputDecoration(
+                                      hintText:
+                                          'Enter_Customer_phone_number_key'
+                                              .tr(),
+                                      labelText: 'Mobile_Number_key'.tr(),
                                       counterText: "",
                                       contentPadding: EdgeInsets.all(0),
                                       fillColor: Colors.transparent,
@@ -280,9 +283,11 @@ class _BillingScreenState extends State<BillingScreen> {
                                             const EdgeInsets.only(top: 8.0),
                                         child: TextFormField(
                                             controller: nameController,
-                                            decoration: const InputDecoration(
-                                              hintText: 'Enter Customer Name',
-                                              labelText: 'Full Name',
+                                            decoration: InputDecoration(
+                                              hintText:
+                                                  'Enter_Customer_Name_key'
+                                                      .tr(),
+                                              labelText: 'Full_Name_key'.tr(),
                                               counterText: "",
                                               contentPadding: EdgeInsets.all(0),
                                               fillColor: Colors.transparent,
@@ -338,7 +343,7 @@ class _BillingScreenState extends State<BillingScreen> {
                                       });
                                     } else {
                                       Fluttertoast.showToast(
-                                          msg: "Please enter Name ",
+                                          msg: "Please_enter_Name_key ".tr(),
                                           backgroundColor: ColorPrimary);
                                     }
                                   }
@@ -361,12 +366,13 @@ class _BillingScreenState extends State<BillingScreen> {
                                 }
                               } else {
                                 Fluttertoast.showToast(
-                                    msg: "Please Enter vailid Number first",
+                                    msg: "Please_Enter_Vailid_Number_first_key"
+                                        .tr(),
                                     backgroundColor: ColorPrimary);
                               }
                             } else {
                               Fluttertoast.showToast(
-                                  msg: "Please turn on Internet",
+                                  msg: "Please_turn_on_Internet_key".tr(),
                                   backgroundColor: ColorPrimary);
                             }
                           },
@@ -379,7 +385,7 @@ class _BillingScreenState extends State<BillingScreen> {
                               children: [
                                 Icon(Icons.search),
                                 Text(
-                                  "  Search All Products",
+                                  "  Search_All_Products_key".tr(),
                                   style: TextStyle(
                                       fontSize: 17,
                                       fontWeight: FontWeight.bold),
@@ -392,7 +398,7 @@ class _BillingScreenState extends State<BillingScreen> {
                           height: 10,
                         ),
                         Text(
-                          "Search By Category",
+                          "Search_By_Category_key".tr(),
                           style: TextStyle(
                               fontSize: 17, fontWeight: FontWeight.bold),
                         ),
@@ -459,7 +465,7 @@ class _BillingScreenState extends State<BillingScreen> {
                           .then((value) => FocusScope.of(context).unfocus());
                     } else {
                       Fluttertoast.showToast(
-                          msg: "Please turn on Internet",
+                          msg: "Please_turn_on_Internet_key".tr(),
                           backgroundColor: ColorPrimary);
                     }
                   },
@@ -472,7 +478,7 @@ class _BillingScreenState extends State<BillingScreen> {
                         color: Colors.white),
                     child: Center(
                         child: Text(
-                      "+ Add New Product",
+                      "+ Add_New_Product_key".tr(),
                       style: TextStyle(
                           color: ColorPrimary,
                           fontSize: 18,
@@ -523,7 +529,7 @@ class _BillingScreenState extends State<BillingScreen> {
                         });
                       } else {
                         Fluttertoast.showToast(
-                            msg: "Please enter Name ",
+                            msg: "Please_enter_Name_key ".tr(),
                             backgroundColor: ColorPrimary);
                       }
                     }
@@ -546,12 +552,12 @@ class _BillingScreenState extends State<BillingScreen> {
                   }
                 } else {
                   Fluttertoast.showToast(
-                      msg: "Please Enter Vailid Number first",
+                      msg: "Please_Enter_Vailid_Number_first_key".tr(),
                       backgroundColor: ColorPrimary);
                 }
               } else {
                 Fluttertoast.showToast(
-                    msg: "Please turn on Internet",
+                    msg: "Please_turn_on_Internet_key".tr(),
                     backgroundColor: ColorPrimary);
               }
             },

@@ -1,3 +1,4 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:vendor/ui/account_management/account_management_screen/account_management_screen.dart';
 import 'package:vendor/ui/billingflow/billing/billing.dart';
@@ -14,7 +15,8 @@ class BottomNavigationHome extends StatefulWidget {
   _BottomNavigationHomeState createState() => _BottomNavigationHomeState();
 }
 
-class _BottomNavigationHomeState extends State<BottomNavigationHome> with TickerProviderStateMixin {
+class _BottomNavigationHomeState extends State<BottomNavigationHome>
+    with TickerProviderStateMixin {
   TabController? _tabController;
 
   @override
@@ -40,10 +42,10 @@ class _BottomNavigationHomeState extends State<BottomNavigationHome> with Ticker
             BillingScreen(),
             InventoryScreen(),
             Center(
-              child: Text("E-shop"),
+              child: Text("shop_key".tr()),
             ),
             Center(
-              child: Text("Staff"),
+              child: Text("Staff_key".tr()),
             ),
             TrackerReportDashboard(),
             AccountManagementScreen(),
@@ -93,7 +95,9 @@ class _BottomBarState extends State<BottomBar> {
     return TabBar(
       controller: widget.tabController,
       indicator: UnderlineTabIndicator(
-          borderSide: BorderSide(width: 3, color: ColorPrimary, style: BorderStyle.solid), insets: EdgeInsets.fromLTRB(30, 0, 30, 54)),
+          borderSide: BorderSide(
+              width: 3, color: ColorPrimary, style: BorderStyle.solid),
+          insets: EdgeInsets.fromLTRB(30, 0, 30, 54)),
       labelColor: ColorPrimary,
       unselectedLabelColor: Colors.grey.shade500,
       physics: NeverScrollableScrollPhysics(),
@@ -102,7 +106,7 @@ class _BottomBarState extends State<BottomBar> {
       },
       tabs: [
         Tab(
-          text: 'Billing',
+          text: 'billing_key'.tr(),
           icon: widget.tabController.index == 0
               ? Image.asset(
                   "assets/images/f1-a.png",
@@ -115,7 +119,7 @@ class _BottomBarState extends State<BottomBar> {
           iconMargin: EdgeInsets.all(0),
         ),
         Tab(
-          text: 'Inventory',
+          text: 'Inventory_key'.tr(),
           icon: widget.tabController.index == 1
               ? Image.asset(
                   "assets/images/f2-a.png",
@@ -128,7 +132,7 @@ class _BottomBarState extends State<BottomBar> {
           iconMargin: EdgeInsets.all(0),
         ),
         Tab(
-          text: 'E-Shop',
+          text: 'shop_key'.tr(),
           icon: widget.tabController.index == 2
               ? Image.asset(
                   "assets/images/f3-a.png",
@@ -141,7 +145,7 @@ class _BottomBarState extends State<BottomBar> {
           iconMargin: EdgeInsets.all(0),
         ),
         Tab(
-          text: 'Staff',
+          text: 'Staff_key'.tr(),
           icon: widget.tabController.index == 3
               ? Image.asset(
                   "assets/images/f4-a.png",
@@ -154,7 +158,7 @@ class _BottomBarState extends State<BottomBar> {
           iconMargin: EdgeInsets.all(0),
         ),
         Tab(
-          text: 'Performance',
+          text: 'Performance_key'.tr(),
           icon: widget.tabController.index == 4
               ? Image.asset(
                   "assets/images/f5-a.png",
@@ -167,7 +171,7 @@ class _BottomBarState extends State<BottomBar> {
           iconMargin: EdgeInsets.all(0),
         ),
         Tab(
-          text: 'Account',
+          text: 'Account_key'.tr(),
           icon: widget.tabController.index == 5
               ? Image.asset(
                   "assets/images/f6-a.png",
@@ -231,7 +235,7 @@ class _MBottomNavigationBarState extends State<MBottomNavigationBar> {
               "assets/images/f1-a.png",
               scale: 2,
             ),
-            label: "Billing"),
+            label: "billing_key".tr()),
         BottomNavigationBarItem(
             icon: Image.asset(
               "assets/images/f2.png",
@@ -241,7 +245,7 @@ class _MBottomNavigationBarState extends State<MBottomNavigationBar> {
               "assets/images/f2-a.png",
               scale: 2,
             ),
-            label: "Inventory"),
+            label: "Inventory_key".tr()),
         BottomNavigationBarItem(
             icon: Image.asset(
               "assets/images/f3.png",
@@ -251,7 +255,7 @@ class _MBottomNavigationBarState extends State<MBottomNavigationBar> {
               "assets/images/f3-a.png",
               scale: 2,
             ),
-            label: "E-Shop"),
+            label: "E-shop_key".tr()),
         BottomNavigationBarItem(
             icon: Image.asset(
               "assets/images/f4.png",
@@ -261,7 +265,7 @@ class _MBottomNavigationBarState extends State<MBottomNavigationBar> {
               "assets/images/f4-a.png",
               scale: 2,
             ),
-            label: "Staff"),
+            label: "Staff_key".tr()),
         BottomNavigationBarItem(
             icon: Image.asset(
               "assets/images/f5.png",
@@ -271,7 +275,7 @@ class _MBottomNavigationBarState extends State<MBottomNavigationBar> {
               "assets/images/f5-a.png",
               scale: 2,
             ),
-            label: "Performance"),
+            label: "Performance_key".tr()),
         BottomNavigationBarItem(
             icon: Image.asset(
               "assets/images/f6.png",
@@ -281,7 +285,7 @@ class _MBottomNavigationBarState extends State<MBottomNavigationBar> {
               "assets/images/f6-a.png",
               scale: 2,
             ),
-            label: "Account"),
+            label: "Account_key".tr()),
       ],
     );
   }

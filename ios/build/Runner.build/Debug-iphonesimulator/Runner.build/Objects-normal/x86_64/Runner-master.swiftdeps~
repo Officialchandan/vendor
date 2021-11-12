@@ -1,0 +1,5 @@
+version: "Apple Swift version 5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)"
+options: "fbeaaf9bd2959937fdbb99b9a9228558"
+build_time: [1636708412, 263480000]
+inputs:
+  "/Users/mac/Documents/vaibhav/myprofit_vendor/ios/Runner/AppDelegate.swift": [1593645056, 0]
