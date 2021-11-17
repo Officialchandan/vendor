@@ -1,3 +1,4 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -13,7 +14,12 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  List<String> textList = ["Change language", "About us", "Rate us", "Share app"];
+  List<String> textList = [
+    "change_language_key".tr(),
+    "about_us_key".tr(),
+    "rate_us_key".tr(),
+    "share_app_key".tr()
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +33,7 @@ class _SettingsState extends State<Settings> {
               Navigator.pop(context);
             },
           ),
-          title: Text("Settings"),
+          title: Text("settings_key".tr()),
         ),
         body: ListView(
           children: List.generate(textList.length, (index) {
@@ -35,17 +41,24 @@ class _SettingsState extends State<Settings> {
                 child: Container(
                   padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
                   decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide(width: 1, color: Color(0xffbdbdbd))),
+                    border: Border(
+                        bottom: BorderSide(width: 1, color: Color(0xffbdbdbd))),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Image.asset("assets/images/setting-ic${index + 1}.png", width: 24),
+                      Image.asset("assets/images/setting-ic${index + 1}.png",
+                          width: 24),
                       SizedBox(width: 17),
                       Expanded(
-                        child: Text(textList[index], style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600)),
+                        child: Text(textList[index],
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600)),
                       ),
-                      Icon(Icons.arrow_forward_ios, color: Colors.black, size: 15),
+                      Icon(Icons.arrow_forward_ios,
+                          color: Colors.black, size: 15),
                     ],
                   ),
                 ),

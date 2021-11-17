@@ -1,3 +1,4 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
@@ -15,16 +16,36 @@ class TrackerReportDashboard extends StatefulWidget {
 
 class _TrackerReportDashboardState extends State<TrackerReportDashboard> {
   final options = [
-    {"title": "Performance tracker", "subTitle": "click here to add product", "image": "assets/images/tr-ic1.png", "id": 1},
-    {"title": "Reports", "subTitle": "click here to add product", "image": "assets/images/tr-ic2.png", "id": 2},
-    {"title": "Money due - UPI", "subTitle": "click here to add product", "image": "assets/images/tr-ic3.png", "id": 3},
-    {"title": "My Customers", "subTitle": "click here to view customer", "image": "assets/images/tr-ic3.png", "id": 4},
+    {
+      "title": "performance_tracker_key".tr(),
+      "subTitle": "click_here_to_add_product_key".tr(),
+      "image": "assets/images/tr-ic1.png",
+      "id": 1
+    },
+    {
+      "title": "reports_key".tr(),
+      "subTitle": "click_here_to_add_product_key".tr(),
+      "image": "assets/images/tr-ic2.png",
+      "id": 2
+    },
+    {
+      "title": "money_due_upi_key".tr(),
+      "subTitle": "click_here_to_add_product_key".tr(),
+      "image": "assets/images/tr-ic3.png",
+      "id": 3
+    },
+    {
+      "title": "my_customers_key".tr(),
+      "subTitle": "click here to view customer",
+      "image": "assets/images/tr-ic3.png",
+      "id": 4
+    },
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "Trackers & Reports",
+        title: "trackers_reports_key".tr(),
       ),
       body: ListView.builder(
         itemBuilder: (context, index) {
@@ -41,16 +62,33 @@ class _TrackerReportDashboardState extends State<TrackerReportDashboard> {
                   child: ListTile(
                     onTap: () {
                       if (options[index]["id"] == 2) {
-                        Navigator.push(context, PageTransition(child: SelectReportTypeScreen(), type: PageTransitionType.fade));
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: SelectReportTypeScreen(),
+                                type: PageTransitionType.fade));
                       }
                       if (options[index]["id"] == 3) {
-                        Navigator.push(context, PageTransition(child: MoneyDueScreen(), type: PageTransitionType.fade));
-                      } if (options[index]["id"] == 4) {
-                        Navigator.push(context, PageTransition(child: MyCustomerScreen(), type: PageTransitionType.fade));
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: MoneyDueScreen(),
+                                type: PageTransitionType.fade));
+                      }
+                      if (options[index]["id"] == 4) {
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: MyCustomerScreen(),
+                                type: PageTransitionType.fade));
                       }
 
                       if (options[index]["id"] == 1) {
-                        Navigator.push(context, PageTransition(child: PerformanceTrackerByCategory(), type: PageTransitionType.fade));
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: PerformanceTrackerByCategory(),
+                                type: PageTransitionType.fade));
                       }
                     },
                     leading: Image(
@@ -71,7 +109,9 @@ class _TrackerReportDashboardState extends State<TrackerReportDashboard> {
                       width: 5,
                       decoration: BoxDecoration(
                           color: ColorPrimary,
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(5),
+                              bottomLeft: Radius.circular(5))),
                     ))
               ],
             ),

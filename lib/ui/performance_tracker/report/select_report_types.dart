@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:open_file/open_file.dart';
@@ -33,21 +34,51 @@ class SelectReportTypeScreen extends StatefulWidget {
 class _SelectReportTypeScreenState extends State<SelectReportTypeScreen> {
   List<Map<String, dynamic>> reportList = [];
   final options = [
-    {"title": "Daily Sales", "subTitle": "click here to add product", "image": "assets/images/tr-ic1.png", "id": 1},
-    {"title": "Coin Generated", "subTitle": "click here to add product", "image": "assets/images/tr-ic2.png", "id": 2},
-    {"title": "Sales Return", "subTitle": "click here to add product", "image": "assets/images/tr-ic3.png", "id": 3},
-    {"title": "Ready Stock", "subTitle": "click here to add product", "image": "assets/images/tr-ic3.png", "id": 4},
+    {
+      "title": "Daily Sales".tr(),
+      "subTitle": "click_here_to_add_product_key".tr(),
+      "image": "assets/images/tr-ic1.png",
+      "id": 1
+    },
+    {
+      "title": "coin_generated_key".tr(),
+      "subTitle": "click_here_to_add_product_key".tr(),
+      "image": "assets/images/tr-ic2.png",
+      "id": 2
+    },
+    {
+      "title": "sale_return_key".tr(),
+      "subTitle": "click_here_to_add_product_key".tr(),
+      "image": "assets/images/tr-ic3.png",
+      "id": 3
+    },
+    {
+      "title": "ready_stock_key".tr(),
+      "subTitle": "click_here_to_add_product_key".tr(),
+      "image": "assets/images/tr-ic3.png",
+      "id": 4
+    },
     // {"title": "Purchase return", "subTitle": "click here to add product", "image": "assets/images/tr-ic3.png", "id": 5},
     // {"title": "Purchase order entry", "subTitle": "click here to add product", "image": "assets/images/tr-ic3.png", "id": 6},
-    {"title": "Product Redeemed", "subTitle": "click here to add product", "image": "assets/images/tr-ic3.png", "id": 7},
-    {"title": "Coin Redeemed", "subTitle": "click here to add product", "image": "assets/images/tr-ic3.png", "id": 8},
+    {
+      "title": "product_redeemed_key".tr(),
+      "subTitle": "click_here_to_add_product_key".tr(),
+      "image": "assets/images/tr-ic3.png",
+      "id": 7
+    },
+    {
+      "title": "coin_redeemed_key".tr(),
+      "subTitle": "click_here_to_add_product_key".tr(),
+      "image": "assets/images/tr-ic3.png",
+      "id": 8
+    },
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "Report Types",
+        title: "report_types_key".tr(),
       ),
       body: ListView.builder(
         itemBuilder: (context, index) {
@@ -64,17 +95,37 @@ class _SelectReportTypeScreenState extends State<SelectReportTypeScreen> {
                   child: ListTile(
                     onTap: () {
                       if (options[index]["id"] == 1) {
-                        Navigator.push(context, PageTransition(child: DailyReport(), type: PageTransitionType.fade));
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: DailyReport(),
+                                type: PageTransitionType.fade));
                       } else if (options[index]["id"] == 2) {
-                        Navigator.push(context, PageTransition(child: GeneratedCoinReport(), type: PageTransitionType.fade));
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: GeneratedCoinReport(),
+                                type: PageTransitionType.fade));
                       } else if (options[index]["id"] == 3) {
-                        Navigator.push(context, PageTransition(child: SaleReturnReport(), type: PageTransitionType.fade));
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: SaleReturnReport(),
+                                type: PageTransitionType.fade));
                       } else if (options[index]["id"] == 4) {
                         getReport(context);
                       } else if (options[index]["id"] == 7) {
-                        Navigator.push(context, PageTransition(child: ProductRedeemReport(), type: PageTransitionType.fade));
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: ProductRedeemReport(),
+                                type: PageTransitionType.fade));
                       } else if (options[index]["id"] == 8) {
-                        Navigator.push(context, PageTransition(child: CoinRedeemReport(), type: PageTransitionType.fade));
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: CoinRedeemReport(),
+                                type: PageTransitionType.fade));
                       } else {}
                     },
                     title: Text("${options[index]["title"]}"),
@@ -89,7 +140,9 @@ class _SelectReportTypeScreenState extends State<SelectReportTypeScreen> {
                       width: 5,
                       decoration: BoxDecoration(
                           color: ColorPrimary,
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(5),
+                              bottomLeft: Radius.circular(5))),
                     ))
               ],
             ),
@@ -115,7 +168,8 @@ class _SelectReportTypeScreenState extends State<SelectReportTypeScreen> {
         EasyLoading.dismiss();
         print("result-->$result");
         if (result["success"]) {
-          List<Map<String, dynamic>> report = List<Map<String, dynamic>>.from(result["data"]!.map((x) => x));
+          List<Map<String, dynamic>> report =
+              List<Map<String, dynamic>>.from(result["data"]!.map((x) => x));
           reportList = report;
           print("report-->$report");
           exportReport(context);
@@ -131,7 +185,7 @@ class _SelectReportTypeScreenState extends State<SelectReportTypeScreen> {
         EasyLoading.dismiss();
       }
     } else {
-      Utility.showToast("Please check your internet connection");
+      Utility.showToast("please_check_your_internet_connection_key".tr());
     }
   }
 
@@ -139,7 +193,8 @@ class _SelectReportTypeScreenState extends State<SelectReportTypeScreen> {
     print("exportReport");
     final xls.Workbook workbook = xls.Workbook(0);
     //Adding a Sheet with name to workbook.
-    final xls.Worksheet sheet1 = workbook.worksheets.addWithName('Coin Redeem Report');
+    final xls.Worksheet sheet1 =
+        workbook.worksheets.addWithName('coin_redeem_report_key'.tr());
     sheet1.showGridlines = true;
 
     int columnIndex = 1;
@@ -149,19 +204,24 @@ class _SelectReportTypeScreenState extends State<SelectReportTypeScreen> {
 
     sheet1.getRangeByIndex(1, 1, 1, reportList.first.keys.length).merge();
 
-    sheet1.getRangeByIndex(rowIndex, columnIndex).value = "Ready Stock Report";
+    sheet1.getRangeByIndex(rowIndex, columnIndex).value =
+        "ready_stock_report_key".tr();
 
     sheet1.getRangeByIndex(rowIndex, columnIndex).rowHeight = 30;
-    sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign = xls.HAlignType.center;
-    sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign = xls.VAlignType.center;
+    sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign =
+        xls.HAlignType.center;
+    sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign =
+        xls.VAlignType.center;
     rowIndex = rowIndex + 1;
 
     reportList.first.keys.forEach((element) {
       sheet1.getRangeByIndex(rowIndex, columnIndex).value = element.toString();
       sheet1.getRangeByIndex(rowIndex, columnIndex).columnWidth = 25;
       sheet1.getRangeByIndex(rowIndex, columnIndex).rowHeight = 20;
-      sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign = xls.HAlignType.center;
-      sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign = xls.VAlignType.center;
+      sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign =
+          xls.HAlignType.center;
+      sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign =
+          xls.VAlignType.center;
       columnIndex = columnIndex + 1;
     });
 
@@ -172,8 +232,10 @@ class _SelectReportTypeScreenState extends State<SelectReportTypeScreen> {
         sheet1.getRangeByIndex(rowIndex, columnIndex).value = value;
         sheet1.getRangeByIndex(rowIndex, columnIndex).columnWidth = 25;
         sheet1.getRangeByIndex(rowIndex, columnIndex).rowHeight = 20;
-        sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign = xls.HAlignType.center;
-        sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign = xls.VAlignType.center;
+        sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign =
+            xls.HAlignType.center;
+        sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign =
+            xls.VAlignType.center;
         columnIndex = columnIndex + 1;
 
         if (key == "stock") {
@@ -186,18 +248,22 @@ class _SelectReportTypeScreenState extends State<SelectReportTypeScreen> {
 
     print("total - >$total");
 
-    sheet1.getRangeByIndex(rowIndex + 1, 1).value = "Total";
-    sheet1.getRangeByIndex(rowIndex + 1, 1).cellStyle.hAlign = xls.HAlignType.center;
-    sheet1.getRangeByIndex(rowIndex + 1, 1).cellStyle.vAlign = xls.VAlignType.center;
+    sheet1.getRangeByIndex(rowIndex + 1, 1).value = "total_key".tr();
+    sheet1.getRangeByIndex(rowIndex + 1, 1).cellStyle.hAlign =
+        xls.HAlignType.center;
+    sheet1.getRangeByIndex(rowIndex + 1, 1).cellStyle.vAlign =
+        xls.VAlignType.center;
 
-    final xls.Style style = workbook.styles.add('Style1');
+    final xls.Style style = workbook.styles.add('style1_key'.tr());
     style.backColorRgb = Colors.red;
     style.hAlign = xls.HAlignType.center;
     style.vAlign = xls.VAlignType.center;
     style.fontColorRgb = Colors.white;
     style.bold = true;
 
-    int index = reportList.first.keys.toList().indexWhere((element) => element == "stock");
+    int index = reportList.first.keys
+        .toList()
+        .indexWhere((element) => element == "stock_key".tr());
     if (index != -1) {
       sheet1.getRangeByIndex(rowIndex + 1, index + 1).value = total;
       sheet1.getRangeByIndex(rowIndex + 1, index + 1).cellStyle = style;
@@ -221,12 +287,16 @@ class _SelectReportTypeScreenState extends State<SelectReportTypeScreen> {
       savedDir.create();
     }
 
-    String fileName = "ready_stock_report" + DateTime.now().millisecondsSinceEpoch.toString() + ".xlsx";
+    String fileName = "ready_stock_report_key".tr() +
+        DateTime.now().millisecondsSinceEpoch.toString() +
+        ".xlsx";
 
-    final File file = File(Platform.isWindows ? '$path\\$fileName' : '$path/$fileName');
+    final File file =
+        File(Platform.isWindows ? '$path\\$fileName' : '$path/$fileName');
     await file.writeAsBytes(bytes, flush: true).whenComplete(() {
       print("completed");
-      Utility.showToast("Report saved at below location \n${file.path}");
+      Utility.showToast(
+          "report_saved_at_below_location_key \n${file.path}".tr());
     });
     print("savedDir${file.path}");
 

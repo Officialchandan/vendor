@@ -1,11 +1,14 @@
 import 'dart:developer';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:share/share.dart';
-import 'package:vendor/ui/home/share.dart';
+import 'package:vendor/ui/account_management/video_tutorial/video_tutorial.dart';
+import 'package:vendor/ui/performance_tracker/money_due_upi/money_due_screen.dart';
+
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/routs.dart';
 
@@ -20,20 +23,20 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<String> name = [
-    "Billing",
-    "Inventory",
-    "Staff Management",
-    "Online Shop",
-    "Performance Tracker",
-    "Account Management"
+    "billing_key".tr(),
+    "inventory_key".tr(),
+    "performance_tracker_key".tr(),
+    "account_management_key".tr(),
+    "money_due_upi_key".tr(),
+    "video_tutorials_key".tr()
   ];
   List<String> description = [
-    "Billing description",
-    "Inventory description",
-    "Staff Management description",
-    "Online Shop description",
-    "Performance Tracker description",
-    "Account Management description"
+    "billing_description_key".tr(),
+    "inventory_description_key".tr(),
+    "staff_management_description_key".tr(),
+    "online_shop_description_key".tr(),
+    "money_due_upi_description_key".tr(),
+    "video_tutorials_description_key".tr()
   ];
 
   List<String> images = [
@@ -41,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
     "assets/images/home2.png",
     "assets/images/home4.png",
     "assets/images/home3.png",
-    "assets/images/home5.png",
+    "assets/images/tr-ic3.png",
     "assets/images/home6.png"
   ];
   _onShareWithEmptyOrigin(BuildContext context) async {
@@ -60,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Home",
+          "home_key".tr(),
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         leading: Text(""),
@@ -88,13 +91,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       color: ColorPrimary,
                       size: 12,
                     ),
+                    SizedBox(
+                      width: 5,
+                    ),
                     Text(
-                      " Share Store  ",
+                      "share_store_key".tr(),
                       style: TextStyle(
                           color: ColorPrimary,
                           fontWeight: FontWeight.w600,
                           fontSize: 12),
-                    )
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
                   ],
                 ),
               ),
@@ -214,15 +223,18 @@ class _HomeScreenState extends State<HomeScreen> {
                         context, Routes.BOTTOM_NAVIGATION_HOME,
                         arguments: index)
                     : index == 4
-                        ? Navigator.pushNamed(
-                            context, Routes.BOTTOM_NAVIGATION_HOME,
-                            arguments: index)
+                        ? Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MoneyDueScreen()))
                         : index == 5
-                            ? Navigator.pushNamed(
-                                context, Routes.BOTTOM_NAVIGATION_HOME,
-                                arguments: index)
-                            : Navigator.pushNamed(
-                                context, Routes.BOTTOM_NAVIGATION_HOME,
-                                arguments: index);
+                            ? Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => VideoTutorial()))
+                            : Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => VideoTutorial()));
   }
 }

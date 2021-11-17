@@ -13,3 +13,11 @@ class GetCustomerNumberResponseEvent extends CustomerNumberResponseEvent {
 class GetVendorCategoryEvent extends CustomerNumberResponseEvent {
   GetVendorCategoryEvent();
 }
+
+class GetBillingPartialUserRegisterEvent extends CustomerNumberResponseEvent {
+  final Map<String, dynamic> input;
+
+  GetBillingPartialUserRegisterEvent({required this.input});
+  @override
+  List<Object> get props => [input];
+}

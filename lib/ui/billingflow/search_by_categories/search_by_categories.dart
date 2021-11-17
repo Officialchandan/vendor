@@ -1,11 +1,14 @@
 import 'dart:developer';
 
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:vendor/model/product_model.dart';
 import 'package:vendor/ui/billingflow/billingproducts/billing_products.dart';
@@ -13,6 +16,7 @@ import 'package:vendor/ui/billingflow/search_by_categories/search_by_categories_
 import 'package:vendor/ui/billingflow/search_by_categories/search_by_categories_event.dart';
 import 'package:vendor/ui/billingflow/search_by_categories/search_by_categories_state.dart';
 import 'package:vendor/utility/color.dart';
+import 'package:vendor/utility/network.dart';
 
 class SearchByCategory extends StatefulWidget {
   String catid;
@@ -39,6 +43,17 @@ class _SearchByCategoryState extends State<SearchByCategory> {
   String searchText = "";
   bool searching = false;
   TextEditingController _searchController = TextEditingController();
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+  refresh() {
+    log("refresh hua");
+    searchByCategoriesBloc
+        .add(GetProductsSearchByCategoriesEvent(input: widget.catid));
+    _refreshController.refreshCompleted();
+
+    //setState(() {});
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -70,7 +85,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
-                    hintText: "Search",
+                    hintText: "search_key".tr(),
                     hintStyle: GoogleFonts.openSans(
                       fontWeight: FontWeight.w600,
                     ),
@@ -211,13 +226,20 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
-                                                Text(
-                                                  "${searchList[index].productName} ($variantName)",
-                                                  style: TextStyle(
-                                                      fontSize: 14,
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.w600),
+                                                Container(
+                                                  width: width * 0.66,
+                                                  child: AutoSizeText(
+                                                    "${searchList[index].productName} ($variantName)",
+                                                    maxLines: 2,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.w600),
+                                                    maxFontSize: 14,
+                                                    minFontSize: 11,
+                                                  ),
                                                 ),
                                               ]),
                                           Row(
@@ -310,18 +332,26 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                                                 padding:
                                                                     EdgeInsets
                                                                         .all(0),
-                                                                onPressed: () {
+                                                                onPressed:
+                                                                    () async {
                                                                   log("true===>$count");
-                                                                  searchList[index]
-                                                                              .count >
-                                                                          1
-                                                                      ? searchByCategoriesBloc.add(
-                                                                          GetIncrementSearchByCategoriesEvent(
-                                                                              count: searchList[index]
-                                                                                  .count--))
-                                                                      : Fluttertoast
-                                                                          .showToast(
-                                                                              msg: "Product cant be in negative");
+                                                                  if (await Network
+                                                                      .isConnected()) {
+                                                                    searchList[index].count >
+                                                                            1
+                                                                        ? searchByCategoriesBloc.add(GetIncrementSearchByCategoriesEvent(
+                                                                            count: searchList[index]
+                                                                                .count--))
+                                                                        : Fluttertoast.showToast(
+                                                                            msg:
+                                                                                "product_cant_be_in_negative_key".tr());
+                                                                  } else {
+                                                                    Fluttertoast.showToast(
+                                                                        msg:
+                                                                            "please_turn_on_the_internet_key",
+                                                                        backgroundColor:
+                                                                            ColorPrimary);
+                                                                  }
                                                                 },
                                                                 iconSize: 20,
                                                                 splashRadius:
@@ -337,12 +367,14 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                                         height: 20,
                                                         color: ColorPrimary,
                                                         child: Center(
-                                                          child: Text(
+                                                          child: AutoSizeText(
                                                             "${searchList[index].count}",
                                                             style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontSize: 14),
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                            maxFontSize: 14,
+                                                            minFontSize: 10,
                                                           ),
                                                         ),
                                                       ),
@@ -364,19 +396,32 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                                                 padding:
                                                                     EdgeInsets
                                                                         .all(0),
-                                                                onPressed: () {
+                                                                onPressed:
+                                                                    () async {
                                                                   log("true===>$count");
-                                                                  searchList[index].count <
-                                                                          searchList[index]
-                                                                              .stock
-                                                                      ? searchByCategoriesBloc.add(GetIncrementSearchByCategoriesEvent(
-                                                                          count: searchList[index]
-                                                                              .count++))
-                                                                      : Fluttertoast.showToast(
-                                                                          msg:
-                                                                              "Stock Limit reached",
-                                                                          backgroundColor:
-                                                                              ColorPrimary);
+
+                                                                  if (await Network
+                                                                      .isConnected()) {
+                                                                    // searchList[index].count <
+                                                                    //         searchList[index]
+                                                                    //             .stock
+                                                                    //     ?
+                                                                    searchByCategoriesBloc.add(
+                                                                        GetIncrementSearchByCategoriesEvent(
+                                                                            count:
+                                                                                searchList[index].count++));
+                                                                    // : Fluttertoast.showToast(
+                                                                    //     msg:
+                                                                    //         "Stock Limit reached",
+                                                                    //     backgroundColor:
+                                                                    //         ColorPrimary);
+                                                                  } else {
+                                                                    Fluttertoast.showToast(
+                                                                        msg:
+                                                                            "please_turn_on_the_internet_key",
+                                                                        backgroundColor:
+                                                                            ColorPrimary);
+                                                                  }
                                                                 },
                                                                 iconSize: 20,
                                                                 splashRadius:
@@ -476,7 +521,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                   ),
                                 ),
                                 Positioned(
-                                  top: 0,
+                                  top: 15,
                                   right: 20,
                                   child: BlocBuilder<SearchByCategoriesBloc,
                                       SearchByCategoriesState>(
@@ -496,12 +541,21 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                           // checkColor: Colors.indigo,
                                           value: searchList[index].check,
                                           activeColor: ColorPrimary,
-                                          onChanged: (newvalue) {
+                                          onChanged: (newvalue) async {
                                             log("true===>");
-                                            searchByCategoriesBloc.add(
-                                                GetCheckBoxSearchByCategoriesEvent(
-                                                    check: newvalue!,
-                                                    index: index));
+                                            if (await Network.isConnected()) {
+                                              searchByCategoriesBloc.add(
+                                                  GetCheckBoxSearchByCategoriesEvent(
+                                                      check: newvalue!,
+                                                      index: index));
+                                            } else {
+                                              Fluttertoast.showToast(
+                                                  msg:
+                                                      "please_turn_on_the_internet_key"
+                                                          .tr(),
+                                                  backgroundColor:
+                                                      ColorPrimary);
+                                            }
                                           },
                                         ),
                                       );
@@ -524,27 +578,34 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                           : Positioned(
                               bottom: 0,
                               child: GestureDetector(
-                                onTap: () {
+                                onTap: () async {
                                   List<ProductModel> product = searchList
                                       .where((element) => element.check)
                                       .toList();
                                   log("$product");
-
-                                  // Navigator.pop(context);
-                                  if (product.length == 0) {
-                                    Fluttertoast.showToast(
-                                        msg: "Please select atlest one product",
-                                        backgroundColor: ColorPrimary);
+                                  if (await Network.isConnected()) {
+                                    // Navigator.pop(context);
+                                    if (product.length == 0) {
+                                      Fluttertoast.showToast(
+                                          msg:
+                                              "please_select_atlest_one_product_key"
+                                                  .tr(),
+                                          backgroundColor: ColorPrimary);
+                                    } else {
+                                      Navigator.push(
+                                          context,
+                                          PageTransition(
+                                              child: BillingProducts(
+                                                billingItemList: product,
+                                                mobile: widget.mobile,
+                                                coin: double.parse(widget.coin),
+                                              ),
+                                              type: PageTransitionType.fade));
+                                    }
                                   } else {
-                                    Navigator.push(
-                                        context,
-                                        PageTransition(
-                                            child: BillingProducts(
-                                              billingItemList: product,
-                                              mobile: widget.mobile,
-                                              coin: double.parse(widget.coin),
-                                            ),
-                                            type: PageTransitionType.fade));
+                                    Fluttertoast.showToast(
+                                        msg: "please_turn_on_the_internet_key",
+                                        backgroundColor: ColorPrimary);
                                   }
                                 },
                                 child: Container(
@@ -552,7 +613,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                   color: ColorPrimary,
                                   child: Center(
                                     child: Text(
-                                      "DONE",
+                                      "done_key".tr(),
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold),

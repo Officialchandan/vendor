@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:open_file/open_file.dart';
@@ -37,7 +38,8 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
   String endDate = "";
   CategoryModel? categoryModel;
   Option? days;
-  DateRangePickerController dateRangePickerController = DateRangePickerController();
+  DateRangePickerController dateRangePickerController =
+      DateRangePickerController();
 
   TextEditingController edtCategory = TextEditingController();
   TextEditingController edtDays = TextEditingController();
@@ -50,18 +52,18 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "Sale Return Reports",
+        title: "sale_return_reports_key".tr(),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(15),
         child: Column(
           children: [
-            Text("View report by"),
+            Text("view_report_by_key".tr()),
             Row(
               children: [
                 Expanded(
                   child: RadioListTile(
-                      title: Text("Date wise"),
+                      title: Text("date_wise_key".tr()),
                       value: 1,
                       groupValue: groupValue,
                       onChanged: (value) {
@@ -71,7 +73,7 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
                 ),
                 Expanded(
                   child: RadioListTile(
-                      title: Text("Day wise"),
+                      title: Text("day_wise_key".tr()),
                       value: 2,
                       groupValue: groupValue,
                       onChanged: (value) {
@@ -100,7 +102,8 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
                     headerStyle: DateRangePickerHeaderStyle(
                       textStyle: TextStyle(color: ColorPrimary),
                     ),
-                    yearCellStyle: DateRangePickerYearCellStyle(textStyle: TextStyle(color: Colors.black)),
+                    yearCellStyle: DateRangePickerYearCellStyle(
+                        textStyle: TextStyle(color: Colors.black)),
                     // showActionButtons: true,
                     showNavigationArrow: false,
                     selectionMode: DateRangePickerSelectionMode.range,
@@ -115,12 +118,13 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
                     },
                     readOnly: true,
                     decoration: InputDecoration(
-                        hintText: "Choose report days",
+                        hintText: "choose_report_days_key".tr(),
                         suffixIcon: Icon(
                           Icons.keyboard_arrow_right_sharp,
                           color: ColorPrimary,
                         ),
-                        suffixIconConstraints: BoxConstraints(maxWidth: 20, maxHeight: 20)),
+                        suffixIconConstraints:
+                            BoxConstraints(maxWidth: 20, maxHeight: 20)),
                   ),
             SizedBox(
               height: 10,
@@ -132,12 +136,13 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
               },
               readOnly: true,
               decoration: InputDecoration(
-                  hintText: "Choose category",
+                  hintText: "Choose_category_key".tr(),
                   suffixIcon: Icon(
                     Icons.keyboard_arrow_right_sharp,
                     color: ColorPrimary,
                   ),
-                  suffixIconConstraints: BoxConstraints(maxWidth: 20, maxHeight: 20)),
+                  suffixIconConstraints:
+                      BoxConstraints(maxWidth: 20, maxHeight: 20)),
             ),
             SizedBox(
               height: 10,
@@ -149,12 +154,13 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
               },
               readOnly: true,
               decoration: InputDecoration(
-                  hintText: "Choose product",
+                  hintText: "choose_product_key".tr(),
                   suffixIcon: Icon(
                     Icons.keyboard_arrow_right_sharp,
                     color: ColorPrimary,
                   ),
-                  suffixIconConstraints: BoxConstraints(maxWidth: 20, maxHeight: 20)),
+                  suffixIconConstraints:
+                      BoxConstraints(maxWidth: 20, maxHeight: 20)),
             ),
           ],
         ),
@@ -167,7 +173,7 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
         shape: RoundedRectangleBorder(),
         color: ColorPrimary,
         child: Text(
-          "Export",
+          "export_key".tr(),
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -179,17 +185,18 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
 
     if (args.value is PickerDateRange) {
       startDate = Utility.getFormatDate(args.value.startDate);
-      endDate = Utility.getFormatDate(args.value.endDate ?? args.value.startDate);
+      endDate =
+          Utility.getFormatDate(args.value.endDate ?? args.value.startDate);
     }
   }
 
   void selectDays(BuildContext context) async {
     final List<Option> options = [
-      Option(optionName: "1 day", optionId: "1"),
-      Option(optionName: "5 days", optionId: "5"),
-      Option(optionName: "7 days", optionId: "7"),
-      Option(optionName: "15 days", optionId: "15"),
-      Option(optionName: "30 days", optionId: "30"),
+      Option(optionName: "1 day_key".tr(), optionId: "1"),
+      Option(optionName: "5 days_key".tr(), optionId: "5"),
+      Option(optionName: "7 days_key".tr(), optionId: "7"),
+      Option(optionName: "15 days_key".tr(), optionId: "15"),
+      Option(optionName: "30 days_key".tr(), optionId: "30"),
     ];
     showModalBottomSheet(
         context: context,
@@ -197,7 +204,9 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
         enableDrag: true,
         isScrollControlled: true,
         backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(25), topLeft: Radius.circular(25))),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(25), topLeft: Radius.circular(25))),
         builder: (context) {
           return CustomBottomSheet(
             onOptionSelect: (Option option) {
@@ -216,7 +225,9 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
         enableDrag: true,
         isScrollControlled: true,
         backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(25), topLeft: Radius.circular(25))),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(25), topLeft: Radius.circular(25))),
         builder: (context) {
           return CategoryBottomSheet(
             onSelect: (CategoryModel option) {
@@ -254,7 +265,8 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
   void getReport(BuildContext context) async {
     if (await Network.isConnected()) {
       Map input = HashMap<String, dynamic>();
-      input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      input["vendor_id"] =
+          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
       input["vendor_id"] = "1";
       String url = "";
 
@@ -265,7 +277,7 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
       } else {
         url = Endpoint.GET_SALE_RETURN_REPORT_BY_DAY;
         if (days == null) {
-          Utility.showToast("Please select days");
+          Utility.showToast("please_select_days_key".tr());
           return;
         } else {
           input["days"] = days!.optionId;
@@ -294,7 +306,8 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
         EasyLoading.dismiss();
         print("result-->$result");
         if (result["success"]) {
-          List<Map<String, dynamic>> report = List<Map<String, dynamic>>.from(result["data"]!.map((x) => x));
+          List<Map<String, dynamic>> report =
+              List<Map<String, dynamic>>.from(result["data"]!.map((x) => x));
           reportList = report;
           print("report-->$report");
           exportReport(context);
@@ -310,7 +323,7 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
         EasyLoading.dismiss();
       }
     } else {
-      Utility.showToast("Please check your internet connection");
+      Utility.showToast("please_check_your_internet_connection_key".tr());
     }
   }
 
@@ -318,7 +331,8 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
     print("exportReport");
     final xls.Workbook workbook = xls.Workbook(0);
     //Adding a Sheet with name to workbook.
-    final xls.Worksheet sheet1 = workbook.worksheets.addWithName('Sale Return Report');
+    final xls.Worksheet sheet1 =
+        workbook.worksheets.addWithName('sale_return_reports_key'.tr());
     sheet1.showGridlines = true;
 
     int columnIndex = 1;
@@ -332,22 +346,29 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
 
     sheet1.getRangeByIndex(1, 1, 1, reportList.first.keys.length).merge();
     if (groupValue == 1) {
-      sheet1.getRangeByIndex(rowIndex, columnIndex).value = "Sale Return Report ($startDate to $endDate)";
+      sheet1.getRangeByIndex(rowIndex, columnIndex).value =
+          "sale_return_reports_key ($startDate to $endDate)".tr();
     } else {
-      sheet1.getRangeByIndex(rowIndex, columnIndex).value = "Sale Return Report (${days!.optionName})";
+      sheet1.getRangeByIndex(rowIndex, columnIndex).value =
+          "sale_return_reports_key (${days!.optionName})".tr();
     }
 
     sheet1.getRangeByIndex(rowIndex, columnIndex).rowHeight = 30;
-    sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign = xls.HAlignType.center;
-    sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign = xls.VAlignType.center;
+    sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign =
+        xls.HAlignType.center;
+    sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign =
+        xls.VAlignType.center;
     rowIndex = rowIndex + 1;
 
     reportList.first.keys.forEach((element) {
-      sheet1.getRangeByIndex(rowIndex, columnIndex).value = element.toString().replaceAll("_", " ").toUpperCase();
+      sheet1.getRangeByIndex(rowIndex, columnIndex).value =
+          element.toString().replaceAll("_", " ").toUpperCase();
       sheet1.getRangeByIndex(rowIndex, columnIndex).columnWidth = 25;
       sheet1.getRangeByIndex(rowIndex, columnIndex).rowHeight = 20;
-      sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign = xls.HAlignType.center;
-      sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign = xls.VAlignType.center;
+      sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign =
+          xls.HAlignType.center;
+      sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign =
+          xls.VAlignType.center;
       columnIndex = columnIndex + 1;
     });
 
@@ -358,34 +379,46 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
         sheet1.getRangeByIndex(rowIndex, columnIndex).value = value;
         sheet1.getRangeByIndex(rowIndex, columnIndex).columnWidth = 25;
         sheet1.getRangeByIndex(rowIndex, columnIndex).rowHeight = 20;
-        sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign = xls.HAlignType.center;
-        sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign = xls.VAlignType.center;
+        sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign =
+            xls.HAlignType.center;
+        sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign =
+            xls.VAlignType.center;
         columnIndex = columnIndex + 1;
 
         if (key == "total") {
           print("value - >$value");
           print("total - >$total");
-          total = double.parse(value == null || value == "" ? "0" : value.toString()) + total;
+          total = double.parse(
+                  value == null || value == "" ? "0" : value.toString()) +
+              total;
         }
         if (key == "mrp") {
           print("mrp - >$value");
           print("totalMrp - >$totalMrp");
-          totalMrp = double.parse(value == null || value == "" ? "0" : value.toString()) + totalMrp;
+          totalMrp = double.parse(
+                  value == null || value == "" ? "0" : value.toString()) +
+              totalMrp;
         }
         if (key == "purchase_price") {
           print("purchase_price - >$value");
           print("totalPurchasePrice - >$totalPurchasePrice");
-          totalPurchasePrice = double.parse(value == null || value == "" ? "0" : value.toString()) + totalPurchasePrice;
+          totalPurchasePrice = double.parse(
+                  value == null || value == "" ? "0" : value.toString()) +
+              totalPurchasePrice;
         }
         if (key == "qty") {
           print("qty - >$value");
           print("qty - >$qty");
-          qty = double.parse(value == null || value == "" ? "0" : value.toString()) + qty;
+          qty = double.parse(
+                  value == null || value == "" ? "0" : value.toString()) +
+              qty;
         }
         if (key == "return_coins") {
           print("qty - >$value");
           print("returnCoins - >$returnCoins");
-          returnCoins = double.parse(value == null || value == "" ? "0" : value.toString()) + returnCoins;
+          returnCoins = double.parse(
+                  value == null || value == "" ? "0" : value.toString()) +
+              returnCoins;
         }
       });
     });
@@ -396,7 +429,7 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
     print("qty - >$qty");
     print("returnCoins - >$returnCoins");
 
-    final xls.Style style = workbook.styles.add('Style1');
+    final xls.Style style = workbook.styles.add('style1_key'.tr());
     style.backColorRgb = Colors.red;
     style.hAlign = xls.HAlignType.center;
     style.vAlign = xls.VAlignType.center;
@@ -408,21 +441,22 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
     reportList.first.forEach((key, value) {
       sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle = style;
       if (columnIndex == 1) {
-        sheet1.getRangeByIndex(rowIndex, 1).value = "Total";
+        sheet1.getRangeByIndex(rowIndex, 1).value = "total_key".tr();
       }
-      if (key == "total") {
+      if (key == "total_key".tr()) {
         sheet1.getRangeByIndex(rowIndex, columnIndex).value = total;
       }
-      if (key == "purchase_price") {
-        sheet1.getRangeByIndex(rowIndex, columnIndex).value = totalPurchasePrice;
+      if (key == "purchase_price_key".tr()) {
+        sheet1.getRangeByIndex(rowIndex, columnIndex).value =
+            totalPurchasePrice;
       }
-      if (key == "mrp") {
+      if (key == "mrp_key".tr()) {
         sheet1.getRangeByIndex(rowIndex, columnIndex).value = totalMrp;
       }
-      if (key == "return_coins") {
+      if (key == "return_coins_key".tr()) {
         sheet1.getRangeByIndex(rowIndex, columnIndex).value = returnCoins;
       }
-      if (key == "qty") {
+      if (key == "qty_key".tr()) {
         sheet1.getRangeByIndex(rowIndex, columnIndex).value = qty;
       }
       // if (key == "redeem_coins") {
@@ -449,12 +483,16 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
       savedDir.create();
     }
 
-    String fileName = "sale_return_report_" + DateTime.now().millisecondsSinceEpoch.toString() + ".xlsx";
+    String fileName = "sale_return_reports_key".tr() +
+        DateTime.now().millisecondsSinceEpoch.toString() +
+        ".xlsx";
 
-    final File file = File(Platform.isWindows ? '$path\\$fileName' : '$path/$fileName');
+    final File file =
+        File(Platform.isWindows ? '$path\\$fileName' : '$path/$fileName');
     await file.writeAsBytes(bytes, flush: true).whenComplete(() {
       print("completed");
-      Utility.showToast("Report saved at below location \n${file.path}");
+      Utility.showToast(
+          "report_saved_at_below_location_key \n${file.path}".tr());
     });
     print("savedDir${file.path}");
 

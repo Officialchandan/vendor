@@ -9,9 +9,11 @@ class CustomerNumberResponseIntialState extends CustomerNumberResponseState {
 
 class GetCustomerNumberResponseState extends CustomerNumberResponseState {
   final message;
+  final status;
   final data;
   final succes;
-  GetCustomerNumberResponseState({this.message, this.data, this.succes});
+  GetCustomerNumberResponseState(
+      {this.message, this.status, this.data, this.succes});
 
   @override
   List<Object> get props => [message, data, succes];
@@ -28,11 +30,12 @@ class GetCustomerNumberResponseLoadingstate
 class GetCustomerNumberResponseFailureState
     extends CustomerNumberResponseState {
   final String message;
+  final status;
   final succes;
   GetCustomerNumberResponseFailureState(
-      {required this.message, required this.succes});
+      {required this.message, this.status, required this.succes});
   @override
-  List<Object?> get props => [message, succes];
+  List<Object?> get props => [message, status, succes];
 }
 
 class GetCategoryByVendorIdLoadingstate extends CustomerNumberResponseState {
@@ -56,4 +59,30 @@ class GetCategoryByVendorIdFailureState extends CustomerNumberResponseState {
   GetCategoryByVendorIdFailureState({required this.message});
   @override
   List<Object?> get props => [message];
+}
+
+class GetBillingPartialUserState extends CustomerNumberResponseState {
+  final message;
+  final data;
+  final succes;
+  GetBillingPartialUserState({this.message, this.data, this.succes});
+
+  @override
+  List<Object> get props => [message, data, succes];
+}
+
+class GetBillingPartialUserLoadingstate extends CustomerNumberResponseState {
+  // final String message;
+  // GetBillingBillingLoadingstate({required this.message});
+  @override
+  List<Object?> get props => [];
+}
+
+class GetBillingPartialUserFailureState extends CustomerNumberResponseState {
+  final String message;
+  final succes;
+  GetBillingPartialUserFailureState(
+      {required this.message, required this.succes});
+  @override
+  List<Object?> get props => [message, succes];
 }

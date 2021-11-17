@@ -1,3 +1,4 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:vendor/utility/color.dart';
 
@@ -17,7 +18,7 @@ class _DiscountCodesState extends State<DiscountCodes> {
     return Scaffold(
         appBar: AppBar(
             title: Text(
-              "Discount Codes",
+              "discount_codes_key".tr(),
               style: TextStyle(fontWeight: FontWeight.w600),
             ),
             leadingWidth: 30,
@@ -56,7 +57,7 @@ class _DiscountCodesState extends State<DiscountCodes> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "FESTIVE10",
+                                  "festive10_key".tr(),
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w600),
@@ -90,7 +91,7 @@ class _DiscountCodesState extends State<DiscountCodes> {
                                       color: ColorPrimary, fontSize: 14),
                                   children: <TextSpan>[
                                     TextSpan(
-                                      text: ' off on orders above ',
+                                      text: ' off_on_orders_above_key '.tr(),
                                       style: TextStyle(
                                           color: Colors.black, fontSize: 14),
                                     ),
@@ -112,12 +113,12 @@ class _DiscountCodesState extends State<DiscountCodes> {
                                       borderRadius: BorderRadius.circular(25),
                                       color: Colors.green),
                                   child: Text(
-                                    "   Active   ",
+                                    "   active_key   ".tr(),
                                     style: TextStyle(
                                         fontSize: 12, color: Colors.white),
                                   ),
                                 ),
-                                Text("Coupan Expired: 27/07/2021")
+                                Text("coupan_expired_key".tr())
                               ],
                             ),
                           ),
@@ -145,7 +146,7 @@ class _DiscountCodesState extends State<DiscountCodes> {
                                     color: Colors.white,
                                   ),
                                   Text(
-                                    "Share Coupon",
+                                    "share_coupon_key".tr(),
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 17),
                                   ),
@@ -164,7 +165,7 @@ class _DiscountCodesState extends State<DiscountCodes> {
                       color: ColorPrimary,
                       child: Center(
                         child: Text(
-                          "CREATE CODES",
+                          "create_codes_key".tr(),
                           style: TextStyle(
                               color: Colors.white, fontWeight: FontWeight.bold),
                         ),

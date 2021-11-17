@@ -1,3 +1,4 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:vendor/ui/account_management/delivery_setting/delivery_areas/delivery_areas.dart';
@@ -13,14 +14,18 @@ class DeliverySetting extends StatefulWidget {
 }
 
 class _DeliverySettingState extends State<DeliverySetting> {
-
-  var DeliveryTitle = ["Delivery areas", "Delivery time", "Delivery fee", "Accept delivery instructions"];
+  var DeliveryTitle = [
+    "delivery_areas_key".tr(),
+    "delivery_time_key".tr(),
+    "delivery_fee_key".tr(),
+    "accept_delivery_instructions_key".tr()
+  ];
 
   var DeliverySubTitle = [
-    "Add serviceable areas",
-    "Add estimated time for delivery",
-    "Free delivery",
-    "Allow customers to add delivery instructions while placing orders"
+    "add_serviceable_areas_key".tr(),
+    "add_estimated_time_for_delivery_key".tr(),
+    "free_delivery_key".tr(),
+    "allow_customers_to_add_delivery_instructions_while_placing_orders_key".tr()
   ];
 
   bool DeliverySwitch = false;
@@ -35,23 +40,21 @@ class _DeliverySettingState extends State<DeliverySetting> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-
         appBar: AppBar(
           automaticallyImplyLeading: false,
           centerTitle: true,
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios),
-            onPressed: (){
+            onPressed: () {
               Navigator.pop(context);
             },
           ),
-          title: Text("Delivery Setting"),
+          title: Text("delivery_setting_key".tr()),
         ),
-
         body: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 15),
           child: Column(
-            children: List.generate(DeliveryTitle.length, (index){
+            children: List.generate(DeliveryTitle.length, (index) {
               return GestureDetector(
                 child: Container(
                   margin: EdgeInsets.only(top: 15),
@@ -68,39 +71,55 @@ class _DeliverySettingState extends State<DeliverySetting> {
                       ),
                       child: Row(
                         children: [
-                          index < 3 ? Image.asset("assets/images/home${index+1}.png", width: 42)
+                          index < 3
+                              ? Image.asset(
+                                  "assets/images/home${index + 1}.png",
+                                  width: 42)
                               : Container(),
-                          index < 3 ? SizedBox(width: 20)
-                              : Container(),
+                          index < 3 ? SizedBox(width: 20) : Container(),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(DeliveryTitle[index], style: TextStyle(color: Color(0xff303030), fontSize: 16, fontWeight: FontWeight.w600)),
-                                    index > 2 ? SizedBox(
-                                      width: 60,
-                                      height: 25,
-                                      child: Switch(
-                                        value: DeliverySwitch,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            DeliverySwitch = value;
-                                          });
-                                        },
-                                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                        inactiveTrackColor: Color(0xffdadada),
-                                        activeTrackColor: Color(0xffc2bcfb),
-                                        activeColor: Color(0xff6657f4),
-                                      ),
-                                    )
+                                    Text(DeliveryTitle[index],
+                                        style: TextStyle(
+                                            color: Color(0xff303030),
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600)),
+                                    index > 2
+                                        ? SizedBox(
+                                            width: 60,
+                                            height: 25,
+                                            child: Switch(
+                                              value: DeliverySwitch,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  DeliverySwitch = value;
+                                                });
+                                              },
+                                              materialTapTargetSize:
+                                                  MaterialTapTargetSize
+                                                      .shrinkWrap,
+                                              inactiveTrackColor:
+                                                  Color(0xffdadada),
+                                              activeTrackColor:
+                                                  Color(0xffc2bcfb),
+                                              activeColor: Color(0xff6657f4),
+                                            ),
+                                          )
                                         : Container(),
                                   ],
                                 ),
                                 SizedBox(height: 4),
-                                Text(DeliverySubTitle[index], style: TextStyle(color: Color(0xff555555), fontSize: 12, fontWeight: FontWeight.w600)),
+                                Text(DeliverySubTitle[index],
+                                    style: TextStyle(
+                                        color: Color(0xff555555),
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600)),
                               ],
                             ),
                           ),
@@ -109,18 +128,19 @@ class _DeliverySettingState extends State<DeliverySetting> {
                     ),
                   ),
                 ),
-                onTap: (){
-                  index < 3 ? Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => DeliveryNavigate[index]),
-                  )
+                onTap: () {
+                  index < 3
+                      ? Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DeliveryNavigate[index]),
+                        )
                       : Container();
                 },
               );
             }),
           ),
         ),
-
       ),
     );
   }

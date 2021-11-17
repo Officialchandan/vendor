@@ -1,3 +1,4 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
@@ -17,20 +18,20 @@ class _WithoutInventoryPerformanceTrackerByCategoryState
     extends State<WithoutInventoryPerformanceTrackerByCategory> {
   final options = [
     {
-      "title": "Sale amount",
-      "subTitle": "click here to see Sale amount",
+      "title": "sale_amount_key".tr(),
+      "subTitle": "click_here_to_see_sale_amount_key".tr(),
       "image": "assets/images/performance-ic1.png",
       "id": 1
     },
     {
-      "title": "Earning till now",
-      "subTitle": "Deduction after 20% of sale amount",
+      "title": "earning_till_now_key".tr(),
+      "subTitle": "deduction_after_20_of_sale_amount_key".tr(),
       "image": "assets/images/performance-ic2.png",
       "id": 2
     },
     {
-      "title": "Walk Ins",
-      "subTitle": "click here to sell Walikins",
+      "title": "walk_in_key".tr(),
+      "subTitle": "click_here_to_sell_walikins_key".tr(),
       "image": "assets/images/performance-ic3.png",
       "id": 3
     },
@@ -39,7 +40,7 @@ class _WithoutInventoryPerformanceTrackerByCategoryState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "Trackers & Reports",
+        title: "trackers_reports_key".tr(),
       ),
       body: ListView.builder(
         itemBuilder: (context, index) {

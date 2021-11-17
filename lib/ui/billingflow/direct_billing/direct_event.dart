@@ -5,7 +5,8 @@ class DirectBillingCustomerNumberResponseEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class GetDirectBillingCustomerNumberResponseEvent extends DirectBillingCustomerNumberResponseEvent {
+class GetDirectBillingCustomerNumberResponseEvent
+    extends DirectBillingCustomerNumberResponseEvent {
   final String mobile;
 
   GetDirectBillingCustomerNumberResponseEvent({required this.mobile});
@@ -23,11 +24,21 @@ class GetDirectBillingEvent extends DirectBillingCustomerNumberResponseEvent {
   List<Object> get props => [input];
 }
 
-class GetDirectBillingOtpEvent extends DirectBillingCustomerNumberResponseEvent {
+class GetDirectBillingOtpEvent
+    extends DirectBillingCustomerNumberResponseEvent {
   final Map<String, dynamic> input;
 
   GetDirectBillingOtpEvent({required this.input});
 
+  @override
+  List<Object> get props => [input];
+}
+
+class GetDirectBillingPartialUserRegisterEvent
+    extends DirectBillingCustomerNumberResponseEvent {
+  final Map<String, dynamic> input;
+
+  GetDirectBillingPartialUserRegisterEvent({required this.input});
   @override
   List<Object> get props => [input];
 }

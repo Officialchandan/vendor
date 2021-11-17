@@ -1,3 +1,4 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
@@ -16,7 +17,7 @@ class _PurchaseEntryState extends State<PurchaseEntry> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "Purchase Order Entry",
+        title: "purchase_order_entry_key".tr(),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(15),
@@ -31,21 +32,27 @@ class _PurchaseEntryState extends State<PurchaseEntry> {
               autofocus: false,
               keyboardType: TextInputType.phone,
               decoration: InputDecoration(
-                  hintText: "Choose Product",
+                  hintText: "choose_product_key".tr(),
                   suffixIcon: Icon(Icons.keyboard_arrow_right_sharp),
-                  suffixIconConstraints: BoxConstraints(maxWidth: 15, minWidth: 10, maxHeight: 15, minHeight: 10)),
+                  suffixIconConstraints: BoxConstraints(
+                      maxWidth: 15,
+                      minWidth: 10,
+                      maxHeight: 15,
+                      minHeight: 10)),
             ),
             SizedBox(
               height: 20,
             ),
             ListTile(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (_) => AddProductScreen()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => AddProductScreen()));
               },
               contentPadding: EdgeInsets.symmetric(horizontal: 0),
               title: Text(
-                "Add new product",
-                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                "add_new_product_key".tr(),
+                style:
+                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
               trailing: Icon(
                 Icons.add_circle,
@@ -61,7 +68,9 @@ class _PurchaseEntryState extends State<PurchaseEntry> {
   void selectCategory(BuildContext context) async {
     showModalBottomSheet(
         context: context,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15))),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15), topRight: Radius.circular(15))),
         builder: (context) {
           return IntrinsicHeight(
               child: Padding(
@@ -81,7 +90,7 @@ class _PurchaseEntryState extends State<PurchaseEntry> {
                                 PageTransition(
                                     child: ViewProductScreen(
                                       categoryId: categoryId,
-                                      from: "purchase_order_entry",
+                                      from: "purchase_order_entry_key".tr(),
                                     ),
                                     type: PageTransitionType.fade));
                           },
@@ -100,7 +109,7 @@ class _PurchaseEntryState extends State<PurchaseEntry> {
                             Navigator.pop(context);
                           },
                           child: Text(
-                            "Close",
+                            "close_key".tr(),
                             style: TextStyle(),
                           )),
                     ],

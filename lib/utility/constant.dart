@@ -1,8 +1,11 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class Constant {
-  static const INTERNET_ALERT_MSG = "Internet not available, Please check your network connection!";
+  static final INTERNET_ALERT_MSG =
+      "internet_not_available_key, please_check_your_network_connection_key"
+          .tr();
 
   static const language = [Locale("en"), Locale("hi")];
   static const langList = [
@@ -13,4 +16,6 @@ class Constant {
 
 const PRICE_TEXT_LENGTH = 8;
 TextInputType priceKeyboardType = TextInputType.phone;
-List<TextInputFormatter> priceInputFormatter = [FilteringTextInputFormatter.allow(RegExp(r'(^\d*\.?\d*)$'))];
+List<TextInputFormatter> priceInputFormatter = [
+  FilteringTextInputFormatter.allow(RegExp(r'(^\d*\.?\d*)$'))
+];

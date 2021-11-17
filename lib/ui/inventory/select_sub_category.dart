@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:collection';
 
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:vendor/model/add_sub_category_response.dart';
 import 'package:vendor/model/get_sub_category_response.dart';
@@ -42,15 +43,17 @@ class _SelectSubCategoryState extends State<SelectSubCategory> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Sub Category"),
+          title: Text("sub_category_key".tr()),
           actions: [
             TextButton(
                 onPressed: () {
-                  List<SubCategoryModel> subCategory = subCategoryList.where((element) => element.check).toList();
+                  List<SubCategoryModel> subCategory = subCategoryList
+                      .where((element) => element.check)
+                      .toList();
                   Navigator.pop(context, subCategory);
                 },
                 child: Text(
-                  "DONE",
+                  "done_key".tr(),
                   style: TextStyle(color: Colors.white),
                 ))
           ],
@@ -81,7 +84,7 @@ class _SelectSubCategoryState extends State<SelectSubCategory> {
                   });
             }
             return Center(
-              child: Text("Unit not found!"),
+              child: Text("unit_not_found_key".tr()),
             );
           },
         ),
@@ -89,7 +92,9 @@ class _SelectSubCategoryState extends State<SelectSubCategory> {
           padding: EdgeInsets.all(10),
           child: MaterialButton(
             onPressed: () {},
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10), side: BorderSide(color: ColorPrimary, width: 1)),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+                side: BorderSide(color: ColorPrimary, width: 1)),
             height: 45,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -102,7 +107,7 @@ class _SelectSubCategoryState extends State<SelectSubCategory> {
                   width: 15,
                 ),
                 Text(
-                  "Add new Subcategory",
+                  "add_new_subcategory_key".tr(),
                   style: TextStyle(color: ColorPrimary),
                 ),
               ],
@@ -115,7 +120,8 @@ class _SelectSubCategoryState extends State<SelectSubCategory> {
 
   void getSubCategory(String categoryId) async {
     if (await Network.isConnected()) {
-      GetSubCategoryResponse response = await apiProvider.getSubCategory(categoryId);
+      GetSubCategoryResponse response =
+          await apiProvider.getSubCategory(categoryId);
 
       if (response.success) {
         subCategoryList = response.data!;
@@ -148,7 +154,10 @@ class _AddCategoryBottomSheetState extends State<AddCategoryBottomSheet> {
   Widget build(BuildContext context) {
     return Padding(
       // padding: EdgeInsets.all(15),
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom, right: 15, left: 15),
+      padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+          right: 15,
+          left: 15),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -158,7 +167,7 @@ class _AddCategoryBottomSheetState extends State<AddCategoryBottomSheet> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Add new subcategory",
+                "add_new_subcategory_key".tr(),
                 style: TextStyle(color: ColorPrimary, fontSize: 18),
               ),
               IconButton(
@@ -176,23 +185,23 @@ class _AddCategoryBottomSheetState extends State<AddCategoryBottomSheet> {
           ),
           TextFormField(
             controller: editText,
-            decoration: InputDecoration(hintText: "Subcategory name"),
+            decoration: InputDecoration(hintText: "subcategory_name_key".tr()),
           ),
           SizedBox(
             height: 15,
           ),
           TextFormField(
             controller: editDescription,
-            decoration: InputDecoration(hintText: "description"),
+            decoration: InputDecoration(hintText: "description_key"),
           ),
           SizedBox(
             height: 15,
           ),
           AppButton(
-            title: "ADD",
+            title: "add_key".tr(),
             onPressed: () {
               if (editText.text.trim().isEmpty)
-                Utility.showToast("Please enter category name");
+                Utility.showToast("please_enter_category_name_key".tr());
               else
                 addSubCategory(widget.categoryId);
             },
@@ -209,7 +218,8 @@ class _AddCategoryBottomSheetState extends State<AddCategoryBottomSheet> {
     if (await Network.isConnected()) {
       Map input = HashMap<String, dynamic>();
       input["category_id"] = categoryId;
-      input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      input["vendor_id"] =
+          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
       input["sub_cat_name"] = editText.text.trim();
       input["description"] = editDescription.text.trim();
 

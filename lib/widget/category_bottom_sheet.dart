@@ -1,3 +1,4 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:vendor/main.dart';
@@ -25,8 +26,9 @@ class _CategoryBottomSheetState extends State<CategoryBottomSheet> {
       child: Column(
         children: [
           Text(
-            "Select Category",
-            style: TextStyle(color: ColorPrimary, fontSize: 18, fontWeight: FontWeight.bold),
+            "select_category_key".tr(),
+            style: TextStyle(
+                color: ColorPrimary, fontSize: 18, fontWeight: FontWeight.bold),
           ),
           Container(
             height: MediaQuery.of(context).size.height * 0.40,
@@ -75,7 +77,7 @@ class _CategoryBottomSheetState extends State<CategoryBottomSheet> {
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text("Cancel"),
+            child: Text("cancel_key".tr()),
           )
         ],
       ),

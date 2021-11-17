@@ -1,3 +1,4 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
@@ -10,21 +11,43 @@ import 'my_customer/customers_screen.dart';
 
 class PerformanceTrackerWithoutInventory extends StatefulWidget {
   @override
-  _PerformanceTrackerWithoutInventoryState createState() => _PerformanceTrackerWithoutInventoryState();
+  _PerformanceTrackerWithoutInventoryState createState() =>
+      _PerformanceTrackerWithoutInventoryState();
 }
 
-class _PerformanceTrackerWithoutInventoryState extends State<PerformanceTrackerWithoutInventory> {
+class _PerformanceTrackerWithoutInventoryState
+    extends State<PerformanceTrackerWithoutInventory> {
   final options = [
-    {"title": "Performance tracker", "subTitle": "click here to add product", "image": "assets/images/tr-ic1.png", "id": 1},
-    {"title": "Reports", "subTitle": "click here to add product", "image": "assets/images/tr-ic2.png", "id": 2},
-    {"title": "Money due - UPI", "subTitle": "click here to add product", "image": "assets/images/tr-ic3.png", "id": 3},
-    {"title": "My Customers", "subTitle": "click here to view customer", "image": "assets/images/tr-ic3.png", "id": 4},
+    {
+      "title": "performance_tracker_key".tr(),
+      "subTitle": "click_here_to_add_product_key".tr(),
+      "image": "assets/images/tr-ic1.png",
+      "id": 1
+    },
+    {
+      "title": "reports_key".tr(),
+      "subTitle": "click_here_to_add_product_key".tr(),
+      "image": "assets/images/tr-ic2.png",
+      "id": 2
+    },
+    {
+      "title": "money_due_upi_key".tr(),
+      "subTitle": "click_here_to_add_product_key".tr(),
+      "image": "assets/images/tr-ic3.png",
+      "id": 3
+    },
+    {
+      "title": "my_customers_key".tr(),
+      "subTitle": "click_here_to_view_customer_key".tr(),
+      "image": "assets/images/tr-ic3.png",
+      "id": 4
+    },
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "Trackers & Reports",
+        title: "trackers_reports_key".tr(),
       ),
       body: ListView.builder(
         itemBuilder: (context, index) {
@@ -41,18 +64,34 @@ class _PerformanceTrackerWithoutInventoryState extends State<PerformanceTrackerW
                   child: ListTile(
                     onTap: () {
                       if (options[index]["id"] == 2) {
-                        Navigator.push(context, PageTransition(child: ReportTypeScreen(), type: PageTransitionType.fade));
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: ReportTypeScreen(),
+                                type: PageTransitionType.fade));
                       }
                       if (options[index]["id"] == 3) {
-                        Navigator.push(context, PageTransition(child: DueAmountScreen(), type: PageTransitionType.fade));
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: DueAmountScreen(),
+                                type: PageTransitionType.fade));
                       }
                       if (options[index]["id"] == 4) {
-                        Navigator.push(context, PageTransition(child: CustomerScreen(), type: PageTransitionType.fade));
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: CustomerScreen(),
+                                type: PageTransitionType.fade));
                       }
 
                       if (options[index]["id"] == 1) {
-                        Navigator.push(context,
-                            PageTransition(child: WithoutInventoryPerformanceTrackerByCategory(), type: PageTransitionType.fade));
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child:
+                                    WithoutInventoryPerformanceTrackerByCategory(),
+                                type: PageTransitionType.fade));
                       }
                     },
                     leading: Image(
@@ -73,7 +112,9 @@ class _PerformanceTrackerWithoutInventoryState extends State<PerformanceTrackerW
                       width: 5,
                       decoration: BoxDecoration(
                           color: ColorPrimary,
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(5),
+                              bottomLeft: Radius.circular(5))),
                     ))
               ],
             ),

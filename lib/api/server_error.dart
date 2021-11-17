@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:vendor/ui/login/login_screen.dart';
 import 'package:vendor/utility/sharedpref.dart';
@@ -27,19 +28,20 @@ class ServerError implements Exception {
     print(error.message);
     switch (error.type) {
       case DioErrorType.cancel:
-        _errorMessage = "Request was cancelled";
+        _errorMessage = "request_was_cancelled_key".tr();
         break;
       case DioErrorType.connectTimeout:
-        _errorMessage = "Connection timeout";
+        _errorMessage = "connection_timeout_key".tr();
         break;
       case DioErrorType.other:
-        _errorMessage = "Connection failed due to internet connection";
+        _errorMessage = "connection_failed_due_to_internet_connection_key";
         break;
       case DioErrorType.receiveTimeout:
         _errorMessage = "Receive timeout in connection";
         break;
       case DioErrorType.response:
-        _errorMessage = "Received invalid status code: ${error.response!.statusCode}";
+        _errorMessage =
+            "Received invalid status code: ${error.response!.statusCode}";
         if (error.response!.statusCode == 401) {
           print("come here-->");
 
@@ -62,13 +64,18 @@ class ServerError implements Exception {
         barrierDismissible: false,
         context: navigationService.navigatorKey.currentContext!,
         builder: (context) => AlertDialog(
-              content: Text("Your session has been expired! Please login again"),
+              content:
+                  Text("Your session has been expired! Please login again"),
               contentPadding: EdgeInsets.all(15),
               actions: [
                 TextButton(
                     onPressed: () async {
                       SharedPref.clearSharedPreference(context);
-                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginScreen()), (route) => false);
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LoginScreen()),
+                          (route) => false);
                     },
                     child: Text("Ok"))
               ],

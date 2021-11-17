@@ -44,7 +44,7 @@ class ChatPapdiData {
     required this.totalPay,
     required this.coinDeducted,
     required this.earningCoins,
-    required this.myProfitRevenu,
+    required this.myProfitRevenue,
   });
 
   String vendorId;
@@ -55,7 +55,7 @@ class ChatPapdiData {
   String totalPay;
   String coinDeducted;
   String earningCoins;
-  String myProfitRevenu;
+  String myProfitRevenue;
 
   factory ChatPapdiData.fromJson(String str) =>
       ChatPapdiData.fromMap(json.decode(str));
@@ -77,9 +77,9 @@ class ChatPapdiData {
         earningCoins: json["earning_coins"] == null
             ? ""
             : json["earning_coins"].toString(),
-        myProfitRevenu: json["myProfit_revenu"] == null
+        myProfitRevenue: json["myprofit_revenue"] == null
             ? ""
-            : json["myProfit_revenu"].toString(),
+            : json["myprofit_revenue"].toString(),
       );
 
   Map<String, dynamic> toMap() => {
@@ -91,6 +91,6 @@ class ChatPapdiData {
         "total_pay": totalPay == null ? null : totalPay,
         "coin_deducted": coinDeducted == null ? null : coinDeducted,
         "earning_coins": earningCoins == null ? null : earningCoins,
-        "myProfit_revenu": myProfitRevenu == null ? null : myProfitRevenu
+        "myprofit_revenue": myProfitRevenue == null ? null : myProfitRevenue
       };
 }

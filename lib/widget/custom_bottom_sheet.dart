@@ -1,3 +1,4 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 
 class CustomBottomSheet extends StatefulWidget {
@@ -48,8 +49,11 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
               onTap: () => Navigator.pop(context),
               title: Center(
                 child: Text(
-                  "Cancel",
-                  style: TextStyle(color: Colors.red, fontSize: 18, fontWeight: FontWeight.bold),
+                  "cancel_key".tr(),
+                  style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
             )

@@ -1,3 +1,4 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/model/get_unit_response.dart';
@@ -25,8 +26,9 @@ class _UnitBottomSheetState extends State<UnitBottomSheet> {
       child: Column(
         children: [
           Text(
-            "Select Category",
-            style: TextStyle(color: ColorPrimary, fontSize: 18, fontWeight: FontWeight.bold),
+            "Select Category".tr(),
+            style: TextStyle(
+                color: ColorPrimary, fontSize: 18, fontWeight: FontWeight.bold),
           ),
           Container(
             height: MediaQuery.of(context).size.height * 0.40,
@@ -53,7 +55,7 @@ class _UnitBottomSheetState extends State<UnitBottomSheet> {
                       });
                 }
                 return Center(
-                  child: Text("Unit not found!"),
+                  child: Text("unit_not_found_key".tr()),
                 );
               },
             ),
@@ -65,7 +67,8 @@ class _UnitBottomSheetState extends State<UnitBottomSheet> {
 
   Future<List<UnitModel>> getUnit(String categoryId) async {
     if (await Network.isConnected()) {
-      GetUnitResponse response = await apiProvider.getUnitsByCategory(categoryId);
+      GetUnitResponse response =
+          await apiProvider.getUnitsByCategory(categoryId);
 
       if (response.success) {
         units = response.data!;

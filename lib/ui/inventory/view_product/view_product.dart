@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:vendor/main.dart';
@@ -53,22 +54,38 @@ class _ViewProductScreenState extends State<ViewProductScreen> {
             decoration: InputDecoration(
               filled: true,
               fillColor: Color.fromRGBO(242, 242, 242, 1),
-              hintText: "Search products",
+              hintText: "search_products_key".tr(),
               contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-              disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-              focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-              errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-              focusedErrorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide.none),
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide.none),
+              disabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide.none),
+              focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide.none),
+              errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide.none),
+              focusedErrorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide.none),
             ),
             onChanged: (text) {
               if (text.isNotEmpty) {
                 List<ProductModel> searchList = [];
 
                 products.forEach((element) {
-                  if (element.productName.toLowerCase().contains(text.trim().toLowerCase()) &&
-                      element.productName.toLowerCase().startsWith(text.toLowerCase())) {
+                  if (element.productName
+                          .toLowerCase()
+                          .contains(text.trim().toLowerCase()) &&
+                      element.productName
+                          .toLowerCase()
+                          .startsWith(text.toLowerCase())) {
                     searchList.add(element);
                   }
                 });
@@ -105,9 +122,12 @@ class _ViewProductScreenState extends State<ViewProductScreen> {
                       for (int i = 0; i < product.productOption.length; i++) {
                         if (product.productOption[i].optionName.isNotEmpty) {
                           if (product.productOption.length - 1 == i)
-                            variantName += product.productOption[i].value.toString();
+                            variantName +=
+                                product.productOption[i].value.toString();
                           else
-                            variantName += product.productOption[i].value.toString() + ", ";
+                            variantName +=
+                                product.productOption[i].value.toString() +
+                                    ", ";
                         } else {
                           product.productOption.removeAt(i);
                         }
@@ -116,11 +136,16 @@ class _ViewProductScreenState extends State<ViewProductScreen> {
 
                     return InkWell(
                       onTap: () async {
-                        await Navigator.push(context, MaterialPageRoute(builder: (_) => EditProductScreen(product: product)));
+                        await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) =>
+                                    EditProductScreen(product: product)));
                         getProducts();
                       },
                       child: Container(
-                        margin: const EdgeInsets.only(bottom: 5, top: 5, right: 10),
+                        margin:
+                            const EdgeInsets.only(bottom: 5, top: 5, right: 10),
                         child: Stack(
                           children: [
                             Padding(
@@ -131,27 +156,40 @@ class _ViewProductScreenState extends State<ViewProductScreen> {
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: ListTile(
-                                  contentPadding: EdgeInsets.only(left: 50, right: 5, top: 20, bottom: 20),
+                                  contentPadding: EdgeInsets.only(
+                                      left: 50, right: 5, top: 20, bottom: 20),
                                   title: Container(
                                       child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Text(product.productName + (variantName.isNotEmpty ? "($variantName)" : "")),
+                                      Text(product.productName +
+                                          (variantName.isNotEmpty
+                                              ? "($variantName)"
+                                              : "")),
                                       const SizedBox(
                                         height: 10,
                                       ),
                                       RichText(
                                           text: TextSpan(children: [
-                                        TextSpan(text: "₹ ${product.sellingPrice}\t", style: TextStyle(color: ColorPrimary)),
+                                        TextSpan(
+                                            text: "₹ ${product.sellingPrice}\t",
+                                            style:
+                                                TextStyle(color: ColorPrimary)),
                                         TextSpan(
                                             text: "₹ ${product.mrp}",
-                                            style: TextStyle(color: Colors.black, decoration: TextDecoration.lineThrough))
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                decoration:
+                                                    TextDecoration.lineThrough))
                                       ]))
                                     ],
                                   )),
-                                  trailing: widget.from! == "purchase_order_entry"
+                                  trailing: widget.from! ==
+                                          "purchase_order_entry_key".tr()
                                       ? SizedBox(
                                           height: 0,
                                           width: 0,
@@ -161,8 +199,12 @@ class _ViewProductScreenState extends State<ViewProductScreen> {
                                             Utility.showSingleAlert(
                                               context,
                                               "Are you sure you want to delete this product?",
-                                              onOk: () => deleteProduct(product, index),
-                                              title: product.productName + (variantName.isNotEmpty ? "($variantName)" : ""),
+                                              onOk: () =>
+                                                  deleteProduct(product, index),
+                                              title: product.productName +
+                                                  (variantName.isNotEmpty
+                                                      ? "($variantName)"
+                                                      : ""),
                                               okText: "Delete",
                                             );
                                           },
@@ -170,7 +212,8 @@ class _ViewProductScreenState extends State<ViewProductScreen> {
                                           splashRadius: 15,
                                           iconSize: 25,
                                           icon: Image(
-                                            image: AssetImage("assets/images/delete.png"),
+                                            image: AssetImage(
+                                                "assets/images/delete.png"),
                                             height: 25,
                                             width: 25,
                                           ),
@@ -188,7 +231,11 @@ class _ViewProductScreenState extends State<ViewProductScreen> {
                                             height: 60,
                                             width: 60,
                                             fit: BoxFit.contain,
-                                            image: NetworkImage(snapshot.data![index].productImages.first.productImage),
+                                            image: NetworkImage(snapshot
+                                                .data![index]
+                                                .productImages
+                                                .first
+                                                .productImage),
                                           )
                                         : Image(
                                             image: AssetImage(
@@ -223,10 +270,11 @@ class _ViewProductScreenState extends State<ViewProductScreen> {
       if (widget.categoryId == null) {
         response = await apiProvider.getAllVendorProducts();
       } else {
-        if (widget.from == "purchase_order_entry") {
+        if (widget.from == "purchase_order_entry_key".tr()) {
           response = await apiProvider.getAllVendorProducts();
         } else {
-          response = await apiProvider.getProductByCategories(widget.categoryId.toString());
+          response = await apiProvider
+              .getProductByCategories(widget.categoryId.toString());
         }
       }
 
@@ -247,7 +295,10 @@ class _ViewProductScreenState extends State<ViewProductScreen> {
 
   void deleteProduct(ProductModel product, int index) async {
     if (await Network.isConnected()) {
-      Map input = <String, dynamic>{"product_id": "${product.productId}", "id": "${product.id}"};
+      Map input = <String, dynamic>{
+        "product_id": "${product.productId}",
+        "id": "${product.id}"
+      };
       EasyLoading.show();
       CommonResponse response = await apiProvider.deleteProduct(input);
       EasyLoading.dismiss();

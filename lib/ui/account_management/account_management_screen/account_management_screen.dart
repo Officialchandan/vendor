@@ -29,24 +29,26 @@ class AccountManagementScreen extends StatefulWidget {
   const AccountManagementScreen({Key? key}) : super(key: key);
 
   @override
-  _AccountManagementScreenState createState() => _AccountManagementScreenState();
+  _AccountManagementScreenState createState() =>
+      _AccountManagementScreenState();
 }
 
 class _AccountManagementScreenState extends State<AccountManagementScreen> {
   List<String> textList = [
-    tr(MString.discount_codes),
-    tr(MString.settings),
-    tr(MString.delivery_settings),
-    tr(MString.video_tutorials),
-    tr(MString.share_store_link),
-    tr(MString.get_store_qr_code),
-    tr(MString.add_business_hours),
-    tr(MString.logout),
+    "discount_codes_key".tr(),
+    "settings_key".tr(),
+    "delivery_setting_key".tr(),
+    "video_tutorials_key".tr(),
+    "share_store_link_key".tr(),
+    "get_store_qr_code_key".tr(),
+    "add_business_hours_key".tr(),
+    "logout_key".tr(),
   ];
   var message;
   bool? status;
   List<VendorDetailData>? data;
-  AccountManagementBloc accountManagementBloc = AccountManagementBloc(AccountManagementIntialState());
+  AccountManagementBloc accountManagementBloc =
+      AccountManagementBloc(AccountManagementIntialState());
 
   @override
   void initState() {
@@ -86,7 +88,7 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
                 automaticallyImplyLeading: false,
                 elevation: 0,
                 // toolbarHeight: 120,
-                title: Text('Account'),
+                title: Text('account_key'.tr()),
                 centerTitle: true,
                 bottom: PreferredSize(
                   preferredSize: Size.fromHeight(70),
@@ -97,8 +99,11 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(70),
-                          child:
-                              Image.asset("assets/images/wallpaperflare.com_wallpaper.jpg", width: 55, height: 55, fit: BoxFit.cover),
+                          child: Image.asset(
+                              "assets/images/wallpaperflare.com_wallpaper.jpg",
+                              width: 55,
+                              height: 55,
+                              fit: BoxFit.cover),
                         ),
                         SizedBox(width: 20),
                         data == null
@@ -109,10 +114,16 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text("${data![0].ownerName}",
-                                      style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)),
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w700)),
                                   SizedBox(height: 3),
                                   Text("${data![0].ownerMobile}",
-                                      style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600)),
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600)),
                                 ],
                               ),
                       ],
@@ -152,18 +163,26 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
                         child: Container(
                           padding: EdgeInsets.all(15),
                           decoration: BoxDecoration(
-                            border: Border(bottom: BorderSide(width: 1, color: Color(0xffbdbdbd))),
+                            border: Border(
+                                bottom: BorderSide(
+                                    width: 1, color: Color(0xffbdbdbd))),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Image.asset("assets/images/account-ic${index + 1}.png", width: 24),
+                              Image.asset(
+                                  "assets/images/account-ic${index + 1}.png",
+                                  width: 24),
                               SizedBox(width: 17),
                               Expanded(
                                 child: Text(textList[index],
-                                    style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600)),
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600)),
                               ),
-                              Icon(Icons.arrow_forward_ios, color: Colors.black, size: 15),
+                              Icon(Icons.arrow_forward_ios,
+                                  color: Colors.black, size: 15),
                             ],
                           ),
                         ),
@@ -241,18 +260,29 @@ logoutDialog(context) {
       builder: (context) {
         return AlertDialog(
           contentPadding: EdgeInsets.fromLTRB(25, 10, 0, 0),
-          title: Text("Logout", style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w600)),
+          title: Text("logout_key".tr(),
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600)),
           content: Text("Are you sure you want to logout?",
-              style: TextStyle(color: Color.fromRGBO(85, 85, 85, 1), fontSize: 15, fontWeight: FontWeight.w500)),
+              style: TextStyle(
+                  color: Color.fromRGBO(85, 85, 85, 1),
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500)),
           actions: [
             MaterialButton(
-              child: Text("Cancel", style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w600)),
+              child: Text("cancel_key".tr(),
+                  style: TextStyle(
+                      color: Colors.grey, fontWeight: FontWeight.w600)),
               onPressed: () {
                 Navigator.pop(context);
               },
             ),
             MaterialButton(
-              child: Text("Logout", style: TextStyle(color: Color(0xfff4511e), fontWeight: FontWeight.w600)),
+              child: Text("logout_key".tr(),
+                  style: TextStyle(
+                      color: Color(0xfff4511e), fontWeight: FontWeight.w600)),
               onPressed: () async {
                 log("ndndnd");
                 LogOutResponse logoutData = await ApiProvider().getLogOut();
@@ -263,13 +293,21 @@ logoutDialog(context) {
                   SystemChannels.textInput.invokeMethod("TextInput.hide");
                   print("kai kroge +");
                   Navigator.pushAndRemoveUntil(
-                      context, MaterialPageRoute(builder: (context) => LoginScreen()), ModalRoute.withName("/"));
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()),
+                      ModalRoute.withName("/"));
 
-                  Fluttertoast.showToast(backgroundColor: ColorPrimary, textColor: Colors.white, msg: "Logout Successfully"
+                  Fluttertoast.showToast(
+                      backgroundColor: ColorPrimary,
+                      textColor: Colors.white,
+                      msg: "logout_successfully_key"
                       // timeInSecForIos: 3
                       );
                 } else {
-                  Fluttertoast.showToast(backgroundColor: ColorPrimary, textColor: Colors.white, msg: "Please turn on  internet");
+                  Fluttertoast.showToast(
+                      backgroundColor: ColorPrimary,
+                      textColor: Colors.white,
+                      msg: "please_turn_on_the_internet_key");
                 }
               },
             ),

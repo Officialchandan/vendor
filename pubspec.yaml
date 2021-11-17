@@ -80,7 +80,8 @@ dependencies:
 #GRAFH
   syncfusion_flutter_charts: ^19.2.48
 
-
+ #  Pull to refresh also used for pagination, refresh data
+  pull_to_refresh:
   #share
   share:
 

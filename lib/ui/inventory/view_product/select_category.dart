@@ -1,3 +1,4 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/main.dart';
@@ -21,7 +22,7 @@ class _ViewCategoryScreenState extends State<ViewCategoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "View Product",
+        title: "view_product_key".tr(),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(15),

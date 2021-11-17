@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/model/get_colors_response.dart';
@@ -37,7 +38,7 @@ class _SelectColorBottomSheetState extends State<SelectColorBottomSheet> {
     return IntrinsicHeight(
       child: Column(
         children: [
-          Text("Select variant options"),
+          Text("select_variant_options_key".tr()),
           Container(
             height: MediaQuery.of(context).size.height * 0.40,
             child: StreamBuilder<List<ColorModel>>(
@@ -69,7 +70,7 @@ class _SelectColorBottomSheetState extends State<SelectColorBottomSheet> {
                       });
                 }
                 return Center(
-                  child: Text("Subcategories not found!"),
+                  child: Text("subcategories_not_found_key!".tr()),
                 );
               },
             ),
@@ -80,7 +81,7 @@ class _SelectColorBottomSheetState extends State<SelectColorBottomSheet> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text("Cancel")),
+                  child: Text("cancel_key".tr())),
             ],
           )
         ],

@@ -1,3 +1,4 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vendor/model/get_brands_response.dart';
@@ -14,7 +15,8 @@ class SuggestedProductScreen extends StatefulWidget {
   _SuggestedProductScreenState createState() => _SuggestedProductScreenState();
 }
 
-class _SuggestedProductScreenState extends State<SuggestedProductScreen> with TickerProviderStateMixin {
+class _SuggestedProductScreenState extends State<SuggestedProductScreen>
+    with TickerProviderStateMixin {
   List<Brand> tabs = [];
   TabController? _tabController;
   int currentIndex = 0;
@@ -37,7 +39,8 @@ class _SuggestedProductScreenState extends State<SuggestedProductScreen> with Ti
       child: BlocListener<SuggestedProductBloc, SuggestedProductState>(
         listener: (context, state) {
           if (state is CheckState) {
-            productMap[tabs[_tabController!.index].brandName]![state.index].check = state.check;
+            productMap[tabs[_tabController!.index].brandName]![state.index]
+                .check = state.check;
             int i = -1;
             productMap.forEach((key, value) {
               i = i + value.where((element) => element.check).toList().length;
@@ -56,7 +59,7 @@ class _SuggestedProductScreenState extends State<SuggestedProductScreen> with Ti
         },
         child: Scaffold(
           appBar: AppBar(
-            title: Text("Add Suggested Product"),
+            title: Text("add_suggested_product_key".tr()),
             bottom: PreferredSize(
                 preferredSize: Size.fromHeight(54),
                 child: BlocBuilder<SuggestedProductBloc, SuggestedProductState>(
@@ -66,8 +69,10 @@ class _SuggestedProductScreenState extends State<SuggestedProductScreen> with Ti
                     }
                     if (state is GetBrandsState) {
                       tabs = state.brands;
-                      _tabController = TabController(length: tabs.length, vsync: this);
-                      suggestedProductBloc.add(GetProductEvent(brandId: tabs[0].brandName));
+                      _tabController =
+                          TabController(length: tabs.length, vsync: this);
+                      suggestedProductBloc
+                          .add(GetProductEvent(brandId: tabs[0].brandName));
                     }
                     if (state is ChangeTabState) {
                       _tabController!.index = state.index;
@@ -100,7 +105,8 @@ class _SuggestedProductScreenState extends State<SuggestedProductScreen> with Ti
               if (state is ChangeTabState) {
                 currentIndex = state.index;
                 if (productMap[tabs[_tabController!.index].brandName] == null) {
-                  suggestedProductBloc.add(GetProductEvent(brandId: tabs[state.index].brandName));
+                  suggestedProductBloc.add(
+                      GetProductEvent(brandId: tabs[state.index].brandName));
                   return CircularProgressIndicator();
                 }
               }
@@ -109,16 +115,19 @@ class _SuggestedProductScreenState extends State<SuggestedProductScreen> with Ti
               }
 
               if (state is GetProductState) {
-                productMap[tabs[_tabController!.index].brandName] = state.products;
+                productMap[tabs[_tabController!.index].brandName] =
+                    state.products;
               }
 
               if (productMap[tabs[_tabController!.index].brandName] != null) {
-                return SuggestedProductList(productMap[tabs[_tabController!.index].brandName]!);
+                return SuggestedProductList(
+                    productMap[tabs[_tabController!.index].brandName]!);
               }
               return CircularProgressIndicator();
             },
           ),
-          bottomNavigationBar: Container(child: BlocBuilder<SuggestedProductBloc, SuggestedProductState>(
+          bottomNavigationBar: Container(
+              child: BlocBuilder<SuggestedProductBloc, SuggestedProductState>(
             builder: (context, state) {
               return MaterialButton(
                 elevation: 0,
@@ -129,11 +138,11 @@ class _SuggestedProductScreenState extends State<SuggestedProductScreen> with Ti
                           List<ProductModel> products = [];
                           productMap.forEach((key, value) {
                             if (value.isNotEmpty) {
-                              products.addAll(value.where((element) => element.check).toList());
+                              products.addAll(value
+                                  .where((element) => element.check)
+                                  .toList());
                             }
                           });
-
-
 
                           String id = "";
                           for (int i = 0; i < products.length; i++) {
@@ -144,9 +153,9 @@ class _SuggestedProductScreenState extends State<SuggestedProductScreen> with Ti
                             }
                           }
 
-
                           if (id.isNotEmpty) {
-                            suggestedProductBloc.add(AddProductApiEvent(id: id));
+                            suggestedProductBloc
+                                .add(AddProductApiEvent(id: id));
                           }
                         }
                       },
@@ -155,7 +164,7 @@ class _SuggestedProductScreenState extends State<SuggestedProductScreen> with Ti
                 disabledColor: Colors.grey,
                 height: 50,
                 disabledTextColor: Colors.white,
-                child: Text("ADD PRODUCT"),
+                child: Text("add_product_key".tr()),
               );
             },
           )),

@@ -12,9 +12,10 @@ class GetDirectBillingCustomerNumberResponseState
     extends DirectBillingCustomerNumberResponseState {
   final message;
   final data;
+  final status;
   final succes;
   GetDirectBillingCustomerNumberResponseState(
-      {this.message, this.data, this.succes});
+      {this.message, this.status, this.data, this.succes});
 
   @override
   List<Object> get props => [message, data, succes];
@@ -32,8 +33,9 @@ class GetDirectBillingCustomerNumberResponseFailureState
     extends DirectBillingCustomerNumberResponseState {
   final String message;
   final succes;
+  final status;
   GetDirectBillingCustomerNumberResponseFailureState(
-      {required this.message, required this.succes});
+      {required this.message, this.status, required this.succes});
   @override
   List<Object?> get props => [message, succes];
 }
@@ -89,6 +91,35 @@ class GetDirectBillingOtpFailureState
   final String message;
   final succes;
   GetDirectBillingOtpFailureState(
+      {required this.message, required this.succes});
+  @override
+  List<Object?> get props => [message, succes];
+}
+
+class GetDirectBillingPartialUserState
+    extends DirectBillingCustomerNumberResponseState {
+  final message;
+  final data;
+  final succes;
+  GetDirectBillingPartialUserState({this.message, this.data, this.succes});
+
+  @override
+  List<Object> get props => [message, data, succes];
+}
+
+class GetDirectBillingPartialUserLoadingstate
+    extends DirectBillingCustomerNumberResponseState {
+  // final String message;
+  // GetDirectBillingBillingLoadingstate({required this.message});
+  @override
+  List<Object?> get props => [];
+}
+
+class GetDirectBillingPartialUserFailureState
+    extends DirectBillingCustomerNumberResponseState {
+  final String message;
+  final succes;
+  GetDirectBillingPartialUserFailureState(
       {required this.message, required this.succes});
   @override
   List<Object?> get props => [message, succes];

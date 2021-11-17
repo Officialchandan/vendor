@@ -1,3 +1,4 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/model/get_categories_response.dart';
@@ -27,7 +28,8 @@ class _SelectCategoryWidgetState extends State<SelectCategoryWidget> {
           margin: EdgeInsets.all(10),
           child: ListTile(
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10), side: BorderSide(color: Colors.grey.shade300, width: 1)),
+                borderRadius: BorderRadius.circular(10),
+                side: BorderSide(color: Colors.grey.shade300, width: 1)),
             onTap: () {
               widget.onSelect(null);
             },
@@ -38,7 +40,7 @@ class _SelectCategoryWidgetState extends State<SelectCategoryWidget> {
               color: ColorPrimary,
               fit: BoxFit.contain,
             ),
-            title: Text("View All Product"),
+            title: Text("view_all_product_key".tr()),
           ),
         ),
         // TextFormField(
@@ -50,7 +52,7 @@ class _SelectCategoryWidgetState extends State<SelectCategoryWidget> {
         //   decoration: InputDecoration(
         //       filled: true,
         //       fillColor: Color.fromRGBO(242, 242, 242, 1),
-        //       hintText: "Search products",
+        //       hintText: "search_products_key",
         //       contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
         //       border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
         //       enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
@@ -63,7 +65,7 @@ class _SelectCategoryWidgetState extends State<SelectCategoryWidget> {
         SizedBox(
           height: 10,
         ),
-        Text("Search by Category"),
+        Text("search_by_category_key".tr()),
         SizedBox(
           height: 10,
         ),
@@ -88,7 +90,9 @@ class _SelectCategoryWidgetState extends State<SelectCategoryWidget> {
                     margin: EdgeInsets.all(10),
                     child: ListTile(
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10), side: BorderSide(color: Colors.grey.shade300, width: 1)),
+                          borderRadius: BorderRadius.circular(10),
+                          side: BorderSide(
+                              color: Colors.grey.shade300, width: 1)),
                       onTap: () {
                         widget.onSelect(snap.data![index].id.toString());
                         // Navigator.push(

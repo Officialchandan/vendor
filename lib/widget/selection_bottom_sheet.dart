@@ -1,3 +1,4 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,7 @@ class _SelectionBottomSheetState extends State<SelectionBottomSheet> {
             widget.onAdd();
           },
           title: Text(
-            "Add variant",
+            "add_variant_key".tr(),
             style: Theme.of(context).textTheme.bodyText1,
           ),
         ),
@@ -37,7 +38,7 @@ class _SelectionBottomSheetState extends State<SelectionBottomSheet> {
             widget.onEdit();
           },
           title: Text(
-            "Edit variant",
+            "edit_variant_key".tr(),
             style: Theme.of(context).textTheme.bodyText1,
           ),
         ),
@@ -50,8 +51,11 @@ class _SelectionBottomSheetState extends State<SelectionBottomSheet> {
             Navigator.pop(context);
           },
           title: Text(
-            "Cancel",
-            style: Theme.of(context).textTheme.bodyText1!.merge(TextStyle(color: Colors.red)),
+            "cancel_key".tr(),
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1!
+                .merge(TextStyle(color: Colors.red)),
           ),
         ),
       ],

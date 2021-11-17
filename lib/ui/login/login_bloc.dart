@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -8,6 +9,7 @@ import 'package:vendor/model/login_otp.dart';
 import 'package:vendor/model/login_response.dart';
 import 'package:vendor/ui/login/login_event.dart';
 import 'package:vendor/ui/login/login_state.dart';
+import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/sharedpref.dart';
 
@@ -43,7 +45,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       }
     } else {
       EasyLoading.dismiss();
-      Fluttertoast.showToast(msg: "Turn on the internet");
+      Fluttertoast.showToast(
+          msg: "please_turn_on_the_internet_key".tr(),
+          backgroundColor: ColorPrimary);
     }
   }
 
@@ -54,19 +58,24 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         if (result.success) {
           SharedPref.setBooleanPreference(SharedPref.LOGIN, true);
           SharedPref.setStringPreference(SharedPref.TOKEN, result.token!);
-          SharedPref.setIntegerPreference(SharedPref.VENDORID, result.vendorId!);
-          SharedPref.setIntegerPreference(SharedPref.USERSTATUS, result.vendorStatus!);
+          SharedPref.setIntegerPreference(
+              SharedPref.VENDORID, result.vendorId!);
+          SharedPref.setIntegerPreference(
+              SharedPref.USERSTATUS, result.vendorStatus!);
 
-          baseOptions.headers.addAll({"Authorization": "bearer ${result.token!}"});
+          baseOptions.headers
+              .addAll({"Authorization": "bearer ${result.token!}"});
           yield GetLoginOtpState(result.message);
         } else {
           yield GetLoginFailureState(message: result.message);
         }
       } catch (error) {
-        yield GetLoginFailureState(message: "internal sever error");
+        yield GetLoginFailureState(message: "internal_server_error_key".tr());
       }
     } else {
-      Fluttertoast.showToast(msg: "Turn on  internet");
+      Fluttertoast.showToast(
+          msg: "please_turn_on_the_internet_key".tr(),
+          backgroundColor: ColorPrimary);
     }
   }
 }

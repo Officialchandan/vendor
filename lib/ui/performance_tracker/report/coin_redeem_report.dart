@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:open_file/open_file.dart';
@@ -41,7 +42,8 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
   CategoryModel? categoryModel;
 
   Option? days;
-  DateRangePickerController dateRangePickerController = DateRangePickerController();
+  DateRangePickerController dateRangePickerController =
+      DateRangePickerController();
 
   TextEditingController edtCategory = TextEditingController();
   TextEditingController edtDays = TextEditingController();
@@ -54,18 +56,18 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "Coin Redeemed Reports",
+        title: "coin_redeemed_reports_key".tr(),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(15),
         child: Column(
           children: [
-            Text("View report by"),
+            Text("view_report_by_key".tr()),
             Row(
               children: [
                 Expanded(
                   child: RadioListTile(
-                      title: Text("Date wise"),
+                      title: Text("date_wise_key".tr()),
                       value: 1,
                       groupValue: groupValue,
                       onChanged: (value) {
@@ -75,7 +77,7 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
                 ),
                 Expanded(
                   child: RadioListTile(
-                      title: Text("Day wise"),
+                      title: Text("date_wise_key".tr()),
                       value: 2,
                       groupValue: groupValue,
                       onChanged: (value) {
@@ -104,7 +106,8 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
                     headerStyle: DateRangePickerHeaderStyle(
                       textStyle: TextStyle(color: ColorPrimary),
                     ),
-                    yearCellStyle: DateRangePickerYearCellStyle(textStyle: TextStyle(color: Colors.black)),
+                    yearCellStyle: DateRangePickerYearCellStyle(
+                        textStyle: TextStyle(color: Colors.black)),
                     // showActionButtons: true,
                     showNavigationArrow: false,
                     selectionMode: DateRangePickerSelectionMode.range,
@@ -119,12 +122,13 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
                     },
                     readOnly: true,
                     decoration: InputDecoration(
-                        hintText: "Choose report days",
+                        hintText: "choose_report_days_key".tr(),
                         suffixIcon: Icon(
                           Icons.keyboard_arrow_right_sharp,
                           color: ColorPrimary,
                         ),
-                        suffixIconConstraints: BoxConstraints(maxWidth: 20, maxHeight: 20)),
+                        suffixIconConstraints:
+                            BoxConstraints(maxWidth: 20, maxHeight: 20)),
                   ),
             SizedBox(
               height: 10,
@@ -138,12 +142,13 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
                     },
                     readOnly: true,
                     decoration: InputDecoration(
-                        hintText: "Choose category",
+                        hintText: "Choose_category_key".tr(),
                         suffixIcon: Icon(
                           Icons.keyboard_arrow_right_sharp,
                           color: ColorPrimary,
                         ),
-                        suffixIconConstraints: BoxConstraints(maxWidth: 20, maxHeight: 20)),
+                        suffixIconConstraints:
+                            BoxConstraints(maxWidth: 20, maxHeight: 20)),
                   ),
             SizedBox(
               height: 10,
@@ -157,12 +162,13 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
                     },
                     readOnly: true,
                     decoration: InputDecoration(
-                        hintText: "Choose product",
+                        hintText: "choose_product_key".tr(),
                         suffixIcon: Icon(
                           Icons.keyboard_arrow_right_sharp,
                           color: ColorPrimary,
                         ),
-                        suffixIconConstraints: BoxConstraints(maxWidth: 20, maxHeight: 20)),
+                        suffixIconConstraints:
+                            BoxConstraints(maxWidth: 20, maxHeight: 20)),
                   ),
           ],
         ),
@@ -175,7 +181,7 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
         shape: RoundedRectangleBorder(),
         color: ColorPrimary,
         child: Text(
-          "Export",
+          "export_key".tr(),
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -188,17 +194,18 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
     if (args.value is PickerDateRange) {
       startDate = Utility.getFormatDate(args.value.startDate);
 
-      endDate = Utility.getFormatDate(args.value.endDate ?? args.value.startDate);
+      endDate =
+          Utility.getFormatDate(args.value.endDate ?? args.value.startDate);
     }
   }
 
   void selectDays(BuildContext context) async {
     final List<Option> options = [
-      Option(optionName: "1 day", optionId: "1"),
-      Option(optionName: "5 days", optionId: "5"),
-      Option(optionName: "7 days", optionId: "7"),
-      Option(optionName: "15 days", optionId: "15"),
-      Option(optionName: "30 days", optionId: "30"),
+      Option(optionName: "1 day_key", optionId: "1"),
+      Option(optionName: "5 days_key", optionId: "5"),
+      Option(optionName: "7 days_key", optionId: "7"),
+      Option(optionName: "15 days_key", optionId: "15"),
+      Option(optionName: "30 days_key", optionId: "30"),
     ];
     showModalBottomSheet(
         context: context,
@@ -206,7 +213,9 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
         enableDrag: true,
         isScrollControlled: true,
         backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(25), topLeft: Radius.circular(25))),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(25), topLeft: Radius.circular(25))),
         builder: (context) {
           return CustomBottomSheet(
             onOptionSelect: (Option option) {
@@ -225,7 +234,9 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
         enableDrag: true,
         isScrollControlled: true,
         backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(25), topLeft: Radius.circular(25))),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(25), topLeft: Radius.circular(25))),
         builder: (context) {
           return CategoryBottomSheet(
             onSelect: (CategoryModel option) {
@@ -263,20 +274,26 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
   void getReport(BuildContext context) async {
     if (await Network.isConnected()) {
       Map input = HashMap<String, dynamic>();
-      input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      input["vendor_id"] =
+          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
       // input["vendor_id"] = "1";
       String url = "";
 
       if (groupValue == 1) {
-        url = widget.chatPapdi == 0 ? Endpoint.GET_COIN_REDEEM_REPORT_BY_DATE : Endpoint.GET_COIN_REDEEM_REPORT_BY_DATE_OF_CHAT_PAPDI;
+        url = widget.chatPapdi == 0
+            ? Endpoint.GET_COIN_REDEEM_REPORT_BY_DATE
+            : Endpoint.GET_COIN_REDEEM_REPORT_BY_DATE_OF_CHAT_PAPDI;
         input["from_date"] = startDate;
         DateTime dateTime = DateTime.parse(endDate);
 
-        input["to_date"] = Utility.getFormatDate(DateTime(dateTime.year, dateTime.month, dateTime.day + 1));
+        input["to_date"] = Utility.getFormatDate(
+            DateTime(dateTime.year, dateTime.month, dateTime.day + 1));
       } else {
-        url = widget.chatPapdi == 0 ? Endpoint.GET_COIN_REDEEM_REPORT_BY_DAY : Endpoint.GET_COIN_REDEEM_REPORT_BY_DAY_OF_CHAT_PAPDI;
+        url = widget.chatPapdi == 0
+            ? Endpoint.GET_COIN_REDEEM_REPORT_BY_DAY
+            : Endpoint.GET_COIN_REDEEM_REPORT_BY_DAY_OF_CHAT_PAPDI;
         if (days == null) {
-          Utility.showToast("Please select days");
+          Utility.showToast("please_select_days_key".tr());
           return;
         } else {
           input["days"] = days!.optionId;
@@ -309,7 +326,8 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
         EasyLoading.dismiss();
         print("result-->$result");
         if (result["success"]) {
-          List<Map<String, dynamic>> report = List<Map<String, dynamic>>.from(result["data"]!.map((x) => x));
+          List<Map<String, dynamic>> report =
+              List<Map<String, dynamic>>.from(result["data"]!.map((x) => x));
           reportList = report;
           print("report-->$report");
           exportReport(context);
@@ -325,7 +343,7 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
         EasyLoading.dismiss();
       }
     } else {
-      Utility.showToast("Please check your internet connection");
+      Utility.showToast("please_check_your_internet_connection_key");
     }
   }
 
@@ -333,7 +351,8 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
     print("exportReport");
     final xls.Workbook workbook = xls.Workbook(0);
     //Adding a Sheet with name to workbook.
-    final xls.Worksheet sheet1 = workbook.worksheets.addWithName('Coin Redeem Report');
+    final xls.Worksheet sheet1 =
+        workbook.worksheets.addWithName('coin_redeem_report_key'.tr());
     sheet1.showGridlines = true;
 
     int columnIndex = 1;
@@ -345,22 +364,29 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
 
     sheet1.getRangeByIndex(1, 1, 1, reportList.first.keys.length).merge();
     if (groupValue == 1) {
-      sheet1.getRangeByIndex(rowIndex, columnIndex).value = "Coin Redeem Report ($startDate to $endDate)";
+      sheet1.getRangeByIndex(rowIndex, columnIndex).value =
+          "coin_redeem_report_key ($startDate to $endDate)".tr();
     } else {
-      sheet1.getRangeByIndex(rowIndex, columnIndex).value = "Coin Redeem Report (${days!.optionName})";
+      sheet1.getRangeByIndex(rowIndex, columnIndex).value =
+          "coin_redeem_report_key (${days!.optionName})".tr();
     }
 
     sheet1.getRangeByIndex(rowIndex, columnIndex).rowHeight = 30;
-    sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign = xls.HAlignType.center;
-    sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign = xls.VAlignType.center;
+    sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign =
+        xls.HAlignType.center;
+    sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign =
+        xls.VAlignType.center;
     rowIndex = rowIndex + 1;
 
     reportList.first.keys.forEach((element) {
-      sheet1.getRangeByIndex(rowIndex, columnIndex).value = element.toString().replaceAll("_", " ").toUpperCase();
+      sheet1.getRangeByIndex(rowIndex, columnIndex).value =
+          element.toString().replaceAll("_", " ").toUpperCase();
       sheet1.getRangeByIndex(rowIndex, columnIndex).columnWidth = 25;
       sheet1.getRangeByIndex(rowIndex, columnIndex).rowHeight = 20;
-      sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign = xls.HAlignType.center;
-      sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign = xls.VAlignType.center;
+      sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign =
+          xls.HAlignType.center;
+      sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign =
+          xls.VAlignType.center;
       columnIndex = columnIndex + 1;
     });
 
@@ -371,11 +397,13 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
         sheet1.getRangeByIndex(rowIndex, columnIndex).value = value;
         sheet1.getRangeByIndex(rowIndex, columnIndex).columnWidth = 25;
         sheet1.getRangeByIndex(rowIndex, columnIndex).rowHeight = 20;
-        sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign = xls.HAlignType.center;
-        sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign = xls.VAlignType.center;
+        sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign =
+            xls.HAlignType.center;
+        sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign =
+            xls.VAlignType.center;
         columnIndex = columnIndex + 1;
 
-        if (key == "redeem_coins") {
+        if (key == "redeem_coins_key".tr()) {
           print("value - >$value");
           print("total - >$total");
           total = double.parse(value.toString()) + total;
@@ -385,11 +413,13 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
 
     print("total - >$total");
 
-    sheet1.getRangeByIndex(rowIndex + 1, 1).value = "Total";
-    sheet1.getRangeByIndex(rowIndex + 1, 1).cellStyle.hAlign = xls.HAlignType.center;
-    sheet1.getRangeByIndex(rowIndex + 1, 1).cellStyle.vAlign = xls.VAlignType.center;
+    sheet1.getRangeByIndex(rowIndex + 1, 1).value = "total_key".tr();
+    sheet1.getRangeByIndex(rowIndex + 1, 1).cellStyle.hAlign =
+        xls.HAlignType.center;
+    sheet1.getRangeByIndex(rowIndex + 1, 1).cellStyle.vAlign =
+        xls.VAlignType.center;
 
-    final xls.Style style = workbook.styles.add('Style1');
+    final xls.Style style = workbook.styles.add('style1_key'.tr());
     style.backColorRgb = Colors.red;
     style.hAlign = xls.HAlignType.center;
     style.vAlign = xls.VAlignType.center;
@@ -401,7 +431,9 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
       columnIndex = columnIndex + 1;
     });
 
-    int index = reportList.first.keys.toList().indexWhere((element) => element == "redeem_coins");
+    int index = reportList.first.keys
+        .toList()
+        .indexWhere((element) => element == "redeem_coins_key");
     if (index != -1) {
       sheet1.getRangeByIndex(rowIndex + 1, index + 1).value = total;
     }
@@ -424,19 +456,22 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
       savedDir.create();
     }
 
-    String fileName = "coin_redeem_report_";
+    String fileName = "coin_redeem_report_key".tr();
 
     if (groupValue == 1) {
       fileName += "$startDate to $endDate" + ".xlsx";
-      sheet1.getRangeByIndex(rowIndex, columnIndex).value = "Coin Redeem Report ($startDate to $endDate)";
+      sheet1.getRangeByIndex(rowIndex, columnIndex).value =
+          "coin_redeem_report_key ($startDate to $endDate)".tr();
     } else {
       fileName += "${days!.optionName}" + ".xlsx";
     }
 
-    final File file = File(Platform.isWindows ? '$path\\$fileName' : '$path/$fileName');
+    final File file =
+        File(Platform.isWindows ? '$path\\$fileName' : '$path/$fileName');
     await file.writeAsBytes(bytes, flush: true).whenComplete(() {
       print("completed");
-      Utility.showToast("Report saved at below location \n${file.path}");
+      Utility.showToast(
+          "report_saved_at_below_location_key \n${file.path}".tr());
     });
     print("savedDir${file.path}");
 

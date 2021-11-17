@@ -5,7 +5,8 @@ class Validator {
   static RegExp emailRegex = new RegExp(
       r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
 
-  static RegExp passwordRegex = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+  static RegExp passwordRegex =
+      RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
   static RegExp doubleRegex = RegExp(r'^(?:0|[1-9][0-9]*)\.[0-9]+$');
 
   static String? emailValidator(String email) {
@@ -14,7 +15,7 @@ class Validator {
     }
 
     if (!emailRegex.hasMatch(email)) {
-      return 'Invalid email address';
+      return 'invalid_email_address_key'.tr();
     }
     return null;
   }
@@ -25,9 +26,9 @@ class Validator {
     if (value.length == 0) {
       return "please_enter_mobile_number_key".tr();
     } else if (value.length != 10) {
-      return "Mobile_number_must_10_digits_key".tr();
+      return "mobile_number_must_10_digits_key".tr();
     } else if (!regExp.hasMatch(value)) {
-      return "Mobile_number_must_be_digits_key".tr();
+      return "mobile_number_must_be_digits_key".tr();
     }
     return null;
   }

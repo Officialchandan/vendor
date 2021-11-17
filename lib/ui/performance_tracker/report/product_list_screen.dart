@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/model/product_by_category_response.dart';
@@ -45,21 +46,35 @@ class _ProductListScreenState extends State<ProductListScreen> {
           decoration: InputDecoration(
             filled: true,
             fillColor: Color.fromRGBO(242, 242, 242, 1),
-            hintText: "Search products",
+            hintText: "search_products_key".tr(),
             contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-            enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-            disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-            focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-            errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-            focusedErrorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide.none),
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide.none),
+            disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide.none),
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide.none),
+            errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide.none),
+            focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide.none),
           ),
           onChanged: (text) {
             if (text.isNotEmpty) {
               List<ProductModel> searchList = [];
 
               products.forEach((element) {
-                if (element.productName.toLowerCase().contains(text.trim().toLowerCase())) {
+                if (element.productName
+                    .toLowerCase()
+                    .contains(text.trim().toLowerCase())) {
                   searchList.add(element);
                 }
               });
@@ -86,7 +101,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
                       // getProducts();
                     },
                     child: Container(
-                      margin: const EdgeInsets.only(bottom: 5, top: 5, right: 10),
+                      margin:
+                          const EdgeInsets.only(bottom: 5, top: 5, right: 10),
                       child: Stack(
                         children: [
                           Padding(
@@ -97,10 +113,12 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: ListTile(
-                                contentPadding: EdgeInsets.only(left: 50, right: 5, top: 5, bottom: 5),
+                                contentPadding: EdgeInsets.only(
+                                    left: 50, right: 5, top: 5, bottom: 5),
                                 title: Container(
                                     child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
@@ -110,7 +128,10 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                     ),
                                     RichText(
                                         text: TextSpan(children: [
-                                      TextSpan(text: "₹ ${product.purchasePrice}\t", style: TextStyle(color: ColorPrimary)),
+                                      TextSpan(
+                                          text: "₹ ${product.purchasePrice}\t",
+                                          style:
+                                              TextStyle(color: ColorPrimary)),
                                       // TextSpan(
                                       //     text: "₹ ${product.total}",
                                       //     style: TextStyle(color: Colors.black, decoration: TextDecoration.lineThrough))
@@ -141,7 +162,11 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                           height: 60,
                                           width: 60,
                                           fit: BoxFit.contain,
-                                          image: NetworkImage(snapshot.data![index].productImages.first.productImage),
+                                          image: NetworkImage(snapshot
+                                              .data![index]
+                                              .productImages
+                                              .first
+                                              .productImage),
                                         )
                                       : Image(
                                           image: AssetImage(
@@ -175,7 +200,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
         child: MaterialButton(
           elevation: 0,
           onPressed: () {
-            List<ProductModel> returnProductList = products.where((element) => element.check).toList();
+            List<ProductModel> returnProductList =
+                products.where((element) => element.check).toList();
             Navigator.of(context).pop(returnProductList);
 
             print("returnProductList-->$returnProductList");
@@ -185,7 +211,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
           disabledColor: Colors.grey,
           height: 50,
           disabledTextColor: Colors.white,
-          child: Text("DONE"),
+          child: Text("done_key".tr()),
         ),
       ),
     );
@@ -197,7 +223,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
       if (widget.categoryId == null || widget.categoryId!.isEmpty) {
         response = await apiProvider.getAllVendorProducts();
       } else {
-        response = await apiProvider.getProductByCategories(widget.categoryId.toString());
+        response = await apiProvider
+            .getProductByCategories(widget.categoryId.toString());
       }
 
       if (response.success) {

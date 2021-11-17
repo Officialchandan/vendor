@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -12,6 +14,7 @@ import 'package:vendor/ui/billingflow/billingproducts/billing_products.dart';
 import 'package:vendor/ui/billingflow/search_all/search_all_event.dart';
 import 'package:vendor/ui/billingflow/search_all/search_all_state.dart';
 import 'package:vendor/utility/color.dart';
+import 'package:vendor/utility/network.dart';
 
 import 'search_all_bloc.dart';
 
@@ -74,7 +77,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
-                      hintText: "Search",
+                      hintText: "search_key".tr(),
                       hintStyle: GoogleFonts.openSans(
                         fontWeight: FontWeight.w600,
                       ),
@@ -215,13 +218,20 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Text(
-                                                "${searchList[index].productName} ($variantName)",
-                                                style: TextStyle(
-                                                    fontSize: 14,
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.w600),
+                                              Container(
+                                                width: width * 0.66,
+                                                child: AutoSizeText(
+                                                  "${searchList[index].productName} ($variantName)",
+                                                  maxLines: 2,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                  maxFontSize: 14,
+                                                  minFontSize: 11,
+                                                ),
                                               ),
                                             ]),
                                         Row(
@@ -311,20 +321,30 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                               padding:
                                                                   EdgeInsets
                                                                       .all(0),
-                                                              onPressed: () {
+                                                              onPressed:
+                                                                  () async {
                                                                 log("true===>$count");
-                                                                searchList[index]
-                                                                            .count >
-                                                                        1
-                                                                    ? searchAllBloc.add(
-                                                                        GetIncrementEvent(
-                                                                            count: searchList[index]
-                                                                                .count--))
-                                                                    : Fluttertoast.showToast(
-                                                                        msg:
-                                                                            "Product cant be in negative",
-                                                                        backgroundColor:
-                                                                            ColorPrimary);
+                                                                if (await Network
+                                                                    .isConnected()) {
+                                                                  searchList[index]
+                                                                              .count >
+                                                                          1
+                                                                      ? searchAllBloc.add(
+                                                                          GetIncrementEvent(
+                                                                              count: searchList[index]
+                                                                                  .count--))
+                                                                      : Fluttertoast.showToast(
+                                                                          msg: "product_cant_be_in_negative_key"
+                                                                              .tr(),
+                                                                          backgroundColor:
+                                                                              ColorPrimary);
+                                                                } else {
+                                                                  Fluttertoast.showToast(
+                                                                      msg: "please_turn_on_the_internet_key"
+                                                                          .tr(),
+                                                                      backgroundColor:
+                                                                          ColorPrimary);
+                                                                }
                                                               },
                                                               iconSize: 20,
                                                               splashRadius: 10,
@@ -339,12 +359,13 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                       height: 20,
                                                       color: ColorPrimary,
                                                       child: Center(
-                                                        child: Text(
+                                                        child: AutoSizeText(
                                                           "${searchList[index].count}",
                                                           style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 14),
+                                                            color: Colors.white,
+                                                          ),
+                                                          maxFontSize: 14,
+                                                          minFontSize: 10,
                                                         ),
                                                       ),
                                                     ),
@@ -365,21 +386,32 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                               padding:
                                                                   EdgeInsets
                                                                       .all(0),
-                                                              onPressed: () {
+                                                              onPressed:
+                                                                  () async {
                                                                 log("true===>$count");
-                                                                searchList[index]
-                                                                            .count <
-                                                                        searchList[index]
-                                                                            .stock
-                                                                    ? searchAllBloc.add(
-                                                                        GetIncrementEvent(
-                                                                            count: searchList[index]
-                                                                                .count++))
-                                                                    : Fluttertoast.showToast(
-                                                                        msg:
-                                                                            "Stock Limit reached",
-                                                                        backgroundColor:
-                                                                            ColorPrimary);
+                                                                if (await Network
+                                                                    .isConnected()) {
+                                                                  // searchList[index].count <
+                                                                  //         searchList[index]
+                                                                  //             .stock
+                                                                  //     ?
+
+                                                                  searchAllBloc.add(
+                                                                      GetIncrementEvent(
+                                                                          count:
+                                                                              searchList[index].count++));
+                                                                  // : Fluttertoast.showToast(
+                                                                  //     msg:
+                                                                  //         "Stock Limit reached",
+                                                                  //     backgroundColor:
+                                                                  //         ColorPrimary);
+                                                                } else {
+                                                                  Fluttertoast.showToast(
+                                                                      msg: "please_turn_on_the_internet_key"
+                                                                          .tr(),
+                                                                      backgroundColor:
+                                                                          ColorPrimary);
+                                                                }
                                                               },
                                                               iconSize: 20,
                                                               splashRadius: 10,
@@ -587,7 +619,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                 // ),
                               ),
                               Positioned(
-                                top: 0,
+                                top: 15,
                                 right: 20,
                                 child:
                                     BlocBuilder<SearchAllBloc, SearchAllState>(
@@ -607,12 +639,21 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                         // checkColor: Colors.indigo,
                                         value: searchList[index].check,
                                         activeColor: ColorPrimary,
-                                        onChanged: (newvalue) {
-                                          log("true===>");
-                                          searchAllBloc.add(GetCheckBoxEvent(
-                                              check: newvalue!, index: index));
-                                          selectedProductList =
-                                              searchList[index];
+                                        onChanged: (newvalue) async {
+                                          if (await Network.isConnected()) {
+                                            log("true===>");
+                                            searchAllBloc.add(GetCheckBoxEvent(
+                                                check: newvalue!,
+                                                index: index));
+                                            selectedProductList =
+                                                searchList[index];
+                                          } else {
+                                            Fluttertoast.showToast(
+                                                msg:
+                                                    "please_turn_on_the_internet_key"
+                                                        .tr(),
+                                                backgroundColor: ColorPrimary);
+                                          }
                                         },
                                       ),
                                     );
@@ -634,27 +675,39 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                           : Positioned(
                               bottom: 0,
                               child: GestureDetector(
-                                onTap: () {
+                                onTap: () async {
                                   List<ProductModel> product = searchList
                                       .where((element) => element.check)
                                       .toList();
                                   log("$product");
-
-                                  // Navigator.pop(context);
-                                  if (product.length == 0) {
-                                    Fluttertoast.showToast(
-                                        msg: "Please select atlest one product",
-                                        backgroundColor: ColorPrimary);
+                                  if (await Network.isConnected()) {
+                                    // Navigator.pop(context);
+                                    if (product.length == 0) {
+                                      Fluttertoast.showToast(
+                                          msg: "please_atleast_one_product_key"
+                                              .tr(),
+                                          backgroundColor: ColorPrimary);
+                                    } else {
+                                      Navigator.push(
+                                              context,
+                                              PageTransition(
+                                                  child: BillingProducts(
+                                                    billingItemList: product,
+                                                    mobile: widget.mobile,
+                                                    coin: double.parse(
+                                                        widget.coin),
+                                                  ),
+                                                  type:
+                                                      PageTransitionType.fade))
+                                          .then((value) {
+                                        log("==>[$value]");
+                                        log("===>${value}");
+                                      });
+                                    }
                                   } else {
-                                    Navigator.push(
-                                        context,
-                                        PageTransition(
-                                            child: BillingProducts(
-                                              billingItemList: product,
-                                              mobile: widget.mobile,
-                                              coin: double.parse(widget.coin),
-                                            ),
-                                            type: PageTransitionType.fade));
+                                    Fluttertoast.showToast(
+                                        msg: "please_turn_on_the_internet_key",
+                                        backgroundColor: Colors.amber);
                                   }
                                 },
                                 child: Container(
@@ -662,7 +715,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                   color: ColorPrimary,
                                   child: Center(
                                     child: Text(
-                                      "DONE",
+                                      "done_key".tr(),
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold),
@@ -712,7 +765,7 @@ class _SizeColorBottomSheetState extends State<SizeColorBottomSheet> {
           Padding(
             padding: const EdgeInsets.only(left: 20, top: 20, bottom: 20),
             child: Text(
-              "Size",
+              "size_key".tr(),
               style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
             ),
           ),
@@ -732,7 +785,7 @@ class _SizeColorBottomSheetState extends State<SizeColorBottomSheet> {
                       decoration: BoxDecoration(
                           color: Colors.amber,
                           borderRadius: BorderRadius.circular(50)),
-                      child: Center(child: Text("M")),
+                      child: Center(child: Text("m_key".tr())),
                     ),
                   ]);
                 }),
@@ -740,7 +793,7 @@ class _SizeColorBottomSheetState extends State<SizeColorBottomSheet> {
           Padding(
             padding: const EdgeInsets.only(left: 20, top: 20, bottom: 20),
             child: Text(
-              "Color",
+              "color_key".tr(),
               style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
             ),
           ),
@@ -779,12 +832,12 @@ class _SizeColorBottomSheetState extends State<SizeColorBottomSheet> {
                     Navigator.pop(context);
                   },
                   child: Text(
-                    "Cancel",
+                    "cancel_key".tr(),
                     style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Text(
-                  "Done",
+                  "done_key".tr(),
                   style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.bold,
