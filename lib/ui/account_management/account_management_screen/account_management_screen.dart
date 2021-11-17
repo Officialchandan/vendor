@@ -35,14 +35,14 @@ class AccountManagementScreen extends StatefulWidget {
 
 class _AccountManagementScreenState extends State<AccountManagementScreen> {
   List<String> textList = [
-    tr(MString.discount_codes),
-    tr(MString.settings),
-    tr(MString.delivery_settings),
-    tr(MString.video_tutorials),
-    tr(MString.share_store_link),
-    tr(MString.get_store_qr_code),
-    tr(MString.add_business_hours),
-    tr(MString.logout),
+    "discount_codes_key".tr(),
+    "settings_key".tr(),
+    "delivery_setting_key".tr(),
+    "video_tutorials_key".tr(),
+    "share_store_link_key".tr(),
+    "get_store_qr_code_key".tr(),
+    "add_business_hours_key".tr(),
+    "logout_key".tr(),
   ];
   var message;
   bool? status;
@@ -88,7 +88,7 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
                 automaticallyImplyLeading: false,
                 elevation: 0,
                 // toolbarHeight: 120,
-                title: Text('Account_key'.tr()),
+                title: Text('account_key'.tr()),
                 centerTitle: true,
                 bottom: PreferredSize(
                   preferredSize: Size.fromHeight(70),
@@ -272,7 +272,7 @@ logoutDialog(context) {
                   fontWeight: FontWeight.w500)),
           actions: [
             MaterialButton(
-              child: Text("Cancel_key".tr(),
+              child: Text("cancel_key".tr(),
                   style: TextStyle(
                       color: Colors.grey, fontWeight: FontWeight.w600)),
               onPressed: () {
@@ -300,14 +300,14 @@ logoutDialog(context) {
                   Fluttertoast.showToast(
                       backgroundColor: ColorPrimary,
                       textColor: Colors.white,
-                      msg: "Logout_Successfully_key"
+                      msg: "logout_successfully_key"
                       // timeInSecForIos: 3
                       );
                 } else {
                   Fluttertoast.showToast(
                       backgroundColor: ColorPrimary,
                       textColor: Colors.white,
-                      msg: "Please_turn_on_internet_key");
+                      msg: "please_turn_on_the_internet_key");
                 }
               },
             ),

@@ -1,8 +1,10 @@
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:vendor/ui/account_management/account_management_screen/account_management_screen.dart';
+import 'package:vendor/ui/account_management/video_tutorial/video_tutorial.dart';
 import 'package:vendor/ui/billingflow/billing/billing.dart';
 import 'package:vendor/ui/inventory/inventory_screen.dart';
+import 'package:vendor/ui/performance_tracker/money_due_upi/money_due_screen.dart';
 import 'package:vendor/ui/performance_tracker/tracker_report_screen.dart';
 import 'package:vendor/utility/color.dart';
 
@@ -22,7 +24,7 @@ class _BottomNavigationHomeState extends State<BottomNavigationHome>
   @override
   void initState() {
     _tabController = TabController(
-      length: 6,
+      length: 4,
       initialIndex: widget.index,
       vsync: this,
     );
@@ -32,7 +34,7 @@ class _BottomNavigationHomeState extends State<BottomNavigationHome>
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 6,
+      length: 4,
       initialIndex: widget.index,
       child: Scaffold(
         body: TabBarView(
@@ -41,12 +43,6 @@ class _BottomNavigationHomeState extends State<BottomNavigationHome>
           children: [
             BillingScreen(),
             InventoryScreen(),
-            Center(
-              child: Text("shop_key".tr()),
-            ),
-            Center(
-              child: Text("Staff_key".tr()),
-            ),
             TrackerReportDashboard(),
             AccountManagementScreen(),
           ],
@@ -119,7 +115,7 @@ class _BottomBarState extends State<BottomBar> {
           iconMargin: EdgeInsets.all(0),
         ),
         Tab(
-          text: 'Inventory_key'.tr(),
+          text: 'inventory_key'.tr(),
           icon: widget.tabController.index == 1
               ? Image.asset(
                   "assets/images/f2-a.png",
@@ -132,34 +128,8 @@ class _BottomBarState extends State<BottomBar> {
           iconMargin: EdgeInsets.all(0),
         ),
         Tab(
-          text: 'shop_key'.tr(),
+          text: 'performance_key'.tr(),
           icon: widget.tabController.index == 2
-              ? Image.asset(
-                  "assets/images/f3-a.png",
-                  scale: 2,
-                )
-              : Image.asset(
-                  "assets/images/f3.png",
-                  scale: 2,
-                ),
-          iconMargin: EdgeInsets.all(0),
-        ),
-        Tab(
-          text: 'Staff_key'.tr(),
-          icon: widget.tabController.index == 3
-              ? Image.asset(
-                  "assets/images/f4-a.png",
-                  scale: 2,
-                )
-              : Image.asset(
-                  "assets/images/f4.png",
-                  scale: 2,
-                ),
-          iconMargin: EdgeInsets.all(0),
-        ),
-        Tab(
-          text: 'Performance_key'.tr(),
-          icon: widget.tabController.index == 4
               ? Image.asset(
                   "assets/images/f5-a.png",
                   scale: 2,
@@ -171,8 +141,8 @@ class _BottomBarState extends State<BottomBar> {
           iconMargin: EdgeInsets.all(0),
         ),
         Tab(
-          text: 'Account_key'.tr(),
-          icon: widget.tabController.index == 5
+          text: 'account_key'.tr(),
+          icon: widget.tabController.index == 3
               ? Image.asset(
                   "assets/images/f6-a.png",
                   scale: 2,
@@ -183,6 +153,32 @@ class _BottomBarState extends State<BottomBar> {
                 ),
           iconMargin: EdgeInsets.all(0),
         ),
+        // Tab(
+        //   text: 'money_due_upi_key'.tr(),
+        //   icon: widget.tabController.index == 4
+        //       ? Image.asset(
+        //           "assets/images/f7-a.png",
+        //           scale: 2,
+        //         )
+        //       : Image.asset(
+        //           "assets/images/f7.png",
+        //           scale: 2,
+        //         ),
+        //   iconMargin: EdgeInsets.all(0),
+        // ),
+        // Tab(
+        //   text: 'video_tutorials_key'.tr(),
+        //   icon: widget.tabController.index == 5
+        //       ? Image.asset(
+        //           "assets/images/f8-a.png",
+        //           scale: 2,
+        //         )
+        //       : Image.asset(
+        //           "assets/images/f8.png",
+        //           scale: 2,
+        //         ),
+        //   iconMargin: EdgeInsets.all(0),
+        // ),
       ],
     );
   }
@@ -245,27 +241,7 @@ class _MBottomNavigationBarState extends State<MBottomNavigationBar> {
               "assets/images/f2-a.png",
               scale: 2,
             ),
-            label: "Inventory_key".tr()),
-        BottomNavigationBarItem(
-            icon: Image.asset(
-              "assets/images/f3.png",
-              scale: 2,
-            ),
-            activeIcon: Image.asset(
-              "assets/images/f3-a.png",
-              scale: 2,
-            ),
-            label: "E-shop_key".tr()),
-        BottomNavigationBarItem(
-            icon: Image.asset(
-              "assets/images/f4.png",
-              scale: 2,
-            ),
-            activeIcon: Image.asset(
-              "assets/images/f4-a.png",
-              scale: 2,
-            ),
-            label: "Staff_key".tr()),
+            label: "inventory_key".tr()),
         BottomNavigationBarItem(
             icon: Image.asset(
               "assets/images/f5.png",
@@ -275,7 +251,7 @@ class _MBottomNavigationBarState extends State<MBottomNavigationBar> {
               "assets/images/f5-a.png",
               scale: 2,
             ),
-            label: "Performance_key".tr()),
+            label: "performance_key".tr()),
         BottomNavigationBarItem(
             icon: Image.asset(
               "assets/images/f6.png",
@@ -285,7 +261,27 @@ class _MBottomNavigationBarState extends State<MBottomNavigationBar> {
               "assets/images/f6-a.png",
               scale: 2,
             ),
-            label: "Account_key".tr()),
+            label: "account_key".tr()),
+        // BottomNavigationBarItem(
+        //     icon: Image.asset(
+        //       "assets/images/f7.png",
+        //       scale: 2,
+        //     ),
+        //     activeIcon: Image.asset(
+        //       "assets/images/f7-a.png",
+        //       scale: 2,
+        //     ),
+        //     label: "money_due_upi_key".tr()),
+        // BottomNavigationBarItem(
+        //     icon: Image.asset(
+        //       "assets/images/f8.png",
+        //       scale: 2,
+        //     ),
+        //     activeIcon: Image.asset(
+        //       "assets/images/f8-a.png",
+        //       scale: 2,
+        //     ),
+        //     label: "video_tutorials_key".tr()),
       ],
     );
   }

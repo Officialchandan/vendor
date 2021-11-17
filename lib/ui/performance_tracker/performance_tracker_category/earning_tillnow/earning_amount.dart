@@ -113,7 +113,7 @@ class _EarningAmountState extends State<EarningAmount> {
                         }
                         if (snapshot.hasError) {
                           return Center(
-                            child: Text("Data_Not_Found_key".tr()),
+                            child: Text("data_not_found_key".tr()),
                           );
                         }
                         if (snapshot.hasData) {
@@ -171,7 +171,7 @@ class _EarningAmountState extends State<EarningAmount> {
                                                         alignment: Alignment
                                                             .centerLeft,
                                                         child: AutoSizeText(
-                                                            "  Earning_key"
+                                                            "  earning_key"
                                                                 .tr(),
                                                             style: TextStyle(
                                                                 fontSize: 18.0,
@@ -449,7 +449,7 @@ class _EarningAmountState extends State<EarningAmount> {
                         }
                         if (snapshot.hasError) {
                           return Center(
-                            child: Text("Data_Not_Found_key".tr()),
+                            child: Text("data_not_found_key".tr()),
                           );
                         }
                         return Container(
@@ -506,7 +506,7 @@ class _EarningAmountState extends State<EarningAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: AutoSizeText(
-                                                          "  Earning_key".tr(),
+                                                          "  earning_key".tr(),
                                                           style: TextStyle(
                                                               fontSize: 18.0,
                                                               color:
@@ -678,7 +678,7 @@ class _EarningAmountState extends State<EarningAmount> {
                         }
                         if (snapshot.hasError) {
                           return Center(
-                            child: Text("Data_Not_Found_key".tr()),
+                            child: Text("data_not_found_key".tr()),
                           );
                         }
                         return Container(
@@ -735,7 +735,7 @@ class _EarningAmountState extends State<EarningAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: AutoSizeText(
-                                                          "  Earning_key".tr(),
+                                                          "  earning_key".tr(),
                                                           style: TextStyle(
                                                               fontSize: 18.0,
                                                               color:
@@ -866,7 +866,7 @@ class _EarningAmountState extends State<EarningAmount> {
       ),
       GDPData(' ', 0),
       GDPData(
-          "yesterdat_key".tr(), double.parse(data.yesterdayEarning.toString())),
+          "yesterday_key".tr(), double.parse(data.yesterdayEarning.toString())),
     ];
     return chartData;
   }

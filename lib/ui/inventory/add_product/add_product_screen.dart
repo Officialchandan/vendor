@@ -167,7 +167,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Add_Products_Image_key".tr()),
+                Text("add_products_image_key".tr()),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
@@ -293,7 +293,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 TextFormField(
                   controller: edtProductName,
                   decoration: InputDecoration(
-                    labelText: "Product_name_key".tr(),
+                    labelText: "product_name_key".tr(),
                   ),
                 ),
                 const SizedBox(
@@ -319,8 +319,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   },
                   controller: edtCategory,
                   decoration: InputDecoration(
-                      labelText: "Category_key".tr(),
-                      hintText: "Select_Category_key".tr(),
+                      labelText: "category_key".tr(),
+                      hintText: "select_category_key".tr(),
                       suffixIcon: Icon(Icons.keyboard_arrow_right_sharp),
                       suffixIconConstraints: BoxConstraints(
                           minWidth: 20,
@@ -378,7 +378,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         child: TextFormField(
                           controller: edtPurchasePrice,
                           decoration: InputDecoration(
-                              labelText: "Purchase_price_key",
+                              labelText: "purchase_price_key",
                               counter: Container()),
                           keyboardType: priceKeyboardType,
                           maxLength: PRICE_TEXT_LENGTH,
@@ -399,7 +399,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           maxLength: PRICE_TEXT_LENGTH,
                           inputFormatters: priceInputFormatter,
                           decoration: InputDecoration(
-                              labelText: "MRP_key".tr(), counter: Container()),
+                              labelText: "mrp_key".tr(), counter: Container()),
                           onChanged: (text) {
                             variantModel.mrp = text;
                           },
@@ -416,7 +416,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           maxLength: PRICE_TEXT_LENGTH,
                           inputFormatters: priceInputFormatter,
                           decoration: InputDecoration(
-                              labelText: "Selling_price_key".tr(),
+                              labelText: "selling_price_key".tr(),
                               counter: Container()),
                           onChanged: (text) {
                             variantModel.sellingPrice = text;
@@ -442,7 +442,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             FilteringTextInputFormatter.digitsOnly
                           ],
                           decoration:
-                              InputDecoration(labelText: "Stock_key".tr()),
+                              InputDecoration(labelText: "stock_key".tr()),
                           onChanged: (text) {
                             variantModel.stock = text;
                           },
@@ -459,7 +459,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           onTap: () {
                             if (categoryId.isEmpty) {
                               Utility.showToast(
-                                  "Please_select_category_first_key".tr());
+                                  "please_select_category_first_key".tr());
                               return;
                             }
 
@@ -475,7 +475,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                 });
                           },
                           decoration: InputDecoration(
-                              labelText: "Unit_key".tr(),
+                              labelText: "unit_key".tr(),
                               suffixIcon:
                                   Icon(Icons.keyboard_arrow_right_sharp),
                               suffixIconConstraints: BoxConstraints(
@@ -498,7 +498,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   controller: edtOptions,
                   onTap: () {
                     if (edtCategory.text.isEmpty)
-                      Utility.showToast("Please_select_category_key".tr());
+                      Utility.showToast("please_select_category_key".tr());
                     else
                       showModalBottomSheet(
                           context: context,
@@ -513,7 +513,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                               onSelect: (List<VariantType> variants) async {
                                 if (variants.isEmpty) {
                                   Utility.showToast(
-                                      "Please_select_at_least_one_option_key"
+                                      "please_select_at_least_one_option_key"
                                           .tr());
                                 } else {
                                   variantType = variants;
@@ -544,7 +544,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   },
                   decoration: InputDecoration(
                       labelText: "options_key".tr(),
-                      hintText: "Select_options_key".tr(),
+                      hintText: "select_options_key".tr(),
                       suffixIcon: Icon(Icons.keyboard_arrow_right),
                       suffixIconConstraints: BoxConstraints(
                           minWidth: 20,
@@ -612,7 +612,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         onTap: () async {
                           if (variantType.isEmpty) {
                             Utility.showToast(
-                                "Please_select_at_least_one_option_key".tr());
+                                "please_select_at_least_one_option_key".tr());
                           } else {
                             var result = await Navigator.push(
                                 context,
@@ -633,8 +633,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             }
                           }
                         },
-                        title: Text("Add_Product_Variants_key".tr()),
-                        subtitle: Text("Color_Size_etc_key".tr()),
+                        title: Text("add_product_variants_key".tr()),
+                        subtitle: Text("color_size_etc_key".tr()),
                         contentPadding: EdgeInsets.only(right: 0, left: 10),
                         trailing: Icon(Icons.keyboard_arrow_right_sharp),
                       );
@@ -647,7 +647,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                               children: [
                                 Expanded(
                                   child: Text(
-                                    "Product_Variants_key".tr(),
+                                    "product_variants_key".tr(),
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold,
@@ -778,7 +778,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                                 "₹ ${variant.sellingPrice}",
                                               ),
                                               Text(
-                                                "Stock_key : ${variant.stock}"
+                                                "stock_key : ${variant.stock}"
                                                     .tr(),
                                               )
                                             ],
@@ -902,7 +902,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
               height: 50,
               shape: RoundedRectangleBorder(),
               color: ColorPrimary,
-              child: Text("Add_Product_key".tr()),
+              child: Text("add_product_key".tr()),
             ),
           ),
         ),
@@ -913,20 +913,20 @@ class _AddProductScreenState extends State<AddProductScreen> {
   void addProduct(BuildContext context) async {
     variantImage.clear();
     if (edtProductName.text.trim().isEmpty) {
-      Utility.showToast("Please_enter_product_name_key".tr());
+      Utility.showToast("please_enter_product_name_key".tr());
       return;
     }
     if (edtCategory.text.isEmpty || categoryId.isEmpty) {
-      Utility.showToast("Please_select_product_category_key".tr());
+      Utility.showToast("please_select_product_category_key".tr());
       return;
     }
 
     if (variantModel.purchasePrice.isEmpty) {
-      Utility.showToast("Please_enter_purchase_price_key".tr());
+      Utility.showToast("please_enter_purchase_price_key".tr());
       return;
     }
     if (variantModel.sellingPrice.isEmpty) {
-      Utility.showToast("Please_enter_selling_price_key".tr());
+      Utility.showToast("please_enter_selling_price_key".tr());
       return;
     }
     if (variantModel.mrp.isEmpty) {
@@ -936,7 +936,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
     if (double.parse(variantModel.sellingPrice.trim()) >
         double.parse(variantModel.mrp.trim())) {
-      Utility.showToast("Selling_Price_cannot_be_more_than_MRP_key".tr());
+      Utility.showToast("selling_price_cannot_be_more_than_mrp_key".tr());
       return;
     }
 
@@ -951,7 +951,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
     if (variantModel.option.isNotEmpty) {
       for (int i = 0; i < variantModel.option.length; i++) {
         if (variantModel.option[i].value.isEmpty) {
-          Utility.showToast("Please_enter_key ${variantModel.option[i].name}");
+          Utility.showToast("please_enter_key ${variantModel.option[i].name}");
           return;
         }
       }

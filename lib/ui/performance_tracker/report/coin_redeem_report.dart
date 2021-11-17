@@ -56,18 +56,18 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "Coin_Redeemed_Reports_key",
+        title: "coin_redeemed_reports_key".tr(),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(15),
         child: Column(
           children: [
-            Text("View_report_by_key".tr()),
+            Text("view_report_by_key".tr()),
             Row(
               children: [
                 Expanded(
                   child: RadioListTile(
-                      title: Text("Date_wise_key".tr()),
+                      title: Text("date_wise_key".tr()),
                       value: 1,
                       groupValue: groupValue,
                       onChanged: (value) {
@@ -77,7 +77,7 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
                 ),
                 Expanded(
                   child: RadioListTile(
-                      title: Text("Day wise"),
+                      title: Text("date_wise_key".tr()),
                       value: 2,
                       groupValue: groupValue,
                       onChanged: (value) {
@@ -122,7 +122,7 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
                     },
                     readOnly: true,
                     decoration: InputDecoration(
-                        hintText: "Choose report days",
+                        hintText: "choose_report_days_key".tr(),
                         suffixIcon: Icon(
                           Icons.keyboard_arrow_right_sharp,
                           color: ColorPrimary,
@@ -142,7 +142,7 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
                     },
                     readOnly: true,
                     decoration: InputDecoration(
-                        hintText: "Choose category",
+                        hintText: "Choose_category_key".tr(),
                         suffixIcon: Icon(
                           Icons.keyboard_arrow_right_sharp,
                           color: ColorPrimary,
@@ -162,7 +162,7 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
                     },
                     readOnly: true,
                     decoration: InputDecoration(
-                        hintText: "Choose product",
+                        hintText: "choose_product_key".tr(),
                         suffixIcon: Icon(
                           Icons.keyboard_arrow_right_sharp,
                           color: ColorPrimary,
@@ -181,7 +181,7 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
         shape: RoundedRectangleBorder(),
         color: ColorPrimary,
         child: Text(
-          "Export",
+          "export_key".tr(),
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -201,11 +201,11 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
 
   void selectDays(BuildContext context) async {
     final List<Option> options = [
-      Option(optionName: "1 day", optionId: "1"),
-      Option(optionName: "5 days", optionId: "5"),
-      Option(optionName: "7 days", optionId: "7"),
-      Option(optionName: "15 days", optionId: "15"),
-      Option(optionName: "30 days", optionId: "30"),
+      Option(optionName: "1 day_key", optionId: "1"),
+      Option(optionName: "5 days_key", optionId: "5"),
+      Option(optionName: "7 days_key", optionId: "7"),
+      Option(optionName: "15 days_key", optionId: "15"),
+      Option(optionName: "30 days_key", optionId: "30"),
     ];
     showModalBottomSheet(
         context: context,
@@ -293,7 +293,7 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
             ? Endpoint.GET_COIN_REDEEM_REPORT_BY_DAY
             : Endpoint.GET_COIN_REDEEM_REPORT_BY_DAY_OF_CHAT_PAPDI;
         if (days == null) {
-          Utility.showToast("Please select days");
+          Utility.showToast("please_select_days_key".tr());
           return;
         } else {
           input["days"] = days!.optionId;
@@ -343,7 +343,7 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
         EasyLoading.dismiss();
       }
     } else {
-      Utility.showToast("Please check your internet connection");
+      Utility.showToast("please_check_your_internet_connection_key");
     }
   }
 
@@ -352,7 +352,7 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
     final xls.Workbook workbook = xls.Workbook(0);
     //Adding a Sheet with name to workbook.
     final xls.Worksheet sheet1 =
-        workbook.worksheets.addWithName('Coin Redeem Report');
+        workbook.worksheets.addWithName('coin_redeem_report_key'.tr());
     sheet1.showGridlines = true;
 
     int columnIndex = 1;
@@ -365,10 +365,10 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
     sheet1.getRangeByIndex(1, 1, 1, reportList.first.keys.length).merge();
     if (groupValue == 1) {
       sheet1.getRangeByIndex(rowIndex, columnIndex).value =
-          "Coin Redeem Report ($startDate to $endDate)";
+          "coin_redeem_report_key ($startDate to $endDate)".tr();
     } else {
       sheet1.getRangeByIndex(rowIndex, columnIndex).value =
-          "Coin Redeem Report (${days!.optionName})";
+          "coin_redeem_report_key (${days!.optionName})".tr();
     }
 
     sheet1.getRangeByIndex(rowIndex, columnIndex).rowHeight = 30;
@@ -403,7 +403,7 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
             xls.VAlignType.center;
         columnIndex = columnIndex + 1;
 
-        if (key == "redeem_coins") {
+        if (key == "redeem_coins_key".tr()) {
           print("value - >$value");
           print("total - >$total");
           total = double.parse(value.toString()) + total;
@@ -413,13 +413,13 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
 
     print("total - >$total");
 
-    sheet1.getRangeByIndex(rowIndex + 1, 1).value = "Total";
+    sheet1.getRangeByIndex(rowIndex + 1, 1).value = "total_key".tr();
     sheet1.getRangeByIndex(rowIndex + 1, 1).cellStyle.hAlign =
         xls.HAlignType.center;
     sheet1.getRangeByIndex(rowIndex + 1, 1).cellStyle.vAlign =
         xls.VAlignType.center;
 
-    final xls.Style style = workbook.styles.add('Style1');
+    final xls.Style style = workbook.styles.add('style1_key'.tr());
     style.backColorRgb = Colors.red;
     style.hAlign = xls.HAlignType.center;
     style.vAlign = xls.VAlignType.center;
@@ -433,7 +433,7 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
 
     int index = reportList.first.keys
         .toList()
-        .indexWhere((element) => element == "redeem_coins");
+        .indexWhere((element) => element == "redeem_coins_key");
     if (index != -1) {
       sheet1.getRangeByIndex(rowIndex + 1, index + 1).value = total;
     }
@@ -456,12 +456,12 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
       savedDir.create();
     }
 
-    String fileName = "coin_redeem_report_";
+    String fileName = "coin_redeem_report_key".tr();
 
     if (groupValue == 1) {
       fileName += "$startDate to $endDate" + ".xlsx";
       sheet1.getRangeByIndex(rowIndex, columnIndex).value =
-          "Coin Redeem Report ($startDate to $endDate)";
+          "coin_redeem_report_key ($startDate to $endDate)".tr();
     } else {
       fileName += "${days!.optionName}" + ".xlsx";
     }
@@ -470,7 +470,8 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
         File(Platform.isWindows ? '$path\\$fileName' : '$path/$fileName');
     await file.writeAsBytes(bytes, flush: true).whenComplete(() {
       print("completed");
-      Utility.showToast("Report saved at below location \n${file.path}");
+      Utility.showToast(
+          "report_saved_at_below_location_key \n${file.path}".tr());
     });
     print("savedDir${file.path}");
 

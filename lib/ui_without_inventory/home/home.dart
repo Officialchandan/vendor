@@ -1,10 +1,11 @@
 import 'dart:developer';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
+
 import 'package:share/share.dart';
-import 'package:vendor/ui/home/bottom_navigation_home.dart';
+
 import 'package:vendor/ui_without_inventory/performancetracker/upi/due_amount_screen.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/routs.dart';
@@ -20,16 +21,16 @@ class HomeScreenWithoutInventory extends StatefulWidget {
 class _HomeScreenWithoutInventoryState
     extends State<HomeScreenWithoutInventory> {
   List<String> name = [
-    "Billing",
-    "Performance Tracker + Reports",
-    "Money Due - UPI",
-    "Account Management"
+    "billing_key".tr(),
+    "performance_tracker_key".tr(),
+    "money_due_upi_key".tr(),
+    "account_management_key".tr()
   ];
   List<String> description = [
-    "Billing description",
-    "Performance Tracker description",
-    "Money Due - UPI description",
-    "Account Management description"
+    "billing_description_key".tr(),
+    "performance_tracker_description_key".tr(),
+    "money_due_upi_description_key".tr(),
+    "account_management_description_key".tr()
   ];
 
   List<String> images = [
@@ -49,7 +50,7 @@ class _HomeScreenWithoutInventoryState
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Home",
+          "home_key".tr(),
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         leading: Text(""),
@@ -77,13 +78,19 @@ class _HomeScreenWithoutInventoryState
                       color: ColorPrimary,
                       size: 12,
                     ),
+                    SizedBox(
+                      width: 5,
+                    ),
                     Text(
-                      " Share Store  ",
+                      "share_store_key".tr(),
                       style: TextStyle(
                           color: ColorPrimary,
                           fontWeight: FontWeight.w600,
                           fontSize: 12),
-                    )
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
                   ],
                 ),
               ),

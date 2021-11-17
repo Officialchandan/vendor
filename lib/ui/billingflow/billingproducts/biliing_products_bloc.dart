@@ -65,7 +65,7 @@ Stream<BillingProductsState> billingProductApi(
       Utility.showToast(response.message);
     }
   } else {
-    Utility.showToast("Please_check_your_internet_connection_key".trim());
+    Utility.showToast("please_check_your_internet_connection_key".trim());
   }
 }
 
@@ -85,6 +85,6 @@ Stream<BillingProductsState> verifyOtp(Map<String, dynamic> input) async* {
       Utility.showToast(response.message);
     }
   } else {
-    Utility.showToast("Please_check_your_internet_connection_key".tr());
+    Utility.showToast("please_check_your_internet_connection_key".tr());
   }
 }

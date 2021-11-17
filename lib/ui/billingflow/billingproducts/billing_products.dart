@@ -134,7 +134,7 @@ class _BillingProductsState extends State<BillingProducts> {
                 icon: Icon(Icons.arrow_back_ios)),
             centerTitle: false,
             title: Text(
-              "Billing_Products_key".tr(),
+              "billing_products_key".tr(),
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
@@ -236,8 +236,8 @@ class _BillingProductsState extends State<BillingProducts> {
                                           Container(
                                             width: 50,
                                             child: AutoSizeText(
-                                              "Qty_key: ${productList[index].count} "
-                                                  .tr(),
+                                              "qty_key".tr() +
+                                                  ": ${productList[index].count}",
                                               maxLines: 1,
                                               style: TextStyle(
                                                 color: Colors.grey,
@@ -283,12 +283,12 @@ class _BillingProductsState extends State<BillingProducts> {
                                                     context,
                                                     index,
                                                     0,
-                                                    "Edit_Amount_key".tr(),
-                                                    "Enter_Amount_key".tr());
+                                                    "edit_amount_key".tr(),
+                                                    "enter_amount_key".tr());
                                               } else {
                                                 Fluttertoast.showToast(
                                                     msg:
-                                                        "Please_turn_on_Internet_key"
+                                                        "please_turn_on_the_internet_key"
                                                             .tr(),
                                                     backgroundColor:
                                                         ColorPrimary);
@@ -316,7 +316,7 @@ class _BillingProductsState extends State<BillingProducts> {
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         AutoSizeText(
-                                          "Earning ",
+                                          "earning_key".tr(),
                                           maxFontSize: 15,
                                           minFontSize: 11,
                                         ),
@@ -378,7 +378,7 @@ class _BillingProductsState extends State<BillingProducts> {
                                                     } else {
                                                       Fluttertoast.showToast(
                                                           msg:
-                                                              "please_turn_on_internet_key"
+                                                              "please_turn_on_the_internet_key"
                                                                   .tr(),
                                                           backgroundColor:
                                                               ColorPrimary);
@@ -388,14 +388,14 @@ class _BillingProductsState extends State<BillingProducts> {
                                               );
                                             },
                                           ),
-                                          Text(" Redeem_key".tr(),
+                                          Text(" " + "redeem_key".tr(),
                                               style: TextStyle(fontSize: 14)),
                                         ]),
                                     Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.end,
                                         children: [
-                                          Text("Redeem_key ".tr(),
+                                          Text("redeem_key".tr(),
                                               style: TextStyle(fontSize: 14)),
                                           Container(
                                             height: 17,
@@ -473,7 +473,7 @@ class _BillingProductsState extends State<BillingProducts> {
                                 .add(DeleteBillingProductsEvent(index: index));
                           } else {
                             Fluttertoast.showToast(
-                                msg: "Please_turn_on_Internet_key".tr(),
+                                msg: "please_turn_on_the_internet_key".tr(),
                                 backgroundColor: ColorPrimary);
                           }
                         },
@@ -514,7 +514,7 @@ class _BillingProductsState extends State<BillingProducts> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Total_Pay_Amount_key".tr(),
+                                  "total_pay_amount_key".tr(),
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w700),
@@ -546,7 +546,7 @@ class _BillingProductsState extends State<BillingProducts> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Redeem_Coins_key".tr(),
+                                  "redeem_coins_key".tr(),
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w700),
@@ -578,7 +578,7 @@ class _BillingProductsState extends State<BillingProducts> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Earn_Coins_key".tr(),
+                                  "earn_coins_key".tr(),
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w700),
@@ -650,7 +650,7 @@ class _BillingProductsState extends State<BillingProducts> {
                                 .then((value) => _textFieldController.clear());
                           } else {
                             Fluttertoast.showToast(
-                                msg: "Please_turn_on_Internet_key".tr(),
+                                msg: "please_turn_on_the_internet_key".tr(),
                                 backgroundColor: ColorPrimary);
                           }
                         },
@@ -791,7 +791,7 @@ class _BillingProductsState extends State<BillingProducts> {
                       }
                     },
                     child: new Text(
-                      "DONE_key".tr(),
+                      "done_key".tr(),
                       style: GoogleFonts.openSans(
                           fontSize: 17,
                           fontWeight: FontWeight.w600,
@@ -954,7 +954,7 @@ class _DialogState extends State<Dialog> {
                     Image.asset("assets/images/coins.png", fit: BoxFit.contain),
               ),
               content: Text(
-                  "Coins_generated_successfully_in_customer_Wallet_key".tr()),
+                  "coins_generated_successfully_in_customer_wallet_key".tr()),
               actions: <Widget>[
                 Center(
                   child: MaterialButton(
@@ -974,7 +974,7 @@ class _DialogState extends State<Dialog> {
                           ModalRoute.withName("/"));
                     },
                     child: new Text(
-                      "DONE_key".tr(),
+                      "done_key".tr(),
                       style: GoogleFonts.openSans(
                           fontSize: 17,
                           fontWeight: FontWeight.w600,

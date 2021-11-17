@@ -1,3 +1,4 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/cupertino.dart';
 
 class SelectImageBottomSheet extends StatelessWidget {
@@ -11,14 +12,14 @@ class SelectImageBottomSheet extends StatelessWidget {
     return CupertinoActionSheet(
       actions: [
         CupertinoActionSheetAction(
-          child: Text("Camera"),
+          child: Text("camera_key".tr()),
           onPressed: () {
             Navigator.pop(context);
             openCamera();
           },
         ),
         CupertinoActionSheetAction(
-          child: Text("Gallery"),
+          child: Text("gallery_key".tr()),
           onPressed: () {
             Navigator.pop(context);
             openGallery();
@@ -29,7 +30,7 @@ class SelectImageBottomSheet extends StatelessWidget {
         onPressed: () {
           Navigator.pop(context);
         },
-        child: Text("Cancel"),
+        child: Text("cancel_key".tr()),
       ),
     );
   }

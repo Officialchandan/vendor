@@ -49,7 +49,7 @@ class _SearchProductScreenState extends State<SearchProductScreen> {
             decoration: InputDecoration(
               filled: true,
               fillColor: Color.fromRGBO(242, 242, 242, 1),
-              hintText: "Search_products_key".tr(),
+              hintText: "search_products_key".tr(),
               contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -203,7 +203,7 @@ class _SearchProductScreenState extends State<SearchProductScreen> {
                                   width: 5,
                                 ),
                                 Text(
-                                  "Share_key".tr(),
+                                  "share_key".tr(),
                                   style: TextStyle(
                                     fontSize: 10,
                                     color: Colors.white,

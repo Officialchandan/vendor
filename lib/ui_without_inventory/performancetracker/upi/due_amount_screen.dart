@@ -1,3 +1,4 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:vendor/utility/color.dart';
 
@@ -14,7 +15,7 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
     return Scaffold(
       backgroundColor: ColorPrimary,
       appBar: AppBar(
-        title: Text("Money Due - UPI"),
+        title: Text("money_due_upi_key".tr()),
         backgroundColor: ColorPrimary,
         elevation: 0,
       ),
@@ -25,11 +26,17 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
           children: [
             Text(
               "₹ 5000",
-              style: Theme.of(context).textTheme.headline4!.merge(TextStyle(color: Colors.white)),
+              style: Theme.of(context)
+                  .textTheme
+                  .headline4!
+                  .merge(TextStyle(color: Colors.white)),
             ),
             Text(
-              "Company due amount",
-              style: Theme.of(context).textTheme.headline6!.merge(TextStyle(color: Colors.white)),
+              "company_due_amount_key".tr(),
+              style: Theme.of(context)
+                  .textTheme
+                  .headline6!
+                  .merge(TextStyle(color: Colors.white)),
             )
           ],
         ),
@@ -41,7 +48,7 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
           shape: RoundedRectangleBorder(),
           color: Colors.white,
           child: Text(
-            "UPI - TRANSFER",
+            "upi_transfer_key".tr(),
             style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
           ),
         ),

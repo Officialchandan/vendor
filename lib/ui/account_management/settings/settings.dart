@@ -15,10 +15,10 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
   List<String> textList = [
-    "Change_language_key".tr(),
-    "About_Us_key".tr(),
+    "change_language_key".tr(),
+    "about_us_key".tr(),
     "rate_us_key".tr(),
-    "Share_app_key".tr()
+    "share_app_key".tr()
   ];
 
   @override
@@ -33,7 +33,7 @@ class _SettingsState extends State<Settings> {
               Navigator.pop(context);
             },
           ),
-          title: Text("Settings_key".tr()),
+          title: Text("settings_key".tr()),
         ),
         body: ListView(
           children: List.generate(textList.length, (index) {

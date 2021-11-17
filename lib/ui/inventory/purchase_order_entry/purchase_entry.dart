@@ -17,7 +17,7 @@ class _PurchaseEntryState extends State<PurchaseEntry> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "Purchase_Order_Entry_key".tr(),
+        title: "purchase_order_entry_key".tr(),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(15),
@@ -32,7 +32,7 @@ class _PurchaseEntryState extends State<PurchaseEntry> {
               autofocus: false,
               keyboardType: TextInputType.phone,
               decoration: InputDecoration(
-                  hintText: "Choose_Product_key".tr(),
+                  hintText: "choose_product_key".tr(),
                   suffixIcon: Icon(Icons.keyboard_arrow_right_sharp),
                   suffixIconConstraints: BoxConstraints(
                       maxWidth: 15,
@@ -50,7 +50,7 @@ class _PurchaseEntryState extends State<PurchaseEntry> {
               },
               contentPadding: EdgeInsets.symmetric(horizontal: 0),
               title: Text(
-                "Add_New_Product_key".tr(),
+                "add_new_product_key".tr(),
                 style:
                     TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
@@ -109,7 +109,7 @@ class _PurchaseEntryState extends State<PurchaseEntry> {
                             Navigator.pop(context);
                           },
                           child: Text(
-                            "Close_key".tr(),
+                            "close_key".tr(),
                             style: TextStyle(),
                           )),
                     ],

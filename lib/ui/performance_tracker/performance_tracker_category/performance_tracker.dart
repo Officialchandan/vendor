@@ -18,19 +18,19 @@ class _PerformanceTrackerByCategoryState
   final options = [
     {
       "title": "sale_amount_key".tr(),
-      "subTitle": "click_here_to_see_Sale_amount_key".tr(),
+      "subTitle": "click_here_to_see_sale_amount_key".tr(),
       "image": "assets/images/performance-ic1.png",
       "id": 1
     },
     {
-      "title": "Earning_till_now_key".tr(),
-      "subTitle": "Deduction_after_20%_of_sale_amount_key".tr(),
+      "title": "earning_till_now_key".tr(),
+      "subTitle": "deduction_after_20_of_sale_amount_key".tr(),
       "image": "assets/images/performance-ic2.png",
       "id": 2
     },
     {
       "title": "walk_in_key".tr(),
-      "subTitle": "click_here_to_sell_Walikins_key".tr(),
+      "subTitle": "click_here_to_sell_walikins_key".tr(),
       "image": "assets/images/performance-ic3.png",
       "id": 3
     },
@@ -39,7 +39,7 @@ class _PerformanceTrackerByCategoryState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "Trackers_&_Reports_key".tr(),
+        title: "trackers_reports_key".tr(),
       ),
       body: ListView.builder(
         itemBuilder: (context, index) {

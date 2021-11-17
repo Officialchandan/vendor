@@ -7,6 +7,7 @@ import 'package:vendor/main.dart';
 import 'package:vendor/model/vendor_profile_response.dart';
 import 'package:vendor/ui_without_inventory/accountmanagement/account_management_without_inventory_event.dart';
 import 'package:vendor/ui_without_inventory/accountmanagement/account_management_without_inventory_state.dart';
+import 'package:vendor/utility/color.dart';
 
 import 'package:vendor/utility/network.dart';
 
@@ -43,10 +44,12 @@ class AccountManagementWithoutInventoryBloc extends Bloc<
         }
       } catch (error) {
         yield GetAccountManagementWithoutInventoryFailureState(
-            message: "internal_Server_error_key".trim(), succes: false);
+            message: "internal_server_error_key".tr(), succes: false);
       }
     } else {
-      Fluttertoast.showToast(msg: "Turn_on_the_internet_key".tr());
+      Fluttertoast.showToast(
+          msg: "please_turn_on_the_internet_key".tr(),
+          backgroundColor: ColorPrimary);
     }
   }
 }

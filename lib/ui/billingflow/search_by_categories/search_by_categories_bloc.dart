@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:vendor/model/product_by_category_response.dart';
 import 'package:vendor/ui/billingflow/search_by_categories/search_by_categories_event.dart';
 import 'package:vendor/ui/billingflow/search_by_categories/search_by_categories_state.dart';
+import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
 
 import '../../../main.dart';
@@ -53,10 +54,12 @@ class SearchByCategoriesBloc
         }
       } catch (error) {
         yield GetSearchByCategoriesFailureState(
-            message: "internal_Server_error_key".tr());
+            message: "internal_server_error_key".tr());
       }
     } else {
-      Fluttertoast.showToast(msg: "Turn_on_the_internet_key".tr());
+      Fluttertoast.showToast(
+          msg: "please_turn_on_the_internet_key".tr(),
+          backgroundColor: ColorPrimary);
     }
   }
 }

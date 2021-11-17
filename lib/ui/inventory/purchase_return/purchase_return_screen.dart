@@ -15,7 +15,7 @@ class _PurchaseReturnScreenState extends State<PurchaseReturnScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "Purchase_Return_key".tr(),
+        title: "purchase_return_key".tr(),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(15),
@@ -30,7 +30,7 @@ class _PurchaseReturnScreenState extends State<PurchaseReturnScreen> {
               autofocus: false,
               keyboardType: TextInputType.phone,
               decoration: InputDecoration(
-                  hintText: "Choose_Product_key".tr(),
+                  hintText: "choose_product_key".tr(),
                   suffixIcon: Icon(Icons.keyboard_arrow_right_sharp),
                   suffixIconConstraints: BoxConstraints(
                       maxWidth: 15,
@@ -87,7 +87,7 @@ class _PurchaseReturnScreenState extends State<PurchaseReturnScreen> {
                             Navigator.pop(context);
                           },
                           child: Text(
-                            "Close_key".tr(),
+                            "close_key".tr(),
                             style: TextStyle(),
                           )),
                     ],

@@ -172,8 +172,8 @@ class _DirectBillingState extends State<DirectBilling> {
                             ],
                             maxLength: 10,
                             decoration: InputDecoration(
-                              hintText: 'Enter_Customer_phone_number_key'.tr(),
-                              labelText: 'Mobile_Number_key'.tr(),
+                              hintText: 'enter_customer_phone_number_key'.tr(),
+                              labelText: 'mobile_number_key'.tr(),
                               counterText: "",
                               contentPadding: EdgeInsets.all(0),
                               fillColor: Colors.transparent,
@@ -205,8 +205,8 @@ class _DirectBillingState extends State<DirectBilling> {
                                 child: TextFormField(
                                     controller: nameController,
                                     decoration: InputDecoration(
-                                      hintText: 'Enter_Customer_Name_key'.tr(),
-                                      labelText: 'Full_Name_key'.tr(),
+                                      hintText: 'enter_customer_name_key'.tr(),
+                                      labelText: 'full_name_key'.tr(),
                                       counterText: "",
                                       contentPadding: EdgeInsets.all(0),
                                       fillColor: Colors.transparent,
@@ -247,7 +247,7 @@ class _DirectBillingState extends State<DirectBilling> {
                         maxLength: 10,
                         decoration: InputDecoration(
                           hintText: 'amount_spent_here_key'.tr(),
-                          labelText: 'Amount_key'.tr(),
+                          labelText: 'amount_key'.tr(),
                           counterText: "",
                           contentPadding: EdgeInsets.all(0),
                           fillColor: Colors.transparent,
@@ -278,13 +278,13 @@ class _DirectBillingState extends State<DirectBilling> {
                     height: 20,
                   ),
                   Container(
-                    child: Text("Total_Payable_Amount_key $amount".tr()),
+                    child: Text("total_payable_amount_key $amount".tr()),
                   ),
                   SizedBox(
                     height: 20,
                   ),
                   Container(
-                    child: Text("Total_Coin_Deducted_key $coinss".tr()),
+                    child: Text("total_coin_deducted_key $coinss".tr()),
                   ),
                   SizedBox(
                     height: 20,
@@ -316,12 +316,12 @@ class _DirectBillingState extends State<DirectBilling> {
                                 });
                               } else {
                                 Fluttertoast.showToast(
-                                    msg: "Please_enter_number_First_key".tr(),
+                                    msg: "please_enter_number_first_key".tr(),
                                     backgroundColor: ColorPrimary);
                               }
                             } else {
                               Fluttertoast.showToast(
-                                  msg: "Please_enter_10_digits_number_key".tr(),
+                                  msg: "please_enter_10_digits_number_key".tr(),
                                   backgroundColor: ColorPrimary);
                             }
                             calculaton(amountController.text.isEmpty
@@ -331,7 +331,7 @@ class _DirectBillingState extends State<DirectBilling> {
                         ),
                       ),
                       Text(
-                        "  Redeemed_Coins_key".tr(),
+                        "  redeemed_coins_key".tr(),
                         style: TextStyle(fontSize: 17),
                       ),
                     ],
@@ -349,7 +349,7 @@ class _DirectBillingState extends State<DirectBilling> {
                                 userRegister(context);
                               } else {
                                 Fluttertoast.showToast(
-                                    msg: "Please_enter_Name_key ".tr(),
+                                    msg: "please_enter_name_key ".tr(),
                                     backgroundColor: ColorPrimary);
                               }
                             } else {
@@ -359,7 +359,7 @@ class _DirectBillingState extends State<DirectBilling> {
                             }
                           } else {
                             Fluttertoast.showToast(
-                                msg: "Please_enter_10_digits_number_key".tr(),
+                                msg: "please_enter_10_digits_number_key".tr(),
                                 backgroundColor: ColorPrimary);
                           }
                         } else {
@@ -373,7 +373,7 @@ class _DirectBillingState extends State<DirectBilling> {
                             }
                           } else {
                             Fluttertoast.showToast(
-                                msg: "Please_enter_10_digits_number_key".tr(),
+                                msg: "please_enter_10_digits_number_key".tr(),
                                 backgroundColor: ColorPrimary);
                           }
                         }
@@ -530,7 +530,7 @@ class _DirectBillingState extends State<DirectBilling> {
                       }
                     },
                     child: new Text(
-                      "DONE_key".tr(),
+                      "done_key".tr(),
                       style: GoogleFonts.openSans(
                           fontSize: 17,
                           fontWeight: FontWeight.w600,

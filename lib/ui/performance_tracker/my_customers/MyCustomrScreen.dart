@@ -44,7 +44,7 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("My_Customers_key".tr()),
+        title: Text("my_customers_key".tr()),
         actions: [
           InkWell(
             onTap: () {
@@ -63,7 +63,7 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
             splashColor: Colors.transparent,
             child: Row(
               mainAxisSize: MainAxisSize.min,
-              children: [Icon(Icons.filter_alt_sharp), Text("Filter_key".tr())],
+              children: [Icon(Icons.filter_alt_sharp), Text("filter_key".tr())],
             ),
           ),
           const SizedBox(
@@ -109,7 +109,7 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5),
                       borderSide: BorderSide.none),
-                  hintText: "Search_Customer_key".tr(),
+                  hintText: "search_customer_key".tr(),
                   hintStyle: TextStyle(fontWeight: FontWeight.bold)),
             ),
             const SizedBox(
@@ -187,7 +187,7 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                                         color: Colors.black, fontSize: 14),
                                   )),
                                   Text(
-                                    "Qty_key : ${customer.qty}".tr(),
+                                    "qty_key".tr() + " : ${customer.qty}",
                                     style: TextStyle(
                                         color: ColorPrimary,
                                         fontWeight: FontWeight.bold,
@@ -204,7 +204,7 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                   );
                 }
                 return Center(
-                  child: Text("Customer_not_found_key".tr()),
+                  child: Text("customer_not_found_key".tr()),
                 );
               },
             ))

@@ -9,6 +9,7 @@ import 'package:vendor/model/login_otp.dart';
 import 'package:vendor/model/login_response.dart';
 import 'package:vendor/ui/login/login_event.dart';
 import 'package:vendor/ui/login/login_state.dart';
+import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/sharedpref.dart';
 
@@ -44,7 +45,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       }
     } else {
       EasyLoading.dismiss();
-      Fluttertoast.showToast(msg: "Turn_on_the_internet_key".tr());
+      Fluttertoast.showToast(
+          msg: "please_turn_on_the_internet_key".tr(),
+          backgroundColor: ColorPrimary);
     }
   }
 
@@ -67,10 +70,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           yield GetLoginFailureState(message: result.message);
         }
       } catch (error) {
-        yield GetLoginFailureState(message: "internal_Server_error_key".tr());
+        yield GetLoginFailureState(message: "internal_server_error_key".tr());
       }
     } else {
-      Fluttertoast.showToast(msg: "Turn_on_the_internet_key".tr());
+      Fluttertoast.showToast(
+          msg: "please_turn_on_the_internet_key".tr(),
+          backgroundColor: ColorPrimary);
     }
   }
 }

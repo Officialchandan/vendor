@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -34,11 +35,17 @@ class Utility {
   }
 
   static showToast(String msg) {
-    Fluttertoast.showToast(msg: msg, textColor: Colors.white, backgroundColor: ColorPrimary, gravity: ToastGravity.BOTTOM);
+    Fluttertoast.showToast(
+        msg: msg,
+        textColor: Colors.white,
+        backgroundColor: ColorPrimary,
+        gravity: ToastGravity.BOTTOM);
   }
 
   static Future<String> findLocalPath() async {
-    final directory = Platform.isAndroid ? await getTemporaryDirectory() : await getApplicationDocumentsDirectory();
+    final directory = Platform.isAndroid
+        ? await getTemporaryDirectory()
+        : await getApplicationDocumentsDirectory();
     return directory.path;
   }
 
@@ -49,18 +56,23 @@ class Utility {
   }
 
   static String getFormatDate1(DateTime dateTime) {
-    String date = DateFormat('dd-MMM-yyyy - ').add_jm().format(dateTime).toString();
+    String date =
+        DateFormat('dd-MMM-yyyy - ').add_jm().format(dateTime).toString();
     debugPrint("date--> $date");
     return date;
   }
 
   static showSingleAlert(BuildContext context, String msg,
-      {String? title, Function? onCancel, Function? onOk, String? cancelText, String? okText}) {
+      {String? title,
+      Function? onCancel,
+      Function? onOk,
+      String? cancelText,
+      String? okText}) {
     showCupertinoDialog(
         context: context,
         builder: (context) {
           return CupertinoAlertDialog(
-            title: Text(title ?? "My Profit"),
+            title: Text(title ?? "my_profit_key".tr()),
             content: Text("$msg"),
             actions: [
               TextButton(
@@ -72,7 +84,7 @@ class Utility {
                       Navigator.pop(context);
                     }
                   },
-                  child: Text(cancelText ?? "Cancel")),
+                  child: Text(cancelText ?? "cancel_key".tr())),
               TextButton(
                   onPressed: () {
                     if (onOk != null) {
@@ -82,7 +94,7 @@ class Utility {
                       Navigator.pop(context);
                     }
                   },
-                  child: Text(okText ?? "Ok")),
+                  child: Text(okText ?? "ok_key".tr())),
             ],
           );
         });

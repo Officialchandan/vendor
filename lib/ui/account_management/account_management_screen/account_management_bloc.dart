@@ -7,6 +7,7 @@ import 'package:vendor/main.dart';
 import 'package:vendor/model/vendor_profile_response.dart';
 import 'package:vendor/ui/account_management/account_management_screen/account_management_event.dart';
 import 'package:vendor/ui/account_management/account_management_screen/account_management_state.dart';
+import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
 
 class AccountManagementBloc
@@ -39,10 +40,12 @@ class AccountManagementBloc
         }
       } catch (error) {
         yield GetAccountManagementFailureState(
-            message: "internal_Server_error_key".tr(), succes: false);
+            message: "internal_server_error_key".tr(), succes: false);
       }
     } else {
-      Fluttertoast.showToast(msg: "Turn_on_the_internet_key".tr());
+      Fluttertoast.showToast(
+          msg: "please_turn_on_the_internet_key".tr(),
+          backgroundColor: ColorPrimary);
     }
   }
 }

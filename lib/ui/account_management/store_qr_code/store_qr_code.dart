@@ -24,7 +24,7 @@ class _StoreQRCodeState extends State<StoreQRCode> {
               Navigator.pop(context);
             },
           ),
-          title: Text("Get_Store_QR_Code_key".tr()),
+          title: Text("get_store_qr_code_key".tr()),
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -49,7 +49,7 @@ class _StoreQRCodeState extends State<StoreQRCode> {
                                 width: 35, height: 35, fit: BoxFit.cover),
                           ),
                           SizedBox(width: 10),
-                          Text("Alexa_Parker_key".tr(),
+                          Text("alexa_parker_key".tr(),
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,
@@ -57,13 +57,13 @@ class _StoreQRCodeState extends State<StoreQRCode> {
                         ],
                       ),
                       SizedBox(height: 10),
-                      Text("myprofitstore.com/alexa_key".tr(),
+                      Text("myprofitstore_alexa_key".tr(),
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 13,
                               fontWeight: FontWeight.w600)),
                       SizedBox(height: 12),
-                      Text("Scan_QR_to_check_our_products_key".tr(),
+                      Text("scan_qr_to_check_our_products_key".tr(),
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 15,
@@ -100,7 +100,7 @@ class _StoreQRCodeState extends State<StoreQRCode> {
                       padding: EdgeInsets.symmetric(vertical: 10),
                       color: ColorPrimary,
                       textColor: Colors.white,
-                      child: Text("Download_QR_key".tr().toUpperCase(),
+                      child: Text("download_qr_key".tr().toUpperCase(),
                           style: TextStyle(
                               fontSize: 15, fontWeight: FontWeight.w600)),
                       onPressed: () {},
@@ -117,7 +117,7 @@ class _StoreQRCodeState extends State<StoreQRCode> {
                       padding: EdgeInsets.symmetric(vertical: 10),
                       color: Colors.white,
                       textColor: ColorPrimary,
-                      child: Text("Share_key".tr().toUpperCase(),
+                      child: Text("share_key".tr().toUpperCase(),
                           style: TextStyle(
                               fontSize: 15, fontWeight: FontWeight.w600)),
                       onPressed: () {},

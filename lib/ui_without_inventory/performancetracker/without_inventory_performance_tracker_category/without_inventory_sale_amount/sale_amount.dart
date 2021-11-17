@@ -82,21 +82,21 @@ class _SaleAmountState extends State<SaleAmount> {
                   tabs: [
                     Tab(
                       child: Text(
-                        "Hourly",
+                        "hourly_key".tr(),
                         style: TextStyle(
                             fontSize: 17, fontWeight: FontWeight.w600),
                       ),
                     ),
                     Tab(
                       child: Text(
-                        "Daily",
+                        "daily_key".tr(),
                         style: TextStyle(
                             fontSize: 17, fontWeight: FontWeight.w600),
                       ),
                     ),
                     Tab(
                       child: Text(
-                        "Monthly",
+                        "monthly_key".tr(),
                         style: TextStyle(
                             fontSize: 17, fontWeight: FontWeight.w600),
                       ),
@@ -105,7 +105,7 @@ class _SaleAmountState extends State<SaleAmount> {
                 ),
               ),
             ),
-            title: Text('Sale Amount'),
+            title: Text('sale_amount_key'.tr()),
             centerTitle: true,
             leading: IconButton(
                 onPressed: () {
@@ -131,7 +131,7 @@ class _SaleAmountState extends State<SaleAmount> {
                         if (snapshot.hasError) {
                           log("snapshot==>${snapshot.error}");
                           return Center(
-                            child: Text("Data_Not_Found_key".tr()),
+                            child: Text("data_not_found_key".tr()),
                           );
                         }
                         if (snapshot.hasData) {
@@ -169,7 +169,8 @@ class _SaleAmountState extends State<SaleAmount> {
                                                     child: Align(
                                                       alignment:
                                                           Alignment.centerLeft,
-                                                      child: Text("  Hourly",
+                                                      child: Text(
+                                                          "  hourly_key".tr(),
                                                           style: TextStyle(
                                                               fontSize: 20.0,
                                                               color:
@@ -189,7 +190,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                                         alignment: Alignment
                                                             .centerLeft,
                                                         child: AutoSizeText(
-                                                            "  Sale",
+                                                            "  sale_key".tr(),
                                                             style: TextStyle(
                                                                 fontSize: 18.0,
                                                                 color:
@@ -467,7 +468,7 @@ class _SaleAmountState extends State<SaleAmount> {
                         }
                         if (snapshot.hasError) {
                           return Center(
-                            child: Text("Data_Not_Found_key".tr()),
+                            child: Text("data_not_found_key".tr()),
                           );
                         }
                         return Container(
@@ -503,7 +504,8 @@ class _SaleAmountState extends State<SaleAmount> {
                                                   child: Align(
                                                     alignment:
                                                         Alignment.centerLeft,
-                                                    child: Text("  Day",
+                                                    child: Text(
+                                                        "  day_key".tr(),
                                                         style: TextStyle(
                                                             fontSize: 20.0,
                                                             color:
@@ -523,7 +525,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: AutoSizeText(
-                                                          "  Sale",
+                                                          "  sale_key".tr(),
                                                           style: TextStyle(
                                                               fontSize: 18.0,
                                                               color:
@@ -695,7 +697,7 @@ class _SaleAmountState extends State<SaleAmount> {
                         }
                         if (snapshot.hasError) {
                           return Center(
-                            child: Text("Data_Not_Found_key".tr()),
+                            child: Text("data_not_found_key".tr()),
                           );
                         }
                         return Container(
@@ -731,7 +733,8 @@ class _SaleAmountState extends State<SaleAmount> {
                                                   child: Align(
                                                     alignment:
                                                         Alignment.centerLeft,
-                                                    child: Text("  Day",
+                                                    child: Text(
+                                                        "  day_key".tr(),
                                                         style: TextStyle(
                                                             fontSize: 20.0,
                                                             color:
@@ -751,7 +754,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: AutoSizeText(
-                                                          "  Sale",
+                                                          "  sale_key".tr(),
                                                           style: TextStyle(
                                                               fontSize: 18.0,
                                                               color:
@@ -877,12 +880,12 @@ class _SaleAmountState extends State<SaleAmount> {
   List<GDPData> getChartData(WithoutInventoryDailySaleData? data) {
     final List<GDPData> chartData = [
       GDPData(
-        'TODAY',
+        'today_key'.tr(),
         double.parse(data!.todaySaleAmount.toString()),
       ),
       GDPData(' ', 0),
       GDPData(
-        "YESTERDAY",
+        "yesterday_key".tr(),
         double.parse(data.yesterdaySaleAmount.toString()),
       ),
     ];

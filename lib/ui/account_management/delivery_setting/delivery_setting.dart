@@ -15,17 +15,17 @@ class DeliverySetting extends StatefulWidget {
 
 class _DeliverySettingState extends State<DeliverySetting> {
   var DeliveryTitle = [
-    "Delivery_Areas_key".tr(),
-    "Delivery_time_key".tr(),
-    "Delivery_Fee_key".tr(),
-    "Accept_delivery_instructions_key".tr()
+    "delivery_areas_key".tr(),
+    "delivery_time_key".tr(),
+    "delivery_fee_key".tr(),
+    "accept_delivery_instructions_key".tr()
   ];
 
   var DeliverySubTitle = [
-    "Add_serviceable_areas_key".tr(),
-    "Add_estimated_time_for_delivery_key".tr(),
-    "Free_Delivery_key".tr(),
-    "Allow_customers_to_add_delivery_instructions_while_placing_orders_key".tr()
+    "add_serviceable_areas_key".tr(),
+    "add_estimated_time_for_delivery_key".tr(),
+    "free_delivery_key".tr(),
+    "allow_customers_to_add_delivery_instructions_while_placing_orders_key".tr()
   ];
 
   bool DeliverySwitch = false;
@@ -49,7 +49,7 @@ class _DeliverySettingState extends State<DeliverySetting> {
               Navigator.pop(context);
             },
           ),
-          title: Text("Delivery_Setting_key".tr()),
+          title: Text("delivery_setting_key".tr()),
         ),
         body: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 15),

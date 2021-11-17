@@ -69,21 +69,21 @@ class _EarningAmountState extends State<EarningAmount> {
                   tabs: [
                     Tab(
                       child: Text(
-                        "Hourly",
+                        "hourly_key".tr(),
                         style: TextStyle(
                             fontSize: 17, fontWeight: FontWeight.w600),
                       ),
                     ),
                     Tab(
                       child: Text(
-                        "Daily",
+                        "daily_key".tr(),
                         style: TextStyle(
                             fontSize: 17, fontWeight: FontWeight.w600),
                       ),
                     ),
                     Tab(
                       child: Text(
-                        "Monthly",
+                        "monthly_key",
                         style: TextStyle(
                             fontSize: 17, fontWeight: FontWeight.w600),
                       ),
@@ -92,7 +92,7 @@ class _EarningAmountState extends State<EarningAmount> {
                 ),
               ),
             ),
-            title: Text('Earning Amount'),
+            title: Text('earning_amount_key'.tr()),
             centerTitle: true,
             leading: IconButton(
                 onPressed: () {
@@ -113,7 +113,7 @@ class _EarningAmountState extends State<EarningAmount> {
                         }
                         if (snapshot.hasError) {
                           return Center(
-                            child: Text("Data_Not_Found_key".tr()),
+                            child: Text("data_not_found_key".tr()),
                           );
                         }
                         if (snapshot.hasData) {
@@ -150,7 +150,8 @@ class _EarningAmountState extends State<EarningAmount> {
                                                     child: Align(
                                                       alignment:
                                                           Alignment.centerLeft,
-                                                      child: Text("  Hourly",
+                                                      child: Text(
+                                                          "  hourly_key",
                                                           style: TextStyle(
                                                               fontSize: 20.0,
                                                               color:
@@ -170,7 +171,8 @@ class _EarningAmountState extends State<EarningAmount> {
                                                         alignment: Alignment
                                                             .centerLeft,
                                                         child: AutoSizeText(
-                                                            "  Earning",
+                                                            "  earning_key"
+                                                                .tr(),
                                                             style: TextStyle(
                                                                 fontSize: 18.0,
                                                                 color:
@@ -385,7 +387,7 @@ class _EarningAmountState extends State<EarningAmount> {
                                         borderColor: Colors.grey.shade500,
 
                                         title: ChartTitle(
-                                            text: "Earning AMT (INR) ",
+                                            text: "earning_amt_inr_key ".tr(),
                                             textStyle: TextStyle(
                                                 fontSize: 14,
                                                 color: Colors.grey.shade600)),
@@ -426,7 +428,7 @@ class _EarningAmountState extends State<EarningAmount> {
                                           //numberFormat: NumberFormat.currency(),
                                           title: AxisTitle(
                                               alignment: ChartAlignment.center,
-                                              text: "Earning AMT (INR) ",
+                                              text: "earning_amt_inr_key ".tr(),
                                               textStyle: TextStyle(
                                                   fontSize: 11,
                                                   color: Colors.grey.shade600)),
@@ -447,7 +449,7 @@ class _EarningAmountState extends State<EarningAmount> {
                         }
                         if (snapshot.hasError) {
                           return Center(
-                            child: Text("Data_Not_Found_key".tr()),
+                            child: Text("data_not_found_key".tr()),
                           );
                         }
                         return Container(
@@ -483,7 +485,8 @@ class _EarningAmountState extends State<EarningAmount> {
                                                   child: Align(
                                                     alignment:
                                                         Alignment.centerLeft,
-                                                    child: Text("  Day",
+                                                    child: Text(
+                                                        "  day_key".tr(),
                                                         style: TextStyle(
                                                             fontSize: 20.0,
                                                             color:
@@ -503,7 +506,7 @@ class _EarningAmountState extends State<EarningAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: AutoSizeText(
-                                                          "  Earning",
+                                                          "  earning_key".tr(),
                                                           style: TextStyle(
                                                               fontSize: 18.0,
                                                               color:
@@ -618,7 +621,7 @@ class _EarningAmountState extends State<EarningAmount> {
                                       borderColor: Colors.grey.shade500,
 
                                       title: ChartTitle(
-                                          text: "Earning AMT (INR) ",
+                                          text: "earning_amt_inr_key ".tr(),
                                           textStyle: TextStyle(
                                               fontSize: 14,
                                               color: Colors.grey.shade600)),
@@ -656,7 +659,7 @@ class _EarningAmountState extends State<EarningAmount> {
                                         //numberFormat: NumberFormat.currency(),
                                         title: AxisTitle(
                                             alignment: ChartAlignment.center,
-                                            text: "Earning AMT (INR) ",
+                                            text: "earning_amt_inr_key ".tr(),
                                             textStyle: TextStyle(
                                                 fontSize: 11,
                                                 color: Colors.grey.shade600)),
@@ -675,7 +678,7 @@ class _EarningAmountState extends State<EarningAmount> {
                         }
                         if (snapshot.hasError) {
                           return Center(
-                            child: Text("Data_Not_Found_key".tr()),
+                            child: Text("data_not_found_key".tr()),
                           );
                         }
                         return Container(
@@ -711,7 +714,8 @@ class _EarningAmountState extends State<EarningAmount> {
                                                   child: Align(
                                                     alignment:
                                                         Alignment.centerLeft,
-                                                    child: Text("  Day",
+                                                    child: Text(
+                                                        "  day_key".tr(),
                                                         style: TextStyle(
                                                             fontSize: 20.0,
                                                             color:
@@ -731,7 +735,7 @@ class _EarningAmountState extends State<EarningAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: AutoSizeText(
-                                                          "  Earning",
+                                                          "  earning_key".tr(),
                                                           style: TextStyle(
                                                               fontSize: 18.0,
                                                               color:
@@ -800,7 +804,7 @@ class _EarningAmountState extends State<EarningAmount> {
                                       borderColor: Colors.grey.shade500,
 
                                       title: ChartTitle(
-                                          text: "Earning AMT (INR) ",
+                                          text: "earning_amt_inr_key ".tr(),
                                           textStyle: TextStyle(
                                               fontSize: 14,
                                               color: Colors.grey.shade600)),
@@ -838,7 +842,7 @@ class _EarningAmountState extends State<EarningAmount> {
                                         //numberFormat: NumberFormat.currency(),
                                         title: AxisTitle(
                                             alignment: ChartAlignment.center,
-                                            text: "Earning AMT (INR) ",
+                                            text: "earning_amt_inr_key ".tr(),
                                             textStyle: TextStyle(
                                                 fontSize: 11,
                                                 color: Colors.grey.shade600)),
@@ -857,11 +861,12 @@ class _EarningAmountState extends State<EarningAmount> {
   List<GDPData> getChartData(WithoutInventoryDailyEarningData? data) {
     final List<GDPData> chartData = [
       GDPData(
-        'TODAY',
+        'today_key'.tr(),
         double.parse(data!.todayEarning.toString()),
       ),
       GDPData(' ', 0),
-      GDPData("YESTERDAY", double.parse(data.yesterdayEarning.toString())),
+      GDPData(
+          "yesterday_key".tr(), double.parse(data.yesterdayEarning.toString())),
     ];
     return chartData;
   }

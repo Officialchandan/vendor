@@ -22,7 +22,7 @@ class _ViewCategoryScreenState extends State<ViewCategoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "View_Product_key".tr(),
+        title: "view_product_key".tr(),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(15),

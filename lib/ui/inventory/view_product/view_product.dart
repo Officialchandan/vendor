@@ -54,7 +54,7 @@ class _ViewProductScreenState extends State<ViewProductScreen> {
             decoration: InputDecoration(
               filled: true,
               fillColor: Color.fromRGBO(242, 242, 242, 1),
-              hintText: "Search_products_key".tr(),
+              hintText: "search_products_key".tr(),
               contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),

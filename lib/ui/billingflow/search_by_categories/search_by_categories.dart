@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:vendor/model/product_model.dart';
 import 'package:vendor/ui/billingflow/billingproducts/billing_products.dart';
@@ -42,6 +43,17 @@ class _SearchByCategoryState extends State<SearchByCategory> {
   String searchText = "";
   bool searching = false;
   TextEditingController _searchController = TextEditingController();
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+  refresh() {
+    log("refresh hua");
+    searchByCategoriesBloc
+        .add(GetProductsSearchByCategoriesEvent(input: widget.catid));
+    _refreshController.refreshCompleted();
+
+    //setState(() {});
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -73,7 +85,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
-                    hintText: "Search_key".tr(),
+                    hintText: "search_key".tr(),
                     hintStyle: GoogleFonts.openSans(
                       fontWeight: FontWeight.w600,
                     ),
@@ -332,11 +344,11 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                                                                 .count--))
                                                                         : Fluttertoast.showToast(
                                                                             msg:
-                                                                                "Product_cant_be_in_negative_key".tr());
+                                                                                "product_cant_be_in_negative_key".tr());
                                                                   } else {
                                                                     Fluttertoast.showToast(
                                                                         msg:
-                                                                            "please_turn_on_internet_key",
+                                                                            "please_turn_on_the_internet_key",
                                                                         backgroundColor:
                                                                             ColorPrimary);
                                                                   }
@@ -406,7 +418,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                                                   } else {
                                                                     Fluttertoast.showToast(
                                                                         msg:
-                                                                            "please_turn_on_internet_key",
+                                                                            "please_turn_on_the_internet_key",
                                                                         backgroundColor:
                                                                             ColorPrimary);
                                                                   }
@@ -539,7 +551,8 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                             } else {
                                               Fluttertoast.showToast(
                                                   msg:
-                                                      "please_turn_on_internet_key",
+                                                      "please_turn_on_the_internet_key"
+                                                          .tr(),
                                                   backgroundColor:
                                                       ColorPrimary);
                                             }
@@ -575,7 +588,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                     if (product.length == 0) {
                                       Fluttertoast.showToast(
                                           msg:
-                                              "Please_select_atlest_one_product_key"
+                                              "please_select_atlest_one_product_key"
                                                   .tr(),
                                           backgroundColor: ColorPrimary);
                                     } else {
@@ -591,7 +604,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                     }
                                   } else {
                                     Fluttertoast.showToast(
-                                        msg: "please_turn_on_internet_key",
+                                        msg: "please_turn_on_the_internet_key",
                                         backgroundColor: ColorPrimary);
                                   }
                                 },
@@ -600,7 +613,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                   color: ColorPrimary,
                                   child: Center(
                                     child: Text(
-                                      "DONE_key".tr(),
+                                      "done_key".tr(),
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold),

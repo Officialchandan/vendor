@@ -44,9 +44,9 @@ class _LoginScreenState extends State<LoginScreen> {
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
     RegExp regExp = new RegExp(pattern);
     if (value.length == 0) {
-      return "Email_is_Required_key".tr();
+      return "email_is_required_key".tr();
     } else if (!regExp.hasMatch(value)) {
-      return "Invalid_Email_key".tr();
+      return "invalid_email_key".tr();
     } else {
       return null;
     }
@@ -191,11 +191,15 @@ class _LoginScreenState extends State<LoginScreen> {
       Fluttertoast.showToast(
           backgroundColor: ColorPrimary,
           textColor: Colors.white,
-          msg: "Please_enter_6_digit_valid_otp_key".tr());
+          msg: "please_enter_6_digit_valid_otp_key".tr());
     } else {
       loginBloc.add(GetLoginOtpEvent(
           mobile: mobileController.text, otp: _textFieldController.text));
     }
+  }
+
+  _onrefresh() {
+    setState(() {});
   }
 
   @override
@@ -284,139 +288,146 @@ class _LoginScreenState extends State<LoginScreen> {
         },
         builder: (context, state) {
           return Scaffold(
-            body: SingleChildScrollView(
-              child: Container(
-                child: Stack(
-                  children: [
-                    Container(
-                        // height: deviceHeight,Ftex
-                        //width: 400,
-                        child: Image.asset(
-                      "assets/images/bg.png",
-                      height: deviceHeight,
-                      width: double.infinity,
-                      fit: BoxFit.fill,
-                    )),
-                    Positioned(
-                      left: 20,
-                      right: 20,
-                      top: deviceHeight * 0.17,
-                      child: Container(
-                        width: 500,
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // Center(
-                              //   child: RichText(
-                              //     text: TextSpan(
-                              //         text: 'Don\'t have an Account?',
-                              //         style: TextStyle(
-                              //             color: ColorTextPrimary,
-                              //             fontWeight: FontWeight.w600,
-                              //             fontSize: 18),
-                              //         children: <TextSpan>[
-                              //           TextSpan(
-                              //               text: ' Sign up',
-                              //               style: TextStyle(
-                              //                   fontWeight: FontWeight.w600,
-                              //                   color: ColorPrimary,
-                              //                   fontSize: 18),
-                              //               recognizer: TapGestureRecognizer()
-                              //                 ..onTap = () {
-                              //                   Navigator.push(
-                              //                       context,
-                              //                       MaterialPageRoute(
-                              //                           builder: (context) =>
-                              //                               SignUp()));
-                              //                 })
-                              //         ]),
-                              //   ),
-                              // ),
-                              // SizedBox(
-                              //   height: 35,
-                              // ),
-                              Text(
-                                "login_key".tr(),
-                                style: GoogleFonts.openSans(
-                                    fontSize: 28,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w600,
-                                    decoration: TextDecoration.none),
-                              ),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              Text(
-                                "add_your_details_to_login_key".tr(),
-                                style: GoogleFonts.openSans(
-                                    fontSize: 17,
-                                    color: ColorTextPrimary,
-                                    fontWeight: FontWeight.w600,
-                                    decoration: TextDecoration.none),
-                              ),
-                              SizedBox(
-                                height: 40,
-                              ),
-                              mobileNumber,
-                              SizedBox(
-                                height: 80,
-                              ),
-                              Center(
-                                child: Column(
-                                    // mainAxisAlignment: MainAxisAlignment.center,
-                                    // crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      MaterialButton(
-                                        minWidth: deviceWidth * 0.65,
-                                        height: 50,
-                                        padding: const EdgeInsets.all(8.0),
-                                        textColor: Colors.white,
-                                        color: ColorPrimary,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        onPressed: () {
-                                          _textFieldController.clear();
+            body: RefreshIndicator(
+              onRefresh: () {
+                return _onrefresh();
+              },
+              child: SingleChildScrollView(
+                child: Container(
+                  child: Stack(
+                    children: [
+                      Container(
+                          // height: deviceHeight,Ftex
+                          //width: 400,
+                          child: Image.asset(
+                        "assets/images/bg.png",
+                        height: deviceHeight,
+                        width: double.infinity,
+                        fit: BoxFit.fill,
+                      )),
+                      Positioned(
+                        left: 20,
+                        right: 20,
+                        top: deviceHeight * 0.17,
+                        child: Container(
+                          width: 500,
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // Center(
+                                //   child: RichText(
+                                //     text: TextSpan(
+                                //         text: 'Don\'t have an Account?',
+                                //         style: TextStyle(
+                                //             color: ColorTextPrimary,
+                                //             fontWeight: FontWeight.w600,
+                                //             fontSize: 18),
+                                //         children: <TextSpan>[
+                                //           TextSpan(
+                                //               text: ' Sign up',
+                                //               style: TextStyle(
+                                //                   fontWeight: FontWeight.w600,
+                                //                   color: ColorPrimary,
+                                //                   fontSize: 18),
+                                //               recognizer: TapGestureRecognizer()
+                                //                 ..onTap = () {
+                                //                   Navigator.push(
+                                //                       context,
+                                //                       MaterialPageRoute(
+                                //                           builder: (context) =>
+                                //                               SignUp()));
+                                //                 })
+                                //         ]),
+                                //   ),
+                                // ),
+                                // SizedBox(
+                                //   height: 35,
+                                // ),
+                                Text(
+                                  "login_key".tr(),
+                                  style: GoogleFonts.openSans(
+                                      fontSize: 28,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w600,
+                                      decoration: TextDecoration.none),
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                Text(
+                                  "add_your_details_to_login_key".tr(),
+                                  style: GoogleFonts.openSans(
+                                      fontSize: 17,
+                                      color: ColorTextPrimary,
+                                      fontWeight: FontWeight.w600,
+                                      decoration: TextDecoration.none),
+                                ),
+                                SizedBox(
+                                  height: 40,
+                                ),
+                                mobileNumber,
+                                SizedBox(
+                                  height: 80,
+                                ),
+                                Center(
+                                  child: Column(
+                                      // mainAxisAlignment: MainAxisAlignment.center,
+                                      // crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        MaterialButton(
+                                          minWidth: deviceWidth * 0.65,
+                                          height: 50,
+                                          padding: const EdgeInsets.all(8.0),
+                                          textColor: Colors.white,
+                                          color: ColorPrimary,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          onPressed: () {
+                                            _textFieldController.clear();
 
-                                          print(
-                                              "kuch to ${mobileController.text}");
-                                          // loginApiCall(
-                                          //     nameController.text, passwordController.text);
-                                          if (_tap == true) {
-                                            _tap = false;
-                                            loginApiOtpCall(
-                                                mobileController.text);
-                                          }
-                                          // _displayDialog(
-                                          //     context, mobileController.text);
-                                        },
-                                        child: new Text(
-                                          "login_key".tr(),
-                                          style: GoogleFonts.openSans(
-                                              fontSize: 17,
-                                              fontWeight: FontWeight.w600,
-                                              decoration: TextDecoration.none),
+                                            print(
+                                                "kuch to ${mobileController.text}");
+                                            // loginApiCall(
+                                            //     nameController.text, passwordController.text);
+                                            if (_tap == true) {
+                                              _tap = false;
+                                              loginApiOtpCall(
+                                                  mobileController.text);
+                                            }
+                                            // _displayDialog(
+                                            //     context, mobileController.text);
+                                          },
+                                          child: new Text(
+                                            "login_key".tr(),
+                                            style: GoogleFonts.openSans(
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.w600,
+                                                decoration:
+                                                    TextDecoration.none),
+                                          ),
                                         ),
-                                      ),
-                                      SizedBox(
-                                        height: 25,
-                                      ),
-                                      Center(
-                                        child: Text(
-                                          "forget_your_password_key".tr(),
-                                          style: GoogleFonts.openSans(
-                                              fontSize: 17,
-                                              color: ColorTextPrimary,
-                                              fontWeight: FontWeight.w600,
-                                              decoration: TextDecoration.none),
+                                        SizedBox(
+                                          height: 25,
                                         ),
-                                      ),
-                                    ]),
-                              ),
-                            ]),
+                                        Center(
+                                          child: Text(
+                                            "forget_your_password_key".tr(),
+                                            style: GoogleFonts.openSans(
+                                                fontSize: 17,
+                                                color: ColorTextPrimary,
+                                                fontWeight: FontWeight.w600,
+                                                decoration:
+                                                    TextDecoration.none),
+                                          ),
+                                        ),
+                                      ]),
+                                ),
+                              ]),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

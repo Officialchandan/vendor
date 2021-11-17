@@ -18,7 +18,7 @@ class _DiscountCodesState extends State<DiscountCodes> {
     return Scaffold(
         appBar: AppBar(
             title: Text(
-              "Discount_Codes_key".tr(),
+              "discount_codes_key".tr(),
               style: TextStyle(fontWeight: FontWeight.w600),
             ),
             leadingWidth: 30,
@@ -57,7 +57,7 @@ class _DiscountCodesState extends State<DiscountCodes> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "FESTIVE10_key".tr(),
+                                  "festive10_key".tr(),
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w600),
@@ -113,12 +113,12 @@ class _DiscountCodesState extends State<DiscountCodes> {
                                       borderRadius: BorderRadius.circular(25),
                                       color: Colors.green),
                                   child: Text(
-                                    "   Active_key   ".tr(),
+                                    "   active_key   ".tr(),
                                     style: TextStyle(
                                         fontSize: 12, color: Colors.white),
                                   ),
                                 ),
-                                Text("Coupan_Expired:_27/07/2021_key".tr())
+                                Text("coupan_expired_key".tr())
                               ],
                             ),
                           ),
@@ -146,7 +146,7 @@ class _DiscountCodesState extends State<DiscountCodes> {
                                     color: Colors.white,
                                   ),
                                   Text(
-                                    "Share_Coupon_key".tr(),
+                                    "share_coupon_key".tr(),
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 17),
                                   ),
@@ -165,7 +165,7 @@ class _DiscountCodesState extends State<DiscountCodes> {
                       color: ColorPrimary,
                       child: Center(
                         child: Text(
-                          "CREATE_CODES_key".tr(),
+                          "create_codes_key".tr(),
                           style: TextStyle(
                               color: Colors.white, fontWeight: FontWeight.bold),
                         ),

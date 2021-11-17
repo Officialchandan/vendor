@@ -1,6 +1,7 @@
 import 'dart:collection';
 import 'dart:developer';
 
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -73,7 +74,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
-              title: Text("Billing",
+              title: Text("billing_key".tr(),
                   style: TextStyle(fontWeight: FontWeight.w600)),
               leading: IconButton(
                 icon: Icon(Icons.arrow_back_ios),
@@ -112,7 +113,10 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                         status = state.succes;
                         datas = state.data;
                         _displayDialog(
-                            context, 1, "Please Enter OTP", "Enter OTP");
+                            context,
+                            1,
+                            "please_enter_password_key".tr(),
+                            "enter_otp_key".tr());
                       }
 
                       if (state is GetChatPapdiBillingLoadingstate) {}
@@ -161,9 +165,9 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                             FilteringTextInputFormatter.digitsOnly
                           ],
                           maxLength: 10,
-                          decoration: const InputDecoration(
-                            hintText: 'Enter Customer phone number',
-                            labelText: 'Mobile Number',
+                          decoration: InputDecoration(
+                            hintText: 'enter_customer_phone_number_key'.tr(),
+                            labelText: 'mobile_number_key'.tr(),
                             counterText: "",
                             contentPadding: EdgeInsets.all(0),
                             fillColor: Colors.transparent,
@@ -196,9 +200,9 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                       status1 == 0
                           ? TextFormField(
                               controller: nameController,
-                              decoration: const InputDecoration(
-                                hintText: 'Enter Customer Name',
-                                labelText: 'Full Name',
+                              decoration: InputDecoration(
+                                hintText: 'enter_customer_name_key'.tr(),
+                                labelText: 'full_name_key'.tr(),
                                 counterText: "",
                                 contentPadding: EdgeInsets.all(0),
                                 fillColor: Colors.transparent,
@@ -228,9 +232,9 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                           FilteringTextInputFormatter.digitsOnly
                         ],
                         maxLength: 10,
-                        decoration: const InputDecoration(
-                          hintText: 'Amount spent here',
-                          labelText: 'Amount',
+                        decoration: InputDecoration(
+                          hintText: 'amount_spent_here_key'.tr(),
+                          labelText: 'amount_key'.tr(),
                           counterText: "",
                           contentPadding: EdgeInsets.all(0),
                           fillColor: Colors.transparent,
@@ -261,13 +265,13 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                     height: 20,
                   ),
                   Container(
-                    child: Text("Total Payable Amount $amount"),
+                    child: Text("total_payable_amount_key $amount".tr()),
                   ),
                   SizedBox(
                     height: 20,
                   ),
                   Container(
-                    child: Text("Total Coin Deducted $coinss"),
+                    child: Text("total_coin_deducted_key $coinss".tr()),
                   ),
                   SizedBox(
                     height: 20,
@@ -299,12 +303,12 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                                 });
                               } else {
                                 Fluttertoast.showToast(
-                                    msg: "Please enter Full Name",
+                                    msg: "please_enter_name_key".tr(),
                                     backgroundColor: ColorPrimary);
                               }
                             } else {
                               Fluttertoast.showToast(
-                                  msg: "Please enter 10 digits number",
+                                  msg: "please_enter_10_digits_number_key".tr(),
                                   backgroundColor: ColorPrimary);
                             }
                             calculaton(amountController.text.isEmpty
@@ -314,7 +318,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                         ),
                       ),
                       Text(
-                        "  Redeemed Coins",
+                        "  redeemed_coins_key".tr(),
                         style: TextStyle(fontSize: 17),
                       ),
                     ],
@@ -334,17 +338,17 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                                 if (succes == true) {}
                               } else {
                                 Fluttertoast.showToast(
-                                    msg: "Please enter Name ",
+                                    msg: "please_enter_name_key ".tr(),
                                     backgroundColor: ColorPrimary);
                               }
                             } else {
                               Fluttertoast.showToast(
-                                  msg: "Please enter amount",
+                                  msg: "please_enter_amount_key".tr(),
                                   backgroundColor: ColorPrimary);
                             }
                           } else {
                             Fluttertoast.showToast(
-                                msg: "Please enter 10 digit mobile number",
+                                msg: "please_enter_10_digits_number_key".tr(),
                                 backgroundColor: ColorPrimary);
                           }
                         } else {
@@ -353,12 +357,12 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                               directBilling(context);
                             } else {
                               Fluttertoast.showToast(
-                                  msg: "Please enter amount",
+                                  msg: "please_enter_amount_key",
                                   backgroundColor: ColorPrimary);
                             }
                           } else {
                             Fluttertoast.showToast(
-                                msg: "Please enter 10 digit mobile number",
+                                msg: "please_enter_10_digits_number_key".tr(),
                                 backgroundColor: ColorPrimary);
                           }
                         }
@@ -370,7 +374,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                             borderRadius: BorderRadius.circular(10)),
                         width: 250,
                         child: Center(
-                          child: Text("SUBMIT",
+                          child: Text("submit_button_key".tr(),
                               style: TextStyle(
                                   fontSize: 17,
                                   color: Colors.white,
@@ -522,7 +526,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                       }
                     },
                     child: new Text(
-                      "DONE",
+                      "done_key".tr(),
                       style: GoogleFonts.openSans(
                           fontSize: 17,
                           fontWeight: FontWeight.w600,

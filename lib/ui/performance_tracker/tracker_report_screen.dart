@@ -23,19 +23,19 @@ class _TrackerReportDashboardState extends State<TrackerReportDashboard> {
       "id": 1
     },
     {
-      "title": "Reports_key".tr(),
+      "title": "reports_key".tr(),
       "subTitle": "click_here_to_add_product_key".tr(),
       "image": "assets/images/tr-ic2.png",
       "id": 2
     },
     {
-      "title": "Money_Due_UPI_key".tr(),
+      "title": "money_due_upi_key".tr(),
       "subTitle": "click_here_to_add_product_key".tr(),
       "image": "assets/images/tr-ic3.png",
       "id": 3
     },
     {
-      "title": "My_Customers_key".tr(),
+      "title": "my_customers_key".tr(),
       "subTitle": "click here to view customer",
       "image": "assets/images/tr-ic3.png",
       "id": 4
@@ -45,7 +45,7 @@ class _TrackerReportDashboardState extends State<TrackerReportDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "Trackers_&_Reports_key".tr(),
+        title: "trackers_reports_key".tr(),
       ),
       body: ListView.builder(
         itemBuilder: (context, index) {

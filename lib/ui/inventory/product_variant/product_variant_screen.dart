@@ -56,7 +56,7 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "Add_Variant_key".tr(),
+        title: "add_variant_key".tr(),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(15.0),
@@ -113,7 +113,7 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
                             width: 15,
                           ),
                           Text(
-                            "Add_New_Variant_key".tr(),
+                            "add_new_variant_key".tr(),
                             style: TextStyle(color: ColorPrimary),
                           ),
                         ],
@@ -139,14 +139,14 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
                           i++) {
                         if (productVariant[j].option[i].value.isEmpty) {
                           Utility.showToast(
-                              "Please_enter_key ${productVariant[j].option[i].name}"
+                              "please_enter_key ${productVariant[j].option[i].name}"
                                   .tr());
                           return;
                         }
                       }
                     }
                     if (productVariant[j].mrp.isEmpty) {
-                      Utility.showToast("Please_enter_mrp_key".tr());
+                      Utility.showToast("please_enter_mrp_key".tr());
                       return;
                     }
                     if (productVariant[j].sellingPrice.isEmpty) {
@@ -156,12 +156,12 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
                     if (double.parse(productVariant[j].sellingPrice.trim()) >
                         double.parse(productVariant[j].mrp.trim())) {
                       Utility.showToast(
-                          "Selling_Price_cannot_be_more_than_MRP_key".tr());
+                          "selling_price_cannot_be_more_than_mrp_key".tr());
                       return;
                     }
 
                     if (productVariant[j].stock.isEmpty) {
-                      Utility.showToast("Please_enter_stock_key".tr());
+                      Utility.showToast("please_enter_stock_key".tr());
                       return;
                     }
                   }
@@ -173,7 +173,7 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
               minWidth: MediaQuery.of(context).size.width,
               shape: RoundedRectangleBorder(),
               color: ColorPrimary,
-              child: Text("DONE_key".tr()),
+              child: Text("done_key".tr()),
             ),
           ],
         ),
@@ -359,7 +359,7 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
                   maxLength: PRICE_TEXT_LENGTH,
                   inputFormatters: priceInputFormatter,
                   decoration: InputDecoration(
-                      labelText: "MRP_key".tr(), counter: Container()),
+                      labelText: "mrp_key".tr(), counter: Container()),
                   onChanged: (text) {
                     variantModel.mrp = text.trim();
                   },
@@ -376,7 +376,7 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
                   maxLength: PRICE_TEXT_LENGTH,
                   inputFormatters: priceInputFormatter,
                   decoration: InputDecoration(
-                      labelText: "Selling_price_key".tr(),
+                      labelText: "selling_price_key".tr(),
                       counter: Container()),
                   onChanged: (text) {
                     variantModel.sellingPrice = text.trim();
@@ -395,7 +395,7 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             initialValue: variantModel.stock.toString(),
             decoration: InputDecoration(
-                labelText: "Stock_key".tr(), counter: Container()),
+                labelText: "stock_key".tr(), counter: Container()),
             onChanged: (text) {
               variantModel.stock = text.trim();
             },
@@ -495,7 +495,7 @@ class _VariantOptionWidgetState extends State<VariantOptionWidget> {
                       });
                 },
                 decoration: InputDecoration(
-                    hintText: "Select_key ${widget.option.name}".tr(),
+                    hintText: "select_key ${widget.option.name}".tr(),
                     labelText: "${widget.option.name}",
                     suffixIcon: Icon(Icons.keyboard_arrow_right),
                     suffixIconConstraints:
@@ -510,7 +510,7 @@ class _VariantOptionWidgetState extends State<VariantOptionWidget> {
             : TextFormField(
                 initialValue: widget.option.value,
                 decoration: InputDecoration(
-                    hintText: "Enter_key ${widget.option.name}".tr(),
+                    hintText: "enter_key ${widget.option.name}".tr(),
                     labelText: "${widget.option.name}"),
                 onChanged: (text) {
                   widget.option.value = text;

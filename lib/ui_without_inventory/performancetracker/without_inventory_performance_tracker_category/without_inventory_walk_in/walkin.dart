@@ -68,21 +68,21 @@ class _WalkInAmountState extends State<WalkInAmount> {
                   tabs: [
                     Tab(
                       child: Text(
-                        "Hourly",
+                        "hourly_key".tr(),
                         style: TextStyle(
                             fontSize: 17, fontWeight: FontWeight.w600),
                       ),
                     ),
                     Tab(
                       child: Text(
-                        "Daily",
+                        "daily_key".tr(),
                         style: TextStyle(
                             fontSize: 17, fontWeight: FontWeight.w600),
                       ),
                     ),
                     Tab(
                       child: Text(
-                        "Monthly",
+                        "monthly_key".tr(),
                         style: TextStyle(
                             fontSize: 17, fontWeight: FontWeight.w600),
                       ),
@@ -91,7 +91,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                 ),
               ),
             ),
-            title: Text('Walkin Amount'),
+            title: Text('walkin_amount_key'.tr()),
             centerTitle: true,
             leading: IconButton(
                 onPressed: () {
@@ -112,7 +112,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                         }
                         if (snapshot.hasError) {
                           return Center(
-                            child: Text("Data_Not_Found_key".tr()),
+                            child: Text("data_not_found_key".tr()),
                           );
                         }
                         return Container(
@@ -148,7 +148,8 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                   child: Align(
                                                     alignment:
                                                         Alignment.centerLeft,
-                                                    child: Text("  Hourly",
+                                                    child: Text(
+                                                        "  hourly_key".tr(),
                                                         style: TextStyle(
                                                             fontSize: 20.0,
                                                             color:
@@ -168,7 +169,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: AutoSizeText(
-                                                          "  Earning",
+                                                          "  earning_key".tr(),
                                                           style: TextStyle(
                                                               fontSize: 18.0,
                                                               color:
@@ -375,7 +376,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                       borderColor: Colors.grey.shade500,
 
                                       title: ChartTitle(
-                                          text: "Walkin AMT (INR) ",
+                                          text: "walkin_amt_inr_key ".tr(),
                                           textStyle: TextStyle(
                                               fontSize: 14,
                                               color: Colors.grey.shade600)),
@@ -414,7 +415,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                         //numberFormat: NumberFormat.currency(),
                                         title: AxisTitle(
                                             alignment: ChartAlignment.center,
-                                            text: "Walkin AMT (INR) ",
+                                            text: "walkin_amt_inr_key ".tr(),
                                             textStyle: TextStyle(
                                                 fontSize: 11,
                                                 color: Colors.grey.shade600)),
@@ -433,7 +434,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                         }
                         if (snapshot.hasError) {
                           return Center(
-                            child: Text("Data Not Found"),
+                            child: Text("data_not_found_key".tr()),
                           );
                         }
                         return Container(
@@ -469,7 +470,8 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                   child: Align(
                                                     alignment:
                                                         Alignment.centerLeft,
-                                                    child: Text("  Day",
+                                                    child: Text(
+                                                        "  day_key".tr(),
                                                         style: TextStyle(
                                                             fontSize: 20.0,
                                                             color:
@@ -489,7 +491,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: AutoSizeText(
-                                                          "  Walkin",
+                                                          "  walkin_key".tr(),
                                                           style: TextStyle(
                                                               fontSize: 18.0,
                                                               color:
@@ -604,7 +606,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                       borderColor: Colors.grey.shade500,
 
                                       title: ChartTitle(
-                                          text: "Walkin AMT (INR) ",
+                                          text: "walkin_amt_inr_key ".tr(),
                                           textStyle: TextStyle(
                                               fontSize: 14,
                                               color: Colors.grey.shade600)),
@@ -642,7 +644,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                         //numberFormat: NumberFormat.currency(),
                                         title: AxisTitle(
                                             alignment: ChartAlignment.center,
-                                            text: "Walkin AMT (INR) ",
+                                            text: "walkin_amt_inr_key ".tr(),
                                             textStyle: TextStyle(
                                                 fontSize: 11,
                                                 color: Colors.grey.shade600)),
@@ -661,7 +663,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                         }
                         if (snapshot.hasError) {
                           return Center(
-                            child: Text("Data Not Found"),
+                            child: Text("data_not_found_key".tr()),
                           );
                         }
                         return Container(
@@ -697,7 +699,8 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                   child: Align(
                                                     alignment:
                                                         Alignment.centerLeft,
-                                                    child: Text("  Day",
+                                                    child: Text(
+                                                        "  day_key".tr(),
                                                         style: TextStyle(
                                                             fontSize: 20.0,
                                                             color:
@@ -717,7 +720,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: AutoSizeText(
-                                                          "  Walkin",
+                                                          "  walkin_key".tr(),
                                                           style: TextStyle(
                                                               fontSize: 18.0,
                                                               color:
@@ -786,7 +789,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                       borderColor: Colors.grey.shade500,
 
                                       title: ChartTitle(
-                                          text: "Walkin AMT (INR) ",
+                                          text: "walkin_amt_inr_key ".tr(),
                                           textStyle: TextStyle(
                                               fontSize: 14,
                                               color: Colors.grey.shade600)),
@@ -824,7 +827,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                         //numberFormat: NumberFormat.currency(),
                                         title: AxisTitle(
                                             alignment: ChartAlignment.center,
-                                            text: "Walkin AMT (INR) ",
+                                            text: "walkin_amt_inr_key ".tr(),
                                             textStyle: TextStyle(
                                                 fontSize: 11,
                                                 color: Colors.grey.shade600)),
@@ -843,11 +846,12 @@ class _WalkInAmountState extends State<WalkInAmount> {
   List<GDPData> getChartData(WithoutInventoryDailyWalkinData? data) {
     final List<GDPData> chartData = [
       GDPData(
-        'TODAY',
+        'today_key'.tr(),
         double.parse(data!.todayWalkIns.toString()),
       ),
       GDPData(' ', 0),
-      GDPData("YESTERDAY", double.parse(data.yesterdayWalkIns.toString())),
+      GDPData(
+          "yesterday_key".tr(), double.parse(data.yesterdayWalkIns.toString())),
     ];
     return chartData;
   }

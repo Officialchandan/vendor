@@ -130,7 +130,7 @@ class _SaleAmountState extends State<SaleAmount> {
                         if (snapshot.hasError) {
                           log("snapshot==>${snapshot.error}");
                           return Center(
-                            child: Text("Data_Not_Found_key"),
+                            child: Text("data_not_found_key"),
                           );
                         }
                         if (snapshot.hasData) {
@@ -467,7 +467,7 @@ class _SaleAmountState extends State<SaleAmount> {
                         }
                         if (snapshot.hasError) {
                           return Center(
-                            child: Text("Data_Not_Found_key".tr()),
+                            child: Text("data_not_found_key".tr()),
                           );
                         }
                         return Container(
@@ -696,7 +696,7 @@ class _SaleAmountState extends State<SaleAmount> {
                         }
                         if (snapshot.hasError) {
                           return Center(
-                            child: Text("Data_Not_Found_key".tr()),
+                            child: Text("data_not_found_key".tr()),
                           );
                         }
                         return Container(

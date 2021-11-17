@@ -59,7 +59,7 @@ class _SuggestedProductScreenState extends State<SuggestedProductScreen>
         },
         child: Scaffold(
           appBar: AppBar(
-            title: Text("Add_Suggested_Product_key".tr()),
+            title: Text("add_suggested_product_key".tr()),
             bottom: PreferredSize(
                 preferredSize: Size.fromHeight(54),
                 child: BlocBuilder<SuggestedProductBloc, SuggestedProductState>(
@@ -164,7 +164,7 @@ class _SuggestedProductScreenState extends State<SuggestedProductScreen>
                 disabledColor: Colors.grey,
                 height: 50,
                 disabledTextColor: Colors.white,
-                child: Text("Add_Product_key".tr()),
+                child: Text("add_product_key".tr()),
               );
             },
           )),

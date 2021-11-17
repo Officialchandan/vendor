@@ -112,7 +112,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                         }
                         if (snapshot.hasError) {
                           return Center(
-                            child: Text("Data_Not_Found_key".tr()),
+                            child: Text("data_not_found_key".tr()),
                           );
                         }
                         return Container(
@@ -169,7 +169,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: AutoSizeText(
-                                                          "  Earning_key".tr(),
+                                                          "  earning_key".tr(),
                                                           style: TextStyle(
                                                               fontSize: 18.0,
                                                               color:
@@ -376,7 +376,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                       borderColor: Colors.grey.shade500,
 
                                       title: ChartTitle(
-                                          text: "Walkin_AMT_(INR)_key ".tr(),
+                                          text: "walkin_amt_inr_key ".tr(),
                                           textStyle: TextStyle(
                                               fontSize: 14,
                                               color: Colors.grey.shade600)),
@@ -415,7 +415,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                         //numberFormat: NumberFormat.currency(),
                                         title: AxisTitle(
                                             alignment: ChartAlignment.center,
-                                            text: "Walkin_AMT_(INR)_key ".tr(),
+                                            text: "walkin_amt_inr_key ".tr(),
                                             textStyle: TextStyle(
                                                 fontSize: 11,
                                                 color: Colors.grey.shade600)),
@@ -434,7 +434,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                         }
                         if (snapshot.hasError) {
                           return Center(
-                            child: Text("Data_Not_Found_key".tr()),
+                            child: Text("data_not_found_key".tr()),
                           );
                         }
                         return Container(
@@ -491,7 +491,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: AutoSizeText(
-                                                          "  Walkin_key".tr(),
+                                                          "  walkin_key".tr(),
                                                           style: TextStyle(
                                                               fontSize: 18.0,
                                                               color:
@@ -606,7 +606,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                       borderColor: Colors.grey.shade500,
 
                                       title: ChartTitle(
-                                          text: "Walkin_AMT_(INR)_key ".tr(),
+                                          text: "walkin_amt_inr_key ".tr(),
                                           textStyle: TextStyle(
                                               fontSize: 14,
                                               color: Colors.grey.shade600)),
@@ -644,7 +644,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                         //numberFormat: NumberFormat.currency(),
                                         title: AxisTitle(
                                             alignment: ChartAlignment.center,
-                                            text: "Walkin_AMT_(INR)_key ".tr(),
+                                            text: "walkin_amt_inr_key ".tr(),
                                             textStyle: TextStyle(
                                                 fontSize: 11,
                                                 color: Colors.grey.shade600)),
@@ -663,7 +663,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                         }
                         if (snapshot.hasError) {
                           return Center(
-                            child: Text("Data_Not_Found_key".tr()),
+                            child: Text("data_not_found_key".tr()),
                           );
                         }
                         return Container(
@@ -720,7 +720,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: AutoSizeText(
-                                                          "  Walkin_key".tr(),
+                                                          "  walkin_key".tr(),
                                                           style: TextStyle(
                                                               fontSize: 18.0,
                                                               color:
@@ -789,7 +789,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                       borderColor: Colors.grey.shade500,
 
                                       title: ChartTitle(
-                                          text: "Walkin_AMT_(INR)_key ".tr(),
+                                          text: "walkin_amt_inr_key ".tr(),
                                           textStyle: TextStyle(
                                               fontSize: 14,
                                               color: Colors.grey.shade600)),
@@ -827,7 +827,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                         //numberFormat: NumberFormat.currency(),
                                         title: AxisTitle(
                                             alignment: ChartAlignment.center,
-                                            text: "Walkin_AMT_(INR)_key ".tr(),
+                                            text: "walkin_amt_inr_key ".tr(),
                                             textStyle: TextStyle(
                                                 fontSize: 11,
                                                 color: Colors.grey.shade600)),
@@ -851,7 +851,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
       ),
       GDPData(' ', 0),
       GDPData(
-          "yesterdat_key".tr(), double.parse(data.yesterdayWalkIns.toString())),
+          "yesterday_key".tr(), double.parse(data.yesterdayWalkIns.toString())),
     ];
     return chartData;
   }

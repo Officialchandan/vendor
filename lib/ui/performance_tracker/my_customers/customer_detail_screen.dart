@@ -35,7 +35,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "Details_key".tr(),
+        title: "details_key".tr(),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(15),
@@ -96,7 +96,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "All_items_key".tr(),
+                            "all_items_key".tr(),
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
@@ -229,7 +229,9 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                                                             10),
                                                   ),
                                                   child: Text(
-                                                    "\tRedeemed_key\t".tr(),
+                                                    "\t" +
+                                                        "redeemed_key".tr() +
+                                                        "\t",
                                                     style: TextStyle(
                                                         color: ColorPrimary),
                                                   ),
@@ -247,7 +249,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Total_Amount_key".tr(),
+                                "total_amount_key".tr(),
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               Text("₹ ${total.toStringAsFixed(2)}"),
@@ -260,7 +262,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Redeemed_Amount_key".tr(),
+                                "redeemed_amount_key".tr(),
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               Text("₹ ${redeemedCoin.toStringAsFixed(2)}"),
@@ -273,7 +275,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Earn_Coins_key".tr(),
+                                "earn_coins_key".tr(),
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               Row(
@@ -297,7 +299,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Pay_Amount_key".tr(),
+                                "pay_amount_key".tr(),
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               Text("₹ ${totalPay.toStringAsFixed(2)}"),

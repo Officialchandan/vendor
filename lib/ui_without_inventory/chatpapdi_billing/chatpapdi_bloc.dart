@@ -28,7 +28,7 @@ class ChatPapdiBillingCustomerNumberResponseBloc extends Bloc<
     if (event is GetChatPapdiBillingCustomerNumberResponseEvent) {
       if (event.mobile.length != 10) {
         yield GetChatPapdiBillingCustomerNumberResponseFailureState(
-            message: "Mobile Number Invalid", succes: false);
+            message: "mobile_number_invalid_key".tr(), succes: false);
       } else {
         yield* getChatPapdiBillingCustomerNumberResponse(
           event.mobile,
@@ -75,10 +75,12 @@ class ChatPapdiBillingCustomerNumberResponseBloc extends Bloc<
         }
       } catch (error) {
         yield GetChatPapdiBillingCustomerNumberResponseFailureState(
-            message: "internal_Server_error_key".tr(), succes: false);
+            message: "internal_server_error_key".tr(), succes: false);
       }
     } else {
-      Fluttertoast.showToast(msg: "Turn_on_the_internet_key".tr());
+      Fluttertoast.showToast(
+          msg: "please_turn_on_the_internet_key".tr(),
+          backgroundColor: ColorPrimary);
     }
   }
 
@@ -102,10 +104,12 @@ class ChatPapdiBillingCustomerNumberResponseBloc extends Bloc<
         }
       } catch (error) {
         yield GetChatPapdiBillingFailureState(
-            message: "internal_Server_error_key".tr(), succes: false);
+            message: "internal_server_error_key".tr(), succes: false);
       }
     } else {
-      Fluttertoast.showToast(msg: "Turn_on_the_internet_key".tr());
+      Fluttertoast.showToast(
+          msg: "please_turn_on_the_internet_key".tr(),
+          backgroundColor: ColorPrimary);
     }
   }
 
@@ -129,10 +133,12 @@ class ChatPapdiBillingCustomerNumberResponseBloc extends Bloc<
         }
       } catch (error) {
         yield GetChatPapdiBillingOtpFailureState(
-            message: "internal_Server_error_key".tr(), succes: false);
+            message: "internal_server_error_key".tr(), succes: false);
       }
     } else {
-      Fluttertoast.showToast(msg: "Turn_on_the_internet_key".tr());
+      Fluttertoast.showToast(
+          msg: "please_turn_on_the_internet_key".tr(),
+          backgroundColor: ColorPrimary);
     }
   }
 
@@ -156,10 +162,12 @@ class ChatPapdiBillingCustomerNumberResponseBloc extends Bloc<
         }
       } catch (error) {
         yield GetChatPapdiPartialUserFailureState(
-            message: "internal_Server_error_key".tr(), succes: false);
+            message: "internal_server_error_key".tr(), succes: false);
       }
     } else {
-      Fluttertoast.showToast(msg: "Turn_on_the_internet_key".tr());
+      Fluttertoast.showToast(
+          msg: "please_turn_on_the_internet_key".tr(),
+          backgroundColor: ColorPrimary);
     }
   }
 }

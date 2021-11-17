@@ -43,7 +43,7 @@ class _SelectSubCategoryState extends State<SelectSubCategory> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Sub_Category_key".tr()),
+          title: Text("sub_category_key".tr()),
           actions: [
             TextButton(
                 onPressed: () {
@@ -53,7 +53,7 @@ class _SelectSubCategoryState extends State<SelectSubCategory> {
                   Navigator.pop(context, subCategory);
                 },
                 child: Text(
-                  "DONE_key".tr(),
+                  "done_key".tr(),
                   style: TextStyle(color: Colors.white),
                 ))
           ],
@@ -84,7 +84,7 @@ class _SelectSubCategoryState extends State<SelectSubCategory> {
                   });
             }
             return Center(
-              child: Text("Unit_not_found!_key".tr()),
+              child: Text("unit_not_found_key".tr()),
             );
           },
         ),
@@ -107,7 +107,7 @@ class _SelectSubCategoryState extends State<SelectSubCategory> {
                   width: 15,
                 ),
                 Text(
-                  "Add_new_Subcategory_key".tr(),
+                  "add_new_subcategory_key".tr(),
                   style: TextStyle(color: ColorPrimary),
                 ),
               ],
@@ -167,7 +167,7 @@ class _AddCategoryBottomSheetState extends State<AddCategoryBottomSheet> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Add_new_Subcategory_key".tr(),
+                "add_new_subcategory_key".tr(),
                 style: TextStyle(color: ColorPrimary, fontSize: 18),
               ),
               IconButton(
@@ -185,7 +185,7 @@ class _AddCategoryBottomSheetState extends State<AddCategoryBottomSheet> {
           ),
           TextFormField(
             controller: editText,
-            decoration: InputDecoration(hintText: "Subcategory_name_key".tr()),
+            decoration: InputDecoration(hintText: "subcategory_name_key".tr()),
           ),
           SizedBox(
             height: 15,
@@ -198,10 +198,10 @@ class _AddCategoryBottomSheetState extends State<AddCategoryBottomSheet> {
             height: 15,
           ),
           AppButton(
-            title: "ADD_key".tr(),
+            title: "add_key".tr(),
             onPressed: () {
               if (editText.text.trim().isEmpty)
-                Utility.showToast("Please_enter_category_name_key".tr());
+                Utility.showToast("please_enter_category_name_key".tr());
               else
                 addSubCategory(widget.categoryId);
             },

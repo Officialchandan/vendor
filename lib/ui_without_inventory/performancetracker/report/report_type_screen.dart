@@ -1,3 +1,4 @@
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
@@ -15,15 +16,30 @@ class ReportTypeScreen extends StatefulWidget {
 
 class _ReportTypeScreenState extends State<ReportTypeScreen> {
   final options = [
-    {"title": "Daily Sales", "subTitle": "click here to add product", "image": "assets/images/tr-ic1.png", "id": 1},
-    {"title": "Coin Generated", "subTitle": "click here to add product", "image": "assets/images/tr-ic2.png", "id": 2},
-    {"title": "Coin Redeemed", "subTitle": "click here to add product", "image": "assets/images/tr-ic3.png", "id": 3},
+    {
+      "title": "daily_sales_key".tr(),
+      "subTitle": "click_here_to_add_product_key".tr(),
+      "image": "assets/images/tr-ic1.png",
+      "id": 1
+    },
+    {
+      "title": "coin_generated_key".tr(),
+      "subTitle": "click_here_to_add_product_key".tr(),
+      "image": "assets/images/tr-ic2.png",
+      "id": 2
+    },
+    {
+      "title": "coin_redeemed_key".tr(),
+      "subTitle": "click_here_to_add_product_key".tr(),
+      "image": "assets/images/tr-ic3.png",
+      "id": 3
+    },
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "Report Types",
+        title: "report_types_key".tr(),
       ),
       body: ListView.builder(
         itemBuilder: (context, index) {
@@ -77,7 +93,9 @@ class _ReportTypeScreenState extends State<ReportTypeScreen> {
                       width: 5,
                       decoration: BoxDecoration(
                           color: ColorPrimary,
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(5),
+                              bottomLeft: Radius.circular(5))),
                     ))
               ],
             ),

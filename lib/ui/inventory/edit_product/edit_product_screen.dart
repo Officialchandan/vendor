@@ -145,7 +145,7 @@ class EditProductScreenState extends State<EditProductScreen> {
         ],
         child: Scaffold(
           appBar: CustomAppBar(
-            title: "Edit_Product_key".tr(),
+            title: "edit_product_key".tr(),
           ),
           body: SingleChildScrollView(
             padding: EdgeInsets.all(15),
@@ -246,7 +246,7 @@ class EditProductScreenState extends State<EditProductScreen> {
                 TextFormField(
                   controller: edtProductName,
                   decoration: InputDecoration(
-                    labelText: "Product_name_key".tr(),
+                    labelText: "product_name_key".tr(),
                   ),
                 ),
                 const SizedBox(
@@ -266,8 +266,8 @@ class EditProductScreenState extends State<EditProductScreen> {
                   },
                   controller: edtCategory,
                   decoration: InputDecoration(
-                      labelText: "Category_key".tr(),
-                      hintText: "Select_Category_key".tr(),
+                      labelText: "category_key".tr(),
+                      hintText: "select_category_key".tr(),
                       suffixIcon: Icon(Icons.keyboard_arrow_right_sharp),
                       suffixIconConstraints: BoxConstraints(
                           minWidth: 20,
@@ -284,7 +284,7 @@ class EditProductScreenState extends State<EditProductScreen> {
                       child: TextFormField(
                         initialValue: widget.product.purchasePrice,
                         decoration: InputDecoration(
-                            labelText: "Purchase_price_key".tr()),
+                            labelText: "purchase_price_key".tr()),
                         onChanged: (text) {
                           widget.product.purchasePrice = text;
                         },
@@ -346,7 +346,7 @@ class EditProductScreenState extends State<EditProductScreen> {
                         onTap: () {
                           if (categoryId.isEmpty) {
                             Utility.showToast(
-                                "Please_select_category_first_key".tr());
+                                "please_select_category_first_key".tr());
                             return;
                           }
 
@@ -362,7 +362,7 @@ class EditProductScreenState extends State<EditProductScreen> {
                               });
                         },
                         decoration: InputDecoration(
-                            labelText: "Unit_key".tr(),
+                            labelText: "unit_key".tr(),
                             suffixIcon: Icon(Icons.keyboard_arrow_right_sharp),
                             suffixIconConstraints: BoxConstraints(
                                 minWidth: 20,
@@ -382,7 +382,7 @@ class EditProductScreenState extends State<EditProductScreen> {
                   controller: edtOptions,
                   onTap: () {
                     if (edtCategory.text.isEmpty)
-                      Utility.showToast("Please_select_category_key".tr());
+                      Utility.showToast("please_select_category_key".tr());
                     else
                       showModalBottomSheet(
                           context: context,
@@ -395,7 +395,7 @@ class EditProductScreenState extends State<EditProductScreen> {
 
                                 if (variants.isEmpty) {
                                   Utility.showToast(
-                                      "Please_select_at_least_one_option_key"
+                                      "please_select_at_least_one_option_key"
                                           .tr());
                                 } else {
                                   variantType = variants;
@@ -427,7 +427,7 @@ class EditProductScreenState extends State<EditProductScreen> {
                   },
                   decoration: InputDecoration(
                       labelText: "options_key".tr(),
-                      hintText: "Select_options_key".tr(),
+                      hintText: "select_options_key".tr(),
                       suffixIcon: Icon(Icons.keyboard_arrow_right),
                       suffixIconConstraints: BoxConstraints(
                           minWidth: 20,
@@ -472,20 +472,20 @@ class EditProductScreenState extends State<EditProductScreen> {
 
   void update(BuildContext context) async {
     if (edtProductName.text.trim().isEmpty) {
-      Utility.showToast("Please_enter_product_name_key".tr());
+      Utility.showToast("please_enter_product_name_key".tr());
       return;
     }
     if (edtCategory.text.isEmpty || categoryId.isEmpty) {
-      Utility.showToast("Please_select_product_category_key".tr());
+      Utility.showToast("please_select_product_category_key".tr());
       return;
     }
 
     if (variantModel.purchasePrice.isEmpty) {
-      Utility.showToast("Please_enter_purchase_price_key".tr());
+      Utility.showToast("please_enter_purchase_price_key".tr());
       return;
     }
     if (variantModel.sellingPrice.isEmpty) {
-      Utility.showToast("Please_enter_selling_price_key".tr());
+      Utility.showToast("please_enter_selling_price_key".tr());
       return;
     }
     if (variantModel.mrp.isEmpty) {
@@ -494,7 +494,7 @@ class EditProductScreenState extends State<EditProductScreen> {
     }
     if (double.parse(variantModel.sellingPrice.trim()) >
         double.parse(variantModel.mrp.trim())) {
-      Utility.showToast("Selling_Price_cannot_be_more_than_MRP_key".tr());
+      Utility.showToast("selling_price_cannot_be_more_than_mrp_key".tr());
       return;
     }
     if (edtUnit.text.isEmpty) {
@@ -509,7 +509,7 @@ class EditProductScreenState extends State<EditProductScreen> {
       for (int i = 0; i < variantModel.option.length; i++) {
         if (variantModel.option[i].value.isEmpty) {
           Utility.showToast(
-              "Please_enter_key ${variantModel.option[i].name}".tr());
+              "please_enter_key ${variantModel.option[i].name}".tr());
           return;
         }
       }

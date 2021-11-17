@@ -30,7 +30,7 @@ class _DeliveryAreasState extends State<DeliveryAreas> {
               Navigator.pop(context);
             },
           ),
-          title: Text("Delivery_Areas_key".tr()),
+          title: Text("delivery_areas_key".tr()),
         ),
         body: SingleChildScrollView(
           padding: EdgeInsets.symmetric(vertical: 15),
@@ -49,12 +49,12 @@ class _DeliveryAreasState extends State<DeliveryAreas> {
                           fontWeight: FontWeight.w600),
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.only(bottom: 6),
-                        labelText: "Add_serviceable_radius_key".tr(),
+                        labelText: "add_serviceable_radius_key".tr(),
                         labelStyle: TextStyle(
                             color: Color(0xff555555),
                             fontSize: 14,
                             fontWeight: FontWeight.w500),
-                        suffixText: "KM_key".tr(),
+                        suffixText: "km_key".tr(),
                         suffixStyle: TextStyle(
                             color: Color(0xff555555),
                             fontSize: 14,
@@ -74,7 +74,7 @@ class _DeliveryAreasState extends State<DeliveryAreas> {
                           fontWeight: FontWeight.w600),
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.only(bottom: 6),
-                        labelText: "Add_serviceable_areas_key".tr(),
+                        labelText: "add_serviceable_areas_key".tr(),
                         labelStyle: TextStyle(
                             color: Color(0xff555555),
                             fontSize: 14,
@@ -123,7 +123,7 @@ class _DeliveryAreasState extends State<DeliveryAreas> {
         bottomNavigationBar: MaterialButton(
           minWidth: double.infinity,
           padding: EdgeInsets.symmetric(vertical: 20),
-          child: Text("DONE_key".tr(),
+          child: Text("done_key".tr(),
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 15,

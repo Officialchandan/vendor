@@ -26,7 +26,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
       create: (context) => moneyDueBloc,
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Money_Due_UPI_key".tr()),
+          title: Text("money_due_upi_key".tr()),
           elevation: 0,
         ),
         body: SingleChildScrollView(
@@ -61,7 +61,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                       },
                     ),
                     Text(
-                      "Company_due_amount_key".tr(),
+                      "company_due_amount_key".tr(),
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,

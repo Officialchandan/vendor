@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,11 +25,20 @@ class AccountManagementWithoutInventoryScreen extends StatefulWidget {
   const AccountManagementWithoutInventoryScreen({Key? key}) : super(key: key);
 
   @override
-  _AccountManagementWithoutInventoryScreenState createState() => _AccountManagementWithoutInventoryScreenState();
+  _AccountManagementWithoutInventoryScreenState createState() =>
+      _AccountManagementWithoutInventoryScreenState();
 }
 
-class _AccountManagementWithoutInventoryScreenState extends State<AccountManagementWithoutInventoryScreen> {
-  List<String> TextList = ["Settings", "Video tutorials", "Share store link", "Get store QR code", "Add business hours", "Logout"];
+class _AccountManagementWithoutInventoryScreenState
+    extends State<AccountManagementWithoutInventoryScreen> {
+  List<String> TextList = [
+    "settings_key".tr(),
+    "video_tutorials_key".tr(),
+    "share_store_link_key".tr(),
+    "get_store_qr_code_key".tr(),
+    "add_business_hours_key".tr(),
+    "logout_key".tr()
+  ];
 
   List<String> ImageList = [
     "assets/images/account-ic2.png",
@@ -83,7 +93,7 @@ class _AccountManagementWithoutInventoryScreenState extends State<AccountManagem
                 automaticallyImplyLeading: false,
                 elevation: 0,
                 // toolbarHeight: 120,
-                title: Text('Account'),
+                title: Text('account_key'.tr()),
                 centerTitle: true,
                 bottom: PreferredSize(
                   preferredSize: Size.fromHeight(70),
@@ -245,23 +255,35 @@ class _AccountManagementWithoutInventoryScreenState extends State<AccountManagem
         builder: (context) {
           return AlertDialog(
             contentPadding: EdgeInsets.fromLTRB(25, 10, 0, 0),
-            title: Text("Logout", style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w600)),
-            content: Text("Are you sure you want to logout?",
-                style: TextStyle(color: Color.fromRGBO(85, 85, 85, 1), fontSize: 15, fontWeight: FontWeight.w500)),
+            title: Text("logout_key".tr(),
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600)),
+            content: Text("are_you_sure_you_want_to_logout_key".tr(),
+                style: TextStyle(
+                    color: Color.fromRGBO(85, 85, 85, 1),
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500)),
             actions: [
               MaterialButton(
-                child: Text("Cancel", style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w600)),
+                child: Text("cancel_key".tr(),
+                    style: TextStyle(
+                        color: Colors.grey, fontWeight: FontWeight.w600)),
                 onPressed: () {
                   Navigator.pop(context);
                 },
               ),
               MaterialButton(
-                child: Text("Logout", style: TextStyle(color: Color(0xfff4511e), fontWeight: FontWeight.w600)),
+                child: Text("logout_key".tr(),
+                    style: TextStyle(
+                        color: Color(0xfff4511e), fontWeight: FontWeight.w600)),
                 onPressed: () async {
                   log("ndndnd");
                   LogOutResponse logoutData = await ApiProvider().getLogOut();
                   print("kai kroge +${logoutData.success}");
-                  await SharedPref.setBooleanPreference(SharedPref.LOGIN, false);
+                  await SharedPref.setBooleanPreference(
+                      SharedPref.LOGIN, false);
                   print("kai kroge +${logoutData.success}");
                   if (await Network.isConnected()) {
                     SystemChannels.textInput.invokeMethod("TextInput.hide");
@@ -271,11 +293,17 @@ class _AccountManagementWithoutInventoryScreenState extends State<AccountManagem
                         MaterialPageRoute(builder: (context) => LoginScreen()),
                         ModalRoute.withName("/"));
 
-                    Fluttertoast.showToast(backgroundColor: ColorPrimary, textColor: Colors.white, msg: "Logout Successfully"
+                    Fluttertoast.showToast(
+                        backgroundColor: ColorPrimary,
+                        textColor: Colors.white,
+                        msg: "logout_successfully_key".tr()
                         // timeInSecForIos: 3
                         );
                   } else {
-                    Fluttertoast.showToast(backgroundColor: ColorPrimary, textColor: Colors.white, msg: "Please turn on  internet");
+                    Fluttertoast.showToast(
+                        backgroundColor: ColorPrimary,
+                        textColor: Colors.white,
+                        msg: "please_turn_on_the_internet_key".tr());
                   }
                 },
               ),

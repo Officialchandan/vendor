@@ -28,13 +28,13 @@ class ServerError implements Exception {
     print(error.message);
     switch (error.type) {
       case DioErrorType.cancel:
-        _errorMessage = "Request_was_cancelled_key".tr();
+        _errorMessage = "request_was_cancelled_key".tr();
         break;
       case DioErrorType.connectTimeout:
-        _errorMessage = "Connection_timeout_key".tr();
+        _errorMessage = "connection_timeout_key".tr();
         break;
       case DioErrorType.other:
-        _errorMessage = "Connection_failed_due_to_internet_connection_key";
+        _errorMessage = "connection_failed_due_to_internet_connection_key";
         break;
       case DioErrorType.receiveTimeout:
         _errorMessage = "Receive timeout in connection";

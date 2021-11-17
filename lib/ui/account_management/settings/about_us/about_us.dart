@@ -22,7 +22,7 @@ class _AboutUsState extends State<AboutUs> {
               Navigator.pop(context);
             },
           ),
-          title: Text("About_Us_key".tr()),
+          title: Text("about_us_key".tr()),
         ),
         body: SingleChildScrollView(
           padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),

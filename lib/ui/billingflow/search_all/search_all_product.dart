@@ -77,7 +77,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
-                      hintText: "Search_key".tr(),
+                      hintText: "search_key".tr(),
                       hintStyle: GoogleFonts.openSans(
                         fontWeight: FontWeight.w600,
                       ),
@@ -334,13 +334,13 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                                               count: searchList[index]
                                                                                   .count--))
                                                                       : Fluttertoast.showToast(
-                                                                          msg: "Product_cant_be_in_negative_key"
+                                                                          msg: "product_cant_be_in_negative_key"
                                                                               .tr(),
                                                                           backgroundColor:
                                                                               ColorPrimary);
                                                                 } else {
                                                                   Fluttertoast.showToast(
-                                                                      msg: "please_turn_on_internet_key"
+                                                                      msg: "please_turn_on_the_internet_key"
                                                                           .tr(),
                                                                       backgroundColor:
                                                                           ColorPrimary);
@@ -407,7 +407,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                                   //         ColorPrimary);
                                                                 } else {
                                                                   Fluttertoast.showToast(
-                                                                      msg: "please_turn_on_internet_key"
+                                                                      msg: "please_turn_on_the_internet_key"
                                                                           .tr(),
                                                                       backgroundColor:
                                                                           ColorPrimary);
@@ -650,7 +650,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                           } else {
                                             Fluttertoast.showToast(
                                                 msg:
-                                                    "please_turn_on_internet_key"
+                                                    "please_turn_on_the_internet_key"
                                                         .tr(),
                                                 backgroundColor: ColorPrimary);
                                           }
@@ -684,7 +684,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                     // Navigator.pop(context);
                                     if (product.length == 0) {
                                       Fluttertoast.showToast(
-                                          msg: "Please_atleast_one_product_key"
+                                          msg: "please_atleast_one_product_key"
                                               .tr(),
                                           backgroundColor: ColorPrimary);
                                     } else {
@@ -706,8 +706,8 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                     }
                                   } else {
                                     Fluttertoast.showToast(
-                                        msg: "please_turn_on_internet_key",
-                                        backgroundColor: ColorPrimary);
+                                        msg: "please_turn_on_the_internet_key",
+                                        backgroundColor: Colors.amber);
                                   }
                                 },
                                 child: Container(
@@ -715,7 +715,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                   color: ColorPrimary,
                                   child: Center(
                                     child: Text(
-                                      "DONE_key".tr(),
+                                      "done_key".tr(),
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold),
@@ -765,7 +765,7 @@ class _SizeColorBottomSheetState extends State<SizeColorBottomSheet> {
           Padding(
             padding: const EdgeInsets.only(left: 20, top: 20, bottom: 20),
             child: Text(
-              "Size_key".tr(),
+              "size_key".tr(),
               style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
             ),
           ),
@@ -785,7 +785,7 @@ class _SizeColorBottomSheetState extends State<SizeColorBottomSheet> {
                       decoration: BoxDecoration(
                           color: Colors.amber,
                           borderRadius: BorderRadius.circular(50)),
-                      child: Center(child: Text("M_key".tr())),
+                      child: Center(child: Text("m_key".tr())),
                     ),
                   ]);
                 }),
@@ -793,7 +793,7 @@ class _SizeColorBottomSheetState extends State<SizeColorBottomSheet> {
           Padding(
             padding: const EdgeInsets.only(left: 20, top: 20, bottom: 20),
             child: Text(
-              "Color_key".tr(),
+              "color_key".tr(),
               style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
             ),
           ),
@@ -832,12 +832,12 @@ class _SizeColorBottomSheetState extends State<SizeColorBottomSheet> {
                     Navigator.pop(context);
                   },
                   child: Text(
-                    "Cancel_key".tr(),
+                    "cancel_key".tr(),
                     style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Text(
-                  "Done_key".tr(),
+                  "done_key".tr(),
                   style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.bold,

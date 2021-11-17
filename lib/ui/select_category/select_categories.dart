@@ -49,7 +49,7 @@ class _SelectCategoriesScreenState extends State<SelectCategoriesScreen> {
           ),
           title: AutoSizeText(
             // "${AppTranslations.of(context)!.text(StringConst.all_categories)}",
-            "Select_Category_key".tr(),
+            "select_category_key".tr(),
             style: Theme.of(context).textTheme.headline6!.merge(
                 TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
             maxFontSize: 25,
@@ -122,7 +122,7 @@ class _SelectCategoriesScreenState extends State<SelectCategoriesScreen> {
               return Container(
                 margin: EdgeInsets.all(10),
                 child: AppButton(
-                  title: "DONE_key".tr(),
+                  title: "done_key".tr(),
                   width: double.infinity,
                   onPressed: () {
                     if (groupId != -1) {
@@ -131,7 +131,7 @@ class _SelectCategoriesScreenState extends State<SelectCategoriesScreen> {
 
                       // Navigator.pushNamed(context, Routs.VENDOR_LIST_SCREEN, arguments: categoryModel);
                     } else {
-                      Utility.showToast("Please_select_category_key".tr());
+                      Utility.showToast("please_select_category_key".tr());
                     }
                   },
                 ),

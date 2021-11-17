@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:vendor/model/product_by_category_response.dart';
 import 'package:vendor/ui/billingflow/search_all/search_all_event.dart';
 import 'package:vendor/ui/billingflow/search_all/search_all_state.dart';
+import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
 
 import '../../../main.dart';
@@ -55,10 +56,12 @@ class SearchAllBloc extends Bloc<SearchAllEvent, SearchAllState> {
           yield GetSearchFailureState(message: result!.message);
         }
       } catch (error) {
-        yield GetSearchFailureState(message: "internal_Server_error_key".tr());
+        yield GetSearchFailureState(message: "internal_server_error_key".tr());
       }
     } else {
-      Fluttertoast.showToast(msg: "Turn_on_the_internet_key".tr());
+      Fluttertoast.showToast(
+          msg: "please_turn_on_the_internet_key".tr(),
+          backgroundColor: ColorPrimary);
     }
   }
 }

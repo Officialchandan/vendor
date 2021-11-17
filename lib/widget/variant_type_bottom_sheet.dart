@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/model/product_variant_response.dart';
@@ -13,7 +14,10 @@ class VariantTypeBottomSheet extends StatefulWidget {
   final List<VariantType> selectedVariants;
   final Function(List<VariantType>) onSelect;
 
-  VariantTypeBottomSheet({required this.categoryId, required this.onSelect, required this.selectedVariants});
+  VariantTypeBottomSheet(
+      {required this.categoryId,
+      required this.onSelect,
+      required this.selectedVariants});
 
   @override
   _VariantTypeBottomSheetState createState() => _VariantTypeBottomSheetState();
@@ -44,8 +48,11 @@ class _VariantTypeBottomSheetState extends State<VariantTypeBottomSheet> {
           ListTile(
             contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
             title: Text(
-              "Select variant options",
-              style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),
+              "select_variant_options_key".tr(),
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold),
             ),
           ),
           Container(
@@ -79,7 +86,7 @@ class _VariantTypeBottomSheetState extends State<VariantTypeBottomSheet> {
                       });
                 }
                 return Center(
-                  child: Text("Subcategories not found!"),
+                  child: Text("subcategories_not_found_key!".tr()),
                 );
               },
             ),
@@ -92,18 +99,26 @@ class _VariantTypeBottomSheetState extends State<VariantTypeBottomSheet> {
                     Navigator.pop(context);
                   },
                   child: Text(
-                    "Cancel",
-                    style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+                    "cancel_key".tr(),
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
                   )),
               TextButton(
                   onPressed: () {
-                    List<VariantType> variants = variantList.where((element) => element.checked).toList();
+                    List<VariantType> variants = variantList
+                        .where((element) => element.checked)
+                        .toList();
                     Navigator.pop(context);
                     widget.onSelect(variants);
                   },
                   child: Text(
-                    "Done",
-                    style: TextStyle(color: ColorPrimary, fontSize: 16, fontWeight: FontWeight.bold),
+                    "done_key".tr(),
+                    style: TextStyle(
+                        color: ColorPrimary,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
                   )),
             ],
           )
@@ -114,13 +129,15 @@ class _VariantTypeBottomSheetState extends State<VariantTypeBottomSheet> {
 
   void getVariant() async {
     if (await Network.isConnected()) {
-      ProductVariantResponse response = await apiProvider.getProductVariantType(widget.categoryId);
+      ProductVariantResponse response =
+          await apiProvider.getProductVariantType(widget.categoryId);
 
       if (response.success) {
         variantList = response.data!;
 
         for (VariantType v in widget.selectedVariants) {
-          variantList.singleWhere((element) => element.id == v.id).checked = true;
+          variantList.singleWhere((element) => element.id == v.id).checked =
+              true;
         }
 
         controller.add(variantList);

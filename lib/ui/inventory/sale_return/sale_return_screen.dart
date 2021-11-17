@@ -54,7 +54,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
         },
         child: Scaffold(
           appBar: CustomAppBar(
-            title: "Sale_Return_key".tr(),
+            title: "sale_return_key".tr(),
           ),
           body: SingleChildScrollView(
             padding: EdgeInsets.all(20),
@@ -73,7 +73,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                   autofocus: true,
                   keyboardType: TextInputType.phone,
                   decoration: InputDecoration(
-                      counterText: "", labelText: "Mobile_Number_key".tr()),
+                      counterText: "", labelText: "mobile_number_key".tr()),
                 ),
                 const SizedBox(
                   height: 15,
@@ -101,7 +101,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                   autofocus: false,
                   keyboardType: TextInputType.phone,
                   decoration: InputDecoration(
-                      hintText: "Choose_Product_key".tr(),
+                      hintText: "choose_product_key".tr(),
                       suffixIcon: Icon(Icons.keyboard_arrow_right_sharp),
                       suffixIconConstraints: BoxConstraints(
                           maxWidth: 15,
@@ -120,7 +120,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                   maxLines: 5,
                   keyboardType: TextInputType.multiline,
                   decoration: InputDecoration(
-                    labelText: "Reason_Optional_key".tr(),
+                    labelText: "reason_optional_key".tr(),
                   ),
                 ),
                 const SizedBox(
@@ -182,7 +182,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                                             height: 10,
                                           ),
                                           Text(
-                                            "Qty_key :  ${product.returnQty}"
+                                            "qty_key :  ${product.returnQty}"
                                                 .tr(),
                                             style: TextStyle(
                                                 color: Colors.black,
@@ -290,7 +290,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                             Navigator.pop(context);
                           },
                           child: Text(
-                            "Cancel_key".tr(),
+                            "cancel_key".tr(),
                             style: TextStyle(),
                           )),
                       TextButton(
@@ -298,7 +298,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                             Navigator.pop(context);
                           },
                           child: Text(
-                            "Done_key".tr(),
+                            "done_key".tr(),
                             style: TextStyle(),
                           )),
                     ],
@@ -312,7 +312,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
 
   void submit() async {
     if (edtMobile.text.isEmpty) {
-      Utility.showToast("Please_enter_customer_mobile_number_key".tr());
+      Utility.showToast("please_enter_customer_mobile_number_key".tr());
     } else if (edtReason.text.trim().isEmpty) {
       Utility.showToast("Please enter reason ");
     } else {

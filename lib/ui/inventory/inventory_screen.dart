@@ -18,35 +18,35 @@ class InventoryScreen extends StatefulWidget {
 
 class _InventoryScreenState extends State<InventoryScreen> {
   CustomAppBar customAppBar = CustomAppBar(
-    title: "Inventory_key".tr(),
+    title: "inventory_key".tr(),
   );
   final options = [
     {
-      "title": "Add_Product_key".tr(),
+      "title": "add_product_key".tr(),
       "subTitle": "click_here_to_add_product_key".tr(),
       "image": "assets/images/inventory.png",
       "id": 1
     },
     {
-      "title": "View_Product_key".tr(),
+      "title": "view_product_key".tr(),
       "subTitle": "click_here_to_add_product_key".tr(),
       "image": "assets/images/inventory-h2.png",
       "id": 2
     },
     {
-      "title": "Sale_Return_key".tr(),
+      "title": "sale_return_key".tr(),
       "subTitle": "click_here_to_add_product_key".tr(),
       "image": "assets/images/inventory-h3.png",
       "id": 3
     },
     {
-      "title": "Purchase_Return_key".tr(),
+      "title": "purchase_return_key".tr(),
       "subTitle": "click_here_to_add_product_key".tr(),
       "image": "assets/images/inventory-h4.png",
       "id": 4
     },
     {
-      "title": "Purchase_Order_Entry_key".tr(),
+      "title": "purchase_order_entry_key".tr(),
       "subTitle": "click_here_to_add_product_key".tr(),
       "image": "assets/images/inventory-h5.png",
       "id": 5
@@ -154,7 +154,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                     height: 30,
                     fit: BoxFit.contain,
                   ),
-                  title: Text("Add_Own_Product_key".tr()),
+                  title: Text("add_own_product_key".tr()),
                   onTap: () {
                     Navigator.pop(context);
                     Navigator.push(
@@ -171,7 +171,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                     height: 30,
                     fit: BoxFit.contain,
                   ),
-                  title: Text("Add_Suggested_Product_key".tr()),
+                  title: Text("add_suggested_product_key".tr()),
                   onTap: () {
                     Navigator.pop(context);
                     Navigator.push(

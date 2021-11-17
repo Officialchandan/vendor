@@ -14,7 +14,8 @@ class TabContainer extends StatefulWidget {
   _TabContainerState createState() => _TabContainerState(page);
 }
 
-class _TabContainerState extends State<TabContainer> with TickerProviderStateMixin {
+class _TabContainerState extends State<TabContainer>
+    with TickerProviderStateMixin {
   late List<Widget> listScreens;
 
   late TabController _tabController;
@@ -53,7 +54,7 @@ class _TabContainerState extends State<TabContainer> with TickerProviderStateMix
     DateTime now = DateTime.now();
     if (now.difference(currentBackPressTime) > Duration(seconds: 2)) {
       currentBackPressTime = now;
-      Fluttertoast.showToast(msg: "exit_warning");
+      Fluttertoast.showToast(msg: "exit_warning_key".tr());
       return Future.value(false);
     }
     return Future.value(true);
@@ -62,9 +63,9 @@ class _TabContainerState extends State<TabContainer> with TickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     var titleList = [
-      tr("billing_dashboard_key"),
-      tr("performance_tracker_key"),
-      tr("outstanding_amount_key"),
+      tr("billing_dashboard_key".tr()),
+      tr("performance_tracker_key".tr()),
+      tr("outstanding_amount_key".tr()),
     ];
     return WillPopScope(
       onWillPop: () {
@@ -109,17 +110,22 @@ class _TabContainerState extends State<TabContainer> with TickerProviderStateMix
                 );
               },
             ),
-            title: Text(titleList[_tabController.index], style: GoogleFonts.openSans(fontWeight: FontWeight.w600)),
+            title: Text(titleList[_tabController.index],
+                style: GoogleFonts.openSans(fontWeight: FontWeight.w600)),
           ),
           //drawer: MyDrawer(),
-          body: TabBarView(controller: _tabController, physics: NeverScrollableScrollPhysics(), children: listScreens),
+          body: TabBarView(
+              controller: _tabController,
+              physics: NeverScrollableScrollPhysics(),
+              children: listScreens),
           bottomNavigationBar: TabBar(
             controller: _tabController,
             //indicatorWeight: 10,
             // indicatorColor: ColorPrimary,
             //automaticIndicatorColorAdjustment: true,
             indicator: UnderlineTabIndicator(
-                borderSide: BorderSide(width: 3, color: ColorPrimary, style: BorderStyle.solid),
+                borderSide: BorderSide(
+                    width: 3, color: ColorPrimary, style: BorderStyle.solid),
                 insets: EdgeInsets.fromLTRB(30, 0, 30, 70)),
             labelColor: ColorPrimary,
             unselectedLabelColor: Colors.grey.shade500,

@@ -29,14 +29,14 @@ class _DeliveryFeeState extends State<DeliveryFee> {
               Navigator.pop(context);
             },
           ),
-          title: Text("Delivery_Fee_key".tr()),
+          title: Text("delivery_fee_key".tr()),
         ),
         body: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Select_delivery_types_key".tr(),
+              Text("select_delivery_types_key".tr(),
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 16,
@@ -47,7 +47,7 @@ class _DeliveryFeeState extends State<DeliveryFee> {
                     child: RadioListTile<FreePaidRadio>(
                       dense: true,
                       contentPadding: EdgeInsets.all(0),
-                      title: Text("Free_Delivery_key".tr(),
+                      title: Text("free_delivery_key".tr(),
                           style: TextStyle(
                               color: Color(0xff555555),
                               fontSize: 15,
@@ -65,7 +65,7 @@ class _DeliveryFeeState extends State<DeliveryFee> {
                     child: RadioListTile<FreePaidRadio>(
                       dense: true,
                       contentPadding: EdgeInsets.all(0),
-                      title: Text("Paid_Delivery_key".tr(),
+                      title: Text("paid_delivery_key".tr(),
                           style: TextStyle(
                               color: Color(0xff555555),
                               fontSize: 15,
@@ -92,7 +92,7 @@ class _DeliveryFeeState extends State<DeliveryFee> {
                               fontWeight: FontWeight.w600),
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.only(bottom: 6),
-                            labelText: "Delivery_Fee_key".tr(),
+                            labelText: "delivery_fee_key".tr(),
                             labelStyle: TextStyle(
                                 color: Color(0xff555555),
                                 fontSize: 14,
@@ -113,7 +113,7 @@ class _DeliveryFeeState extends State<DeliveryFee> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Add_condition_key".tr(),
+                              Text("add_condition_key".tr(),
                                   style: TextStyle(
                                       color: Color(0xff303030),
                                       fontSize: 15,
@@ -153,7 +153,7 @@ class _DeliveryFeeState extends State<DeliveryFee> {
                                       contentPadding:
                                           EdgeInsets.only(bottom: 6),
                                       labelText:
-                                          "Free_delivery_on_orders_above_key",
+                                          "free_delivery_on_orders_above_key",
                                       labelStyle: TextStyle(
                                           color: Color(0xff555555),
                                           fontSize: 14,

@@ -24,7 +24,7 @@ class CustomerNumberResponseBloc
     if (event is GetCustomerNumberResponseEvent) {
       if (event.mobile.length != 10) {
         yield GetCustomerNumberResponseFailureState(
-            message: "Mobile_Number_Invalid_key".tr(), succes: false);
+            message: "mobile_number_invalid_key".tr(), succes: false);
       } else {
         yield* getCustomerNumberResponse(
           event.mobile,
@@ -65,12 +65,14 @@ class CustomerNumberResponseBloc
         }
       } catch (error) {
         yield GetCustomerNumberResponseFailureState(
-          message: "internal_Server_error_key".tr(),
+          message: "internal_server_error_key".tr(),
           succes: false,
         );
       }
     } else {
-      Fluttertoast.showToast(msg: "Turn_on_the_internet_key".tr());
+      Fluttertoast.showToast(
+          msg: "please_turn_on_the_internet_key".tr(),
+          backgroundColor: ColorPrimary);
     }
   }
 
@@ -89,10 +91,12 @@ class CustomerNumberResponseBloc
         }
       } catch (error) {
         yield GetCategoryByVendorIdFailureState(
-            message: "internal_Server_error_key".tr());
+            message: "internal_server_error_key".tr());
       }
     } else {
-      Fluttertoast.showToast(msg: "Turn_on_the_internet_key".tr());
+      Fluttertoast.showToast(
+          msg: "please_turn_on_the_internet_key".tr(),
+          backgroundColor: ColorPrimary);
     }
   }
 
@@ -115,10 +119,12 @@ class CustomerNumberResponseBloc
         }
       } catch (error) {
         yield GetBillingPartialUserFailureState(
-            message: "internal_Server_error_key".tr(), succes: false);
+            message: "internal_server_error_key".tr(), succes: false);
       }
     } else {
-      Fluttertoast.showToast(msg: "Turn_on_the_internet_key".tr());
+      Fluttertoast.showToast(
+          msg: "please_turn_on_the_internet_key".tr(),
+          backgroundColor: ColorPrimary);
     }
   }
 }
