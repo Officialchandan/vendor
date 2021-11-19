@@ -153,7 +153,8 @@ class _DeliveryFeeState extends State<DeliveryFee> {
                                       contentPadding:
                                           EdgeInsets.only(bottom: 6),
                                       labelText:
-                                          "free_delivery_on_orders_above_key",
+                                          "free_delivery_on_orders_above_key"
+                                              .tr(),
                                       labelStyle: TextStyle(
                                           color: Color(0xff555555),
                                           fontSize: 14,

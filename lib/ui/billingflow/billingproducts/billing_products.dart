@@ -288,7 +288,7 @@ class _BillingProductsState extends State<BillingProducts> {
                                               } else {
                                                 Fluttertoast.showToast(
                                                     msg:
-                                                        "please_turn_on_the_internet_key"
+                                                        "please_check_your_internet_connection_key"
                                                             .tr(),
                                                     backgroundColor:
                                                         ColorPrimary);
@@ -378,7 +378,7 @@ class _BillingProductsState extends State<BillingProducts> {
                                                     } else {
                                                       Fluttertoast.showToast(
                                                           msg:
-                                                              "please_turn_on_the_internet_key"
+                                                              "please_check_your_internet_connection_key"
                                                                   .tr(),
                                                           backgroundColor:
                                                               ColorPrimary);
@@ -473,7 +473,8 @@ class _BillingProductsState extends State<BillingProducts> {
                                 .add(DeleteBillingProductsEvent(index: index));
                           } else {
                             Fluttertoast.showToast(
-                                msg: "please_turn_on_the_internet_key".tr(),
+                                msg: "please_check_your_internet_connection_key"
+                                    .tr(),
                                 backgroundColor: ColorPrimary);
                           }
                         },
@@ -650,7 +651,8 @@ class _BillingProductsState extends State<BillingProducts> {
                                 .then((value) => _textFieldController.clear());
                           } else {
                             Fluttertoast.showToast(
-                                msg: "please_turn_on_the_internet_key".tr(),
+                                msg: "please_check_your_internet_connection_key"
+                                    .tr(),
                                 backgroundColor: ColorPrimary);
                           }
                         },

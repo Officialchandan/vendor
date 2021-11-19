@@ -4,12 +4,14 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:share/share.dart';
 import 'package:vendor/ui/account_management/video_tutorial/video_tutorial.dart';
 import 'package:vendor/ui/performance_tracker/money_due_upi/money_due_screen.dart';
 
 import 'package:vendor/utility/color.dart';
+import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/routs.dart';
 
 import 'bottom_navigation_home.dart';
@@ -134,9 +136,18 @@ class _HomeScreenState extends State<HomeScreen> {
             //index.isEven ? Colors.indigoAccent : Colors.indigoAccent[100],
           ),
           child: InkWell(
-            onTap: () {
+            hoverColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            splashColor: Colors.transparent,
+            onTap: () async {
               log("f");
-              routeManager(index);
+              if (await Network.isConnected()) {
+                routeManager(index);
+              } else {
+                Fluttertoast.showToast(
+                    msg: "please_check_your_internet_connection_key".tr(),
+                    backgroundColor: ColorPrimary);
+              }
             },
             child: Container(
               padding: const EdgeInsets.all(8.0),
@@ -223,10 +234,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         context, Routes.BOTTOM_NAVIGATION_HOME,
                         arguments: index)
                     : index == 4
-                        ? Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MoneyDueScreen()))
+                        ? Navigator.pushNamed(
+                            context, Routes.BOTTOM_NAVIGATION_HOME,
+                            arguments: index)
                         : index == 5
                             ? Navigator.push(
                                 context,

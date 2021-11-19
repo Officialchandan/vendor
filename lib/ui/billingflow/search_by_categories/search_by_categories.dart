@@ -348,7 +348,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                                                   } else {
                                                                     Fluttertoast.showToast(
                                                                         msg:
-                                                                            "please_turn_on_the_internet_key",
+                                                                            "please_check_your_internet_connection_key",
                                                                         backgroundColor:
                                                                             ColorPrimary);
                                                                   }
@@ -418,7 +418,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                                                   } else {
                                                                     Fluttertoast.showToast(
                                                                         msg:
-                                                                            "please_turn_on_the_internet_key",
+                                                                            "please_check_your_internet_connection_key",
                                                                         backgroundColor:
                                                                             ColorPrimary);
                                                                   }
@@ -551,7 +551,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                             } else {
                                               Fluttertoast.showToast(
                                                   msg:
-                                                      "please_turn_on_the_internet_key"
+                                                      "please_check_your_internet_connection_key"
                                                           .tr(),
                                                   backgroundColor:
                                                       ColorPrimary);
@@ -604,7 +604,8 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                     }
                                   } else {
                                     Fluttertoast.showToast(
-                                        msg: "please_turn_on_the_internet_key",
+                                        msg:
+                                            "please_check_your_internet_connection_key",
                                         backgroundColor: ColorPrimary);
                                   }
                                 },

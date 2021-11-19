@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 
 class Constant {
   static final INTERNET_ALERT_MSG =
-      "internet_not_available_key, please_check_your_network_connection_key"
+      "please_check_your_internet_connection_key, please_check_your_network_connection_key"
           .tr();
 
   static const language = [Locale("en"), Locale("hi")];

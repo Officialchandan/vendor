@@ -149,7 +149,8 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        "  hourly_key".tr(),
+                                                        "  " +
+                                                            "hourly_key".tr(),
                                                         style: TextStyle(
                                                             fontSize: 20.0,
                                                             color:
@@ -169,7 +170,9 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: AutoSizeText(
-                                                          "  earning_key".tr(),
+                                                          "  " +
+                                                              "earning_key"
+                                                                  .tr(),
                                                           style: TextStyle(
                                                               fontSize: 18.0,
                                                               color:
@@ -214,7 +217,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        '  ${snapshot.data!.values.toList()[0]} ',
+                                                        '  ${(double.parse(snapshot.data!.values.toList()[0]).toStringAsFixed(2))} ',
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w600,
@@ -260,7 +263,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        '  ${snapshot.data!.values.toList()[1]}',
+                                                        '  ${(double.parse(snapshot.data!.values.toList()[1]).toStringAsFixed(2))}',
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w600,
@@ -306,7 +309,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        '  ${snapshot.data!.values.toList()[2]}',
+                                                        '  ${(double.parse(snapshot.data!.values.toList()[2]).toStringAsFixed(2))}',
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w600,
@@ -352,7 +355,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        '  ${snapshot.data!.values.toList()[3]}',
+                                                        '  ${(double.parse(snapshot.data!.values.toList()[3]).toStringAsFixed(2))}',
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w600,
@@ -376,7 +379,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                       borderColor: Colors.grey.shade500,
 
                                       title: ChartTitle(
-                                          text: "walkin_amt_inr_key ".tr(),
+                                          text: "walkin_amt_inr_key".tr() + " ",
                                           textStyle: TextStyle(
                                               fontSize: 14,
                                               color: Colors.grey.shade600)),
@@ -415,7 +418,8 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                         //numberFormat: NumberFormat.currency(),
                                         title: AxisTitle(
                                             alignment: ChartAlignment.center,
-                                            text: "walkin_amt_inr_key ".tr(),
+                                            text:
+                                                "walkin_amt_inr_key".tr() + " ",
                                             textStyle: TextStyle(
                                                 fontSize: 11,
                                                 color: Colors.grey.shade600)),
@@ -471,7 +475,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        "  day_key".tr(),
+                                                        "  " + "day_key".tr(),
                                                         style: TextStyle(
                                                             fontSize: 20.0,
                                                             color:
@@ -491,7 +495,8 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: AutoSizeText(
-                                                          "  walkin_key".tr(),
+                                                          " " +
+                                                              "walkin_key".tr(),
                                                           style: TextStyle(
                                                               fontSize: 18.0,
                                                               color:
@@ -536,7 +541,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        '  ${snapshot.data!.dailyWalkIns}',
+                                                        '  ${(double.parse(snapshot.data!.dailyWalkIns)).toStringAsFixed(2)}',
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w600,
@@ -582,7 +587,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        '  ${snapshot.data!.yesterdayWalkIns}',
+                                                        '  ${(double.parse(snapshot.data!.yesterdayWalkIns)).toStringAsFixed(2)}',
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w600,
@@ -606,7 +611,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                       borderColor: Colors.grey.shade500,
 
                                       title: ChartTitle(
-                                          text: "walkin_amt_inr_key ".tr(),
+                                          text: "walkin_amt_inr_key".tr() + " ",
                                           textStyle: TextStyle(
                                               fontSize: 14,
                                               color: Colors.grey.shade600)),
@@ -644,7 +649,8 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                         //numberFormat: NumberFormat.currency(),
                                         title: AxisTitle(
                                             alignment: ChartAlignment.center,
-                                            text: "walkin_amt_inr_key ".tr(),
+                                            text:
+                                                "walkin_amt_inr_key".tr() + " ",
                                             textStyle: TextStyle(
                                                 fontSize: 11,
                                                 color: Colors.grey.shade600)),
@@ -700,7 +706,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        "  day_key".tr(),
+                                                        "  " + "day_key".tr(),
                                                         style: TextStyle(
                                                             fontSize: 20.0,
                                                             color:
@@ -720,7 +726,8 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: AutoSizeText(
-                                                          "  walkin_key".tr(),
+                                                          " " +
+                                                              "walkin_key".tr(),
                                                           style: TextStyle(
                                                               fontSize: 18.0,
                                                               color:
@@ -765,7 +772,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        '  ${snapshot.data!.monthlyWalkIns}',
+                                                        '  ${(double.parse(snapshot.data!.monthlyWalkIns)).toStringAsFixed(2)}',
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w600,
@@ -789,7 +796,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                       borderColor: Colors.grey.shade500,
 
                                       title: ChartTitle(
-                                          text: "walkin_amt_inr_key ".tr(),
+                                          text: "walkin_amt_inr_key".tr() + " ",
                                           textStyle: TextStyle(
                                               fontSize: 14,
                                               color: Colors.grey.shade600)),
@@ -827,7 +834,8 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                         //numberFormat: NumberFormat.currency(),
                                         title: AxisTitle(
                                             alignment: ChartAlignment.center,
-                                            text: "walkin_amt_inr_key ".tr(),
+                                            text:
+                                                "walkin_amt_inr_key".tr() + " ",
                                             textStyle: TextStyle(
                                                 fontSize: 11,
                                                 color: Colors.grey.shade600)),

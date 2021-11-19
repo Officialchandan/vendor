@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:vendor/api/api_provider.dart';
 import 'package:vendor/model/log_out.dart';
 import 'package:vendor/model/vendor_profile_response.dart';
@@ -35,20 +36,38 @@ class AccountManagementScreen extends StatefulWidget {
 
 class _AccountManagementScreenState extends State<AccountManagementScreen> {
   List<String> textList = [
-    "discount_codes_key".tr(),
+    // "discount_codes_key".tr(),
     "settings_key".tr(),
-    "delivery_setting_key".tr(),
+    // "delivery_setting_key".tr(),
     "video_tutorials_key".tr(),
     "share_store_link_key".tr(),
     "get_store_qr_code_key".tr(),
     "add_business_hours_key".tr(),
     "logout_key".tr(),
   ];
+
+  List<String> imageList = [
+    "assets/images/account-ic2.png",
+    "assets/images/account-ic4.png",
+    "assets/images/account-ic5.png",
+    "assets/images/account-ic6.png",
+    "assets/images/account-ic7.png",
+    "assets/images/account-ic8.png",
+  ];
   var message;
   bool? status;
   List<VendorDetailData>? data;
   AccountManagementBloc accountManagementBloc =
       AccountManagementBloc(AccountManagementIntialState());
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+  refresh() {
+    log("refresh hua");
+
+    _refreshController.refreshCompleted();
+
+    //setState(() {});
+  }
 
   @override
   void initState() {
@@ -170,9 +189,7 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Image.asset(
-                                  "assets/images/account-ic${index + 1}.png",
-                                  width: 24),
+                              Image.asset(imageList[index], width: 24),
                               SizedBox(width: 17),
                               Expanded(
                                 child: Text(textList[index],
@@ -186,8 +203,15 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
                             ],
                           ),
                         ),
-                        onTap: () {
-                          onClick(context, index);
+                        onTap: () async {
+                          if (await Network.isConnected()) {
+                            onClick(context, index);
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: "please_check_your_internet_connection_key"
+                                    .tr(),
+                                backgroundColor: ColorPrimary);
+                          }
                         });
                   }),
                 ),
@@ -203,28 +227,40 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
 //ontap-function
 Future<void> onClick(BuildContext context, int currentIndex) async {
   switch (currentIndex) {
+    // case 0:
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => DiscountCodes()),
+    //   );
+    //   break;
     case 0:
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => DiscountCodes()),
-      );
-      break;
-    case 1:
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => Settings()),
       );
       break;
+    // case 2:
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => DeliverySetting()),
+    //   );
+    //   break;
+    case 1:
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
+      break;
     case 2:
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => DeliverySetting()),
+        MaterialPageRoute(builder: (context) => HomeScreen()),
       );
       break;
     case 3:
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
+        MaterialPageRoute(builder: (context) => StoreQRCode()),
       );
       break;
     case 4:
@@ -234,18 +270,6 @@ Future<void> onClick(BuildContext context, int currentIndex) async {
       );
       break;
     case 5:
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => StoreQRCode()),
-      );
-      break;
-    case 6:
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
-      );
-      break;
-    case 7:
       logoutDialog(context);
       break;
   }
@@ -265,7 +289,7 @@ logoutDialog(context) {
                   color: Colors.black,
                   fontSize: 20,
                   fontWeight: FontWeight.w600)),
-          content: Text("Are you sure you want to logout?",
+          content: Text("are_you_sure_you_want_to_logout_key".tr(),
               style: TextStyle(
                   color: Color.fromRGBO(85, 85, 85, 1),
                   fontSize: 15,
@@ -300,14 +324,14 @@ logoutDialog(context) {
                   Fluttertoast.showToast(
                       backgroundColor: ColorPrimary,
                       textColor: Colors.white,
-                      msg: "logout_successfully_key"
+                      msg: "logout_successfully_key".tr()
                       // timeInSecForIos: 3
                       );
                 } else {
                   Fluttertoast.showToast(
                       backgroundColor: ColorPrimary,
                       textColor: Colors.white,
-                      msg: "please_turn_on_the_internet_key");
+                      msg: "please_check_your_internet_connection_key".tr());
                 }
               },
             ),

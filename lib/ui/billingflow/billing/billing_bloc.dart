@@ -71,7 +71,7 @@ class CustomerNumberResponseBloc
       }
     } else {
       Fluttertoast.showToast(
-          msg: "please_turn_on_the_internet_key".tr(),
+          msg: "please_check_your_internet_connection_key".tr(),
           backgroundColor: ColorPrimary);
     }
   }
@@ -95,7 +95,7 @@ class CustomerNumberResponseBloc
       }
     } else {
       Fluttertoast.showToast(
-          msg: "please_turn_on_the_internet_key".tr(),
+          msg: "please_check_your_internet_connection_key".tr(),
           backgroundColor: ColorPrimary);
     }
   }
@@ -123,7 +123,7 @@ class CustomerNumberResponseBloc
       }
     } else {
       Fluttertoast.showToast(
-          msg: "please_turn_on_the_internet_key".tr(),
+          msg: "please_check_your_internet_connection_key".tr(),
           backgroundColor: ColorPrimary);
     }
   }
