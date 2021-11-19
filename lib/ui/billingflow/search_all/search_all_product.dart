@@ -340,7 +340,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                                               ColorPrimary);
                                                                 } else {
                                                                   Fluttertoast.showToast(
-                                                                      msg: "please_turn_on_the_internet_key"
+                                                                      msg: "please_check_your_internet_connection_key"
                                                                           .tr(),
                                                                       backgroundColor:
                                                                           ColorPrimary);
@@ -407,7 +407,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                                   //         ColorPrimary);
                                                                 } else {
                                                                   Fluttertoast.showToast(
-                                                                      msg: "please_turn_on_the_internet_key"
+                                                                      msg: "please_check_your_internet_connection_key"
                                                                           .tr(),
                                                                       backgroundColor:
                                                                           ColorPrimary);
@@ -650,7 +650,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                           } else {
                                             Fluttertoast.showToast(
                                                 msg:
-                                                    "please_turn_on_the_internet_key"
+                                                    "please_check_your_internet_connection_key"
                                                         .tr(),
                                                 backgroundColor: ColorPrimary);
                                           }
@@ -706,7 +706,8 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                     }
                                   } else {
                                     Fluttertoast.showToast(
-                                        msg: "please_turn_on_the_internet_key",
+                                        msg:
+                                            "please_check_your_internet_connection_key",
                                         backgroundColor: Colors.amber);
                                   }
                                 },

@@ -1,10 +1,12 @@
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
 import 'package:vendor/ui/performance_tracker/performance_tracker_category/performance_tracker.dart';
 import 'package:vendor/ui/performance_tracker/report/select_report_types.dart';
 import 'package:vendor/utility/color.dart';
+import 'package:vendor/utility/network.dart';
 
 import 'money_due_upi/money_due_screen.dart';
 import 'my_customers/MyCustomrScreen.dart';
@@ -60,35 +62,43 @@ class _TrackerReportDashboardState extends State<TrackerReportDashboard> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: ListTile(
-                    onTap: () {
-                      if (options[index]["id"] == 2) {
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                                child: SelectReportTypeScreen(),
-                                type: PageTransitionType.fade));
-                      }
-                      if (options[index]["id"] == 3) {
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                                child: MoneyDueScreen(),
-                                type: PageTransitionType.fade));
-                      }
-                      if (options[index]["id"] == 4) {
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                                child: MyCustomerScreen(),
-                                type: PageTransitionType.fade));
-                      }
+                    hoverColor: Colors.transparent,
+                    onTap: () async {
+                      if (await Network.isConnected()) {
+                        if (options[index]["id"] == 2) {
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  child: SelectReportTypeScreen(),
+                                  type: PageTransitionType.fade));
+                        }
+                        if (options[index]["id"] == 3) {
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  child: MoneyDueScreen(),
+                                  type: PageTransitionType.fade));
+                        }
+                        if (options[index]["id"] == 4) {
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  child: MyCustomerScreen(),
+                                  type: PageTransitionType.fade));
+                        }
 
-                      if (options[index]["id"] == 1) {
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                                child: PerformanceTrackerByCategory(),
-                                type: PageTransitionType.fade));
+                        if (options[index]["id"] == 1) {
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  child: PerformanceTrackerByCategory(),
+                                  type: PageTransitionType.fade));
+                        }
+                      } else {
+                        Fluttertoast.showToast(
+                            msg: "please_check_your_internet_connection_key"
+                                .tr(),
+                            backgroundColor: ColorPrimary);
                       }
                     },
                     leading: Image(

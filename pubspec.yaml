@@ -90,8 +90,6 @@ dependencies:
   math_expressions:
   easy_localization:
 
-  scrollable_positioned_list:
-
 
 #  downloads_path_provider_28: ^0.1.2
 

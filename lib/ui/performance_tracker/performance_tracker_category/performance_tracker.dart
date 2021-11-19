@@ -1,11 +1,13 @@
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
 import 'package:vendor/ui/performance_tracker/performance_tracker_category/earning_tillnow/earning_amount.dart';
 import 'package:vendor/ui/performance_tracker/performance_tracker_category/sale_amount/sale_amount.dart';
 import 'package:vendor/ui/performance_tracker/performance_tracker_category/walk_in/walkin.dart';
 import 'package:vendor/utility/color.dart';
+import 'package:vendor/utility/network.dart';
 
 class PerformanceTrackerByCategory extends StatefulWidget {
   @override
@@ -54,28 +56,37 @@ class _PerformanceTrackerByCategoryState
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: ListTile(
-                    onTap: () {
-                      if (options[index]["id"] == 2) {
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                                child: EarningAmount(),
-                                type: PageTransitionType.fade));
-                      }
-                      if (options[index]["id"] == 3) {
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                                child: WalkInAmount(),
-                                type: PageTransitionType.fade));
-                      }
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    onTap: () async {
+                      if (await Network.isConnected()) {
+                        if (options[index]["id"] == 2) {
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  child: EarningAmount(),
+                                  type: PageTransitionType.fade));
+                        }
+                        if (options[index]["id"] == 3) {
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  child: WalkInAmount(),
+                                  type: PageTransitionType.fade));
+                        }
 
-                      if (options[index]["id"] == 1) {
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                                child: SaleAmount(),
-                                type: PageTransitionType.fade));
+                        if (options[index]["id"] == 1) {
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  child: SaleAmount(),
+                                  type: PageTransitionType.fade));
+                        }
+                      } else {
+                        Fluttertoast.showToast(
+                            msg: "please_check_your_internet_connection_key"
+                                .tr(),
+                            backgroundColor: ColorPrimary);
                       }
                     },
                     leading: Image(

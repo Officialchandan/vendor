@@ -24,7 +24,7 @@ class _BottomNavigationHomeState extends State<BottomNavigationHome>
   @override
   void initState() {
     _tabController = TabController(
-      length: 4,
+      length: 5,
       initialIndex: widget.index,
       vsync: this,
     );
@@ -34,7 +34,7 @@ class _BottomNavigationHomeState extends State<BottomNavigationHome>
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
+      length: 5,
       initialIndex: widget.index,
       child: Scaffold(
         body: TabBarView(
@@ -45,6 +45,7 @@ class _BottomNavigationHomeState extends State<BottomNavigationHome>
             InventoryScreen(),
             TrackerReportDashboard(),
             AccountManagementScreen(),
+            MoneyDueScreen(),
           ],
         ),
         // bottomNavigationBar: BottomBar(
@@ -153,19 +154,19 @@ class _BottomBarState extends State<BottomBar> {
                 ),
           iconMargin: EdgeInsets.all(0),
         ),
-        // Tab(
-        //   text: 'money_due_upi_key'.tr(),
-        //   icon: widget.tabController.index == 4
-        //       ? Image.asset(
-        //           "assets/images/f7-a.png",
-        //           scale: 2,
-        //         )
-        //       : Image.asset(
-        //           "assets/images/f7.png",
-        //           scale: 2,
-        //         ),
-        //   iconMargin: EdgeInsets.all(0),
-        // ),
+        Tab(
+          text: 'money_due_upi_key'.tr(),
+          icon: widget.tabController.index == 4
+              ? Image.asset(
+                  "assets/images/f7-a.png",
+                  scale: 2,
+                )
+              : Image.asset(
+                  "assets/images/f7.png",
+                  scale: 2,
+                ),
+          iconMargin: EdgeInsets.all(0),
+        ),
         // Tab(
         //   text: 'video_tutorials_key'.tr(),
         //   icon: widget.tabController.index == 5
@@ -262,16 +263,16 @@ class _MBottomNavigationBarState extends State<MBottomNavigationBar> {
               scale: 2,
             ),
             label: "account_key".tr()),
-        // BottomNavigationBarItem(
-        //     icon: Image.asset(
-        //       "assets/images/f7.png",
-        //       scale: 2,
-        //     ),
-        //     activeIcon: Image.asset(
-        //       "assets/images/f7-a.png",
-        //       scale: 2,
-        //     ),
-        //     label: "money_due_upi_key".tr()),
+        BottomNavigationBarItem(
+            icon: Image.asset(
+              "assets/images/f7.png",
+              scale: 2,
+            ),
+            activeIcon: Image.asset(
+              "assets/images/f7-a.png",
+              scale: 2,
+            ),
+            label: "money_due_upi_key".tr()),
         // BottomNavigationBarItem(
         //     icon: Image.asset(
         //       "assets/images/f8.png",

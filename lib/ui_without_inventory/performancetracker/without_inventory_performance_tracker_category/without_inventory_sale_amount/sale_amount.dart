@@ -170,7 +170,8 @@ class _SaleAmountState extends State<SaleAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: Text(
-                                                          "  hourly_key".tr(),
+                                                          "  " +
+                                                              "hourly_key".tr(),
                                                           style: TextStyle(
                                                               fontSize: 20.0,
                                                               color:
@@ -190,7 +191,8 @@ class _SaleAmountState extends State<SaleAmount> {
                                                         alignment: Alignment
                                                             .centerLeft,
                                                         child: AutoSizeText(
-                                                            "  sale_key".tr(),
+                                                            "  " +
+                                                                "sale_key".tr(),
                                                             style: TextStyle(
                                                                 fontSize: 18.0,
                                                                 color:
@@ -505,7 +507,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        "  day_key".tr(),
+                                                        "  " + "day_key".tr(),
                                                         style: TextStyle(
                                                             fontSize: 20.0,
                                                             color:
@@ -525,7 +527,8 @@ class _SaleAmountState extends State<SaleAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: AutoSizeText(
-                                                          "  sale_key".tr(),
+                                                          "  " +
+                                                              "sale_key".tr(),
                                                           style: TextStyle(
                                                               fontSize: 18.0,
                                                               color:
@@ -734,7 +737,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        "  day_key".tr(),
+                                                        "  " + "day_key".tr(),
                                                         style: TextStyle(
                                                             fontSize: 20.0,
                                                             color:
@@ -754,7 +757,8 @@ class _SaleAmountState extends State<SaleAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: AutoSizeText(
-                                                          "  sale_key".tr(),
+                                                          "  " +
+                                                              "sale_key".tr(),
                                                           style: TextStyle(
                                                               fontSize: 18.0,
                                                               color:

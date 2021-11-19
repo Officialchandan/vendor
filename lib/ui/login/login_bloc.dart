@@ -46,7 +46,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     } else {
       EasyLoading.dismiss();
       Fluttertoast.showToast(
-          msg: "please_turn_on_the_internet_key".tr(),
+          msg: "please_check_your_internet_connection_key".tr(),
           backgroundColor: ColorPrimary);
     }
   }
@@ -58,6 +58,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         if (result.success) {
           SharedPref.setBooleanPreference(SharedPref.LOGIN, true);
           SharedPref.setStringPreference(SharedPref.TOKEN, result.token!);
+
           SharedPref.setIntegerPreference(
               SharedPref.VENDORID, result.vendorId!);
           SharedPref.setIntegerPreference(
@@ -74,7 +75,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       }
     } else {
       Fluttertoast.showToast(
-          msg: "please_turn_on_the_internet_key".tr(),
+          msg: "please_check_your_internet_connection_key".tr(),
           backgroundColor: ColorPrimary);
     }
   }

@@ -169,7 +169,8 @@ class _SaleAmountState extends State<SaleAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: Text(
-                                                          "  hourly_key",
+                                                          "  " +
+                                                              "hourly_key".tr(),
                                                           style: TextStyle(
                                                               fontSize: 20.0,
                                                               color:
@@ -189,7 +190,8 @@ class _SaleAmountState extends State<SaleAmount> {
                                                         alignment: Alignment
                                                             .centerLeft,
                                                         child: AutoSizeText(
-                                                            "  sale_key".tr(),
+                                                            "  " +
+                                                                "sale_key".tr(),
                                                             style: TextStyle(
                                                                 fontSize: 18.0,
                                                                 color:
@@ -235,7 +237,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: Text(
-                                                          '  ${snapshot.data!.values.toList()[0]}',
+                                                          '  ${(double.parse(snapshot.data!.values.toList()[0]).toStringAsFixed(2))}',
                                                           style: TextStyle(
                                                               fontWeight:
                                                                   FontWeight
@@ -283,7 +285,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: Text(
-                                                          '  ${snapshot.data!.values.toList()[1]}',
+                                                          '  ${(double.parse(snapshot.data!.values.toList()[1]).toStringAsFixed(2))}',
                                                           style: TextStyle(
                                                               fontWeight:
                                                                   FontWeight
@@ -331,7 +333,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: Text(
-                                                          '  ${snapshot.data!.values.toList()[2]}',
+                                                          '  ${(double.parse(snapshot.data!.values.toList()[2]).toStringAsFixed(2))}',
                                                           style: TextStyle(
                                                               fontWeight:
                                                                   FontWeight
@@ -379,7 +381,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: Text(
-                                                          '  ${snapshot.data!.values.toList()[3]}',
+                                                          ' ${(double.parse(snapshot.data!.values.toList()[3]).toStringAsFixed(2))}',
                                                           style: TextStyle(
                                                               fontWeight:
                                                                   FontWeight
@@ -405,7 +407,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                         borderColor: Colors.grey.shade500,
 
                                         title: ChartTitle(
-                                            text: "sale_amt_inr_key ".tr(),
+                                            text: "sale_amt_inr_key".tr(),
                                             textStyle: TextStyle(
                                                 fontSize: 14,
                                                 color: Colors.grey.shade600)),
@@ -504,7 +506,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        "  day_key".tr(),
+                                                        "  " + "day_key".tr(),
                                                         style: TextStyle(
                                                             fontSize: 20.0,
                                                             color:
@@ -524,7 +526,8 @@ class _SaleAmountState extends State<SaleAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: AutoSizeText(
-                                                          "  sale_key".tr(),
+                                                          "  " +
+                                                              "sale_key".tr(),
                                                           style: TextStyle(
                                                               fontSize: 18.0,
                                                               color:
@@ -569,7 +572,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        '  ${snapshot.data!.todaySaleAmount}',
+                                                        '  ${(double.parse(snapshot.data!.todaySaleAmount)).toStringAsFixed(2)}}',
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w600,
@@ -615,7 +618,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        '  ${snapshot.data!.yesterdaySaleAmount}',
+                                                        '  ${(double.parse(snapshot.data!.yesterdaySaleAmount)).toStringAsFixed(2)}',
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w600,
@@ -639,7 +642,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                       borderColor: Colors.grey.shade500,
 
                                       title: ChartTitle(
-                                          text: "sale_amt_inr_key ".tr(),
+                                          text: "sale_amt_inr_key".tr(),
                                           textStyle: TextStyle(
                                               fontSize: 14,
                                               color: Colors.grey.shade600)),
@@ -677,7 +680,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                         //numberFormat: NumberFormat.currency(),
                                         title: AxisTitle(
                                             alignment: ChartAlignment.center,
-                                            text: "sale_amt_inr_key ".tr(),
+                                            text: "sale_amt_inr_key".tr(),
                                             textStyle: TextStyle(
                                                 fontSize: 11,
                                                 color: Colors.grey.shade600)),
@@ -733,7 +736,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        "  day_key".tr(),
+                                                        "  " + "day_key".tr(),
                                                         style: TextStyle(
                                                             fontSize: 20.0,
                                                             color:
@@ -753,7 +756,8 @@ class _SaleAmountState extends State<SaleAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: AutoSizeText(
-                                                          "  Sale_key".tr(),
+                                                          "  " +
+                                                              "sale_key".tr(),
                                                           style: TextStyle(
                                                               fontSize: 18.0,
                                                               color:
@@ -798,7 +802,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        '  ${snapshot.data!.saleAmount}',
+                                                        '  ${(double.parse(snapshot.data!.saleAmount)).toStringAsFixed(2)}',
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w600,
@@ -822,7 +826,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                       borderColor: Colors.grey.shade500,
 
                                       title: ChartTitle(
-                                          text: "sale_amt_inr_key ".tr(),
+                                          text: "sale_amt_inr_key".tr(),
                                           textStyle: TextStyle(
                                               fontSize: 14,
                                               color: Colors.grey.shade600)),
@@ -860,7 +864,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                         //numberFormat: NumberFormat.currency(),
                                         title: AxisTitle(
                                             alignment: ChartAlignment.center,
-                                            text: "sale_amt_inr_key  ".tr(),
+                                            text: "sale_amt_inr_key".tr(),
                                             textStyle: TextStyle(
                                                 fontSize: 11,
                                                 color: Colors.grey.shade600)),

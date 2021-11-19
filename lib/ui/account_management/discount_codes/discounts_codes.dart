@@ -86,17 +86,17 @@ class _DiscountCodesState extends State<DiscountCodes> {
                             ),
                             child: RichText(
                               text: TextSpan(
-                                  text: '\u20B950',
+                                  text: '\u20B950 ',
                                   style: TextStyle(
                                       color: ColorPrimary, fontSize: 14),
                                   children: <TextSpan>[
                                     TextSpan(
-                                      text: ' off_on_orders_above_key '.tr(),
+                                      text: 'off_on_orders_above_key'.tr(),
                                       style: TextStyle(
                                           color: Colors.black, fontSize: 14),
                                     ),
                                     TextSpan(
-                                      text: '\u20B9500',
+                                      text: ' \u20B9500',
                                       style: TextStyle(
                                           color: ColorPrimary, fontSize: 14),
                                     )
@@ -113,7 +113,7 @@ class _DiscountCodesState extends State<DiscountCodes> {
                                       borderRadius: BorderRadius.circular(25),
                                       color: Colors.green),
                                   child: Text(
-                                    "   active_key   ".tr(),
+                                    "   " + "active_key".tr() + "   ",
                                     style: TextStyle(
                                         fontSize: 12, color: Colors.white),
                                   ),

@@ -151,7 +151,7 @@ class _EarningAmountState extends State<EarningAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: Text(
-                                                          "  hourly_key",
+                                                          "  " + "hourly_key",
                                                           style: TextStyle(
                                                               fontSize: 20.0,
                                                               color:
@@ -171,8 +171,9 @@ class _EarningAmountState extends State<EarningAmount> {
                                                         alignment: Alignment
                                                             .centerLeft,
                                                         child: AutoSizeText(
-                                                            "  earning_key"
-                                                                .tr(),
+                                                            "  " +
+                                                                "earning_key"
+                                                                    .tr(),
                                                             style: TextStyle(
                                                                 fontSize: 18.0,
                                                                 color:
@@ -387,7 +388,8 @@ class _EarningAmountState extends State<EarningAmount> {
                                         borderColor: Colors.grey.shade500,
 
                                         title: ChartTitle(
-                                            text: "earning_amt_inr_key ".tr(),
+                                            text: "earning_amt_inr_key".tr() +
+                                                " ",
                                             textStyle: TextStyle(
                                                 fontSize: 14,
                                                 color: Colors.grey.shade600)),
@@ -428,7 +430,8 @@ class _EarningAmountState extends State<EarningAmount> {
                                           //numberFormat: NumberFormat.currency(),
                                           title: AxisTitle(
                                               alignment: ChartAlignment.center,
-                                              text: "earning_amt_inr_key ".tr(),
+                                              text: "earning_amt_inr_key".tr() +
+                                                  " ",
                                               textStyle: TextStyle(
                                                   fontSize: 11,
                                                   color: Colors.grey.shade600)),
@@ -486,7 +489,7 @@ class _EarningAmountState extends State<EarningAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        "  day_key".tr(),
+                                                        "  " + "day_key".tr(),
                                                         style: TextStyle(
                                                             fontSize: 20.0,
                                                             color:
@@ -506,7 +509,9 @@ class _EarningAmountState extends State<EarningAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: AutoSizeText(
-                                                          "  earning_key".tr(),
+                                                          "  " +
+                                                              "earning_key"
+                                                                  .tr(),
                                                           style: TextStyle(
                                                               fontSize: 18.0,
                                                               color:
@@ -621,7 +626,8 @@ class _EarningAmountState extends State<EarningAmount> {
                                       borderColor: Colors.grey.shade500,
 
                                       title: ChartTitle(
-                                          text: "earning_amt_inr_key ".tr(),
+                                          text:
+                                              "earning_amt_inr_key".tr() + " ",
                                           textStyle: TextStyle(
                                               fontSize: 14,
                                               color: Colors.grey.shade600)),
@@ -659,7 +665,8 @@ class _EarningAmountState extends State<EarningAmount> {
                                         //numberFormat: NumberFormat.currency(),
                                         title: AxisTitle(
                                             alignment: ChartAlignment.center,
-                                            text: "earning_amt_inr_key ".tr(),
+                                            text: "earning_amt_inr_key".tr() +
+                                                " ",
                                             textStyle: TextStyle(
                                                 fontSize: 11,
                                                 color: Colors.grey.shade600)),
@@ -715,7 +722,7 @@ class _EarningAmountState extends State<EarningAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        "  day_key".tr(),
+                                                        "  " + "day_key".tr(),
                                                         style: TextStyle(
                                                             fontSize: 20.0,
                                                             color:
@@ -735,7 +742,9 @@ class _EarningAmountState extends State<EarningAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: AutoSizeText(
-                                                          "  earning_key".tr(),
+                                                          "  " +
+                                                              "earning_key"
+                                                                  .tr(),
                                                           style: TextStyle(
                                                               fontSize: 18.0,
                                                               color:
@@ -804,7 +813,8 @@ class _EarningAmountState extends State<EarningAmount> {
                                       borderColor: Colors.grey.shade500,
 
                                       title: ChartTitle(
-                                          text: "earning_amt_inr_key ".tr(),
+                                          text:
+                                              "earning_amt_inr_key".tr() + " ",
                                           textStyle: TextStyle(
                                               fontSize: 14,
                                               color: Colors.grey.shade600)),
@@ -842,7 +852,8 @@ class _EarningAmountState extends State<EarningAmount> {
                                         //numberFormat: NumberFormat.currency(),
                                         title: AxisTitle(
                                             alignment: ChartAlignment.center,
-                                            text: "earning_amt_inr_key ".tr(),
+                                            text: "earning_amt_inr_key".tr() +
+                                                " ",
                                             textStyle: TextStyle(
                                                 fontSize: 11,
                                                 color: Colors.grey.shade600)),

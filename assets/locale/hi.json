@@ -58,7 +58,7 @@
     "returning_consumer_key" : "रिटर्निंग कंज्यूमर",
     "please_select_your_language_key" : "कृपया अपनी भाषा चुनें",
     "update_button_key" : "अपडेट करें",
-    "please_please_turn_on_the_internet_key" :"कृपया इंटरनेट चालू करें",
+
     "please_amount_spent_here_key" : "कृपया बिल राशि दर्ज करें",
     "please_enter_first_name_key" :"कृपया पहला नाम दर्ज करें",
     "please_enter_last_name_key" : "कृपया अंतिम नाम दर्ज करें",
@@ -87,7 +87,7 @@
     "please_enter_vailid_number_first_key":"कृपया पहले मान्य नंबर दर्ज करें",
     "mobile_number_invalid_key":"मोबाइल नंबर अमान्य",
     "internal_server_error_key":"आंतरिक सर्वर त्रुटि",
-    "please_turn_on_the_internet_key":"कृपया इंटरनेट चालू करें",
+
     "search_key":"खोज",
     "product_cant_be_in_negative_key":"उत्पाद ऋणात्मक नहीं हो सकता",
     "please_select_atlest_one_product_key":"कृपया कम से कम एक उत्पाद का चयन करें",
@@ -147,7 +147,7 @@
       "subcategories_not_found_key":"उपश्रेणियाँ नहीं मिली",
       "the_mobile_format_is_invalid_key" :"मोबाइल प्रारूप अमान्य है",
       "please_enter_valid_mobile_number_key":"कृपया वैध मोबाइल नंबर दर्ज करें",
-      "please_turn_on_internet_key":"कृपया इंटरनेट चालू करें",
+
       "please_enter_valid_number_first_key":"कृपया पहले मान्य नंबर दर्ज करें",
       "product_cant_be_negative_key":"उत्पाद नकारात्मक नहीं हो सकता",
       "please_atleast_one_product_key":"कृपया कम से कम एक उत्पाद",
@@ -298,7 +298,6 @@
           "reason_optional_key":"कारण (वैकल्पिक)",
           "please_enter_customer_mobile_number_key":"कृपया ग्राहक का मोबाइल नंबर दर्ज करें",
           "please_enter_reason_key":"कृपया कारण दर्ज करें",
-          "internet_not_available_key":"इंटरनेट उपलब्ध नहीं है",
           "please_check_your_network_connection_key":"Please check your network connection",
           "add_key":"जोड़ें",
           "add_own_product_key":"अपना उत्पाद जोड़ें",
