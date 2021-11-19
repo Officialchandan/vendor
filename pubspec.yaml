@@ -89,10 +89,7 @@ dependencies:
   flutter_widget_from_html:
   math_expressions:
   easy_localization:
-#push notification
-  firebase_core: 
-  firebase_messaging:
-  flutter_local_notifications: 
+
 
 #  downloads_path_provider_28: ^0.1.2
 

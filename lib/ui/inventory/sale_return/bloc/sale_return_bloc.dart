@@ -14,15 +14,19 @@ class SaleReturnBloc extends Bloc<SaleReturnEvent, SaleReturnState> {
   @override
   Stream<SaleReturnState> mapEventToState(SaleReturnEvent event) async* {
     if (event is GetPurchasedProductEvent) {
+      yield SaleReturnLoadingState();
       yield* getPurchasedProduct(event.mobile);
     }
     if (event is SaleReturnApiEvent) {
+      yield SaleReturnLoadingState();
       yield* saleReturnApi(event.input);
     }
     if (event is VerifyOtpEvent) {
+      yield SaleReturnLoadingState();
       yield* verifyOtpApi(event.input);
     }
     if (event is SelectProductEvent) {
+      yield SaleReturnLoadingState();
       yield SelectProductState(returnProductList: event.returnProductList);
     }
   }

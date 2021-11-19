@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:vendor/api/api_provider.dart';
 import 'package:vendor/model/log_out.dart';
 import 'package:vendor/model/vendor_profile_response.dart';
@@ -57,17 +56,7 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
   var message;
   bool? status;
   List<VendorDetailData>? data;
-  AccountManagementBloc accountManagementBloc =
-      AccountManagementBloc(AccountManagementIntialState());
-  RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
-  refresh() {
-    log("refresh hua");
-
-    _refreshController.refreshCompleted();
-
-    //setState(() {});
-  }
+  AccountManagementBloc accountManagementBloc = AccountManagementBloc(AccountManagementIntialState());
 
   @override
   void initState() {

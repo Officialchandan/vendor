@@ -29,7 +29,7 @@
     "hourly_key" : "Hourly",
     "daily_key" : "Daily",
     
-    
+
     "monthly_key" : "Monthly",
     "earning_till_now_key" : "Earning till now \n(deduction after 20% of sale amt)",
     "walk_in_key" : "Walk Ins",
@@ -63,7 +63,7 @@
     "returning_consumer_key" : "Returning Consumer",
     "please_select_your_language_key" : "Please select your language",
     "update_button_key" : "Update",
-  
+
     "please_amount_spent_here_key" : "Please Enter Amount Bill",
     "please_enter_first_name_key" :"Please Enter First Name",
     "please_enter_last_name_key" : "Please Enter Last Name",
@@ -96,7 +96,7 @@
     "invalid_email_address_key" : "Invalid email address",
     "mobile_number_invalid_key":"Mobile Number Invalid",
     "internal_server_error_key":"internal Server error",
-    
+
     "search_key":"Search",
     "product_cant_be_in_negative_key":"Product cant be in negative",
     "please_select_atlest_one_product_key":"Please select atlest one product",
@@ -141,6 +141,7 @@
      "add_suggested_product_key":"Add Suggested Product",
      "add_product_key":"Add Product",
      "view_product_key":"View Product",
+     "view_category_key":"View Category",
      "sale_return_key":"Sale Return",
     
      
@@ -174,6 +175,7 @@
       "please_enter_mrp_key":"please enter mrp",
       "please_select_unit_key":"please select unit",
       "stock_can_not_be_empty_key":"stock can not be empty",
+      "stock_can_not_be_zero_key":"stock can not be zero",
       "please_enter_size_key":"please enter size",
       "please_enter_color_key":"please enter color",
       "please_enter_material_key":"please enter Material",
@@ -195,7 +197,7 @@
       "ok_key":"Ok",
       "are_you_sure_you_want_to_logout_key":"Are you sure you want to logout?",
       "logout_successfully_key":"Logout Successfully",
-     
+
       "delivery_areas_key":"Delivery Areas",
       "add_serviceable_radius_key":"Add serviceable radius",
       "add_serviceable_areas_key":"Add serviceable areas",
@@ -280,7 +282,7 @@
       "reason_optional_key":"Reason (Optional)",
       "please_enter_customer_mobile_number_key":"Please enter customer mobile number",
       "please_enter_reason_key":"Please enter reason",
-     
+
       "please_check_your_network_connection_key":"Please check your network connection",
       "add_key":"ADD",
       "add_own_product_key":"Add Own Product",

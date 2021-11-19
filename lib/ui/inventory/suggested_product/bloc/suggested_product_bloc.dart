@@ -3,6 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/model/add_suggested_product_response.dart';
 import 'package:vendor/model/get_brands_response.dart';
+import 'package:vendor/model/get_categories_response.dart';
 import 'package:vendor/model/product_by_category_response.dart';
 import 'package:vendor/ui/inventory/suggested_product/bloc/suggested_product_event.dart';
 import 'package:vendor/ui/inventory/suggested_product/bloc/suggested_product_state.dart';
@@ -22,6 +23,10 @@ class SuggestedProductBloc extends Bloc<SuggestedProductEvent, SuggestedProductS
     if (event is GetBrandsEvent) {
       yield LoadingState();
       yield* getBrands();
+    }
+    if (event is GetCategoriesEvent) {
+      yield LoadingState();
+      yield* getCategories();
     }
     if (event is ChangeTabEvent) {
       yield LoadingState();
@@ -54,15 +59,33 @@ class SuggestedProductBloc extends Bloc<SuggestedProductEvent, SuggestedProductS
     }
   }
 
+  Stream<SuggestedProductState> getCategories() async* {
+    if (await Network.isConnected()) {
+      // EasyLoading.show();
+
+      GetCategoriesResponse response = await apiProvider.getCategoryByVendorId();
+      // EasyLoading.dismiss();
+      if (response.success) {
+        yield GetCategoryState(categories: response.data!);
+      } else {
+        EasyLoading.dismiss();
+        Utility.showToast(response.message);
+      }
+    } else {
+      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+    }
+  }
+
   Stream<SuggestedProductState> getProducts(GetProductEvent event) async* {
     if (await Network.isConnected()) {
-      ProductByCategoryResponse response = await apiProvider.getSuggestedProduct(event.brandId);
+      ProductByCategoryResponse response = await apiProvider.getSuggestedProduct(event.categoryId);
 
       if (response.success) {
         yield GetProductState(products: response.data!);
       } else {
-        EasyLoading.dismiss();
-        Utility.showToast(response.message);
+        yield GetProductFailureState(message: response.message);
+        // EasyLoading.dismiss();
+        // Utility.showToast(response.message);
       }
     } else {
       Utility.showToast(Constant.INTERNET_ALERT_MSG);

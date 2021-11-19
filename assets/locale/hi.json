@@ -58,7 +58,7 @@
     "returning_consumer_key" : "रिटर्निंग कंज्यूमर",
     "please_select_your_language_key" : "कृपया अपनी भाषा चुनें",
     "update_button_key" : "अपडेट करें",
-    
+
     "please_amount_spent_here_key" : "कृपया बिल राशि दर्ज करें",
     "please_enter_first_name_key" :"कृपया पहला नाम दर्ज करें",
     "please_enter_last_name_key" : "कृपया अंतिम नाम दर्ज करें",
@@ -87,7 +87,7 @@
     "please_enter_vailid_number_first_key":"कृपया पहले मान्य नंबर दर्ज करें",
     "mobile_number_invalid_key":"मोबाइल नंबर अमान्य",
     "internal_server_error_key":"आंतरिक सर्वर त्रुटि",
-   
+
     "search_key":"खोज",
     "product_cant_be_in_negative_key":"उत्पाद ऋणात्मक नहीं हो सकता",
     "please_select_atlest_one_product_key":"कृपया कम से कम एक उत्पाद का चयन करें",
@@ -128,7 +128,8 @@
      "add_suggested_product_key":"सुझाए गए उत्पाद जोड़ें",
      "add_product_key":"उत्पाद जोड़ें",
      "view_product_key":"उत्पाद देखें",
-     "sale_return_key":"बिक्री वापसी",      
+     "view_category_key":"श्रेणी देखें",
+     "sale_return_key":"बिक्री वापसी",
      "click_here_to_add_product_key":"उत्पाद जोड़ने के लिए यहां क्लिक करें",
      "add_one_product_key":"एक उत्पाद जोड़ें",   
      "sub_category_key":"उप श्रेणी",
@@ -146,7 +147,7 @@
       "subcategories_not_found_key":"उपश्रेणियाँ नहीं मिली",
       "the_mobile_format_is_invalid_key" :"मोबाइल प्रारूप अमान्य है",
       "please_enter_valid_mobile_number_key":"कृपया वैध मोबाइल नंबर दर्ज करें",
-      
+
       "please_enter_valid_number_first_key":"कृपया पहले मान्य नंबर दर्ज करें",
       "product_cant_be_negative_key":"उत्पाद नकारात्मक नहीं हो सकता",
       "please_atleast_one_product_key":"कृपया कम से कम एक उत्पाद",
@@ -158,6 +159,7 @@
       "please_enter_mrp_key":"कृपया एमआरपी दर्ज करें",
       "please_select_unit_key":"कृपया इकाई का चयन करें",
       "stock_can_not_be_empty_key":"स्टॉक खाली नहीं हो सकता",
+      "stock_can_not_be_zero_key":"स्टॉक शून्य नहीं हो सकता",
       "please_enter_size_key":"कृपया आकार दर्ज करें",
       "please_enter_color_key":"कृपया रंग दर्ज करें",
       "please_enter_material_key":"कृपया सामग्री दर्ज करें",

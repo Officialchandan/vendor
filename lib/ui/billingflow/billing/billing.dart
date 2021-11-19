@@ -10,7 +10,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:vendor/UI/inventory/add_product/add_product_screen.dart';
-import 'package:vendor/model/get_vendorcategory_id.dart';
+import 'package:vendor/model/get_categories_response.dart';
 import 'package:vendor/ui/billingflow/billing/billing_bloc.dart';
 import 'package:vendor/ui/billingflow/billing/billing_event.dart';
 import 'package:vendor/ui/billingflow/billing/billing_state.dart';
@@ -35,7 +35,7 @@ class _BillingScreenState extends State<BillingScreen> {
       CustomerNumberResponseBloc();
   TextEditingController mobileController = TextEditingController();
   TextEditingController nameController = TextEditingController();
-  List<GetVendorCategoryByIdData> category = [];
+  List<CategoryModel> category = [];
 
   var check;
   var coins;
@@ -527,7 +527,7 @@ class _BillingScreenState extends State<BillingScreen> {
     );
   }
 
-  Widget categoryListWidget(List<GetVendorCategoryByIdData> category) {
+  Widget categoryListWidget(List<CategoryModel> category) {
     return ListView.builder(
         // padding: EdgeInsets.only(bottom: 80),
         itemCount: category.length,

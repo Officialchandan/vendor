@@ -8,13 +8,11 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:provider/provider.dart';
 import 'package:vendor/api/Endpoint.dart';
 import 'package:vendor/api/NavigationService.dart';
 import 'package:vendor/api/api_provider.dart';
 import 'package:vendor/ui/home/bottom_navigation_home.dart';
 import 'package:vendor/ui/home/home.dart';
-import 'package:vendor/ui/inventory/suggested_product/SuggestedProductProvider.dart';
 import 'package:vendor/ui/language/select_language.dart';
 import 'package:vendor/ui/login/login_screen.dart';
 import 'package:vendor/ui/splash/splash_screen.dart';
@@ -60,6 +58,7 @@ ThemeData themeData(context) => ThemeData(
       color: ColorPrimary,
       opacity: 1,
     ),
+
     // accentTextTheme: Theme.of(context).textTheme,
     unselectedWidgetColor: Colors.black,
     fontFamily: GoogleFonts.openSans().fontFamily,
@@ -71,6 +70,8 @@ ThemeData themeData(context) => ThemeData(
       textTheme: ButtonTextTheme.primary,
     ),
     inputDecorationTheme: InputDecorationTheme(
+        hoverColor: ColorPrimary,
+
         // filled: true,
         // fillColor: Color.fromRGBO(242, 242, 242, 1),
         hintStyle: TextStyle(
@@ -169,60 +170,53 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     // FlutterStatusbarcolor.setStatusBarColor(Color(0xff493ad6));
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider.value(
-          value: SuggestedProductProvider(),
-        ),
-      ],
-      child: MaterialApp(
-        title: 'Vendor',
-        localizationsDelegates: context.localizationDelegates,
-        supportedLocales: context.supportedLocales,
-        locale: context.locale,
-        theme: themeData(context),
-        debugShowCheckedModeBanner: false,
-        navigatorKey: navigationService.navigatorKey,
-        builder: EasyLoading.init(),
-        onGenerateRoute: (route) {
-          switch (route.name) {
-            case "/":
-              return PageTransition(type: PageTransitionType.fade, child: SplashScreen());
+    return MaterialApp(
+      title: 'Vendor',
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
+      theme: themeData(context),
+      debugShowCheckedModeBanner: false,
+      navigatorKey: navigationService.navigatorKey,
+      builder: EasyLoading.init(),
+      onGenerateRoute: (route) {
+        switch (route.name) {
+          case "/":
+            return PageTransition(type: PageTransitionType.fade, child: SplashScreen());
 
-            case Routes.SplashScreen:
-              return PageTransition(type: PageTransitionType.fade, child: SplashScreen());
+          case Routes.SplashScreen:
+            return PageTransition(type: PageTransitionType.fade, child: SplashScreen());
 
-            case Routes.SelectLanguage:
-              return PageTransition(type: PageTransitionType.fade, child: SelectLanguage());
+          case Routes.SelectLanguage:
+            return PageTransition(type: PageTransitionType.fade, child: SelectLanguage());
 
-            case Routes.LoginScreen:
-              return PageTransition(type: PageTransitionType.fade, child: LoginScreen());
+          case Routes.LoginScreen:
+            return PageTransition(type: PageTransitionType.fade, child: LoginScreen());
 
-            case Routes.HomeScreen:
-              return PageTransition(type: PageTransitionType.fade, child: HomeScreen());
+          case Routes.HomeScreen:
+            return PageTransition(type: PageTransitionType.fade, child: HomeScreen());
 
-            case Routes.HomeScreenWithoutInventory:
-              return PageTransition(type: PageTransitionType.fade, child: HomeScreenWithoutInventory());
+          case Routes.HomeScreenWithoutInventory:
+            return PageTransition(type: PageTransitionType.fade, child: HomeScreenWithoutInventory());
 
-            case Routes.BOTTOM_NAVIGATION_HOME:
-              int index = route.arguments as int;
-              return PageTransition(
-                  type: PageTransitionType.fade,
-                  child: BottomNavigationHome(
-                    index: index,
-                  ));
+          case Routes.BOTTOM_NAVIGATION_HOME:
+            int index = route.arguments as int;
+            return PageTransition(
+                type: PageTransitionType.fade,
+                child: BottomNavigationHome(
+                  index: index,
+                ));
 
-            case Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY:
-              int index = route.arguments as int;
-              return PageTransition(
-                  type: PageTransitionType.fade,
-                  child: BottomNavigationHomeWithOutInventory(
-                    index: index,
-                  ));
-          }
-        },
-        home: SplashScreen(),
-      ),
+          case Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY:
+            int index = route.arguments as int;
+            return PageTransition(
+                type: PageTransitionType.fade,
+                child: BottomNavigationHomeWithOutInventory(
+                  index: index,
+                ));
+        }
+      },
+      home: SplashScreen(),
     );
   }
 

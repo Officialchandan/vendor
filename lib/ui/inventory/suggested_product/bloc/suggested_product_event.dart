@@ -6,15 +6,17 @@ class SuggestedProductEvent extends Equatable {
 }
 
 class GetProductEvent extends SuggestedProductEvent {
-  final String brandId;
+  final String categoryId;
 
-  GetProductEvent({required this.brandId});
+  GetProductEvent({required this.categoryId});
 
   @override
-  List<Object?> get props => [brandId];
+  List<Object?> get props => [categoryId];
 }
 
 class GetBrandsEvent extends SuggestedProductEvent {}
+
+class GetCategoriesEvent extends SuggestedProductEvent {}
 
 class ChangeTabEvent extends SuggestedProductEvent {
   final int index;
