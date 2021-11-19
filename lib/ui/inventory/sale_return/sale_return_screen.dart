@@ -48,8 +48,9 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
             _displayDialog(context, state.input);
           }
           if (state is VerifyOtpSuccessState) {
-            Utility.showToast(state.message);
             Navigator.pop(context);
+            Utility.showToast(state.message);
+            // Navigator.pop(context);
           }
         },
         child: Scaffold(
@@ -66,14 +67,12 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                   maxLength: 10,
                   onChanged: (text) {
                     if (text.trim().length == 10) {
-                      saleReturnBloc
-                          .add(GetPurchasedProductEvent(mobile: text));
+                      saleReturnBloc.add(GetPurchasedProductEvent(mobile: text));
                     }
                   },
                   autofocus: true,
                   keyboardType: TextInputType.phone,
-                  decoration: InputDecoration(
-                      counterText: "", labelText: "mobile_number_key".tr()),
+                  decoration: InputDecoration(counterText: "", labelText: "mobile_number_key".tr()),
                 ),
                 const SizedBox(
                   height: 15,
@@ -82,17 +81,21 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                   controller: edtProducts,
                   readOnly: true,
                   onTap: () async {
+                    if (edtMobile.text.isEmpty) {
+                      Utility.showToast("Please enter mobile number first!");
+                      return;
+                    }
+                    if (edtMobile.text.trim().length != 10) {
+                      Utility.showToast("Please enter valid mobile number");
+                      return;
+                    }
+
                     var result = await Navigator.push(
-                        context,
-                        PageTransition(
-                            child: SaleProductScreen(purchasedList),
-                            type: PageTransitionType.fade));
+                        context, PageTransition(child: SaleProductScreen(purchasedList), type: PageTransitionType.fade));
 
                     if (result != null) {
-                      List<PurchaseProductModel> list =
-                          result as List<PurchaseProductModel>;
-                      saleReturnBloc
-                          .add(SelectProductEvent(returnProductList: list));
+                      List<PurchaseProductModel> list = result as List<PurchaseProductModel>;
+                      saleReturnBloc.add(SelectProductEvent(returnProductList: list));
                     }
 
                     // selectProduct(context);
@@ -103,11 +106,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                   decoration: InputDecoration(
                       hintText: "choose_product_key".tr(),
                       suffixIcon: Icon(Icons.keyboard_arrow_right_sharp),
-                      suffixIconConstraints: BoxConstraints(
-                          maxWidth: 15,
-                          minWidth: 10,
-                          maxHeight: 15,
-                          minHeight: 10)),
+                      suffixIconConstraints: BoxConstraints(maxWidth: 15, minWidth: 10, maxHeight: 15, minHeight: 10)),
                 ),
                 const SizedBox(
                   height: 15,
@@ -134,13 +133,10 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
 
                     if (returnProductList.isNotEmpty) {
                       return Column(
-                        children:
-                            List.generate(returnProductList.length, (index) {
-                          PurchaseProductModel product =
-                              returnProductList[index];
+                        children: List.generate(returnProductList.length, (index) {
+                          PurchaseProductModel product = returnProductList[index];
                           return Container(
-                            margin: const EdgeInsets.only(
-                                bottom: 5, top: 5, right: 10),
+                            margin: const EdgeInsets.only(bottom: 5, top: 5, right: 10),
                             child: Stack(
                               children: [
                                 Padding(
@@ -151,17 +147,11 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: ListTile(
-                                      contentPadding: EdgeInsets.only(
-                                          left: 50,
-                                          right: 5,
-                                          top: 5,
-                                          bottom: 5),
+                                      contentPadding: EdgeInsets.only(left: 50, right: 5, top: 5, bottom: 5),
                                       title: Container(
                                           child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           Text("${product.productName}"),
@@ -170,10 +160,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                                           ),
                                           RichText(
                                               text: TextSpan(children: [
-                                            TextSpan(
-                                                text: "₹ ${product.price}\t",
-                                                style: TextStyle(
-                                                    color: ColorPrimary)),
+                                            TextSpan(text: "₹ ${product.price}\t", style: TextStyle(color: ColorPrimary)),
                                             // TextSpan(
                                             //     text: "₹ ${product.total}",
                                             //     style: TextStyle(color: Colors.black, decoration: TextDecoration.lineThrough))
@@ -182,11 +169,8 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                                             height: 10,
                                           ),
                                           Text(
-                                            "qty_key :  ${product.returnQty}"
-                                                .tr(),
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 14),
+                                            "qty_key :  ${product.returnQty}".tr(),
+                                            style: TextStyle(color: Colors.black, fontSize: 14),
                                           )
                                         ],
                                       )),
@@ -203,8 +187,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                                                 height: 60,
                                                 width: 60,
                                                 fit: BoxFit.contain,
-                                                image: NetworkImage(product
-                                                    .productImages.first),
+                                                image: NetworkImage(product.productImages.first),
                                               )
                                             : Image(
                                                 image: AssetImage(
@@ -253,9 +236,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
   void selectProduct(BuildContext context) async {
     showModalBottomSheet(
         context: context,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(15), topRight: Radius.circular(15))),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15))),
         builder: (context) {
           return IntrinsicHeight(
               child: Padding(
@@ -313,8 +294,11 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
   void submit() async {
     if (edtMobile.text.isEmpty) {
       Utility.showToast("please_enter_customer_mobile_number_key".tr());
-    } else if (edtReason.text.trim().isEmpty) {
+    } /* else if (edtReason.text.trim().isEmpty) {
       Utility.showToast("Please enter reason ");
+    }*/
+    else if (returnProductList.isEmpty) {
+      Utility.showToast("Please select product to be return!");
     } else {
       String productId = "";
       String qty = "";
@@ -331,8 +315,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
 
       Map input = HashMap<String, dynamic>();
       input["mobile"] = edtMobile.text.trim();
-      input["vendor_id"] =
-          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
       input["product_id"] = productId;
       input["qty"] = qty;
       input["reason"] = edtReason.text.trim();
@@ -348,8 +331,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
           return ConstrainedBox(
             constraints: BoxConstraints(maxWidth: 400),
             child: AlertDialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
               title: RichText(
                 text: TextSpan(
                   text: "otp_verification_key".tr(),
@@ -360,8 +342,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                   ),
                   children: [
                     TextSpan(
-                      text: "please_verify_your_otp_on_key".tr() +
-                          "${input["mobile"]}",
+                      text: "please_verify_your_otp_on_key".tr() + "${input["mobile"]}",
                       style: GoogleFonts.openSans(
                         fontSize: 14.0,
                         color: ColorTextPrimary,
@@ -384,8 +365,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                   hintStyle: GoogleFonts.openSans(
                     fontWeight: FontWeight.w600,
                   ),
-                  contentPadding:
-                      const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                  contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.white),
                   ),
@@ -403,27 +383,20 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                     padding: const EdgeInsets.all(8.0),
                     textColor: Colors.white,
                     color: ColorPrimary,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                     onPressed: () {
                       if (_textFieldController.text.isEmpty) {
-                        Fluttertoast.showToast(
-                            msg: "please_enter_password_key".tr(),
-                            backgroundColor: ColorPrimary);
+                        Fluttertoast.showToast(msg: "please_enter_password_key".tr(), backgroundColor: ColorPrimary);
                       } else {
                         input["otp"] = _textFieldController.text.trim();
                         saleReturnBloc.add(VerifyOtpEvent(input: input));
-                        Navigator.pop(context);
                       }
                       // loginApiCall(
                       //     mobileController.text, _textFieldController.text);
                     },
                     child: new Text(
                       "verify_key".tr(),
-                      style: GoogleFonts.openSans(
-                          fontSize: 17,
-                          fontWeight: FontWeight.w600,
-                          decoration: TextDecoration.none),
+                      style: GoogleFonts.openSans(fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
                     ),
                   ),
                 ),

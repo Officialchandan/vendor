@@ -25,11 +25,7 @@ class ProductVariantScreen extends StatefulWidget {
   final bool add;
 
   ProductVariantScreen(
-      {required this.variantType,
-      required this.categoryId,
-      required this.productVariant,
-      required this.edit,
-      required this.add});
+      {required this.variantType, required this.categoryId, required this.productVariant, required this.edit, required this.add});
 
   @override
   _ProductVariantScreenState createState() => _ProductVariantScreenState();
@@ -39,6 +35,8 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
   List<ProductVariantModel> productVariant = [];
   TextEditingController edtOption = TextEditingController();
   StreamController<List<ProductVariantModel>> controller = StreamController();
+
+  ScrollController _scrollController = ScrollController();
 
   @override
   void dispose() {
@@ -58,16 +56,34 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
       appBar: CustomAppBar(
         title: "add_variant_key".tr(),
       ),
-      body: SingleChildScrollView(
+      body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: StreamBuilder<List<ProductVariantModel>>(
           stream: controller.stream,
           initialData: [],
           builder: (context, snapshot) {
             if (snapshot.hasData) {
+              return ListView.builder(
+                  controller: _scrollController,
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    return ProductVariantWidget(
+                      snapshot.data![index],
+                      onDelete: () {
+                        productVariant.removeAt(index);
+                        controller.add(productVariant);
+                      },
+                    );
+                  });
               return Column(
                 children: List.generate(snapshot.data!.length, (index) {
-                  return ProductVariantWidget(snapshot.data![index]);
+                  return ProductVariantWidget(
+                    snapshot.data![index],
+                    onDelete: () {
+                      productVariant.removeAt(index);
+                      controller.add(productVariant);
+                    },
+                  );
                 }),
               );
             }
@@ -85,6 +101,11 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
                     child: MaterialButton(
                       onPressed: () {
                         addVariant();
+                        _scrollController.animateTo(
+                          _scrollController.position.maxScrollExtent + 400,
+                          curve: Curves.easeOut,
+                          duration: const Duration(milliseconds: 500),
+                        );
                         // ProductVariantModel productVariantModel =
                         //     ProductVariantModel(mrp: "0", purchasePrice: "", sellingPrice: "", stock: 0);
                         // productVariantModel.option = [];
@@ -98,8 +119,7 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
                         // Navigator.pop(context, variants);
                       },
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          side: BorderSide(color: ColorPrimary, width: 1)),
+                          borderRadius: BorderRadius.circular(10), side: BorderSide(color: ColorPrimary, width: 1)),
                       height: 50,
                       minWidth: MediaQuery.of(context).size.width,
                       child: Row(
@@ -134,13 +154,9 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
                 if (productVariant.isNotEmpty) {
                   for (int j = 0; j < productVariant.length; j++) {
                     if (productVariant[j].option.isNotEmpty) {
-                      for (int i = 0;
-                          i < productVariant[j].option.length;
-                          i++) {
+                      for (int i = 0; i < productVariant[j].option.length; i++) {
                         if (productVariant[j].option[i].value.isEmpty) {
-                          Utility.showToast(
-                              "please_enter_key ${productVariant[j].option[i].name}"
-                                  .tr());
+                          Utility.showToast("please_enter_key ${productVariant[j].option[i].name}".tr());
                           return;
                         }
                       }
@@ -153,15 +169,17 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
                       Utility.showToast("enter_selling_price_key".tr());
                       return;
                     }
-                    if (double.parse(productVariant[j].sellingPrice.trim()) >
-                        double.parse(productVariant[j].mrp.trim())) {
-                      Utility.showToast(
-                          "selling_price_cannot_be_more_than_mrp_key".tr());
+                    if (double.parse(productVariant[j].sellingPrice.trim()) > double.parse(productVariant[j].mrp.trim())) {
+                      Utility.showToast("selling_price_cannot_be_more_than_mrp_key".tr());
                       return;
                     }
 
                     if (productVariant[j].stock.isEmpty) {
                       Utility.showToast("please_enter_stock_key".tr());
+                      return;
+                    }
+                    if (int.parse(productVariant[j].stock) <= 0) {
+                      Utility.showToast("stock_can_not_be_zero_key".tr());
                       return;
                     }
                   }
@@ -185,7 +203,8 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
     if (!widget.add && widget.edit) {
       productVariant.addAll(widget.productVariant);
       controller.add(productVariant);
-    } /* else if(!widget.add && !widget.edit){
+    }
+    /* else if(!widget.add && !widget.edit){
       ProductVariantModel productVariantModel = ProductVariantModel(mrp: "0", purchasePrice: "", sellingPrice: "", stock: 0);
       productVariantModel.option = [];
       widget.variantType.forEach((variantType) {
@@ -197,8 +216,7 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
       productVariant.add(productVariantModel);
     }*/
     else {
-      ProductVariantModel productVariantModel = ProductVariantModel(
-          mrp: "0", purchasePrice: "", sellingPrice: "", stock: "");
+      ProductVariantModel productVariantModel = ProductVariantModel(mrp: "0", purchasePrice: "", sellingPrice: "", stock: "");
       productVariantModel.option = [];
       widget.variantType.forEach((variantType) {
         VariantOption variant = VariantOption();
@@ -214,8 +232,9 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
 
 class ProductVariantWidget extends StatefulWidget {
   final ProductVariantModel variant;
+  final Function onDelete;
 
-  ProductVariantWidget(this.variant);
+  ProductVariantWidget(this.variant, {required this.onDelete});
 
   @override
   _ProductVariantWidgetState createState() => _ProductVariantWidgetState();
@@ -233,6 +252,7 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
   void initState() {
     variantModel = widget.variant;
     imageList.addAll(widget.variant.productImages);
+    imgController.add(imageList);
     // variant.addAll(widget.variant.option);
     // this.variant = widget.variant;
     super.initState();
@@ -241,13 +261,22 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.black),
-          borderRadius: BorderRadius.circular(1)),
+      decoration: BoxDecoration(border: Border.all(color: Colors.black), borderRadius: BorderRadius.circular(1)),
       margin: EdgeInsets.symmetric(vertical: 10),
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Align(
+            alignment: Alignment.centerRight,
+            child: IconButton(
+              splashRadius: 12,
+              icon: Icon(Icons.delete),
+              onPressed: () {
+                widget.onDelete();
+              },
+            ),
+          ),
           Text("Add Product Image"),
           Container(
             height: 100,
@@ -256,9 +285,7 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
                 Container(
                   width: 80,
                   height: 80,
-                  decoration: BoxDecoration(
-                      color: Colors.grey.shade100,
-                      borderRadius: BorderRadius.circular(5)),
+                  decoration: BoxDecoration(color: Colors.grey.shade100, borderRadius: BorderRadius.circular(5)),
                   child: IconButton(
                     onPressed: () {
                       selectImage(context, widget.variant.productImages);
@@ -281,8 +308,7 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
                                 Container(
                                   width: 80,
                                   height: 80,
-                                  margin: EdgeInsets.symmetric(
-                                      vertical: 10, horizontal: 10),
+                                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
                                       image: DecorationImage(
@@ -299,9 +325,7 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
                                     child: Container(
                                         width: 25,
                                         padding: EdgeInsets.all(3),
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: ColorPrimary),
+                                        decoration: BoxDecoration(shape: BoxShape.circle, color: ColorPrimary),
                                         child: Icon(
                                           Icons.delete,
                                           color: Colors.white,
@@ -358,8 +382,7 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
                   keyboardType: priceKeyboardType,
                   maxLength: PRICE_TEXT_LENGTH,
                   inputFormatters: priceInputFormatter,
-                  decoration: InputDecoration(
-                      labelText: "mrp_key".tr(), counter: Container()),
+                  decoration: InputDecoration(labelText: "mrp_key".tr(), counter: Container()),
                   onChanged: (text) {
                     variantModel.mrp = text.trim();
                   },
@@ -375,9 +398,7 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
                   keyboardType: priceKeyboardType,
                   maxLength: PRICE_TEXT_LENGTH,
                   inputFormatters: priceInputFormatter,
-                  decoration: InputDecoration(
-                      labelText: "selling_price_key".tr(),
-                      counter: Container()),
+                  decoration: InputDecoration(labelText: "selling_price_key".tr(), counter: Container()),
                   onChanged: (text) {
                     variantModel.sellingPrice = text.trim();
                   },
@@ -394,8 +415,7 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
             maxLength: PRICE_TEXT_LENGTH,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             initialValue: variantModel.stock.toString(),
-            decoration: InputDecoration(
-                labelText: "stock_key".tr(), counter: Container()),
+            decoration: InputDecoration(labelText: "stock_key".tr(), counter: Container()),
             onChanged: (text) {
               variantModel.stock = text.trim();
             },
@@ -418,8 +438,7 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
             ));
   }
 
-  pickImage(BuildContext context, ImageSource source,
-      List<File> productImages) async {
+  pickImage(BuildContext context, ImageSource source, List<File> productImages) async {
     try {
       List<XFile> imgList = [];
       if (source == ImageSource.gallery) {
@@ -498,8 +517,7 @@ class _VariantOptionWidgetState extends State<VariantOptionWidget> {
                     hintText: "select_key ${widget.option.name}".tr(),
                     labelText: "${widget.option.name}",
                     suffixIcon: Icon(Icons.keyboard_arrow_right),
-                    suffixIconConstraints:
-                        BoxConstraints(maxHeight: 20, maxWidth: 20)
+                    suffixIconConstraints: BoxConstraints(maxHeight: 20, maxWidth: 20)
                     /*suffix: Container(
                       width: 20,
                       height: 20,
@@ -509,9 +527,9 @@ class _VariantOptionWidgetState extends State<VariantOptionWidget> {
               )
             : TextFormField(
                 initialValue: widget.option.value,
+                maxLength: 30,
                 decoration: InputDecoration(
-                    hintText: "enter_key ${widget.option.name}".tr(),
-                    labelText: "${widget.option.name}"),
+                    counter: SizedBox.shrink(), hintText: "enter_key ${widget.option.name}".tr(), labelText: "${widget.option.name}"),
                 onChanged: (text) {
                   widget.option.value = text;
                 },

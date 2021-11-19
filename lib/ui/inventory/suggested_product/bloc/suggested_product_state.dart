@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:vendor/model/get_brands_response.dart';
+import 'package:vendor/model/get_categories_response.dart';
 import 'package:vendor/model/product_model.dart';
 
 class SuggestedProductState extends Equatable {
@@ -20,6 +21,15 @@ class GetProductState extends SuggestedProductState {
   List<Object?> get props => [products];
 }
 
+class GetProductFailureState extends SuggestedProductState {
+  final String message;
+
+  GetProductFailureState({required this.message});
+
+  @override
+  List<Object?> get props => [message];
+}
+
 class AddProductSuccessState extends SuggestedProductState {
   final String message;
 
@@ -36,6 +46,15 @@ class GetBrandsState extends SuggestedProductState {
 
   @override
   List<Object?> get props => [brands];
+}
+
+class GetCategoryState extends SuggestedProductState {
+  final List<CategoryModel> categories;
+
+  GetCategoryState({required this.categories});
+
+  @override
+  List<Object?> get props => [categories];
 }
 
 class ChangeTabState extends SuggestedProductState {

@@ -1,7 +1,7 @@
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vendor/model/get_brands_response.dart';
+import 'package:vendor/model/get_categories_response.dart';
 import 'package:vendor/model/product_model.dart';
 import 'package:vendor/ui/inventory/suggested_product/bloc/suggested_product_bloc.dart';
 import 'package:vendor/ui/inventory/suggested_product/bloc/suggested_product_event.dart';
@@ -15,9 +15,8 @@ class SuggestedProductScreen extends StatefulWidget {
   _SuggestedProductScreenState createState() => _SuggestedProductScreenState();
 }
 
-class _SuggestedProductScreenState extends State<SuggestedProductScreen>
-    with TickerProviderStateMixin {
-  List<Brand> tabs = [];
+class _SuggestedProductScreenState extends State<SuggestedProductScreen> with TickerProviderStateMixin {
+  List<CategoryModel> tabs = [];
   TabController? _tabController;
   int currentIndex = 0;
   bool enabled = false;
@@ -39,8 +38,7 @@ class _SuggestedProductScreenState extends State<SuggestedProductScreen>
       child: BlocListener<SuggestedProductBloc, SuggestedProductState>(
         listener: (context, state) {
           if (state is CheckState) {
-            productMap[tabs[_tabController!.index].brandName]![state.index]
-                .check = state.check;
+            productMap[tabs[_tabController!.index].categoryName!]![state.index].check = state.check;
             int i = -1;
             productMap.forEach((key, value) {
               i = i + value.where((element) => element.check).toList().length;
@@ -65,14 +63,12 @@ class _SuggestedProductScreenState extends State<SuggestedProductScreen>
                 child: BlocBuilder<SuggestedProductBloc, SuggestedProductState>(
                   builder: (context, state) {
                     if (state is SuggestedProductInitialState) {
-                      suggestedProductBloc.add(GetBrandsEvent());
+                      suggestedProductBloc.add(GetCategoriesEvent());
                     }
-                    if (state is GetBrandsState) {
-                      tabs = state.brands;
-                      _tabController =
-                          TabController(length: tabs.length, vsync: this);
-                      suggestedProductBloc
-                          .add(GetProductEvent(brandId: tabs[0].brandName));
+                    if (state is GetCategoryState) {
+                      tabs = state.categories;
+                      _tabController = TabController(length: tabs.length, vsync: this);
+                      suggestedProductBloc.add(GetProductEvent(categoryId: tabs[0].id));
                     }
                     if (state is ChangeTabState) {
                       _tabController!.index = state.index;
@@ -90,7 +86,7 @@ class _SuggestedProductScreenState extends State<SuggestedProductScreen>
                       },
                       tabs: tabs
                           .map((e) => Tab(
-                                text: e.brandName,
+                                text: e.categoryName!,
                               ))
                           .toList(),
                     );
@@ -104,30 +100,29 @@ class _SuggestedProductScreenState extends State<SuggestedProductScreen>
               }
               if (state is ChangeTabState) {
                 currentIndex = state.index;
-                if (productMap[tabs[_tabController!.index].brandName] == null) {
-                  suggestedProductBloc.add(
-                      GetProductEvent(brandId: tabs[state.index].brandName));
+                if (productMap[tabs[_tabController!.index].categoryName!] == null) {
+                  suggestedProductBloc.add(GetProductEvent(categoryId: tabs[state.index].id));
                   return CircularProgressIndicator();
                 }
               }
               if (state is LoadingState) {
                 return Center(child: CircularProgressIndicator());
               }
-
-              if (state is GetProductState) {
-                productMap[tabs[_tabController!.index].brandName] =
-                    state.products;
+              if (state is GetProductFailureState) {
+                return Center(child: Text(state.message));
               }
 
-              if (productMap[tabs[_tabController!.index].brandName] != null) {
-                return SuggestedProductList(
-                    productMap[tabs[_tabController!.index].brandName]!);
+              if (state is GetProductState) {
+                productMap[tabs[_tabController!.index].categoryName!] = state.products;
+              }
+
+              if (productMap[tabs[_tabController!.index].categoryName!] != null) {
+                return SuggestedProductList(productMap[tabs[_tabController!.index].categoryName!]!);
               }
               return CircularProgressIndicator();
             },
           ),
-          bottomNavigationBar: Container(
-              child: BlocBuilder<SuggestedProductBloc, SuggestedProductState>(
+          bottomNavigationBar: Container(child: BlocBuilder<SuggestedProductBloc, SuggestedProductState>(
             builder: (context, state) {
               return MaterialButton(
                 elevation: 0,
@@ -138,9 +133,7 @@ class _SuggestedProductScreenState extends State<SuggestedProductScreen>
                           List<ProductModel> products = [];
                           productMap.forEach((key, value) {
                             if (value.isNotEmpty) {
-                              products.addAll(value
-                                  .where((element) => element.check)
-                                  .toList());
+                              products.addAll(value.where((element) => element.check).toList());
                             }
                           });
 
@@ -154,8 +147,7 @@ class _SuggestedProductScreenState extends State<SuggestedProductScreen>
                           }
 
                           if (id.isNotEmpty) {
-                            suggestedProductBloc
-                                .add(AddProductApiEvent(id: id));
+                            suggestedProductBloc.add(AddProductApiEvent(id: id));
                           }
                         }
                       },
