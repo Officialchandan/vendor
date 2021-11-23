@@ -1,6 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization/src/public_ext.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:vendor/main.dart';
 import 'package:vendor/ui/performance_tracker/money_due_upi/bloc/money_due_bloc.dart';
 import 'package:vendor/ui/performance_tracker/money_due_upi/bloc/money_due_event.dart';
 import 'package:vendor/ui/performance_tracker/money_due_upi/bloc/money_due_state.dart';
@@ -68,6 +72,25 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                         fontSize: 20,
                       ),
                     ),
+                    Container(
+                      child: InkWell(
+                        onTap: () {
+                          setState(() {});
+                          flutterLocalNotificationsPlugin.show(
+                              0,
+                              "title",
+                              "body",
+                              NotificationDetails(
+                                  android: AndroidNotificationDetails(
+                                      channel.id, channel.name,
+                                      importance: Importance.high,
+                                      playSound: true,
+                                      color: ColorPrimary,
+                                      icon: "@mipmap/ic_launcher")));
+                        },
+                        child: Text("Click me send notifucation"),
+                      ),
+                    )
                   ],
                 ),
               ),

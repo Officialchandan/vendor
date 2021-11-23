@@ -550,8 +550,7 @@ class _BillingScreenState extends State<BillingScreen> {
                                 context,
                                 PageTransition(
                                     child: SearchByCategory(
-                                      catid:
-                                          category[index].categoryId.toString(),
+                                      catid: category[index].id.toString(),
                                       mobile: mobileController.text,
                                       coin: coins,
                                     ),
@@ -573,7 +572,7 @@ class _BillingScreenState extends State<BillingScreen> {
                           context,
                           PageTransition(
                               child: SearchByCategory(
-                                catid: category[index].categoryId.toString(),
+                                catid: category[index].id.toString(),
                                 mobile: mobileController.text,
                                 coin: coins,
                               ),
