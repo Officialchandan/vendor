@@ -85,8 +85,8 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                       channel.id, channel.name,
                                       importance: Importance.high,
                                       playSound: true,
-                                      color: ColorPrimary,
-                                      icon: "@mipmap/ic_launcher")));
+                                      // color: ColorPrimary,
+                                      icon: "logo")));
                         },
                         child: Text("Click me send notifucation"),
                       ),
