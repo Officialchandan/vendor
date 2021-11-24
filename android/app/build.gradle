@@ -26,6 +26,20 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('/Users/mac/Desktop/pankaj/git/myprofit_vendor/android/app/src/main/assets/vendor.jks')
+            storePassword '123456'
+            keyAlias 'vendor'
+            keyPassword '123456'
+        }
+        release {
+            storeFile file('/Users/mac/Desktop/pankaj/git/myprofit_vendor/android/app/src/main/assets/vendor.jks')
+            storePassword '123456'
+            keyAlias 'vendor'
+            keyPassword '123456'
+        }
+    }
     compileSdkVersion 31
 
     sourceSets {
@@ -37,17 +51,31 @@ android {
         applicationId "com.myprofit.vendor"
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
+        versionCode 1
+        versionName '1.0'
+        signingConfig signingConfigs.release
+        multiDexEnabled true
     }
 
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            multiDexEnabled true
+        }
+        debug {
             signingConfig signingConfigs.debug
+            minifyEnabled true
+            multiDexEnabled true
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildToolsVersion '30.0.3'
 }
 
 flutter {
