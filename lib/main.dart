@@ -2,9 +2,12 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:page_transition/page_transition.dart';
@@ -15,6 +18,7 @@ import 'package:vendor/ui/home/bottom_navigation_home.dart';
 import 'package:vendor/ui/home/home.dart';
 import 'package:vendor/ui/language/select_language.dart';
 import 'package:vendor/ui/login/login_screen.dart';
+import 'package:vendor/ui/performance_tracker/money_due_upi/money_due_screen.dart';
 import 'package:vendor/ui/splash/splash_screen.dart';
 import 'package:vendor/ui_without_inventory/home/bottom_navigation_bar.dart';
 import 'package:vendor/ui_without_inventory/home/home.dart';
@@ -127,13 +131,72 @@ ThemeData themeData(context) => ThemeData(
         900: Color(0xFF1500F5),
       },
     )).copyWith(secondary: ColorPrimary).copyWith(secondary: ColorPrimary));
+const AndroidNotificationChannel channel = AndroidNotificationChannel(
+    "high_importance_channel", "Hogh Importance Notification",
+    importance: Importance.high, playSound: true);
+
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
+final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  print("A bg Message showed up: ${message.messageId}");
+}
+
+fcmtoken() async {
+  log("${await firebaseMessaging.getToken()}");
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  await Firebase.initializeApp();
+  await fcmtoken();
 
+  FirebaseMessaging.onBackgroundMessage((_firebaseMessagingBackgroundHandler));
+
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    RemoteNotification? notification = message.notification;
+    AndroidNotification? android = message.notification?.android;
+    log("===>$notification");
+    log("===>$android");
+    if (notification != null && android != null) {
+      flutterLocalNotificationsPlugin.show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          NotificationDetails(
+            android: AndroidNotificationDetails(channel.id, channel.name,
+                color: ColorPrimary, playSound: true, icon: "logo"),
+          ));
+    }
+    Navigator.push(navigationService.navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (_) => MoneyDueScreen()));
+  });
+
+  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    print("a new on message");
+    RemoteNotification? notification = message.notification;
+    AndroidNotification? android = message.notification?.android;
+    if (notification != null && android != null) {
+      log("notification aya");
+      Navigator.push(navigationService.navigatorKey.currentContext!,
+          MaterialPageRoute(builder: (_) => MoneyDueScreen()));
+    }
+  });
+
+  await flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+      ?.createNotificationChannel(channel);
   configEasyLoading();
 
+  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: ColorPrimary,
   ));
@@ -150,7 +213,11 @@ void main() async {
       }));
   // assets/locale
   runApp(
-    EasyLocalization(supportedLocales: Constant.language, path: 'assets/locale', fallbackLocale: Locale('en'), child: MyApp()),
+    EasyLocalization(
+        supportedLocales: Constant.language,
+        path: 'assets/locale',
+        fallbackLocale: Locale('en'),
+        child: MyApp()),
   );
 }
 
@@ -182,22 +249,29 @@ class _MyAppState extends State<MyApp> {
       onGenerateRoute: (route) {
         switch (route.name) {
           case "/":
-            return PageTransition(type: PageTransitionType.fade, child: SplashScreen());
+            return PageTransition(
+                type: PageTransitionType.fade, child: SplashScreen());
 
           case Routes.SplashScreen:
-            return PageTransition(type: PageTransitionType.fade, child: SplashScreen());
+            return PageTransition(
+                type: PageTransitionType.fade, child: SplashScreen());
 
           case Routes.SelectLanguage:
-            return PageTransition(type: PageTransitionType.fade, child: SelectLanguage());
+            return PageTransition(
+                type: PageTransitionType.fade, child: SelectLanguage());
 
           case Routes.LoginScreen:
-            return PageTransition(type: PageTransitionType.fade, child: LoginScreen());
+            return PageTransition(
+                type: PageTransitionType.fade, child: LoginScreen());
 
           case Routes.HomeScreen:
-            return PageTransition(type: PageTransitionType.fade, child: HomeScreen());
+            return PageTransition(
+                type: PageTransitionType.fade, child: HomeScreen());
 
           case Routes.HomeScreenWithoutInventory:
-            return PageTransition(type: PageTransitionType.fade, child: HomeScreenWithoutInventory());
+            return PageTransition(
+                type: PageTransitionType.fade,
+                child: HomeScreenWithoutInventory());
 
           case Routes.BOTTOM_NAVIGATION_HOME:
             int index = route.arguments as int;

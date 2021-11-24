@@ -35,7 +35,7 @@ class _SelectReportTypeScreenState extends State<SelectReportTypeScreen> {
   List<Map<String, dynamic>> reportList = [];
   final options = [
     {
-      "title": "Daily Sales".tr(),
+      "title": "daily_sales_key".tr(),
       "subTitle": "click_here_to_add_product_key".tr(),
       "image": "assets/images/tr-ic1.png",
       "id": 1
