@@ -24,7 +24,7 @@ class MoneyDueBloc extends Bloc<MoneyDueEvent, MoneyDueState> {
   Stream<MoneyDueState> getDueAmountApi() async* {
     if (await Network.isConnected()) {
       GetDueAmountResponse response = await apiProvider.getDueAmount();
-      yield GetDueAmountState(dueAmount: response.totalDue);
+      yield GetDueAmountState(dueAmount: response.totalDue, categoryDue: response.data);
     } else {
       Utility.showToast(Constant.INTERNET_ALERT_MSG);
     }

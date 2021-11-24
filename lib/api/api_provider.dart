@@ -1048,7 +1048,7 @@ class ApiProvider {
         message = "Please try again later!";
       }
       print("Exception occurred: $message stackTrace: $error");
-      return GetDueAmountResponse(success: false, message: message, totalDue: "0");
+      return GetDueAmountResponse(success: false, message: message, totalDue: "0", data: []);
     }
   }
 
