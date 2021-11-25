@@ -9,6 +9,7 @@ class SharedPref {
   static const USERSTATUS = "status";
   static const USERNAME = "name";
   static const USERNUMBER = "number";
+  static const OWNERNAME = "ownername";
 
   static Future<String> getStringPreference(String key) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();

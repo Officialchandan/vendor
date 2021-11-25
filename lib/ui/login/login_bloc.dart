@@ -63,6 +63,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
               SharedPref.VENDORID, result.vendorId!);
           SharedPref.setIntegerPreference(
               SharedPref.USERSTATUS, result.vendorStatus!);
+          SharedPref.setStringPreference(
+              SharedPref.USERNAME, result.vendorName!);
+          SharedPref.setStringPreference(
+              SharedPref.USERNUMBER, result.vendorMobile!);
+          SharedPref.setStringPreference(
+              SharedPref.OWNERNAME, result.ownerName!);
 
           baseOptions.headers
               .addAll({"Authorization": "bearer ${result.token!}"});

@@ -1,6 +1,6 @@
 // To parse this JSON data, do
 //
-//     final loginResponse = loginResponseFromMap(jsonString);
+//     final LoginResponse = LoginResponseFromMap(jsonString);
 
 import 'dart:convert';
 
@@ -12,15 +12,20 @@ class LoginResponse {
     this.tokenType,
     required this.message,
     this.vendorStatus,
+    this.vendorName,
+    this.vendorMobile,
+    this.ownerName,
   });
 
   bool success;
   int? vendorId;
   String? token;
   String? tokenType;
-
   String message;
   int? vendorStatus;
+  String? vendorName;
+  String? vendorMobile;
+  String? ownerName;
 
   factory LoginResponse.fromJson(String str) =>
       LoginResponse.fromMap(json.decode(str));
@@ -28,20 +33,28 @@ class LoginResponse {
   String toJson() => json.encode(toMap());
 
   factory LoginResponse.fromMap(Map<String, dynamic> json) => LoginResponse(
-        success: json["success"] ?? false,
-        vendorId: json["vendor_id"] ?? 0,
-        token: json["token"] ?? "",
-        tokenType: json["token_type"] ?? "",
-        message: json["message"] ?? "",
-        vendorStatus: json["vendor_status"] == null ? 0 : json["vendor_status"],
+        success: json["success"] == null ? null : json["success"],
+        vendorId: json["vendor_id"] == null ? null : json["vendor_id"],
+        token: json["token"] == null ? null : json["token"],
+        tokenType: json["token_type"] == null ? null : json["token_type"],
+        message: json["message"] == null ? null : json["message"],
+        vendorStatus:
+            json["vendor_status"] == null ? null : json["vendor_status"],
+        vendorName: json["vendor_name"] == null ? null : json["vendor_name"],
+        vendorMobile:
+            json["vendor_mobile"] == null ? null : json["vendor_mobile"],
+        ownerName: json["owner_name"] == null ? null : json["owner_name"],
       );
 
   Map<String, dynamic> toMap() => {
-        "success": success,
-        "vendor_id": vendorId,
-        "token": token,
-        "token_type": tokenType,
-        "message": message,
+        "success": success == null ? null : success,
+        "vendor_id": vendorId == null ? null : vendorId,
+        "token": token == null ? null : token,
+        "token_type": tokenType == null ? null : tokenType,
+        "message": message == null ? null : message,
         "vendor_status": vendorStatus == null ? null : vendorStatus,
+        "vendor_name": vendorName == null ? null : vendorName,
+        "vendor_mobile": vendorMobile == null ? null : vendorMobile,
+        "owner_name": ownerName == null ? null : ownerName,
       };
 }

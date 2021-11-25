@@ -45,32 +45,55 @@ class ProductModel {
   bool billingcheck = false;
   int count = 1;
   int returnQty = 1;
+  double amounttopay = 0;
+  double coinpaid = 0;
 
-  factory ProductModel.fromJson(String str) => ProductModel.fromMap(json.decode(str));
+  factory ProductModel.fromJson(String str) =>
+      ProductModel.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
   factory ProductModel.fromMap(Map<String, dynamic> json) => ProductModel(
         id: json["id"] == null ? "0" : json["id"].toString(),
-        productId: json["product_id"] == null ? "0" : json["product_id"].toString(),
-        categoryId: json["category_id"] == null ? "0" : json["category_id"].toString(),
-        categoryName: json["category_name"] == null ? "" : json["category_name"].toString(),
-        vendorId: json["vendor_id"] == null ? "0" : json["vendor_id"].toString(),
-        productName: json["product_name"] == null ? "" : json["product_name"].toString(),
-        description: json["description"] == null ? "" : json["description"].toString(),
-        productOptionVariantId: json["product_option_variant_id"] == null ? "" : json["product_option_variant_id"].toString(),
-        purchasePrice: json["purchase_price"] == null ? "" : json["purchase_price"].toString(),
+        productId:
+            json["product_id"] == null ? "0" : json["product_id"].toString(),
+        categoryId:
+            json["category_id"] == null ? "0" : json["category_id"].toString(),
+        categoryName: json["category_name"] == null
+            ? ""
+            : json["category_name"].toString(),
+        vendorId:
+            json["vendor_id"] == null ? "0" : json["vendor_id"].toString(),
+        productName:
+            json["product_name"] == null ? "" : json["product_name"].toString(),
+        description:
+            json["description"] == null ? "" : json["description"].toString(),
+        productOptionVariantId: json["product_option_variant_id"] == null
+            ? ""
+            : json["product_option_variant_id"].toString(),
+        purchasePrice: json["purchase_price"] == null
+            ? ""
+            : json["purchase_price"].toString(),
         mrp: json["mrp"] == null ? "0" : json["mrp"].toString(),
-        sellingPrice: json["selling_price"] == null ? "0" : json["selling_price"].toString(),
+        sellingPrice: json["selling_price"] == null
+            ? "0"
+            : json["selling_price"].toString(),
         stock: json["stock"] == null ? 0 : json["stock"],
-        earningCoins: json["earning_coins"] == null ? "0" : json["earning_coins"].toString(),
-        redeemCoins: json["redeem_coins"] == null ? "0" : json["redeem_coins"].toString(),
+        earningCoins: json["earning_coins"] == null
+            ? "0"
+            : json["earning_coins"].toString(),
+        redeemCoins: json["redeem_coins"] == null
+            ? "0"
+            : json["redeem_coins"].toString(),
         unit: json["unit"] == null ? "0" : json["unit"].toString(),
         productOption: json["product_option"] == null
             ? []
-            : List<ProductOption>.from(json["product_option"].map((x) => ProductOption.fromMap(x))),
-        productImages:
-            json["product_images"] == null ? [] : List<ProductImage>.from(json["product_images"].map((x) => ProductImage.fromMap(x))),
+            : List<ProductOption>.from(
+                json["product_option"].map((x) => ProductOption.fromMap(x))),
+        productImages: json["product_images"] == null
+            ? []
+            : List<ProductImage>.from(
+                json["product_images"].map((x) => ProductImage.fromMap(x))),
       );
 
   Map<String, dynamic> toMap() => {
@@ -80,7 +103,8 @@ class ProductModel {
         "vendor_id": vendorId == null ? null : vendorId,
         "product_name": productName == null ? null : productName,
         "description": description == null ? null : description,
-        "product_option_variant_id": productOptionVariantId == null ? null : productOptionVariantId,
+        "product_option_variant_id":
+            productOptionVariantId == null ? null : productOptionVariantId,
         "purchase_price": purchasePrice == null ? null : purchasePrice,
         "mrp": mrp == null ? null : mrp,
         "selling_price": sellingPrice == null ? null : sellingPrice,
@@ -88,8 +112,12 @@ class ProductModel {
         "earning_coins": earningCoins == null ? null : earningCoins,
         "redeem_coins": redeemCoins == null ? null : redeemCoins,
         "unit": unit == null ? null : unit,
-        "product_option": productOption == null ? null : List<dynamic>.from(productOption.map((x) => x.toMap())),
-        "product_images": productImages == null ? null : List<dynamic>.from(productImages.map((x) => x)),
+        "product_option": productOption == null
+            ? null
+            : List<dynamic>.from(productOption.map((x) => x.toMap())),
+        "product_images": productImages == null
+            ? null
+            : List<dynamic>.from(productImages.map((x) => x)),
       };
 }
 
@@ -104,14 +132,17 @@ class ProductImage {
   String variantId;
   String productImage;
 
-  factory ProductImage.fromJson(String str) => ProductImage.fromMap(json.decode(str));
+  factory ProductImage.fromJson(String str) =>
+      ProductImage.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
   factory ProductImage.fromMap(Map<String, dynamic> json) => ProductImage(
         id: json["id"] == null ? "" : json["id"].toString(),
-        variantId: json["variant_id"] == null ? "" : json["variant_id"].toString(),
-        productImage: json["product_image"] == null ? "" : json["product_image"],
+        variantId:
+            json["variant_id"] == null ? "" : json["variant_id"].toString(),
+        productImage:
+            json["product_image"] == null ? "" : json["product_image"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -132,12 +163,14 @@ class ProductOption {
   String optionName;
   String value;
 
-  factory ProductOption.fromJson(String str) => ProductOption.fromMap(json.decode(str));
+  factory ProductOption.fromJson(String str) =>
+      ProductOption.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
   factory ProductOption.fromMap(Map<String, dynamic> json) => ProductOption(
-        productOptionId: json["product_option_id"] == null ? "0" : json["product_option_id"],
+        productOptionId:
+            json["product_option_id"] == null ? "0" : json["product_option_id"],
         optionName: json["option_name"] == null ? "" : json["option_name"],
         value: json["value"] == null ? "" : json["value"],
       );

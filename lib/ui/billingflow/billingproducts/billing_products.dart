@@ -404,7 +404,7 @@ class _BillingProductsState extends State<BillingProducts> {
                                                 "assets/images/point.png"),
                                           ),
                                           Text(
-                                              " ${double.parse(productList[index].redeemCoins) * productList[index].count}",
+                                              " ${(double.parse(productList[index].redeemCoins) * productList[index].count).toStringAsFixed(2)}",
                                               style: TextStyle(
                                                   color: ColorPrimary,
                                                   fontSize: 15)),
@@ -706,7 +706,7 @@ class _BillingProductsState extends State<BillingProducts> {
           double.parse(productList[i].sellingPrice) * productList[i].count;
 
       billingProduct["product_redeem"] = widget.billingItemList[i].redeemCoins;
-
+      billingProduct["amount_paid"] = widget.billingItemList[i].redeemCoins;
       billingProductList.add(billingProduct);
     }
     input["product"] = billingProductList;
@@ -830,6 +830,70 @@ class _BillingProductsState extends State<BillingProducts> {
     billingProductsBloc.add(OtpVerifyEvent(input: input));
   }
 
+  // void calculateAmounts(List<ProductModel> productList) {
+  //   totalPay = 0;
+  //   redeemCoins = 0;
+  //   earnCoins = 0;
+
+  //   double availableCoins = widget.coin;
+  //   double customerCoins = widget.coin;
+  //   double redeemedCoin = 0;
+
+  //   productList.forEach((product) {
+  //     log("=====>sellingPrice${double.parse(product.sellingPrice)}");
+  //     log("=====>product.count${product.count}");
+  //     log("---totalPay$totalPay");
+  //     log("=====>redeemCoins==>${double.parse(product.redeemCoins)}");
+  //     //redeemedCoin += double.parse(product.redeemCoins);
+  //     // log("=====>redeemCoinss==>$redeemedCoin");
+  //     //log("=====>product.count${product.count}");
+  //     product.redeemCoins = (double.parse(product.sellingPrice) * 3).toString();
+
+  //     //log("=====>product.redeemCoins${product.redeemCoins}");
+  //     if (product.billingcheck) {
+  //       if (availableCoins >=
+  //           (double.parse(product.redeemCoins) *
+  //               double.parse(product.count.toString()))) {
+  //         redeemCoins += double.parse(product.redeemCoins) *
+  //             double.parse(product.count.toString());
+  //         redeemedCoin += double.parse(product.redeemCoins) *
+  //             double.parse(product.count.toString());
+  //         availableCoins = availableCoins -
+  //             double.parse(product.redeemCoins) *
+  //                 double.parse(product.count.toString());
+  //         log("sellingPrice=====>${double.parse(product.sellingPrice) * product.count}");
+  //         log("customerCoins=====>$customerCoins");
+  //         log("redeemCoins=====>$redeemCoins");
+  //         log("availableCoins====>$availableCoins");
+  //       } else {
+  //         double remainingCoin = (double.parse(product.redeemCoins) *
+  //                 double.parse(product.count.toString())) -
+  //             availableCoins;
+  //         log("availableCoins1======>$availableCoins");
+  //         log("customerCoins1=====>$customerCoins");
+  //         log("amount1 ==> $remainingCoin");
+  //         log("customerCoins1=====>$customerCoins");
+  //         double coinToRupee = remainingCoin / 3;
+  //         log("amount1== ==> $remainingCoin");
+  //         totalPay += coinToRupee;
+  //         redeemedCoin += availableCoins;
+  //         redeemCoins += availableCoins;
+  //         availableCoins = 0;
+  //       }
+  //     } else {
+  //       totalPay += double.parse(product.sellingPrice) * product.count;
+  //       log("yha mai aya hu $totalPay");
+  //     }
+
+  //     log("=====>product.earningCoins${double.parse(product.earningCoins)}");
+  //     log("=====>product.count2${product.count}");
+  //     earnCoins += double.parse(product.earningCoins) * product.count;
+  //     log("---earnCoins$earnCoins");
+  //     log("---totalpay --> $totalPay");
+  //     log("---redeemCoins --> $redeemCoins");
+  //   });
+  // }
+
   void calculateAmounts(List<ProductModel> productList) {
     totalPay = 0;
     redeemCoins = 0;
@@ -838,18 +902,20 @@ class _BillingProductsState extends State<BillingProducts> {
     double availableCoins = widget.coin;
     double customerCoins = widget.coin;
     double redeemedCoin = 0;
+    double partialcoin = 0;
+    double partialamount = 0;
 
     productList.forEach((product) {
       log("=====>sellingPrice${double.parse(product.sellingPrice)}");
       log("=====>product.count${product.count}");
       log("---totalPay$totalPay");
       log("=====>redeemCoins==>${double.parse(product.redeemCoins)}");
-      // redeemedCoin += double.parse(product.redeemCoins);
-      log("=====>redeemCoinss==>$redeemedCoin");
-      log("=====>product.count${product.count}");
+      //redeemedCoin += double.parse(product.redeemCoins);
+      // log("=====>redeemCoinss==>$redeemedCoin");
+      //log("=====>product.count${product.count}");
       product.redeemCoins = (double.parse(product.sellingPrice) * 3).toString();
 
-      log("=====>product.redeemCoins${product.redeemCoins}");
+      //log("=====>product.redeemCoins${product.redeemCoins}");
       if (product.billingcheck) {
         if (availableCoins >=
             (double.parse(product.redeemCoins) *
@@ -864,32 +930,58 @@ class _BillingProductsState extends State<BillingProducts> {
           log("sellingPrice=====>${double.parse(product.sellingPrice) * product.count}");
           log("customerCoins=====>$customerCoins");
           log("redeemCoins=====>$redeemCoins");
+          log("availableCoins====>$availableCoins");
+        } else if (availableCoins == 0) {
+          totalPay += double.parse(product.sellingPrice) * product.count;
+          log("yha mai aya hu== $totalPay");
         } else {
-          double remainingCoin = (double.parse(product.redeemCoins) *
-                  double.parse(product.count.toString())) -
-              availableCoins;
+          if (availableCoins <
+              (double.parse(product.redeemCoins) *
+                  double.parse(product.count.toString()))) {
+            log("yha mai aya hu totalPay===>");
+            double remainingCoin = (double.parse(product.redeemCoins) *
+                    double.parse(product.count.toString())) -
+                availableCoins;
+            log("availableCoins1======>$availableCoins");
+            log("customerCoins1=====>$customerCoins");
+            log("amount1 ==> $remainingCoin");
+            log("customerCoins1=====>$customerCoins");
+            double coinToRupee = remainingCoin / 3;
 
-          log("customerCoins=====>$customerCoins");
-          log("amount ==> $remainingCoin");
-          log("customerCoins$customerCoins");
-          double coinToRupee = remainingCoin / 3;
-          log("amount ==> $remainingCoin");
-          totalPay += coinToRupee;
-          redeemedCoin += availableCoins;
-          redeemCoins += availableCoins;
-          availableCoins = 0;
+            log("amount1== ==> $remainingCoin");
+            log("coinToRupee== ==> $coinToRupee");
+
+            product.coinpaid = availableCoins;
+            product.amounttopay = coinToRupee;
+
+            log("product.coinpaid== ==> $availableCoins");
+            log("product.amounttopay== ==> $coinToRupee");
+            totalPay += coinToRupee;
+            redeemedCoin += availableCoins;
+            redeemCoins += availableCoins;
+            availableCoins = 0;
+            log("yha mai aya hu totalPay====>");
+          } else {
+            double remainingCoin = (double.parse(product.redeemCoins) *
+                    double.parse(product.count.toString())) -
+                availableCoins;
+            log("availableCoins1======>$availableCoins");
+            log("customerCoins1=====>$customerCoins");
+            log("amount1 ==> $remainingCoin");
+            log("customerCoins1=====>$customerCoins");
+            double coinToRupee = remainingCoin / 3;
+            log("amount1== ==> $remainingCoin");
+            totalPay += coinToRupee;
+            redeemedCoin += availableCoins;
+            redeemCoins += availableCoins;
+            availableCoins = 0;
+          }
         }
-
-        // totalPay -= double.parse(product.sellingPrice) * product.count;
       } else {
-        log("yha mai aya hu");
         totalPay += double.parse(product.sellingPrice) * product.count;
+        log("yha mai aya hu $totalPay");
       }
-      // if (product.billingcheck) {
-      //   widget.coin -= double.parse(product.redeemCoins) * product.count;
-      // } else {
-      //   widget.coin += double.parse(product.redeemCoins) * product.count;
-      // }
+
       log("=====>product.earningCoins${double.parse(product.earningCoins)}");
       log("=====>product.count2${product.count}");
       earnCoins += double.parse(product.earningCoins) * product.count;
@@ -897,39 +989,7 @@ class _BillingProductsState extends State<BillingProducts> {
       log("---totalpay --> $totalPay");
       log("---redeemCoins --> $redeemCoins");
     });
-    // totalPay = redeemCoinss -
   }
-
-//   void calculateAmounts(List<ProductModel> productList) {
-//     double totalPay = 0;
-//     double redeemCoins = 0;
-//     double earnCoins = 0;
-//     double customerCoins = widget.coin;
-
-//     productList.forEach((product) {
-//       product.redeemCoins = (double.parse(product.sellingPrice) * 3).toString();
-
-//       if (product.billingcheck) {
-//         redeemCoins += double.parse(product.redeemCoins);
-//       }
-
-//       totalPay += double.parse(product.sellingPrice) * product.count;
-//       earnCoins += double.parse(product.earningCoins) * product.count;
-
-//       log("=====>product.earningCoins${double.parse(product.earningCoins)}");
-//       log("=====>product.count2${product.count}");
-//       log("---earnCoins$earnCoins");
-//       log("---totalpay --> $totalPay");
-//       log("---redeemCoins --> $redeemCoins");
-//     });
-
-//     if (customerCoins >= redeemCoins) {
-//       double d = totalPay;
-
-//       double e = redeemCoins*3;
-
-//     } else {}
-//   }
 }
 
 class Dialog extends StatefulWidget {
