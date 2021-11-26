@@ -327,7 +327,7 @@ class _BillingProductsState extends State<BillingProducts> {
                                               "assets/images/point.png"),
                                         ),
                                         AutoSizeText(
-                                          " ${(double.parse(productList[index].earningCoins) * productList[index].count).toStringAsFixed(2)}",
+                                          " ${(double.parse(productList[index].earningCoins).toStringAsFixed(2))}",
                                           style: TextStyle(
                                             color: ColorPrimary,
                                           ),
@@ -705,8 +705,11 @@ class _BillingProductsState extends State<BillingProducts> {
       billingProduct["total"] =
           double.parse(productList[i].sellingPrice) * productList[i].count;
 
-      billingProduct["product_redeem"] = widget.billingItemList[i].redeemCoins;
-      billingProduct["amount_paid"] = widget.billingItemList[i].redeemCoins;
+      billingProduct["product_redeem"] =
+          (double.parse(widget.billingItemList[i].redeemCoins) *
+                  productList[i].count)
+              .toString();
+      billingProduct["amount_paid"] = widget.billingItemList[i].amounttopay;
       billingProductList.add(billingProduct);
     }
     input["product"] = billingProductList;
@@ -928,17 +931,20 @@ class _BillingProductsState extends State<BillingProducts> {
               double.parse(product.redeemCoins) *
                   double.parse(product.count.toString());
           log("sellingPrice=====>${double.parse(product.sellingPrice) * product.count}");
+          product.amounttopay = 0;
           log("customerCoins=====>$customerCoins");
           log("redeemCoins=====>$redeemCoins");
           log("availableCoins====>$availableCoins");
         } else if (availableCoins == 0) {
+          product.amounttopay =
+              double.parse(product.sellingPrice) * product.count;
           totalPay += double.parse(product.sellingPrice) * product.count;
           log("yha mai aya hu== $totalPay");
         } else {
           if (availableCoins <
               (double.parse(product.redeemCoins) *
                   double.parse(product.count.toString()))) {
-            log("yha mai aya hu totalPay===>");
+            log("yha mai aya hu totalPay===>${double.parse(product.redeemCoins) * double.parse(product.count.toString())}");
             double remainingCoin = (double.parse(product.redeemCoins) *
                     double.parse(product.count.toString())) -
                 availableCoins;
@@ -956,11 +962,15 @@ class _BillingProductsState extends State<BillingProducts> {
 
             log("product.coinpaid== ==> $availableCoins");
             log("product.amounttopay== ==> $coinToRupee");
-            totalPay += coinToRupee;
+            partialcoin = double.parse(product.redeemCoins) *
+                double.parse(product.count.toString());
+            log("yha mai aya hu totalPay====>${product.redeemCoins}");
             redeemedCoin += availableCoins;
             redeemCoins += availableCoins;
             availableCoins = 0;
+            product.redeemCoins = partialcoin.toString();
             log("yha mai aya hu totalPay====>");
+            totalPay = coinToRupee;
           } else {
             double remainingCoin = (double.parse(product.redeemCoins) *
                     double.parse(product.count.toString())) -
@@ -978,13 +988,17 @@ class _BillingProductsState extends State<BillingProducts> {
           }
         }
       } else {
+        product.coinpaid = 0;
+        product.redeemCoins = product.coinpaid.toString();
+        product.amounttopay =
+            double.parse(product.sellingPrice) * product.count;
         totalPay += double.parse(product.sellingPrice) * product.count;
         log("yha mai aya hu $totalPay");
       }
 
       log("=====>product.earningCoins${double.parse(product.earningCoins)}");
       log("=====>product.count2${product.count}");
-      earnCoins += double.parse(product.earningCoins) * product.count;
+      earnCoins += double.parse(product.earningCoins);
       log("---earnCoins$earnCoins");
       log("---totalpay --> $totalPay");
       log("---redeemCoins --> $redeemCoins");
