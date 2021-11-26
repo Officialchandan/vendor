@@ -783,6 +783,13 @@ class _BillingProductsState extends State<BillingProducts> {
     redeemCoins = 0;
     earnCoins = 0;
 
+
+
+
+
+
+
+
     double availableCoins = widget.coin;
     double customerCoins = widget.coin;
     double redeemedCoin = 0;
