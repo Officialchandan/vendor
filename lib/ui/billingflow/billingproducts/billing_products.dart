@@ -583,7 +583,7 @@ class _BillingProductsState extends State<BillingProducts> {
     for (int i = 0; i < productList.length; i++) {
       Map<String, dynamic> billingProduct = Map<String, dynamic>();
 
-      if (productList[i].check) {
+      if (productList[i].billingcheck) {
         billingProduct["product_id"] = productList[i].id;
         billingProduct["product_name"] = productList[i].productName;
         billingProduct["qty"] = productList[i].count.toString();
@@ -714,8 +714,8 @@ class _BillingProductsState extends State<BillingProducts> {
     input["otp"] = "${_textFieldController.text}";
     input["total_pay"] = "${otpVerifyList!.totalPay}";
 
-    input["total_redeem"] = totalPay;
-    input["total_earning"] = earnCoins;
+    input["total_redeem"] = otpVerifyList!.redeemCoins;
+    input["total_earning"] = otpVerifyList!.earningCoins;
     input["myprofit_revenue"] = "${otpVerifyList!.myprofitrevenue}";
 
     log("=====? $input");

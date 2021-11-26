@@ -12,8 +12,7 @@ import 'package:vendor/utility/utility.dart';
 class CustomerDetailScreen extends StatefulWidget {
   final Customer customer;
 
-  const CustomerDetailScreen({required this.customer, Key? key})
-      : super(key: key);
+  const CustomerDetailScreen({required this.customer, Key? key}) : super(key: key);
 
   @override
   _CustomerDetailScreenState createState() => _CustomerDetailScreenState();
@@ -43,9 +42,8 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
           children: [
             Container(
               padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(color: Colors.grey.shade200, width: 1)),
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(5), border: Border.all(color: Colors.grey.shade200, width: 1)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -55,10 +53,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                       Expanded(
                           child: Text(
                         widget.customer.customerName,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16),
+                        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
                       )),
                       Text(
                         Utility.getFormatDate1(widget.customer.date),
@@ -89,18 +84,13 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                     return Container(
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(
-                              color: Colors.grey.shade200, width: 1)),
+                          borderRadius: BorderRadius.circular(5), border: Border.all(color: Colors.grey.shade200, width: 1)),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             "all_items_key".tr(),
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15),
+                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
                           ),
                           Column(
                             children: List.generate(
@@ -109,30 +99,19 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                                       children: [
                                         Container(
                                           padding: const EdgeInsets.all(10),
-                                          margin: EdgeInsets.symmetric(
-                                              vertical: 10),
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              color: Colors.grey.shade100),
+                                          margin: EdgeInsets.symmetric(vertical: 10),
+                                          decoration:
+                                              BoxDecoration(borderRadius: BorderRadius.circular(5), color: Colors.grey.shade100),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.max,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
                                             children: [
                                               Image(
-                                                image: NetworkImage(snapshot
-                                                        .data![index]
-                                                        .productImages
-                                                        .isNotEmpty
-                                                    ? snapshot
-                                                        .data![index]
-                                                        .productImages
-                                                        .first
-                                                        .productImage
+                                                image: NetworkImage(snapshot.data![index].productImages.isNotEmpty
+                                                    ? snapshot.data![index].productImages.first.productImage
                                                     : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDIC2m4o5Ff_s_BOIL0-y7uq8m_Kqrn0Yq1Q&usqp=CAU"),
-                                                height: 70,
-                                                width: 70,
+                                                height: 50,
+                                                width: 50,
                                                 fit: BoxFit.contain,
                                               ),
                                               const SizedBox(
@@ -143,28 +122,17 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                                                   child: Column(
                                                     children: [
                                                       Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
+                                                        mainAxisSize: MainAxisSize.max,
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                         children: [
                                                           Text(
                                                             "${snapshot.data![index].productName}",
                                                             style: TextStyle(
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                fontSize: 16),
+                                                                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
                                                           ),
                                                           Text(
-                                                            "${snapshot.data![index].total}",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .black,
-                                                                fontSize: 14),
+                                                            "₹ ${snapshot.data![index].total}",
+                                                            style: TextStyle(color: ColorPrimary, fontSize: 14),
                                                           ),
                                                         ],
                                                       ),
@@ -172,35 +140,23 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                                                         height: 5,
                                                       ),
                                                       Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                         children: [
                                                           Text(
                                                             "${snapshot.data![index].qty} x ${snapshot.data![index].price}",
                                                             style: TextStyle(
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                fontSize: 16),
+                                                                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
                                                           ),
                                                           Row(
                                                             children: [
                                                               Image(
-                                                                image: AssetImage(
-                                                                    "assets/images/point.png"),
+                                                                image: AssetImage("assets/images/point.png"),
                                                                 width: 15,
                                                                 height: 15,
                                                               ),
                                                               Text(
                                                                 "${snapshot.data![index].earningCoins}",
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontSize:
-                                                                        14),
+                                                                style: TextStyle(color: Colors.black, fontSize: 14),
                                                               ),
                                                             ],
                                                           ),
@@ -213,27 +169,18 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                                             ],
                                           ),
                                         ),
-                                        snapshot.data![index].redeemCoins
-                                                    .isEmpty ||
-                                                snapshot.data![index]
-                                                        .redeemCoins ==
-                                                    "0"
+                                        snapshot.data![index].redeemCoins.isEmpty ||
+                                                double.parse(snapshot.data![index].redeemCoins) == 0
                                             ? Container()
                                             : Positioned(
                                                 child: Container(
                                                   decoration: BoxDecoration(
-                                                    color: ColorPrimary
-                                                        .withOpacity(0.2),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
+                                                    color: ColorPrimary.withOpacity(0.2),
+                                                    borderRadius: BorderRadius.circular(10),
                                                   ),
                                                   child: Text(
-                                                    "\t" +
-                                                        "redeemed_key".tr() +
-                                                        "\t",
-                                                    style: TextStyle(
-                                                        color: ColorPrimary),
+                                                    "\t" + "redeemed_key".tr() + "\t",
+                                                    style: TextStyle(color: ColorPrimary),
                                                   ),
                                                 ),
                                                 top: 0,
@@ -282,8 +229,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Image(
-                                    image:
-                                        AssetImage("assets/images/point.png"),
+                                    image: AssetImage("assets/images/point.png"),
                                     width: 15,
                                     height: 15,
                                   ),
@@ -324,8 +270,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
         "vendor_id": await SharedPref.getIntegerPreference(SharedPref.VENDORID)
       };
 
-      GetCustomerProductResponse response =
-          await apiProvider.getCustomerProduct(input);
+      GetCustomerProductResponse response = await apiProvider.getCustomerProduct(input);
       if (response.success) {
         response.data!.forEach((product) {
           totalPay += double.parse(product.total);

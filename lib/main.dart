@@ -132,7 +132,7 @@ ThemeData themeData(context) => ThemeData(
       },
     )).copyWith(secondary: ColorPrimary).copyWith(secondary: ColorPrimary));
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
-    "high_importance_channel", "Hogh Importance Notification",
+    "high_importance_channel", "High Importance Notification",
     importance: Importance.high, playSound: true);
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -144,7 +144,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("A bg Message showed up: ${message.messageId}");
 }
 
-fcmtoken() async {
+fcmToken() async {
   log("${await firebaseMessaging.getToken()}");
 }
 
@@ -152,7 +152,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp();
-  await fcmtoken();
+  await fcmToken();
 
   FirebaseMessaging.onBackgroundMessage((_firebaseMessagingBackgroundHandler));
 
