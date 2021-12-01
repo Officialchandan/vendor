@@ -145,7 +145,11 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 }
 
 fcmToken() async {
-  log("${await firebaseMessaging.getToken()}");
+  try {
+    log("${await firebaseMessaging.getToken()}");
+  } catch (e) {
+    log("error");
+  }
 }
 
 void main() async {

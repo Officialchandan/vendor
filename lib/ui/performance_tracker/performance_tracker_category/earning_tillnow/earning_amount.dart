@@ -109,7 +109,9 @@ class _EarningAmountState extends State<EarningAmount> {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return Center(child: CircularProgressIndicator());
+                          return Center(
+                              child: CircularProgressIndicator(
+                                  color: ColorPrimary));
                         }
                         if (snapshot.hasError) {
                           return Center(
@@ -448,7 +450,9 @@ class _EarningAmountState extends State<EarningAmount> {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return Center(child: CircularProgressIndicator());
+                          return Center(
+                              child: CircularProgressIndicator(
+                                  color: ColorPrimary));
                         }
                         if (snapshot.hasError) {
                           return Center(
@@ -681,7 +685,9 @@ class _EarningAmountState extends State<EarningAmount> {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return Center(child: CircularProgressIndicator());
+                          return Center(
+                              child: CircularProgressIndicator(
+                                  color: ColorPrimary));
                         }
                         if (snapshot.hasError) {
                           return Center(

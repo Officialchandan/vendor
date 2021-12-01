@@ -7,6 +7,7 @@ class ProductModel {
     required this.categoryName,
     required this.categoryId,
     required this.vendorId,
+    required this.commission,
     required this.productName,
     required this.description,
     required this.productOptionVariantId,
@@ -28,6 +29,7 @@ class ProductModel {
   String categoryId;
   String categoryName;
   String vendorId;
+  String commission;
   String productName;
   String description;
   String productOptionVariantId;
@@ -62,6 +64,8 @@ class ProductModel {
         categoryName: json["category_name"] == null
             ? ""
             : json["category_name"].toString(),
+        commission:
+            json["commission"] == null ? "" : json["commission"].toString(),
         vendorId:
             json["vendor_id"] == null ? "0" : json["vendor_id"].toString(),
         productName:
@@ -101,6 +105,7 @@ class ProductModel {
         "product_id": productId == null ? null : productId,
         "category_id": categoryId == null ? null : categoryId,
         "vendor_id": vendorId == null ? null : vendorId,
+        "commission": commission == null ? null : commission,
         "product_name": productName == null ? null : productName,
         "description": description == null ? null : description,
         "product_option_variant_id":
