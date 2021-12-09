@@ -53,32 +53,29 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   Stream<LoginState> getLoginOtp(mobile, otp) async* {
     if (await Network.isConnected()) {
-      try {
-        LoginResponse result = await apiProvider.verifyOtp(mobile, otp);
-        if (result.success) {
-          SharedPref.setBooleanPreference(SharedPref.LOGIN, true);
-          SharedPref.setStringPreference(SharedPref.TOKEN, result.token!);
+      //try {
+      LoginResponse result = await apiProvider.verifyOtp(mobile, otp);
+      if (result.success) {
+        SharedPref.setBooleanPreference(SharedPref.LOGIN, true);
+        SharedPref.setStringPreference(SharedPref.TOKEN, result.token!);
 
-          SharedPref.setIntegerPreference(
-              SharedPref.VENDORID, result.vendorId!);
-          SharedPref.setIntegerPreference(
-              SharedPref.USERSTATUS, result.vendorStatus!);
-          SharedPref.setStringPreference(
-              SharedPref.USERNAME, result.vendorName!);
-          SharedPref.setStringPreference(
-              SharedPref.USERNUMBER, result.vendorMobile!);
-          SharedPref.setStringPreference(
-              SharedPref.OWNERNAME, result.ownerName!);
+        SharedPref.setIntegerPreference(SharedPref.VENDORID, result.vendorId!);
+        SharedPref.setIntegerPreference(
+            SharedPref.USERSTATUS, result.vendorStatus!);
+        SharedPref.setStringPreference(SharedPref.USERNAME, result.vendorName!);
+        SharedPref.setStringPreference(
+            SharedPref.USERNUMBER, result.vendorMobile!);
+        SharedPref.setStringPreference(SharedPref.OWNERNAME, result.ownerName!);
 
-          baseOptions.headers
-              .addAll({"Authorization": "bearer ${result.token!}"});
-          yield GetLoginOtpState(result.message);
-        } else {
-          yield GetLoginFailureState(message: result.message);
-        }
-      } catch (error) {
-        yield GetLoginFailureState(message: "internal_server_error_key".tr());
+        baseOptions.headers
+            .addAll({"Authorization": "bearer ${result.token!}"});
+        yield GetLoginOtpState(result.message);
+      } else {
+        yield GetLoginFailureState(message: result.message);
       }
+      // } catch (error) {
+      //   yield GetLoginFailureState(message: "internal_server_error_key".tr());
+      // }
     } else {
       Fluttertoast.showToast(
           msg: "please_check_your_internet_connection_key".tr(),

@@ -31,7 +31,8 @@ class BillingScreen extends StatefulWidget {
 }
 
 class _BillingScreenState extends State<BillingScreen> {
-  CustomerNumberResponseBloc customerNumberResponseBloc = CustomerNumberResponseBloc();
+  CustomerNumberResponseBloc customerNumberResponseBloc =
+      CustomerNumberResponseBloc();
   TextEditingController mobileController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   List<CategoryModel> category = [];
@@ -42,7 +43,8 @@ class _BillingScreenState extends State<BillingScreen> {
   var userStatus;
   var status;
   var status1;
-  RefreshController _refreshController = RefreshController(initialRefresh: false);
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
 
   @override
   void initState() {
@@ -68,7 +70,8 @@ class _BillingScreenState extends State<BillingScreen> {
         )),
         Text(
           "  0.0",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: ColorPrimary),
+          style: TextStyle(
+              fontSize: 20, fontWeight: FontWeight.w700, color: ColorPrimary),
         ),
       ],
     );
@@ -78,33 +81,46 @@ class _BillingScreenState extends State<BillingScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomeScreen()));
         return true;
       },
       child: BlocProvider<CustomerNumberResponseBloc>(
         create: (context) => customerNumberResponseBloc,
-        child: BlocConsumer<CustomerNumberResponseBloc, CustomerNumberResponseState>(
+        child: BlocConsumer<CustomerNumberResponseBloc,
+            CustomerNumberResponseState>(
           listener: (context, state) async {
-            userStatus = await SharedPref.getIntegerPreference(SharedPref.USERSTATUS);
+            userStatus =
+                await SharedPref.getIntegerPreference(SharedPref.USERSTATUS);
           },
           builder: (context, state) {
             return Scaffold(
               appBar: AppBar(
-                title: Text("billing_key".tr(), style: TextStyle(fontWeight: FontWeight.w600)),
+                title: Text("billing_key".tr(),
+                    style: TextStyle(fontWeight: FontWeight.w600)),
                 leadingWidth: 140,
                 leading: userStatus == 1
                     ? Padding(
-                        padding: const EdgeInsets.only(top: 15.0, bottom: 15, left: 20),
+                        padding: const EdgeInsets.only(
+                            top: 15.0, bottom: 15, left: 20),
                         child: InkWell(
                           onTap: () {
-                            Navigator.push(context, PageTransition(child: DirectBilling(), type: PageTransitionType.fade));
+                            Navigator.push(
+                                context,
+                                PageTransition(
+                                    child: DirectBilling(),
+                                    type: PageTransitionType.fade));
                           },
                           child: Container(
-                            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5)),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(5)),
                             child: Center(
                               child: Text(
                                 "direct_billing_key".tr(),
-                                style: TextStyle(color: ColorPrimary, fontWeight: FontWeight.bold),
+                                style: TextStyle(
+                                    color: ColorPrimary,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ),
                           ),
@@ -147,7 +163,8 @@ class _BillingScreenState extends State<BillingScreen> {
                         //mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          BlocConsumer<CustomerNumberResponseBloc, CustomerNumberResponseState>(
+                          BlocConsumer<CustomerNumberResponseBloc,
+                              CustomerNumberResponseState>(
                             listener: (context, state) {
                               if (state is GetCustomerNumberResponseState) {
                                 log("number chl gya");
@@ -161,7 +178,8 @@ class _BillingScreenState extends State<BillingScreen> {
                                 //     textColor: Colors.white,
                                 //     msg: state.message);
                               }
-                              if (state is GetCustomerNumberResponseFailureState) {
+                              if (state
+                                  is GetCustomerNumberResponseFailureState) {
                                 check = state.succes;
                                 log("======>$check");
                                 message = state.message;
@@ -188,17 +206,24 @@ class _BillingScreenState extends State<BillingScreen> {
                                     mobileController.text.length == 10
                                         ? Text(
                                             "  ${state.data}",
-                                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: ColorPrimary),
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w700,
+                                                color: ColorPrimary),
                                           )
                                         : Text(
                                             "  0.0",
-                                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: ColorPrimary),
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w700,
+                                                color: ColorPrimary),
                                           ),
                                   ],
                                 );
                               }
 
-                              if (state is GetCustomerNumberResponseLoadingstate) {
+                              if (state
+                                  is GetCustomerNumberResponseLoadingstate) {
                                 return Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
@@ -209,7 +234,10 @@ class _BillingScreenState extends State<BillingScreen> {
                                     )),
                                     Text(
                                       "  0.0",
-                                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: ColorPrimary),
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w700,
+                                          color: ColorPrimary),
                                     ),
                                   ],
                                 );
@@ -217,7 +245,8 @@ class _BillingScreenState extends State<BillingScreen> {
                               return show();
                             },
                           ),
-                          BlocConsumer<CustomerNumberResponseBloc, CustomerNumberResponseState>(
+                          BlocConsumer<CustomerNumberResponseBloc,
+                              CustomerNumberResponseState>(
                             listener: (context, state) {},
                             builder: (context, state) {
                               return Container(
@@ -225,47 +254,81 @@ class _BillingScreenState extends State<BillingScreen> {
                                   TextFormField(
                                       controller: mobileController,
                                       keyboardType: TextInputType.number,
-                                      validator: (numb) => Validator.validateMobile(numb!, context),
-                                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                      validator: (numb) =>
+                                          Validator.validateMobile(
+                                              numb!, context),
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.digitsOnly
+                                      ],
                                       maxLength: 10,
                                       decoration: InputDecoration(
-                                        hintText: 'enter_customer_phone_number_key'.tr(),
+                                        hintText:
+                                            'enter_customer_phone_number_key'
+                                                .tr(),
                                         labelText: 'mobile_number_key'.tr(),
                                         counterText: "",
                                         contentPadding: EdgeInsets.all(0),
                                         fillColor: Colors.transparent,
-                                        enabledBorder:
-                                            UnderlineInputBorder(borderSide: BorderSide(color: ColorTextPrimary, width: 1.5)),
-                                        focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
-                                        border: UnderlineInputBorder(borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
+                                        enabledBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: ColorTextPrimary,
+                                                width: 1.5)),
+                                        focusedBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: ColorPrimary,
+                                                width: 1.5)),
+                                        border: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: ColorPrimary,
+                                                width: 1.5)),
                                       ),
                                       onChanged: (length) {
-                                        if (mobileController.text.length == 10) {
-                                          customerNumberResponseBloc
-                                              .add(GetCustomerNumberResponseEvent(mobile: mobileController.text));
+                                        if (mobileController.text.length ==
+                                            10) {
+                                          customerNumberResponseBloc.add(
+                                              GetCustomerNumberResponseEvent(
+                                                  mobile:
+                                                      mobileController.text));
                                         }
                                         if (mobileController.text.length == 9) {
-                                          customerNumberResponseBloc
-                                              .add(GetCustomerNumberResponseEvent(mobile: mobileController.text));
+                                          customerNumberResponseBloc.add(
+                                              GetCustomerNumberResponseEvent(
+                                                  mobile:
+                                                      mobileController.text));
                                         }
                                       }),
                                   status == 0
                                       ? Padding(
-                                          padding: const EdgeInsets.only(top: 8.0),
+                                          padding:
+                                              const EdgeInsets.only(top: 8.0),
                                           child: TextFormField(
                                               controller: nameController,
                                               decoration: InputDecoration(
-                                                hintText: 'enter_customer_name_key'.tr(),
+                                                hintText:
+                                                    'enter_customer_name_key'
+                                                        .tr(),
                                                 labelText: 'full_name_key'.tr(),
                                                 counterText: "",
-                                                contentPadding: EdgeInsets.all(0),
+                                                contentPadding:
+                                                    EdgeInsets.all(0),
                                                 fillColor: Colors.transparent,
                                                 enabledBorder:
-                                                    UnderlineInputBorder(borderSide: BorderSide(color: ColorTextPrimary, width: 1.5)),
+                                                    UnderlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                            color:
+                                                                ColorTextPrimary,
+                                                            width: 1.5)),
                                                 focusedBorder:
-                                                    UnderlineInputBorder(borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
-                                                border: UnderlineInputBorder(borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
+                                                    UnderlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                            color: ColorPrimary,
+                                                            width: 1.5)),
+                                                border: UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color: ColorPrimary,
+                                                        width: 1.5)),
                                               ),
                                               onChanged: (length) {}),
                                         )
@@ -290,17 +353,22 @@ class _BillingScreenState extends State<BillingScreen> {
                                                 context,
                                                 PageTransition(
                                                     child: SearchAllProduct(
-                                                      mobile: mobileController.text,
-                                                      coin: coins,
+                                                      mobile:
+                                                          mobileController.text,
+                                                      coin: coins =
+                                                          0.toString(),
                                                     ),
-                                                    type: PageTransitionType.fade))
+                                                    type: PageTransitionType
+                                                        .fade))
                                             .then((value) {
                                           nameController.clear();
                                           mobileController.clear();
                                           FocusScope.of(context).unfocus();
                                         });
                                       } else {
-                                        Fluttertoast.showToast(msg: "please_enter_name_key ".tr(), backgroundColor: ColorPrimary);
+                                        Fluttertoast.showToast(
+                                            msg: "please_enter_name_key ".tr(),
+                                            backgroundColor: ColorPrimary);
                                       }
                                     }
                                   } else {
@@ -315,21 +383,30 @@ class _BillingScreenState extends State<BillingScreen> {
                                               ),
                                               type: PageTransitionType.fade));
                                     } else {
-                                      Fluttertoast.showToast(msg: "$message", backgroundColor: ColorPrimary);
+                                      Fluttertoast.showToast(
+                                          msg: "$message",
+                                          backgroundColor: ColorPrimary);
                                     }
                                   }
                                 } else {
                                   Fluttertoast.showToast(
-                                      msg: "please_enter_vailid_number_first_key".tr(), backgroundColor: ColorPrimary);
+                                      msg:
+                                          "please_enter_vailid_number_first_key"
+                                              .tr(),
+                                      backgroundColor: ColorPrimary);
                                 }
                               } else {
                                 Fluttertoast.showToast(
-                                    msg: "please_check_your_internet_connection_key".tr(), backgroundColor: ColorPrimary);
+                                    msg:
+                                        "please_check_your_internet_connection_key"
+                                            .tr(),
+                                    backgroundColor: ColorPrimary);
                               }
                             },
                             child: Container(
                               width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height * 0.070,
+                              height:
+                                  MediaQuery.of(context).size.height * 0.070,
                               padding: EdgeInsets.only(left: 10),
                               color: Colors.grey[300],
                               child: Row(
@@ -337,7 +414,9 @@ class _BillingScreenState extends State<BillingScreen> {
                                   Icon(Icons.search),
                                   Text(
                                     "search_all_products_key".tr(),
-                                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                                    style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold),
                                   )
                                 ],
                               ),
@@ -348,12 +427,14 @@ class _BillingScreenState extends State<BillingScreen> {
                           ),
                           Text(
                             "search_by_category_key".tr(),
-                            style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontSize: 17, fontWeight: FontWeight.bold),
                           ),
                           SizedBox(
                             height: 10,
                           ),
-                          BlocConsumer<CustomerNumberResponseBloc, CustomerNumberResponseState>(
+                          BlocConsumer<CustomerNumberResponseBloc,
+                              CustomerNumberResponseState>(
                             listener: (context, state) {
                               if (state is GetCategoryByVendorIdState) {
                                 log("category chl gya");
@@ -363,7 +444,9 @@ class _BillingScreenState extends State<BillingScreen> {
                                 //     msg: state.message);
                               }
                               if (state is GetCategoryByVendorIdFailureState) {
-                                Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
+                                Fluttertoast.showToast(
+                                    msg: state.message,
+                                    backgroundColor: ColorPrimary);
                               }
                               if (state is GetCategoryByVendorIdLoadingstate) {
                                 CircularProgressIndicator(
@@ -373,7 +456,8 @@ class _BillingScreenState extends State<BillingScreen> {
                             },
                             builder: (context, state) {
                               if (state is CustomerNumberResponseIntialState) {
-                                customerNumberResponseBloc.add(GetVendorCategoryEvent());
+                                customerNumberResponseBloc
+                                    .add(GetVendorCategoryEvent());
                               }
                               if (state is GetCategoryByVendorIdState) {
                                 category = state.data!;
@@ -390,7 +474,8 @@ class _BillingScreenState extends State<BillingScreen> {
                               return Container(
                                   color: Colors.transparent,
                                   //   padding: EdgeInsets.only(bottom: 80),
-                                  height: MediaQuery.of(context).size.height * 0.42,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.42,
                                   child: categoryListWidget(category));
                             },
                           ),
@@ -406,10 +491,16 @@ class _BillingScreenState extends State<BillingScreen> {
                   onTap: () async {
                     if (await Network.isConnected()) {
                       FocusScope.of(context).unfocus();
-                      Navigator.push(context, PageTransition(child: AddProductScreen(), type: PageTransitionType.fade))
+                      Navigator.push(
+                              context,
+                              PageTransition(
+                                  child: AddProductScreen(),
+                                  type: PageTransitionType.fade))
                           .then((value) => FocusScope.of(context).unfocus());
                     } else {
-                      Fluttertoast.showToast(msg: "please_check_your_internet_connection_key".tr(), backgroundColor: ColorPrimary);
+                      Fluttertoast.showToast(
+                          msg: "please_check_your_internet_connection_key".tr(),
+                          backgroundColor: ColorPrimary);
                     }
                   },
                   child: Container(
@@ -422,7 +513,10 @@ class _BillingScreenState extends State<BillingScreen> {
                     child: Center(
                         child: Text(
                       "add_new_product_key".tr(),
-                      style: TextStyle(color: ColorPrimary, fontSize: 18, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                          color: ColorPrimary,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600),
                     )),
                   ),
                 ),
@@ -467,7 +561,9 @@ class _BillingScreenState extends State<BillingScreen> {
                           mobileController.clear();
                         });
                       } else {
-                        Fluttertoast.showToast(msg: "please_enter_name_key ".tr(), backgroundColor: ColorPrimary);
+                        Fluttertoast.showToast(
+                            msg: "please_enter_name_key ".tr(),
+                            backgroundColor: ColorPrimary);
                       }
                     }
                   } else {
@@ -483,14 +579,19 @@ class _BillingScreenState extends State<BillingScreen> {
                               ),
                               type: PageTransitionType.fade));
                     } else {
-                      Fluttertoast.showToast(msg: "$message", backgroundColor: ColorPrimary);
+                      Fluttertoast.showToast(
+                          msg: "$message", backgroundColor: ColorPrimary);
                     }
                   }
                 } else {
-                  Fluttertoast.showToast(msg: "please_enter_vailid_number_first_key".tr(), backgroundColor: ColorPrimary);
+                  Fluttertoast.showToast(
+                      msg: "please_enter_vailid_number_first_key".tr(),
+                      backgroundColor: ColorPrimary);
                 }
               } else {
-                Fluttertoast.showToast(msg: "please_check_your_internet_connection_key".tr(), backgroundColor: ColorPrimary);
+                Fluttertoast.showToast(
+                    msg: "please_check_your_internet_connection_key".tr(),
+                    backgroundColor: ColorPrimary);
               }
             },
             child: Container(
@@ -525,7 +626,8 @@ class _BillingScreenState extends State<BillingScreen> {
                         //colorBlendMode: BlendMode.clear,
                         fit: BoxFit.contain);
                   },
-                  progressIndicatorBuilder: (context, url, downloadProgress) => Icon(
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      Icon(
                     Icons.image,
                     color: ColorPrimary,
                   ),
@@ -536,7 +638,10 @@ class _BillingScreenState extends State<BillingScreen> {
                   transform: Matrix4.translationValues(0, -2, 0),
                   child: Text(
                     "${category[index].categoryName}",
-                    style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600),
                   ),
                 ),
                 // trailing: ButtonTheme(
@@ -579,6 +684,7 @@ class _BillingScreenState extends State<BillingScreen> {
     input["first_name"] = nameController.text;
 
     log("=====? $input");
-    customerNumberResponseBloc.add(GetBillingPartialUserRegisterEvent(input: input));
+    customerNumberResponseBloc
+        .add(GetBillingPartialUserRegisterEvent(input: input));
   }
 }

@@ -23,7 +23,7 @@ class PartialUserRegisterResponse {
   factory PartialUserRegisterResponse.fromMap(Map<String, dynamic> json) =>
       PartialUserRegisterResponse(
         success: json["success"] == null ? null : json["success"],
-        message: json["message"] == null ? "" : json["message"],
+        message: json["message"] == null ? "" : json["message"].toString(),
         status: json["status"] == null ? null : json["status"],
       );
 
