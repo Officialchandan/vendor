@@ -131,10 +131,12 @@ ThemeData themeData(context) => ThemeData(
         900: Color(0xFF1500F5),
       },
     )).copyWith(secondary: ColorPrimary).copyWith(secondary: ColorPrimary));
-const AndroidNotificationChannel channel = AndroidNotificationChannel("high_importance_channel", "High Importance Notification",
+const AndroidNotificationChannel channel = AndroidNotificationChannel(
+    "high_importance_channel", "High Importance Notification",
     importance: Importance.high, playSound: true);
 
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
@@ -171,7 +173,8 @@ void main() async {
           notification.title,
           notification.body,
           NotificationDetails(
-            android: AndroidNotificationDetails(channel.id, channel.name, color: ColorPrimary, playSound: true, icon: "logo"),
+            android: AndroidNotificationDetails(channel.id, channel.name,
+                color: ColorPrimary, playSound: true, icon: "logo"),
           ));
     }
     // Navigator.push(navigationService.navigatorKey.currentContext!,
@@ -184,12 +187,14 @@ void main() async {
     AndroidNotification? android = message.notification?.android;
     if (notification != null && android != null) {
       log("notification aya");
-      Navigator.push(navigationService.navigatorKey.currentContext!, MaterialPageRoute(builder: (_) => MoneyDueScreen()));
+      Navigator.push(navigationService.navigatorKey.currentContext!,
+          MaterialPageRoute(builder: (_) => MoneyDueScreen()));
     }
   });
 
   await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(channel);
   configEasyLoading();
 
@@ -214,7 +219,11 @@ void main() async {
       }));
   // assets/locale
   runApp(
-    EasyLocalization(supportedLocales: Constant.language, path: 'assets/locale', fallbackLocale: Locale('en'), child: MyApp()),
+    EasyLocalization(
+        supportedLocales: Constant.language,
+        path: 'assets/locale',
+        fallbackLocale: Locale('en'),
+        child: MyApp()),
   );
 }
 
@@ -246,22 +255,29 @@ class _MyAppState extends State<MyApp> {
       onGenerateRoute: (route) {
         switch (route.name) {
           case "/":
-            return PageTransition(type: PageTransitionType.fade, child: SplashScreen());
+            return PageTransition(
+                type: PageTransitionType.fade, child: SplashScreen());
 
           case Routes.SplashScreen:
-            return PageTransition(type: PageTransitionType.fade, child: SplashScreen());
+            return PageTransition(
+                type: PageTransitionType.fade, child: SplashScreen());
 
           case Routes.SelectLanguage:
-            return PageTransition(type: PageTransitionType.fade, child: SelectLanguage());
+            return PageTransition(
+                type: PageTransitionType.fade, child: SelectLanguage());
 
           case Routes.LoginScreen:
-            return PageTransition(type: PageTransitionType.fade, child: LoginScreen());
+            return PageTransition(
+                type: PageTransitionType.fade, child: LoginScreen());
 
           case Routes.HomeScreen:
-            return PageTransition(type: PageTransitionType.fade, child: HomeScreen());
+            return PageTransition(
+                type: PageTransitionType.fade, child: HomeScreen());
 
           case Routes.HomeScreenWithoutInventory:
-            return PageTransition(type: PageTransitionType.fade, child: HomeScreenWithoutInventory());
+            return PageTransition(
+                type: PageTransitionType.fade,
+                child: HomeScreenWithoutInventory());
 
           case Routes.BOTTOM_NAVIGATION_HOME:
             int index = route.arguments as int;

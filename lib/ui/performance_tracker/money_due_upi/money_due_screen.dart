@@ -57,7 +57,10 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
 
                           return Text(
                             "₹ $dueAmount",
-                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
                           );
                         },
                       ),
@@ -76,7 +79,10 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                   padding: const EdgeInsets.all(15.0),
                   child: Text(
                     "Categories",
-                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20),
                   ),
                 ),
                 BlocBuilder<MoneyDueBloc, MoneyDueState>(
@@ -93,7 +99,8 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                       children: List.generate(
                           categoryDue.length,
                           (index) => Container(
-                                margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 10),
                                 decoration: BoxDecoration(
                                   color: ColorPrimary,
                                   borderRadius: BorderRadius.circular(6),
@@ -104,20 +111,25 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                   ),
                                   decoration: BoxDecoration(
                                     color: Colors.grey.shade50,
-                                    borderRadius: BorderRadius.only(topRight: Radius.circular(5), bottomRight: Radius.circular(5)),
+                                    borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(5),
+                                        bottomRight: Radius.circular(5)),
                                   ),
                                   child: ListTile(
                                     onTap: () {},
                                     leading: Image(
-                                      image: NetworkImage("${categoryDue[index].image}"),
+                                      image: NetworkImage(
+                                          "${categoryDue[index].image}"),
                                       height: 30,
                                       width: 30,
                                       fit: BoxFit.contain,
                                     ),
-                                    title: Text("${categoryDue[index].categoryName}"),
+                                    title: Text(
+                                        "${categoryDue[index].categoryName}"),
                                     // subtitle: Text("${categoryDue[index]["subTitle"]}"),
 
-                                    trailing: Text("₹ ${categoryDue[index].myprofitRevenue}"),
+                                    trailing: Text(
+                                        "₹ ${categoryDue[index].myprofitRevenue}"),
                                   ),
                                 ),
                               )),
@@ -133,7 +145,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
             height: 50,
             shape: RoundedRectangleBorder(),
             child: Text(
-              "UPI - TRANSFER",
+              "upi_transfer_key".tr(),
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           )),

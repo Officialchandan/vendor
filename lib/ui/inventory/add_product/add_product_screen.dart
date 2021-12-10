@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:collection';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
@@ -261,9 +260,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                       child: Container(
                                           width: 25,
                                           padding: EdgeInsets.all(3),
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: ColorPrimary),
+                                          decoration: BoxDecoration(shape: BoxShape.circle, color: ColorPrimary),
                                           child: Icon(
                                             Icons.delete,
                                             color: Colors.white,
@@ -461,12 +458,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           controller: edtStock,
                           keyboardType: TextInputType.phone,
                           maxLength: 8,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly
-                          ],
-                          decoration: InputDecoration(
-                              labelText: "stock_key".tr(),
-                              counter: SizedBox.shrink()),
+                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                          decoration: InputDecoration(labelText: "stock_key".tr(), counter: SizedBox.shrink()),
                           onChanged: (text) {
                             variantModel.stock = text;
                           },
@@ -527,40 +520,30 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       showModalBottomSheet(
                           context: context,
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(15),
-                                  topRight: Radius.circular(15))),
+                              borderRadius: BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15))),
                           builder: (context) {
                             return VariantTypeBottomSheet(
                               categoryId: categoryId,
                               selectedVariants: variantType,
                               onSelect: (List<VariantType> variants) async {
                                 if (variants.isEmpty) {
-                                  Utility.showToast(
-                                      "please_select_at_least_one_option_key"
-                                          .tr());
+                                  Utility.showToast("please_select_at_least_one_option_key".tr());
                                 } else {
                                   variantType = variants;
                                   List<VariantOption> options = [];
                                   String variantName = "";
                                   for (int i = 0; i < variantType.length; i++) {
-                                    options.add(VariantOption(
-                                        name: variantType[i].variantName,
-                                        value: ""));
+                                    options.add(VariantOption(name: variantType[i].variantName, value: ""));
                                     if (i == variantType.length - 1)
-                                      variantName = variantName +
-                                          variantType[i].variantName;
+                                      variantName = variantName + variantType[i].variantName;
                                     else
-                                      variantName = variantName +
-                                          variantType[i].variantName +
-                                          " / ";
+                                      variantName = variantName + variantType[i].variantName + " / ";
                                   }
                                   ProductVariantModel model = variantModel;
                                   model.option = options;
                                   edtOptions.text = variantName;
                                   print(model.toString());
-                                  addProductBloc.add(
-                                      SelectVariantOptionEvent(variant: model));
+                                  addProductBloc.add(SelectVariantOptionEvent(variant: model));
                                 }
                               },
                             );
@@ -570,11 +553,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       labelText: "options_key".tr(),
                       hintText: "select_options_key".tr(),
                       suffixIcon: Icon(Icons.keyboard_arrow_right),
-                      suffixIconConstraints: BoxConstraints(
-                          minWidth: 20,
-                          maxWidth: 21,
-                          minHeight: 20,
-                          maxHeight: 21)),
+                      suffixIconConstraints: BoxConstraints(minWidth: 20, maxWidth: 21, minHeight: 20, maxHeight: 21)),
                 ),
                 const SizedBox(
                   height: 15,
@@ -598,8 +577,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       variantModel = state.variant;
                     }
                     return Column(
-                      children:
-                          List.generate(variantModel.option.length, (index) {
+                      children: List.generate(variantModel.option.length, (index) {
                         return VariantOptionWidget(variantModel.option[index]);
                       }),
                     );
@@ -631,12 +609,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     if (productVariant.isEmpty) {
                       return ListTile(
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            side: BorderSide(color: Colors.black, width: 1)),
+                            borderRadius: BorderRadius.circular(10), side: BorderSide(color: Colors.black, width: 1)),
                         onTap: () async {
                           if (variantType.isEmpty) {
-                            Utility.showToast(
-                                "please_select_at_least_one_option_key".tr());
+                            Utility.showToast("please_select_at_least_one_option_key".tr());
                           } else {
                             var result = await Navigator.push(
                                 context,
@@ -649,13 +625,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                         add: false),
                                     type: PageTransitionType.bottomToTop));
                             if (result != null) {
-                              List<ProductVariantModel> variants =
-                                  result as List<ProductVariantModel>;
+                              List<ProductVariantModel> variants = result as List<ProductVariantModel>;
 
                               debugPrint("variants---->$variants");
 
-                              addProductBloc.add(AddProductVariantEvent(
-                                  productVariant: variants));
+                              addProductBloc.add(AddProductVariantEvent(productVariant: variants));
                             }
                           }
                         },
@@ -667,103 +641,74 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     } else {
                       return Column(
                         children: [
-                          Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    "product_variants_key".tr(),
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16),
-                                  ),
-                                ),
-                                IconButton(
-                                  onPressed: () {
-                                    SystemChannels.textInput
-                                        .invokeMethod("TextInput.hide");
+                          Row(mainAxisSize: MainAxisSize.max, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                            Expanded(
+                              child: Text(
+                                "product_variants_key".tr(),
+                                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                SystemChannels.textInput.invokeMethod("TextInput.hide");
 
-                                    showBottomSheet(
-                                        context: context,
-                                        builder: (context) {
-                                          return SelectionBottomSheet(
-                                              onEdit: () async {
-                                            var result = await Navigator.push(
-                                                context,
-                                                PageTransition(
-                                                    child: ProductVariantScreen(
-                                                        variantType:
-                                                            variantType,
-                                                        categoryId: categoryId,
-                                                        productVariant:
-                                                            productVariant,
-                                                        edit: true,
-                                                        add: false),
-                                                    type: PageTransitionType
-                                                        .bottomToTop));
-                                            if (result != null) {
-                                              List<ProductVariantModel>
-                                                  variants = result as List<
-                                                      ProductVariantModel>;
+                                showBottomSheet(
+                                    context: context,
+                                    builder: (context) {
+                                      return SelectionBottomSheet(onEdit: () async {
+                                        var result = await Navigator.push(
+                                            context,
+                                            PageTransition(
+                                                child: ProductVariantScreen(
+                                                    variantType: variantType,
+                                                    categoryId: categoryId,
+                                                    productVariant: productVariant,
+                                                    edit: true,
+                                                    add: false),
+                                                type: PageTransitionType.bottomToTop));
+                                        if (result != null) {
+                                          List<ProductVariantModel> variants = result as List<ProductVariantModel>;
 
-                                              addProductBloc.add(
-                                                  UpdateProductVariantEvent(
-                                                      productVariant:
-                                                          variants));
-                                            }
-                                          }, onAdd: () async {
-                                            var result = await Navigator.push(
-                                                context,
-                                                PageTransition(
-                                                  child: ProductVariantScreen(
-                                                      variantType: variantType,
-                                                      categoryId: categoryId,
-                                                      productVariant:
-                                                          productVariant,
-                                                      edit: false,
-                                                      add: true),
-                                                  type: PageTransitionType
-                                                      .bottomToTop,
-                                                ));
-                                            if (result != null) {
-                                              List<ProductVariantModel>
-                                                  variants = result as List<
-                                                      ProductVariantModel>;
-                                              addProductBloc.add(
-                                                  AddProductVariantEvent(
-                                                      productVariant:
-                                                          variants));
-                                            }
-                                          });
-                                        });
-                                  },
-                                  padding: EdgeInsets.all(0),
-                                  icon: Icon(Icons.more_vert),
-                                  splashRadius: 12,
-                                  iconSize: 20,
-                                  constraints: BoxConstraints(
-                                      maxHeight: 20, maxWidth: 20),
-                                ),
-                              ]),
+                                          addProductBloc.add(UpdateProductVariantEvent(productVariant: variants));
+                                        }
+                                      }, onAdd: () async {
+                                        var result = await Navigator.push(
+                                            context,
+                                            PageTransition(
+                                              child: ProductVariantScreen(
+                                                  variantType: variantType,
+                                                  categoryId: categoryId,
+                                                  productVariant: productVariant,
+                                                  edit: false,
+                                                  add: true),
+                                              type: PageTransitionType.bottomToTop,
+                                            ));
+                                        if (result != null) {
+                                          List<ProductVariantModel> variants = result as List<ProductVariantModel>;
+                                          addProductBloc.add(AddProductVariantEvent(productVariant: variants));
+                                        }
+                                      });
+                                    });
+                              },
+                              padding: EdgeInsets.all(0),
+                              icon: Icon(Icons.more_vert),
+                              splashRadius: 12,
+                              iconSize: 20,
+                              constraints: BoxConstraints(maxHeight: 20, maxWidth: 20),
+                            ),
+                          ]),
                           SizedBox(
                             height: 15,
                           ),
                           Column(
-                            children:
-                                List.generate(productVariant.length, (index) {
-                              ProductVariantModel variant =
-                                  productVariant[index];
+                            children: List.generate(productVariant.length, (index) {
+                              ProductVariantModel variant = productVariant[index];
                               String variantName = "";
                               for (int i = 0; i < variant.option.length; i++) {
                                 if (i == variant.option.length - 1)
-                                  variantName =
-                                      variantName + variant.option[i].value;
+                                  variantName = variantName + variant.option[i].value;
                                 else
-                                  variantName = variantName +
-                                      variant.option[i].value +
-                                      " / ";
+                                  variantName = variantName + variant.option[i].value + " / ";
                               }
 
                               return Container(
@@ -773,79 +718,52 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                 child: Stack(
                                   children: [
                                     Container(
-                                      padding: EdgeInsets.only(
-                                          left: 50,
-                                          right: 10,
-                                          bottom: 10,
-                                          top: 10),
+                                      padding: EdgeInsets.only(left: 50, right: 10, bottom: 10, top: 10),
                                       margin: EdgeInsets.only(left: 20),
-                                      constraints:
-                                          BoxConstraints(minHeight: 80),
+                                      constraints: BoxConstraints(minHeight: 80),
                                       decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          border: Border.all(
-                                              color: Colors.black, width: 1)),
+                                          borderRadius: BorderRadius.circular(10), border: Border.all(color: Colors.black, width: 1)),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text(
                                                 "$variantName",
                                               ),
                                               Text(
                                                 "₹ ${variant.sellingPrice}",
-                                                style: TextStyle(
-                                                    color: ColorPrimary),
+                                                style: TextStyle(color: ColorPrimary),
                                               ),
                                               Text(
-                                                "stock_key : ${variant.stock}"
-                                                    .tr(),
+                                                "stock_key : ${variant.stock}".tr(),
                                               )
                                             ],
                                           ),
                                           Row(
                                             mainAxisSize: MainAxisSize.min,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               IconButton(
                                                   onPressed: () async {
-                                                    var result =
-                                                        await Navigator.push(
-                                                            context,
-                                                            PageTransition(
-                                                              child: ProductVariantScreen(
-                                                                  variantType:
-                                                                      variantType,
-                                                                  categoryId:
-                                                                      categoryId,
-                                                                  productVariant: [
-                                                                    variant
-                                                                  ],
-                                                                  edit: true,
-                                                                  add: false),
-                                                              type: PageTransitionType
-                                                                  .bottomToTop,
-                                                            ));
+                                                    var result = await Navigator.push(
+                                                        context,
+                                                        PageTransition(
+                                                          child: ProductVariantScreen(
+                                                              variantType: variantType,
+                                                              categoryId: categoryId,
+                                                              productVariant: [variant],
+                                                              edit: true,
+                                                              add: false),
+                                                          type: PageTransitionType.bottomToTop,
+                                                        ));
                                                     if (result != null) {
-                                                      List<ProductVariantModel>
-                                                          variants =
-                                                          result as List<
-                                                              ProductVariantModel>;
-                                                      addProductBloc.add(
-                                                          UpdateSingleProductVariantEvent(
-                                                              productVariant:
-                                                                  variants
-                                                                      .first,
-                                                              index: index));
+                                                      List<ProductVariantModel> variants = result as List<ProductVariantModel>;
+                                                      addProductBloc.add(UpdateSingleProductVariantEvent(
+                                                          productVariant: variants.first, index: index));
                                                     }
                                                   },
                                                   padding: EdgeInsets.all(0),
@@ -859,10 +777,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                                   )),
                                               IconButton(
                                                   onPressed: () {
-                                                    addProductBloc.add(
-                                                        DeleteProductVariantEvent(
-                                                            productVariant:
-                                                                variant));
+                                                    addProductBloc.add(DeleteProductVariantEvent(productVariant: variant));
                                                   },
                                                   padding: EdgeInsets.all(0),
                                                   splashRadius: 15,
@@ -884,15 +799,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                       bottom: 0,
                                       child: Center(
                                         child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                          child: productVariant[index]
-                                                  .productImages
-                                                  .isNotEmpty
+                                          borderRadius: BorderRadius.circular(5),
+                                          child: productVariant[index].productImages.isNotEmpty
                                               ? Image.file(
-                                                  productVariant[index]
-                                                      .productImages
-                                                      .first,
+                                                  productVariant[index].productImages.first,
                                                   width: 60,
                                                   height: 60,
                                                   fit: BoxFit.contain,
@@ -921,16 +831,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
             ),
           ),
           bottomNavigationBar: Container(
-            padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom),
+            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
             child: MaterialButton(
               onPressed: () {
-                // if (widget.status == 0) {
-                //   Navigator.pushAndRemoveUntil(
-                //       context,
-                //       MaterialPageRoute(builder: (context) => BillingScreen()),
-                //       (route) => false);
-                // }
                 addProduct(context);
               },
               height: 50,
@@ -968,8 +871,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
       return;
     }
 
-    if (double.parse(variantModel.sellingPrice.trim()) >
-        double.parse(variantModel.mrp.trim())) {
+    if (double.parse(variantModel.sellingPrice.trim()) > double.parse(variantModel.mrp.trim())) {
       Utility.showToast("selling_price_cannot_be_more_than_mrp_key".tr());
       return;
     }
@@ -997,8 +899,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
     Map<String, dynamic> input = HashMap<String, dynamic>();
 
-    input["vendor_id"] =
-        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     input["category_id"] = categoryId;
     input["product_name"] = edtProductName.text.trim();
     input["unit"] = unitId;

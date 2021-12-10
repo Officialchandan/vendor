@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+
 class ProductModel {
   ProductModel({
     required this.id,
@@ -42,6 +44,8 @@ class ProductModel {
   String unit;
   List<ProductOption> productOption;
   List<ProductImage> productImages;
+
+  TextEditingController qtyController = TextEditingController();
 
   bool check = false;
   bool billingcheck = false;
