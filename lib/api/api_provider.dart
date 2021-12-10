@@ -36,6 +36,8 @@ import 'package:vendor/model/get_purchased_product_response.dart';
 import 'package:vendor/model/get_size_response.dart';
 import 'package:vendor/model/get_sub_category_response.dart';
 import 'package:vendor/model/get_unit_response.dart';
+import 'package:vendor/model/gift_deliverd.dart';
+import 'package:vendor/model/gift_scheme_response.dart';
 import 'package:vendor/model/hourly_earning.dart';
 import 'package:vendor/model/hourly_sale_amount.dart';
 import 'package:vendor/model/hourly_walkin.dart';
@@ -545,7 +547,7 @@ class ApiProvider {
     try {
       Response res = await dio.post(Endpoint.ADD_PRODUCT_IMAGE,
           data: input,
-          options: Options(sendTimeout: 10000, receiveTimeout: 10000));
+          options: Options(sendTimeout: 100000, receiveTimeout: 60000));
 
       return UploadImageResponse.fromJson(res.toString());
     } catch (error) {
@@ -1403,5 +1405,31 @@ class ApiProvider {
     //   print("Exception occurred: $message stackTrace: $error");
     //   return PartialUserRegisterResponse(success: false, message: message);
     // }
+  }
+
+  Future<GiftSchemeResponse> getVendorGiftScheme() async {
+    try {
+      Map input = HashMap<String, dynamic>();
+
+      input["vendor_id"] =
+          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+
+      Response res = await dio.post(
+        Endpoint.GET__VENDOR_GIFT_SCHEME,
+        data: input,
+      );
+
+      return GiftSchemeResponse.fromJson(res.toString());
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return GiftSchemeResponse(success: false, message: message);
+    }
   }
 }

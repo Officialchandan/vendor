@@ -11,7 +11,8 @@ class Endpoint {
 
   static const String GET_ALL_VENDOR_PRODUCTS = "getAllVendorProducts";
 
-  static const String GET_VENDOR_PRODUCT_BY_CATEGORY = "getVendorProductByCategory";
+  static const String GET_VENDOR_PRODUCT_BY_CATEGORY =
+      "getVendorProductByCategory";
 
   static const String GET_SUGGESTED_PRODUCTS = "getSuggestedProducts";
 
@@ -55,7 +56,8 @@ class Endpoint {
 
   static const String PURCHASE_RETURN = "purchaseReturn";
 
-  static const String GET_VERIFY_EARNING_COINOTP_VENDORID = "verifyEarningCoinsByOTP";
+  static const String GET_VERIFY_EARNING_COINOTP_VENDORID =
+      "verifyEarningCoinsByOTP";
 
   static const String GET_DAILY_SALE_AMOUNT = "dailySaleAmount";
 
@@ -63,29 +65,41 @@ class Endpoint {
 
   static const String GENERATE_REPORT = "generateReports";
 
-  static const String GET_GENERATE_COIN_REPORT_BY_DAY = "getGenerateCoinReportByDay";
+  static const String GET_GENERATE_COIN_REPORT_BY_DAY =
+      "getGenerateCoinReportByDay";
 
-  static const String GET_GENERATE_COIN_REPORT_BY_DATE_OF_CHAT_PAPDI = "getChatPapdiGenerateCoinReportByDate";
+  static const String GET_GENERATE_COIN_REPORT_BY_DATE_OF_CHAT_PAPDI =
+      "getChatPapdiGenerateCoinReportByDate";
 
-  static const String GET_GENERATE_COIN_REPORT_BY_DATE = "getGenerateCoinReportByDate";
+  static const String GET_GENERATE_COIN_REPORT_BY_DATE =
+      "getGenerateCoinReportByDate";
 
-  static const String GET_GENERATE_COIN_REPORT_BY_DAY_OF_CHAT_PAPDI = "getChatPapdiGenerateCoinReportByDay";
+  static const String GET_GENERATE_COIN_REPORT_BY_DAY_OF_CHAT_PAPDI =
+      "getChatPapdiGenerateCoinReportByDay";
 
-  static const String GET_SALE_RETURN_REPORT_BY_DATE = "getSaleReturnReportbyDate";
+  static const String GET_SALE_RETURN_REPORT_BY_DATE =
+      "getSaleReturnReportbyDate";
 
-  static const String GET_SALE_RETURN_REPORT_BY_DAY = "getSaleReturnReportbyDay";
+  static const String GET_SALE_RETURN_REPORT_BY_DAY =
+      "getSaleReturnReportbyDay";
 
-  static const String GET_PRODUCT_REDEEM_REPORT_BY_DATE = "getProductRedeemReportByDate";
+  static const String GET_PRODUCT_REDEEM_REPORT_BY_DATE =
+      "getProductRedeemReportByDate";
 
-  static const String GET_PRODUCT_REDEEM_REPORT_BY_DAY = "getProductRedeemReportByDay";
+  static const String GET_PRODUCT_REDEEM_REPORT_BY_DAY =
+      "getProductRedeemReportByDay";
 
-  static const String GET_COIN_REDEEM_REPORT_BY_DATE = "getCoinRedeemedReportByDate";
+  static const String GET_COIN_REDEEM_REPORT_BY_DATE =
+      "getCoinRedeemedReportByDate";
 
-  static const String GET_COIN_REDEEM_REPORT_BY_DATE_OF_CHAT_PAPDI = "getChatPapdiRedeemedCoinReportByDate";
+  static const String GET_COIN_REDEEM_REPORT_BY_DATE_OF_CHAT_PAPDI =
+      "getChatPapdiRedeemedCoinReportByDate";
 
-  static const String GET_COIN_REDEEM_REPORT_BY_DAY = "getCoinRedeemedReportByDay";
+  static const String GET_COIN_REDEEM_REPORT_BY_DAY =
+      "getCoinRedeemedReportByDay";
 
-  static const String GET_COIN_REDEEM_REPORT_BY_DAY_OF_CHAT_PAPDI = "getChatPapdiRedeemedCoinReportByDay";
+  static const String GET_COIN_REDEEM_REPORT_BY_DAY_OF_CHAT_PAPDI =
+      "getChatPapdiRedeemedCoinReportByDay";
 
   static const String GET_READY_STOCK_REPORT = "getReadyStockReport";
 
@@ -117,31 +131,49 @@ class Endpoint {
 
   static const String GET_MY_CUSTOMER = "getAllCustomersByVendorID";
 
-  static const String GET_CUSTOMER_OF_CHAT_PAPDI = "getAllChatPapdiCustomersByVendorID";
+  static const String GET_CUSTOMER_OF_CHAT_PAPDI =
+      "getAllChatPapdiCustomersByVendorID";
 
   static const String GET_CUSTOMER_PRODUCT = "getAllProductByCustomerID";
+
   static const String GET_TOTAL_MONEY_DUE = "getTotalMoneyDue";
 
   static const String GET_CHATPAPDI_BILLING = "chatPapdiBilling";
 
-  static const String GET_CHATPAPDI_BILLING_OTP = "confirmChatPapdiBillingByOtp";
+  static const String GET_CHATPAPDI_BILLING_OTP =
+      "confirmChatPapdiBillingByOtp";
 
   static const String GET_CHATPAPDI_DAILY_REPORT = "chatPapdiDailySaleAmount";
 
-  static const String GET_CHATPAPDI_HOURLY_SALE_AMOUNT = "chatPapdiHourlySaleAmount";
+  static const String GET_CHATPAPDI_HOURLY_SALE_AMOUNT =
+      "chatPapdiHourlySaleAmount";
 
-  static const String GET_CHATPAPDI_MONTHLY_SALE_AMOUNT = "chatPapdiMonthlySaleAmount";
+  static const String GET_CHATPAPDI_MONTHLY_SALE_AMOUNT =
+      "chatPapdiMonthlySaleAmount";
 
-  static const String GET_CHATPAPDI_HOURLY_WALKIN_AMOUNT = "chatPapdiHourlyWalkIns";
+  static const String GET_CHATPAPDI_HOURLY_WALKIN_AMOUNT =
+      "chatPapdiHourlyWalkIns";
 
-  static const String GET_CHATPAPDI_DAILY_WALKIN_AMOUNT = "chatPapdiDailyWalkIns";
+  static const String GET_CHATPAPDI_DAILY_WALKIN_AMOUNT =
+      "chatPapdiDailyWalkIns";
 
-  static const String GET_CHATPAPDI_MONTHLY_WALKIN_AMOUNT = "chatPapdiMonthlyWalkIns";
+  static const String GET_CHATPAPDI_MONTHLY_WALKIN_AMOUNT =
+      "chatPapdiMonthlyWalkIns";
 
-  static const String GET_CHATPAPDI_HOURLY_EARNING_AMOUNT = "chatPapdiHourlyEarningAmount";
+  static const String GET_CHATPAPDI_HOURLY_EARNING_AMOUNT =
+      "chatPapdiHourlyEarningAmount";
 
-  static const String GET_CHATPAPDI_DAILY_EARNING_AMOUNT = "chatPapdiDailyEarningAmount";
+  static const String GET_CHATPAPDI_DAILY_EARNING_AMOUNT =
+      "chatPapdiDailyEarningAmount";
 
-  static const String GET_CHATPAPDI_MONTHLY_EARNING_AMOUNT = "monthlyEarningAmount";
-  static const String GET_CHATPAPDI_PARTIAL_USER_REGISTER = "customerPartialRegistration";
+  static const String GET_CHATPAPDI_MONTHLY_EARNING_AMOUNT =
+      "monthlyEarningAmount";
+
+  static const String GET_CHATPAPDI_PARTIAL_USER_REGISTER =
+      "customerPartialRegistration";
+
+  static const String GET__VENDOR_GIFT_SCHEME = "getVendorGiftSchemes";
+
+  static const String GET_UPDATE_VENDOR_GIFT_RECEIVED_STATUS =
+      "updateVendorGiftReceivedStatus";
 }

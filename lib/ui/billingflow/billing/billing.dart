@@ -9,7 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:vendor/UI/inventory/add_product/add_product_screen.dart';
+import 'package:vendor/ui/inventory/add_product/add_product_screen.dart';
 import 'package:vendor/model/get_categories_response.dart';
 import 'package:vendor/ui/billingflow/billing/billing_bloc.dart';
 import 'package:vendor/ui/billingflow/billing/billing_event.dart';
@@ -18,6 +18,7 @@ import 'package:vendor/ui/billingflow/direct_billing/direct_billing.dart';
 import 'package:vendor/ui/billingflow/search_all/search_all_product.dart';
 import 'package:vendor/ui/billingflow/search_by_categories/search_by_categories.dart';
 import 'package:vendor/ui/home/home.dart';
+import 'package:vendor/ui/inventory/add_product/add_product_screen.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/sharedpref.dart';
@@ -43,6 +44,7 @@ class _BillingScreenState extends State<BillingScreen> {
   var userStatus;
   var status;
   var status1;
+  int navig = 1;
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
@@ -224,6 +226,7 @@ class _BillingScreenState extends State<BillingScreen> {
 
                               if (state
                                   is GetCustomerNumberResponseLoadingstate) {
+                                log("hello1");
                                 return Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
@@ -449,6 +452,7 @@ class _BillingScreenState extends State<BillingScreen> {
                                     backgroundColor: ColorPrimary);
                               }
                               if (state is GetCategoryByVendorIdLoadingstate) {
+                                log("hello");
                                 CircularProgressIndicator(
                                   backgroundColor: ColorPrimary,
                                 );
@@ -463,6 +467,7 @@ class _BillingScreenState extends State<BillingScreen> {
                                 category = state.data!;
                               }
                               if (state is GetCategoryByVendorIdLoadingstate) {
+                                log("hello2");
                                 return Container(
                                   height: 40,
                                   child: CircularProgressIndicator(
@@ -494,7 +499,7 @@ class _BillingScreenState extends State<BillingScreen> {
                       Navigator.push(
                               context,
                               PageTransition(
-                                  child: AddProductScreen(),
+                                  child: AddProductScreen(status: 0),
                                   type: PageTransitionType.fade))
                           .then((value) => FocusScope.of(context).unfocus());
                     } else {
