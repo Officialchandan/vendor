@@ -13,7 +13,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:vendor/model/get_sub_category_response.dart';
 import 'package:vendor/model/product_variant.dart';
 import 'package:vendor/model/product_variant_response.dart';
-import 'package:vendor/ui/billingflow/billing/billing.dart';
+
 import 'package:vendor/ui/custom_widget/app_bar.dart';
 import 'package:vendor/ui/inventory/add_product/bloc/add_product_bloc.dart';
 import 'package:vendor/ui/inventory/add_product/bloc/add_product_event.dart';
@@ -469,40 +469,40 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       SizedBox(
                         width: 15,
                       ),
-                      Expanded(
-                        child: TextFormField(
-                          readOnly: true,
-                          controller: edtUnit,
-                          onTap: () {
-                            if (categoryId.isEmpty) {
-                              Utility.showToast(
-                                  "please_select_category_first_key".tr());
-                              return;
-                            }
-
-                            showModalBottomSheet(
-                                context: context,
-                                builder: (context) {
-                                  return UnitBottomSheet(
-                                      categoryId: categoryId,
-                                      onSelect: (unit) {
-                                        unitId = unit.id;
-                                        edtUnit.text = unit.unitName;
-                                      });
-                                });
-                          },
-                          decoration: InputDecoration(
-                              labelText: "unit_key".tr(),
-                              suffixIcon:
-                                  Icon(Icons.keyboard_arrow_right_sharp),
-                              suffixIconConstraints: BoxConstraints(
-                                  minWidth: 20,
-                                  maxWidth: 21,
-                                  minHeight: 20,
-                                  maxHeight: 21)),
-                        ),
-                        flex: 2,
-                      ),
+                      // Expanded(
+                      //   child: TextFormField(
+                      //     readOnly: true,
+                      //     controller: edtUnit,
+                      //     onTap: () {
+                      //       if (categoryId.isEmpty) {
+                      //         Utility.showToast(
+                      //             "please_select_category_first_key".tr());
+                      //         return;
+                      //       }
+                      //
+                      //       showModalBottomSheet(
+                      //           context: context,
+                      //           builder: (context) {
+                      //             return UnitBottomSheet(
+                      //                 categoryId: categoryId,
+                      //                 onSelect: (unit) {
+                      //                   unitId = unit.id;
+                      //                   edtUnit.text = unit.unitName;
+                      //                 });
+                      //           });
+                      //     },
+                      //     decoration: InputDecoration(
+                      //         labelText: "unit_key".tr(),
+                      //         suffixIcon:
+                      //             Icon(Icons.keyboard_arrow_right_sharp),
+                      //         suffixIconConstraints: BoxConstraints(
+                      //             minWidth: 20,
+                      //             maxWidth: 21,
+                      //             minHeight: 20,
+                      //             maxHeight: 21)),
+                      //   ),
+                      //   flex: 2,
+                      // ),
                     ],
                   );
                 }),
