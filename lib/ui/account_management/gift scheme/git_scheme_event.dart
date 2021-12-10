@@ -8,3 +8,8 @@ class GiftSchemeEvent extends Equatable {
 class GetGiftSchemeEvent extends GiftSchemeEvent {
   GetGiftSchemeEvent();
 }
+
+class GetGiftDeliverdEvent extends GiftSchemeEvent {
+  final int giftid;
+  GetGiftDeliverdEvent({required this.giftid});
+}

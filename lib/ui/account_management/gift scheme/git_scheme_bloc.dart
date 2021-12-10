@@ -17,9 +17,15 @@ class GiftSchemeBloc extends Bloc<GiftSchemeEvent, GiftSchemeState> {
   GiftSchemeBloc(GiftSchemeState initialState) : super(initialState);
 
   @override
-  Stream<GiftSchemeState> mapEventTostate(GiftSchemeEvent event) async* {
+  Stream<GiftSchemeState> mapEventToState(GiftSchemeEvent event) async* {
     if (event is GetGiftSchemeEvent) {
+      log("bloc mai aya");
       yield* getGiftScheme();
+    }
+
+    if (event is GetGiftDeliverdEvent) {
+      log("bloc mai aya");
+      yield* getGiftDeliverd(event.giftid);
     }
   }
 
@@ -28,17 +34,46 @@ class GiftSchemeBloc extends Bloc<GiftSchemeEvent, GiftSchemeState> {
       yield GetGiftSchemeLoadingstate();
       try {
         GiftSchemeResponse result = await apiProvider.getVendorGiftScheme();
-        log("$result");
+        log("=====>$result");
         if (result.success) {
           yield GetGiftSchemestate(
               succes: result.success,
               message: result.message,
               data: result.data);
+        } else if (result.success == false) {
+          yield GetGiftSchemeFailureState(
+              message: result.message, succes: result.success);
         } else {
           yield GetGiftSchemeLoadingstate();
         }
       } catch (error) {
         yield GetGiftSchemeFailureState(
+            message: "internal_server_error_key".tr(), succes: false);
+      }
+    } else {
+      Fluttertoast.showToast(
+          msg: "please_check_your_internet_connection_key".tr(),
+          backgroundColor: ColorPrimary);
+    }
+  }
+
+  Stream<GiftSchemeState> getGiftDeliverd(giftid) async* {
+    if (await Network.isConnected()) {
+      yield GetGiftDeliverdLoadingstate();
+      try {
+        GiftDeliverdResponse result =
+            await apiProvider.getVendorGiftStatus(giftid);
+        log("=====>$result");
+        if (result.success) {
+          yield GetGiftDeliverdstate(
+            succes: result.success,
+            message: result.message,
+          );
+        } else {
+          yield GetGiftDeliverdLoadingstate();
+        }
+      } catch (error) {
+        yield GetGiftDeliverdFailureState(
             message: "internal_server_error_key".tr(), succes: false);
       }
     } else {
