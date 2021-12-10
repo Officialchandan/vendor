@@ -25,7 +25,11 @@ class ProductVariantScreen extends StatefulWidget {
   final bool add;
 
   ProductVariantScreen(
-      {required this.variantType, required this.categoryId, required this.productVariant, required this.edit, required this.add});
+      {required this.variantType,
+      required this.categoryId,
+      required this.productVariant,
+      required this.edit,
+      required this.add});
 
   @override
   _ProductVariantScreenState createState() => _ProductVariantScreenState();
@@ -119,7 +123,8 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
                         // Navigator.pop(context, variants);
                       },
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10), side: BorderSide(color: ColorPrimary, width: 1)),
+                          borderRadius: BorderRadius.circular(10),
+                          side: BorderSide(color: ColorPrimary, width: 1)),
                       height: 50,
                       minWidth: MediaQuery.of(context).size.width,
                       child: Row(
@@ -154,9 +159,13 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
                 if (productVariant.isNotEmpty) {
                   for (int j = 0; j < productVariant.length; j++) {
                     if (productVariant[j].option.isNotEmpty) {
-                      for (int i = 0; i < productVariant[j].option.length; i++) {
+                      for (int i = 0;
+                          i < productVariant[j].option.length;
+                          i++) {
                         if (productVariant[j].option[i].value.isEmpty) {
-                          Utility.showToast("please_enter_key ${productVariant[j].option[i].name}".tr());
+                          Utility.showToast(
+                              "please_enter_key ${productVariant[j].option[i].name}"
+                                  .tr());
                           return;
                         }
                       }
@@ -169,8 +178,10 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
                       Utility.showToast("enter_selling_price_key".tr());
                       return;
                     }
-                    if (double.parse(productVariant[j].sellingPrice.trim()) > double.parse(productVariant[j].mrp.trim())) {
-                      Utility.showToast("selling_price_cannot_be_more_than_mrp_key".tr());
+                    if (double.parse(productVariant[j].sellingPrice.trim()) >
+                        double.parse(productVariant[j].mrp.trim())) {
+                      Utility.showToast(
+                          "selling_price_cannot_be_more_than_mrp_key".tr());
                       return;
                     }
 
@@ -216,7 +227,8 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
       productVariant.add(productVariantModel);
     }*/
     else {
-      ProductVariantModel productVariantModel = ProductVariantModel(mrp: "0", purchasePrice: "", sellingPrice: "", stock: "");
+      ProductVariantModel productVariantModel = ProductVariantModel(
+          mrp: "0", purchasePrice: "", sellingPrice: "", stock: "");
       productVariantModel.option = [];
       widget.variantType.forEach((variantType) {
         VariantOption variant = VariantOption();
@@ -261,7 +273,9 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(border: Border.all(color: Colors.black), borderRadius: BorderRadius.circular(1)),
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.black),
+          borderRadius: BorderRadius.circular(1)),
       margin: EdgeInsets.symmetric(vertical: 10),
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       child: Column(
@@ -285,7 +299,9 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
                 Container(
                   width: 80,
                   height: 80,
-                  decoration: BoxDecoration(color: Colors.grey.shade100, borderRadius: BorderRadius.circular(5)),
+                  decoration: BoxDecoration(
+                      color: Colors.grey.shade100,
+                      borderRadius: BorderRadius.circular(5)),
                   child: IconButton(
                     onPressed: () {
                       selectImage(context, widget.variant.productImages);
@@ -308,7 +324,8 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
                                 Container(
                                   width: 80,
                                   height: 80,
-                                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                                  margin: EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 10),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
                                       image: DecorationImage(
@@ -325,7 +342,9 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
                                     child: Container(
                                         width: 25,
                                         padding: EdgeInsets.all(3),
-                                        decoration: BoxDecoration(shape: BoxShape.circle, color: ColorPrimary),
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: ColorPrimary),
                                         child: Icon(
                                           Icons.delete,
                                           color: Colors.white,
@@ -382,7 +401,8 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
                   keyboardType: priceKeyboardType,
                   maxLength: PRICE_TEXT_LENGTH,
                   inputFormatters: priceInputFormatter,
-                  decoration: InputDecoration(labelText: "mrp_key".tr(), counter: Container()),
+                  decoration: InputDecoration(
+                      labelText: "mrp_key".tr(), counter: Container()),
                   onChanged: (text) {
                     variantModel.mrp = text.trim();
                   },
@@ -398,7 +418,9 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
                   keyboardType: priceKeyboardType,
                   maxLength: PRICE_TEXT_LENGTH,
                   inputFormatters: priceInputFormatter,
-                  decoration: InputDecoration(labelText: "selling_price_key".tr(), counter: Container()),
+                  decoration: InputDecoration(
+                      labelText: "selling_price_key".tr(),
+                      counter: Container()),
                   onChanged: (text) {
                     variantModel.sellingPrice = text.trim();
                   },
@@ -415,7 +437,8 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
             maxLength: PRICE_TEXT_LENGTH,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             initialValue: variantModel.stock.toString(),
-            decoration: InputDecoration(labelText: "stock_key".tr(), counter: Container()),
+            decoration: InputDecoration(
+                labelText: "stock_key".tr(), counter: Container()),
             onChanged: (text) {
               variantModel.stock = text.trim();
             },
@@ -438,7 +461,8 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
             ));
   }
 
-  pickImage(BuildContext context, ImageSource source, List<File> productImages) async {
+  pickImage(BuildContext context, ImageSource source,
+      List<File> productImages) async {
     try {
       List<XFile> imgList = [];
       if (source == ImageSource.gallery) {
@@ -517,7 +541,8 @@ class _VariantOptionWidgetState extends State<VariantOptionWidget> {
                     hintText: "select_key ${widget.option.name}".tr(),
                     labelText: "${widget.option.name}",
                     suffixIcon: Icon(Icons.keyboard_arrow_right),
-                    suffixIconConstraints: BoxConstraints(maxHeight: 20, maxWidth: 20)
+                    suffixIconConstraints:
+                        BoxConstraints(maxHeight: 20, maxWidth: 20)
                     /*suffix: Container(
                       width: 20,
                       height: 20,
@@ -529,7 +554,10 @@ class _VariantOptionWidgetState extends State<VariantOptionWidget> {
                 initialValue: widget.option.value,
                 maxLength: 30,
                 decoration: InputDecoration(
-                    counter: SizedBox.shrink(), hintText: "enter_key ${widget.option.name}".tr(), labelText: "${widget.option.name}"),
+                    counter: SizedBox.shrink(),
+                    hintText:
+                        "please_enter_key".tr() + " ${widget.option.name}".tr(),
+                    labelText: "${widget.option.name}".tr()),
                 onChanged: (text) {
                   widget.option.value = text;
                 },

@@ -3,11 +3,16 @@ import 'dart:collection';
 
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/model/common_response.dart';
 import 'package:vendor/model/product_by_category_response.dart';
 import 'package:vendor/model/product_model.dart';
+
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/network.dart';
@@ -27,6 +32,7 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
   List<ProductModel> products = [];
 
   TextEditingController txtSearch = TextEditingController();
+  TextEditingController editQtyController = TextEditingController();
   ScrollController scrollController = ScrollController();
 
   StreamController<List<ProductModel>> streamController = StreamController();
@@ -125,7 +131,7 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
                             product.productOption[i].value.toString() + ", ";
                     }
                   }
-
+                  // product.qtyController!.text = product.returnQty.toString();
                   return Container(
                     margin: const EdgeInsets.only(bottom: 5, top: 5, right: 10),
                     child: Stack(
@@ -193,6 +199,10 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
                                                         product.returnQty =
                                                             product.returnQty -
                                                                 1;
+                                                        product.qtyController
+                                                                .text =
+                                                            product.returnQty
+                                                                .toString();
                                                         streamController
                                                             .add(products);
                                                       }
@@ -204,15 +214,18 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
                                                     )),
                                               ),
                                               Container(
-                                                width: 20,
+                                                width: 25,
                                                 height: 25,
                                                 color: ColorPrimary,
                                                 child: Center(
                                                   child: Text(
-                                                    "${product.returnQty}",
+                                                    product.returnQty
+                                                        .toString(),
                                                     style: TextStyle(
                                                         color: Colors.white,
-                                                        fontSize: 14),
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.bold),
                                                   ),
                                                 ),
                                               ),
@@ -227,6 +240,10 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
                                                         product.returnQty =
                                                             product.returnQty +
                                                                 1;
+                                                        product.qtyController
+                                                                .text =
+                                                            product.returnQty
+                                                                .toString();
                                                         streamController
                                                             .add(products);
                                                       }
@@ -283,7 +300,26 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
                           left: 20,
                           top: 0,
                           bottom: 0,
-                        )
+                        ),
+                        Positioned(
+                            right: 22,
+                            bottom: 28,
+                            child: InkWell(
+                              onTap: () {
+                                editQty(product.stock.toString(),
+                                    product.returnQty.toString(), (value) {
+                                  product.returnQty = int.parse(value);
+                                  streamController.add(products);
+                                });
+                              },
+                              child: Text(
+                                "Edit Qty",
+                                style: TextStyle(
+                                    color: ColorPrimary,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ))
                       ],
                     ),
                   );
@@ -374,5 +410,85 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
 
       // EasyLoading.showError(Constant.INTERNET_ALERT_MSG);
     }
+  }
+
+  editQty(String stocks, String product, Function(String qty) onQtySelect) {
+    editQtyController.text = product;
+    return showDialog(
+        barrierDismissible: true,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            title: RichText(
+              text: TextSpan(
+                text: "Edit Quantity",
+                style: GoogleFonts.openSans(
+                  fontSize: 18.0,
+                  color: ColorPrimary,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            content: TextFormField(
+              controller: editQtyController,
+              cursorColor: ColorPrimary,
+              keyboardType: TextInputType.number,
+              maxLength: 3,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              decoration: InputDecoration(
+                counterText: "",
+                hintText: "Enter Quantity",
+                hintStyle: GoogleFonts.openSans(
+                  fontWeight: FontWeight.w600,
+                ),
+                contentPadding:
+                    const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+              ),
+              onSaved: (value) {
+                editQtyController.text = value!;
+              },
+            ),
+            actions: <Widget>[
+              Center(
+                child: MaterialButton(
+                  minWidth: MediaQuery.of(context).size.width * 0.40,
+                  height: 50,
+                  padding: const EdgeInsets.all(8.0),
+                  textColor: Colors.white,
+                  color: ColorPrimary,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  onPressed: () {
+                    if (int.parse(editQtyController.text) <=
+                        int.parse(stocks)) {
+                      onQtySelect(editQtyController.text);
+                      Navigator.pop(context);
+                    } else {
+                      Fluttertoast.showToast(
+                        backgroundColor: ColorPrimary,
+                        textColor: Colors.white,
+                        msg: "Enter valid quantity of products",
+                      );
+                    }
+                  },
+                  child: new Text(
+                    "done_key".tr(),
+                    style: GoogleFonts.openSans(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w600,
+                        decoration: TextDecoration.none),
+                  ),
+                ),
+              ),
+              Container(
+                height: 20,
+                width: MediaQuery.of(context).size.width * 0.95,
+                color: Colors.transparent,
+              )
+            ],
+          );
+        });
   }
 }

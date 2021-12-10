@@ -38,7 +38,7 @@ class _TrackerReportDashboardState extends State<TrackerReportDashboard> {
     },
     {
       "title": "my_customers_key".tr(),
-      "subTitle": "click here to view customer",
+      "subTitle": "click_here_to_view_customer_key".tr(),
       "image": "assets/images/tr-ic3.png",
       "id": 4
     },

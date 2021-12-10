@@ -484,7 +484,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                 controller: otpController,
                 cursorColor: ColorPrimary,
                 keyboardType: TextInputType.number,
-                inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 decoration: InputDecoration(
                   // filled: true,
 
