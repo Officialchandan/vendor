@@ -68,7 +68,10 @@ class _InventoryScreenState extends State<InventoryScreen> {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => HomeScreen()), (route) => false);
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (_) => HomeScreen()),
+                    (route) => false);
               },
               icon: Icon(Icons.home))
         ],
@@ -88,19 +91,35 @@ class _InventoryScreenState extends State<InventoryScreen> {
                   child: ListTile(
                     onTap: () {
                       if (options[index]["id"] == 2) {
-                        Navigator.push(context, PageTransition(child: ViewCategoryScreen(), type: PageTransitionType.fade));
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: ViewCategoryScreen(),
+                                type: PageTransitionType.fade));
                       }
                       if (options[index]["id"] == 3) {
-                        Navigator.push(context, PageTransition(child: SaleReturnScreen(), type: PageTransitionType.fade));
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: SaleReturnScreen(),
+                                type: PageTransitionType.fade));
                       }
                       if (options[index]["id"] == 4) {
-                        Navigator.push(context, PageTransition(child: PurchaseReturnScreen(), type: PageTransitionType.fade));
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: PurchaseReturnScreen(),
+                                type: PageTransitionType.fade));
                       }
                       if (options[index]["id"] == 5) {
-                        Navigator.push(context, PageTransition(child: PurchaseEntry(), type: PageTransitionType.fade));
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: PurchaseEntry(),
+                                type: PageTransitionType.fade));
                       }
                       if (options[index]["id"] == 1) {
-                        showSheet(context);
+                        // showSheet(context);
                       }
                     },
                     leading: Image(
@@ -121,7 +140,9 @@ class _InventoryScreenState extends State<InventoryScreen> {
                       width: 5,
                       decoration: BoxDecoration(
                           color: Colors.blue,
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(5),
+                              bottomLeft: Radius.circular(5))),
                     ))
               ],
             ),
@@ -149,7 +170,11 @@ class _InventoryScreenState extends State<InventoryScreen> {
                   title: Text("add_own_product_key".tr()),
                   onTap: () {
                     Navigator.pop(context);
-                    Navigator.push(context, PageTransition(child: AddProductScreen(), type: PageTransitionType.fade));
+                    Navigator.push(
+                        context,
+                        PageTransition(
+                            child: AddProductScreen(),
+                            type: PageTransitionType.fade));
                   },
                 ),
                 ListTile(
@@ -162,7 +187,11 @@ class _InventoryScreenState extends State<InventoryScreen> {
                   title: Text("add_suggested_product_key".tr()),
                   onTap: () {
                     Navigator.pop(context);
-                    Navigator.push(context, PageTransition(child: SuggestedProductScreen(), type: PageTransitionType.fade));
+                    Navigator.push(
+                        context,
+                        PageTransition(
+                            child: SuggestedProductScreen(),
+                            type: PageTransitionType.fade));
                   },
                 ),
               ],
