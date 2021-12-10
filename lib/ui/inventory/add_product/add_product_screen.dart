@@ -78,7 +78,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
       create: (context) => addProductBloc,
       child: BlocListener<AddProductBloc, AddProductState>(
         listener: (context, state) {
-          log("state ${state}");
           if (state is SelectImageState) {
             imageList.addAll(state.image);
             variantModel.productImages = imageList;
@@ -165,9 +164,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
           }
         },
         child: Scaffold(
-          appBar: CustomAppBar(
-            title: tr(MString.add_product),
-          ),
+          appBar: AppBar(title: Text("add_product_key".tr())),
           body: SingleChildScrollView(
             padding: EdgeInsets.all(20),
             child: Column(
@@ -400,7 +397,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         child: TextFormField(
                           controller: edtPurchasePrice,
                           decoration: InputDecoration(
-                              labelText: "purchase_price_key",
+                              labelText: "purchase_price_key".tr(),
                               counter: Container()),
                           keyboardType: priceKeyboardType,
                           maxLength: PRICE_TEXT_LENGTH,
