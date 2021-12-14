@@ -47,6 +47,7 @@ class DirectBillingData {
     required this.coinDeducted,
     required this.earningCoins,
     required this.myprofitRevenue,
+    required this.qrCodeStatus,
   });
 
   int vendorId;
@@ -58,6 +59,7 @@ class DirectBillingData {
   String coinDeducted;
   String earningCoins;
   String myprofitRevenue;
+  String qrCodeStatus;
 
   factory DirectBillingData.fromJson(String str) =>
       DirectBillingData.fromMap(json.decode(str));
@@ -82,6 +84,9 @@ class DirectBillingData {
         myprofitRevenue: json["myprofit_revenue"] == null
             ? ""
             : json["myprofit_revenue"].toString(),
+        qrCodeStatus: json["qr_code_status"] == null
+            ? ""
+            : json["qr_code_status"].toString(),
       );
 
   Map<String, dynamic> toMap() => {
@@ -94,5 +99,6 @@ class DirectBillingData {
         "coin_deducted": coinDeducted,
         "earning_coins": earningCoins,
         "myprofit_revenue": myprofitRevenue,
+        "qr_code_status": qrCodeStatus == null ? null : qrCodeStatus,
       };
 }

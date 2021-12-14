@@ -20,7 +20,7 @@ class GiftScheme extends StatefulWidget {
 }
 
 class _GiftSchemeState extends State<GiftScheme> {
-  int _gift = 0;
+  // int _gift = 0;
   int? gift_id;
   GiftSchemeBloc giftSchemeBloc = GiftSchemeBloc(GiftSchemeIntialState());
   List<GiftSchemeData>? data;
@@ -77,7 +77,7 @@ class _GiftSchemeState extends State<GiftScheme> {
             }
             if (state is GetGiftSchemestate) {
               return ListView.builder(
-                  itemCount: 1,
+                  itemCount: data!.length == null ? 0 : data!.length,
                   itemBuilder: (context, index) {
                     return Card(
                       elevation: 5,
@@ -128,7 +128,8 @@ class _GiftSchemeState extends State<GiftScheme> {
                                                           VisualDensity
                                                               .comfortable,
                                                       splashRadius: 15,
-                                                      groupValue: _gift,
+                                                      groupValue:
+                                                          data![index].gift,
                                                       onChanged: (value) {},
                                                     ),
                                                   ),
@@ -148,7 +149,8 @@ class _GiftSchemeState extends State<GiftScheme> {
                                                     child: Radio<int>(
                                                       value: 0,
                                                       activeColor: ColorPrimary,
-                                                      groupValue: _gift,
+                                                      groupValue:
+                                                          data![index].gift,
                                                       onChanged: (value) {},
                                                     ),
                                                   ),
@@ -178,13 +180,15 @@ class _GiftSchemeState extends State<GiftScheme> {
                                                           VisualDensity
                                                               .comfortable,
                                                       splashRadius: 15,
-                                                      groupValue: _gift,
+                                                      groupValue:
+                                                          data![index].gift,
                                                       onChanged: (value) {
                                                         gift_id =
                                                             data![index].id;
-                                                        log("===>$_gift");
+                                                        log("===>$data![index].gift");
                                                         //setState(() {
-                                                        _gift = value!;
+                                                        data![index].gift =
+                                                            value!;
                                                         // });
                                                         _displayDialog(
                                                             context, index);
@@ -207,11 +211,13 @@ class _GiftSchemeState extends State<GiftScheme> {
                                                     child: Radio<int>(
                                                       value: 0,
                                                       activeColor: ColorPrimary,
-                                                      groupValue: _gift,
+                                                      groupValue:
+                                                          data![index].gift,
                                                       onChanged: (value) {
                                                         log("===>");
                                                         //    setState(() {
-                                                        _gift = value!;
+                                                        data![index].gift =
+                                                            value!;
                                                         //   });
                                                       },
                                                     ),
@@ -305,8 +311,10 @@ class _GiftSchemeState extends State<GiftScheme> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
                     onPressed: () {
+                      data![index].gift = 1;
                       giftSchemeBloc
                           .add(GetGiftDeliverdEvent(giftid: gift_id!));
+                      data![index].gift = 1;
                       Navigator.pop(context);
                     },
                     child: new Text(

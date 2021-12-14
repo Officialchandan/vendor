@@ -12,6 +12,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/model/billing_product_response.dart';
 import 'package:vendor/model/product_model.dart';
+
+import 'package:vendor/ui/billingflow/Scanner/scanner.dart';
 import 'package:vendor/ui/billingflow/billingproducts/biliing_products_bloc.dart';
 import 'package:vendor/ui/billingflow/billingproducts/biliing_products_event.dart';
 import 'package:vendor/ui/billingflow/billingproducts/biliing_products_state.dart';
@@ -69,7 +71,7 @@ class _BillingProductsState extends State<BillingProducts> {
   double x = 0.0;
   var message;
   var status;
-
+  var codes;
   double earningPrice(double price, double comission) {
     x = price;
     log("1=$x");
@@ -604,7 +606,7 @@ class _BillingProductsState extends State<BillingProducts> {
                     );
                   }),
                   BlocConsumer<BillingProductsBloc, BillingProductsState>(
-                    listener: (context, state) {
+                    listener: (context, state) async {
                       if (state is PayBillingProductsState) {
                         message = state.message;
                         status = state.succes;
@@ -627,11 +629,15 @@ class _BillingProductsState extends State<BillingProducts> {
                       }
 
                       if (state is VerifyOtpState) {
+                        var result = await Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Scanner()));
+                        log("-------$result --------");
+                        // codes = result;
                         // Navigator.push(
                         //     context,
                         //     MaterialPageRoute(
                         //         builder: (context) => BillingScreen()));
-                        d._displayCoinDialog(context);
+                        // d._displayCoinDialog(context);
                       }
                       if (state is VerifyOtpStateLoadingstate) {
                         log("number chl gya");
@@ -792,7 +798,7 @@ class _BillingProductsState extends State<BillingProducts> {
                     color: ColorPrimary,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    onPressed: () {
+                    onPressed: () async {
                       if (status == 0) {
                         if (_textFieldController.text.isNotEmpty) {
                           log("onPressed->$status");
@@ -857,6 +863,7 @@ class _BillingProductsState extends State<BillingProducts> {
     input["myprofit_revenue"] = "${otpVerifyList!.myprofitrevenue}";
 
     log("=====? $input");
+
     billingProductsBloc.add(OtpVerifyEvent(input: input));
   }
 

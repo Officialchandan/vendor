@@ -8,13 +8,13 @@ class CustomerNumberResponse {
   CustomerNumberResponse({
     required this.success,
     required this.message,
-    this.status,
+    this.cust_reg_status,
     this.data,
   });
 
   bool success;
   String message;
-  int? status;
+  int? cust_reg_status;
   CustomerNumberResponseData? data;
 
   factory CustomerNumberResponse.fromJson(String str) =>
@@ -26,7 +26,8 @@ class CustomerNumberResponse {
       CustomerNumberResponse(
         success: json["success"],
         message: json["message"],
-        status: json["status"] == null ? 0 : json["status"],
+        cust_reg_status:
+            json["cust_reg_status"] == null ? 0 : json["cust_reg_status"],
         data: json["data"] == null
             ? null
             : CustomerNumberResponseData.fromMap(json["data"]),
@@ -35,7 +36,7 @@ class CustomerNumberResponse {
   Map<String, dynamic> toMap() => {
         "success": success,
         "message": message,
-        "status": status == null ? null : status,
+        "cust_reg_status": cust_reg_status == null ? null : cust_reg_status,
         "data": data!.toMap(),
       };
 }

@@ -40,16 +40,17 @@ class GiftSchemeResponse {
 }
 
 class GiftSchemeData {
-  GiftSchemeData(
-      {required this.id,
-      required this.schemeName,
-      required this.giftName,
-      required this.giftImage,
-      required this.description,
-      required this.barcode,
-      required this.qty,
-      required this.cartTotal,
-      required this.status});
+  GiftSchemeData({
+    required this.id,
+    required this.schemeName,
+    required this.giftName,
+    required this.giftImage,
+    required this.description,
+    required this.barcode,
+    required this.qty,
+    required this.cartTotal,
+    required this.status,
+  });
 
   int id;
   String schemeName;
@@ -60,6 +61,7 @@ class GiftSchemeData {
   String qty;
   String cartTotal;
   int status;
+  int? gift = 0;
 
   factory GiftSchemeData.fromJson(String str) =>
       GiftSchemeData.fromMap(json.decode(str));
