@@ -12,6 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/model/billing_product_response.dart';
 import 'package:vendor/model/product_model.dart';
+import 'package:vendor/model/verify_otp.dart';
 
 import 'package:vendor/ui/billingflow/Scanner/scanner.dart';
 import 'package:vendor/ui/billingflow/billingproducts/biliing_products_bloc.dart';
@@ -41,7 +42,7 @@ class BillingProducts extends StatefulWidget {
 
 class _BillingProductsState extends State<BillingProducts> {
   _BillingProductsState(List<ProductModel> billingItemList, mobile, coin);
-
+  VerifyEarningCoinsOtpData? passing;
   ProductModel? selectedProductList;
   List<ProductModel> productList = [];
   List index = [];
@@ -629,8 +630,11 @@ class _BillingProductsState extends State<BillingProducts> {
                       }
 
                       if (state is VerifyOtpState) {
-                        var result = await Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Scanner()));
+                        passing = state.data;
+                        var result = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Scanner(data: passing!)));
                         log("-------$result --------");
                         // codes = result;
                         // Navigator.push(
