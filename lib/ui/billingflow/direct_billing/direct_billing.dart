@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vendor/model/direct_billing.dart';
+import 'package:vendor/ui/billingflow/direct_billing/ScannerDirectBilling/scanner.dart';
 import 'package:vendor/ui/billingflow/direct_billing/direct_bloc.dart';
 import 'package:vendor/ui/billingflow/direct_billing/direct_event.dart';
 import 'package:vendor/ui/billingflow/direct_billing/direct_state.dart';
@@ -127,11 +128,22 @@ class _DirectBillingState extends State<DirectBilling> {
                       if (state is GetDirectBillingOtpState) {
                         Fluttertoast.showToast(
                             msg: state.message, backgroundColor: ColorPrimary);
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    BottomNavigationHome()));
+                        int.parse(datas!.qrCodeStatus) == 0
+                            ? Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        BottomNavigationHome()))
+                            : Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        Scanner(data: datas!)));
+                        // Navigator.pushReplacement(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (BuildContext context) =>
+                        //             BottomNavigationHome()));
                       }
                       if (state is GetDirectBillingOtpLoadingstate) {}
                       if (state is GetDirectBillingOtpFailureState) {

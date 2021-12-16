@@ -13,6 +13,7 @@ import 'package:vendor/ui_without_inventory/chatpapdi_billing/ScannerChatPapdi/s
 import 'package:vendor/ui_without_inventory/chatpapdi_billing/chatpapdi_bloc.dart';
 import 'package:vendor/ui_without_inventory/chatpapdi_billing/chatpapdi_event.dart';
 import 'package:vendor/ui_without_inventory/chatpapdi_billing/chatpapdi_state.dart';
+import 'package:vendor/ui_without_inventory/home/bottom_navigation_bar.dart';
 
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
@@ -130,11 +131,19 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                       if (state is GetChatPapdiBillingOtpState) {
                         Fluttertoast.showToast(
                             msg: state.message, backgroundColor: ColorPrimary);
-                        var result = await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Scanner(data: datas!)));
-                        log("-------$result --------");
+                        // var result = await
+                        datas!.qrCodeStatus == 0
+                            ? Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        BottomNavigationHomeWithOutInventory()))
+                            : Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        Scanner(data: datas!)));
+                        // log("-------$result --------");
                         // Navigator.pushReplacement(
                         //     context,
                         //     MaterialPageRoute(

@@ -15,6 +15,7 @@ import 'package:vendor/model/product_model.dart';
 import 'package:vendor/model/verify_otp.dart';
 
 import 'package:vendor/ui/billingflow/Scanner/scanner.dart';
+import 'package:vendor/ui/billingflow/billing/billing.dart';
 import 'package:vendor/ui/billingflow/billingproducts/biliing_products_bloc.dart';
 import 'package:vendor/ui/billingflow/billingproducts/biliing_products_event.dart';
 import 'package:vendor/ui/billingflow/billingproducts/biliing_products_state.dart';
@@ -631,11 +632,18 @@ class _BillingProductsState extends State<BillingProducts> {
 
                       if (state is VerifyOtpState) {
                         passing = state.data;
-                        var result = await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Scanner(data: passing!)));
-                        log("-------$result --------");
+                        //var result = await
+                        otpVerifyList!.qrCodeStatus == 0
+                            ? Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => BillingScreen()))
+                            : Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        Scanner(data: passing!)));
+                        //log("-------$result --------");
                         // codes = result;
                         // Navigator.push(
                         //     context,

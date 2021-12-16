@@ -21,7 +21,7 @@ class ScannerBloc extends Bloc<ScannerEvent, ScannerState> {
 Stream<ScannerState> scannerApi(input) async* {
   if (await Network.isConnected()) {
     EasyLoading.show();
-    QrcodeResponse response = await apiProvider.getNormalQRcode(input);
+    QrcodeResponse response = await apiProvider.getQRcode(input);
     EasyLoading.dismiss();
     if (response.success) {
       yield GetScannerState(

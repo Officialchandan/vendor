@@ -1476,4 +1476,22 @@ class ApiProvider {
       return QrcodeResponse(success: false, message: message);
     }
   }
+
+  Future<QrcodeResponse> getNormalQRcode(Map<String, dynamic> input) async {
+    try {
+      Response res = await dio.post(Endpoint.GET_NORMAL_QR_CODE, data: input);
+      log("===>billing$res");
+      return QrcodeResponse.fromJson(res.toString());
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return QrcodeResponse(success: false, message: message);
+    }
+  }
 }
