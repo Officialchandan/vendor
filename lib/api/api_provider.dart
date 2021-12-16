@@ -50,6 +50,7 @@ import 'package:vendor/model/monthly_walkin.dart';
 import 'package:vendor/model/partial_user_register.dart';
 import 'package:vendor/model/product_by_category_response.dart';
 import 'package:vendor/model/product_variant_response.dart';
+import 'package:vendor/model/qr_code.dart';
 import 'package:vendor/model/upload_image_response.dart';
 import 'package:vendor/model/vendor_profile_response.dart';
 import 'package:vendor/model/verify_otp.dart';
@@ -1455,6 +1456,24 @@ class ApiProvider {
       }
       print("Exception occurred: $message stackTrace: $error");
       return GiftDeliverdResponse(success: false, message: message);
+    }
+  }
+
+  Future<QrcodeResponse> getQRcode(Map<String, dynamic> input) async {
+    try {
+      Response res = await dio.post(Endpoint.GET_QR_CODE, data: input);
+      log("===>billing$res");
+      return QrcodeResponse.fromJson(res.toString());
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return QrcodeResponse(success: false, message: message);
     }
   }
 }
