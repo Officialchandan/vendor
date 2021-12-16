@@ -62,14 +62,14 @@ class DirectBillingCustomerNumberResponseBloc extends Bloc<
               message: result.message,
               data: result.data!.walletBalance,
               succes: result.success,
-              status: result.status);
+              status: result.cust_reg_status);
         } else {
           Fluttertoast.showToast(
               msg: result.message, backgroundColor: ColorPrimary);
           yield GetDirectBillingCustomerNumberResponseFailureState(
               message: result.message,
               succes: result.success,
-              status: result.status);
+              status: result.cust_reg_status);
         }
       } catch (error) {
         yield GetDirectBillingCustomerNumberResponseFailureState(

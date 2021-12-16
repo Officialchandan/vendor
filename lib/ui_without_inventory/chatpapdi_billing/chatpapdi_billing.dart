@@ -8,11 +8,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vendor/model/chat_papdi_module/billing_chatpapdi.dart';
-import 'package:vendor/ui/billingflow/direct_billing/direct_event.dart';
+import 'package:vendor/ui_without_inventory/chatpapdi_billing/ScannerChatPapdi/scanner_chatpapdi.dart';
+
 import 'package:vendor/ui_without_inventory/chatpapdi_billing/chatpapdi_bloc.dart';
 import 'package:vendor/ui_without_inventory/chatpapdi_billing/chatpapdi_event.dart';
 import 'package:vendor/ui_without_inventory/chatpapdi_billing/chatpapdi_state.dart';
-import 'package:vendor/ui_without_inventory/home/bottom_navigation_bar.dart';
+
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/validator.dart';
@@ -45,7 +46,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
   String amount = "0.0";
   var billing, succes;
   ChatPapdiData? datas;
-
+  ChatPapdiData? passing;
   Widget show(var coins) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
@@ -90,7 +91,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                 children: [
                   BlocConsumer<ChatPapdiBillingCustomerNumberResponseBloc,
                       ChatPapdiBillingCustomerNumberResponseState>(
-                    listener: (context, state) {
+                    listener: (context, state) async {
                       if (state
                           is GetChatPapdiBillingCustomerNumberResponseState) {
                         coins = state.data.toString();
@@ -129,11 +130,16 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                       if (state is GetChatPapdiBillingOtpState) {
                         Fluttertoast.showToast(
                             msg: state.message, backgroundColor: ColorPrimary);
-                        Navigator.pushReplacement(
+                        var result = await Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    BottomNavigationHomeWithOutInventory()));
+                                builder: (context) => Scanner(data: datas!)));
+                        log("-------$result --------");
+                        // Navigator.pushReplacement(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (BuildContext context) =>
+                        //             BottomNavigationHomeWithOutInventory()));
                       }
                       if (state is GetChatPapdiBillingOtpLoadingstate) {}
                       if (state is GetChatPapdiBillingOtpFailureState) {

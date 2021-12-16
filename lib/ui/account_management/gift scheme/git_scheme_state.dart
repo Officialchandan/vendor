@@ -29,3 +29,30 @@ class GetGiftSchemestate extends GiftSchemeState {
   @override
   List<Object> get props => [message, data, succes];
 }
+
+class GiftDeliverdIntialState extends GiftSchemeState {
+  @override
+  List<Object?> get props => [];
+}
+
+class GetGiftDeliverdLoadingstate extends GiftSchemeState {
+  @override
+  List<Object?> get props => [];
+}
+
+class GetGiftDeliverdFailureState extends GiftSchemeState {
+  final String message;
+  final succes;
+  GetGiftDeliverdFailureState({required this.message, required this.succes});
+  @override
+  List<Object?> get props => [message, succes];
+}
+
+class GetGiftDeliverdstate extends GiftSchemeState {
+  final message;
+
+  final succes;
+  GetGiftDeliverdstate({required this.succes, required this.message});
+  @override
+  List<Object> get props => [message, succes];
+}

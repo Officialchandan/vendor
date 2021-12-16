@@ -1432,4 +1432,29 @@ class ApiProvider {
       return GiftSchemeResponse(success: false, message: message);
     }
   }
+
+  Future<GiftDeliverdResponse> getVendorGiftStatus(giftid) async {
+    try {
+      Map input = HashMap<String, dynamic>();
+
+      input["gift_id"] = giftid;
+
+      Response res = await dio.post(
+        Endpoint.GET_UPDATE_VENDOR_GIFT_RECEIVED_STATUS,
+        data: input,
+      );
+
+      return GiftDeliverdResponse.fromJson(res.toString());
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return GiftDeliverdResponse(success: false, message: message);
+    }
+  }
 }

@@ -49,6 +49,7 @@ class GiftSchemeData {
     required this.barcode,
     required this.qty,
     required this.cartTotal,
+    required this.status,
   });
 
   int id;
@@ -59,6 +60,8 @@ class GiftSchemeData {
   String barcode;
   String qty;
   String cartTotal;
+  int status;
+  int? gift = 0;
 
   factory GiftSchemeData.fromJson(String str) =>
       GiftSchemeData.fromMap(json.decode(str));
@@ -78,6 +81,7 @@ class GiftSchemeData {
         qty: json["qty"] == null ? "" : json["qty"].toString(),
         cartTotal:
             json["cart_total"] == null ? "" : json["cart_total"].toString(),
+        status: json["status"] == null ? null : json["status"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -89,5 +93,6 @@ class GiftSchemeData {
         "barcode": barcode == null ? null : barcode,
         "qty": qty == null ? null : qty,
         "cart_total": cartTotal == null ? null : cartTotal,
+        "status": status == null ? null : status,
       };
 }

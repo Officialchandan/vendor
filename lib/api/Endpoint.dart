@@ -176,4 +176,6 @@ class Endpoint {
 
   static const String GET_UPDATE_VENDOR_GIFT_RECEIVED_STATUS =
       "updateVendorGiftReceivedStatus";
+
+  static const String GET_QR_CODE = "scanQRCode";
 }

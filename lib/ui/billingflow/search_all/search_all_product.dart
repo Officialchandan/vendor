@@ -186,7 +186,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                           return Stack(
                             children: [
                               Container(
-                                height: 100,
+                                height: 110,
                                 margin: EdgeInsets.only(
                                     top: 10, bottom: 10, left: 30, right: 10),
                                 decoration: BoxDecoration(
