@@ -11,14 +11,15 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/model/billing_product_response.dart';
+import 'package:vendor/model/chat_papdi_module/billing_chatpapdi.dart';
 import 'package:vendor/model/product_model.dart';
 import 'package:vendor/model/verify_otp.dart';
 
-import 'package:vendor/ui/billingflow/Scanner/scanner.dart';
 import 'package:vendor/ui/billingflow/billingproducts/biliing_products_bloc.dart';
 import 'package:vendor/ui/billingflow/billingproducts/biliing_products_event.dart';
 import 'package:vendor/ui/billingflow/billingproducts/biliing_products_state.dart';
 import 'package:vendor/ui/home/bottom_navigation_home.dart';
+import 'package:vendor/ui_without_inventory/chatpapdi_billing/ScannerChatPapdi/scanner_chatpapdi.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/sharedpref.dart';
@@ -42,7 +43,7 @@ class BillingProducts extends StatefulWidget {
 
 class _BillingProductsState extends State<BillingProducts> {
   _BillingProductsState(List<ProductModel> billingItemList, mobile, coin);
-  VerifyEarningCoinsOtpData? passing;
+  ChatPapdiData? passing;
   ProductModel? selectedProductList;
   List<ProductModel> productList = [];
   List index = [];

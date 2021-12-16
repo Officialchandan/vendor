@@ -42,3 +42,8 @@ class GetDirectBillingPartialUserRegisterEvent
   @override
   List<Object> get props => [input];
 }
+
+class GetDirectBillingCategoryEvent
+    extends DirectBillingCustomerNumberResponseEvent {
+  GetDirectBillingCategoryEvent();
+}

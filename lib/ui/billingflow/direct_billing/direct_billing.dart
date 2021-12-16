@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vendor/model/direct_billing.dart';
+import 'package:vendor/model/get_categories_response.dart';
 import 'package:vendor/ui/billingflow/direct_billing/direct_bloc.dart';
 import 'package:vendor/ui/billingflow/direct_billing/direct_event.dart';
 import 'package:vendor/ui/billingflow/direct_billing/direct_state.dart';
@@ -35,9 +36,10 @@ class _DirectBillingState extends State<DirectBilling> {
   var message = "";
   var status1, succes;
   bool? status, redeem = false;
+  List<CategoryModel> categoryList = [];
   bool valuefirst = false;
   String coins = "0.0";
-
+  List categoryIdList = [];
   String coinss = "0.0";
 
   String amount = "0.0";
@@ -60,6 +62,13 @@ class _DirectBillingState extends State<DirectBilling> {
         ),
       ],
     );
+  }
+
+  @override
+  void initState() {
+    directBillingCustomerNumberResponseBloc
+        .add(GetDirectBillingCategoryEvent());
+    super.initState();
   }
 
   @override
@@ -149,6 +158,9 @@ class _DirectBillingState extends State<DirectBilling> {
 
                         if (state is GetDirectBillingPartialUserFailureState) {
                           succes = state.succes;
+                        }
+                        if (state is GetDirectBillingCategoryByVendorIdState) {
+                          categoryList = state.data;
                         }
                       },
                       builder: (context, state) {
@@ -299,25 +311,21 @@ class _DirectBillingState extends State<DirectBilling> {
                       height: 20,
                     ),
                     Container(
-                      height: 220,
+                      height: 225,
                       width: MediaQuery.of(context).size.width,
-                      child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: 5,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 10, bottom: 10),
-                              child: Container(
-                                height: 55,
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: Colors.grey, width: .5),
-                                    borderRadius: BorderRadius.circular(8)),
-                                child: Row(),
-                              ),
-                            );
-                          }),
+                      child: categoryList.isNotEmpty
+                          ? ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: 5,
+                              itemBuilder: (context, index) {
+                                return buildList(categoryList[index]);
+                              })
+                          : Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                    ),
+                    SizedBox(
+                      height: 20,
                     ),
                     Row(
                       children: [
@@ -370,62 +378,65 @@ class _DirectBillingState extends State<DirectBilling> {
                     SizedBox(
                       height: 20,
                     ),
-                    Center(
-                      child: InkWell(
-                        onTap: () {
-                          if (status1 == 0) {
-                            if (mobileController.text.length == 10) {
-                              if (amountController.text.length >= 0) {
-                                if (nameController.text.length > 1) {
-                                  userRegister(context);
-                                } else {
-                                  Fluttertoast.showToast(
-                                      msg: "please_enter_name_key ".tr(),
-                                      backgroundColor: ColorPrimary);
-                                }
-                              } else {
-                                Fluttertoast.showToast(
-                                    msg: "please_enter_amount_key".tr(),
-                                    backgroundColor: ColorPrimary);
-                              }
-                            } else {
-                              Fluttertoast.showToast(
-                                  msg: "please_enter_10_digits_number_key".tr(),
-                                  backgroundColor: ColorPrimary);
-                            }
-                          } else {
-                            if (mobileController.text.length == 10) {
-                              if (amountController.text.length >= 0) {
-                                directBilling(context);
-                              } else {
-                                Fluttertoast.showToast(
-                                    msg: "please_enter_amount_key".tr(),
-                                    backgroundColor: ColorPrimary);
-                              }
-                            } else {
-                              Fluttertoast.showToast(
-                                  msg: "please_enter_10_digits_number_key".tr(),
-                                  backgroundColor: ColorPrimary);
-                            }
-                          }
-                        },
-                        child: Container(
-                          height: 50,
-                          decoration: BoxDecoration(
-                              color: ColorPrimary,
-                              borderRadius: BorderRadius.circular(10)),
-                          width: 250,
-                          child: Center(
-                            child: Text("submit_button_key".tr(),
-                                style: TextStyle(
-                                    fontSize: 17,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w600)),
-                          ),
-                        ),
-                      ),
-                    )
                   ],
+                ),
+              ),
+            ),
+            bottomNavigationBar: Container(
+              height: 130,
+              child: Center(
+                child: InkWell(
+                  onTap: () {
+                    if (status1 == 0) {
+                      if (mobileController.text.length == 10) {
+                        if (amountController.text.length >= 0) {
+                          if (nameController.text.length > 1) {
+                            userRegister(context);
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: "please_enter_name_key ".tr(),
+                                backgroundColor: ColorPrimary);
+                          }
+                        } else {
+                          Fluttertoast.showToast(
+                              msg: "please_enter_amount_key".tr(),
+                              backgroundColor: ColorPrimary);
+                        }
+                      } else {
+                        Fluttertoast.showToast(
+                            msg: "please_enter_10_digits_number_key".tr(),
+                            backgroundColor: ColorPrimary);
+                      }
+                    } else {
+                      if (mobileController.text.length == 10) {
+                        if (amountController.text.length >= 0) {
+                          directBilling(context);
+                        } else {
+                          Fluttertoast.showToast(
+                              msg: "please_enter_amount_key".tr(),
+                              backgroundColor: ColorPrimary);
+                        }
+                      } else {
+                        Fluttertoast.showToast(
+                            msg: "please_enter_10_digits_number_key".tr(),
+                            backgroundColor: ColorPrimary);
+                      }
+                    }
+                  },
+                  child: Container(
+                    height: 50,
+                    decoration: BoxDecoration(
+                        color: ColorPrimary,
+                        borderRadius: BorderRadius.circular(10)),
+                    width: 250,
+                    child: Center(
+                      child: Text("submit_button_key".tr(),
+                          style: TextStyle(
+                              fontSize: 17,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600)),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -479,6 +490,7 @@ class _DirectBillingState extends State<DirectBilling> {
         await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     input["total_pay"] = amount;
     input["coin_deducted"] = coinss;
+    input["category_id"] = categoryIdList.join(',');
 
     log("=====? $input");
     directBillingCustomerNumberResponseBloc
@@ -579,5 +591,68 @@ class _DirectBillingState extends State<DirectBilling> {
             ),
           );
         }).then((value) => otpController.clear());
+  }
+
+  Widget buildList(list) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10, bottom: 10),
+      child: Container(
+        height: 55,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey, width: .5),
+            borderRadius: BorderRadius.circular(8)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: 20,
+            ),
+            Container(
+              height: 18,
+              width: 18,
+              color: Colors.white,
+              child: Checkbox(
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                value: list.isChecked,
+                checkColor: Colors.white,
+                activeColor: ColorPrimary,
+                onChanged: (isCheck) {
+                  list.isChecked = isCheck;
+                  if (isCheck!) {
+                    categoryIdList.add(list.id);
+                  } else {
+                    categoryIdList.remove(list.id);
+                  }
+                  setState(() {});
+
+                  log("List of Selected Category ${categoryIdList.join(',')}");
+                },
+              ),
+            ),
+            SizedBox(
+              width: 20,
+            ),
+            Image.network(
+              list.image,
+              width: 20,
+              height: 20,
+              color: ColorPrimary,
+              fit: BoxFit.cover,
+            ),
+            SizedBox(
+              width: 20,
+            ),
+            Text(
+              list.categoryName,
+              style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
