@@ -280,13 +280,13 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                     height: 20,
                   ),
                   Container(
-                    child: Text("total_payable_amount_key $amount".tr()),
+                    child: Text("total_payable_amount_key".tr() + " $amount"),
                   ),
                   SizedBox(
                     height: 20,
                   ),
                   Container(
-                    child: Text("total_coin_deducted_key $coinss".tr()),
+                    child: Text("total_coin_deducted_key".tr() + " $coinss"),
                   ),
                   SizedBox(
                     height: 20,
@@ -333,7 +333,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                         ),
                       ),
                       Text(
-                        "  redeemed_coins_key".tr(),
+                        "  " + "redeemed_coins_key".tr(),
                         style: TextStyle(fontSize: 17),
                       ),
                     ],

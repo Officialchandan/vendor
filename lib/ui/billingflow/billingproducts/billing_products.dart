@@ -632,18 +632,11 @@ class _BillingProductsState extends State<BillingProducts> {
 
                       if (state is VerifyOtpState) {
                         passing = state.data;
-                        //var result = await
-                        otpVerifyList!.qrCodeStatus == 0
-                            ? Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => BillingScreen()))
-                            : Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        Scanner(data: passing!)));
-                        //log("-------$result --------");
+                        var result = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Scanner(data: passing!)));
+                        log("-------$result --------");
                         // codes = result;
                         // Navigator.push(
                         //     context,

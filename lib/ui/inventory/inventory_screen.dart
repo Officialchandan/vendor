@@ -119,7 +119,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                                 type: PageTransitionType.fade));
                       }
                       if (options[index]["id"] == 1) {
-                        // showSheet(context);
+                        showSheet(context);
                       }
                     },
                     leading: Image(
@@ -171,29 +171,30 @@ class _InventoryScreenState extends State<InventoryScreen> {
                   onTap: () {
                     Navigator.pop(context);
                     Navigator.push(
-                        context,
-                        PageTransition(
-                            child: AddProductScreen(),
-                            type: PageTransitionType.fade));
+                      context,
+                      PageTransition(
+                          child: AddProductScreen(),
+                          type: PageTransitionType.fade),
+                    );
                   },
                 ),
-                ListTile(
-                  leading: Image(
-                    image: AssetImage("assets/images/suggested.png"),
-                    width: 30,
-                    height: 30,
-                    fit: BoxFit.contain,
-                  ),
-                  title: Text("add_suggested_product_key".tr()),
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.push(
-                        context,
-                        PageTransition(
-                            child: SuggestedProductScreen(),
-                            type: PageTransitionType.fade));
-                  },
-                ),
+                // ListTile(
+                //   leading: Image(
+                //     image: AssetImage("assets/images/suggested.png"),
+                //     width: 30,
+                //     height: 30,
+                //     fit: BoxFit.contain,
+                //   ),
+                //   title: Text("add_suggested_product_key".tr()),
+                //   onTap: () {
+                //     Navigator.pop(context);
+                //     Navigator.push(
+                //         context,
+                //         PageTransition(
+                //             child: SuggestedProductScreen(),
+                //             type: PageTransitionType.fade));
+                //   },
+                // ),
               ],
             ),
           );

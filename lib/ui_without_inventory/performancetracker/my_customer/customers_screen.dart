@@ -275,8 +275,8 @@ class _CustomerScreenState extends State<CustomerScreen> {
                                       color: Colors.black, fontSize: 14),
                                 )),
                                 Text(
-                                  "amount_spend_key: ${customer.amountSpend}"
-                                      .tr(),
+                                  "amount_spend_key".tr() +
+                                      ": ${customer.amountSpend}",
                                   style: TextStyle(
                                       color: ColorPrimary,
                                       fontWeight: FontWeight.bold,

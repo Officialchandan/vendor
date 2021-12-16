@@ -124,3 +124,20 @@ class GetDirectBillingPartialUserFailureState
   @override
   List<Object?> get props => [message, succes];
 }
+
+class GetDirectBillingCategoryByVendorIdState
+    extends DirectBillingCustomerNumberResponseState {
+  final message;
+  final data;
+  GetDirectBillingCategoryByVendorIdState({this.message, this.data});
+  @override
+  List<Object?> get props => [message, data];
+}
+
+class GetDirectBillingCategoryByVendorIdFailureState
+    extends DirectBillingCustomerNumberResponseState {
+  final String message;
+  GetDirectBillingCategoryByVendorIdFailureState({required this.message});
+  @override
+  List<Object?> get props => [message];
+}

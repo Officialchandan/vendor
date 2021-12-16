@@ -8,7 +8,9 @@ import 'package:vendor/main.dart';
 import 'package:vendor/model/customer_number_response.dart';
 import 'package:vendor/model/direct_billing.dart';
 import 'package:vendor/model/direct_billing_otp.dart';
+import 'package:vendor/model/get_categories_response.dart';
 import 'package:vendor/model/partial_user_register.dart';
+import 'package:vendor/ui/billingflow/billing/billing_state.dart';
 import 'package:vendor/ui/billingflow/direct_billing/direct_event.dart';
 import 'package:vendor/ui/billingflow/direct_billing/direct_state.dart';
 import 'package:vendor/utility/color.dart';
@@ -44,6 +46,11 @@ class DirectBillingCustomerNumberResponseBloc extends Bloc<
 
     if (event is GetDirectBillingPartialUserRegisterEvent) {
       yield* getDirectBillingPartialUserRegister(event.input);
+    }
+
+    if (event is GetDirectBillingCategoryEvent) {
+      yield GetDirectBillingPartialUserLoadingstate();
+      yield* getVendorCategoryByIdResponse();
     }
   }
 
@@ -163,6 +170,32 @@ class DirectBillingCustomerNumberResponseBloc extends Bloc<
       } catch (error) {
         yield GetDirectBillingPartialUserFailureState(
             message: "internal_server_error_key".tr(), succes: false);
+      }
+    } else {
+      Fluttertoast.showToast(
+          msg: "please_check_your_internet_connection_key".tr(),
+          backgroundColor: ColorPrimary);
+    }
+  }
+
+  Stream<DirectBillingCustomerNumberResponseState>
+      getVendorCategoryByIdResponse() async* {
+    if (await Network.isConnected()) {
+      yield GetDirectBillingLoadingstate();
+      try {
+        GetCategoriesResponse result =
+            await apiProvider.getCategoryByVendorId();
+        log("$result");
+        if (result.success) {
+          yield GetDirectBillingCategoryByVendorIdState(
+              message: result.message, data: result.data!);
+        } else {
+          yield GetDirectBillingCategoryByVendorIdFailureState(
+              message: result.message);
+        }
+      } catch (error) {
+        yield GetDirectBillingCategoryByVendorIdFailureState(
+            message: "internal_server_error_key".tr());
       }
     } else {
       Fluttertoast.showToast(
