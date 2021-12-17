@@ -7,20 +7,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:vendor/model/direct_billing.dart';
-
+import 'package:vendor/model/verify_otp.dart';
 import 'package:vendor/ui/billingflow/Scanner/scanner_bloc.dart';
 import 'package:vendor/ui/billingflow/Scanner/scanner_event.dart';
 import 'package:vendor/ui/billingflow/Scanner/scanner_state.dart';
 import 'package:vendor/ui/billingflow/billing/billing.dart';
-import 'package:vendor/ui/billingflow/direct_billing/direct_billing.dart';
 import 'package:vendor/ui/home/bottom_navigation_home.dart';
-import 'package:vendor/ui_without_inventory/chatpapdi_billing/chatpapdi_billing.dart';
-import 'package:vendor/utility/color.dart';
+
 import 'package:vendor/utility/sharedpref.dart';
 
 class Scanner extends StatefulWidget {
-  final DirectBillingData data;
+  final VerifyEarningCoinsOtpData data;
   Scanner({required this.data});
 
   @override
@@ -43,14 +40,14 @@ class _ScannerState extends State<Scanner> {
     controller!.resumeCamera();
   }
 
-  add() {
-    return Navigator.push(
-        context, MaterialPageRoute(builder: (context) => ChatPapdiBilling()));
-  }
+  // add() {
+  //   return Navigator.push(
+  //       context, MaterialPageRoute(builder: (context) => ChatPapdiBilling()));
+  // }
 
   Future<void> scanner(BuildContext context) async {
     Map<String, dynamic> input = HashMap<String, dynamic>();
-    input["bill_id"] = widget.data.billId;
+    input["order_id"] = widget.data.orderId;
     input["vendor_id"] = widget.data.vendorId;
     input["gift_id"] = 1;
     input["qr_code"] = "brc_01";
@@ -58,11 +55,15 @@ class _ScannerState extends State<Scanner> {
 
     scannerBloc.add(GetScannerEvent(data: input));
     // Navigator.of(context).pop(result!.code);
-
     Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => BottomNavigationHome()),
+        MaterialPageRoute(
+            builder: (context) => BottomNavigationHome(
+                  index: 0,
+                )),
         (route) => false);
+    //  Navigator.push(
+    // context, MaterialPageRoute(builder: (context) => ChatPapdiBilling()));
   }
 
   @override
@@ -73,9 +74,7 @@ class _ScannerState extends State<Scanner> {
         listener: (context, state) {
           // TODO: implement listener
           if (state is GetScannerState) {
-            // Navigator.of(context).pop(result!.code);
-            Fluttertoast.showToast(
-                msg: state.message, backgroundColor: ColorPrimary);
+            Navigator.of(context).pop(result!.code);
           }
           if (state is GetScannerStateLoadingstate) {}
           if (state is IntitalScannerstate) {}

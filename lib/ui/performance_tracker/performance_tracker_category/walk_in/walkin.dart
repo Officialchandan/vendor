@@ -7,6 +7,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:vendor/api/api_provider.dart';
 import 'package:vendor/model/daily_walkin.dart';
 import 'package:vendor/model/hourly_sale_amount.dart';
+import 'package:vendor/model/hourly_walkin.dart';
 import 'package:vendor/model/monthly_walkin.dart';
 import 'package:vendor/utility/color.dart';
 
@@ -22,22 +23,22 @@ class _WalkInAmountState extends State<WalkInAmount> {
   DailyWalkinAmountResponse? resultDaily;
   MonthlyWalkinAmountResponse? resultMonthly;
 
-  HourlySaleAmountResponse? resultHourly;
+  HourlyWalkinAmountResponse? resultHourly;
 
   Future<DailyWalkinAmountData> getDhabasDay() async {
-    resultDaily = await ApiProvider().getDailyWalkinAmount();
+    resultDaily = await ApiProvider().getDailyWalkinAmount(2, 1, 1);
     log('${resultDaily!.data}');
     return resultDaily!.data!;
   }
 
   Future<MonthlyWalkinAmountData> getDhabasMonthly() async {
-    resultMonthly = await ApiProvider().getMonthlyWalkinAmount();
+    resultMonthly = await ApiProvider().getMonthlyWalkinAmount(2, 2, 2);
     log('${resultMonthly!.data}');
     return resultMonthly!.data!;
   }
 
   Future<Map<String, String>> getDhabasHourly() async {
-    resultHourly = (await ApiProvider().getHourlySaleAmount());
+    resultHourly = (await ApiProvider().getHourlyWalkinAmount(1));
     log('${resultHourly!.data}');
     return resultHourly!.data!;
   }
@@ -522,7 +523,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: AutoSizeText(
-                                                      '  ${snapshot.data!.today}',
+                                                      '  ${snapshot.data!.date}',
                                                       style: TextStyle(
                                                           fontWeight:
                                                               FontWeight.w600,
@@ -545,53 +546,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        '  ${(double.parse(snapshot.data!.dailyWalkIns)).toStringAsFixed(2)}',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 15.0,
-                                                            color:
-                                                                Colors.black)),
-                                                  ))
-                                            ]),
-                                      ]),
-                                      TableRow(children: [
-                                        Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                  height: 50,
-                                                  width: deviceWidth * 0.44,
-                                                  color: Colors.white,
-                                                  child: Align(
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    child: AutoSizeText(
-                                                      '  ${snapshot.data!.yesterday}',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          fontSize: 14.0,
-                                                          color: Colors.black),
-                                                      maxFontSize: 14,
-                                                      minFontSize: 12,
-                                                    ),
-                                                  ))
-                                            ]),
-                                        Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                  height: 50,
-                                                  width: deviceWidth * 0.44,
-                                                  color: Colors.white,
-                                                  child: Align(
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    child: Text(
-                                                        '  ${(double.parse(snapshot.data!.yesterdayWalkIns)).toStringAsFixed(2)}',
+                                                        '  ${(double.parse(snapshot.data!.walkIns)).toStringAsFixed(2)}',
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w600,
@@ -861,11 +816,10 @@ class _WalkInAmountState extends State<WalkInAmount> {
     final List<GDPData> chartData = [
       GDPData(
         'today_key'.tr(),
-        double.parse(data!.dailyWalkIns.toString()),
+        double.parse(data!.walkIns.toString()),
       ),
       GDPData(' ', 0),
-      GDPData(
-          "yesterday_key".tr(), double.parse(data.yesterdayWalkIns.toString())),
+      GDPData("", 0),
     ];
     return chartData;
   }

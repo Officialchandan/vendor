@@ -27,19 +27,19 @@ class _SaleAmountState extends State<SaleAmount> {
   List<String> demo = [];
 
   Future<DailySellAmountData> getDhabasDay() async {
-    resultDaily = await ApiProvider().getDailySaleAmount();
+    resultDaily = await ApiProvider().getDailySaleAmount(2, 2, 2021 - 12 - 16);
     log('${resultDaily!.data}');
     return resultDaily!.data!;
   }
 
   Future<MonthlySellAmountData> getDhabasMonthly() async {
-    resultMonthly = await ApiProvider().getMonthlySaleAmount();
+    resultMonthly = await ApiProvider().getMonthlySaleAmount(1, 2);
     log('${resultMonthly!.data}');
     return resultMonthly!.data!;
   }
 
   Future<Map<String, String>> getDhabasHourly() async {
-    resultHourly = (await ApiProvider().getHourlySaleAmount());
+    resultHourly = (await ApiProvider().getHourlySaleAmount(1));
     log('${resultHourly!.data}');
     //resultHourlyMap = resultHourly!.data!;
     //for (var i = 0; i < resultHourly!.data!.length; i++) {
@@ -553,7 +553,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: AutoSizeText(
-                                                      '  ${snapshot.data!.today}',
+                                                      '  ${snapshot.data!.date}',
                                                       style: TextStyle(
                                                           fontWeight:
                                                               FontWeight.w600,
@@ -577,52 +577,6 @@ class _SaleAmountState extends State<SaleAmount> {
                                                         Alignment.centerLeft,
                                                     child: Text(
                                                         '  ${(double.parse(snapshot.data!.todaySaleAmount)).toStringAsFixed(2)}}',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 15.0,
-                                                            color:
-                                                                Colors.black)),
-                                                  ))
-                                            ]),
-                                      ]),
-                                      TableRow(children: [
-                                        Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                  height: 50,
-                                                  width: deviceWidth * 0.44,
-                                                  color: Colors.white,
-                                                  child: Align(
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    child: AutoSizeText(
-                                                      '  ${snapshot.data!.yesterday}',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          fontSize: 14.0,
-                                                          color: Colors.black),
-                                                      maxFontSize: 14,
-                                                      minFontSize: 12,
-                                                    ),
-                                                  ))
-                                            ]),
-                                        Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                  height: 50,
-                                                  width: deviceWidth * 0.44,
-                                                  color: Colors.white,
-                                                  child: Align(
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    child: Text(
-                                                        '  ${(double.parse(snapshot.data!.yesterdaySaleAmount)).toStringAsFixed(2)}',
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w600,
@@ -894,8 +848,8 @@ class _SaleAmountState extends State<SaleAmount> {
       ),
       GDPData(' ', 0),
       GDPData(
-        "YESTERDAY",
-        double.parse(data.yesterdaySaleAmount.toString()),
+        "",
+        0,
       ),
     ];
     return chartData;

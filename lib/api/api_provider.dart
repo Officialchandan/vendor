@@ -691,7 +691,8 @@ class ApiProvider {
     }
   }
 
-  Future<DailySellAmountResponse> getDailySaleAmount() async {
+  Future<DailySellAmountResponse> getDailySaleAmount(
+      catid, productid, date) async {
     try {
       Map input = HashMap<String, dynamic>();
       log("------->res");
@@ -717,7 +718,7 @@ class ApiProvider {
     }
   }
 
-  Future<MonthlySellAmountResponse> getMonthlySaleAmount() async {
+  Future<MonthlySellAmountResponse> getMonthlySaleAmount(catid, month) async {
     try {
       Map input = HashMap<String, dynamic>();
       log("------->res");
@@ -743,7 +744,7 @@ class ApiProvider {
     }
   }
 
-  Future<HourlySaleAmountResponse> getHourlySaleAmount() async {
+  Future<HourlySaleAmountResponse> getHourlySaleAmount(catid) async {
     try {
       Map input = HashMap<String, dynamic>();
       log("------->res");
@@ -769,7 +770,7 @@ class ApiProvider {
     }
   }
 
-  Future<HourlyEarningAmountResponse> getHourlyEarningAmount() async {
+  Future<HourlyEarningAmountResponse> getHourlyEarningAmount(catid) async {
     try {
       Map input = HashMap<String, dynamic>();
       log("------->res");
@@ -795,7 +796,7 @@ class ApiProvider {
     }
   }
 
-  Future<HourlyWalkinAmountResponse> getHourlyWalkinAmount() async {
+  Future<HourlyWalkinAmountResponse> getHourlyWalkinAmount(catid) async {
     try {
       Map input = HashMap<String, dynamic>();
       log("------->res");
@@ -821,7 +822,8 @@ class ApiProvider {
     }
   }
 
-  Future<DailyEarningAmountResponse> getDailyEarningAmount() async {
+  Future<DailyEarningAmountResponse> getDailyEarningAmount(
+      catid, productid, date) async {
     try {
       Map input = HashMap<String, dynamic>();
       log("------->res");
@@ -847,7 +849,8 @@ class ApiProvider {
     }
   }
 
-  Future<MonthlyEarningAmountResponse> getMonthlyEarningAmount() async {
+  Future<MonthlyEarningAmountResponse> getMonthlyEarningAmount(
+      catid, productid, date) async {
     // try {
     Map input = HashMap<String, dynamic>();
     log("------->res");
@@ -873,7 +876,8 @@ class ApiProvider {
     // }
   }
 
-  Future<DailyWalkinAmountResponse> getDailyWalkinAmount() async {
+  Future<DailyWalkinAmountResponse> getDailyWalkinAmount(
+      catid, productid, date) async {
     try {
       Map input = HashMap<String, dynamic>();
       log("------->res");
@@ -899,7 +903,8 @@ class ApiProvider {
     }
   }
 
-  Future<MonthlyWalkinAmountResponse> getMonthlyWalkinAmount() async {
+  Future<MonthlyWalkinAmountResponse> getMonthlyWalkinAmount(
+      catid, productid, date) async {
     try {
       Map input = HashMap<String, dynamic>();
       log("------->res");

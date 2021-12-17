@@ -632,11 +632,21 @@ class _BillingProductsState extends State<BillingProducts> {
 
                       if (state is VerifyOtpState) {
                         passing = state.data;
-                        var result = await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Scanner(data: passing!)));
-                        log("-------$result --------");
+                        Fluttertoast.showToast(
+                            msg: state.message, backgroundColor: ColorPrimary);
+                        otpVerifyList!.qrCodeStatus == 0
+                            ? Navigator.pushAndRemoveUntil(
+                                context,
+                                PageTransition(
+                                    child: BottomNavigationHome(),
+                                    type: PageTransitionType.fade),
+                                ModalRoute.withName("/"))
+                            : Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        Scanner(data: passing!)));
+                        //log("-------$result --------");
                         // codes = result;
                         // Navigator.push(
                         //     context,

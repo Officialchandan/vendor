@@ -15,14 +15,18 @@ class DailySellAmountResponse {
   String message;
   DailySellAmountData? data;
 
-  factory DailySellAmountResponse.fromJson(String str) => DailySellAmountResponse.fromMap(json.decode(str));
+  factory DailySellAmountResponse.fromJson(String str) =>
+      DailySellAmountResponse.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory DailySellAmountResponse.fromMap(Map<String, dynamic> json) => DailySellAmountResponse(
+  factory DailySellAmountResponse.fromMap(Map<String, dynamic> json) =>
+      DailySellAmountResponse(
         success: json["success"] == null ? null : json["success"],
         message: json["message"] == null ? null : json["message"],
-        data: json["data"] == null ? null : DailySellAmountData.fromMap(json["data"]),
+        data: json["data"] == null
+            ? null
+            : DailySellAmountData.fromMap(json["data"]),
       );
 
   Map<String, dynamic> toMap() => {
@@ -34,32 +38,28 @@ class DailySellAmountResponse {
 
 class DailySellAmountData {
   DailySellAmountData({
-    required this.today,
+    required this.date,
     required this.todaySaleAmount,
-    required this.yesterday,
-    required this.yesterdaySaleAmount,
   });
 
-  String today;
+  String date;
   String todaySaleAmount;
-  String yesterday;
-  String yesterdaySaleAmount;
 
-  factory DailySellAmountData.fromJson(String str) => DailySellAmountData.fromMap(json.decode(str));
+  factory DailySellAmountData.fromJson(String str) =>
+      DailySellAmountData.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory DailySellAmountData.fromMap(Map<String, dynamic> json) => DailySellAmountData(
-        today: json["today"] == null ? "" : json["today"].toString(),
-        todaySaleAmount: json["today_sale_amount"] == null ? "" : json["today_sale_amount"].toString(),
-        yesterday: json["yesterday"] == null ? "" : json["yesterday"].toString(),
-        yesterdaySaleAmount: json["yesterday_sale_amount"] == null ? "" : json["yesterday_sale_amount"].toString(),
+  factory DailySellAmountData.fromMap(Map<String, dynamic> json) =>
+      DailySellAmountData(
+        date: json["date"] == null ? "" : json["date"].toString(),
+        todaySaleAmount: json["today_sale_amount"] == null
+            ? ""
+            : json["today_sale_amount"].toString(),
       );
 
   Map<String, dynamic> toMap() => {
-        "today": today,
-        "today_sale_amount": todaySaleAmount,
-        "yesterday": yesterday,
-        "yesterday_sale_amount": yesterdaySaleAmount,
+        "date": date == null ? null : date,
+        "today_sale_amount": todaySaleAmount == null ? null : todaySaleAmount,
       };
 }
