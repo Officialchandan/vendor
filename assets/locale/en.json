@@ -10,6 +10,7 @@
     "forget_your_password_key" : "Forget your password?",
     "invalid_credentials_key" : "Please try again with valid Credentials",
     "billing_dashboard_key" : "Billing Dashboard",
+    "product_added_successfully" : "Product Added Successfully",
     "mobile_no_key" : "Mobile no.",
     "amount_key":"Amount",
     "amount_spent_here_key" : "Amount spent here",
