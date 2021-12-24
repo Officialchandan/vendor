@@ -48,6 +48,7 @@ class BillingProductData {
     required this.earningCoins,
     required this.myprofitrevenue,
     required this.orderDate,
+    required this.qrCodeStatus,
   });
 
   int orderId;
@@ -60,6 +61,7 @@ class BillingProductData {
   String earningCoins;
   String myprofitrevenue;
   String orderDate;
+  int qrCodeStatus;
 
   factory BillingProductData.fromJson(String str) =>
       BillingProductData.fromMap(json.decode(str));
@@ -81,6 +83,8 @@ class BillingProductData {
             : json["myprofit_revenue"].toString(),
         orderDate:
             json["order_date"] == null ? "" : json["order_date"].toString(),
+        qrCodeStatus:
+            json["qr_code_status"] == null ? null : json["qr_code_status"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -94,5 +98,6 @@ class BillingProductData {
         "earning_coins": earningCoins,
         "myprofit_revenue": myprofitrevenue,
         "order_date": orderDate,
+        "qr_code_status": qrCodeStatus == null ? null : qrCodeStatus,
       };
 }

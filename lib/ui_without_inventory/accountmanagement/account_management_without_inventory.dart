@@ -13,6 +13,7 @@ import 'package:vendor/model/vendor_profile_response.dart';
 
 import 'package:vendor/ui/login/login_screen.dart';
 import 'package:vendor/ui_without_inventory/account_settings/account_settings.dart';
+
 import 'package:vendor/ui_without_inventory/accountmanagement/account_management_without_inventory_bloc.dart';
 import 'package:vendor/ui_without_inventory/accountmanagement/account_management_without_inventory_event.dart';
 import 'package:vendor/ui_without_inventory/accountmanagement/account_management_without_inventory_state.dart';

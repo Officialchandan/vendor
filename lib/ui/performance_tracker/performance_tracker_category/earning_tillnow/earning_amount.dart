@@ -8,6 +8,7 @@ import 'package:vendor/api/api_provider.dart';
 import 'package:vendor/model/daily_earning.dart';
 import 'package:vendor/model/hourly_earning.dart';
 import 'package:vendor/model/monthly_earning.dart';
+import 'package:vendor/ui/performance_tracker/performance_tracker_category/bottom_widget.dart';
 import 'package:vendor/utility/color.dart';
 
 class EarningAmount extends StatefulWidget {
@@ -17,13 +18,18 @@ class EarningAmount extends StatefulWidget {
   _EarningAmountState createState() => _EarningAmountState();
 }
 
-class _EarningAmountState extends State<EarningAmount> {
+class _EarningAmountState extends State<EarningAmount>
+    with TickerProviderStateMixin {
   TooltipBehavior? _tooltipBehavior;
   DailyEarningAmountResponse? resultDaily;
   MonthlyEarningAmountResponse? resultMonthly;
 
+  Map<String, String>? resultHourlyMap = {};
+  int earningindex = 2;
+  List<String> demo = [];
+  TabController? _tabController;
+  BottomWidget? bottomWidget;
   HourlyEarningAmountResponse? resultHourly;
-  Map<String, String>? resultHourlyMap;
 
   Future<DailyEarningAmountData> getDhabasDay() async {
     resultDaily = await ApiProvider().getDailyEarningAmount();
@@ -44,6 +50,11 @@ class _EarningAmountState extends State<EarningAmount> {
   }
 
   @override
+  void initState() {
+    _tabController = new TabController(vsync: this, length: 3);
+  }
+
+  @override
   Widget build(BuildContext context) {
     var deviceWidth = MediaQuery.of(context).size.width;
 
@@ -59,11 +70,13 @@ class _EarningAmountState extends State<EarningAmount> {
                 child: TabBar(
                   unselectedLabelColor: Colors.black,
                   labelColor: ColorPrimary,
+                  controller: _tabController,
                   indicator: BoxDecoration(
                       color: TabBarColor,
                       border: Border(
                           bottom: BorderSide(color: ColorPrimary, width: 3))),
                   onTap: (index) {
+                    log("$index");
                     // Tab index when user select it, it start from zero
                   },
                   tabs: [
@@ -100,8 +113,35 @@ class _EarningAmountState extends State<EarningAmount> {
                 },
                 icon: Icon(Icons.arrow_back_ios)),
             backgroundColor: ColorPrimary,
+            actions: [
+              InkWell(
+                onTap: () {
+                  showModalBottomSheet(
+                      backgroundColor: Colors.transparent,
+                      context: context,
+                      builder: (context) {
+                        return BottomWidget(
+                          index: _tabController!.index,
+                          screenindex: earningindex,
+                        );
+                      });
+                },
+                splashColor: Colors.transparent,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.filter_alt_sharp),
+                    Text("filter_key".tr())
+                  ],
+                ),
+              ),
+              const SizedBox(
+                width: 15,
+              )
+            ],
           ),
           body: TabBarView(
+            controller: _tabController,
             children: [
               SingleChildScrollView(
                   child: FutureBuilder<Map<String, String>>(
@@ -537,7 +577,7 @@ class _EarningAmountState extends State<EarningAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: AutoSizeText(
-                                                      '  ${snapshot.data!.today}',
+                                                      '  ${snapshot.data!.date}',
                                                       style: TextStyle(
                                                           fontWeight:
                                                               FontWeight.w600,
@@ -560,7 +600,7 @@ class _EarningAmountState extends State<EarningAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        '  ${(double.parse(snapshot.data!.dailyEarning)).toStringAsFixed(2)}',
+                                                        '  ${(double.parse(snapshot.data!.todayEarning)).toStringAsFixed(2)}',
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w600,
@@ -570,52 +610,52 @@ class _EarningAmountState extends State<EarningAmount> {
                                                   ))
                                             ]),
                                       ]),
-                                      TableRow(children: [
-                                        Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                  height: 50,
-                                                  width: deviceWidth * 0.44,
-                                                  color: Colors.white,
-                                                  child: Align(
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    child: AutoSizeText(
-                                                      '  ${snapshot.data!.yesterday}',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          fontSize: 14.0,
-                                                          color: Colors.black),
-                                                      maxFontSize: 14,
-                                                      minFontSize: 12,
-                                                    ),
-                                                  ))
-                                            ]),
-                                        Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                  height: 50,
-                                                  width: deviceWidth * 0.44,
-                                                  color: Colors.white,
-                                                  child: Align(
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    child: Text(
-                                                        '  ${(double.parse(snapshot.data!.yesterdayEarning)).toStringAsFixed(2)}',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 15.0,
-                                                            color:
-                                                                Colors.black)),
-                                                  ))
-                                            ]),
-                                      ]),
+                                      // TableRow(children: [
+                                      //   Column(
+                                      //       crossAxisAlignment:
+                                      //           CrossAxisAlignment.start,
+                                      //       children: [
+                                      //         Container(
+                                      //             height: 50,
+                                      //             width: deviceWidth * 0.44,
+                                      //             color: Colors.white,
+                                      //             child: Align(
+                                      //               alignment:
+                                      //                   Alignment.centerLeft,
+                                      //               child: AutoSizeText(
+                                      //                 '  ${snapshot.data!.yesterday}',
+                                      //                 style: TextStyle(
+                                      //                     fontWeight:
+                                      //                         FontWeight.w600,
+                                      //                     fontSize: 14.0,
+                                      //                     color: Colors.black),
+                                      //                 maxFontSize: 14,
+                                      //                 minFontSize: 12,
+                                      //               ),
+                                      //             ))
+                                      //       ]),
+                                      //   Column(
+                                      //       crossAxisAlignment:
+                                      //           CrossAxisAlignment.start,
+                                      //       children: [
+                                      //         Container(
+                                      //             height: 50,
+                                      //             width: deviceWidth * 0.44,
+                                      //             color: Colors.white,
+                                      //             child: Align(
+                                      //               alignment:
+                                      //                   Alignment.centerLeft,
+                                      //               child: Text(
+                                      //                   '  ${(double.parse(snapshot.data!.yesterdayEarning)).toStringAsFixed(2)}',
+                                      //                   style: TextStyle(
+                                      //                       fontWeight:
+                                      //                           FontWeight.w600,
+                                      //                       fontSize: 15.0,
+                                      //                       color:
+                                      //                           Colors.black)),
+                                      //             ))
+                                      //       ]),
+                                      // ]),
                                     ],
                                   ),
                                   SizedBox(
@@ -728,7 +768,8 @@ class _EarningAmountState extends State<EarningAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        "  " + "day_key".tr(),
+                                                        "  " +
+                                                            "monthly_key".tr(),
                                                         style: TextStyle(
                                                             fontSize: 20.0,
                                                             color:
@@ -879,11 +920,10 @@ class _EarningAmountState extends State<EarningAmount> {
     final List<GDPData> chartData = [
       GDPData(
         'today_key'.tr(),
-        double.parse(data!.dailyEarning.toString()),
+        double.parse(data!.todayEarning.toString()),
       ),
       GDPData(' ', 0),
-      GDPData(
-          "yesterday_key".tr(), double.parse(data.yesterdayEarning.toString())),
+      GDPData("", 0),
     ];
     return chartData;
   }

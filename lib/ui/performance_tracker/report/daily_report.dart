@@ -43,7 +43,8 @@ class _DailyReportState extends State<DailyReport> {
 
   TextEditingController edtCategory = TextEditingController();
   TextEditingController edtProducts = TextEditingController();
-  DateRangePickerController dateRangePickerController = DateRangePickerController();
+  DateRangePickerController dateRangePickerController =
+      DateRangePickerController();
   CategoryModel? categoryModel;
 
   List<Map<String, dynamic>> reportList = [];
@@ -80,7 +81,8 @@ class _DailyReportState extends State<DailyReport> {
                 enablePastDates: true,
                 monthCellStyle: DateRangePickerMonthCellStyle(
                     weekendTextStyle: TextStyle(color: Colors.grey.shade300),
-                    disabledDatesTextStyle: TextStyle(color: Colors.grey.shade300)),
+                    disabledDatesTextStyle:
+                        TextStyle(color: Colors.grey.shade300)),
                 monthViewSettings: DateRangePickerMonthViewSettings(
                   enableSwipeSelection: true,
                   showTrailingAndLeadingDates: true,
@@ -93,7 +95,8 @@ class _DailyReportState extends State<DailyReport> {
                 headerStyle: DateRangePickerHeaderStyle(
                   textStyle: TextStyle(color: ColorPrimary),
                 ),
-                yearCellStyle: DateRangePickerYearCellStyle(textStyle: TextStyle(color: Colors.black)),
+                yearCellStyle: DateRangePickerYearCellStyle(
+                    textStyle: TextStyle(color: Colors.black)),
                 showNavigationArrow: false,
                 selectionMode: DateRangePickerSelectionMode.single,
                 endRangeSelectionColor: ColorPrimary,
@@ -117,7 +120,8 @@ class _DailyReportState extends State<DailyReport> {
                           Icons.keyboard_arrow_right_sharp,
                           color: ColorPrimary,
                         ),
-                        suffixIconConstraints: BoxConstraints(maxWidth: 20, maxHeight: 20)),
+                        suffixIconConstraints:
+                            BoxConstraints(maxWidth: 20, maxHeight: 20)),
                   ),
             SizedBox(
               height: 10,
@@ -131,12 +135,13 @@ class _DailyReportState extends State<DailyReport> {
                     },
                     readOnly: true,
                     decoration: InputDecoration(
-                        hintText: "Choose_category_key".tr(),
+                        hintText: "choose_product_key".tr(),
                         suffixIcon: Icon(
                           Icons.keyboard_arrow_right_sharp,
                           color: ColorPrimary,
                         ),
-                        suffixIconConstraints: BoxConstraints(maxWidth: 20, maxHeight: 20)),
+                        suffixIconConstraints:
+                            BoxConstraints(maxWidth: 20, maxHeight: 20)),
                   ),
             // reportList.isNotEmpty
             //     ? Container(
@@ -183,7 +188,9 @@ class _DailyReportState extends State<DailyReport> {
         enableDrag: true,
         isScrollControlled: true,
         backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(25), topLeft: Radius.circular(25))),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(25), topLeft: Radius.circular(25))),
         builder: (context) {
           return CategoryBottomSheet(
             onSelect: (CategoryModel option) {
@@ -244,9 +251,12 @@ class _DailyReportState extends State<DailyReport> {
 
   void getReport(BuildContext context) async {
     if (await Network.isConnected()) {
-      String url = widget.chatPapdi == 1 ? Endpoint.GET_DAILY_REPORT_CHAT_PAPDI : Endpoint.GET_DAILY_REPORT;
+      String url = widget.chatPapdi == 1
+          ? Endpoint.GET_DAILY_REPORT_CHAT_PAPDI
+          : Endpoint.GET_DAILY_REPORT;
       Map input = HashMap<String, dynamic>();
-      input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      input["vendor_id"] =
+          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
       // input["vendor_id"] = "1";
       input["date"] = selectedDate;
 
@@ -276,7 +286,8 @@ class _DailyReportState extends State<DailyReport> {
         EasyLoading.dismiss();
         print("result-->$result");
         if (result["success"]) {
-          List<Map<String, dynamic>> report = List<Map<String, dynamic>>.from(result["data"]!.map((x) => x));
+          List<Map<String, dynamic>> report =
+              List<Map<String, dynamic>>.from(result["data"]!.map((x) => x));
 
           report.forEach((element) {
             element.remove("created_at");
@@ -321,7 +332,8 @@ class _DailyReportState extends State<DailyReport> {
     print("exportReport");
     final xls.Workbook workbook = xls.Workbook(0);
     //Adding a Sheet with name to workbook.
-    final xls.Worksheet sheet1 = workbook.worksheets.addWithName('daily_report_key'.tr());
+    final xls.Worksheet sheet1 =
+        workbook.worksheets.addWithName('daily_report_key'.tr());
     sheet1.showGridlines = true;
 
     int columnIndex = 1;
@@ -334,18 +346,24 @@ class _DailyReportState extends State<DailyReport> {
     double redeemCoins = 0.0;
 
     sheet1.getRangeByIndex(1, 1, 1, reportList.first.keys.length).merge();
-    sheet1.getRangeByIndex(rowIndex, columnIndex).value = "daily_report_key ($selectedDate)".tr();
+    sheet1.getRangeByIndex(rowIndex, columnIndex).value =
+        "daily_report_key ($selectedDate)".tr();
     sheet1.getRangeByIndex(rowIndex, columnIndex).rowHeight = 30;
-    sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign = xls.HAlignType.center;
-    sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign = xls.VAlignType.center;
+    sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign =
+        xls.HAlignType.center;
+    sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign =
+        xls.VAlignType.center;
     rowIndex = rowIndex + 1;
 
     reportList.first.keys.forEach((element) {
-      sheet1.getRangeByIndex(rowIndex, columnIndex).value = element.toString().replaceAll("_", " ").toUpperCase();
+      sheet1.getRangeByIndex(rowIndex, columnIndex).value =
+          element.toString().replaceAll("_", " ").toUpperCase();
       sheet1.getRangeByIndex(rowIndex, columnIndex).columnWidth = 25;
       sheet1.getRangeByIndex(rowIndex, columnIndex).rowHeight = 20;
-      sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign = xls.HAlignType.center;
-      sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign = xls.VAlignType.center;
+      sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign =
+          xls.HAlignType.center;
+      sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign =
+          xls.VAlignType.center;
       columnIndex = columnIndex + 1;
     });
 
@@ -356,23 +374,33 @@ class _DailyReportState extends State<DailyReport> {
         sheet1.getRangeByIndex(rowIndex, columnIndex).value = value;
         sheet1.getRangeByIndex(rowIndex, columnIndex).columnWidth = 25;
         sheet1.getRangeByIndex(rowIndex, columnIndex).rowHeight = 20;
-        sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign = xls.HAlignType.center;
-        sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign = xls.VAlignType.center;
+        sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign =
+            xls.HAlignType.center;
+        sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign =
+            xls.VAlignType.center;
 
         if (key == "total_key".tr()) {
-          total = double.parse(value == null ? "0.0" : value.toString()) + total;
+          total =
+              double.parse(value == null ? "0.0" : value.toString()) + total;
         }
         if (key == "mrp_key".tr()) {
-          totalMrp = double.parse(value == null ? "0.0" : value.toString()) + totalMrp;
+          totalMrp =
+              double.parse(value == null ? "0.0" : value.toString()) + totalMrp;
         }
         if (key == "purchase_price_key".tr()) {
-          totalPurchasePrice = double.parse(value == null || value == "" ? "0.0" : value.toString()) + totalPurchasePrice;
+          totalPurchasePrice = double.parse(
+                  value == null || value == "" ? "0.0" : value.toString()) +
+              totalPurchasePrice;
         }
         if (key == "earning_coins".tr()) {
-          earningCoins = double.parse(value == null || value == "" ? "0.0" : value.toString()) + earningCoins;
+          earningCoins = double.parse(
+                  value == null || value == "" ? "0.0" : value.toString()) +
+              earningCoins;
         }
         if (key == "redeem_coins_key".tr()) {
-          redeemCoins = double.parse(value == null || value == "" ? "0.0" : value.toString()) + redeemCoins;
+          redeemCoins = double.parse(
+                  value == null || value == "" ? "0.0" : value.toString()) +
+              redeemCoins;
         }
         columnIndex = columnIndex + 1;
       });
@@ -385,8 +413,10 @@ class _DailyReportState extends State<DailyReport> {
     print("redeemCoins - >$redeemCoins");
 
     sheet1.getRangeByIndex(rowIndex + 1, 1).value = "total_key".tr();
-    sheet1.getRangeByIndex(rowIndex + 1, 1).cellStyle.hAlign = xls.HAlignType.center;
-    sheet1.getRangeByIndex(rowIndex + 1, 1).cellStyle.vAlign = xls.VAlignType.center;
+    sheet1.getRangeByIndex(rowIndex + 1, 1).cellStyle.hAlign =
+        xls.HAlignType.center;
+    sheet1.getRangeByIndex(rowIndex + 1, 1).cellStyle.vAlign =
+        xls.VAlignType.center;
 
     final xls.Style style = workbook.styles.add('style1_key'.tr());
     style.backColorRgb = Colors.red;
@@ -400,29 +430,42 @@ class _DailyReportState extends State<DailyReport> {
       columnIndex = columnIndex + 1;
     });
 
-    int index = reportList.first.keys.toList().indexWhere((element) => element == "total_key".tr());
+    int index = reportList.first.keys
+        .toList()
+        .indexWhere((element) => element == "total_key".tr());
     if (index != -1) {
       sheet1.getRangeByIndex(rowIndex + 1, index + 1).value = total;
     }
 
-    int purchaseIndex = reportList.first.keys.toList().indexWhere((element) => element == "purchase_price_key".tr());
+    int purchaseIndex = reportList.first.keys
+        .toList()
+        .indexWhere((element) => element == "purchase_price_key".tr());
     if (purchaseIndex != -1) {
-      sheet1.getRangeByIndex(rowIndex + 1, purchaseIndex + 1).value = totalPurchasePrice;
+      sheet1.getRangeByIndex(rowIndex + 1, purchaseIndex + 1).value =
+          totalPurchasePrice;
     }
 
-    int mrpIndex = reportList.first.keys.toList().indexWhere((element) => element == "mrp_key".tr());
+    int mrpIndex = reportList.first.keys
+        .toList()
+        .indexWhere((element) => element == "mrp_key".tr());
     if (mrpIndex != -1) {
       sheet1.getRangeByIndex(rowIndex + 1, mrpIndex + 1).value = totalMrp;
     }
 
-    int earningCoinsIndex = reportList.first.keys.toList().indexWhere((element) => element == "earning_coins_key");
+    int earningCoinsIndex = reportList.first.keys
+        .toList()
+        .indexWhere((element) => element == "earning_coins_key");
     if (earningCoinsIndex != -1) {
-      sheet1.getRangeByIndex(rowIndex + 1, earningCoinsIndex + 1).value = earningCoins;
+      sheet1.getRangeByIndex(rowIndex + 1, earningCoinsIndex + 1).value =
+          earningCoins;
     }
 
-    int redeemCoinsIndex = reportList.first.keys.toList().indexWhere((element) => element == "redeem_coins_key".tr());
+    int redeemCoinsIndex = reportList.first.keys
+        .toList()
+        .indexWhere((element) => element == "redeem_coins_key".tr());
     if (redeemCoinsIndex != -1) {
-      sheet1.getRangeByIndex(rowIndex + 1, redeemCoinsIndex + 1).value = redeemCoins;
+      sheet1.getRangeByIndex(rowIndex + 1, redeemCoinsIndex + 1).value =
+          redeemCoins;
     }
 
     final List<int> bytes = workbook.saveAsStream();
@@ -443,12 +486,16 @@ class _DailyReportState extends State<DailyReport> {
       savedDir.create();
     }
 
-    String fileName = "daily_report_key${selectedDate}_${DateTime.now().millisecondsSinceEpoch.toString()}" + ".xlsx".tr();
+    String fileName =
+        "daily_report_key${selectedDate}_${DateTime.now().millisecondsSinceEpoch.toString()}" +
+            ".xlsx".tr();
 
-    final File file = File(Platform.isWindows ? '$path\\$fileName' : '$path/$fileName');
+    final File file =
+        File(Platform.isWindows ? '$path\\$fileName' : '$path/$fileName');
     await file.writeAsBytes(bytes, flush: true).whenComplete(() {
       print("completed");
-      Utility.showToast("report_saved_at_below_location_key \n${file.path}".tr());
+      Utility.showToast(
+          "report_saved_at_below_location_key \n${file.path}".tr());
     });
     print("savedDir${file.path}");
 
@@ -464,7 +511,8 @@ class _DailyReportState extends State<DailyReport> {
     PdfDocument document = PdfDocument();
     document.pageSettings.orientation = PdfPageOrientation.landscape;
     PdfPage pdfPage = document.pages.add();
-    PdfGrid pdfGrid = _key.currentState!.exportToPdfGrid(excludeColumns: ["created_at", "product_id", "category_id"]);
+    PdfGrid pdfGrid = _key.currentState!.exportToPdfGrid(
+        excludeColumns: ["created_at", "product_id", "category_id"]);
     pdfGrid.draw(page: pdfPage, bounds: Rect.fromLTWH(0, 0, 0, 0));
 
     final List<int> bytes = document.save();
@@ -488,10 +536,12 @@ class _DailyReportState extends State<DailyReport> {
 
     String fileName = "daily_report_key$selectedDate".tr() + ".pdf";
 
-    final File file = File(Platform.isWindows ? '$path\\$fileName' : '$path/$fileName');
+    final File file =
+        File(Platform.isWindows ? '$path\\$fileName' : '$path/$fileName');
     await file.writeAsBytes(bytes, flush: true).whenComplete(() {
       print("completed");
-      Utility.showToast("report_saved_at_below_location_key \n${file.path}".tr());
+      Utility.showToast(
+          "report_saved_at_below_location_key \n${file.path}".tr());
     });
     print("savedDir${file.path}");
     // await helper.saveAndLaunchFile(bytes, 'DataGrid.pdf');
@@ -518,7 +568,8 @@ class EmployeeDataSource extends DataGridSource {
     employeeData.forEach((element) {
       List<DataGridCell<dynamic>> gridRow = [];
       element.forEach((key, value) {
-        gridRow.add(DataGridCell<String>(columnName: '$key', value: value.toString()));
+        gridRow.add(
+            DataGridCell<String>(columnName: '$key', value: value.toString()));
         // sheet1.getRangeByIndex(rowIndex, columnIndex).value = value;
         // sheet1.getRangeByIndex(rowIndex, columnIndex).columnWidth = 25;
         // sheet1.getRangeByIndex(rowIndex, columnIndex).rowHeight = 20;

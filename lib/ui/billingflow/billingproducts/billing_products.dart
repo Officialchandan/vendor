@@ -11,15 +11,15 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/model/billing_product_response.dart';
-import 'package:vendor/model/chat_papdi_module/billing_chatpapdi.dart';
 import 'package:vendor/model/product_model.dart';
 import 'package:vendor/model/verify_otp.dart';
 
+import 'package:vendor/ui/billingflow/Scanner/scanner.dart';
+import 'package:vendor/ui/billingflow/billing/billing.dart';
 import 'package:vendor/ui/billingflow/billingproducts/biliing_products_bloc.dart';
 import 'package:vendor/ui/billingflow/billingproducts/biliing_products_event.dart';
 import 'package:vendor/ui/billingflow/billingproducts/biliing_products_state.dart';
 import 'package:vendor/ui/home/bottom_navigation_home.dart';
-import 'package:vendor/ui_without_inventory/chatpapdi_billing/ScannerChatPapdi/scanner_chatpapdi.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/sharedpref.dart';
@@ -43,7 +43,7 @@ class BillingProducts extends StatefulWidget {
 
 class _BillingProductsState extends State<BillingProducts> {
   _BillingProductsState(List<ProductModel> billingItemList, mobile, coin);
-  ChatPapdiData? passing;
+  VerifyEarningCoinsOtpData? passing;
   ProductModel? selectedProductList;
   List<ProductModel> productList = [];
   List index = [];
@@ -632,11 +632,21 @@ class _BillingProductsState extends State<BillingProducts> {
 
                       if (state is VerifyOtpState) {
                         passing = state.data;
-                        var result = await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Scanner(data: passing!)));
-                        log("-------$result --------");
+                        Fluttertoast.showToast(
+                            msg: state.message, backgroundColor: ColorPrimary);
+                        otpVerifyList!.qrCodeStatus == 0
+                            ? Navigator.pushAndRemoveUntil(
+                                context,
+                                PageTransition(
+                                    child: BottomNavigationHome(),
+                                    type: PageTransitionType.fade),
+                                ModalRoute.withName("/"))
+                            : Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        Scanner(data: passing!)));
+                        //log("-------$result --------");
                         // codes = result;
                         // Navigator.push(
                         //     context,
