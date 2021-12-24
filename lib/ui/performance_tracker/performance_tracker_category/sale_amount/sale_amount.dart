@@ -8,6 +8,7 @@ import 'package:vendor/api/api_provider.dart';
 import 'package:vendor/model/daily_sale_amount.dart';
 import 'package:vendor/model/hourly_sale_amount.dart';
 import 'package:vendor/model/monthly_sale_amount.dart';
+import 'package:vendor/ui/performance_tracker/performance_tracker_category/bottom_widget.dart';
 import 'package:vendor/utility/color.dart';
 
 class SaleAmount extends StatefulWidget {
@@ -17,29 +18,30 @@ class SaleAmount extends StatefulWidget {
   _SaleAmountState createState() => _SaleAmountState();
 }
 
-class _SaleAmountState extends State<SaleAmount> {
+class _SaleAmountState extends State<SaleAmount> with TickerProviderStateMixin {
   TooltipBehavior? _tooltipBehavior;
   DailySellAmountResponse? resultDaily;
   MonthlySellAmountResponse? resultMonthly;
   Map<String, String>? resultHourlyMap = {};
-
+  int saleindex = 1;
   HourlySaleAmountResponse? resultHourly;
   List<String> demo = [];
-
+  TabController? _tabController;
+  BottomWidget? bottomWidget;
   Future<DailySellAmountData> getDhabasDay() async {
-    resultDaily = await ApiProvider().getDailySaleAmount(2, 2, 2021 - 12 - 16);
+    resultDaily = await ApiProvider().getDailySaleAmount();
     log('${resultDaily!.data}');
     return resultDaily!.data!;
   }
 
   Future<MonthlySellAmountData> getDhabasMonthly() async {
-    resultMonthly = await ApiProvider().getMonthlySaleAmount(1, 2);
+    resultMonthly = await ApiProvider().getMonthlySaleAmount();
     log('${resultMonthly!.data}');
     return resultMonthly!.data!;
   }
 
   Future<Map<String, String>> getDhabasHourly() async {
-    resultHourly = (await ApiProvider().getHourlySaleAmount(1));
+    resultHourly = (await ApiProvider().getHourlySaleAmount(""));
     log('${resultHourly!.data}');
     //resultHourlyMap = resultHourly!.data!;
     //for (var i = 0; i < resultHourly!.data!.length; i++) {
@@ -52,6 +54,7 @@ class _SaleAmountState extends State<SaleAmount> {
   @override
   void initState() {
     // TODO: implement initState
+    _tabController = new TabController(vsync: this, length: 3);
     // getDhabasHourly();
   }
 
@@ -71,11 +74,14 @@ class _SaleAmountState extends State<SaleAmount> {
                 child: TabBar(
                   unselectedLabelColor: Colors.black,
                   labelColor: ColorPrimary,
+                  controller: _tabController,
                   indicator: BoxDecoration(
                       color: TabBarColor,
                       border: Border(
                           bottom: BorderSide(color: ColorPrimary, width: 3))),
                   onTap: (index) {
+                    log("$index");
+
                     // Tab index when user select it, it start from zero
                   },
                   tabs: [
@@ -106,6 +112,32 @@ class _SaleAmountState extends State<SaleAmount> {
             ),
             title: Text('sale_amount_key'.tr()),
             centerTitle: true,
+            actions: [
+              InkWell(
+                onTap: () {
+                  showModalBottomSheet(
+                      backgroundColor: Colors.transparent,
+                      context: context,
+                      builder: (context) {
+                        return BottomWidget(
+                          index: _tabController!.index,
+                          screenindex: saleindex,
+                        );
+                      }).then((value) => setState(() {}));
+                },
+                splashColor: Colors.transparent,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.filter_alt_sharp),
+                    Text("filter_key".tr())
+                  ],
+                ),
+              ),
+              const SizedBox(
+                width: 15,
+              )
+            ],
             leading: IconButton(
                 onPressed: () {
                   Navigator.pop(context);
@@ -114,6 +146,7 @@ class _SaleAmountState extends State<SaleAmount> {
             backgroundColor: ColorPrimary,
           ),
           body: TabBarView(
+            controller: _tabController,
             children: [
               SingleChildScrollView(
                   child: FutureBuilder<Map<String, String>>(
@@ -383,7 +416,7 @@ class _SaleAmountState extends State<SaleAmount> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: Text(
-                                                          ' ${(double.parse(snapshot.data!.values.toList()[3]).toStringAsFixed(2))}',
+                                                          '  ${(double.parse(snapshot.data!.values.toList()[3]).toStringAsFixed(2))}',
                                                           style: TextStyle(
                                                               fontWeight:
                                                                   FontWeight
@@ -696,7 +729,8 @@ class _SaleAmountState extends State<SaleAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        "  " + "day_key".tr(),
+                                                        "  " +
+                                                            "monthly_key".tr(),
                                                         style: TextStyle(
                                                             fontSize: 20.0,
                                                             color:

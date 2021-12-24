@@ -24,12 +24,16 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
                 return Container(
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide(width: 1, color: Color(0xffa2a2a2))),
+                    border: Border(
+                        bottom: BorderSide(width: 1, color: Color(0xffa2a2a2))),
                   ),
                   child: RadioListTile<int>(
                     contentPadding: EdgeInsets.all(0),
                     title: Text("${Constant.langList[index]["name"]}",
-                        style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w500)),
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500)),
                     value: index,
                     groupValue: _groupValue,
                     onChanged: (value) {
@@ -50,19 +54,26 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
                     },
                     child: Text(
                       "Cancel",
-                      style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold),
                     )),
                 TextButton(
                     onPressed: () {
                       if (_groupValue != -1) {
-                        context.locale = Constant.langList[_groupValue]["code"] as Locale;
+                        context.locale =
+                            Constant.langList[_groupValue]["code"] as Locale;
                         print(context.locale.toString());
                       }
                       Navigator.pop(context);
                     },
                     child: Text(
                       "Done",
-                      style: TextStyle(color: ColorPrimary, fontSize: 16, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          color: ColorPrimary,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold),
                     )),
               ],
             )

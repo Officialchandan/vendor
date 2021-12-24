@@ -9,6 +9,7 @@ import 'package:vendor/model/daily_walkin.dart';
 import 'package:vendor/model/hourly_sale_amount.dart';
 import 'package:vendor/model/hourly_walkin.dart';
 import 'package:vendor/model/monthly_walkin.dart';
+import 'package:vendor/ui/performance_tracker/performance_tracker_category/bottom_widget.dart';
 import 'package:vendor/utility/color.dart';
 
 class WalkInAmount extends StatefulWidget {
@@ -18,29 +19,40 @@ class WalkInAmount extends StatefulWidget {
   _WalkInAmountState createState() => _WalkInAmountState();
 }
 
-class _WalkInAmountState extends State<WalkInAmount> {
+class _WalkInAmountState extends State<WalkInAmount>
+    with TickerProviderStateMixin {
   TooltipBehavior? _tooltipBehavior;
   DailyWalkinAmountResponse? resultDaily;
   MonthlyWalkinAmountResponse? resultMonthly;
-
+  int walkinindex = 3;
   HourlyWalkinAmountResponse? resultHourly;
+  Map<String, String>? resultHourlyMap = {};
 
+  List<String> demo = [];
+  TabController? _tabController;
+  BottomWidget? bottomWidget;
   Future<DailyWalkinAmountData> getDhabasDay() async {
-    resultDaily = await ApiProvider().getDailyWalkinAmount(2, 1, 1);
+    resultDaily = await ApiProvider().getDailyWalkinAmount();
     log('${resultDaily!.data}');
     return resultDaily!.data!;
   }
 
   Future<MonthlyWalkinAmountData> getDhabasMonthly() async {
-    resultMonthly = await ApiProvider().getMonthlyWalkinAmount(2, 2, 2);
+    resultMonthly = await ApiProvider().getMonthlyWalkinAmount();
     log('${resultMonthly!.data}');
     return resultMonthly!.data!;
   }
 
   Future<Map<String, String>> getDhabasHourly() async {
-    resultHourly = (await ApiProvider().getHourlyWalkinAmount(1));
+    resultHourly = (await ApiProvider().getHourlyWalkinAmount());
     log('${resultHourly!.data}');
     return resultHourly!.data!;
+  }
+
+  @override
+  // ignore: must_call_super
+  void initState() {
+    _tabController = new TabController(vsync: this, length: 3);
   }
 
   @override
@@ -59,11 +71,14 @@ class _WalkInAmountState extends State<WalkInAmount> {
                 child: TabBar(
                   unselectedLabelColor: Colors.black,
                   labelColor: ColorPrimary,
+                  controller: _tabController,
                   indicator: BoxDecoration(
                       color: TabBarColor,
                       border: Border(
                           bottom: BorderSide(color: ColorPrimary, width: 3))),
                   onTap: (index) {
+                    log("$index");
+
                     // Tab index when user select it, it start from zero
                   },
                   tabs: [
@@ -99,9 +114,36 @@ class _WalkInAmountState extends State<WalkInAmount> {
                   Navigator.pop(context);
                 },
                 icon: Icon(Icons.arrow_back_ios)),
+            actions: [
+              InkWell(
+                onTap: () {
+                  showModalBottomSheet(
+                      backgroundColor: Colors.transparent,
+                      context: context,
+                      builder: (context) {
+                        return BottomWidget(
+                          index: _tabController!.index,
+                          screenindex: walkinindex,
+                        );
+                      });
+                },
+                splashColor: Colors.transparent,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.filter_alt_sharp),
+                    Text("filter_key".tr())
+                  ],
+                ),
+              ),
+              const SizedBox(
+                width: 15,
+              )
+            ],
             backgroundColor: ColorPrimary,
           ),
           body: TabBarView(
+            controller: _tabController,
             children: [
               SingleChildScrollView(
                   child: FutureBuilder<Map<String, String>>(
@@ -667,7 +709,8 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Text(
-                                                        "  " + "day_key".tr(),
+                                                        "  " +
+                                                            "monthly_key".tr(),
                                                         style: TextStyle(
                                                             fontSize: 20.0,
                                                             color:

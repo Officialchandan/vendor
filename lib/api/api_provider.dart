@@ -692,12 +692,15 @@ class ApiProvider {
   }
 
   Future<DailySellAmountResponse> getDailySaleAmount(
-      catid, productid, date) async {
+      {catid, productid, date}) async {
     try {
       Map input = HashMap<String, dynamic>();
       log("------->res");
       input["vendor_id"] =
           await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      input["category_id"] = catid;
+      input["product_id"] = productid;
+      input["date"] = date;
 
       Response res = await dio.post(
         Endpoint.GET_DAILY_SALE_AMOUNT,
@@ -718,12 +721,16 @@ class ApiProvider {
     }
   }
 
-  Future<MonthlySellAmountResponse> getMonthlySaleAmount(catid, month) async {
+  Future<MonthlySellAmountResponse> getMonthlySaleAmount(
+      {catid, productid, month}) async {
     try {
       Map input = HashMap<String, dynamic>();
       log("------->res");
       input["vendor_id"] =
           await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      input["category_id"] = catid;
+      input["product_id"] = productid;
+      input["month"] = month;
 
       Response res = await dio.post(
         Endpoint.GET_MONTHLY_SALE_AMOUNT,
@@ -750,6 +757,7 @@ class ApiProvider {
       log("------->res");
       input["vendor_id"] =
           await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      input["category_id"] = catid;
 
       Response res = await dio.post(
         Endpoint.GET_HOURLY_SALE_AMOUNT,
@@ -770,12 +778,13 @@ class ApiProvider {
     }
   }
 
-  Future<HourlyEarningAmountResponse> getHourlyEarningAmount(catid) async {
+  Future<HourlyEarningAmountResponse> getHourlyEarningAmount({catid}) async {
     try {
       Map input = HashMap<String, dynamic>();
       log("------->res");
       input["vendor_id"] =
           await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      input["category_id"] = catid;
 
       Response res = await dio.post(
         Endpoint.GET_HOURLY_EARNING_AMOUNT,
@@ -796,12 +805,13 @@ class ApiProvider {
     }
   }
 
-  Future<HourlyWalkinAmountResponse> getHourlyWalkinAmount(catid) async {
+  Future<HourlyWalkinAmountResponse> getHourlyWalkinAmount({catid}) async {
     try {
       Map input = HashMap<String, dynamic>();
       log("------->res");
       input["vendor_id"] =
           await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      input["category_id"] = catid;
 
       Response res = await dio.post(
         Endpoint.GET_HOURLY_WALKIN_AMOUNT,
@@ -823,12 +833,15 @@ class ApiProvider {
   }
 
   Future<DailyEarningAmountResponse> getDailyEarningAmount(
-      catid, productid, date) async {
+      {catid, productid, date}) async {
     try {
       Map input = HashMap<String, dynamic>();
       log("------->res");
       input["vendor_id"] =
           await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      input["category_id"] = catid;
+      input["product_id"] = productid;
+      input["date"] = date;
 
       Response res = await dio.post(
         Endpoint.GET_DAILY_EARNING_AMOUNT,
@@ -850,39 +863,45 @@ class ApiProvider {
   }
 
   Future<MonthlyEarningAmountResponse> getMonthlyEarningAmount(
-      catid, productid, date) async {
-    // try {
-    Map input = HashMap<String, dynamic>();
-    log("------->res");
-    input["vendor_id"] =
-        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
-
-    Response res = await dio.post(
-      Endpoint.GET_MONTHLY_EARNING_AMOUNT,
-      data: input,
-    );
-    log("------->$res");
-    return MonthlyEarningAmountResponse.fromJson(res.toString());
-    // } catch (error) {
-    //   String message = "";
-    //   if (error is DioError) {
-    //     ServerError e = ServerError.withError(error: error);
-    //     message = e.getErrorMessage();
-    //   } else {
-    //     message = "Please try again later!";
-    //   }
-    //   print("Exception occurred: $message stackTrace: $error");
-    //   return MonthlyEarningAmountResponse(success: false, message: message);
-    // }
-  }
-
-  Future<DailyWalkinAmountResponse> getDailyWalkinAmount(
-      catid, productid, date) async {
+      {catid, productid, month}) async {
     try {
       Map input = HashMap<String, dynamic>();
       log("------->res");
       input["vendor_id"] =
           await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      input["category_id"] = catid;
+      input["product_id"] = productid;
+      input["month"] = month;
+
+      Response res = await dio.post(
+        Endpoint.GET_MONTHLY_EARNING_AMOUNT,
+        data: input,
+      );
+      log("------->$res");
+      return MonthlyEarningAmountResponse.fromJson(res.toString());
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return MonthlyEarningAmountResponse(success: false, message: message);
+    }
+  }
+
+  Future<DailyWalkinAmountResponse> getDailyWalkinAmount(
+      {catid, productid, date}) async {
+    try {
+      Map input = HashMap<String, dynamic>();
+      log("------->res");
+      input["vendor_id"] =
+          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      input["category_id"] = catid;
+      input["product_id"] = productid;
+      input["date"] = date;
 
       Response res = await dio.post(
         Endpoint.GET_DAILY_WALKIN_AMOUNT,
@@ -904,12 +923,15 @@ class ApiProvider {
   }
 
   Future<MonthlyWalkinAmountResponse> getMonthlyWalkinAmount(
-      catid, productid, date) async {
+      {catid, productid, month}) async {
     try {
       Map input = HashMap<String, dynamic>();
       log("------->res");
       input["vendor_id"] =
           await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      input["category_id"] = catid;
+      input["product_id"] = productid;
+      input["month"] = month;
 
       Response res = await dio.post(
         Endpoint.GET_MONTHLY_WALKIN_AMOUNT,
