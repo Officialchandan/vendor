@@ -2,8 +2,6 @@ import 'dart:developer';
 
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
-import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
-import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -69,7 +67,6 @@ class _BottomWidgetState extends State<BottomWidget> {
   // final GlobalKey<SfDataGridState> _key = GlobalKey<SfDataGridState>();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getCategories();
   }

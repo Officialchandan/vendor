@@ -390,7 +390,7 @@ class _DirectBillingState extends State<DirectBilling> {
               ),
             ),
             bottomNavigationBar: Container(
-              height: 130,
+              height: 80,
               child: Center(
                 child: InkWell(
                   onTap: () {

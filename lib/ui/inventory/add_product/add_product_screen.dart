@@ -965,10 +965,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
       return;
     }
 
-    if (edtUnit.text.isEmpty) {
-      Utility.showToast("please_select_unit_key".tr());
-      return;
-    }
+    // if (edtUnit.text.isEmpty) {
+    //   Utility.showToast("please_select_unit_key".tr());
+    //   return;
+    // }
     if (variantModel.stock.isEmpty) {
       Utility.showToast("stock_can_not_be_empty_key".tr());
       return;
@@ -992,7 +992,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
         await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     input["category_id"] = categoryId;
     input["product_name"] = edtProductName.text.trim();
-    input["unit"] = unitId;
+    // input["unit"] = unitId;
 
     List<Map<String, dynamic>> productVariantList = [];
     Map<String, dynamic> productVariantMap = HashMap<String, dynamic>();
