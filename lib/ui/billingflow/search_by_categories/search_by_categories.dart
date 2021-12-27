@@ -120,9 +120,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                             GetProductsSearchByCategoriesEvent(
                                 input: widget.catid));
                       }
-                      if (state is GetSearchByCategoriesState) {
-                        log("chal pdi api");
-                      }
+                      if (state is GetSearchByCategoriesState) {}
                       if (state is GetSearchByCategoriesFailureState) {
                         Fluttertoast.showToast(
                             msg: state.message, backgroundColor: ColorPrimary);
@@ -193,7 +191,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                             return Stack(
                               children: [
                                 Container(
-                                  height: 100,
+                                  height: 110,
                                   margin: EdgeInsets.only(
                                       top: 10, bottom: 10, left: 30, right: 10),
                                   decoration: BoxDecoration(
@@ -266,7 +264,6 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                                   ],
                                                 ),
                                               ),
-
                                               // Row(
                                               //     mainAxisAlignment:
                                               //         MainAxisAlignment.end,
@@ -293,6 +290,40 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                               //         width: 10,
                                               //       ),
                                               //     ]),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                children: [
+                                                  Container(
+                                                    height: 20,
+                                                    child: Center(
+                                                      child: Row(
+                                                        children: [
+                                                          Container(
+                                                              child:
+                                                                  Image.asset(
+                                                            "assets/images/point.png",
+                                                            scale: 2.5,
+                                                          )),
+                                                          Text(
+                                                            " ${searchList[index].redeemCoins}",
+                                                            style: TextStyle(
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                color:
+                                                                    ColorPrimary),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                ],
+                                              ),
                                             ],
                                           ),
                                           Row(

@@ -535,6 +535,7 @@ class _BillingScreenState extends State<BillingScreen> {
 
   Widget categoryListWidget(List<CategoryModel> category) {
     return ListView.builder(
+
         // padding: EdgeInsets.only(bottom: 80),
         itemCount: category.length,
         itemBuilder: (context, index) {

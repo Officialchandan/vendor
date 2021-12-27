@@ -257,6 +257,42 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                 ],
                                               ),
                                             ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                Container(
+                                                  height: 20,
+                                                  child: Center(
+                                                    child: Row(
+                                                      children: [
+                                                        Container(
+                                                            child: Image.asset(
+                                                          "assets/images/point.png",
+                                                          scale: 2.5,
+                                                        )),
+                                                        Text(
+                                                          " ${searchList[index].redeemCoins}",
+                                                          style: TextStyle(
+                                                              fontSize: 13,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              color:
+                                                                  ColorPrimary),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                              ],
+                                            ),
 
                                             // Row(
                                             //     mainAxisAlignment:
