@@ -692,7 +692,7 @@ class ApiProvider {
   }
 
   Future<DailySellAmountResponse> getDailySaleAmount(
-      {catid, productid, date}) async {
+      catid, productid, date) async {
     try {
       Map input = HashMap<String, dynamic>();
       log("------->res");
@@ -722,7 +722,7 @@ class ApiProvider {
   }
 
   Future<MonthlySellAmountResponse> getMonthlySaleAmount(
-      {catid, productid, month}) async {
+      catid, productid, month) async {
     try {
       Map input = HashMap<String, dynamic>();
       log("------->res");
@@ -754,10 +754,10 @@ class ApiProvider {
   Future<HourlySaleAmountResponse> getHourlySaleAmount(catid) async {
     try {
       Map input = HashMap<String, dynamic>();
-      log("------->res");
+      log("------->res$catid");
       input["vendor_id"] =
           await SharedPref.getIntegerPreference(SharedPref.VENDORID);
-      input["category_id"] = catid;
+      input["category_id"] = catid.toString();
 
       Response res = await dio.post(
         Endpoint.GET_HOURLY_SALE_AMOUNT,
@@ -805,7 +805,7 @@ class ApiProvider {
     }
   }
 
-  Future<HourlyWalkinAmountResponse> getHourlyWalkinAmount({catid}) async {
+  Future<HourlyWalkinAmountResponse> getHourlyWalkinAmount(catid) async {
     try {
       Map input = HashMap<String, dynamic>();
       log("------->res");
@@ -893,7 +893,7 @@ class ApiProvider {
   }
 
   Future<DailyWalkinAmountResponse> getDailyWalkinAmount(
-      {catid, productid, date}) async {
+      catid, productid, date) async {
     try {
       Map input = HashMap<String, dynamic>();
       log("------->res");

@@ -27,11 +27,18 @@ import 'package:vendor/widget/show_catagories_widget.dart';
 
 DateRangePickerController dateRangePickerController =
     DateRangePickerController();
+
 final GlobalKey<SfDataGridState> _key = GlobalKey<SfDataGridState>();
 
 class BottomWidget extends StatefulWidget {
   final int index, screenindex;
-  BottomWidget({Key? key, required this.index, required this.screenindex})
+  final Function(String? categoryid, String? listSelected, String? date)
+      onSelect;
+  BottomWidget(
+      {Key? key,
+      required this.index,
+      required this.screenindex,
+      required this.onSelect})
       : super(key: key);
 
   @override
@@ -41,6 +48,7 @@ class BottomWidget extends StatefulWidget {
 class _BottomWidgetState extends State<BottomWidget> {
   GetCategoriesResponse? result;
   CategoryModel? categoryModel;
+  String productIndex = "";
   List<ProductModel> productList = [];
   TextEditingController edtCategory = TextEditingController();
   TextEditingController edtProducts = TextEditingController();
@@ -188,18 +196,25 @@ class _BottomWidgetState extends State<BottomWidget> {
     if (widget.index == 0) {
       resultHourlySale = (await ApiProvider()
           .getHourlySaleAmount(categoryModel == null ? "" : categoryModel!.id));
-      log('${resultHourlySale!.data}');
-      Navigator.pop(context);
-      return resultHourlySale!.data!;
+      log('===>getHourlySaleAmount${resultHourlySale!.data}');
+      widget.onSelect(categoryModel == null ? "" : categoryModel!.id, "", "");
+      Navigator.pop(context, categoryModel!.id);
+      // return resultHourlySale!.data!;
     } else if (widget.index == 1) {
-      resultDailySale = await ApiProvider().getDailySaleAmount();
+      resultDailySale = await ApiProvider().getDailySaleAmount("", "", "");
       log('${resultDailySale!.data}');
+
+      widget.onSelect(
+          categoryModel == null ? "" : categoryModel!.id, productIndex, "");
       Navigator.pop(context);
-      return resultDailySale!.data!;
+      // return resultDailySale!.data!;
     } else if (widget.index == 2) {
-      resultMonthlySale = await ApiProvider().getMonthlySaleAmount();
+      resultMonthlySale = await ApiProvider().getMonthlySaleAmount("", "", "");
       log('${resultMonthlySale!.data}');
-      return resultMonthlySale!.data!;
+      widget.onSelect(
+          categoryModel == null ? "" : categoryModel!.id, "", selectedDate);
+      Navigator.pop(context);
+      //return resultMonthlySale!.data!;
     }
   }
 
@@ -207,31 +222,49 @@ class _BottomWidgetState extends State<BottomWidget> {
     if (widget.index == 0) {
       resultHourlyEarning = (await ApiProvider().getHourlyEarningAmount());
       log('${resultHourlyEarning!.data}');
-      return resultHourlyEarning!.data!;
+      widget.onSelect(categoryModel == null ? "" : categoryModel!.id,
+          productIndex, selectedDate);
+      Navigator.pop(context);
+      // return resultHourlyEarning!.data!;
     } else if (widget.index == 1) {
       resultDailyEarning = await ApiProvider().getDailyEarningAmount();
       log('${resultDailyEarning!.data}');
-      return resultDailyEarning!.data!;
+      widget.onSelect(categoryModel == null ? "" : categoryModel!.id,
+          productIndex, selectedDate);
+      Navigator.pop(context);
+      //return resultDailyEarning!.data!;
     } else if (widget.index == 2) {
       resultMonthlyEarning = await ApiProvider().getMonthlyEarningAmount();
       log('${resultMonthlyEarning!.data}');
-      return resultMonthlyEarning!.data!;
+      widget.onSelect(categoryModel == null ? "" : categoryModel!.id,
+          productIndex, selectedDate);
+      Navigator.pop(context);
+      // return resultMonthlyEarning!.data!;
     }
   }
 
   callingapiWalkin(int index) async {
     if (widget.index == 0) {
-      resultHourlyWalkin = (await ApiProvider().getHourlyWalkinAmount());
+      resultHourlyWalkin = (await ApiProvider().getHourlyWalkinAmount(""));
       log('${resultHourlyWalkin!.data}');
-      return resultHourlyWalkin!.data!;
+      widget.onSelect(categoryModel == null ? "" : categoryModel!.id,
+          productIndex, selectedDate);
+      Navigator.pop(context);
+      // return resultHourlyWalkin!.data!;
     } else if (widget.index == 1) {
-      resultDailyWalkin = await ApiProvider().getDailyWalkinAmount();
+      resultDailyWalkin = await ApiProvider().getDailyWalkinAmount("", "", "");
       log('${resultDailyWalkin!.data}');
-      return resultDailyWalkin!.data!;
+      widget.onSelect(categoryModel == null ? "" : categoryModel!.id,
+          productIndex, selectedDate);
+      Navigator.pop(context);
+      // return resultDailyWalkin!.data!;
     } else if (widget.index == 2) {
       resultMonthlyWalkin = await ApiProvider().getMonthlyWalkinAmount();
       log('${resultMonthlyWalkin!.data}');
-      return resultMonthlyWalkin!.data!;
+      widget.onSelect(categoryModel == null ? "" : categoryModel!.id,
+          productIndex, selectedDate);
+      Navigator.pop(context);
+      // return resultMonthlyWalkin!.data!;
     }
   }
 
@@ -360,13 +393,15 @@ class _BottomWidgetState extends State<BottomWidget> {
     for (int i = 0; i < productList.length; i++) {
       if (i == productList.length - 1) {
         text += productList[i].productName;
+        productIndex += productList[i].id;
       } else {
         text += productList[i].productName + ",";
+        productIndex += productList[i].id + ",";
       }
     }
 
     edtProducts.text = text;
-
+    log("===>$productIndex");
     print("selected product->$productList");
   }
 
@@ -382,6 +417,7 @@ class _BottomWidgetState extends State<BottomWidget> {
                 log("${edtCategory.text}");
 
                 categoryModel = option;
+
                 log("${categoryModel!.id}");
               },
             ),
