@@ -8,16 +8,19 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:vendor/api/api_provider.dart';
 import 'package:vendor/model/daily_sale_amount.dart';
 import 'package:vendor/model/monthly_sale_amount.dart';
+import 'package:vendor/ui/performance_tracker/listner/performancetrackerlistner.dart';
 import 'package:vendor/utility/color.dart';
 
 class MonthlySaleAmount extends StatefulWidget {
-  MonthlySaleAmount({Key? key}) : super(key: key);
+  final Function(PerformanceTrackerListner monthlyListner) onInit;
+  MonthlySaleAmount({Key? key, required this.onInit}) : super(key: key);
 
   @override
   _MonthlySaleAmountState createState() => _MonthlySaleAmountState();
 }
 
-class _MonthlySaleAmountState extends State<MonthlySaleAmount> {
+class _MonthlySaleAmountState extends State<MonthlySaleAmount>
+    implements PerformanceTrackerListner {
   StreamController<MonthlySellAmountData> controller = StreamController();
   TooltipBehavior? _tooltipBehavior;
   MonthlySellAmountResponse? resultMonthly;
@@ -32,7 +35,9 @@ class _MonthlySaleAmountState extends State<MonthlySaleAmount> {
     return resultMonthly!.data!;
   }
 
+  @override
   void initState() {
+    widget.onInit(this);
     super.initState();
     getDhabasMonthly();
   }
@@ -215,6 +220,12 @@ class _MonthlySaleAmountState extends State<MonthlySaleAmount> {
       ),
     ];
     return chartData;
+  }
+
+  @override
+  void onFiterSelect(String? catid, String? productid, String? date) {
+    getDhabasMonthly(
+        catid: catid ?? "", productid: productid ?? "", month: date ?? "");
   }
 }
 

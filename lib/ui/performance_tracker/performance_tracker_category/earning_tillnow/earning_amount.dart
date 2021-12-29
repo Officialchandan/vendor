@@ -128,9 +128,21 @@ class _EarningAmountState extends State<EarningAmount>
           body: TabBarView(
             controller: _tabController,
             children: [
-              HourlyEarningAmount(),
-              DailyEarningAmount(),
-              MonthlyEarningAmount()
+              HourlyEarningAmount(
+                onInit: (PerformanceTrackerListner hourlyListner) {
+                  performanceTrackerListner = hourlyListner;
+                },
+              ),
+              DailyEarningAmount(
+                onInit: (PerformanceTrackerListner dailyListner) {
+                  performanceTrackerListner = dailyListner;
+                },
+              ),
+              MonthlyEarningAmount(
+                onInit: (PerformanceTrackerListner monthlyListner) {
+                  performanceTrackerListner = monthlyListner;
+                },
+              )
             ],
           ),
         ),

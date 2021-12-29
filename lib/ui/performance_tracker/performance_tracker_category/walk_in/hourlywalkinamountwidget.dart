@@ -7,16 +7,19 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:vendor/api/api_provider.dart';
 import 'package:vendor/model/hourly_walkin.dart';
+import 'package:vendor/ui/performance_tracker/listner/performancetrackerlistner.dart';
 import 'package:vendor/utility/color.dart';
 
 class HourlyWalkinAmount extends StatefulWidget {
-  HourlyWalkinAmount({Key? key}) : super(key: key);
+  final Function(PerformanceTrackerListner hourlyListner) onInit;
+  HourlyWalkinAmount({Key? key, required this.onInit}) : super(key: key);
 
   @override
   _HourlyWalkinAmountState createState() => _HourlyWalkinAmountState();
 }
 
-class _HourlyWalkinAmountState extends State<HourlyWalkinAmount> {
+class _HourlyWalkinAmountState extends State<HourlyWalkinAmount>
+    implements PerformanceTrackerListner {
   TooltipBehavior? _tooltipBehavior;
   StreamController<Map<String, String>> controller = StreamController();
 
@@ -31,7 +34,7 @@ class _HourlyWalkinAmountState extends State<HourlyWalkinAmount> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    widget.onInit(this);
     super.initState();
     getDhabasHourly();
   }
@@ -343,6 +346,11 @@ class _HourlyWalkinAmountState extends State<HourlyWalkinAmount> {
       ),
     ];
     return chartData;
+  }
+
+  @override
+  void onFiterSelect(String? catid, String? productid, String? date) {
+    getDhabasHourly(catid: catid ?? "");
   }
 }
 

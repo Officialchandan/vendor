@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
+import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -30,14 +31,19 @@ final GlobalKey<SfDataGridState> _key = GlobalKey<SfDataGridState>();
 
 class BottomWidget extends StatefulWidget {
   final int index, screenindex;
-  final Function(String? categoryid, String? listSelected, String? date)
-      onSelect;
-  BottomWidget(
-      {Key? key,
-      required this.index,
-      required this.screenindex,
-      required this.onSelect})
-      : super(key: key);
+  //final DateTime? initialDate;
+
+  final Function(
+    String? categoryid,
+    String? listSelected,
+    String? date,
+  ) onSelect;
+  BottomWidget({
+    Key? key,
+    required this.index,
+    required this.screenindex,
+    required this.onSelect,
+  }) : super(key: key);
 
   @override
   _BottomWidgetState createState() => _BottomWidgetState();
@@ -63,12 +69,15 @@ class _BottomWidgetState extends State<BottomWidget> {
   HourlyWalkinAmountResponse? resultHourlyWalkin;
   DailyWalkinAmountResponse? resultDailyWalkin;
   MonthlyWalkinAmountResponse? resultMonthlyWalkin;
-
+  DateTime? selectedDates;
   // final GlobalKey<SfDataGridState> _key = GlobalKey<SfDataGridState>();
   @override
   void initState() {
     super.initState();
     getCategories();
+    selectedDates = DateTime.now();
+
+    DateTime.now();
   }
 
   @override
@@ -104,7 +113,7 @@ class _BottomWidgetState extends State<BottomWidget> {
                   color: Colors.black26,
                   thickness: 2,
                 ),
-                widget.index == 0 || widget.index == 2
+                widget.index == 0
                     ? Text("")
                     : TextFormField(
                         controller: edtProducts,
@@ -122,34 +131,59 @@ class _BottomWidgetState extends State<BottomWidget> {
                             suffixIconConstraints:
                                 BoxConstraints(maxWidth: 20, maxHeight: 20)),
                       ),
-                widget.index == 0 || widget.index == 2
-                    ? Text("")
-                    : Divider(
-                        color: Colors.black26,
-                        thickness: 2,
-                      ),
-                widget.index == 0
-                    ? Text("")
-                    : TextFormField(
-                        controller: edtDate,
-                        onTap: () {
-                          calendr(context);
-                        },
-                        readOnly: true,
-                        decoration: InputDecoration(
-                          hintText: "Select date".tr(),
-                          border: InputBorder.none,
-                        ),
-                      ),
                 widget.index == 0
                     ? Text("")
                     : Divider(
                         color: Colors.black26,
                         thickness: 2,
                       ),
-                SizedBox(
-                  height: 10,
-                ),
+                widget.index == 2
+                    ?
+                    //Row(children: [
+                    widget.index != 0
+                        ? TextFormField(
+                            controller: edtDate,
+                            onTap: () {
+                              calendrmonth();
+                              edtDate.text = (selectedDates?.month).toString();
+                            },
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              hintText: "Select month".tr(),
+                              border: InputBorder.none,
+                            ))
+                        : Container(
+                            height: 50,
+                          )
+                    : widget.index != 0
+                        ? TextFormField(
+                            controller: edtDate,
+                            onTap: () {
+                              calendr(context);
+                            },
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              hintText: "Select date".tr(),
+                              border: InputBorder.none,
+                            ),
+                          )
+                        : Container(
+                            height: 50,
+                          ),
+                widget.index == 2
+                    ? widget.index != 0
+                        ? Divider(
+                            color: Colors.black26,
+                            thickness: 2,
+                          )
+                        : Text("")
+                    : widget.index != 0
+                        ? Divider(
+                            color: Colors.black26,
+                            thickness: 2,
+                          )
+                        : Text(""),
+                SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -166,11 +200,29 @@ class _BottomWidgetState extends State<BottomWidget> {
                     InkWell(
                       onTap: () {
                         if (widget.screenindex == 1) {
-                          callingapiSale(widget.index);
+                          widget.onSelect(
+                              categoryModel == null ? "" : categoryModel!.id,
+                              productIndex,
+                              widget.index == 2
+                                  ? (selectedDates?.month).toString()
+                                  : selectedDate);
+                          Navigator.pop(context);
                         } else if (widget.screenindex == 2) {
-                          callingapiEarning(widget.index);
+                          widget.onSelect(
+                              categoryModel == null ? "" : categoryModel!.id,
+                              productIndex,
+                              widget.index == 2
+                                  ? (selectedDates?.month).toString()
+                                  : selectedDate);
+                          Navigator.pop(context);
                         } else if (widget.screenindex == 3) {
-                          callingapiWalkin(widget.index);
+                          widget.onSelect(
+                              categoryModel == null ? "" : categoryModel!.id,
+                              productIndex,
+                              widget.index == 2
+                                  ? (selectedDates?.month).toString()
+                                  : selectedDate);
+                          Navigator.pop(context);
                         }
                       },
                       child: Text(
@@ -188,82 +240,85 @@ class _BottomWidgetState extends State<BottomWidget> {
     );
   }
 
-  callingapiSale(int index) async {
-    // categoryModel == null ? "" : categoryModel!.id;
-    if (widget.index == 0) {
-      resultHourlySale = (await ApiProvider()
-          .getHourlySaleAmount(categoryModel == null ? "" : categoryModel!.id));
-      log('===>getHourlySaleAmount${resultHourlySale!.data}');
-      widget.onSelect(categoryModel == null ? "" : categoryModel!.id, "", "");
-      Navigator.pop(context, categoryModel!.id);
-      // return resultHourlySale!.data!;
-    } else if (widget.index == 1) {
-      resultDailySale = await ApiProvider().getDailySaleAmount("", "", "");
-      log('${resultDailySale!.data}');
+  // callingapiSale(int index) async {
+  //   // categoryModel == null ? "" : categoryModel!.id;
+  //   if (widget.index == 0) {
+  //     resultHourlySale = (await ApiProvider()
+  //         .getHourlySaleAmount(categoryModel == null ? "" : categoryModel!.id));
+  //     log('===>getHourlySaleAmount${resultHourlySale!.data}');
+  //     widget.onSelect(categoryModel == null ? "" : categoryModel!.id, "", "");
+  //     Navigator.pop(context, categoryModel!.id);
+  //     // return resultHourlySale!.data!;
+  //   } else if (widget.index == 1) {
+  //     resultDailySale = await ApiProvider().getDailySaleAmount("", "", "");
+  //     log('${resultDailySale!.data}');
 
-      widget.onSelect(
-          categoryModel == null ? "" : categoryModel!.id, productIndex, "");
-      Navigator.pop(context);
-      // return resultDailySale!.data!;
-    } else if (widget.index == 2) {
-      resultMonthlySale = await ApiProvider().getMonthlySaleAmount("", "", "");
-      log('${resultMonthlySale!.data}');
-      widget.onSelect(
-          categoryModel == null ? "" : categoryModel!.id, "", selectedDate);
-      Navigator.pop(context);
-      //return resultMonthlySale!.data!;
-    }
-  }
+  //     widget.onSelect(
+  //         categoryModel == null ? "" : categoryModel!.id, productIndex, "");
+  //     Navigator.pop(context);
+  //     // return resultDailySale!.data!;
+  //   } else if (widget.index == 2) {
+  //     resultMonthlySale = await ApiProvider().getMonthlySaleAmount("", "", "");
+  //     log('${resultMonthlySale!.data}');
+  //     widget.onSelect(
+  //         categoryModel == null ? "" : categoryModel!.id, "", selectedDate);
+  //     Navigator.pop(context);
+  //     //return resultMonthlySale!.data!;
+  //   }
+  // }
 
-  callingapiEarning(int index) async {
-    if (widget.index == 0) {
-      resultHourlyEarning = (await ApiProvider().getHourlyEarningAmount());
-      log('${resultHourlyEarning!.data}');
-      widget.onSelect(categoryModel == null ? "" : categoryModel!.id,
-          productIndex, selectedDate);
-      Navigator.pop(context);
-      // return resultHourlyEarning!.data!;
-    } else if (widget.index == 1) {
-      resultDailyEarning = await ApiProvider().getDailyEarningAmount();
-      log('${resultDailyEarning!.data}');
-      widget.onSelect(categoryModel == null ? "" : categoryModel!.id,
-          productIndex, selectedDate);
-      Navigator.pop(context);
-      //return resultDailyEarning!.data!;
-    } else if (widget.index == 2) {
-      resultMonthlyEarning = await ApiProvider().getMonthlyEarningAmount();
-      log('${resultMonthlyEarning!.data}');
-      widget.onSelect(categoryModel == null ? "" : categoryModel!.id,
-          productIndex, selectedDate);
-      Navigator.pop(context);
-      // return resultMonthlyEarning!.data!;
-    }
-  }
+  // callingapiEarning(int index) async {
+  //   if (widget.index == 0) {
+  //     resultHourlyEarning = (await ApiProvider().getHourlyEarningAmount(""));
+  //     log('${resultHourlyEarning!.data}');
+  //     widget.onSelect(categoryModel == null ? "" : categoryModel!.id,
+  //         productIndex, selectedDate);
+  //     Navigator.pop(context);
+  //     // return resultHourlyEarning!.data!;
+  //   } else if (widget.index == 1) {
+  //     resultDailyEarning =
+  //         await ApiProvider().getDailyEarningAmount("", "", "");
+  //     log('${resultDailyEarning!.data}');
+  //     widget.onSelect(categoryModel == null ? "" : categoryModel!.id,
+  //         productIndex, selectedDate);
+  //     Navigator.pop(context);
+  //     //return resultDailyEarning!.data!;
+  //   } else if (widget.index == 2) {
+  //     resultMonthlyEarning =
+  //         await ApiProvider().getMonthlyEarningAmount("", "", "");
+  //     log('${resultMonthlyEarning!.data}');
+  //     widget.onSelect(categoryModel == null ? "" : categoryModel!.id,
+  //         productIndex, selectedDate);
+  //     Navigator.pop(context);
+  //     // return resultMonthlyEarning!.data!;
+  //   }
+  // }
 
-  callingapiWalkin(int index) async {
-    if (widget.index == 0) {
-      resultHourlyWalkin = (await ApiProvider().getHourlyWalkinAmount(""));
-      log('${resultHourlyWalkin!.data}');
-      widget.onSelect(categoryModel == null ? "" : categoryModel!.id,
-          productIndex, selectedDate);
-      Navigator.pop(context);
-      // return resultHourlyWalkin!.data!;
-    } else if (widget.index == 1) {
-      resultDailyWalkin = await ApiProvider().getDailyWalkinAmount("", "", "");
-      log('${resultDailyWalkin!.data}');
-      widget.onSelect(categoryModel == null ? "" : categoryModel!.id,
-          productIndex, selectedDate);
-      Navigator.pop(context);
-      // return resultDailyWalkin!.data!;
-    } else if (widget.index == 2) {
-      resultMonthlyWalkin = await ApiProvider().getMonthlyWalkinAmount();
-      log('${resultMonthlyWalkin!.data}');
-      widget.onSelect(categoryModel == null ? "" : categoryModel!.id,
-          productIndex, selectedDate);
-      Navigator.pop(context);
-      // return resultMonthlyWalkin!.data!;
-    }
-  }
+  // callingapiWalkin(int index) async {
+  //   if (widget.index == 0) {
+  //     resultHourlyWalkin = (await ApiProvider().getHourlyWalkinAmount(""));
+  //     log('${resultHourlyWalkin!.data}');
+  //     widget.onSelect(categoryModel == null ? "" : categoryModel!.id,
+  //         productIndex, selectedDate);
+  //     Navigator.pop(context);
+  //     // return resultHourlyWalkin!.data!;
+  //   } else if (widget.index == 1) {
+  //     resultDailyWalkin = await ApiProvider().getDailyWalkinAmount("", "", "");
+  //     log('${resultDailyWalkin!.data}');
+  //     widget.onSelect(categoryModel == null ? "" : categoryModel!.id,
+  //         productIndex, selectedDate);
+  //     Navigator.pop(context);
+  //     // return resultDailyWalkin!.data!;
+  //   } else if (widget.index == 2) {
+  //     resultMonthlyWalkin =
+  //         await ApiProvider().getMonthlyWalkinAmount("", "", "");
+  //     log('${resultMonthlyWalkin!.data}');
+  //     widget.onSelect(categoryModel == null ? "" : categoryModel!.id,
+  //         productIndex, selectedDate);
+  //     Navigator.pop(context);
+  //     // return resultMonthlyWalkin!.data!;
+  //   }
+  // }
 
   // Future<Map<String, String>> getDhabasHourly() async {
   //   resultHourly = (await ApiProvider().getHourlySaleAmount());
@@ -275,6 +330,21 @@ class _BottomWidgetState extends State<BottomWidget> {
 
   //   return resultHourly!.data!;
   // }
+  calendrmonth() {
+    showMonthPicker(
+      context: context,
+      firstDate: DateTime(DateTime.now().year - 1, 5),
+      lastDate: DateTime(DateTime.now().year + 1, 9),
+      initialDate: selectedDates ?? DateTime.now(),
+    ).then((date) {
+      if (date != null) {
+        setState(() {
+          selectedDates = date;
+          log("message-->${selectedDates?.month}");
+        });
+      }
+    });
+  }
 
   getCategories() async {
     result = await ApiProvider().getCategoryByVendorId();

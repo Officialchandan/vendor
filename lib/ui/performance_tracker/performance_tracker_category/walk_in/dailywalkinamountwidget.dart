@@ -7,16 +7,19 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:vendor/api/api_provider.dart';
 import 'package:vendor/model/daily_walkin.dart';
+import 'package:vendor/ui/performance_tracker/listner/performancetrackerlistner.dart';
 import 'package:vendor/utility/color.dart';
 
 class DailyWalkInAmount extends StatefulWidget {
-  DailyWalkInAmount({Key? key}) : super(key: key);
+  final Function(PerformanceTrackerListner dailyListner) onInit;
+  DailyWalkInAmount({Key? key, required this.onInit}) : super(key: key);
 
   @override
   _DailyWalkInAmountState createState() => _DailyWalkInAmountState();
 }
 
-class _DailyWalkInAmountState extends State<DailyWalkInAmount> {
+class _DailyWalkInAmountState extends State<DailyWalkInAmount>
+    implements PerformanceTrackerListner {
   TooltipBehavior? _tooltipBehavior;
   DailyWalkinAmountResponse? resultDaily;
   Future<DailyWalkinAmountData> getDhabasDay({catid, productid, date}) async {
@@ -31,6 +34,12 @@ class _DailyWalkInAmountState extends State<DailyWalkInAmount> {
   }
 
   StreamController<DailyWalkinAmountData> controller = StreamController();
+  @override
+  void initState() {
+    widget.onInit(this);
+    super.initState();
+    getDhabasDay();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -211,6 +220,12 @@ class _DailyWalkInAmountState extends State<DailyWalkInAmount> {
       GDPData("", 0),
     ];
     return chartData;
+  }
+
+  @override
+  void onFiterSelect(String? catid, String? productid, String? date) {
+    getDhabasDay(
+        catid: catid ?? "", productid: productid ?? "", date: date ?? "");
   }
 }
 
