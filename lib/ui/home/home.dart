@@ -1,14 +1,19 @@
 import 'dart:developer';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:dio/dio.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:share/share.dart';
+import 'package:vendor/api/Endpoint.dart';
+import 'package:vendor/api/server_error.dart';
+import 'package:vendor/main.dart';
 import 'package:vendor/ui/account_management/video_tutorial/video_tutorial.dart';
-import 'package:vendor/ui/performance_tracker/money_due_upi/money_due_screen.dart';
+import 'package:vendor/ui/notification_screen/model/notification_count.dart';
+import 'package:vendor/ui/notification_screen/notification_screen.dart';
 
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
@@ -24,6 +29,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<CountData> notificationList = [];
   List<String> name = [
     "billing_key".tr(),
     "inventory_key".tr(),
@@ -49,9 +55,15 @@ class _HomeScreenState extends State<HomeScreen> {
     "assets/images/tr-ic3.png",
     "assets/images/home6.png"
   ];
-  _onShareWithEmptyOrigin(BuildContext context) async {
+  onShareWithEmptyOrigin(BuildContext context) async {
     await Share.share(
         "https://play.google.com/store/apps/details?id=com.tencent.ig");
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getNotificationCount();
   }
 
   @override
@@ -71,46 +83,94 @@ class _HomeScreenState extends State<HomeScreen> {
         leading: Text(""),
         centerTitle: true,
         // backgroundColor: Colors.indigoAccent,
+        // actions: [
+        //   Padding(
+        //     padding: EdgeInsets.only(
+        //       top: 15,
+        //       bottom: 15,
+        //       right: 15,
+        //     ),
+        //     child: InkWell(
+        //       onTap: () {
+        //         _onShareWithEmptyOrigin(context);
+        //       },
+        //       child: Container(
+        //         decoration: BoxDecoration(
+        //             color: Colors.white,
+        //             borderRadius: BorderRadius.all(Radius.circular(5))),
+        //         child: Row(
+        //           children: [
+        //             Icon(
+        //               Icons.share,
+        //               color: ColorPrimary,
+        //               size: 12,
+        //             ),
+        //             SizedBox(
+        //               width: 5,
+        //             ),
+        //             Text(
+        //               "share_store_key".tr(),
+        //               style: TextStyle(
+        //                   color: ColorPrimary,
+        //                   fontWeight: FontWeight.w600,
+        //                   fontSize: 12),
+        //             ),
+        //             SizedBox(
+        //               width: 5,
+        //             ),
+        //           ],
+        //         ),
+        //       ),
+        //     ),
+        //   )
+        // ],
         actions: [
-          Padding(
-            padding: EdgeInsets.only(
-              top: 15,
-              bottom: 15,
-              right: 15,
-            ),
-            child: InkWell(
-              onTap: () {
-                _onShareWithEmptyOrigin(context);
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(5))),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.share,
-                      color: ColorPrimary,
-                      size: 12,
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      "share_store_key".tr(),
-                      style: TextStyle(
-                          color: ColorPrimary,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 12),
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                  ],
+          Stack(
+            children: [
+              IconButton(
+                icon: Icon(
+                  Icons.notifications,
                 ),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => NotificationScreen()));
+                },
               ),
-            ),
-          )
+              notificationList.isNotEmpty
+                  ? Positioned(
+                      right: 10,
+                      top: 8,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(50),
+                        child: Container(
+                          height: 14,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(50),
+                            border: Border.all(color: ColorPrimary, width: 1),
+                          ),
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(3, 0, 3, 0),
+                              child: Text(
+                                notificationList.length.toString(),
+                                textDirection: TextDirection.ltr,
+                                style: TextStyle(
+                                  color: ColorPrimary,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 8,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ))
+                  : Container()
+            ],
+          ),
         ],
       ),
       body: StaggeredGridView.countBuilder(
@@ -246,5 +306,25 @@ class _HomeScreenState extends State<HomeScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => VideoTutorial()));
+  }
+
+  Future<NotificationCount> getNotificationCount() async {
+    try {
+      Response res = await dio.get(Endpoint.GET_NOTIFICATION_COUNT);
+      NotificationCount count = NotificationCount.fromJson(res.toString());
+      notificationList = count.data!;
+      setState(() {});
+      return count;
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return NotificationCount(success: false, message: message);
+    }
   }
 }

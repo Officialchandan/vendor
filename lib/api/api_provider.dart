@@ -54,6 +54,9 @@ import 'package:vendor/model/qr_code.dart';
 import 'package:vendor/model/upload_image_response.dart';
 import 'package:vendor/model/vendor_profile_response.dart';
 import 'package:vendor/model/verify_otp.dart';
+import 'package:vendor/ui/notification_screen/model/notification_count.dart';
+import 'package:vendor/ui/notification_screen/model/notification_response.dart';
+import 'package:vendor/ui/notification_screen/model/notification_status.dart';
 import 'package:vendor/utility/sharedpref.dart';
 
 import '../main.dart';
@@ -1519,6 +1522,43 @@ class ApiProvider {
       }
       print("Exception occurred: $message stackTrace: $error");
       return QrcodeResponse(success: false, message: message);
+    }
+  }
+
+  Future<NotificationResponse> getNotifications(Map input) async {
+    try {
+      Response res = await dio.post(Endpoint.GET_NOTIFICATIONS, data: input);
+
+      return NotificationResponse.fromJson(res.toString());
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return NotificationResponse(success: false, message: message);
+    }
+  }
+
+  Future<NotificationStatusResponse> markAsReadNotification(Map input) async {
+    try {
+      Response res =
+          await dio.post(Endpoint.UPDATE_NOTIFICATION_STATUS, data: input);
+
+      return NotificationStatusResponse.fromJson(res.toString());
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return NotificationStatusResponse(success: false, message: message);
     }
   }
 }

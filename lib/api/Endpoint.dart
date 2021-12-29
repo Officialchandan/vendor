@@ -180,4 +180,10 @@ class Endpoint {
   static const String GET_QR_CODE = "scanQRCode";
 
   static const String GET_NORMAL_QR_CODE = "scanQRCodeNormalBilling";
+
+  static const String GET_NOTIFICATION_COUNT = "getNotificatonList";
+
+  static const String GET_NOTIFICATIONS = "getVendorSendNotificatonList";
+  static const String UPDATE_NOTIFICATION_STATUS =
+      "updateSendNotificationStatus";
 }
