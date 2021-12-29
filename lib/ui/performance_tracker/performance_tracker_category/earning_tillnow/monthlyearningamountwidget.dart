@@ -7,25 +7,28 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:vendor/api/api_provider.dart';
 import 'package:vendor/model/monthly_earning.dart';
+import 'package:vendor/ui/performance_tracker/listner/performancetrackerlistner.dart';
 import 'package:vendor/utility/color.dart';
 
 class MonthlyEarningAmount extends StatefulWidget {
-  MonthlyEarningAmount({Key? key}) : super(key: key);
+  final Function(PerformanceTrackerListner monthlyListner) onInit;
+  MonthlyEarningAmount({Key? key, required this.onInit}) : super(key: key);
 
   @override
   _MonthlyEarningAmountState createState() => _MonthlyEarningAmountState();
 }
 
-class _MonthlyEarningAmountState extends State<MonthlyEarningAmount> {
+class _MonthlyEarningAmountState extends State<MonthlyEarningAmount>
+    implements PerformanceTrackerListner {
   MonthlyEarningAmountResponse? resultMonthly;
   TooltipBehavior? _tooltipBehavior;
   Future<MonthlyEarningAmountData> getDhabasMonthly(
       {catid, productid, month}) async {
     log('resultMonthly!.data');
     resultMonthly = await ApiProvider().getMonthlyEarningAmount(
-        catid: catid == null ? "" : catid,
-        productid: productid == null ? "" : productid,
-        month: month == null ? "" : month);
+        catid == null ? "" : catid,
+        productid == null ? "" : productid,
+        month == null ? "" : month);
     log('${resultMonthly!.data}');
     controller.add(resultMonthly!.data!);
     return resultMonthly!.data!;
@@ -34,7 +37,7 @@ class _MonthlyEarningAmountState extends State<MonthlyEarningAmount> {
   StreamController<MonthlyEarningAmountData> controller = StreamController();
   @override
   void initState() {
-    // TODO: implement initState
+    widget.onInit(this);
     super.initState();
     getDhabasMonthly();
   }
@@ -221,6 +224,12 @@ class _MonthlyEarningAmountState extends State<MonthlyEarningAmount> {
       ),
     ];
     return chartData;
+  }
+
+  @override
+  void onFiterSelect(String? catid, String? productid, String? date) {
+    getDhabasMonthly(
+        catid: catid ?? "", productid: productid ?? "", month: date ?? "");
   }
 }
 

@@ -54,6 +54,7 @@ dependencies:
 
   #date range picker
   syncfusion_flutter_datepicker:
+  month_picker_dialog: ^0.4.0
   intl:
 
   #  picker provider permission check

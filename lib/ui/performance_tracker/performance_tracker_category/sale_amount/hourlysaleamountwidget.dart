@@ -7,25 +7,28 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:vendor/api/api_provider.dart';
 import 'package:vendor/model/hourly_sale_amount.dart';
+import 'package:vendor/ui/performance_tracker/listner/performancetrackerlistner.dart';
 import 'package:vendor/utility/color.dart';
 
 class HourlySaleAmount extends StatefulWidget {
-  HourlySaleAmount({Key? key}) : super(key: key);
+  final Function(PerformanceTrackerListner hourlyListner) onInit;
+  HourlySaleAmount({Key? key, required this.onInit}) : super(key: key);
 
   @override
   _HourlySaleAmountState createState() => _HourlySaleAmountState();
 }
 
-class _HourlySaleAmountState extends State<HourlySaleAmount> {
+class _HourlySaleAmountState extends State<HourlySaleAmount>
+    implements PerformanceTrackerListner {
   TooltipBehavior? _tooltipBehavior;
   StreamController<Map<String, String>> controller = StreamController();
   HourlySaleAmountResponse? resultHourly;
   List<String> demo = [];
   @override
   void initState() {
-    // TODO: implement initState
+    widget.onInit(this);
     super.initState();
-    getDhabasHourly(catid: "1");
+    getDhabasHourly();
   }
 
   getDhabasHourly({catid}) async {
@@ -352,6 +355,11 @@ class _HourlySaleAmountState extends State<HourlySaleAmount> {
           '${data.keys.toList()[3]}', double.parse(data.values.toList()[3])),
     ];
     return chartData;
+  }
+
+  @override
+  void onFiterSelect(String? catid, String? productid, String? date) {
+    getDhabasHourly(catid: catid ?? "");
   }
 }
 

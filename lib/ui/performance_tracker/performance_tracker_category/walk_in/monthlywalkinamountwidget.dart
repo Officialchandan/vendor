@@ -7,25 +7,39 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:vendor/api/api_provider.dart';
 import 'package:vendor/model/monthly_walkin.dart';
+import 'package:vendor/ui/performance_tracker/listner/performancetrackerlistner.dart';
 import 'package:vendor/utility/color.dart';
 
 class MonthlyWalkinAmount extends StatefulWidget {
-  MonthlyWalkinAmount({Key? key}) : super(key: key);
+  final Function(PerformanceTrackerListner monthlyListner) onInit;
+  MonthlyWalkinAmount({Key? key, required this.onInit}) : super(key: key);
 
   @override
   _MonthlyWalkinAmountState createState() => _MonthlyWalkinAmountState();
 }
 
-class _MonthlyWalkinAmountState extends State<MonthlyWalkinAmount> {
+class _MonthlyWalkinAmountState extends State<MonthlyWalkinAmount>
+    implements PerformanceTrackerListner {
   MonthlyWalkinAmountResponse? resultMonthly;
   TooltipBehavior? _tooltipBehavior;
-  Future<MonthlyWalkinAmountData> getDhabasMonthly() async {
-    resultMonthly = await ApiProvider().getMonthlyWalkinAmount();
+  Future<MonthlyWalkinAmountData> getDhabasMonthly(
+      {catid, productid, month}) async {
+    resultMonthly = await ApiProvider().getMonthlyWalkinAmount(
+        catid == null ? "" : catid,
+        productid == null ? "" : productid,
+        month == null ? "" : month);
     log('${resultMonthly!.data}');
+    controller.add(resultMonthly!.data!);
     return resultMonthly!.data!;
   }
 
   StreamController<MonthlyWalkinAmountData> controller = StreamController();
+  @override
+  void initState() {
+    widget.onInit(this);
+    super.initState();
+    getDhabasMonthly();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -209,6 +223,15 @@ class _MonthlyWalkinAmountState extends State<MonthlyWalkinAmount> {
       ),
     ];
     return chartData;
+  }
+
+  @override
+  void onFiterSelect(String? catid, String? productid, String? date) {
+    getDhabasMonthly(
+      catid: catid ?? "",
+      productid: productid ?? "",
+      month: date ?? "",
+    );
   }
 }
 

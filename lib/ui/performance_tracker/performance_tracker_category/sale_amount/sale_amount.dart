@@ -108,8 +108,8 @@ class _SaleAmountState extends State<SaleAmount> with TickerProviderStateMixin {
                           index: _tabController!.index,
                           screenindex: saleindex,
                           onSelect: (categoryid, listSelected, date) {
-                            performanceTrackerListner!.onFiterSelect(
-                                categoryid!, listSelected!, date!);
+                            performanceTrackerListner!
+                                .onFiterSelect(categoryid, listSelected, date);
                           },
                         );
                       }).then((value) {
@@ -140,9 +140,21 @@ class _SaleAmountState extends State<SaleAmount> with TickerProviderStateMixin {
           body: TabBarView(
             controller: _tabController,
             children: [
-              HourlySaleAmount(),
-              DailySaleAmount(),
-              MonthlySaleAmount()
+              HourlySaleAmount(
+                onInit: (PerformanceTrackerListner hourlyListner) {
+                  performanceTrackerListner = hourlyListner;
+                },
+              ),
+              DailySaleAmount(
+                onInit: (PerformanceTrackerListner dailyListner) {
+                  performanceTrackerListner = dailyListner;
+                },
+              ),
+              MonthlySaleAmount(
+                onInit: (PerformanceTrackerListner monthlyListner) {
+                  performanceTrackerListner = monthlyListner;
+                },
+              )
             ],
           ),
         ),

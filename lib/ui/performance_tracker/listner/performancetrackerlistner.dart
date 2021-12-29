@@ -1,3 +1,3 @@
 abstract class PerformanceTrackerListner {
-  void onFiterSelect(String catid, String productid, String date);
+  void onFiterSelect(String? catid, String? productid, String? date);
 }

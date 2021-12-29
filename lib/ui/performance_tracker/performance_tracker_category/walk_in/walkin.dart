@@ -135,9 +135,21 @@ class _WalkInAmountState extends State<WalkInAmount>
           body: TabBarView(
             controller: _tabController,
             children: [
-              HourlyWalkinAmount(),
-              DailyWalkInAmount(),
-              MonthlyWalkinAmount()
+              HourlyWalkinAmount(
+                onInit: (PerformanceTrackerListner hourlyListner) {
+                  performanceTrackerListner = hourlyListner;
+                },
+              ),
+              DailyWalkInAmount(
+                onInit: (PerformanceTrackerListner dailyListner) {
+                  performanceTrackerListner = dailyListner;
+                },
+              ),
+              MonthlyWalkinAmount(
+                onInit: (PerformanceTrackerListner monthlyListner) {
+                  performanceTrackerListner = monthlyListner;
+                },
+              )
             ],
           ),
         ),

@@ -7,23 +7,26 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:vendor/api/api_provider.dart';
 import 'package:vendor/model/daily_sale_amount.dart';
+import 'package:vendor/ui/performance_tracker/listner/performancetrackerlistner.dart';
 
 import 'package:vendor/utility/color.dart';
 
 class DailySaleAmount extends StatefulWidget {
-  DailySaleAmount({Key? key}) : super(key: key);
+  final Function(PerformanceTrackerListner dailyListner) onInit;
+  DailySaleAmount({Key? key, required this.onInit}) : super(key: key);
 
   @override
   _DailySaleAmountState createState() => _DailySaleAmountState();
 }
 
-class _DailySaleAmountState extends State<DailySaleAmount> {
+class _DailySaleAmountState extends State<DailySaleAmount>
+    implements PerformanceTrackerListner {
   StreamController<DailySellAmountData> controller = StreamController();
   TooltipBehavior? _tooltipBehavior;
   DailySellAmountResponse? resultDaily;
   @override
   void initState() {
-    // TODO: implement initState
+    widget.onInit(this);
     super.initState();
     getDhabasDay();
   }
@@ -216,6 +219,15 @@ class _DailySaleAmountState extends State<DailySaleAmount> {
       ),
     ];
     return chartData;
+  }
+
+  @override
+  void onFiterSelect(String? catid, String? productid, String? date) {
+    getDhabasDay(
+      catid: catid ?? "",
+      productid: productid ?? "",
+      date: date ?? "",
+    );
   }
 }
 

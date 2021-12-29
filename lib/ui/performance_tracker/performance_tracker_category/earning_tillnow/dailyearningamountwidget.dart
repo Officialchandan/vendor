@@ -7,23 +7,25 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:vendor/api/api_provider.dart';
 import 'package:vendor/model/daily_earning.dart';
+import 'package:vendor/ui/performance_tracker/listner/performancetrackerlistner.dart';
 import 'package:vendor/utility/color.dart';
 
 class DailyEarningAmount extends StatefulWidget {
-  DailyEarningAmount({Key? key}) : super(key: key);
-
+  DailyEarningAmount({Key? key, required this.onInit}) : super(key: key);
+  final Function(PerformanceTrackerListner dailyListner) onInit;
   @override
   _DailyEarningAmountState createState() => _DailyEarningAmountState();
 }
 
-class _DailyEarningAmountState extends State<DailyEarningAmount> {
+class _DailyEarningAmountState extends State<DailyEarningAmount>
+    implements PerformanceTrackerListner {
   DailyEarningAmountResponse? resultDaily;
   TooltipBehavior? _tooltipBehavior;
   Future<DailyEarningAmountData> getDhabasDay({catid, productid, date}) async {
     resultDaily = await ApiProvider().getDailyEarningAmount(
-        catid: catid == null ? "" : catid,
-        productid: productid == null ? "" : productid,
-        date: date == null ? "" : date);
+        catid == null ? "" : catid,
+        productid == null ? "" : productid,
+        date == null ? "" : date);
     log('${resultDaily!.data}');
     controller.add(resultDaily!.data!);
     return resultDaily!.data!;
@@ -33,7 +35,7 @@ class _DailyEarningAmountState extends State<DailyEarningAmount> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    widget.onInit(this);
     super.initState();
     getDhabasDay();
   }
@@ -263,6 +265,15 @@ class _DailyEarningAmountState extends State<DailyEarningAmount> {
       GDPData("", 0),
     ];
     return chartData;
+  }
+
+  @override
+  void onFiterSelect(String? catid, String? productid, String? date) {
+    getDhabasDay(
+      catid: catid ?? "",
+      productid: productid ?? "",
+      date: date ?? "",
+    );
   }
 }
 
