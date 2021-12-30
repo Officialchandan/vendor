@@ -186,10 +186,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
     input["vendor_id"] = userId;
     notificationBloc.add(MarkAsReadEvent(input: input));
 
-    // Navigator.pushAndRemoveUntil(
-    //     context,
-    //     MaterialPageRoute(builder: (context) => MoneyDueScreen()),
-    //     ModalRoute.withName("/"));
     Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: 4);
   }
 }
