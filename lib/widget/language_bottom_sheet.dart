@@ -1,5 +1,6 @@
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
+import 'package:vendor/ui/splash/splash_screen.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/constant.dart';
 
@@ -64,9 +65,12 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
                       if (_groupValue != -1) {
                         context.locale =
                             Constant.langList[_groupValue]["code"] as Locale;
-                        print(context.locale.toString());
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SplashScreen()),
+                            (Route<dynamic> route) => false);
                       }
-                      Navigator.pop(context);
                     },
                     child: Text(
                       "Done",
