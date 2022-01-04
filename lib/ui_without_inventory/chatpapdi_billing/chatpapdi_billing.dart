@@ -522,20 +522,33 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                     color: ColorPrimary,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    onPressed: () {
+                    onPressed: () async {
                       if (status1 == 0) {
                         log("index->$index");
+                        Map<String, dynamic> input = HashMap<String, dynamic>();
+                        input["vendor_id"] =
+                            await SharedPref.getIntegerPreference(
+                                SharedPref.VENDORID);
+                        input["bill_id"] = datas!.billId;
 
-                        // directBillingCustomerNumberResponseBloc.add((
-                        //     price: y, index: index, earningCoin: earningCoin));
-                        otpController.clear();
-                        mobileController.clear();
-                        nameController.clear();
-                        amountController.clear();
-                        redeem = false;
-                        FocusScope.of(context).unfocus();
+                        input["otp"] = otpController.text;
+                        input["total_pay"] = datas!.totalPay;
+                        input["coin_deducted"] = datas!.coinDeducted;
+                        input["earning_coins"] = datas!.earningCoins;
+                        input["myprofit_revenue"] = datas!.myProfitRevenue;
 
-                        Navigator.pop(context);
+                        log("=====? $input");
+
+                        directBillingCustomerNumberResponseBloc
+                            .add(GetChatPapdiBillingOtpEvent(input: input));
+
+                        // otpController.clear();
+                        // mobileController.clear();
+                        // nameController.clear();
+                        // amountController.clear();
+                        // redeem = false;
+                        // FocusScope.of(context).unfocus();
+                        // Navigator.pop(context);
                       } else {
                         verifyOtp(context);
                       }

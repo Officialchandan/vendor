@@ -67,6 +67,9 @@ class _ScannerState extends State<Scanner> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
     return BlocProvider<ScannerBloc>(
       create: (context) => scannerBloc,
       child: BlocListener<ScannerBloc, ScannerState>(
@@ -86,9 +89,9 @@ class _ScannerState extends State<Scanner> {
             return Scaffold(
               body: Column(
                 children: <Widget>[
-                  Expanded(flex: 4, child: _buildQrView(context)),
-                  Expanded(
-                    flex: 1,
+                  Container(
+                      height: height * 0.80, child: _buildQrView(context)),
+                  Container(
                     child: FittedBox(
                       fit: BoxFit.contain,
                       child: Column(
