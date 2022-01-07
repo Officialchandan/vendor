@@ -353,7 +353,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                                 if (succes == true) {}
                               } else {
                                 Fluttertoast.showToast(
-                                    msg: "please_enter_name_key ".tr(),
+                                    msg: "please_enter_name_key".tr(),
                                     backgroundColor: ColorPrimary);
                               }
                             } else {

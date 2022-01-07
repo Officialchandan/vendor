@@ -333,7 +333,7 @@ class _DailyReportState extends State<DailyReport> {
     final xls.Workbook workbook = xls.Workbook(0);
     //Adding a Sheet with name to workbook.
     final xls.Worksheet sheet1 =
-        workbook.worksheets.addWithName('daily_report_key'.tr());
+        workbook.worksheets.addWithName('Daily Report');
     sheet1.showGridlines = true;
 
     int columnIndex = 1;
@@ -347,7 +347,7 @@ class _DailyReportState extends State<DailyReport> {
 
     sheet1.getRangeByIndex(1, 1, 1, reportList.first.keys.length).merge();
     sheet1.getRangeByIndex(rowIndex, columnIndex).value =
-        "daily_report_key ($selectedDate)".tr();
+        "Daily Report ($selectedDate)";
     sheet1.getRangeByIndex(rowIndex, columnIndex).rowHeight = 30;
     sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign =
         xls.HAlignType.center;
@@ -378,31 +378,41 @@ class _DailyReportState extends State<DailyReport> {
             xls.HAlignType.center;
         sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign =
             xls.VAlignType.center;
+        columnIndex = columnIndex + 1;
 
-        if (key == "total_key".tr()) {
+        if (key == "total") {
+          print("value - >$value");
+          print("total - >$total");
           total =
               double.parse(value == null ? "0.0" : value.toString()) + total;
         }
-        if (key == "mrp_key".tr()) {
+        if (key == "mrp") {
+          print("mrp - >$value");
+          print("totalMrp - >$totalMrp");
           totalMrp =
               double.parse(value == null ? "0.0" : value.toString()) + totalMrp;
         }
-        if (key == "purchase_price_key".tr()) {
+        if (key == "purchase_price") {
+          print("purchase_price - >$value");
+          print("totalPurchasePrice - >$totalPurchasePrice");
           totalPurchasePrice = double.parse(
                   value == null || value == "" ? "0.0" : value.toString()) +
               totalPurchasePrice;
         }
-        if (key == "earning_coins".tr()) {
+        if (key == "earning_coins") {
+          print("earning_coins - >$value");
+          print("earningCoins - >$earningCoins");
           earningCoins = double.parse(
                   value == null || value == "" ? "0.0" : value.toString()) +
               earningCoins;
         }
-        if (key == "redeem_coins_key".tr()) {
+        if (key == "redeem_coins") {
+          print("redeem_coins - >$value");
+          print("redeemCoins - >$redeemCoins");
           redeemCoins = double.parse(
                   value == null || value == "" ? "0.0" : value.toString()) +
               redeemCoins;
         }
-        columnIndex = columnIndex + 1;
       });
     });
 
@@ -412,13 +422,13 @@ class _DailyReportState extends State<DailyReport> {
     print("earningCoins - >$earningCoins");
     print("redeemCoins - >$redeemCoins");
 
-    sheet1.getRangeByIndex(rowIndex + 1, 1).value = "total_key".tr();
+    sheet1.getRangeByIndex(rowIndex + 1, 1).value = "Total";
     sheet1.getRangeByIndex(rowIndex + 1, 1).cellStyle.hAlign =
         xls.HAlignType.center;
     sheet1.getRangeByIndex(rowIndex + 1, 1).cellStyle.vAlign =
         xls.VAlignType.center;
 
-    final xls.Style style = workbook.styles.add('style1_key'.tr());
+    final xls.Style style = workbook.styles.add('Style1');
     style.backColorRgb = Colors.red;
     style.hAlign = xls.HAlignType.center;
     style.vAlign = xls.VAlignType.center;
@@ -432,14 +442,14 @@ class _DailyReportState extends State<DailyReport> {
 
     int index = reportList.first.keys
         .toList()
-        .indexWhere((element) => element == "total_key".tr());
+        .indexWhere((element) => element == "total");
     if (index != -1) {
       sheet1.getRangeByIndex(rowIndex + 1, index + 1).value = total;
     }
 
     int purchaseIndex = reportList.first.keys
         .toList()
-        .indexWhere((element) => element == "purchase_price_key".tr());
+        .indexWhere((element) => element == "purchase_price");
     if (purchaseIndex != -1) {
       sheet1.getRangeByIndex(rowIndex + 1, purchaseIndex + 1).value =
           totalPurchasePrice;
@@ -447,14 +457,14 @@ class _DailyReportState extends State<DailyReport> {
 
     int mrpIndex = reportList.first.keys
         .toList()
-        .indexWhere((element) => element == "mrp_key".tr());
+        .indexWhere((element) => element == "mrp");
     if (mrpIndex != -1) {
       sheet1.getRangeByIndex(rowIndex + 1, mrpIndex + 1).value = totalMrp;
     }
 
     int earningCoinsIndex = reportList.first.keys
         .toList()
-        .indexWhere((element) => element == "earning_coins_key");
+        .indexWhere((element) => element == "earning_coins");
     if (earningCoinsIndex != -1) {
       sheet1.getRangeByIndex(rowIndex + 1, earningCoinsIndex + 1).value =
           earningCoins;
@@ -462,7 +472,7 @@ class _DailyReportState extends State<DailyReport> {
 
     int redeemCoinsIndex = reportList.first.keys
         .toList()
-        .indexWhere((element) => element == "redeem_coins_key".tr());
+        .indexWhere((element) => element == "redeem_coins");
     if (redeemCoinsIndex != -1) {
       sheet1.getRangeByIndex(rowIndex + 1, redeemCoinsIndex + 1).value =
           redeemCoins;
@@ -486,16 +496,13 @@ class _DailyReportState extends State<DailyReport> {
       savedDir.create();
     }
 
-    String fileName =
-        "daily_report_key${selectedDate}_${DateTime.now().millisecondsSinceEpoch.toString()}" +
-            ".xlsx".tr();
+    String fileName = "Daily_Report_$selectedDate" + ".xlsx";
 
     final File file =
         File(Platform.isWindows ? '$path\\$fileName' : '$path/$fileName');
     await file.writeAsBytes(bytes, flush: true).whenComplete(() {
       print("completed");
-      Utility.showToast(
-          "report_saved_at_below_location_key \n${file.path}".tr());
+      Utility.showToast("Report saved at below location \n${file.path}");
     });
     print("savedDir${file.path}");
 

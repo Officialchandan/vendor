@@ -36,7 +36,7 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
     // "discount_codes_key".tr(),
     "settings_key".tr(),
     // "delivery_setting_key".tr(),
-    "gift scheme",
+    "gift_scheme_key".tr(),
     "video_tutorials_key".tr(),
     "share_store_link_key".tr(),
     "get_store_qr_code_key".tr(),

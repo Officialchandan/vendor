@@ -201,11 +201,11 @@ class _GeneratedCoinReportState extends State<GeneratedCoinReport> {
 
   void selectDays(BuildContext context) async {
     final List<Option> options = [
-      Option(optionName: "1 day_key".tr(), optionId: "1"),
-      Option(optionName: "5 days_key".tr(), optionId: "5"),
-      Option(optionName: "7 days_key".tr(), optionId: "7"),
-      Option(optionName: "15 days_key".tr(), optionId: "15"),
-      Option(optionName: "30 days_key".tr(), optionId: "30"),
+      Option(optionName: "1" + "day_key".tr(), optionId: "1"),
+      Option(optionName: "5" + "days_key".tr(), optionId: "5"),
+      Option(optionName: "7" + "days_key".tr(), optionId: "7"),
+      Option(optionName: "15" + "days_key".tr(), optionId: "15"),
+      Option(optionName: "30" + "days_key".tr(), optionId: "30"),
     ];
     showModalBottomSheet(
         context: context,
@@ -352,7 +352,7 @@ class _GeneratedCoinReportState extends State<GeneratedCoinReport> {
     final xls.Workbook workbook = xls.Workbook(0);
     //Adding a Sheet with name to workbook.
     final xls.Worksheet sheet1 =
-        workbook.worksheets.addWithName('generate_coin_report_key'.tr());
+        workbook.worksheets.addWithName('Generate Coin Report');
     sheet1.showGridlines = true;
 
     int columnIndex = 1;
@@ -368,10 +368,10 @@ class _GeneratedCoinReportState extends State<GeneratedCoinReport> {
     sheet1.getRangeByIndex(1, 1, 1, reportList.first.keys.length).merge();
     if (groupValue == 1) {
       sheet1.getRangeByIndex(rowIndex, columnIndex).value =
-          "generate_coin_report_key ($startDate to $endDate)".tr();
+          "Generate Coin Report ($startDate to $endDate)";
     } else {
       sheet1.getRangeByIndex(rowIndex, columnIndex).value =
-          "generate_coin_report_key (${days!.optionName})".tr();
+          "Generate Coin Report (${days!.optionName})";
     }
 
     sheet1.getRangeByIndex(rowIndex, columnIndex).rowHeight = 30;
@@ -406,32 +406,45 @@ class _GeneratedCoinReportState extends State<GeneratedCoinReport> {
             xls.VAlignType.center;
         columnIndex = columnIndex + 1;
 
-        if (key == "total_key".tr()) {
+        if (key == "total") {
+          print("value - >$value");
+          print("total - >$total");
           total = double.parse(
                   value == null || value == "" ? "0" : value.toString()) +
               total;
         }
-        if (key == "mrp_key".tr()) {
+        if (key == "mrp") {
+          print("mrp - >$value");
+          print("totalMrp - >$totalMrp");
           totalMrp = double.parse(
                   value == null || value == "" ? "0" : value.toString()) +
               totalMrp;
         }
-        if (key == "purchase_price_key".tr()) {
+        if (key == "purchase_price") {
+          print("purchase_price - >$value");
+          print("totalPurchasePrice - >$totalPurchasePrice");
           totalPurchasePrice = double.parse(
                   value == null || value == "" ? "0" : value.toString()) +
               totalPurchasePrice;
         }
-        if (key == "qty_key".tr()) {
+
+        if (key == "qty") {
+          print("qty - >$value");
+          print("qty - >$qty");
           qty = double.parse(
                   value == null || value == "" ? "0" : value.toString()) +
               qty;
         }
-        if (key == "monetary_value_key".tr()) {
+        if (key == "monetary_value") {
+          print("monetary_value - >$value");
+          print("monetaryValue - >$monetaryValue");
           monetaryValue = double.parse(
                   value == null || value == "" ? "0" : value.toString()) +
               monetaryValue;
         }
-        if (key == "earning_coins_key".tr()) {
+        if (key == "earning_coins") {
+          print("earning_coins - >$value");
+          print("earnCoins - >$earnCoins");
           earnCoins = double.parse(
                   value == null || value == "" ? "0" : value.toString()) +
               earnCoins;
@@ -443,13 +456,13 @@ class _GeneratedCoinReportState extends State<GeneratedCoinReport> {
     print("totalPurchasePrice - >$totalPurchasePrice");
     print("totalMrp - >$totalMrp");
 
-    sheet1.getRangeByIndex(rowIndex + 1, 1).value = "total_key".tr();
+    sheet1.getRangeByIndex(rowIndex + 1, 1).value = "Total";
     sheet1.getRangeByIndex(rowIndex + 1, 1).cellStyle.hAlign =
         xls.HAlignType.center;
     sheet1.getRangeByIndex(rowIndex + 1, 1).cellStyle.vAlign =
         xls.VAlignType.center;
 
-    final xls.Style style = workbook.styles.add('style1_key'.tr());
+    final xls.Style style = workbook.styles.add('Style1');
     style.backColorRgb = Colors.red;
     style.hAlign = xls.HAlignType.center;
     style.vAlign = xls.VAlignType.center;
@@ -464,14 +477,14 @@ class _GeneratedCoinReportState extends State<GeneratedCoinReport> {
 
     int index = reportList.first.keys
         .toList()
-        .indexWhere((element) => element == "total_key".tr());
+        .indexWhere((element) => element == "total");
     if (index != -1) {
       sheet1.getRangeByIndex(rowIndex + 1, index + 1).value = total;
     }
 
     int purchaseIndex = reportList.first.keys
         .toList()
-        .indexWhere((element) => element == "purchase_price_key".tr());
+        .indexWhere((element) => element == "purchase_price");
     if (purchaseIndex != -1) {
       sheet1.getRangeByIndex(rowIndex + 1, purchaseIndex + 1).value =
           totalPurchasePrice;
@@ -479,28 +492,28 @@ class _GeneratedCoinReportState extends State<GeneratedCoinReport> {
 
     int mrpIndex = reportList.first.keys
         .toList()
-        .indexWhere((element) => element == "mrp_key".tr());
+        .indexWhere((element) => element == "mrp");
     if (purchaseIndex != -1) {
       sheet1.getRangeByIndex(rowIndex + 1, mrpIndex + 1).value = totalMrp;
     }
 
     int qtyIndex = reportList.first.keys
         .toList()
-        .indexWhere((element) => element == "qty_key".tr());
+        .indexWhere((element) => element == "qty");
     if (qtyIndex != -1) {
       sheet1.getRangeByIndex(rowIndex + 1, qtyIndex + 1).value = qty;
     }
 
     int earnCoinIndex = reportList.first.keys
         .toList()
-        .indexWhere((element) => element == "earning_coins_key".tr());
+        .indexWhere((element) => element == "earning_coins");
     if (earnCoinIndex != -1) {
       sheet1.getRangeByIndex(rowIndex + 1, earnCoinIndex + 1).value = earnCoins;
     }
 
     int monetaryIndex = reportList.first.keys
         .toList()
-        .indexWhere((element) => element == "monetary_value_key".tr());
+        .indexWhere((element) => element == "monetary_value");
     if (monetaryIndex != -1) {
       sheet1.getRangeByIndex(rowIndex + 1, monetaryIndex + 1).value =
           monetaryValue;
@@ -524,7 +537,7 @@ class _GeneratedCoinReportState extends State<GeneratedCoinReport> {
       savedDir.create();
     }
 
-    String fileName = "generate_coin_report_key".tr();
+    String fileName = "generate_coin_report_";
     if (groupValue == 1) {
       fileName += "$startDate-to-$endDate" + ".xlsx";
     } else {
@@ -535,8 +548,7 @@ class _GeneratedCoinReportState extends State<GeneratedCoinReport> {
         File(Platform.isWindows ? '$path\\$fileName' : '$path/$fileName');
     await file.writeAsBytes(bytes, flush: true).whenComplete(() {
       print("completed");
-      Utility.showToast(
-          "report_saved_at_below_location_key \n${file.path}".tr());
+      Utility.showToast("Report saved at below location \n${file.path}");
     });
     print("savedDir${file.path}");
 

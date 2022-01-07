@@ -370,7 +370,7 @@ class _BillingScreenState extends State<BillingScreen> {
                                         });
                                       } else {
                                         Fluttertoast.showToast(
-                                            msg: "please_enter_name_key ".tr(),
+                                            msg: "please_enter_name_key".tr(),
                                             backgroundColor: ColorPrimary);
                                       }
                                     }
@@ -568,7 +568,7 @@ class _BillingScreenState extends State<BillingScreen> {
                         });
                       } else {
                         Fluttertoast.showToast(
-                            msg: "please_enter_name_key ".tr(),
+                            msg: "please_enter_name_key".tr(),
                             backgroundColor: ColorPrimary);
                       }
                     }

@@ -201,11 +201,11 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
 
   void selectDays(BuildContext context) async {
     final List<Option> options = [
-      Option(optionName: "1 day_key", optionId: "1"),
-      Option(optionName: "5 days_key", optionId: "5"),
-      Option(optionName: "7 days_key", optionId: "7"),
-      Option(optionName: "15 days_key", optionId: "15"),
-      Option(optionName: "30 days_key", optionId: "30"),
+      Option(optionName: "1" + "day_key".tr(), optionId: "1"),
+      Option(optionName: "5" + "days_key".tr(), optionId: "5"),
+      Option(optionName: "7" + "days_key".tr(), optionId: "7"),
+      Option(optionName: "15" + "days_key".tr(), optionId: "15"),
+      Option(optionName: "30" + "days_key".tr(), optionId: "30"),
     ];
     showModalBottomSheet(
         context: context,
@@ -352,7 +352,7 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
     final xls.Workbook workbook = xls.Workbook(0);
     //Adding a Sheet with name to workbook.
     final xls.Worksheet sheet1 =
-        workbook.worksheets.addWithName('coin_redeem_report_key'.tr());
+        workbook.worksheets.addWithName('Coin Redeem Report');
     sheet1.showGridlines = true;
 
     int columnIndex = 1;
@@ -365,10 +365,10 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
     sheet1.getRangeByIndex(1, 1, 1, reportList.first.keys.length).merge();
     if (groupValue == 1) {
       sheet1.getRangeByIndex(rowIndex, columnIndex).value =
-          "coin_redeem_report_key ($startDate to $endDate)".tr();
+          "Coin Redeem Report ($startDate to $endDate)";
     } else {
       sheet1.getRangeByIndex(rowIndex, columnIndex).value =
-          "coin_redeem_report_key (${days!.optionName})".tr();
+          "Coin Redeem Report (${days!.optionName})";
     }
 
     sheet1.getRangeByIndex(rowIndex, columnIndex).rowHeight = 30;
@@ -403,7 +403,7 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
             xls.VAlignType.center;
         columnIndex = columnIndex + 1;
 
-        if (key == "redeem_coins_key".tr()) {
+        if (key == "redeem_coins") {
           print("value - >$value");
           print("total - >$total");
           total = double.parse(value.toString()) + total;
@@ -413,13 +413,13 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
 
     print("total - >$total");
 
-    sheet1.getRangeByIndex(rowIndex + 1, 1).value = "total_key".tr();
+    sheet1.getRangeByIndex(rowIndex + 1, 1).value = "Total";
     sheet1.getRangeByIndex(rowIndex + 1, 1).cellStyle.hAlign =
         xls.HAlignType.center;
     sheet1.getRangeByIndex(rowIndex + 1, 1).cellStyle.vAlign =
         xls.VAlignType.center;
 
-    final xls.Style style = workbook.styles.add('style1_key'.tr());
+    final xls.Style style = workbook.styles.add('Style1');
     style.backColorRgb = Colors.red;
     style.hAlign = xls.HAlignType.center;
     style.vAlign = xls.VAlignType.center;
@@ -433,7 +433,7 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
 
     int index = reportList.first.keys
         .toList()
-        .indexWhere((element) => element == "redeem_coins_key");
+        .indexWhere((element) => element == "redeem_coins");
     if (index != -1) {
       sheet1.getRangeByIndex(rowIndex + 1, index + 1).value = total;
     }
@@ -456,12 +456,12 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
       savedDir.create();
     }
 
-    String fileName = "coin_redeem_report_key".tr();
+    String fileName = "coin_redeem_report_";
 
     if (groupValue == 1) {
-      fileName += "$startDate to $endDate" + ".xlsx";
+      fileName += "$startDate to $endDate" + ".2xlsx";
       sheet1.getRangeByIndex(rowIndex, columnIndex).value =
-          "coin_redeem_report_key ($startDate to $endDate)".tr();
+          "Coin Redeem Report ($startDate to $endDate)";
     } else {
       fileName += "${days!.optionName}" + ".xlsx";
     }
@@ -470,8 +470,7 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
         File(Platform.isWindows ? '$path\\$fileName' : '$path/$fileName');
     await file.writeAsBytes(bytes, flush: true).whenComplete(() {
       print("completed");
-      Utility.showToast(
-          "report_saved_at_below_location_key \n${file.path}".tr());
+      Utility.showToast("Report saved at below location \n${file.path}");
     });
     print("savedDir${file.path}");
 

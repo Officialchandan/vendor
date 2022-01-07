@@ -401,7 +401,7 @@ class _DirectBillingState extends State<DirectBilling> {
                             userRegister(context);
                           } else {
                             Fluttertoast.showToast(
-                                msg: "please_enter_name_key ".tr(),
+                                msg: "please_enter_name_key".tr(),
                                 backgroundColor: ColorPrimary);
                           }
                         } else {

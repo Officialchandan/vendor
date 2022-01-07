@@ -192,11 +192,11 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
 
   void selectDays(BuildContext context) async {
     final List<Option> options = [
-      Option(optionName: "1 day_key".tr(), optionId: "1"),
-      Option(optionName: "5 days_key".tr(), optionId: "5"),
-      Option(optionName: "7 days_key".tr(), optionId: "7"),
-      Option(optionName: "15 days_key".tr(), optionId: "15"),
-      Option(optionName: "30 days_key".tr(), optionId: "30"),
+      Option(optionName: "1" + "day_key".tr(), optionId: "1"),
+      Option(optionName: "5" + "days_key".tr(), optionId: "5"),
+      Option(optionName: "7" + "days_key".tr(), optionId: "7"),
+      Option(optionName: "15" + "days_key".tr(), optionId: "15"),
+      Option(optionName: "30" + "days_key".tr(), optionId: "30"),
     ];
     showModalBottomSheet(
         context: context,
@@ -332,7 +332,7 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
     final xls.Workbook workbook = xls.Workbook(0);
     //Adding a Sheet with name to workbook.
     final xls.Worksheet sheet1 =
-        workbook.worksheets.addWithName('sale_return_reports_key'.tr());
+        workbook.worksheets.addWithName('Sale Return Report');
     sheet1.showGridlines = true;
 
     int columnIndex = 1;
@@ -347,10 +347,10 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
     sheet1.getRangeByIndex(1, 1, 1, reportList.first.keys.length).merge();
     if (groupValue == 1) {
       sheet1.getRangeByIndex(rowIndex, columnIndex).value =
-          "sale_return_reports_key ($startDate to $endDate)".tr();
+          "Sale Return Report ($startDate to $endDate)";
     } else {
       sheet1.getRangeByIndex(rowIndex, columnIndex).value =
-          "sale_return_reports_key (${days!.optionName})".tr();
+          "Sale Return Report (${days!.optionName})";
     }
 
     sheet1.getRangeByIndex(rowIndex, columnIndex).rowHeight = 30;
@@ -429,7 +429,7 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
     print("qty - >$qty");
     print("returnCoins - >$returnCoins");
 
-    final xls.Style style = workbook.styles.add('style1_key'.tr());
+    final xls.Style style = workbook.styles.add('Style1');
     style.backColorRgb = Colors.red;
     style.hAlign = xls.HAlignType.center;
     style.vAlign = xls.VAlignType.center;
@@ -441,22 +441,22 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
     reportList.first.forEach((key, value) {
       sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle = style;
       if (columnIndex == 1) {
-        sheet1.getRangeByIndex(rowIndex, 1).value = "total_key".tr();
+        sheet1.getRangeByIndex(rowIndex, 1).value = "Total";
       }
-      if (key == "total_key".tr()) {
+      if (key == "total") {
         sheet1.getRangeByIndex(rowIndex, columnIndex).value = total;
       }
-      if (key == "purchase_price_key".tr()) {
+      if (key == "purchase_price") {
         sheet1.getRangeByIndex(rowIndex, columnIndex).value =
             totalPurchasePrice;
       }
-      if (key == "mrp_key".tr()) {
+      if (key == "mrp") {
         sheet1.getRangeByIndex(rowIndex, columnIndex).value = totalMrp;
       }
-      if (key == "return_coins_key".tr()) {
+      if (key == "return_coins") {
         sheet1.getRangeByIndex(rowIndex, columnIndex).value = returnCoins;
       }
-      if (key == "qty_key".tr()) {
+      if (key == "qty") {
         sheet1.getRangeByIndex(rowIndex, columnIndex).value = qty;
       }
       // if (key == "redeem_coins") {
@@ -483,7 +483,7 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
       savedDir.create();
     }
 
-    String fileName = "sale_return_reports_key".tr() +
+    String fileName = "sale_return_report_" +
         DateTime.now().millisecondsSinceEpoch.toString() +
         ".xlsx";
 
@@ -491,8 +491,7 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
         File(Platform.isWindows ? '$path\\$fileName' : '$path/$fileName');
     await file.writeAsBytes(bytes, flush: true).whenComplete(() {
       print("completed");
-      Utility.showToast(
-          "report_saved_at_below_location_key \n${file.path}".tr());
+      Utility.showToast("Report saved at below location \n${file.path}");
     });
     print("savedDir${file.path}");
 
