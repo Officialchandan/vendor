@@ -226,18 +226,35 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                               children: [
                                                 Container(
                                                   width: width * 0.66,
-                                                  child: AutoSizeText(
-                                                    "${searchList[index].productName} ($variantName)",
-                                                    maxLines: 2,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontWeight:
-                                                            FontWeight.w600),
-                                                    maxFontSize: 14,
-                                                    minFontSize: 11,
-                                                  ),
+                                                  child: variantName.isEmpty
+                                                      ? AutoSizeText(
+                                                          "${searchList[index].productName} ",
+                                                          maxLines: 2,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600),
+                                                          maxFontSize: 14,
+                                                          minFontSize: 11,
+                                                        )
+                                                      : AutoSizeText(
+                                                          "${searchList[index].productName} ($variantName)",
+                                                          maxLines: 2,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600),
+                                                          maxFontSize: 14,
+                                                          minFontSize: 11,
+                                                        ),
                                                 ),
                                               ]),
                                           Row(
@@ -306,7 +323,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                                             scale: 2.5,
                                                           )),
                                                           Text(
-                                                            " ${searchList[index].redeemCoins}",
+                                                            "RC ${(double.parse(searchList[index].redeemCoins) * searchList[index].count).toStringAsFixed(2)}",
                                                             style: TextStyle(
                                                                 fontSize: 12,
                                                                 fontWeight:
@@ -339,7 +356,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                                               25),
                                                       border: Border.all(
                                                           color: Colors.black)),
-                                                  height: 20,
+                                                  height: 25,
                                                   // width: 90,
                                                   child: Row(
                                                     mainAxisSize:
@@ -395,7 +412,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                                       ),
                                                       Container(
                                                         width: 20,
-                                                        height: 20,
+                                                        height: 25,
                                                         color: ColorPrimary,
                                                         child: Center(
                                                           child: AutoSizeText(
@@ -476,7 +493,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                                       scale: 2.5,
                                                     )),
                                                     Text(
-                                                      " ${double.parse(searchList[index].earningCoins) * searchList[index].count}",
+                                                      "EC ${(double.parse(searchList[index].earningCoins) * searchList[index].count).toStringAsFixed(2)}",
                                                       style: TextStyle(
                                                           fontSize: 17,
                                                           fontWeight:

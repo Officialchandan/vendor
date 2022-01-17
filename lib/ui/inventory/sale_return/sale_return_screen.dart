@@ -48,9 +48,13 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
             _displayDialog(context, state.input);
           }
           if (state is VerifyOtpSuccessState) {
+            // Navigator.pushAndRemoveUntil(
+            //     context,
+            //     MaterialPageRoute(builder: (context) => SaleReturnScreen()),
+            //     (route) => false);
             Navigator.pop(context);
             Utility.showToast(state.message);
-            // Navigator.pop(context);
+            Navigator.pop(context);
           }
         },
         child: Scaffold(
