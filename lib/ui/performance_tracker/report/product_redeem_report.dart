@@ -191,11 +191,11 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
 
   void selectDays(BuildContext context) async {
     final List<Option> options = [
-      Option(optionName: "1 day_key".tr(), optionId: "1"),
-      Option(optionName: "5 days_key".tr(), optionId: "5"),
-      Option(optionName: "7 days_key".tr(), optionId: "7"),
-      Option(optionName: "15 days_key".tr(), optionId: "15"),
-      Option(optionName: "30 days_key".tr(), optionId: "30"),
+      Option(optionName: "1" + "day_key".tr(), optionId: "1"),
+      Option(optionName: "5" + "days_key".tr(), optionId: "5"),
+      Option(optionName: "7" + "days_key".tr(), optionId: "7"),
+      Option(optionName: "15" + "days_key".tr(), optionId: "15"),
+      Option(optionName: "30" + "days_key".tr(), optionId: "30"),
     ];
     showModalBottomSheet(
         context: context,
@@ -331,7 +331,7 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
     final xls.Workbook workbook = xls.Workbook(0);
     //Adding a Sheet with name to workbook.
     final xls.Worksheet sheet1 =
-        workbook.worksheets.addWithName('product_redeem_reports_key'.tr());
+        workbook.worksheets.addWithName('Product Redeem Report');
     sheet1.showGridlines = true;
 
     int columnIndex = 1;
@@ -346,10 +346,10 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
     sheet1.getRangeByIndex(1, 1, 1, reportList.first.keys.length).merge();
     if (groupValue == 1) {
       sheet1.getRangeByIndex(rowIndex, columnIndex).value =
-          "product_redeem_reports_key ($startDate to $endDate)".tr();
+          "Product Redeem Report ($startDate to $endDate)";
     } else {
       sheet1.getRangeByIndex(rowIndex, columnIndex).value =
-          "product_redeem_reports_key (${days!.optionName})".tr();
+          "Product Redeem Report (${days!.optionName})";
     }
 
     sheet1.getRangeByIndex(rowIndex, columnIndex).rowHeight = 30;
@@ -425,7 +425,7 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
     print("totalMrp - >$totalMrp");
     print("qty - >$qty");
 
-    final xls.Style style = workbook.styles.add('style1_key'.tr());
+    final xls.Style style = workbook.styles.add('Style1');
     style.backColorRgb = Colors.red;
     style.hAlign = xls.HAlignType.center;
     style.vAlign = xls.VAlignType.center;
@@ -437,22 +437,22 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
     reportList.first.forEach((key, value) {
       sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle = style;
       if (columnIndex == 1) {
-        sheet1.getRangeByIndex(rowIndex, 1).value = "total_key".tr();
+        sheet1.getRangeByIndex(rowIndex, 1).value = "Total";
       }
-      if (key == "total_key".tr()) {
+      if (key == "total") {
         sheet1.getRangeByIndex(rowIndex, columnIndex).value = total;
       }
-      if (key == "purchase_price_key".tr()) {
+      if (key == "purchase_price") {
         sheet1.getRangeByIndex(rowIndex, columnIndex).value =
             totalPurchasePrice;
       }
-      if (key == "mrp_key".tr()) {
+      if (key == "mrp") {
         sheet1.getRangeByIndex(rowIndex, columnIndex).value = totalMrp;
       }
-      if (key == "qty_key".tr()) {
+      if (key == "qty") {
         sheet1.getRangeByIndex(rowIndex, columnIndex).value = qty;
       }
-      if (key == "redeem_coins_key".tr()) {
+      if (key == "redeem_coins") {
         sheet1.getRangeByIndex(rowIndex, columnIndex).value = redeemCoins;
       }
       columnIndex = columnIndex + 1;
@@ -476,7 +476,7 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
       savedDir.create();
     }
 
-    String fileName = "product_redeem_reports_key".tr();
+    String fileName = "product_redeem_report_";
     if (groupValue == 1) {
       fileName += "${startDate}_to_$endDate" + ".xlsx";
     } else {
@@ -487,8 +487,7 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
         File(Platform.isWindows ? '$path\\$fileName' : '$path/$fileName');
     await file.writeAsBytes(bytes, flush: true).whenComplete(() {
       print("completed");
-      Utility.showToast(
-          "report_saved_at_below_location_key \n${file.path}".tr());
+      Utility.showToast("Report saved at below location \n${file.path}");
     });
     print("savedDir${file.path}");
 

@@ -18,26 +18,43 @@ class _SplashScreenState extends State<SplashScreen> {
     var log = await SharedPref.getBooleanPreference(SharedPref.LOGIN);
     var lang = await SharedPref.getStringPreference(SharedPref.SELECTEDLANG);
     if (lang.isEmpty) {
-      Timer(Duration(seconds: 3), () => Navigator.pushNamedAndRemoveUntil(context, Routes.SelectLanguage, ModalRoute.withName("/")));
+      Timer(
+          Duration(seconds: 3),
+          () => Navigator.pushNamedAndRemoveUntil(
+              context, Routes.SelectLanguage, ModalRoute.withName("/")));
     } else if (log) {
       String token = await SharedPref.getStringPreference(SharedPref.TOKEN);
       int vendorId = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
-      int statusId = await SharedPref.getIntegerPreference(SharedPref.USERSTATUS);
+      int statusId =
+          await SharedPref.getIntegerPreference(SharedPref.USERSTATUS);
       print("token-->$token");
       print("vendorId-->$vendorId");
       if (token.isEmpty) {
-        Timer(Duration(seconds: 3), () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen())));
+        Timer(
+            Duration(seconds: 3),
+            () => Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => LoginScreen())));
       } else {
         baseOptions.headers.addAll({"Authorization": "bearer $token"});
         if (await SharedPref.getIntegerPreference(SharedPref.USERSTATUS) == 0) {
-          Timer(Duration(seconds: 3),
-              () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreenWithoutInventory())));
+          Timer(
+              Duration(seconds: 3),
+              () => Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => HomeScreenWithoutInventory())));
         } else {
-          Timer(Duration(seconds: 3), () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen())));
+          Timer(
+              Duration(seconds: 3),
+              () => Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => HomeScreen())));
         }
       }
     } else {
-      Timer(Duration(seconds: 3), () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen())));
+      Timer(
+          Duration(seconds: 3),
+          () => Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => LoginScreen())));
     }
   }
 
@@ -59,13 +76,15 @@ class _SplashScreenState extends State<SplashScreen> {
           children: [
             Align(
               alignment: Alignment.topLeft,
-              child: Image.asset('assets/images/splash-top.png', width: deviceWidth * 0.35),
+              child: Image.asset('assets/images/splash-top.png',
+                  width: deviceWidth * 0.35),
             ),
             Image.asset(
               'assets/images/logo.png',
               height: deviceHeight * 0.35,
             ),
-            Image.asset('assets/images/splash-bottom.png', width: double.infinity),
+            Image.asset('assets/images/splash-bottom.png',
+                width: double.infinity),
           ],
         ),
       ),

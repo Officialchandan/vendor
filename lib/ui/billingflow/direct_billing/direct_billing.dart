@@ -318,12 +318,14 @@ class _DirectBillingState extends State<DirectBilling> {
                       height: 20,
                     ),
                     Container(
-                      height: 225,
+                      height: categoryList.isNotEmpty
+                          ? (70 * (categoryList.length.toDouble()))
+                          : 70,
                       width: MediaQuery.of(context).size.width,
                       child: categoryList.isNotEmpty
                           ? ListView.builder(
                               shrinkWrap: true,
-                              itemCount: 5,
+                              itemCount: categoryList.length,
                               itemBuilder: (context, index) {
                                 return buildList(categoryList[index]);
                               })
@@ -401,7 +403,7 @@ class _DirectBillingState extends State<DirectBilling> {
                             userRegister(context);
                           } else {
                             Fluttertoast.showToast(
-                                msg: "please_enter_name_key ".tr(),
+                                msg: "please_enter_name_key".tr(),
                                 backgroundColor: ColorPrimary);
                           }
                         } else {

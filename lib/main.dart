@@ -206,7 +206,8 @@ void main() async {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: ColorPrimary,
   ));
-
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   dio.interceptors.add(LogInterceptor(
       responseBody: true,
       responseHeader: false,

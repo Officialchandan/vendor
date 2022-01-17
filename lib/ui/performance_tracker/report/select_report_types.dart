@@ -194,7 +194,7 @@ class _SelectReportTypeScreenState extends State<SelectReportTypeScreen> {
     final xls.Workbook workbook = xls.Workbook(0);
     //Adding a Sheet with name to workbook.
     final xls.Worksheet sheet1 =
-        workbook.worksheets.addWithName('coin_redeem_report_key'.tr());
+        workbook.worksheets.addWithName('Coin Redeem Report');
     sheet1.showGridlines = true;
 
     int columnIndex = 1;
@@ -204,8 +204,7 @@ class _SelectReportTypeScreenState extends State<SelectReportTypeScreen> {
 
     sheet1.getRangeByIndex(1, 1, 1, reportList.first.keys.length).merge();
 
-    sheet1.getRangeByIndex(rowIndex, columnIndex).value =
-        "ready_stock_report_key".tr();
+    sheet1.getRangeByIndex(rowIndex, columnIndex).value = "Ready Stock Report";
 
     sheet1.getRangeByIndex(rowIndex, columnIndex).rowHeight = 30;
     sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign =
@@ -248,13 +247,13 @@ class _SelectReportTypeScreenState extends State<SelectReportTypeScreen> {
 
     print("total - >$total");
 
-    sheet1.getRangeByIndex(rowIndex + 1, 1).value = "total_key".tr();
+    sheet1.getRangeByIndex(rowIndex + 1, 1).value = "Total";
     sheet1.getRangeByIndex(rowIndex + 1, 1).cellStyle.hAlign =
         xls.HAlignType.center;
     sheet1.getRangeByIndex(rowIndex + 1, 1).cellStyle.vAlign =
         xls.VAlignType.center;
 
-    final xls.Style style = workbook.styles.add('style1_key'.tr());
+    final xls.Style style = workbook.styles.add('Style1');
     style.backColorRgb = Colors.red;
     style.hAlign = xls.HAlignType.center;
     style.vAlign = xls.VAlignType.center;
@@ -263,7 +262,7 @@ class _SelectReportTypeScreenState extends State<SelectReportTypeScreen> {
 
     int index = reportList.first.keys
         .toList()
-        .indexWhere((element) => element == "stock_key".tr());
+        .indexWhere((element) => element == "stock");
     if (index != -1) {
       sheet1.getRangeByIndex(rowIndex + 1, index + 1).value = total;
       sheet1.getRangeByIndex(rowIndex + 1, index + 1).cellStyle = style;
@@ -287,7 +286,7 @@ class _SelectReportTypeScreenState extends State<SelectReportTypeScreen> {
       savedDir.create();
     }
 
-    String fileName = "ready_stock_report_key".tr() +
+    String fileName = "ready_stock_report" +
         DateTime.now().millisecondsSinceEpoch.toString() +
         ".xlsx";
 
@@ -295,8 +294,7 @@ class _SelectReportTypeScreenState extends State<SelectReportTypeScreen> {
         File(Platform.isWindows ? '$path\\$fileName' : '$path/$fileName');
     await file.writeAsBytes(bytes, flush: true).whenComplete(() {
       print("completed");
-      Utility.showToast(
-          "report_saved_at_below_location_key \n${file.path}".tr());
+      Utility.showToast("Report saved at below location \n${file.path}");
     });
     print("savedDir${file.path}");
 

@@ -18,7 +18,8 @@
     "submit_button_key" : "SUBMIT",
     "billing_key" : "Billing",
     "performance_tracker_key" : "Performance Tracker + Reports",
- 
+ "gift_scheme_key" : "Gift Scheme",
+ "gift_received_key" :"Gift Received",
     "performance_key" : "performance",
     "outstanding_key" : "Outstanding",
     "home_key" : "Home",
@@ -60,6 +61,9 @@
     "please_enter_amount_key" : "Please Enter Amount",
     "please_enter_mobile_number_key" : "Please Enter Mobile Number",
     "yesterday_key" : "YESTERDAY",
+    "yes_key" : "yes",
+    "no_key" : "NO",
+    "you_wont_key":"You won't be able to revert this action.",
     "today_key" : "TODAY",
     "returning_consumer_key" : "Returning Consumer",
     "please_select_your_language_key" : "Please select your language",
@@ -347,6 +351,8 @@
        "my_profit_key":"My Profit",
       
      "notification_key":"Notification"
+  
+    
       
 
 

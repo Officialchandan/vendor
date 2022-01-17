@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:vendor/model/verify_otp.dart';
 import 'package:vendor/ui/billingflow/Scanner/scanner_bloc.dart';
@@ -184,10 +185,11 @@ class _ScannerState extends State<Scanner> {
                                         onPressed: () async {
                                           Navigator.pushAndRemoveUntil(
                                               context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      BillingScreen()),
-                                              (route) => false);
+                                              PageTransition(
+                                                  child: BottomNavigationHome(),
+                                                  type:
+                                                      PageTransitionType.fade),
+                                              ModalRoute.withName("/"));
                                         },
                                         child: const Text('Skip',
                                             style: TextStyle(fontSize: 20)),

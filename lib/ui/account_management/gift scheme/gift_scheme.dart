@@ -40,7 +40,7 @@ class _GiftSchemeState extends State<GiftScheme> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Gift Scheme",
+          "gift_scheme_key".tr(),
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
@@ -108,7 +108,7 @@ class _GiftSchemeState extends State<GiftScheme> {
                                 Column(
                                   children: [
                                     Text(
-                                      "Gift Received?",
+                                      "gift_received_key".tr() + "?",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold),
                                     ),
@@ -134,7 +134,7 @@ class _GiftSchemeState extends State<GiftScheme> {
                                                     ),
                                                   ),
                                                   Text(
-                                                    "YES",
+                                                    "yes_key".tr(),
                                                     style: TextStyle(
                                                         fontSize: 10,
                                                         fontWeight:
@@ -155,7 +155,7 @@ class _GiftSchemeState extends State<GiftScheme> {
                                                     ),
                                                   ),
                                                   Text(
-                                                    "NO",
+                                                    "no_key".tr(),
                                                     style: TextStyle(
                                                         fontSize: 10,
                                                         fontWeight:
@@ -249,7 +249,7 @@ class _GiftSchemeState extends State<GiftScheme> {
                               height: 5,
                             ),
                             Text(
-                              "qty: ${data![index].qty}",
+                              "qty_key".tr() + ":" + " ${data![index].qty}",
                               style: TextStyle(
                                   color: ColorTextPrimary,
                                   fontWeight: FontWeight.w600),
@@ -299,7 +299,7 @@ class _GiftSchemeState extends State<GiftScheme> {
             child: AlertDialog(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10)),
-              content: Text("You won't be able to revert this action."),
+              content: Text("you_wont_key"),
               actions: <Widget>[
                 Center(
                   child: MaterialButton(

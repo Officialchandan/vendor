@@ -74,7 +74,7 @@ class _BillingProductsState extends State<BillingProducts> {
   var message;
   var status;
   var codes;
-  double earningPrice(double price, double comission) {
+  double earningPrice(double price, double comission, int qty) {
     x = price;
     log("1=$x");
     x = (x * comission) / 100;
@@ -87,6 +87,7 @@ class _BillingProductsState extends State<BillingProducts> {
     log("5=$x");
     x = x * 3;
     log("6=$x");
+    x = x / qty;
     return x;
   }
 
@@ -225,16 +226,27 @@ class _BillingProductsState extends State<BillingProducts> {
                                     Container(
                                       width: MediaQuery.of(context).size.width *
                                           0.58,
-                                      child: AutoSizeText(
-                                        "${productList[index].productName} ($variantName)",
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w600),
-                                        maxFontSize: 13,
-                                        minFontSize: 10,
-                                      ),
+                                      child: variantName.isEmpty
+                                          ? AutoSizeText(
+                                              "${productList[index].productName} ",
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w600),
+                                              maxFontSize: 13,
+                                              minFontSize: 10,
+                                            )
+                                          : AutoSizeText(
+                                              "${productList[index].productName} ($variantName)",
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w600),
+                                              maxFontSize: 13,
+                                              minFontSize: 10,
+                                            ),
                                     ),
                                     Row(
                                         mainAxisAlignment:
@@ -334,7 +346,7 @@ class _BillingProductsState extends State<BillingProducts> {
                                               "assets/images/point.png"),
                                         ),
                                         AutoSizeText(
-                                          " ${(double.parse(productList[index].earningCoins).toStringAsFixed(2))}",
+                                          " ${((double.parse(productList[index].earningCoins) * (productList[index].count)).toStringAsFixed(2))}",
                                           style: TextStyle(
                                             color: ColorPrimary,
                                           ),
@@ -822,7 +834,9 @@ class _BillingProductsState extends State<BillingProducts> {
                               double.parse(_textFieldController.text.trim());
                           log("y->$y");
                           double earningCoin = earningPrice(
-                              y, double.parse(productList[index].commission));
+                              y,
+                              double.parse(productList[index].commission),
+                              productList[index].count);
 
                           log("index->$index");
                           log("earningCoin->$earningCoin");
@@ -901,7 +915,8 @@ class _BillingProductsState extends State<BillingProducts> {
       //log("=====>product.count${product.count}");
       product.redeemCoins = (double.parse(product.sellingPrice) * 3).toString();
 
-      //log("=====>product.redeemCoins${product.redeemCoins}");
+      log("=====>product.redeemCoins${product.redeemCoins}");
+      log("---totalPay${(double.parse(product.sellingPrice))}");
       if (product.billingcheck) {
         if (availableCoins >=
             (double.parse(product.redeemCoins) *
@@ -927,6 +942,7 @@ class _BillingProductsState extends State<BillingProducts> {
           log("customerCoins1=====>$customerCoins");
           double coinToRupee = remainingCoin / 3;
           log("amount1== ==> $remainingCoin");
+          log("coinToRupee== ==> $coinToRupee");
           totalPay += coinToRupee;
           redeemedCoin += availableCoins;
           redeemCoins += availableCoins;

@@ -220,18 +220,33 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                             children: [
                                               Container(
                                                 width: width * 0.66,
-                                                child: AutoSizeText(
-                                                  "${searchList[index].productName} ($variantName)",
-                                                  maxLines: 2,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.w600),
-                                                  maxFontSize: 14,
-                                                  minFontSize: 11,
-                                                ),
+                                                child: variantName.isEmpty
+                                                    ? AutoSizeText(
+                                                        "${searchList[index].productName} ",
+                                                        maxLines: 2,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w600),
+                                                        maxFontSize: 14,
+                                                        minFontSize: 11,
+                                                      )
+                                                    : AutoSizeText(
+                                                        "${searchList[index].productName} ($variantName)",
+                                                        maxLines: 2,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w600),
+                                                        maxFontSize: 14,
+                                                        minFontSize: 11,
+                                                      ),
                                               ),
                                             ]),
                                         Row(
@@ -271,10 +286,11 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                           "assets/images/point.png",
                                                           scale: 2.5,
                                                         )),
-                                                        Text(
-                                                          " ${searchList[index].redeemCoins}",
+                                                        AutoSizeText(
+                                                          "RC ${(double.parse(searchList[index].redeemCoins) * searchList[index].count).toStringAsFixed(2)}",
+                                                          maxFontSize: 13,
+                                                          minFontSize: 11,
                                                           style: TextStyle(
-                                                              fontSize: 13,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w600,
@@ -334,7 +350,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                             25),
                                                     border: Border.all(
                                                         color: Colors.black)),
-                                                height: 20,
+                                                height: 25,
                                                 // width: 90,
                                                 child: Row(
                                                   mainAxisSize:
@@ -351,7 +367,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                               state.count;
                                                         }
                                                         return Container(
-                                                          height: 20,
+                                                          height: 30,
                                                           width: 30,
                                                           child: IconButton(
                                                               padding:
@@ -392,7 +408,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                     ),
                                                     Container(
                                                       width: 20,
-                                                      height: 20,
+                                                      height: 25,
                                                       color: ColorPrimary,
                                                       child: Center(
                                                         child: AutoSizeText(
@@ -416,7 +432,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                               state.count;
                                                         }
                                                         return Container(
-                                                          height: 20,
+                                                          height: 30,
                                                           width: 30,
                                                           child: IconButton(
                                                               padding:
@@ -510,7 +526,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                     scale: 2.5,
                                                   )),
                                                   Text(
-                                                    " ${(double.parse(searchList[index].earningCoins) * searchList[index].count).toStringAsFixed(2)}",
+                                                    "EC ${(double.parse(searchList[index].earningCoins) * searchList[index].count).toStringAsFixed(2)}",
                                                     style: TextStyle(
                                                         fontSize: 17,
                                                         fontWeight:
