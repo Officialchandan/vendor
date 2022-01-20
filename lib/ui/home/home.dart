@@ -33,27 +33,27 @@ class _HomeScreenState extends State<HomeScreen> {
   List<String> name = [
     "billing_key".tr(),
     "inventory_key".tr(),
+    "money_due_upi_key".tr(),
+    "video_tutorials_key".tr(),
     "performance_tracker_key".tr(),
     "account_management_key".tr(),
-    "money_due_upi_key".tr(),
-    "video_tutorials_key".tr()
   ];
   List<String> description = [
     "billing_description_key".tr(),
     "inventory_description_key".tr(),
+    "money_due_upi_description_key".tr(),
+    "video_tutorials_description_key".tr(),
     "staff_management_description_key".tr(),
     "online_shop_description_key".tr(),
-    "money_due_upi_description_key".tr(),
-    "video_tutorials_description_key".tr()
   ];
 
   List<String> images = [
     "assets/images/home1.png",
     "assets/images/home2.png",
+    "assets/images/tr-ic3.png",
+    "assets/images/home6.png",
     "assets/images/home4.png",
     "assets/images/home3.png",
-    "assets/images/tr-ic3.png",
-    "assets/images/home6.png"
   ];
   onShareWithEmptyOrigin(BuildContext context) async {
     await Share.share(
@@ -290,22 +290,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME,
                     arguments: index)
                 : index == 3
-                    ? Navigator.pushNamed(
-                        context, Routes.BOTTOM_NAVIGATION_HOME,
-                        arguments: index)
+                    ? Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => VideoTutorial()))
                     : index == 4
                         ? Navigator.pushNamed(
                             context, Routes.BOTTOM_NAVIGATION_HOME,
-                            arguments: index)
+                            arguments: 3)
                         : index == 5
-                            ? Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => VideoTutorial()))
-                            : Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => VideoTutorial()));
+                            ? Navigator.pushNamed(
+                                context, Routes.BOTTOM_NAVIGATION_HOME,
+                                arguments: 4)
+                            : Navigator.pushNamed(
+                                context, Routes.BOTTOM_NAVIGATION_HOME,
+                                arguments: 4);
   }
 
   Future<NotificationCount> getNotificationCount() async {

@@ -15,4 +15,6 @@ class Routes {
   static const Performance_WITHOUTINVENTORY =
       "/PerformanceTrackerWithoutInventory";
   static const DUE_AMOUNT_SCREEN = "/DueAmountScreen";
+  static const ACCOUNT_MANAGEMENT_SCREEN = "/AccountManagementScreen";
+  static const TRACKER_REPORT_DASHBORD_SCREEN = "/TrackerReportDashboard";
 }

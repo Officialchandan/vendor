@@ -43,9 +43,9 @@ class _BottomNavigationHomeState extends State<BottomNavigationHome>
           children: [
             BillingScreen(),
             InventoryScreen(),
+            MoneyDueScreen(),
             TrackerReportDashboard(),
             AccountManagementScreen(),
-            MoneyDueScreen(),
           ],
         ),
         // bottomNavigationBar: BottomBar(
@@ -128,9 +128,23 @@ class _BottomBarState extends State<BottomBar> {
                 ),
           iconMargin: EdgeInsets.all(0),
         ),
+
+        Tab(
+          text: 'money_due_upi_key'.tr(),
+          icon: widget.tabController.index == 2
+              ? Image.asset(
+                  "assets/images/f7-a.png",
+                  scale: 2,
+                )
+              : Image.asset(
+                  "assets/images/f7.png",
+                  scale: 2,
+                ),
+          iconMargin: EdgeInsets.all(0),
+        ),
         Tab(
           text: 'performance_key'.tr(),
-          icon: widget.tabController.index == 2
+          icon: widget.tabController.index == 3
               ? Image.asset(
                   "assets/images/f5-a.png",
                   scale: 2,
@@ -143,26 +157,13 @@ class _BottomBarState extends State<BottomBar> {
         ),
         Tab(
           text: 'account_key'.tr(),
-          icon: widget.tabController.index == 3
+          icon: widget.tabController.index == 4
               ? Image.asset(
                   "assets/images/f6-a.png",
                   scale: 2,
                 )
               : Image.asset(
                   "assets/images/f6.png",
-                  scale: 2,
-                ),
-          iconMargin: EdgeInsets.all(0),
-        ),
-        Tab(
-          text: 'money_due_upi_key'.tr(),
-          icon: widget.tabController.index == 4
-              ? Image.asset(
-                  "assets/images/f7-a.png",
-                  scale: 2,
-                )
-              : Image.asset(
-                  "assets/images/f7.png",
                   scale: 2,
                 ),
           iconMargin: EdgeInsets.all(0),
@@ -245,6 +246,16 @@ class _MBottomNavigationBarState extends State<MBottomNavigationBar> {
             label: "inventory_key".tr()),
         BottomNavigationBarItem(
             icon: Image.asset(
+              "assets/images/f7.png",
+              scale: 2,
+            ),
+            activeIcon: Image.asset(
+              "assets/images/f7-a.png",
+              scale: 2,
+            ),
+            label: "money_due_upi_key".tr()),
+        BottomNavigationBarItem(
+            icon: Image.asset(
               "assets/images/f5.png",
               scale: 2,
             ),
@@ -263,16 +274,7 @@ class _MBottomNavigationBarState extends State<MBottomNavigationBar> {
               scale: 2,
             ),
             label: "account_key".tr()),
-        BottomNavigationBarItem(
-            icon: Image.asset(
-              "assets/images/f7.png",
-              scale: 2,
-            ),
-            activeIcon: Image.asset(
-              "assets/images/f7-a.png",
-              scale: 2,
-            ),
-            label: "money_due_upi_key".tr()),
+
         // BottomNavigationBarItem(
         //     icon: Image.asset(
         //       "assets/images/f8.png",

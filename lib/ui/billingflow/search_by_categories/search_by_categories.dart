@@ -323,7 +323,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                                             scale: 2.5,
                                                           )),
                                                           Text(
-                                                            "RC ${(double.parse(searchList[index].redeemCoins) * searchList[index].count).toStringAsFixed(2)}",
+                                                            " ${(double.parse(searchList[index].redeemCoins) * searchList[index].count).toStringAsFixed(2)}",
                                                             style: TextStyle(
                                                                 fontSize: 12,
                                                                 fontWeight:
@@ -493,7 +493,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                                       scale: 2.5,
                                                     )),
                                                     Text(
-                                                      "EC ${(double.parse(searchList[index].earningCoins) * searchList[index].count).toStringAsFixed(2)}",
+                                                      " ${(double.parse(searchList[index].earningCoins) * searchList[index].count).toStringAsFixed(2)}",
                                                       style: TextStyle(
                                                           fontSize: 17,
                                                           fontWeight:

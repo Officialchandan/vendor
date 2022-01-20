@@ -287,7 +287,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                           scale: 2.5,
                                                         )),
                                                         AutoSizeText(
-                                                          "RC ${(double.parse(searchList[index].redeemCoins) * searchList[index].count).toStringAsFixed(2)}",
+                                                          " ${(double.parse(searchList[index].redeemCoins) * searchList[index].count).toStringAsFixed(2)}",
                                                           maxFontSize: 13,
                                                           minFontSize: 11,
                                                           style: TextStyle(
@@ -526,7 +526,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                     scale: 2.5,
                                                   )),
                                                   Text(
-                                                    "EC ${(double.parse(searchList[index].earningCoins) * searchList[index].count).toStringAsFixed(2)}",
+                                                    " ${(double.parse(searchList[index].earningCoins) * searchList[index].count).toStringAsFixed(2)}",
                                                     style: TextStyle(
                                                         fontSize: 17,
                                                         fontWeight:

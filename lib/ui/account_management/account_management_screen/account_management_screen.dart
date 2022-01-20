@@ -14,6 +14,7 @@ import 'package:vendor/ui/account_management/account_management_screen/account_m
 import 'package:vendor/ui/account_management/gift%20scheme/gift_scheme.dart';
 import 'package:vendor/ui/account_management/settings/settings.dart';
 import 'package:vendor/ui/account_management/store_qr_code/store_qr_code.dart';
+import 'package:vendor/ui/account_management/video_tutorial/video_tutorial.dart';
 import 'package:vendor/ui/home/home.dart';
 import 'package:vendor/ui/login/login_screen.dart';
 import 'package:vendor/utility/color.dart';
@@ -36,21 +37,21 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
     // "discount_codes_key".tr(),
     "settings_key".tr(),
     // "delivery_setting_key".tr(),
-    "gift_scheme_key".tr(),
+    //"gift_scheme_key".tr(),
     "video_tutorials_key".tr(),
     "share_store_link_key".tr(),
     "get_store_qr_code_key".tr(),
-    "add_business_hours_key".tr(),
+    //"add_business_hours_key".tr(),
     "logout_key".tr(),
   ];
 
   List<String> imageList = [
     "assets/images/account-ic2.png",
-    "assets/images/account-ic9.png",
+    // "assets/images/account-ic9.png",
     "assets/images/account-ic4.png",
     "assets/images/account-ic5.png",
     "assets/images/account-ic6.png",
-    "assets/images/account-ic7.png",
+    // "assets/images/account-ic7.png",
     "assets/images/account-ic8.png",
   ];
   var message;
@@ -216,10 +217,16 @@ Future<void> onClick(BuildContext context, int currentIndex) async {
     //     MaterialPageRoute(builder: (context) => DeliverySetting()),
     //   );
     //   break;
+    // case 1:
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => GiftScheme()),
+    //   );
+    //   break;
     case 1:
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => GiftScheme()),
+        MaterialPageRoute(builder: (context) => VideoTutorial()),
       );
       break;
     case 2:
@@ -231,22 +238,16 @@ Future<void> onClick(BuildContext context, int currentIndex) async {
     case 3:
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
-      );
-      break;
-    case 4:
-      Navigator.push(
-        context,
         MaterialPageRoute(builder: (context) => StoreQRCode()),
       );
       break;
-    case 5:
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
-      );
-      break;
-    case 6:
+    // case 5:
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => HomeScreen()),
+    //   );
+    //   break;
+    case 4:
       logoutDialog(context);
       break;
   }

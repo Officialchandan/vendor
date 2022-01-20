@@ -133,7 +133,13 @@ class _BillingScreenState extends State<BillingScreen> {
                 actions: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.pop(context);
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          PageTransition(
+                              child: HomeScreen(),
+                              type: PageTransitionType.fade),
+                          ModalRoute.withName("/"));
+                      // Navigator.pop(context);
                       log("$userStatus");
                       log("${SharedPref.getIntegerPreference(SharedPref.VENDORID)}");
                     },
@@ -364,8 +370,8 @@ class _BillingScreenState extends State<BillingScreen> {
                                                     type: PageTransitionType
                                                         .fade))
                                             .then((value) {
-                                          nameController.clear();
-                                          mobileController.clear();
+                                          // nameController.clear();
+                                          // mobileController.clear();
                                           FocusScope.of(context).unfocus();
                                         });
                                       } else {
@@ -563,8 +569,8 @@ class _BillingScreenState extends State<BillingScreen> {
                                     ),
                                     type: PageTransitionType.fade))
                             .then((value) {
-                          nameController.clear();
-                          mobileController.clear();
+                          // nameController.clear();
+                          // mobileController.clear();
                         });
                       } else {
                         Fluttertoast.showToast(

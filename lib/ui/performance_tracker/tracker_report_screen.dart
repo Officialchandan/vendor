@@ -30,12 +30,12 @@ class _TrackerReportDashboardState extends State<TrackerReportDashboard> {
       "image": "assets/images/tr-ic2.png",
       "id": 2
     },
-    {
-      "title": "money_due_upi_key".tr(),
-      "subTitle": "click_here_to_add_product_key".tr(),
-      "image": "assets/images/tr-ic3.png",
-      "id": 3
-    },
+    // {
+    //   "title": "money_due_upi_key".tr(),
+    //   "subTitle": "click_here_to_add_product_key".tr(),
+    //   "image": "assets/images/tr-ic3.png",
+    //   "id": 3
+    // },
     {
       "title": "my_customers_key".tr(),
       "subTitle": "click_here_to_view_customer_key".tr(),
