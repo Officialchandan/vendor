@@ -229,6 +229,10 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
         customerList = response.data!;
         streamController.add(response.data!);
       }
+      // else {
+      //   customerList = [];
+      //   streamController.add(response.data!);
+      // }
     } else {
       Utility.showToast(Constant.INTERNET_ALERT_MSG);
     }
