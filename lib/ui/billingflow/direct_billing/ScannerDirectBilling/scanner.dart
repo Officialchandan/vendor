@@ -8,16 +8,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:vendor/model/direct_billing.dart';
-
-import 'package:vendor/ui/billingflow/Scanner/scanner_bloc.dart';
-import 'package:vendor/ui/billingflow/Scanner/scanner_event.dart';
-import 'package:vendor/ui/billingflow/Scanner/scanner_state.dart';
 import 'package:vendor/ui/billingflow/billing/billing.dart';
-import 'package:vendor/ui/billingflow/direct_billing/direct_billing.dart';
+import 'package:vendor/ui/billingflow/direct_billing/ScannerDirectBilling/scanner_bloc.dart';
+import 'package:vendor/ui/billingflow/direct_billing/ScannerDirectBilling/scanner_event.dart';
+import 'package:vendor/ui/billingflow/direct_billing/ScannerDirectBilling/scanner_state.dart';
 import 'package:vendor/ui/home/bottom_navigation_home.dart';
 import 'package:vendor/ui_without_inventory/chatpapdi_billing/chatpapdi_billing.dart';
 import 'package:vendor/utility/color.dart';
-import 'package:vendor/utility/sharedpref.dart';
 
 class Scanner extends StatefulWidget {
   final DirectBillingData data;
@@ -55,9 +52,9 @@ class _ScannerState extends State<Scanner> {
     input["gift_id"] = 1;
     input["qr_code"] = "brc_01";
     input["customer_id"] = widget.data.customerId;
-
+    log("yha tak");
     scannerBloc.add(GetScannerEvent(data: input));
-    // Navigator.of(context).pop(result!.code);
+    //Navigator.of(context).pop(result!.code);
 
     Navigator.pushAndRemoveUntil(
         context,
