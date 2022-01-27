@@ -40,7 +40,7 @@
     "day_key" : "दिन",
     "sale_key" : "बिक्री",
     "sale_amt_inr_key" : "बिक्री रकम (रुपया)",
-    "daily_report_key" : "दैनिक रिपोर्ट",
+    "sales_report_key" : "बिक्री रिपोर्ट",
     "monthly_report_key" : "मासिक रिपोर्ट",
     "earning_amount_key" : "कमाई की रकम",
     "hourly_earning_key" : "प्रति घंटा कमाई",

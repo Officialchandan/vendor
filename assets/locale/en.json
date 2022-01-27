@@ -40,7 +40,7 @@
     "day_key" : "Day",
     "sale_key" : "Sale",
     "sale_amt_inr_key" : "SALE AMT (INR)",
-    "daily_report_key" : "Daily report",
+    "sales_report_key" : "Sales report",
     "monthly_report_key" : "Monthly report",
     "earning_amount_key" : "Earning Amount",
     "hourly_earning_key" : "Hourly Earning",

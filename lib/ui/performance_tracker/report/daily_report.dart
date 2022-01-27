@@ -1,14 +1,17 @@
 import 'dart:collection';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:open_file/open_file.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:syncfusion_flutter_datagrid_export/export.dart' as sf;
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -46,6 +49,7 @@ class _DailyReportState extends State<DailyReport> {
   DateRangePickerController dateRangePickerController =
       DateRangePickerController();
   CategoryModel? categoryModel;
+  final GlobalKey<SfDataGridState> key = GlobalKey<SfDataGridState>();
 
   List<Map<String, dynamic>> reportList = [];
   final GlobalKey<SfDataGridState> _key = GlobalKey<SfDataGridState>();
@@ -68,7 +72,7 @@ class _DailyReportState extends State<DailyReport> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "daily_report_key".tr(),
+        title: "sales_report_key".tr(),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(15),
@@ -309,9 +313,9 @@ class _DailyReportState extends State<DailyReport> {
           // Future.delayed(Duration(seconds: 3), () {
           //   generateReport();
           // });
-          print("report-->$report");
 
-          exportReport(context);
+          exportExcelReport(context);
+          generateReport(context);
         } else {
           EasyLoading.dismiss();
           Utility.showToast(response.data["message"]);
@@ -328,12 +332,11 @@ class _DailyReportState extends State<DailyReport> {
     }
   }
 
-  void exportReport(BuildContext context) async {
-    print("exportReport");
+  void exportExcelReport(BuildContext context) async {
     final xls.Workbook workbook = xls.Workbook(0);
     //Adding a Sheet with name to workbook.
     final xls.Worksheet sheet1 =
-        workbook.worksheets.addWithName('Daily Report');
+        workbook.worksheets.addWithName('Sales Report');
     sheet1.showGridlines = true;
 
     int columnIndex = 1;
@@ -381,46 +384,30 @@ class _DailyReportState extends State<DailyReport> {
         columnIndex = columnIndex + 1;
 
         if (key == "total") {
-          print("value - >$value");
-          print("total - >$total");
           total =
               double.parse(value == null ? "0.0" : value.toString()) + total;
         }
         if (key == "mrp") {
-          print("mrp - >$value");
-          print("totalMrp - >$totalMrp");
           totalMrp =
               double.parse(value == null ? "0.0" : value.toString()) + totalMrp;
         }
         if (key == "purchase_price") {
-          print("purchase_price - >$value");
-          print("totalPurchasePrice - >$totalPurchasePrice");
           totalPurchasePrice = double.parse(
                   value == null || value == "" ? "0.0" : value.toString()) +
               totalPurchasePrice;
         }
         if (key == "earning_coins") {
-          print("earning_coins - >$value");
-          print("earningCoins - >$earningCoins");
           earningCoins = double.parse(
                   value == null || value == "" ? "0.0" : value.toString()) +
               earningCoins;
         }
         if (key == "redeem_coins") {
-          print("redeem_coins - >$value");
-          print("redeemCoins - >$redeemCoins");
           redeemCoins = double.parse(
                   value == null || value == "" ? "0.0" : value.toString()) +
               redeemCoins;
         }
       });
     });
-
-    print("total - >$total");
-    print("totalPurchasePrice - >$totalPurchasePrice");
-    print("totalMrp - >$totalMrp");
-    print("earningCoins - >$earningCoins");
-    print("redeemCoins - >$redeemCoins");
 
     sheet1.getRangeByIndex(rowIndex + 1, 1).value = "Total";
     sheet1.getRangeByIndex(rowIndex + 1, 1).cellStyle.hAlign =
@@ -511,7 +498,7 @@ class _DailyReportState extends State<DailyReport> {
     OpenFile.open(file.path);
   }
 
-  void generateReport() async {
+  void generateReport(BuildContext context) async {
     // final PdfDocument document = _key.currentState!.exportToPdfDocument(
     //   autoColumnWidth: true
     // );
