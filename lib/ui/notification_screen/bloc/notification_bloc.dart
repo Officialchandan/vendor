@@ -18,9 +18,6 @@ class NotificationBloc extends Bloc<NotificationEvents, NotificationStates> {
       yield GetNotificationLoadingState();
       yield* getNotifications(event);
     }
-    if (event is MarkAsReadEvent) {
-      yield* markAsRead(event);
-    }
   }
 
   Stream<NotificationStates> getNotifications(
@@ -38,20 +35,6 @@ class NotificationBloc extends Bloc<NotificationEvents, NotificationStates> {
       }
     } else {
       yield GetNotificationFailureState(message: Constant.INTERNET_ALERT_MSG);
-    }
-  }
-
-  Stream<NotificationStates> markAsRead(MarkAsReadEvent event) async* {
-    if (await Network.isConnected()) {
-      NotificationStatusResponse response =
-          await apiProvider.markAsReadNotification(event.input);
-      if (response.success) {
-        yield MarkAsReadSucessState(message: response.message);
-      } else {
-        yield MarkAsReadFailureState(message: response.message);
-      }
-    } else {
-      yield MarkAsReadFailureState(message: Constant.INTERNET_ALERT_MSG);
     }
   }
 }

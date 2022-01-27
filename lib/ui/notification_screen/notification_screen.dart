@@ -1,16 +1,22 @@
 import 'dart:collection';
 
+import 'package:dio/dio.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:vendor/api/Endpoint.dart';
+import 'package:vendor/api/server_error.dart';
 import 'package:vendor/ui/notification_screen/bloc/notification_bloc.dart';
 import 'package:vendor/ui/notification_screen/bloc/notification_state.dart';
 import 'package:vendor/ui/notification_screen/bloc/notofication_event.dart';
 import 'package:vendor/ui/notification_screen/model/notification_response.dart';
+import 'package:vendor/ui/notification_screen/model/notification_status.dart';
 import 'package:vendor/ui/performance_tracker/money_due_upi/money_due_screen.dart';
 import 'package:vendor/utility/routs.dart';
 import 'package:vendor/utility/sharedpref.dart';
+
+import '../../main.dart';
 
 class NotificationScreen extends StatefulWidget {
   NotificationScreen({Key? key}) : super(key: key);
@@ -53,13 +59,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             color: Colors.white,
             child: Padding(
               padding: const EdgeInsets.only(top: 10, bottom: 10),
-              child: BlocConsumer<NotificationBloc, NotificationStates>(
-                listener: (context, state) {
-                  if (state is MarkAsReadSucessState) {
-                    getNotifications();
-                    // Utility.showToast("Notification marked as a read");
-                  }
-                },
+              child: BlocBuilder<NotificationBloc, NotificationStates>(
                 builder: (context, state) {
                   if (state is GetNotificationLoadingState) {
                     return Center(
@@ -94,6 +94,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
           padding: const EdgeInsets.only(left: 20, right: 20),
           child: InkWell(
             onTap: () async {
+              setState(() {
+                data[index].isRead = 1;
+              });
               markAsRead(data[index].id);
             },
             child: Container(
@@ -178,7 +181,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
     notificationBloc.add(GetNotificationEvent());
   }
 
-  void markAsRead(int id) async {
+  Future<NotificationStatusResponse> markAsRead(int id) async {
     Map input = HashMap();
     String userId =
         (await SharedPref.getIntegerPreference(SharedPref.VENDORID)).toString();
@@ -187,6 +190,29 @@ class _NotificationScreenState extends State<NotificationScreen> {
     input["vendor_id"] = userId;
     notificationBloc.add(MarkAsReadEvent(input: input));
 
-    Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: 4);
+    try {
+      Response res =
+          await dio.post(Endpoint.UPDATE_NOTIFICATION_STATUS, data: input);
+
+      NotificationStatusResponse response =
+          NotificationStatusResponse.fromJson(res.toString());
+      Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: 4);
+      if (response.success) {
+        return NotificationStatusResponse(
+            message: response.message, success: true);
+      } else {
+        return NotificationStatusResponse(
+            message: "Data not found!", success: false);
+      }
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      return NotificationStatusResponse(success: false, message: message);
+    }
   }
 }

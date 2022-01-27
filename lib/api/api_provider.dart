@@ -1542,23 +1542,4 @@ class ApiProvider {
       return NotificationResponse(success: false, message: message);
     }
   }
-
-  Future<NotificationStatusResponse> markAsReadNotification(Map input) async {
-    try {
-      Response res =
-          await dio.post(Endpoint.UPDATE_NOTIFICATION_STATUS, data: input);
-
-      return NotificationStatusResponse.fromJson(res.toString());
-    } catch (error) {
-      String message = "";
-      if (error is DioError) {
-        ServerError e = ServerError.withError(error: error);
-        message = e.getErrorMessage();
-      } else {
-        message = "Please try again later!";
-      }
-      print("Exception occurred: $message stackTrace: $error");
-      return NotificationStatusResponse(success: false, message: message);
-    }
-  }
 }
