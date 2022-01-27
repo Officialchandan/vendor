@@ -86,6 +86,12 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                         .contains(text.trim().toLowerCase())) {
                       searchList.add(element);
                     }
+
+                    if (element.mobile
+                        .toLowerCase()
+                        .contains(text.trim().toLowerCase())) {
+                      searchList.add(element);
+                    }
                   });
 
                   streamController.add(searchList);
@@ -122,6 +128,11 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
                     child: CircularProgressIndicator(),
+                  );
+                }
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Text(snapshot.error.toString()),
                   );
                 }
 
@@ -228,11 +239,10 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
       if (response.success) {
         customerList = response.data!;
         streamController.add(response.data!);
+      } else {
+        customerList = [];
+        streamController.addError("${response.message}");
       }
-      // else {
-      //   customerList = [];
-      //   streamController.add(response.data!);
-      // }
     } else {
       Utility.showToast(Constant.INTERNET_ALERT_MSG);
     }

@@ -16,6 +16,7 @@ import 'package:vendor/ui_without_inventory/chatpapdi_billing/ScannerChatPapdi/s
 import 'package:vendor/ui_without_inventory/chatpapdi_billing/ScannerChatPapdi/scanner_chatpapdi_state.dart';
 import 'package:vendor/ui_without_inventory/chatpapdi_billing/chatpapdi_billing.dart';
 import 'package:vendor/ui_without_inventory/home/bottom_navigation_bar.dart';
+import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
 
 class Scanner extends StatefulWidget {
@@ -68,6 +69,8 @@ class _ScannerState extends State<Scanner> {
         listener: (context, state) {
           // TODO: implement listener
           if (state is GetScannerState) {
+            Fluttertoast.showToast(
+                msg: state.message, backgroundColor: ColorPrimary);
             // Navigator.of(context).pop(result!.code);
           }
           if (state is GetScannerStateLoadingstate) {}

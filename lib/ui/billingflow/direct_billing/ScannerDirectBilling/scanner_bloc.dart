@@ -3,8 +3,8 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/model/billing_product_response.dart';
 import 'package:vendor/model/qr_code.dart';
-import 'package:vendor/ui/billingflow/Scanner/scanner_event.dart';
-import 'package:vendor/ui/billingflow/Scanner/scanner_state.dart';
+import 'package:vendor/ui/billingflow/direct_billing/ScannerDirectBilling/scanner_event.dart';
+import 'package:vendor/ui/billingflow/direct_billing/ScannerDirectBilling/scanner_state.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/utility.dart';
 

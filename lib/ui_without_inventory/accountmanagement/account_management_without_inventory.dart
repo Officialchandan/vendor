@@ -38,7 +38,7 @@ class _AccountManagementWithoutInventoryScreenState
     "video_tutorials_key".tr(),
     "share_store_link_key".tr(),
     "get_store_qr_code_key".tr(),
-    "add_business_hours_key".tr(),
+    // "add_business_hours_key".tr(),
     "logout_key".tr()
   ];
 
@@ -47,7 +47,7 @@ class _AccountManagementWithoutInventoryScreenState
     "assets/images/account-ic4.png",
     "assets/images/account-ic5.png",
     "assets/images/account-ic6.png",
-    "assets/images/account-ic7.png",
+    //"assets/images/account-ic7.png",
     "assets/images/account-ic8.png"
   ];
   var message;
@@ -236,13 +236,13 @@ class _AccountManagementWithoutInventoryScreenState
           MaterialPageRoute(builder: (context) => HomeScreenWithoutInventory()),
         );
         break;
+      // case 4:
+      //   Navigator.push(
+      //     context,
+      //     MaterialPageRoute(builder: (context) => HomeScreenWithoutInventory()),
+      //   );
+      //   break;
       case 4:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => HomeScreenWithoutInventory()),
-        );
-        break;
-      case 5:
         logoutDialog(context);
         break;
     }
