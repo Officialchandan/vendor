@@ -141,33 +141,32 @@ class _HomeScreenState extends State<HomeScreen> {
               notificationList.isNotEmpty
                   ? Positioned(
                       right: 10,
-                      top: 8,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(50),
-                        child: Container(
-                          height: 15,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(50),
-                            border: Border.all(color: ColorPrimary, width: 1),
+                      top: 10,
+                      child: new Container(
+                        padding: EdgeInsets.all(2),
+                        decoration: new BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                            color: ColorPrimary,
                           ),
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
-                              child: Text(
-                                notificationList.length.toString(),
-                                textDirection: TextDirection.ltr,
-                                style: TextStyle(
-                                  color: ColorPrimary,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 8,
-                                ),
-                              ),
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        constraints: BoxConstraints(
+                          minWidth: 14,
+                          minHeight: 14,
+                        ),
+                        child: Center(
+                          child: Text(
+                            notificationList.length.toString(),
+                            style: TextStyle(
+                              color: ColorPrimary,
+                              fontSize: 8,
                             ),
+                            textAlign: TextAlign.center,
                           ),
                         ),
-                      ))
+                      ),
+                    )
                   : Container()
             ],
           ),
