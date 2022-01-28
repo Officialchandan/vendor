@@ -141,28 +141,31 @@ class _HomeScreenState extends State<HomeScreen> {
               notificationList.isNotEmpty
                   ? Positioned(
                       right: 10,
-                      top: 10,
-                      child: new Container(
-                        padding: EdgeInsets.all(2),
-                        decoration: new BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(
-                            color: ColorPrimary,
-                          ),
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        constraints: BoxConstraints(
-                          minWidth: 14,
-                          minHeight: 14,
-                        ),
-                        child: Center(
-                          child: Text(
-                            notificationList.length.toString(),
-                            style: TextStyle(
+                      top: 8,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(50),
+                        child: new Container(
+                          padding: EdgeInsets.all(2),
+                          decoration: new BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(
                               color: ColorPrimary,
-                              fontSize: 8,
                             ),
-                            textAlign: TextAlign.center,
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          constraints: BoxConstraints(
+                            minWidth: 14,
+                            minHeight: 14,
+                          ),
+                          child: Center(
+                            child: Text(
+                              notificationList.length.toString(),
+                              style: TextStyle(
+                                color: ColorPrimary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 8,
+                              ),
+                            ),
                           ),
                         ),
                       ),
