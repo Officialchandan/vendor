@@ -12,17 +12,17 @@ import 'package:syncfusion_flutter_datagrid_export/export.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart' as xlsio;
-import 'package:vendor/utility/color.dart';
 
-class ReportDataGrid extends StatefulWidget {
+class RedeemCoinReportDataGrid extends StatefulWidget {
   List<Map<String, dynamic>>? reportData;
-  ReportDataGrid({Key? key, this.reportData}) : super(key: key);
+  RedeemCoinReportDataGrid({Key? key, this.reportData}) : super(key: key);
 
   @override
-  _ReportDataGridState createState() => _ReportDataGridState();
+  _RedeemCoinReportDataGridState createState() =>
+      _RedeemCoinReportDataGridState();
 }
 
-class _ReportDataGridState extends State<ReportDataGrid> {
+class _RedeemCoinReportDataGridState extends State<RedeemCoinReportDataGrid> {
   ReportDataSource? reportDataSource;
   final GlobalKey<SfDataGridState> _dataGridKey = GlobalKey<SfDataGridState>();
 
@@ -102,7 +102,7 @@ class _ReportDataGridState extends State<ReportDataGrid> {
       context: context,
       builder: (context) {
         return Container(
-          height: 148,
+          height: 140,
           width: MediaQuery.of(context).size.width,
           decoration: const BoxDecoration(
             color: Colors.white,
@@ -132,11 +132,6 @@ class _ReportDataGridState extends State<ReportDataGrid> {
           DateFormat("/dd MMM yyyy").format(DateTime.now()) +
           ".xlsx";
       log(path);
-      log("${_dataGridKey.currentState.toString()}");
-
-      if (_dataGridKey.currentState == null) {
-        print("not null");
-      }
 
       final xlsio.Workbook workbook =
           _dataGridKey.currentState!.exportToExcelWorkbook();
@@ -251,7 +246,7 @@ class RadioListBuilderState extends State<RadioListBuilder> {
       separatorBuilder: (BuildContext context, int index) {
         return const Divider(
           color: Colors.grey,
-          thickness: 1,
+          thickness: 0.6,
         );
       },
     );
