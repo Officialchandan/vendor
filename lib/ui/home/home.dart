@@ -145,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(50),
                         child: new Container(
-                          padding: EdgeInsets.all(2),
+                          padding: EdgeInsets.all(1.5),
                           decoration: new BoxDecoration(
                             color: Colors.white,
                             border: Border.all(
@@ -157,7 +157,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             minWidth: 14,
                             minHeight: 14,
                           ),
-                          child: Center(
+                          child: Align(
+                            alignment: Alignment.center,
                             child: Text(
                               notificationList.length.toString(),
                               style: TextStyle(

@@ -1,5 +1,6 @@
 import 'dart:collection';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -17,6 +18,8 @@ import 'package:vendor/model/get_categories_response.dart';
 import 'package:vendor/model/product_model.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
 import 'package:vendor/ui/performance_tracker/report/product_list_screen.dart';
+
+import 'package:vendor/ui/performance_tracker/report_data_grid/report_data_grid.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/sharedpref.dart';
@@ -276,7 +279,7 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
       Map input = HashMap<String, dynamic>();
       input["vendor_id"] =
           await SharedPref.getIntegerPreference(SharedPref.VENDORID);
-      // input["vendor_id"] = "1";
+
       String url = "";
 
       if (groupValue == 1) {
@@ -324,26 +327,32 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
         Response response = await dio.post(url, data: input);
         Map<String, dynamic> result = json.decode(response.toString());
         EasyLoading.dismiss();
-        print("result-->$result");
+
         if (result["success"]) {
           List<Map<String, dynamic>> report =
               List<Map<String, dynamic>>.from(result["data"]!.map((x) => x));
           reportList = report;
-          print("report-->$report");
-          exportReport(context);
+
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ReportDataGrid(
+                        reportData: reportList,
+                      )));
+          // exportReport(context);
         } else {
           EasyLoading.dismiss();
           Utility.showToast(response.data["message"]);
         }
       } catch (exception) {
-        print("exception-->$exception");
         if (exception is DioError) {
           ServerError e = ServerError.withError(error: exception);
+          print("exception-->$e");
         }
         EasyLoading.dismiss();
       }
     } else {
-      Utility.showToast("please_check_your_internet_connection_key");
+      Utility.showToast("please_check_your_internet_connection_key".tr());
     }
   }
 
@@ -459,7 +468,7 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
     String fileName = "coin_redeem_report_";
 
     if (groupValue == 1) {
-      fileName += "$startDate to $endDate" + ".2xlsx";
+      fileName += "$startDate to $endDate" + ".xlsx";
       sheet1.getRangeByIndex(rowIndex, columnIndex).value =
           "Coin Redeem Report ($startDate to $endDate)";
     } else {
@@ -469,7 +478,6 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
     final File file =
         File(Platform.isWindows ? '$path\\$fileName' : '$path/$fileName');
     await file.writeAsBytes(bytes, flush: true).whenComplete(() {
-      print("completed");
       Utility.showToast("Report saved at below location \n${file.path}");
     });
     print("savedDir${file.path}");
