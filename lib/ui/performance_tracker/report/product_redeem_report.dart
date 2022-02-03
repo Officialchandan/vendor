@@ -18,6 +18,7 @@ import 'package:vendor/model/get_categories_response.dart';
 import 'package:vendor/model/product_model.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
 import 'package:vendor/ui/performance_tracker/report/product_list_screen.dart';
+import 'package:vendor/ui/performance_tracker/report_data_grid/product_redeem_report_data_grid.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/sharedpref.dart';
@@ -308,14 +309,18 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
           List<Map<String, dynamic>> report =
               List<Map<String, dynamic>>.from(result["data"]!.map((x) => x));
           reportList = report;
-          print("report-->$report");
-          exportReport(context);
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ProductRedeemReportDataGrid(
+                        reportData: reportList,
+                      )));
+          // exportReport(context);
         } else {
           EasyLoading.dismiss();
           Utility.showToast(response.data["message"]);
         }
       } catch (exception) {
-        print("exception-->$exception");
         if (exception is DioError) {
           ServerError e = ServerError.withError(error: exception);
         }
@@ -327,7 +332,6 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
   }
 
   void exportReport(BuildContext context) async {
-    print("exportReport");
     final xls.Workbook workbook = xls.Workbook(0);
     //Adding a Sheet with name to workbook.
     final xls.Worksheet sheet1 =

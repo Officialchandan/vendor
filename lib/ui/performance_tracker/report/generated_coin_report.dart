@@ -1,7 +1,6 @@
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +16,7 @@ import 'package:vendor/model/get_categories_response.dart';
 import 'package:vendor/model/product_model.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
 import 'package:vendor/ui/performance_tracker/report/product_list_screen.dart';
+import 'package:vendor/ui/performance_tracker/report_data_grid/generated_coin_report_data_grid.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/sharedpref.dart';
@@ -329,8 +329,13 @@ class _GeneratedCoinReportState extends State<GeneratedCoinReport> {
           List<Map<String, dynamic>> report =
               List<Map<String, dynamic>>.from(result["data"]!.map((x) => x));
           reportList = report;
-          print("report-->$report");
-          exportReport(context);
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => GeneratedCoinReportDataGrid(
+                        reportData: reportList,
+                      )));
+          // exportReport(context);
         } else {
           EasyLoading.dismiss();
           Utility.showToast(response.data["message"]);
