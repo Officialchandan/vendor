@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
@@ -37,7 +38,7 @@ class _DailyReportDataGridState extends State<DailyReportDataGrid> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Sales Report"),
+          title: Text("sales_report_key".tr()),
           actions: [
             IconButton(
                 onPressed: () {
@@ -257,8 +258,10 @@ class _DailyReportDataGridState extends State<DailyReportDataGrid> {
     if (permission.isGranted) {
       Directory? directory;
       directory = await getExternalStorageDirectory();
+      String fileName = "/Daily Sales Report ";
       String path = directory!.path +
-          DateFormat("/dd MMM yyyy").format(DateTime.now()) +
+          fileName +
+          DateFormat("dd MMM yyyy").format(DateTime.now()) +
           ".xlsx";
 
       final xlsio.Workbook workbook =
@@ -279,8 +282,10 @@ class _DailyReportDataGridState extends State<DailyReportDataGrid> {
     if (permission.isGranted) {
       Directory? directory;
       directory = await getExternalStorageDirectory();
+      String fileName = "/Daily Sales Report ";
       String path = directory!.path +
-          DateFormat("/dd MMM yyyy").format(DateTime.now()) +
+          fileName +
+          DateFormat("dd MMM yyyy").format(DateTime.now()) +
           ".pdf";
       log(path);
       final PdfDocument document = dataGridKey.currentState!

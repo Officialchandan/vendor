@@ -13,17 +13,16 @@ import 'package:syncfusion_flutter_xlsio/xlsio.dart' as xlsio;
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/utility.dart';
 
-class ProductRedeemReportDataGrid extends StatefulWidget {
+class SalesReturnReportDataGrid extends StatefulWidget {
   List<Map<String, dynamic>>? reportData;
-  ProductRedeemReportDataGrid({Key? key, this.reportData}) : super(key: key);
+  SalesReturnReportDataGrid({Key? key, this.reportData}) : super(key: key);
 
   @override
-  _ProductRedeemReportDataGridState createState() =>
-      _ProductRedeemReportDataGridState();
+  _SalesReturnReportDataGridState createState() =>
+      _SalesReturnReportDataGridState();
 }
 
-class _ProductRedeemReportDataGridState
-    extends State<ProductRedeemReportDataGrid> {
+class _SalesReturnReportDataGridState extends State<SalesReturnReportDataGrid> {
   ReportDataSource? reportDataSource;
   String? reportType;
 
@@ -32,7 +31,6 @@ class _ProductRedeemReportDataGridState
   @override
   void initState() {
     reportDataSource = ReportDataSource(reportData: widget.reportData!);
-
     super.initState();
   }
 
@@ -41,7 +39,7 @@ class _ProductRedeemReportDataGridState
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("product_redeem_reports_key".tr()),
+          title: Text("sale_return_reports_key".tr()),
           actions: [
             IconButton(
                 onPressed: () {
@@ -61,6 +59,15 @@ class _ProductRedeemReportDataGridState
           headerGridLinesVisibility: GridLinesVisibility.both,
           columns: <GridColumn>[
             GridColumn(
+                columnName: 'Category Name',
+                label: Container(
+                    padding: const EdgeInsets.all(16.0),
+                    alignment: Alignment.center,
+                    child: const Text(
+                      "Category Name",
+                      overflow: TextOverflow.ellipsis,
+                    ))),
+            GridColumn(
                 columnName: 'Product Name',
                 label: Container(
                     padding: const EdgeInsets.all(16.0),
@@ -79,12 +86,30 @@ class _ProductRedeemReportDataGridState
                       overflow: TextOverflow.ellipsis,
                     ))),
             GridColumn(
-                columnName: 'Redeem Coins',
+                columnName: 'Mobile',
                 label: Container(
                     padding: const EdgeInsets.all(16.0),
                     alignment: Alignment.center,
                     child: const Text(
-                      "Redeem Coins",
+                      "Mobile",
+                      overflow: TextOverflow.ellipsis,
+                    ))),
+            GridColumn(
+                columnName: 'Return Coins',
+                label: Container(
+                    padding: const EdgeInsets.all(16.0),
+                    alignment: Alignment.center,
+                    child: const Text(
+                      "Return Coins",
+                      overflow: TextOverflow.ellipsis,
+                    ))),
+            GridColumn(
+                columnName: 'Reason',
+                label: Container(
+                    padding: const EdgeInsets.all(16.0),
+                    alignment: Alignment.center,
+                    child: const Text(
+                      "Reason",
                       overflow: TextOverflow.ellipsis,
                     ))),
             GridColumn(
@@ -198,7 +223,7 @@ class _ProductRedeemReportDataGridState
     if (permission.isGranted) {
       Directory? directory;
       directory = await getExternalStorageDirectory();
-      String fileName = "/Product Redeem Report ";
+      String fileName = "/Sales Return Report ";
       String path = directory!.path +
           fileName +
           DateFormat("dd MMM yyyy").format(DateTime.now()) +
@@ -222,7 +247,7 @@ class _ProductRedeemReportDataGridState
     if (permission.isGranted) {
       Directory? directory;
       directory = await getExternalStorageDirectory();
-      String fileName = "/Product Redeem Report ";
+      String fileName = "/Sales Return Report ";
       String path = directory!.path +
           fileName +
           DateFormat("dd MMM yyyy").format(DateTime.now()) +
@@ -246,10 +271,14 @@ class ReportDataSource extends DataGridSource {
     _reportData = reportData
         .map<DataGridRow>((e) => DataGridRow(cells: [
               DataGridCell<String>(
+                  columnName: 'Category Name', value: e['category_name']),
+              DataGridCell<String>(
                   columnName: 'Product Name', value: e['product_name']),
               DataGridCell<int>(columnName: 'Quantity', value: e['qty']),
+              DataGridCell<String>(columnName: 'Mobile', value: e['mobile']),
               DataGridCell<String>(
-                  columnName: 'Redeem Coins', value: e['redeem_coins']),
+                  columnName: 'Return Coins', value: e['return_coins']),
+              DataGridCell<String>(columnName: 'Reason', value: e['reason']),
               DataGridCell<String>(columnName: 'Date', value: e['date']),
               DataGridCell<String>(columnName: 'Time', value: e['time']),
             ]))

@@ -13,17 +13,16 @@ import 'package:syncfusion_flutter_xlsio/xlsio.dart' as xlsio;
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/utility.dart';
 
-class ProductRedeemReportDataGrid extends StatefulWidget {
+class ReadyStockReportDataGrid extends StatefulWidget {
   List<Map<String, dynamic>>? reportData;
-  ProductRedeemReportDataGrid({Key? key, this.reportData}) : super(key: key);
+  ReadyStockReportDataGrid({Key? key, this.reportData}) : super(key: key);
 
   @override
-  _ProductRedeemReportDataGridState createState() =>
-      _ProductRedeemReportDataGridState();
+  _ReadyStockReportDataGridState createState() =>
+      _ReadyStockReportDataGridState();
 }
 
-class _ProductRedeemReportDataGridState
-    extends State<ProductRedeemReportDataGrid> {
+class _ReadyStockReportDataGridState extends State<ReadyStockReportDataGrid> {
   ReportDataSource? reportDataSource;
   String? reportType;
 
@@ -32,7 +31,6 @@ class _ProductRedeemReportDataGridState
   @override
   void initState() {
     reportDataSource = ReportDataSource(reportData: widget.reportData!);
-
     super.initState();
   }
 
@@ -41,7 +39,7 @@ class _ProductRedeemReportDataGridState
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("product_redeem_reports_key".tr()),
+          title: Text("ready_stock_report_key".tr()),
           actions: [
             IconButton(
                 onPressed: () {
@@ -61,6 +59,15 @@ class _ProductRedeemReportDataGridState
           headerGridLinesVisibility: GridLinesVisibility.both,
           columns: <GridColumn>[
             GridColumn(
+                columnName: 'Category Name',
+                label: Container(
+                    padding: const EdgeInsets.all(16.0),
+                    alignment: Alignment.center,
+                    child: const Text(
+                      "Category Name",
+                      overflow: TextOverflow.ellipsis,
+                    ))),
+            GridColumn(
                 columnName: 'Product Name',
                 label: Container(
                     padding: const EdgeInsets.all(16.0),
@@ -70,21 +77,12 @@ class _ProductRedeemReportDataGridState
                       overflow: TextOverflow.ellipsis,
                     ))),
             GridColumn(
-                columnName: 'Quantity',
+                columnName: 'Stock',
                 label: Container(
                     padding: const EdgeInsets.all(16.0),
                     alignment: Alignment.center,
                     child: const Text(
-                      "Quantity",
-                      overflow: TextOverflow.ellipsis,
-                    ))),
-            GridColumn(
-                columnName: 'Redeem Coins',
-                label: Container(
-                    padding: const EdgeInsets.all(16.0),
-                    alignment: Alignment.center,
-                    child: const Text(
-                      "Redeem Coins",
+                      "Stock",
                       overflow: TextOverflow.ellipsis,
                     ))),
             GridColumn(
@@ -197,8 +195,8 @@ class _ProductRedeemReportDataGridState
     var permission = await Permission.storage.request();
     if (permission.isGranted) {
       Directory? directory;
+      String fileName = "/Ready Stock Report ";
       directory = await getExternalStorageDirectory();
-      String fileName = "/Product Redeem Report ";
       String path = directory!.path +
           fileName +
           DateFormat("dd MMM yyyy").format(DateTime.now()) +
@@ -222,7 +220,7 @@ class _ProductRedeemReportDataGridState
     if (permission.isGranted) {
       Directory? directory;
       directory = await getExternalStorageDirectory();
-      String fileName = "/Product Redeem Report ";
+      String fileName = "/Ready Stock Report ";
       String path = directory!.path +
           fileName +
           DateFormat("dd MMM yyyy").format(DateTime.now()) +
@@ -246,10 +244,10 @@ class ReportDataSource extends DataGridSource {
     _reportData = reportData
         .map<DataGridRow>((e) => DataGridRow(cells: [
               DataGridCell<String>(
-                  columnName: 'Product Name', value: e['product_name']),
-              DataGridCell<int>(columnName: 'Quantity', value: e['qty']),
+                  columnName: 'Category Name', value: e['category_name']),
               DataGridCell<String>(
-                  columnName: 'Redeem Coins', value: e['redeem_coins']),
+                  columnName: 'Product Name', value: e['product_name']),
+              DataGridCell<int>(columnName: 'Stock', value: e['stock']),
               DataGridCell<String>(columnName: 'Date', value: e['date']),
               DataGridCell<String>(columnName: 'Time', value: e['time']),
             ]))

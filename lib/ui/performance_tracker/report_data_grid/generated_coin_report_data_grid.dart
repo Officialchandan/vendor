@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
@@ -39,7 +40,7 @@ class _GeneratedCoinReportDataGridState
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Coin Generated Report"),
+          title: Text("generate_coin_report_key".tr()),
           actions: [
             IconButton(
                 onPressed: () {
@@ -223,8 +224,10 @@ class _GeneratedCoinReportDataGridState
     if (permission.isGranted) {
       Directory? directory;
       directory = await getExternalStorageDirectory();
+      String fileName = "/Coin Generated Report ";
       String path = directory!.path +
-          DateFormat("/dd MMM yyyy").format(DateTime.now()) +
+          fileName +
+          DateFormat("dd MMM yyyy").format(DateTime.now()) +
           ".xlsx";
 
       final xlsio.Workbook workbook =
@@ -245,8 +248,10 @@ class _GeneratedCoinReportDataGridState
     if (permission.isGranted) {
       Directory? directory;
       directory = await getExternalStorageDirectory();
+      String fileName = "/Coin Generated Report ";
       String path = directory!.path +
-          DateFormat("/dd MMM yyyy").format(DateTime.now()) +
+          fileName +
+          DateFormat("dd MMM yyyy").format(DateTime.now()) +
           ".pdf";
       log(path);
       final PdfDocument document = dataGridKey.currentState!

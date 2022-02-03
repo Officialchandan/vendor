@@ -18,6 +18,7 @@ import 'package:vendor/api/Endpoint.dart';
 import 'package:vendor/api/server_error.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
 import 'package:vendor/ui/performance_tracker/report/product_list_screen.dart';
+import 'package:vendor/ui/performance_tracker/report_data_grid/sales_return_report_data_grid.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/sharedpref.dart';
@@ -304,13 +305,18 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
         Response response = await dio.post(url, data: input);
         Map<String, dynamic> result = json.decode(response.toString());
         EasyLoading.dismiss();
-        print("result-->$result");
+
         if (result["success"]) {
           List<Map<String, dynamic>> report =
               List<Map<String, dynamic>>.from(result["data"]!.map((x) => x));
           reportList = report;
-          print("report-->$report");
-          exportReport(context);
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => SalesReturnReportDataGrid(
+                        reportData: reportList,
+                      )));
+          // exportReport(context);
         } else {
           EasyLoading.dismiss();
           Utility.showToast(response.data["message"]);

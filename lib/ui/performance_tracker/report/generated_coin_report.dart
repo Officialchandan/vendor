@@ -56,7 +56,7 @@ class _GeneratedCoinReportState extends State<GeneratedCoinReport> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "reports_key".tr(),
+        title: "generate_coin_report_key".tr(),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(15),

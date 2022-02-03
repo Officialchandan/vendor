@@ -18,6 +18,7 @@ import 'package:vendor/ui/performance_tracker/report/daily_report.dart';
 import 'package:vendor/ui/performance_tracker/report/generated_coin_report.dart';
 import 'package:vendor/ui/performance_tracker/report/product_redeem_report.dart';
 import 'package:vendor/ui/performance_tracker/report/sale_return_report.dart';
+import 'package:vendor/ui/performance_tracker/report_data_grid/ready_stock_report_data_grid.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/utility.dart';
@@ -166,19 +167,23 @@ class _SelectReportTypeScreenState extends State<SelectReportTypeScreen> {
         Response response = await dio.post(url, data: input);
         Map<String, dynamic> result = json.decode(response.toString());
         EasyLoading.dismiss();
-        print("result-->$result");
+
         if (result["success"]) {
           List<Map<String, dynamic>> report =
               List<Map<String, dynamic>>.from(result["data"]!.map((x) => x));
           reportList = report;
-          print("report-->$report");
-          exportReport(context);
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ReadyStockReportDataGrid(
+                        reportData: reportList,
+                      )));
+          // exportReport(context);
         } else {
           EasyLoading.dismiss();
           Utility.showToast(response.data["message"]);
         }
       } catch (exception) {
-        print("exception-->$exception");
         if (exception is DioError) {
           ServerError e = ServerError.withError(error: exception);
         }
