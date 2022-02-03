@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -11,16 +12,15 @@ import 'package:syncfusion_flutter_xlsio/xlsio.dart' as xlsio;
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/utility.dart';
 
-class RedeemCoinReportDataGrid extends StatefulWidget {
+class DailyReportDataGrid extends StatefulWidget {
   List<Map<String, dynamic>>? reportData;
-  RedeemCoinReportDataGrid({Key? key, this.reportData}) : super(key: key);
+  DailyReportDataGrid({Key? key, this.reportData}) : super(key: key);
 
   @override
-  _RedeemCoinReportDataGridState createState() =>
-      _RedeemCoinReportDataGridState();
+  _DailyReportDataGridState createState() => _DailyReportDataGridState();
 }
 
-class _RedeemCoinReportDataGridState extends State<RedeemCoinReportDataGrid> {
+class _DailyReportDataGridState extends State<DailyReportDataGrid> {
   ReportDataSource? reportDataSource;
   String? reportType;
 
@@ -57,12 +57,93 @@ class _RedeemCoinReportDataGridState extends State<RedeemCoinReportDataGrid> {
           headerGridLinesVisibility: GridLinesVisibility.both,
           columns: <GridColumn>[
             GridColumn(
+                columnName: 'Order ID',
+                label: Container(
+                    padding: const EdgeInsets.all(16.0),
+                    alignment: Alignment.center,
+                    child: const Text(
+                      "Order ID",
+                      overflow: TextOverflow.ellipsis,
+                    ))),
+            GridColumn(
+                columnName: 'Product ID',
+                label: Container(
+                    padding: const EdgeInsets.all(16.0),
+                    alignment: Alignment.center,
+                    child: const Text(
+                      "Product ID",
+                      overflow: TextOverflow.ellipsis,
+                    ))),
+            GridColumn(
+                columnName: 'Category ID',
+                label: Container(
+                    padding: const EdgeInsets.all(16.0),
+                    alignment: Alignment.center,
+                    child: const Text(
+                      "Category ID",
+                      overflow: TextOverflow.ellipsis,
+                    ))),
+            GridColumn(
                 columnName: 'Product Name',
                 label: Container(
                     padding: const EdgeInsets.all(16.0),
                     alignment: Alignment.center,
                     child: const Text(
                       "Product Name",
+                      overflow: TextOverflow.ellipsis,
+                    ))),
+            GridColumn(
+                columnName: 'Customer ID',
+                label: Container(
+                    padding: const EdgeInsets.all(16.0),
+                    alignment: Alignment.center,
+                    child: const Text(
+                      "Customer ID",
+                      overflow: TextOverflow.ellipsis,
+                    ))),
+            GridColumn(
+                columnName: 'Mobile',
+                label: Container(
+                    padding: const EdgeInsets.all(16.0),
+                    alignment: Alignment.center,
+                    child: const Text(
+                      "Mobile",
+                      overflow: TextOverflow.ellipsis,
+                    ))),
+            GridColumn(
+                columnName: 'Purchase Price',
+                label: Container(
+                    padding: const EdgeInsets.all(16.0),
+                    alignment: Alignment.center,
+                    child: const Text(
+                      "Purchase Price",
+                      overflow: TextOverflow.ellipsis,
+                    ))),
+            GridColumn(
+                columnName: 'MRP',
+                label: Container(
+                    padding: const EdgeInsets.all(16.0),
+                    alignment: Alignment.center,
+                    child: const Text(
+                      "MRP",
+                      overflow: TextOverflow.ellipsis,
+                    ))),
+            GridColumn(
+                columnName: 'Total',
+                label: Container(
+                    padding: const EdgeInsets.all(16.0),
+                    alignment: Alignment.center,
+                    child: const Text(
+                      "Total",
+                      overflow: TextOverflow.ellipsis,
+                    ))),
+            GridColumn(
+                columnName: 'Earning Coins',
+                label: Container(
+                    padding: const EdgeInsets.all(16.0),
+                    alignment: Alignment.center,
+                    child: const Text(
+                      "Earning Coins",
                       overflow: TextOverflow.ellipsis,
                     ))),
             GridColumn(
@@ -75,30 +156,12 @@ class _RedeemCoinReportDataGridState extends State<RedeemCoinReportDataGrid> {
                       overflow: TextOverflow.ellipsis,
                     ))),
             GridColumn(
-                columnName: 'Created At',
-                label: Container(
-                    padding: const EdgeInsets.all(16.0),
-                    alignment: Alignment.center,
-                    child: const Text(
-                      "Created At",
-                      overflow: TextOverflow.ellipsis,
-                    ))),
-            GridColumn(
                 columnName: 'Date',
                 label: Container(
                     padding: const EdgeInsets.all(16.0),
                     alignment: Alignment.center,
                     child: const Text(
                       "Date",
-                      overflow: TextOverflow.ellipsis,
-                    ))),
-            GridColumn(
-                columnName: 'Time',
-                label: Container(
-                    padding: const EdgeInsets.all(16.0),
-                    alignment: Alignment.center,
-                    child: const Text(
-                      "Time",
                       overflow: TextOverflow.ellipsis,
                     ))),
           ],
@@ -200,6 +263,7 @@ class _RedeemCoinReportDataGridState extends State<RedeemCoinReportDataGrid> {
       final xlsio.Workbook workbook =
           dataGridKey.currentState!.exportToExcelWorkbook();
       final List<int> bytes = workbook.saveAsStream();
+
       File(path).writeAsBytes(bytes);
       workbook.dispose();
       Utility.showToast("File Saved");
@@ -216,7 +280,7 @@ class _RedeemCoinReportDataGridState extends State<RedeemCoinReportDataGrid> {
       String path = directory.path +
           DateFormat("/dd MMM yyyy").format(DateTime.now()) +
           ".pdf";
-
+      log(path);
       final PdfDocument document = dataGridKey.currentState!
           .exportToPdfDocument(fitAllColumnsInOnePage: true);
       final List<int> bytes = document.save();
@@ -234,14 +298,25 @@ class ReportDataSource extends DataGridSource {
   ReportDataSource({required List<Map<String, dynamic>> reportData}) {
     _reportData = reportData
         .map<DataGridRow>((e) => DataGridRow(cells: [
+              DataGridCell<int>(columnName: 'Order ID', value: e['order_id']),
+              DataGridCell<int>(
+                  columnName: 'Product ID', value: e['product_id']),
+              DataGridCell<int>(
+                  columnName: 'Category ID', value: e['category_id']),
               DataGridCell<String>(
-                  columnName: 'Name', value: e['product_name']),
+                  columnName: 'Product Name', value: e['product_name']),
+              DataGridCell<int>(
+                  columnName: 'Customer ID', value: e['customer_id']),
+              DataGridCell<String>(columnName: 'Mobile', value: e['mobile']),
+              DataGridCell<String>(
+                  columnName: 'Purchase Price', value: e['purchase_price']),
+              DataGridCell<String>(columnName: 'MRP', value: e['mrp']),
+              DataGridCell<String>(columnName: 'Total', value: e['total']),
+              DataGridCell<String>(
+                  columnName: 'Earning Coins', value: e['earning_coins']),
               DataGridCell<String>(
                   columnName: 'Redeem Coins', value: e['redeem_coins']),
-              DataGridCell<String>(
-                  columnName: 'Created At', value: e['created_at']),
               DataGridCell<String>(columnName: 'Date', value: e['date']),
-              DataGridCell<String>(columnName: 'Time', value: e['time']),
             ]))
         .toList();
   }

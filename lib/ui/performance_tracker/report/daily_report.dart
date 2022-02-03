@@ -23,6 +23,7 @@ import 'package:vendor/model/get_categories_response.dart';
 import 'package:vendor/model/product_model.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
 import 'package:vendor/ui/performance_tracker/report/product_list_screen.dart';
+import 'package:vendor/ui/performance_tracker/report_data_grid/sales_return_report_data_grid.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/sharedpref.dart';
@@ -296,12 +297,18 @@ class _DailyReportState extends State<DailyReport> {
           report.forEach((element) {
             element.remove("created_at");
             element.remove("time");
-            element["total"] = element["total_pay"];
+            // element["total"] = element["total_pay"];
             element.remove("total_pay");
 
             debugPrint("element-->$element");
 
             reportList.add(element);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => DailyReportDataGrid(
+                          reportData: reportList,
+                        ))).then((value) => reportList.clear());
           });
 
           // reportList = report;
@@ -314,8 +321,8 @@ class _DailyReportState extends State<DailyReport> {
           //   generateReport();
           // });
 
-          exportExcelReport(context);
-          generateReport(context);
+          // exportExcelReport(context);
+          // generateReport(context);
         } else {
           EasyLoading.dismiss();
           Utility.showToast(response.data["message"]);
