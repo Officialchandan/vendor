@@ -37,7 +37,7 @@ class _DailyReportDataGridState extends State<DailyReportDataGrid> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Report Data"),
+          title: Text("Sales Report"),
           actions: [
             IconButton(
                 onPressed: () {
@@ -255,8 +255,9 @@ class _DailyReportDataGridState extends State<DailyReportDataGrid> {
   Future<void> exportDataGridToExcel() async {
     var permission = await Permission.storage.request();
     if (permission.isGranted) {
-      Directory directory = await getTemporaryDirectory();
-      String path = directory.path +
+      Directory? directory;
+      directory = await getExternalStorageDirectory();
+      String path = directory!.path +
           DateFormat("/dd MMM yyyy").format(DateTime.now()) +
           ".xlsx";
 
@@ -276,8 +277,9 @@ class _DailyReportDataGridState extends State<DailyReportDataGrid> {
   Future<void> exportDataGridToPdf() async {
     var permission = await Permission.storage.request();
     if (permission.isGranted) {
-      Directory directory = await getTemporaryDirectory();
-      String path = directory.path +
+      Directory? directory;
+      directory = await getExternalStorageDirectory();
+      String path = directory!.path +
           DateFormat("/dd MMM yyyy").format(DateTime.now()) +
           ".pdf";
       log(path);

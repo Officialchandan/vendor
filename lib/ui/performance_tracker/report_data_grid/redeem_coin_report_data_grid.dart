@@ -192,8 +192,9 @@ class _RedeemCoinReportDataGridState extends State<RedeemCoinReportDataGrid> {
   Future<void> exportDataGridToExcel() async {
     var permission = await Permission.storage.request();
     if (permission.isGranted) {
-      Directory directory = await getTemporaryDirectory();
-      String path = directory.path +
+      Directory? directory;
+      directory = await getExternalStorageDirectory();
+      String path = directory!.path +
           DateFormat("/dd MMM yyyy").format(DateTime.now()) +
           ".xlsx";
 
@@ -212,8 +213,9 @@ class _RedeemCoinReportDataGridState extends State<RedeemCoinReportDataGrid> {
   Future<void> exportDataGridToPdf() async {
     var permission = await Permission.storage.request();
     if (permission.isGranted) {
-      Directory directory = await getTemporaryDirectory();
-      String path = directory.path +
+      Directory? directory;
+      directory = await getExternalStorageDirectory();
+      String path = directory!.path +
           DateFormat("/dd MMM yyyy").format(DateTime.now()) +
           ".pdf";
 
