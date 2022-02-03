@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
+import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
@@ -29,6 +31,7 @@ class _RedeemCoinReportDataGridState extends State<RedeemCoinReportDataGrid> {
   @override
   void initState() {
     reportDataSource = ReportDataSource(reportData: widget.reportData!);
+
     super.initState();
   }
 
@@ -37,7 +40,7 @@ class _RedeemCoinReportDataGridState extends State<RedeemCoinReportDataGrid> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Report Data"),
+          title: Text("coin_redeemed_reports_key".tr()),
           actions: [
             IconButton(
                 onPressed: () {
@@ -72,15 +75,6 @@ class _RedeemCoinReportDataGridState extends State<RedeemCoinReportDataGrid> {
                     alignment: Alignment.center,
                     child: const Text(
                       "Redeem Coins",
-                      overflow: TextOverflow.ellipsis,
-                    ))),
-            GridColumn(
-                columnName: 'Created At',
-                label: Container(
-                    padding: const EdgeInsets.all(16.0),
-                    alignment: Alignment.center,
-                    child: const Text(
-                      "Created At",
                       overflow: TextOverflow.ellipsis,
                     ))),
             GridColumn(
@@ -194,13 +188,16 @@ class _RedeemCoinReportDataGridState extends State<RedeemCoinReportDataGrid> {
     if (permission.isGranted) {
       Directory? directory;
       directory = await getExternalStorageDirectory();
+      String fileName = "/Coin Redeem Report ";
       String path = directory!.path +
-          DateFormat("/dd MMM yyyy").format(DateTime.now()) +
+          fileName +
+          DateFormat("dd MMM yyyy").format(DateTime.now()) +
           ".xlsx";
 
       final xlsio.Workbook workbook =
           dataGridKey.currentState!.exportToExcelWorkbook();
       final List<int> bytes = workbook.saveAsStream();
+
       File(path).writeAsBytes(bytes);
       workbook.dispose();
       Utility.showToast("File Saved");
@@ -215,10 +212,12 @@ class _RedeemCoinReportDataGridState extends State<RedeemCoinReportDataGrid> {
     if (permission.isGranted) {
       Directory? directory;
       directory = await getExternalStorageDirectory();
+      String fileName = "/Coin Redeem Report ";
       String path = directory!.path +
-          DateFormat("/dd MMM yyyy").format(DateTime.now()) +
+          fileName +
+          DateFormat("dd MMM yyyy").format(DateTime.now()) +
           ".pdf";
-
+      log(path);
       final PdfDocument document = dataGridKey.currentState!
           .exportToPdfDocument(fitAllColumnsInOnePage: true);
       final List<int> bytes = document.save();
@@ -237,11 +236,9 @@ class ReportDataSource extends DataGridSource {
     _reportData = reportData
         .map<DataGridRow>((e) => DataGridRow(cells: [
               DataGridCell<String>(
-                  columnName: 'Name', value: e['product_name']),
+                  columnName: 'Product Name', value: e['product_name']),
               DataGridCell<String>(
                   columnName: 'Redeem Coins', value: e['redeem_coins']),
-              DataGridCell<String>(
-                  columnName: 'Created At', value: e['created_at']),
               DataGridCell<String>(columnName: 'Date', value: e['date']),
               DataGridCell<String>(columnName: 'Time', value: e['time']),
             ]))
