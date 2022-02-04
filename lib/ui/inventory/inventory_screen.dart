@@ -22,12 +22,12 @@ class _InventoryScreenState extends State<InventoryScreen> {
     title: "inventory_key".tr(),
   );
   final options = [
-    // {
-    //   "title": "add_product_key".tr(),
-    //   "subTitle": "click_here_to_add_product_key".tr(),
-    //   "image": "assets/images/inventory.png",
-    //   "id": 1
-    // },
+    {
+      "title": "add_product_key".tr(),
+      "subTitle": "click_here_to_add_product_key".tr(),
+      "image": "assets/images/inventory.png",
+      "id": 1
+    },
     {
       "title": "view_product_key".tr(),
       "subTitle": "click_here_to_add_product_key".tr(),
@@ -119,7 +119,13 @@ class _InventoryScreenState extends State<InventoryScreen> {
                                 type: PageTransitionType.fade));
                       }
                       if (options[index]["id"] == 1) {
-                        showSheet(context);
+                        Navigator.push(
+                          context,
+                          PageTransition(
+                              child: AddProductScreen(),
+                              type: PageTransitionType.fade),
+                        );
+                        // showSheet(context);
                       }
                     },
                     leading: Image(
