@@ -1,14 +1,7 @@
-import 'dart:async';
 import 'dart:developer';
-
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:vendor/api/api_provider.dart';
-import 'package:vendor/model/daily_sale_amount.dart';
-import 'package:vendor/model/hourly_sale_amount.dart';
-import 'package:vendor/model/monthly_sale_amount.dart';
 import 'package:vendor/ui/performance_tracker/listner/performancetrackerlistner.dart';
 import 'package:vendor/ui/performance_tracker/performance_tracker_category/bottom_widget.dart';
 import 'package:vendor/ui/performance_tracker/performance_tracker_category/sale_amount/dailysaleamountwidget.dart';
@@ -38,18 +31,16 @@ class _SaleAmountState extends State<SaleAmount> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    // TODO: implement initState
     _tabController = new TabController(vsync: this, length: 3);
-    log("hiii");
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    var deviceWidth = MediaQuery.of(context).size.width;
-    var deviceHeigth = MediaQuery.of(context).size.height;
     return DefaultTabController(
       length: 3,
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: Scaffold(
           appBar: AppBar(
             bottom: PreferredSize(

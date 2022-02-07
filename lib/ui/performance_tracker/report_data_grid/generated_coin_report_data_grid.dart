@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:syncfusion_flutter_datagrid_export/export.dart';
@@ -44,7 +45,7 @@ class _GeneratedCoinReportDataGridState
           actions: [
             IconButton(
                 onPressed: () {
-                  showType();
+                  exportDataGridToPdf();
                 },
                 icon: Icon(Icons.download))
           ],
@@ -236,7 +237,8 @@ class _GeneratedCoinReportDataGridState
 
       File(path).writeAsBytes(bytes);
       workbook.dispose();
-      Utility.showToast("File Saved");
+      Utility.showToast("File Saved " + path);
+      OpenFile.open(path);
     }
     if (permission.isPermanentlyDenied) {
       openAppSettings();
@@ -259,7 +261,8 @@ class _GeneratedCoinReportDataGridState
       final List<int> bytes = document.save();
       File(path).writeAsBytes(bytes);
       document.dispose();
-      Utility.showToast("File Saved");
+      Utility.showToast("File Saved " + path);
+      OpenFile.open(path);
     }
     if (permission.isPermanentlyDenied) {
       openAppSettings();

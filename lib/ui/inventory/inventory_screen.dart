@@ -40,18 +40,18 @@ class _InventoryScreenState extends State<InventoryScreen> {
       "image": "assets/images/inventory-h3.png",
       "id": 3
     },
-    {
-      "title": "purchase_return_key".tr(),
-      "subTitle": "click_here_to_add_product_key".tr(),
-      "image": "assets/images/inventory-h4.png",
-      "id": 4
-    },
-    {
-      "title": "purchase_order_entry_key".tr(),
-      "subTitle": "click_here_to_add_product_key".tr(),
-      "image": "assets/images/inventory-h5.png",
-      "id": 5
-    },
+    // {
+    //   "title": "purchase_return_key".tr(),
+    //   "subTitle": "click_here_to_add_product_key".tr(),
+    //   "image": "assets/images/inventory-h4.png",
+    //   "id": 4
+    // },
+    // {
+    //   "title": "purchase_order_entry_key".tr(),
+    //   "subTitle": "click_here_to_add_product_key".tr(),
+    //   "image": "assets/images/inventory-h5.png",
+    //   "id": 5
+    // },
     // {"title": "Add Product", "subTitle": "click here to add product", "image": "assets/images/category1.png", "id": 6},
   ];
 

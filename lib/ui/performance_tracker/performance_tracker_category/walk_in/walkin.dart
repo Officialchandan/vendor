@@ -1,14 +1,7 @@
 import 'dart:developer';
-
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:vendor/api/api_provider.dart';
 import 'package:vendor/model/daily_walkin.dart';
-import 'package:vendor/model/hourly_sale_amount.dart';
-import 'package:vendor/model/hourly_walkin.dart';
-import 'package:vendor/model/monthly_walkin.dart';
 import 'package:vendor/ui/performance_tracker/listner/performancetrackerlistner.dart';
 import 'package:vendor/ui/performance_tracker/performance_tracker_category/bottom_widget.dart';
 import 'package:vendor/ui/performance_tracker/performance_tracker_category/walk_in/dailywalkinamountwidget.dart';
@@ -25,7 +18,6 @@ class WalkInAmount extends StatefulWidget {
 
 class _WalkInAmountState extends State<WalkInAmount>
     with TickerProviderStateMixin {
-  TooltipBehavior? _tooltipBehavior;
   DailyWalkinAmountResponse? resultDaily;
   PerformanceTrackerListner? performanceTrackerListner;
   int walkinindex = 3;
@@ -37,18 +29,17 @@ class _WalkInAmountState extends State<WalkInAmount>
   BottomWidget? bottomWidget;
 
   @override
-  // ignore: must_call_super
   void initState() {
     _tabController = new TabController(vsync: this, length: 3);
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    var deviceWidth = MediaQuery.of(context).size.width;
-
     return DefaultTabController(
       length: 3,
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: Scaffold(
           appBar: AppBar(
             bottom: PreferredSize(

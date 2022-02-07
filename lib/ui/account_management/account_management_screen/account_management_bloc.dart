@@ -12,33 +12,25 @@ import 'package:vendor/utility/network.dart';
 
 class AccountManagementBloc
     extends Bloc<AccountManagementEvent, AccountManagementState> {
-  AccountManagementBloc(AccountManagementState initialState)
-      : super(initialState);
+  AccountManagementBloc() : super(AccountManagementIntialState());
 
   @override
   Stream<AccountManagementState> mapEventToState(
       AccountManagementEvent event) async* {
     if (event is GetAccountManagementEvent) {
+      yield GetAccountManagementLoadingstate();
       yield* getVendorProfile();
     }
   }
 
   Stream<AccountManagementState> getVendorProfile() async* {
     if (await Network.isConnected()) {
-      yield GetAccountManagementLoadingstate();
-      try {
-        VendorDetailResponse result =
-            await apiProvider.getVendorProfileDetail();
-        log("$result");
-        if (result.success) {
-          yield GetAccountManagementState(
-              message: result.message,
-              data: result.data,
-              succes: result.message);
-        } else {
-          yield GetAccountManagementLoadingstate();
-        }
-      } catch (error) {
+      VendorDetailResponse result = await apiProvider.getVendorProfileDetail();
+
+      if (result.success) {
+        yield GetAccountManagementState(
+            message: result.message, data: result.data, succes: result.message);
+      } else {
         yield GetAccountManagementFailureState(
             message: "internal_server_error_key".tr(), succes: false);
       }

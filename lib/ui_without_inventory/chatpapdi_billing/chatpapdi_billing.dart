@@ -111,7 +111,6 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                         if (state
                             is GetChatPapdiBillingCustomerNumberResponseFailureState) {
                           status1 = state.status;
-                          log("staus=>$status1}");
                         }
                         if (state is GetChatPapdiBillingFailureState) {
                           message = state.message;
@@ -141,13 +140,14 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                           Fluttertoast.showToast(
                               msg: state.message,
                               backgroundColor: ColorPrimary);
+
                           // var result = await
                           datas!.qrCodeStatus == 0
                               ? Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                       builder: (BuildContext context) =>
-                                          BottomNavigationHomeWithOutInventory()))
+                                          HomeScreenWithoutInventory()))
                               : Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -252,41 +252,40 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                     ),
                     Container(
                       child: TextFormField(
-                          controller: amountController,
-                          keyboardType: TextInputType.number,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly
-                          ],
-                          maxLength: 10,
-                          decoration: InputDecoration(
-                            hintText: 'amount_spent_here_key'.tr(),
-                            labelText: 'amount_key'.tr(),
-                            counterText: "",
-                            contentPadding: EdgeInsets.all(0),
-                            fillColor: Colors.transparent,
-                            enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: ColorTextPrimary, width: 1.5)),
-                            focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: ColorPrimary, width: 1.5)),
-                            border: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: ColorPrimary, width: 1.5)),
-                          ),
-                          onChanged: (length) {
-                            log("$status1  ===>");
-                            if (length.isEmpty) {
-                              log("if$length");
-                              log("if$coins");
-                              coinss = 0.toString();
-                            } else {
-                              log("else$length");
-                              calculaton(length);
-                            }
-                            setState(() {});
-                          }),
+                        controller: amountController,
+                        keyboardType: TextInputType.number,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        maxLength: 10,
+                        decoration: InputDecoration(
+                          hintText: 'amount_spent_here_key'.tr(),
+                          labelText: 'amount_key'.tr(),
+                          counterText: "",
+                          contentPadding: EdgeInsets.all(0),
+                          fillColor: Colors.transparent,
+                          enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: ColorTextPrimary, width: 1.5)),
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: ColorPrimary, width: 1.5)),
+                          border: UnderlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: ColorPrimary, width: 1.5)),
+                        ),
+                        onChanged: (length) {
+                          if (length.isEmpty) {
+                            coinss = 0.toString();
+                            amount = 0.toString();
+                            redeem = false;
+                          } else {
+                            calculaton(length);
+                          }
+                          setState(() {});
+                        },
+                      ),
                     ),
                     SizedBox(
                       height: 20,
@@ -319,7 +318,6 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                             //     .billingcheck,
                             activeColor: ColorPrimary,
                             onChanged: (redeems) {
-                              log("true===>");
                               redeem = false;
 
                               if (mobileController.text.length == 10) {
@@ -362,7 +360,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                               if (amountController.text.length >= 0) {
                                 if (nameController.text.length > 1) {
                                   userRegister(context);
-                                  log("====>$succes");
+
                                   if (succes == true) {}
                                 } else {
                                   Fluttertoast.showToast(
@@ -425,25 +423,21 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
     if (redeem == true) {
       if (double.parse(coins) >= double.parse(length) * 3) {
         double amounts = double.parse(length) * 3;
-        log("amount1===>$amounts");
+
         coinss = amounts.toStringAsFixed(2);
         amount = 0.toString();
-        log("coins1===>$coins");
       } else {
         int i = 1;
         var rs;
         if (1 == i) {
           rs = double.parse(coins) / 3;
-          log("==>rs$rs");
           coinss = coins.toString();
-          log("==>controller${length}");
           amount = (double.parse(length) - rs).toStringAsFixed(2);
-          log("===>amount${length}");
         }
       }
     } else {
       coinss = 0.toString();
-      amount = 0.toString();
+      amount = length.toString();
     }
   }
 
@@ -452,7 +446,6 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
     input["mobile"] = mobileController.text;
     input["first_name"] = nameController.text;
 
-    log("=====? $input");
     directBillingCustomerNumberResponseBloc
         .add(GetChatPapdiPartialUserRegisterEvent(input: input));
   }
@@ -466,7 +459,6 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
     input["total_pay"] = amount;
     input["coin_deducted"] = coinss;
 
-    log("=====? $input");
     directBillingCustomerNumberResponseBloc
         .add(GetChatPapdiBillingEvent(input: input));
   }
@@ -482,8 +474,6 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
     input["coin_deducted"] = datas!.coinDeducted;
     input["earning_coins"] = datas!.earningCoins;
     input["myprofit_revenue"] = datas!.myProfitRevenue;
-
-    log("=====? $input");
 
     directBillingCustomerNumberResponseBloc
         .add(GetChatPapdiBillingOtpEvent(input: input));
