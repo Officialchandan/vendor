@@ -1,13 +1,11 @@
 import 'dart:async';
 import 'dart:collection';
 import 'dart:developer';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:vendor/api/Endpoint.dart';
 import 'package:vendor/api/api_provider.dart';
@@ -20,6 +18,7 @@ import 'package:vendor/ui/account_management/discount_codes/discounts_codes.dart
 import 'package:vendor/ui/account_management/gift%20scheme/gift_scheme.dart';
 import 'package:vendor/ui/account_management/settings/settings.dart';
 import 'package:vendor/ui/account_management/store_qr_code/store_qr_code.dart';
+import 'package:vendor/ui/account_management/terms_and_condition/terms_and_condition.dart';
 import 'package:vendor/ui/account_management/video_tutorial/video_tutorial.dart';
 import 'package:vendor/ui/home/home.dart';
 import 'package:vendor/ui/login/login_screen.dart';
@@ -65,8 +64,9 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
   var message;
   bool? status;
 
-  StreamController<List<VendorDetailData>> controller = StreamController();
+  StreamController<VendorDetailData> controller = StreamController();
   AccountManagementBloc accountManagementBloc = AccountManagementBloc();
+  VendorDetailData? vendorDetailData;
 
   @override
   void initState() {
@@ -87,11 +87,11 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
           title: Text('account_key'.tr()),
           centerTitle: true,
           bottom: PreferredSize(
-            preferredSize: Size.fromHeight(70),
+            preferredSize: Size.fromHeight(80),
             child: Container(
               padding: EdgeInsets.fromLTRB(15, 0, 15, 20),
               color: ColorPrimary,
-              child: StreamBuilder<List<VendorDetailData>>(
+              child: StreamBuilder<VendorDetailData>(
                 stream: controller.stream,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
@@ -99,8 +99,17 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
                       contentPadding: const EdgeInsets.all(0),
                       leading: ClipRRect(
                         borderRadius: BorderRadius.circular(70),
-                        child: Image.asset(
-                            "assets/images/wallpaperflare.com_wallpaper.jpg",
+                        child: CachedNetworkImage(
+                            imageUrl: snapshot.data!.vendorImage!.isNotEmpty
+                                ? snapshot.data!.vendorImage!.first.toString()
+                                : "https://blog.yorksj.ac.uk/amelia-lambert/wp-content/themes/oria/images/placeholder.png",
+                            progressIndicatorBuilder:
+                                (context, url, downloadProgress) => Center(
+                                      child: CircularProgressIndicator(
+                                          value: downloadProgress.progress),
+                                    ),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
                             width: 55,
                             height: 55,
                             fit: BoxFit.cover),
@@ -108,13 +117,13 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
                       title: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(snapshot.data![0].ownerName.toString(),
+                          Text(snapshot.data!.ownerName.toString(),
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 17,
                                   fontWeight: FontWeight.w700)),
                           SizedBox(height: 3),
-                          Text(snapshot.data![0].shopName.toString(),
+                          Text(snapshot.data!.shopName.toString(),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -130,7 +139,7 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(5, 2, 5, 2),
                           child: Text(
-                            snapshot.data![0].ownerMobile.toString(),
+                            snapshot.data!.ownerMobile.toString(),
                             style: TextStyle(
                                 fontSize: 13, fontWeight: FontWeight.bold),
                           ),
@@ -200,7 +209,7 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
                   ),
                   onTap: () async {
                     if (await Network.isConnected()) {
-                      onClick(context, index);
+                      onClick(context, index, vendorDetailData);
                     } else {
                       Fluttertoast.showToast(
                           msg: "please_check_your_internet_connection_key".tr(),
@@ -225,8 +234,10 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
         Endpoint.GET_VENDOR_PROFILE,
         data: input,
       );
+
       VendorDetailResponse response =
           VendorDetailResponse.fromJson(res.toString());
+      vendorDetailData = response.data;
       controller.add(response.data!);
       return response;
     } catch (error) {
@@ -243,7 +254,7 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
   }
 }
 
-Future<void> onClick(BuildContext context, int currentIndex) async {
+Future<void> onClick(BuildContext context, int currentIndex, var data) async {
   switch (currentIndex) {
     case 0:
       Navigator.push(
@@ -287,12 +298,13 @@ Future<void> onClick(BuildContext context, int currentIndex) async {
         MaterialPageRoute(builder: (context) => StoreQRCode()),
       );
       break;
-    // case 5:
-    //   Navigator.push(
-    //     context,
-    //     MaterialPageRoute(builder: (context) => HomeScreen()),
-    //   );
-    //   break;
+    case 6:
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => TermsAndCondition(vendorDetailData: data)),
+      );
+      break;
     case 7:
       logoutDialog(context);
       break;

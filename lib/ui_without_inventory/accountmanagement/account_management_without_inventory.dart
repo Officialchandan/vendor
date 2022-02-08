@@ -1,27 +1,20 @@
 import 'dart:async';
 import 'dart:collection';
 import 'dart:developer';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/src/public_ext.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:vendor/api/Endpoint.dart';
 import 'package:vendor/api/api_provider.dart';
 import 'package:vendor/api/server_error.dart';
 import 'package:vendor/model/log_out.dart';
 import 'package:vendor/model/vendor_profile_response.dart';
-
+import 'package:vendor/ui/account_management/terms_and_condition/terms_and_condition.dart';
 import 'package:vendor/ui/login/login_screen.dart';
 import 'package:vendor/ui_without_inventory/account_settings/account_settings.dart';
-
-import 'package:vendor/ui_without_inventory/accountmanagement/account_management_without_inventory_bloc.dart';
-import 'package:vendor/ui_without_inventory/accountmanagement/account_management_without_inventory_event.dart';
-import 'package:vendor/ui_without_inventory/accountmanagement/account_management_without_inventory_state.dart';
 import 'package:vendor/ui_without_inventory/home/home.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
@@ -65,8 +58,8 @@ class _AccountManagementWithoutInventoryScreenState
   ];
   var message;
   bool? status;
-
-  StreamController<List<VendorDetailData>> controller = StreamController();
+  VendorDetailData? vendorDetailData;
+  StreamController<VendorDetailData> controller = StreamController();
   List<VendorDetailData>? data;
   // AccountManagementWithoutInventoryBloc accountManagementBloc =
   //     AccountManagementWithoutInventoryBloc(
@@ -94,7 +87,7 @@ class _AccountManagementWithoutInventoryScreenState
             child: Container(
               padding: EdgeInsets.fromLTRB(15, 0, 15, 20),
               color: ColorPrimary,
-              child: StreamBuilder<List<VendorDetailData>>(
+              child: StreamBuilder<VendorDetailData>(
                 stream: controller.stream,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
@@ -102,22 +95,31 @@ class _AccountManagementWithoutInventoryScreenState
                       contentPadding: const EdgeInsets.all(0),
                       leading: ClipRRect(
                         borderRadius: BorderRadius.circular(70),
-                        child: Image.asset(
-                            "assets/images/wallpaperflare.com_wallpaper.jpg",
-                            width: 55,
-                            height: 55,
-                            fit: BoxFit.cover),
+                        child: CachedNetworkImage(
+                          imageUrl: snapshot.data!.vendorImage!.isNotEmpty
+                              ? snapshot.data!.vendorImage!.first.toString()
+                              : "https://blog.yorksj.ac.uk/amelia-lambert/wp-content/themes/oria/images/placeholder.png",
+                          progressIndicatorBuilder:
+                              (context, url, downloadProgress) =>
+                                  CircularProgressIndicator(
+                                      value: downloadProgress.progress),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
+                          width: 55,
+                          height: 55,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                       title: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(snapshot.data![0].ownerName.toString(),
+                          Text(snapshot.data!.ownerName.toString(),
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 17,
                                   fontWeight: FontWeight.w700)),
                           SizedBox(height: 3),
-                          Text(snapshot.data![0].shopName.toString(),
+                          Text(snapshot.data!.shopName.toString(),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -133,7 +135,7 @@ class _AccountManagementWithoutInventoryScreenState
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(5, 2, 5, 2),
                           child: Text(
-                            snapshot.data![0].ownerMobile.toString(),
+                            snapshot.data!.ownerMobile.toString(),
                             style: TextStyle(
                                 fontSize: 13, fontWeight: FontWeight.bold),
                           ),
@@ -202,7 +204,7 @@ class _AccountManagementWithoutInventoryScreenState
                     ),
                   ),
                   onTap: () {
-                    onClick(context, index);
+                    onClick(context, index, vendorDetailData);
                   });
             }),
           ),
@@ -211,7 +213,7 @@ class _AccountManagementWithoutInventoryScreenState
     );
   }
 
-  Future<void> onClick(BuildContext context, int currentIndex) async {
+  Future<void> onClick(BuildContext context, int currentIndex, var data) async {
     switch (currentIndex) {
       case 1:
         Navigator.push(
@@ -219,7 +221,15 @@ class _AccountManagementWithoutInventoryScreenState
           MaterialPageRoute(builder: (context) => AccountSettings()),
         );
         break;
-
+      case 6:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => TermsAndCondition(
+                    vendorDetailData: data,
+                  )),
+        );
+        break;
       case 7:
         logoutDialog(context);
         break;
@@ -304,6 +314,7 @@ class _AccountManagementWithoutInventoryScreenState
 
       VendorDetailResponse response =
           VendorDetailResponse.fromJson(res.toString());
+      vendorDetailData = response.data;
       controller.add(response.data!);
       return response;
     } catch (error) {
