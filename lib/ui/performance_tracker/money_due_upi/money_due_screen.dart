@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +10,8 @@ import 'package:vendor/ui/performance_tracker/money_due_upi/bloc/money_due_state
 import 'package:vendor/utility/color.dart';
 
 class MoneyDueScreen extends StatefulWidget {
+  bool? isShow;
+  MoneyDueScreen(this.isShow);
   @override
   _MoneyDueScreenState createState() => _MoneyDueScreenState();
 }
@@ -30,7 +34,16 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
       child: Scaffold(
           appBar: AppBar(
             title: Text("money_due_upi_key".tr()),
+            automaticallyImplyLeading: widget.isShow!,
             elevation: 0,
+            leading: widget.isShow! == true
+                ? IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(Icons.arrow_back_ios),
+                  )
+                : Container(),
           ),
           body: SingleChildScrollView(
             child: Column(

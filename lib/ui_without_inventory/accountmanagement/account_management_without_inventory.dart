@@ -94,7 +94,7 @@ class _AccountManagementWithoutInventoryScreenState
                     return ListTile(
                       contentPadding: const EdgeInsets.all(0),
                       leading: ClipRRect(
-                        borderRadius: BorderRadius.circular(70),
+                        borderRadius: BorderRadius.circular(80),
                         child: CachedNetworkImage(
                           imageUrl: snapshot.data!.vendorImage!.isNotEmpty
                               ? snapshot.data!.vendorImage!.first.toString()

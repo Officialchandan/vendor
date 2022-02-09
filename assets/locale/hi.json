@@ -319,6 +319,7 @@
           "redeemed_amount_key":"भुनाई गई राशि",
           "pay_amount_key":"भुगतान राशि",
           "money_due_upi_key":"बकाया पैसा - यूपीआई",
+          "upi_key":"यूपीआई",
           "company_due_amount_key":"कंपनी देय राशि",
           "click_here_to_see_sale_amount_key":"बिक्री राशि देखने के लिए यहां क्लिक करें",
           

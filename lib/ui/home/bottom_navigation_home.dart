@@ -43,7 +43,7 @@ class _BottomNavigationHomeState extends State<BottomNavigationHome>
           children: [
             BillingScreen(),
             InventoryScreen(),
-            MoneyDueScreen(),
+            MoneyDueScreen(false),
             TrackerReportDashboard(),
             AccountManagementScreen(),
           ],
@@ -81,7 +81,6 @@ class _BottomBarState extends State<BottomBar> {
   @override
   void initState() {
     widget.tabController.addListener(() {
-      debugPrint("Tab change--> ${widget.tabController.index}");
       setState(() {});
     });
     super.initState();
@@ -130,7 +129,7 @@ class _BottomBarState extends State<BottomBar> {
         ),
 
         Tab(
-          text: 'money_due_upi_key'.tr(),
+          text: 'upi_key'.tr(),
           icon: widget.tabController.index == 2
               ? Image.asset(
                   "assets/images/f7-a.png",
@@ -253,7 +252,7 @@ class _MBottomNavigationBarState extends State<MBottomNavigationBar> {
               "assets/images/f7-a.png",
               scale: 2,
             ),
-            label: "money_due_upi_key".tr()),
+            label: "upi_key".tr()),
         BottomNavigationBarItem(
             icon: Image.asset(
               "assets/images/f5.png",

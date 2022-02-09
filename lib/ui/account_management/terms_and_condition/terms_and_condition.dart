@@ -46,7 +46,7 @@ class _TermsAndConditionState extends State<TermsAndCondition> {
                             : "T&C not available",
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 17,
+                          fontSize: 18,
                         ),
                       ),
                     ),

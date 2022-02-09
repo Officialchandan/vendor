@@ -30,12 +30,12 @@ class _TrackerReportDashboardState extends State<TrackerReportDashboard> {
       "image": "assets/images/tr-ic2.png",
       "id": 2
     },
-    // {
-    //   "title": "money_due_upi_key".tr(),
-    //   "subTitle": "click_here_to_add_product_key".tr(),
-    //   "image": "assets/images/tr-ic3.png",
-    //   "id": 3
-    // },
+    {
+      "title": "money_due_upi_key".tr(),
+      "subTitle": "click_here_to_add_product_key".tr(),
+      "image": "assets/images/tr-ic3.png",
+      "id": 3
+    },
     {
       "title": "my_customers_key".tr(),
       "subTitle": "click_here_to_view_customer_key".tr(),
@@ -46,8 +46,10 @@ class _TrackerReportDashboardState extends State<TrackerReportDashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        title: "trackers_reports_key".tr(),
+      appBar: AppBar(
+        title: Text("trackers_reports_key".tr()),
+        centerTitle: true,
+        automaticallyImplyLeading: false,
       ),
       body: ListView.builder(
         itemBuilder: (context, index) {
@@ -76,7 +78,7 @@ class _TrackerReportDashboardState extends State<TrackerReportDashboard> {
                           Navigator.push(
                               context,
                               PageTransition(
-                                  child: MoneyDueScreen(),
+                                  child: MoneyDueScreen(true),
                                   type: PageTransitionType.fade));
                         }
                         if (options[index]["id"] == 4) {

@@ -182,13 +182,11 @@ void main() async {
   });
 
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-    print("a new on message");
     RemoteNotification? notification = message.notification;
     AndroidNotification? android = message.notification?.android;
     if (notification != null && android != null) {
-      log("notification aya");
       Navigator.push(navigationService.navigatorKey.currentContext!,
-          MaterialPageRoute(builder: (_) => MoneyDueScreen()));
+          MaterialPageRoute(builder: (_) => MoneyDueScreen(true)));
     }
   });
 

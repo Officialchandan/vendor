@@ -18,6 +18,12 @@ class _CustomAppBarState extends State<CustomAppBar> {
     print("Hi");
     return AppBar(
       title: Text("${widget.title}"),
+      leading: IconButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        icon: Icon(Icons.arrow_back_ios),
+      ),
     );
   }
 }

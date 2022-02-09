@@ -65,6 +65,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("inventory_key".tr()),
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
               onPressed: () {

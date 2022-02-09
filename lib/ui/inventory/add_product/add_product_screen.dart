@@ -164,7 +164,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
           }
         },
         child: Scaffold(
-          appBar: AppBar(title: Text("add_product_key".tr())),
+          appBar: CustomAppBar(title: "add_product_key".tr()),
           body: SingleChildScrollView(
             padding: EdgeInsets.all(20),
             child: Column(

@@ -305,6 +305,7 @@
       "redeemed_amount_key":"Redeemed Amount",
       "pay_amount_key":"Pay Amount",
       "money_due_upi_key":"Money Due - UPI",
+      "upi_key":"UPI",
       "company_due_amount_key":"Company due amount",
       "click_here_to_see_sale_amount_key":"click here to see Sale amount",
       

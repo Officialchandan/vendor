@@ -45,6 +45,12 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("my_customers_key".tr()),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(Icons.arrow_back_ios),
+        ),
         actions: [
           InkWell(
             onTap: () {
