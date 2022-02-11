@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/src/public_ext.dart';
@@ -14,7 +13,6 @@ import 'package:vendor/main.dart';
 import 'package:vendor/ui/account_management/video_tutorial/video_tutorial.dart';
 import 'package:vendor/ui/notification_screen/model/notification_count.dart';
 import 'package:vendor/ui/notification_screen/notification_screen.dart';
-
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/routs.dart';
@@ -203,7 +201,6 @@ class _HomeScreenState extends State<HomeScreen> {
             highlightColor: Colors.transparent,
             splashColor: Colors.transparent,
             onTap: () async {
-              log("f");
               if (await Network.isConnected()) {
                 routeManager(index);
               } else {

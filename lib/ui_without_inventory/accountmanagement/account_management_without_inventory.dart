@@ -97,7 +97,8 @@ class _AccountManagementWithoutInventoryScreenState
                         borderRadius: BorderRadius.circular(80),
                         child: CachedNetworkImage(
                           imageUrl: snapshot.data!.vendorImage!.isNotEmpty
-                              ? snapshot.data!.vendorImage!.first.toString()
+                              ? snapshot.data!.vendorImage!.first.image
+                                  .toString()
                               : "https://blog.yorksj.ac.uk/amelia-lambert/wp-content/themes/oria/images/placeholder.png",
                           progressIndicatorBuilder:
                               (context, url, downloadProgress) =>

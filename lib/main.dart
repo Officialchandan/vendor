@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -163,10 +162,7 @@ void main() async {
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     RemoteNotification? notification = message.notification;
     AndroidNotification? android = message.notification?.android;
-    log("notification data -> ${message.data}");
-    log("notification title ${message.notification!.title}");
-    log("notification body ${message.notification!.body}");
-    log("===>$android");
+
     if (notification != null && android != null) {
       flutterLocalNotificationsPlugin.show(
           notification.hashCode,
