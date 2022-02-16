@@ -18,6 +18,8 @@ import 'package:vendor/ui_without_inventory/chatpapdi_billing/chatpapdi_billing.
 import 'package:vendor/ui_without_inventory/home/bottom_navigation_bar.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
+import 'package:vendor/widget/coin_chatpapdi_genrated.dart';
+import 'package:vendor/widget/coin_genrate_pop.dart';
 
 class Scanner extends StatefulWidget {
   final ChatPapdiData data;
@@ -52,11 +54,13 @@ class _ScannerState extends State<Scanner> {
     input["customer_id"] = widget.data.customerId;
 
     scannerBloc.add(GetScannerEvent(data: input));
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (BuildContext context) =>
-                BottomNavigationHomeWithOutInventory()));
+    Navigator.pop(context);
+    CoinDialogChatpapdi.displayCoinDialog(context);
+    // Navigator.pushReplacement(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (BuildContext context) =>
+    //             BottomNavigationHomeWithOutInventory()));
   }
 
   @override
@@ -161,12 +165,9 @@ class _ScannerState extends State<Scanner> {
                                   Fluttertoast.showToast(
                                       msg: "Skiped QR code ");
 
-                                  Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              ChatPapdiBilling()),
-                                      (route) => false);
+                                  Navigator.pop(context);
+                                  CoinDialogChatpapdi.displayCoinDialog(
+                                      context);
                                 },
                                 child: const Text('Skip',
                                     style: TextStyle(fontSize: 20)),

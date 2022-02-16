@@ -15,6 +15,7 @@ import 'package:vendor/ui/billingflow/direct_billing/ScannerDirectBilling/scanne
 import 'package:vendor/ui/home/bottom_navigation_home.dart';
 import 'package:vendor/ui_without_inventory/chatpapdi_billing/chatpapdi_billing.dart';
 import 'package:vendor/utility/color.dart';
+import 'package:vendor/widget/coin_genrate_pop.dart';
 
 class Scanner extends StatefulWidget {
   final DirectBillingData data;
@@ -55,11 +56,12 @@ class _ScannerState extends State<Scanner> {
     log("yha tak");
     scannerBloc.add(GetScannerEvent(data: input));
     //Navigator.of(context).pop(result!.code);
-
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => BottomNavigationHome()),
-        (route) => false);
+    Navigator.pop(context);
+    CoinDialog.displayCoinDialog(context);
+    // Navigator.pushAndRemoveUntil(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => BottomNavigationHome()),
+    //     (route) => false);
   }
 
   @override
@@ -105,8 +107,8 @@ class _ScannerState extends State<Scanner> {
                                   log("message=>${result!.code}");
                                   log("data==>${widget.data}");
                                   scanner(context);
-                                  Fluttertoast.showToast(
-                                      msg: "${result!.code}");
+                                  // Fluttertoast.showToast(
+                                  //     msg: "${}");
                                 },
                                 child: const Text('Done',
                                     style: TextStyle(fontSize: 20)),
@@ -164,12 +166,14 @@ class _ScannerState extends State<Scanner> {
                                 margin: const EdgeInsets.all(8),
                                 child: ElevatedButton(
                                   onPressed: () async {
-                                    Navigator.pushAndRemoveUntil(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                BillingScreen()),
-                                        (route) => false);
+                                    Navigator.pop(context);
+                                    CoinDialog.displayCoinDialog(context);
+                                    // Navigator.pushAndRemoveUntil(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //         builder: (context) =>
+                                    //             BillingScreen()),
+                                    //     (route) => false);
                                   },
                                   child: const Text('Skip',
                                       style: TextStyle(fontSize: 20)),

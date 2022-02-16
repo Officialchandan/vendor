@@ -17,6 +17,7 @@ import 'package:vendor/ui/home/bottom_navigation_home.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/validator.dart';
+import 'package:vendor/widget/coin_genrate_pop.dart';
 
 class DirectBilling extends StatefulWidget {
   DirectBilling({Key? key}) : super(key: key);
@@ -34,6 +35,7 @@ class _DirectBillingState extends State<DirectBilling> {
       directBillingCustomerNumberResponseBloc =
       DirectBillingCustomerNumberResponseBloc();
   var value = true;
+  var checkbox = false;
   var message = "";
   var status1, succes;
   bool? status, redeem = false;
@@ -137,15 +139,12 @@ class _DirectBillingState extends State<DirectBilling> {
                               backgroundColor: ColorPrimary);
                         }
                         if (state is GetDirectBillingOtpState) {
+                          Navigator.pop(context);
                           Fluttertoast.showToast(
                               msg: state.message,
                               backgroundColor: ColorPrimary);
                           int.parse(datas!.qrCodeStatus) == 0
-                              ? Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          BottomNavigationHome()))
+                              ? CoinDialog.displayCoinDialog(context)
                               : Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
@@ -419,7 +418,13 @@ class _DirectBillingState extends State<DirectBilling> {
                     } else {
                       if (mobileController.text.length == 10) {
                         if (amountController.text.length >= 0) {
-                          directBilling(context);
+                          if (checkbox == true) {
+                            directBilling(context);
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: "Please select category".tr(),
+                                backgroundColor: ColorPrimary);
+                          }
                         } else {
                           Fluttertoast.showToast(
                               msg: "please_enter_amount_key".tr(),
@@ -628,7 +633,8 @@ class _DirectBillingState extends State<DirectBilling> {
                 activeColor: ColorPrimary,
                 onChanged: (isCheck) {
                   list.isChecked = isCheck;
-                  if (isCheck!) {
+                  checkbox = isCheck!;
+                  if (isCheck) {
                     categoryIdList.add(list.id);
                   } else {
                     categoryIdList.remove(list.id);

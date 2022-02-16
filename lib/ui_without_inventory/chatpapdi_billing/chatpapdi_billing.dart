@@ -20,6 +20,7 @@ import 'package:vendor/ui_without_inventory/home/home.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/validator.dart';
+import 'package:vendor/widget/coin_chatpapdi_genrated.dart';
 
 class ChatPapdiBilling extends StatefulWidget {
   ChatPapdiBilling({Key? key}) : super(key: key);
@@ -143,11 +144,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
 
                           // var result = await
                           datas!.qrCodeStatus == 0
-                              ? Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          HomeScreenWithoutInventory()))
+                              ? CoinDialogChatpapdi.displayCoinDialog(context)
                               : Navigator.push(
                                   context,
                                   MaterialPageRoute(

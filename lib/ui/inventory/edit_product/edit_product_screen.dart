@@ -480,10 +480,10 @@ class EditProductScreenState extends State<EditProductScreen> {
       return;
     }
 
-    if (variantModel.purchasePrice.isEmpty) {
-      Utility.showToast("please_enter_purchase_price_key".tr());
-      return;
-    }
+    // if (variantModel.purchasePrice.isEmpty) {
+    //   Utility.showToast("please_enter_purchase_price_key".tr());
+    //   return;
+    // }
     if (variantModel.sellingPrice.isEmpty) {
       Utility.showToast("please_enter_selling_price_key".tr());
       return;

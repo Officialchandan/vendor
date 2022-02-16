@@ -18,6 +18,8 @@ import 'package:vendor/ui/home/bottom_navigation_home.dart';
 
 import 'package:vendor/utility/sharedpref.dart';
 
+import '../../../widget/coin_genrate_pop.dart';
+
 class Scanner extends StatefulWidget {
   final VerifyEarningCoinsOtpData data;
   Scanner({required this.data});
@@ -73,13 +75,15 @@ class _ScannerState extends State<Scanner> {
     //             index: 0,
     //           )),
     // );
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-            builder: (context) => BottomNavigationHome(
-                  index: 0,
-                )),
-        (route) => false);
+    Navigator.pop(context);
+    CoinDialog.displayCoinDialog(context);
+    // Navigator.pushAndRemoveUntil(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (context) => BottomNavigationHome(
+    //               index: 0,
+    //             )),
+    //     (route) => false);
     // Navigator.push(
     //     context, MaterialPageRoute(builder: (context) => ChatPapdiBilling()));
   }
@@ -183,13 +187,17 @@ class _ScannerState extends State<Scanner> {
                                       margin: const EdgeInsets.all(8),
                                       child: ElevatedButton(
                                         onPressed: () async {
-                                          Navigator.pushAndRemoveUntil(
-                                              context,
-                                              PageTransition(
-                                                  child: BottomNavigationHome(),
-                                                  type:
-                                                      PageTransitionType.fade),
-                                              ModalRoute.withName("/"));
+                                          Fluttertoast.showToast(
+                                              msg: "Skiped QR code ");
+                                          Navigator.pop(context);
+                                          CoinDialog.displayCoinDialog(context);
+                                          // Navigator.pushAndRemoveUntil(
+                                          //     context,
+                                          //     PageTransition(
+                                          //         child: BottomNavigationHome(),
+                                          //         type:
+                                          //             PageTransitionType.fade),
+                                          //     ModalRoute.withName("/"));
                                         },
                                         child: const Text('Skip',
                                             style: TextStyle(fontSize: 20)),

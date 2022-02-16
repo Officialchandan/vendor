@@ -25,7 +25,7 @@ class _WithoutInventoryPerformanceTrackerByCategoryState
     },
     {
       "title": "earning_till_now_key".tr(),
-      "subTitle": "deduction_after_20_of_sale_amount_key".tr(),
+      "subTitle": "after_deduction_commission_key".tr(),
       "image": "assets/images/performance-ic2.png",
       "id": 2
     },
