@@ -57,27 +57,24 @@ class _NotificationScreenState extends State<NotificationScreen> {
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 10, bottom: 10),
-              child: BlocBuilder<NotificationBloc, NotificationStates>(
-                builder: (context, state) {
-                  if (state is GetNotificationLoadingState) {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  if (state is GetNotificationSuccessState) {
-                    return showNotifications(state.data!);
-                  }
+            child: BlocBuilder<NotificationBloc, NotificationStates>(
+              builder: (context, state) {
+                if (state is GetNotificationLoadingState) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (state is GetNotificationSuccessState) {
+                  return showNotifications(state.data!);
+                }
 
-                  if (state is GetNotificationFailureState) {
-                    return Center(
-                      child: Text(state.message),
-                    );
-                  }
-                  return Container();
-                },
-              ),
+                if (state is GetNotificationFailureState) {
+                  return Center(
+                    child: Text(state.message),
+                  );
+                }
+                return Container();
+              },
             ),
           ),
         ),
@@ -88,10 +85,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
   Widget showNotifications(List<NotificationData> data) {
     return ListView.separated(
       itemCount: data.length,
-      reverse: true,
+      reverse: false,
+      padding: const EdgeInsets.only(top: 15, bottom: 15),
       itemBuilder: (context, index) {
         return Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20),
+          padding: const EdgeInsets.only(left: 15, right: 15),
           child: InkWell(
             onTap: () async {
               setState(() {
@@ -154,8 +152,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        DateFormat.jm()
-                            .format(DateTime.parse(data[index].createdAt)),
+                        DateFormat("dd MMM")
+                                .format(DateTime.parse(data[index].createdAt)) +
+                            " " +
+                            DateFormat.jm()
+                                .format(DateTime.parse(data[index].createdAt))
+                                .toLowerCase(),
                         style: TextStyle(
                             color: data[index].isRead == 1
                                 ? Colors.grey
