@@ -33,7 +33,7 @@
     "daily_key" : "रोज",
     "t&c_with_signature":"हस्ताक्षर के साथ नियम एवं शर्तें",
     "monthly_key" : "महीने के",
-    "earning_till_now_key" : "अब तक की कमाई \n(बिक्री राशि के 20% के बाद कटौती)",
+    "earning_till_now_key" : "अब तक की कमाई \n(कटौती आयोग के बाद)",
     "walk_in_key" : "वॉक इंस",
     "sale_amount_key" : "बिक्री की राशि",
     "hourly_report_key" : "प्रति घंटा रिपोर्ट",
@@ -324,6 +324,8 @@
           "click_here_to_see_sale_amount_key":"बिक्री राशि देखने के लिए यहां क्लिक करें",
           
           "deduction_after_20_of_sale_amount_key":"बिक्री राशि के 20% के बाद कटौती",
+          "after_deduction_commission_key":"कटौती आयोग के बाद",
+          "click_here_to_see_earning_amount_key" : "कमाई की रकम देखने के लिए यहां क्लिक करें",
           "click_here_to_sell_walikins_key":"वालिकिन्स बेचने के लिए यहां क्लिक करें",
           "trackers_reports_key":"ट्रैकर्स और रिपोर्ट",
           "walkin_amount_key":"वॉक-इन राशि",

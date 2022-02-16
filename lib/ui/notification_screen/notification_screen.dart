@@ -88,7 +88,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
   Widget showNotifications(List<NotificationData> data) {
     return ListView.separated(
       itemCount: data.length,
-      reverse: true,
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.only(left: 20, right: 20),

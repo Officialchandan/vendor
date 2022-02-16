@@ -34,7 +34,7 @@
     
 
     "monthly_key" : "Monthly",
-    "earning_till_now_key" : "Earning till now \n(deduction after 20% of sale amt)",
+    "earning_till_now_key" : "Earning till now \n(After deduction commission)",
     "walk_in_key" : "Walk Ins",
     "sale_amount_key" : "Sale Amount",
     "hourly_report_key" : "Hourly report",
@@ -308,9 +308,10 @@
       "upi_key":"UPI",
       "company_due_amount_key":"Company due amount",
       "click_here_to_see_sale_amount_key":"click here to see Sale amount",
-      
+      "click_here_to_see_earning_amount_key" : "click here to see Earning amount",
       "deduction_after_20_of_sale_amount_key":"Deduction after 20% of sale amount",
-      "click_here_to_sell_walikins_key":"click here to sell Walikins",
+      "after_deduction_commission_key":"After deduction commission",
+      "click_here_to_sell_walikins_key":"click here to see Walikins",
       "trackers_reports_key":"Trackers & Reports",
       "walkin_amount_key":"Walkin Amount",
       "data_not_found_key":"Data Not Found",
