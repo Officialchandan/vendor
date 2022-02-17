@@ -643,16 +643,12 @@ class _BillingProductsState extends State<BillingProducts> {
                       }
 
                       if (state is VerifyOtpState) {
+                        Navigator.pop(context);
                         passing = state.data;
                         Fluttertoast.showToast(
                             msg: state.message, backgroundColor: ColorPrimary);
                         otpVerifyList!.qrCodeStatus == 0
-                            ? Navigator.pushAndRemoveUntil(
-                                context,
-                                PageTransition(
-                                    child: BottomNavigationHome(),
-                                    type: PageTransitionType.fade),
-                                ModalRoute.withName("/"))
+                            ? d._displayCoinDialog(context)
                             : Navigator.push(
                                 context,
                                 MaterialPageRoute(
