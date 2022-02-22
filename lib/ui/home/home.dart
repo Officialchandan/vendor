@@ -1,21 +1,22 @@
+import 'dart:collection';
 import 'dart:developer';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:dio/dio.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:share/share.dart';
-import 'package:vendor/api/Endpoint.dart';
-import 'package:vendor/api/server_error.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/ui/account_management/video_tutorial/video_tutorial.dart';
-import 'package:vendor/ui/notification_screen/model/notification_count.dart';
+import 'package:vendor/ui/notification_screen/model/notification_response.dart';
 import 'package:vendor/ui/notification_screen/notification_screen.dart';
 import 'package:vendor/utility/color.dart';
+import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/routs.dart';
+import 'package:vendor/utility/sharedpref.dart';
+import 'package:vendor/utility/utility.dart';
 
 import 'bottom_navigation_home.dart';
 
@@ -27,7 +28,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<CountData> notificationList = [];
+  List<NotificationData>? notificationData;
+  int count = 0;
+  int isReadCount = 0;
+  int totalNotification = 0;
   List<String> name = [
     "billing_key".tr(),
     "inventory_key".tr(),
@@ -61,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    getNotificationCount();
+    getNotifications();
   }
 
   @override
@@ -133,10 +137,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => NotificationScreen()));
+                          builder: (context) => NotificationScreen(
+                                notificationData: notificationData!,
+                              ))).then((value) {
+                    setState(() {
+                      count -= value as int;
+                    });
+                  });
                 },
               ),
-              notificationList.isNotEmpty
+              notificationData != null
                   ? Positioned(
                       right: 10,
                       top: 8,
@@ -158,7 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Align(
                             alignment: Alignment.center,
                             child: Text(
-                              notificationList.length.toString(),
+                              count.toString(),
                               style: TextStyle(
                                 color: ColorPrimary,
                                 fontWeight: FontWeight.bold,
@@ -307,23 +317,28 @@ class _HomeScreenState extends State<HomeScreen> {
                                 arguments: 4);
   }
 
-  Future<NotificationCount> getNotificationCount() async {
-    try {
-      Response res = await dio.get(Endpoint.GET_NOTIFICATION_COUNT);
-      NotificationCount count = NotificationCount.fromJson(res.toString());
-      notificationList = count.data!;
-      setState(() {});
-      return count;
-    } catch (error) {
-      String message = "";
-      if (error is DioError) {
-        ServerError e = ServerError.withError(error: error);
-        message = e.getErrorMessage();
+  getNotifications() async {
+    String userId =
+        (await SharedPref.getIntegerPreference(SharedPref.VENDORID)).toString();
+    Map input = HashMap();
+    input["vendor_id"] = userId;
+    if (await Network.isConnected()) {
+      NotificationResponse response = await apiProvider.getNotifications(input);
+      if (response.success) {
+        notificationData = response.data;
+        totalNotification = response.data!.length;
+        response.data!.forEach((element) {
+          if (element.isRead == 1) {
+            isReadCount++;
+          }
+          setState(() {});
+          count = totalNotification - isReadCount;
+        });
       } else {
-        message = "Please try again later!";
+        Utility.showToast(response.message);
       }
-      print("Exception occurred: $message stackTrace: $error");
-      return NotificationCount(success: false, message: message);
+    } else {
+      Utility.showToast(Constant.INTERNET_ALERT_MSG);
     }
   }
 }

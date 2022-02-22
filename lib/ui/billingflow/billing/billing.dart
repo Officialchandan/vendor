@@ -83,8 +83,10 @@ class _BillingScreenState extends State<BillingScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomeScreen()));
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => HomeScreen()),
+            (route) => false);
         return true;
       },
       child: BlocProvider<CustomerNumberResponseBloc>(

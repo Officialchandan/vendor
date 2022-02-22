@@ -1,50 +1,48 @@
 import 'dart:collection';
-
+import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:vendor/api/Endpoint.dart';
 import 'package:vendor/api/server_error.dart';
-import 'package:vendor/ui/notification_screen/bloc/notification_bloc.dart';
-import 'package:vendor/ui/notification_screen/bloc/notification_state.dart';
-import 'package:vendor/ui/notification_screen/bloc/notofication_event.dart';
 import 'package:vendor/ui/notification_screen/model/notification_response.dart';
 import 'package:vendor/ui/notification_screen/model/notification_status.dart';
-import 'package:vendor/ui/performance_tracker/money_due_upi/money_due_screen.dart';
 import 'package:vendor/utility/routs.dart';
 import 'package:vendor/utility/sharedpref.dart';
-
 import '../../main.dart';
 
 class NotificationScreen extends StatefulWidget {
-  NotificationScreen({Key? key}) : super(key: key);
+  final List<NotificationData> notificationData;
+  NotificationScreen({Key? key, required this.notificationData})
+      : super(key: key);
 
   @override
   _NotificationScreenState createState() => _NotificationScreenState();
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
-  NotificationBloc notificationBloc = NotificationBloc();
+  int isReadCount = 0;
   @override
   void initState() {
     super.initState();
-
-    getNotifications();
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: BlocProvider(
-        create: (context) => notificationBloc,
+      child: WillPopScope(
+        onWillPop: () async {
+          Navigator.of(context).pop(isReadCount);
+          return true;
+        },
         child: Scaffold(
           appBar: AppBar(
             leading: IconButton(
               icon: Icon(Icons.arrow_back_ios),
               onPressed: () {
-                Navigator.of(context).pop();
+                log("isReadCount >>>>>> " + isReadCount.toString());
+                Navigator.of(context).pop(isReadCount);
               },
             ),
             title: Text(
@@ -54,29 +52,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
             centerTitle: true,
           ),
           body: Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            color: Colors.white,
-            child: BlocBuilder<NotificationBloc, NotificationStates>(
-              builder: (context, state) {
-                if (state is GetNotificationLoadingState) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                if (state is GetNotificationSuccessState) {
-                  return showNotifications(state.data!);
-                }
-
-                if (state is GetNotificationFailureState) {
-                  return Center(
-                    child: Text(state.message),
-                  );
-                }
-                return Container();
-              },
-            ),
-          ),
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              color: Colors.white,
+              child: showNotifications(widget.notificationData)),
         ),
       ),
     );
@@ -93,6 +72,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
           child: InkWell(
             onTap: () async {
               setState(() {
+                if (data[index].isRead == 0) {
+                  isReadCount++;
+                }
                 data[index].isRead = 1;
               });
               markAsRead(data[index].id);
@@ -179,10 +161,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
     );
   }
 
-  void getNotifications() async {
-    notificationBloc.add(GetNotificationEvent());
-  }
-
   Future<NotificationStatusResponse> markAsRead(int id) async {
     Map input = HashMap();
     String userId =
@@ -190,7 +168,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
     input["id"] = id;
     input["vendor_id"] = userId;
-    notificationBloc.add(MarkAsReadEvent(input: input));
 
     try {
       Response res =
@@ -198,7 +175,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
       NotificationStatusResponse response =
           NotificationStatusResponse.fromJson(res.toString());
-      Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: 4);
+      Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: 2);
       if (response.success) {
         return NotificationStatusResponse(
             message: response.message, success: true);
