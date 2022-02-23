@@ -191,7 +191,10 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
               minWidth: MediaQuery.of(context).size.width,
               shape: RoundedRectangleBorder(),
               color: ColorPrimary,
-              child: Text("done_key".tr()),
+              child: Text(
+                "done_key".tr(),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
             ),
           ],
         ),
@@ -555,7 +558,7 @@ class _VariantOptionWidgetState extends State<VariantOptionWidget> {
                       });
                 },
                 decoration: InputDecoration(
-                    hintText: "select_key ${widget.option.name}".tr(),
+                    hintText: "select_key".tr() + " ${widget.option.name}",
                     labelText: "${widget.option.name}",
                     suffixIcon: Icon(Icons.keyboard_arrow_right),
                     suffixIconConstraints:

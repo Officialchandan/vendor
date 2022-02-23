@@ -85,7 +85,10 @@ class _CategoryBottomSheetState extends State<CategoryBottomSheet> {
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text("cancel_key".tr()),
+            child: Text(
+              "cancel_key".tr(),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
           )
         ],
       ),

@@ -83,15 +83,16 @@ class _SelectColorBottomSheetState extends State<SelectColorBottomSheet> {
               },
             ),
           ),
-          Row(
-            children: [
-              TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text("cancel_key".tr())),
-            ],
-          )
+          TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Center(
+                child: Text(
+                  "cancel_key".tr(),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ))
         ],
       ),
     );
