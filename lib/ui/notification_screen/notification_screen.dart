@@ -41,7 +41,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
             leading: IconButton(
               icon: Icon(Icons.arrow_back_ios),
               onPressed: () {
-                log("isReadCount >>>>>> " + isReadCount.toString());
                 Navigator.of(context).pop(isReadCount);
               },
             ),

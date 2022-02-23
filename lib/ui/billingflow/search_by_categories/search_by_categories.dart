@@ -579,33 +579,26 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                         searchList[state.index].check =
                                             state.check;
                                       }
-                                      return Container(
-                                        height: 18,
-                                        width: 18,
-                                        color: Colors.white,
-                                        child: Checkbox(
-                                          materialTapTargetSize:
-                                              MaterialTapTargetSize.shrinkWrap,
-                                          // checkColor: Colors.indigo,
-                                          value: searchList[index].check,
-                                          activeColor: ColorPrimary,
-                                          onChanged: (newvalue) async {
-                                            log("true===>");
-                                            if (await Network.isConnected()) {
-                                              searchByCategoriesBloc.add(
-                                                  GetCheckBoxSearchByCategoriesEvent(
-                                                      check: newvalue!,
-                                                      index: index));
-                                            } else {
-                                              Fluttertoast.showToast(
-                                                  msg:
-                                                      "please_check_your_internet_connection_key"
-                                                          .tr(),
-                                                  backgroundColor:
-                                                      ColorPrimary);
-                                            }
-                                          },
-                                        ),
+                                      return Checkbox(
+                                        materialTapTargetSize:
+                                            MaterialTapTargetSize.shrinkWrap,
+                                        // checkColor: Colors.indigo,
+                                        value: searchList[index].check,
+                                        activeColor: ColorPrimary,
+                                        onChanged: (newvalue) async {
+                                          if (await Network.isConnected()) {
+                                            searchByCategoriesBloc.add(
+                                                GetCheckBoxSearchByCategoriesEvent(
+                                                    check: newvalue!,
+                                                    index: index));
+                                          } else {
+                                            Fluttertoast.showToast(
+                                                msg:
+                                                    "please_check_your_internet_connection_key"
+                                                        .tr(),
+                                                backgroundColor: ColorPrimary);
+                                          }
+                                        },
                                       );
                                     },
                                   ),

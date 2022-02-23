@@ -671,8 +671,8 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                 // ),
                               ),
                               Positioned(
-                                top: 15,
-                                right: 20,
+                                top: 8,
+                                right: 8,
                                 child:
                                     BlocBuilder<SearchAllBloc, SearchAllState>(
                                   builder: (context, state) {
@@ -680,34 +680,28 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                       searchList[state.index].check =
                                           state.check;
                                     }
-                                    return Container(
-                                      height: 18,
-                                      width: 18,
-                                      color: Colors.white,
-                                      child: Checkbox(
-                                        materialTapTargetSize:
-                                            MaterialTapTargetSize.shrinkWrap,
+                                    return Checkbox(
+                                      materialTapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
 
-                                        // checkColor: Colors.indigo,
-                                        value: searchList[index].check,
-                                        activeColor: ColorPrimary,
-                                        onChanged: (newvalue) async {
-                                          if (await Network.isConnected()) {
-                                            log("true===>");
-                                            searchAllBloc.add(GetCheckBoxEvent(
-                                                check: newvalue!,
-                                                index: index));
-                                            selectedProductList =
-                                                searchList[index];
-                                          } else {
-                                            Fluttertoast.showToast(
-                                                msg:
-                                                    "please_check_your_internet_connection_key"
-                                                        .tr(),
-                                                backgroundColor: ColorPrimary);
-                                          }
-                                        },
-                                      ),
+                                      // checkColor: Colors.indigo,
+                                      value: searchList[index].check,
+                                      activeColor: ColorPrimary,
+                                      onChanged: (newvalue) async {
+                                        if (await Network.isConnected()) {
+                                          log("true===>");
+                                          searchAllBloc.add(GetCheckBoxEvent(
+                                              check: newvalue!, index: index));
+                                          selectedProductList =
+                                              searchList[index];
+                                        } else {
+                                          Fluttertoast.showToast(
+                                              msg:
+                                                  "please_check_your_internet_connection_key"
+                                                      .tr(),
+                                              backgroundColor: ColorPrimary);
+                                        }
+                                      },
                                     );
                                   },
                                 ),

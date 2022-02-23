@@ -28,7 +28,8 @@ class _SuggestedProductListState extends State<SuggestedProductList> {
         },
         itemBuilder: (context, index) {
           return Card(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Row(
@@ -36,7 +37,8 @@ class _SuggestedProductListState extends State<SuggestedProductList> {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Image(
-                        image: NetworkImage("http://vendor.tekzee.in/images/product_image/01631711435.jpg"),
+                        image: NetworkImage(
+                            "http://vendor.tekzee.in/images/product_image/01631711435.jpg"),
                         height: MediaQuery.of(context).size.width * 0.20,
                         width: MediaQuery.of(context).size.width * 0.20,
                         fit: BoxFit.fill,
@@ -49,14 +51,22 @@ class _SuggestedProductListState extends State<SuggestedProductList> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("${widget.products[index].productName}\n", style: TextStyle(color: Colors.black)),
+                          Text("${widget.products[index].productName}\n",
+                              style: TextStyle(color: Colors.black)),
                           RichText(
-                            text: TextSpan(children: [
-                              TextSpan(text: "₹${widget.products[index].sellingPrice}\t\t", style: TextStyle(color: Colors.black)),
-                              TextSpan(
-                                  text: "${widget.products[index].mrp}",
-                                  style: TextStyle(decoration: TextDecoration.lineThrough, color: Colors.black))
-                            ]),
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                    text:
+                                        "₹${widget.products[index].sellingPrice}\t\t",
+                                    style: TextStyle(color: Colors.black)),
+                                TextSpan(
+                                    text: "${widget.products[index].mrp}",
+                                    style: TextStyle(
+                                        decoration: TextDecoration.lineThrough,
+                                        color: Colors.black))
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -69,7 +79,8 @@ class _SuggestedProductListState extends State<SuggestedProductList> {
                         return Checkbox(
                           value: widget.products[index].check,
                           onChanged: (value) {
-                            BlocProvider.of<SuggestedProductBloc>(context).add(CheckEvent(index: index, check: value!));
+                            BlocProvider.of<SuggestedProductBloc>(context)
+                                .add(CheckEvent(index: index, check: value!));
                           },
                         );
                       },

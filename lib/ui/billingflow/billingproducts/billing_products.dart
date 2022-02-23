@@ -370,39 +370,34 @@ class _BillingProductsState extends State<BillingProducts> {
                                           BlocBuilder<BillingProductsBloc,
                                               BillingProductsState>(
                                             builder: (context, state) {
-                                              return Container(
-                                                height: 18,
-                                                width: 18,
-                                                color: Colors.white,
-                                                child: Checkbox(
-                                                  materialTapTargetSize:
-                                                      MaterialTapTargetSize
-                                                          .shrinkWrap,
+                                              return Checkbox(
+                                                materialTapTargetSize:
+                                                    MaterialTapTargetSize
+                                                        .shrinkWrap,
 
-                                                  // checkColor: Colors.indigo,
-                                                  value: productList[index]
-                                                      .billingcheck,
-                                                  activeColor: ColorPrimary,
-                                                  onChanged: (newvalue) async {
-                                                    log("true===>");
-                                                    if (await Network
-                                                        .isConnected()) {
-                                                      billingProductsBloc.add(
-                                                          CheckedBillingProductsEvent(
-                                                              check: newvalue!,
-                                                              index: index));
-                                                      selectedProductList =
-                                                          productList[index];
-                                                    } else {
-                                                      Fluttertoast.showToast(
-                                                          msg:
-                                                              "please_check_your_internet_connection_key"
-                                                                  .tr(),
-                                                          backgroundColor:
-                                                              ColorPrimary);
-                                                    }
-                                                  },
-                                                ),
+                                                // checkColor: Colors.indigo,
+                                                value: productList[index]
+                                                    .billingcheck,
+                                                activeColor: ColorPrimary,
+                                                onChanged: (newvalue) async {
+                                                  log("true===>");
+                                                  if (await Network
+                                                      .isConnected()) {
+                                                    billingProductsBloc.add(
+                                                        CheckedBillingProductsEvent(
+                                                            check: newvalue!,
+                                                            index: index));
+                                                    selectedProductList =
+                                                        productList[index];
+                                                  } else {
+                                                    Fluttertoast.showToast(
+                                                        msg:
+                                                            "please_check_your_internet_connection_key"
+                                                                .tr(),
+                                                        backgroundColor:
+                                                            ColorPrimary);
+                                                  }
+                                                },
                                               );
                                             },
                                           ),

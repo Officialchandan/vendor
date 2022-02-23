@@ -337,45 +337,39 @@ class _DirectBillingState extends State<DirectBilling> {
                     ),
                     Row(
                       children: [
-                        Container(
-                          height: 18,
-                          width: 18,
-                          color: Colors.white,
-                          child: Checkbox(
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
-                            value: this.redeem,
-                            checkColor: Colors.white,
-                            // value: widget
-                            //     .billingItemList[index]
-                            //     .billingcheck,
-                            activeColor: ColorPrimary,
-                            onChanged: (redeems) {
-                              log("true===>");
-                              redeem = false;
+                        Checkbox(
+                          materialTapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
+                          value: this.redeem,
+                          checkColor: Colors.white,
+                          // value: widget
+                          //     .billingItemList[index]
+                          //     .billingcheck,
+                          activeColor: ColorPrimary,
+                          onChanged: (redeems) {
+                            log("true===>");
+                            redeem = false;
 
-                              if (mobileController.text.length == 10) {
-                                if (amountController.text.length > 0) {
-                                  calculaton(amountController.text);
-                                  setState(() {
-                                    redeem = redeems;
-                                  });
-                                } else {
-                                  Fluttertoast.showToast(
-                                      msg: "please_enter_number_first_key".tr(),
-                                      backgroundColor: ColorPrimary);
-                                }
+                            if (mobileController.text.length == 10) {
+                              if (amountController.text.length > 0) {
+                                calculaton(amountController.text);
+                                setState(() {
+                                  redeem = redeems;
+                                });
                               } else {
                                 Fluttertoast.showToast(
-                                    msg: "please_enter_10_digits_number_key"
-                                        .tr(),
+                                    msg: "please_enter_number_first_key".tr(),
                                     backgroundColor: ColorPrimary);
                               }
-                              calculaton(amountController.text.isEmpty
-                                  ? "0"
-                                  : amountController.text);
-                            },
-                          ),
+                            } else {
+                              Fluttertoast.showToast(
+                                  msg: "please_enter_10_digits_number_key".tr(),
+                                  backgroundColor: ColorPrimary);
+                            }
+                            calculaton(amountController.text.isEmpty
+                                ? "0"
+                                : amountController.text);
+                          },
                         ),
                         Text(
                           "  " + "redeemed_coins_key".tr(),
@@ -622,28 +616,23 @@ class _DirectBillingState extends State<DirectBilling> {
             SizedBox(
               width: 20,
             ),
-            Container(
-              height: 18,
-              width: 18,
-              color: Colors.white,
-              child: Checkbox(
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                value: list.isChecked,
-                checkColor: Colors.white,
-                activeColor: ColorPrimary,
-                onChanged: (isCheck) {
-                  list.isChecked = isCheck;
-                  checkbox = isCheck!;
-                  if (isCheck) {
-                    categoryIdList.add(list.id);
-                  } else {
-                    categoryIdList.remove(list.id);
-                  }
-                  setState(() {});
+            Checkbox(
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              value: list.isChecked,
+              checkColor: Colors.white,
+              activeColor: ColorPrimary,
+              onChanged: (isCheck) {
+                list.isChecked = isCheck;
+                checkbox = isCheck!;
+                if (isCheck) {
+                  categoryIdList.add(list.id);
+                } else {
+                  categoryIdList.remove(list.id);
+                }
+                setState(() {});
 
-                  log("List of Selected Category ${categoryIdList.join(',')}");
-                },
-              ),
+                log("List of Selected Category ${categoryIdList.join(',')}");
+              },
             ),
             SizedBox(
               width: 20,
