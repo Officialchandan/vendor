@@ -353,7 +353,8 @@
        "category_not_found_key":"Category not found",
        "my_profit_key":"My Profit",
       
-     "notification_key":"Notification"
+     "notification_key":"Notification",
+  "calculation_key": "Calculation"
   
     
       
