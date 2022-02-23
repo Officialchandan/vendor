@@ -179,7 +179,10 @@ class EditProductScreenState extends State<EditProductScreen> {
                                       },
                                     ));
                           },
-                          icon: Icon(Icons.linked_camera),
+                          icon: Icon(
+                            Icons.linked_camera,
+                            size: 40,
+                          ),
                         ),
                       ),
                       SizedBox(

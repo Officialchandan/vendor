@@ -74,14 +74,19 @@ class _VariantTypeBottomSheetState extends State<VariantTypeBottomSheet> {
                       itemBuilder: (context, index) {
                         VariantType variant = snap.data![index];
                         return ListTile(
+                          horizontalTitleGap: 8,
                           leading: Checkbox(
+                            activeColor: ColorPrimary,
                             onChanged: (check) {
                               variantList[index].checked = check!;
                               controller.add(variantList);
                             },
                             value: variant.checked,
                           ),
-                          title: Text("${variant.variantName}"),
+                          title: Text(
+                            "${variant.variantName}",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                         );
                       });
                 }

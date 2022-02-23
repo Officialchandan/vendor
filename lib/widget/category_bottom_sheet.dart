@@ -25,10 +25,18 @@ class _CategoryBottomSheetState extends State<CategoryBottomSheet> {
     return IntrinsicHeight(
       child: Column(
         children: [
-          Text(
-            "select_category_key".tr(),
-            style: TextStyle(
-                color: ColorPrimary, fontSize: 18, fontWeight: FontWeight.bold),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15, 20, 0, 10),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "select_category_key".tr(),
+                style: TextStyle(
+                    color: ColorPrimary,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
           ),
           Container(
             height: MediaQuery.of(context).size.height * 0.40,

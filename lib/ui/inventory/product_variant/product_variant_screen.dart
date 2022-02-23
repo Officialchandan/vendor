@@ -79,17 +79,6 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
                       },
                     );
                   });
-              return Column(
-                children: List.generate(snapshot.data!.length, (index) {
-                  return ProductVariantWidget(
-                    snapshot.data![index],
-                    onDelete: () {
-                      productVariant.removeAt(index);
-                      controller.add(productVariant);
-                    },
-                  );
-                }),
-              );
             }
             return Container();
           },
@@ -272,179 +261,202 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.black),
-          borderRadius: BorderRadius.circular(1)),
-      margin: EdgeInsets.symmetric(vertical: 10),
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Align(
-            alignment: Alignment.centerRight,
-            child: IconButton(
-              splashRadius: 12,
-              icon: Icon(Icons.delete),
-              onPressed: () {
-                widget.onDelete();
-              },
-            ),
-          ),
-          Text("Add Product Image"),
-          Container(
-            height: 100,
-            child: Row(
-              children: [
-                Container(
-                  width: 80,
-                  height: 80,
-                  decoration: BoxDecoration(
-                      color: Colors.grey.shade100,
-                      borderRadius: BorderRadius.circular(5)),
-                  child: IconButton(
-                    onPressed: () {
-                      selectImage(context, widget.variant.productImages);
-                    },
-                    icon: Icon(Icons.linked_camera),
-                  ),
-                ),
-                Container(
-                    width: MediaQuery.of(context).size.width - 140,
-                    child: StreamBuilder<List<File>>(
-                      stream: imgController.stream,
-                      initialData: imageList,
-                      builder: (context, snap) {
-                        if (snap.hasData && snap.data!.isNotEmpty) {
-                          return ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: snap.data!.length,
-                            itemBuilder: (context, index) {
-                              return Stack(children: [
-                                Container(
-                                  width: 80,
-                                  height: 80,
-                                  margin: EdgeInsets.symmetric(
-                                      vertical: 10, horizontal: 10),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      image: DecorationImage(
-                                        image: FileImage(
-                                          snap.data![index],
-                                        ),
-                                        fit: BoxFit.cover,
-                                      )),
-                                ),
-                                Positioned(
-                                  right: 0,
-                                  top: 0,
-                                  child: InkWell(
-                                    child: Container(
-                                        width: 25,
-                                        padding: EdgeInsets.all(3),
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: ColorPrimary),
-                                        child: Icon(
-                                          Icons.delete,
-                                          color: Colors.white,
-                                          size: 15,
-                                        )),
-                                    onTap: () {
-                                      imageList.removeAt(index);
-                                      imgController.add(imageList);
-                                    },
-                                  ),
-                                )
-                              ]);
-                            },
-                          );
-                        }
-
-                        return Container();
-                      },
-                    )),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          // Text("Add Variant"),
-          // TextFormField(
-          //   decoration: InputDecoration(labelText: "Size"),
-          // ),
-          // SizedBox(
-          //   height: 10,
-          // ),
-
-          Column(
-            children: List.generate(variantModel.option.length, (index) {
-              return VariantOptionWidget(variantModel.option[index]);
-            }),
-          ),
-
-          Row(
+    return Stack(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey),
+              borderRadius: BorderRadius.circular(8)),
+          margin: EdgeInsets.symmetric(vertical: 10),
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Expanded(
-              //   child: TextFormField(
-              //     decoration: InputDecoration(labelText: "Purchase price"),
-              //   ),
-              //   flex: 3,
-              // ),
-              // SizedBox(
-              //   width: 15,
-              // ),
-              Expanded(
-                child: TextFormField(
-                  initialValue: variantModel.mrp.toString(),
-                  keyboardType: priceKeyboardType,
-                  maxLength: PRICE_TEXT_LENGTH,
-                  inputFormatters: priceInputFormatter,
-                  decoration: InputDecoration(
-                      labelText: "mrp_key".tr(), counter: Container()),
-                  onChanged: (text) {
-                    variantModel.mrp = text.trim();
-                  },
+              Text(
+                "add_products_image_key".tr(),
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+              ),
+              Container(
+                height: 100,
+                child: Row(
+                  children: [
+                    Container(
+                      width: 80,
+                      height: 80,
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade100,
+                          borderRadius: BorderRadius.circular(5)),
+                      child: IconButton(
+                        onPressed: () {
+                          selectImage(context, widget.variant.productImages);
+                        },
+                        icon: Icon(
+                          Icons.linked_camera,
+                          size: 40,
+                        ),
+                      ),
+                    ),
+                    Container(
+                        width: MediaQuery.of(context).size.width - 140,
+                        child: StreamBuilder<List<File>>(
+                          stream: imgController.stream,
+                          initialData: imageList,
+                          builder: (context, snap) {
+                            if (snap.hasData && snap.data!.isNotEmpty) {
+                              return ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: snap.data!.length,
+                                itemBuilder: (context, index) {
+                                  return Stack(children: [
+                                    Container(
+                                      width: 80,
+                                      height: 80,
+                                      margin: EdgeInsets.symmetric(
+                                          vertical: 10, horizontal: 10),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          image: DecorationImage(
+                                            image: FileImage(
+                                              snap.data![index],
+                                            ),
+                                            fit: BoxFit.cover,
+                                          )),
+                                    ),
+                                    Positioned(
+                                      right: 0,
+                                      top: 0,
+                                      child: InkWell(
+                                        child: Container(
+                                            width: 25,
+                                            padding: EdgeInsets.all(3),
+                                            decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: ColorPrimary),
+                                            child: Icon(
+                                              Icons.delete,
+                                              color: Colors.white,
+                                              size: 15,
+                                            )),
+                                        onTap: () {
+                                          imageList.removeAt(index);
+                                          imgController.add(imageList);
+                                        },
+                                      ),
+                                    )
+                                  ]);
+                                },
+                              );
+                            }
+
+                            return Container();
+                          },
+                        )),
+                  ],
                 ),
-                flex: 2,
               ),
               SizedBox(
-                width: 15,
+                height: 15,
               ),
-              Expanded(
-                child: TextFormField(
-                  initialValue: variantModel.sellingPrice.toString(),
-                  keyboardType: priceKeyboardType,
-                  maxLength: PRICE_TEXT_LENGTH,
-                  inputFormatters: priceInputFormatter,
-                  decoration: InputDecoration(
-                      labelText: "selling_price_key".tr(),
-                      counter: Container()),
-                  onChanged: (text) {
-                    variantModel.sellingPrice = text.trim();
-                  },
-                ),
-                flex: 2,
+              // Text("Add Variant"),
+              // TextFormField(
+              //   decoration: InputDecoration(labelText: "Size"),
+              // ),
+              // SizedBox(
+              //   height: 10,
+              // ),
+
+              Column(
+                children: List.generate(variantModel.option.length, (index) {
+                  return VariantOptionWidget(variantModel.option[index]);
+                }),
+              ),
+
+              Row(
+                children: [
+                  // Expanded(
+                  //   child: TextFormField(
+                  //     decoration: InputDecoration(labelText: "Purchase price"),
+                  //   ),
+                  //   flex: 3,
+                  // ),
+                  // SizedBox(
+                  //   width: 15,
+                  // ),
+                  Expanded(
+                    child: TextFormField(
+                      initialValue: variantModel.mrp.toString(),
+                      keyboardType: priceKeyboardType,
+                      maxLength: PRICE_TEXT_LENGTH,
+                      inputFormatters: priceInputFormatter,
+                      decoration: InputDecoration(
+                          labelText: "mrp_key".tr(), counter: Container()),
+                      onChanged: (text) {
+                        variantModel.mrp = text.trim();
+                      },
+                    ),
+                    flex: 2,
+                  ),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  Expanded(
+                    child: TextFormField(
+                      initialValue: variantModel.sellingPrice.toString(),
+                      keyboardType: priceKeyboardType,
+                      maxLength: PRICE_TEXT_LENGTH,
+                      inputFormatters: priceInputFormatter,
+                      decoration: InputDecoration(
+                          labelText: "selling_price_key".tr(),
+                          counter: Container()),
+                      onChanged: (text) {
+                        variantModel.sellingPrice = text.trim();
+                      },
+                    ),
+                    flex: 2,
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                keyboardType: priceKeyboardType,
+                maxLength: PRICE_TEXT_LENGTH,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                initialValue: variantModel.stock.toString(),
+                decoration: InputDecoration(
+                    labelText: "stock_key".tr(), counter: Container()),
+                onChanged: (text) {
+                  variantModel.stock = text.trim();
+                },
               ),
             ],
           ),
-          SizedBox(
-            height: 10,
-          ),
-          TextFormField(
-            keyboardType: priceKeyboardType,
-            maxLength: PRICE_TEXT_LENGTH,
-            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-            initialValue: variantModel.stock.toString(),
-            decoration: InputDecoration(
-                labelText: "stock_key".tr(), counter: Container()),
-            onChanged: (text) {
-              variantModel.stock = text.trim();
+        ),
+        Positioned(
+          right: 15,
+          top: -12,
+          child: ElevatedButton(
+            onPressed: () {
+              widget.onDelete();
             },
+            child: Text(
+              "delete_key".tr(),
+              style: TextStyle(
+                fontSize: 12,
+              ),
+            ),
+            style: ButtonStyle(
+                minimumSize: MaterialStateProperty.all(Size(60, 22)),
+                backgroundColor: MaterialStateProperty.all(Colors.red),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18.0),
+                ))),
           ),
-        ],
-      ),
+        )
+      ],
     );
   }
 
@@ -528,6 +540,11 @@ class _VariantOptionWidgetState extends State<VariantOptionWidget> {
                 onTap: () {
                   showModalBottomSheet(
                       context: context,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        topRight: Radius.circular(15),
+                      )),
                       builder: (context) {
                         return SelectColorBottomSheet(onSelect: (color) {
                           editText.text = color.colorName;

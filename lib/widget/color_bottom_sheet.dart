@@ -38,7 +38,15 @@ class _SelectColorBottomSheetState extends State<SelectColorBottomSheet> {
     return IntrinsicHeight(
       child: Column(
         children: [
-          Text("select_variant_options_key".tr()),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15, 20, 0, 10),
+            child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "select_variant_options_key".tr(),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                )),
+          ),
           Container(
             height: MediaQuery.of(context).size.height * 0.40,
             child: StreamBuilder<List<ColorModel>>(
