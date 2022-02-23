@@ -170,7 +170,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("add_products_image_key".tr()),
+                Text(
+                  "add_products_image_key".tr(),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+
+                SizedBox(
+                  height: 10,
+                ),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
@@ -198,7 +205,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                       },
                                     ));
                           },
-                          icon: Icon(Icons.linked_camera),
+                          icon: Icon(Icons.linked_camera, size: 40),
                         ),
                       ),
                       SizedBox(
@@ -260,7 +267,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                           padding: EdgeInsets.all(3),
                                           decoration: BoxDecoration(
                                               shape: BoxShape.circle,
-                                              color: ColorPrimary),
+                                              color: Colors.red),
                                           child: Icon(
                                             Icons.delete,
                                             color: Colors.white,
@@ -304,9 +311,18 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 //     );
                 //   },
                 // ),
+
                 const SizedBox(
                   height: 15,
                 ),
+                Text(
+                  "add_product_key".tr(),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+
                 TextFormField(
                   maxLength: 40,
                   controller: edtProductName,
@@ -656,7 +672,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             }
                           }
                         },
-                        title: Text("add_product_variants_key".tr()),
+                        title: Text(
+                          "add_product_variants_key".tr(),
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                         subtitle: Text("color_size_etc_key".tr()),
                         contentPadding: EdgeInsets.only(right: 0, left: 10),
                         trailing: Icon(Icons.keyboard_arrow_right_sharp),
@@ -684,6 +703,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
                                     showBottomSheet(
                                         context: context,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(15),
+                                          topRight: Radius.circular(15),
+                                        )),
                                         builder: (context) {
                                           return SelectionBottomSheet(
                                               onEdit: () async {
@@ -803,8 +827,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                                     color: ColorPrimary),
                                               ),
                                               Text(
-                                                "stock_key : ${variant.stock}"
-                                                    .tr(),
+                                                "stock_key".tr() +
+                                                    ": ${variant.stock}".tr(),
                                               )
                                             ],
                                           ),
@@ -927,7 +951,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
               height: 50,
               shape: RoundedRectangleBorder(),
               color: ColorPrimary,
-              child: Text("add_product_key".tr()),
+              child: Text(
+                "add_product_key".tr().toUpperCase(),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              ),
             ),
           ),
         ),

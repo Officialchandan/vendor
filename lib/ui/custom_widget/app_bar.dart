@@ -17,7 +17,10 @@ class _CustomAppBarState extends State<CustomAppBar> {
   Widget build(BuildContext context) {
     print("Hi");
     return AppBar(
-      title: Text("${widget.title}"),
+      title: Text(
+        "${widget.title}",
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
       leading: IconButton(
         onPressed: () {
           Navigator.pop(context);
