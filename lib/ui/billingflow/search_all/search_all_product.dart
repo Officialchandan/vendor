@@ -105,198 +105,406 @@ class _SearchAllProductState extends State<SearchAllProduct> {
               body: Container(
                 child: Stack(children: [
                   BlocConsumer<SearchAllBloc, SearchAllState>(
-                      listener: (context, state) {
-                    if (state is SearchAllIntialState) {
-                      searchAllBloc.add(GetProductsEvent());
-                    }
-                    if (state is GetSearchState) {
-                      log("chal pdi api");
-                    }
-                    if (state is GetSearchFailureState) {
-                      Fluttertoast.showToast(
-                          msg: state.message, backgroundColor: ColorPrimary);
-                    }
-                  }, builder: (context, state) {
-                    if (state is GetSearchState) {
-                      products = state.data!;
-                      searchList = products;
-                      log("${products.length}");
-                    }
-                    if (state is GetSearchLoadingState) {
-                      return Center(
-                        child: CircularProgressIndicator(
-                          backgroundColor: ColorPrimary,
-                        ),
-                      );
-                    }
-
-                    if (state is CategoriesSearchState) {
-                      if (state.searchword.isEmpty) {
+                    listener: (context, state) {
+                      if (state is SearchAllIntialState) {
+                        searchAllBloc.add(GetProductsEvent());
+                      }
+                      if (state is GetSearchState) {
+                        log("chal pdi api");
+                      }
+                      if (state is GetSearchFailureState) {
+                        Fluttertoast.showToast(
+                            msg: state.message, backgroundColor: ColorPrimary);
+                      }
+                    },
+                    builder: (context, state) {
+                      if (state is GetSearchState) {
+                        products = state.data!;
                         searchList = products;
-                      } else {
-                        List<ProductModel> list = [];
-                        products.forEach((element) {
-                          if (element.productName
-                              .toLowerCase()
-                              .contains(state.searchword.toLowerCase())) {
-                            list.add(element);
-                            log("how much -->${state.searchword}");
-                          }
-                        });
-                        // for (int i = 0; i < product  ``s.length; i++) {
-                        //   if (products[i]
-                        //       .productName
-                        //       .toLowerCase()
-                        //       .contains(state.searchword.toLowerCase())) {
-                        //     list.add(products[i]);
-                        //     log("how much -->${state.searchword}");
-                        //   }
-                        // }
+                        log("${products.length}");
+                      }
+                      if (state is GetSearchLoadingState) {
+                        return Center(
+                          child: CircularProgressIndicator(
+                            backgroundColor: ColorPrimary,
+                          ),
+                        );
+                      }
 
-                        if (list.isEmpty) {
-                          return Container(
-                            height: height,
-                            child: Image.asset("assets/images/no_data.gif"),
-                          );
+                      if (state is CategoriesSearchState) {
+                        if (state.searchword.isEmpty) {
+                          searchList = products;
                         } else {
-                          searchList = list;
+                          List<ProductModel> list = [];
+                          products.forEach((element) {
+                            if (element.productName
+                                .toLowerCase()
+                                .contains(state.searchword.toLowerCase())) {
+                              list.add(element);
+                              log("how much -->${state.searchword}");
+                            }
+                          });
+                          // for (int i = 0; i < product  ``s.length; i++) {
+                          //   if (products[i]
+                          //       .productName
+                          //       .toLowerCase()
+                          //       .contains(state.searchword.toLowerCase())) {
+                          //     list.add(products[i]);
+                          //     log("how much -->${state.searchword}");
+                          //   }
+                          // }
+
+                          if (list.isEmpty) {
+                            return Container(
+                              height: height,
+                              child: Image.asset("assets/images/no_data.gif"),
+                            );
+                          } else {
+                            searchList = list;
+                          }
                         }
                       }
-                    }
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 50.0, top: 10),
-                      child: ListView.builder(
-                        itemCount: searchList.length,
-                        itemBuilder: (context, index) {
-                          String variantName = "";
-                          ProductModel product = searchList[index];
-                          if (product.productOption.isNotEmpty) {
-                            for (int i = 0;
-                                i < product.productOption.length;
-                                i++) {
-                              if (product.productOption.length - 1 == i)
-                                variantName +=
-                                    product.productOption[i].value.toString();
-                              else
-                                variantName +=
-                                    product.productOption[i].value.toString() +
-                                        ", ";
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 50),
+                        child: ListView.builder(
+                          padding: const EdgeInsets.only(top: 5, bottom: 10),
+                          itemCount: searchList.length,
+                          itemBuilder: (context, index) {
+                            String variantName = "";
+                            ProductModel product = searchList[index];
+                            if (product.productOption.isNotEmpty) {
+                              for (int i = 0;
+                                  i < product.productOption.length;
+                                  i++) {
+                                if (product.productOption.length - 1 == i)
+                                  variantName +=
+                                      product.productOption[i].value.toString();
+                                else
+                                  variantName += product.productOption[i].value
+                                          .toString() +
+                                      ", ";
+                              }
                             }
-                          }
-                          return Stack(
-                            children: [
-                              Container(
-                                height: 110,
-                                margin: EdgeInsets.only(
-                                    top: 10, bottom: 10, left: 30, right: 10),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey,
-                                      offset: Offset(0.0, 1.0), //(x,y)
-                                      blurRadius: 6.0,
-                                    ),
-                                  ],
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: ListTile(
-                                  minLeadingWidth: 20,
-                                  contentPadding: EdgeInsets.only(left: 70),
-
-                                  title: Container(
-                                    transform:
-                                        Matrix4.translationValues(0, -2, 0),
-                                    padding: EdgeInsets.symmetric(vertical: 10),
+                            return Stack(
+                              children: [
+                                Container(
+                                  height: 96,
+                                  width: MediaQuery.of(context).size.width,
+                                  margin: EdgeInsets.only(
+                                      left: 14, right: 14, top: 10, bottom: 10),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey,
+                                        offset: Offset(0.0, 1.0), //(x,y)
+                                        blurRadius: 6.0,
+                                      ),
+                                    ],
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 10,
+                                        right: 10,
+                                        top: 10,
+                                        bottom: 10),
                                     child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Container(
-                                                width: width * 0.66,
-                                                child: variantName.isEmpty
-                                                    ? AutoSizeText(
-                                                        "${searchList[index].productName} ",
-                                                        maxLines: 2,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style: TextStyle(
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w600),
-                                                        maxFontSize: 14,
-                                                        minFontSize: 11,
-                                                      )
-                                                    : AutoSizeText(
-                                                        "${searchList[index].productName} ($variantName)",
-                                                        maxLines: 2,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style: TextStyle(
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w600),
-                                                        maxFontSize: 14,
-                                                        minFontSize: 11,
-                                                      ),
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                color: Colors.grey.shade200,
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
                                               ),
-                                            ]),
+                                              child: searchList[index]
+                                                      .productImages
+                                                      .isNotEmpty
+                                                  ? ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      child: searchList[index]
+                                                              .productImages[0]
+                                                              .productImage
+                                                              .isNotEmpty
+                                                          ? Image(
+                                                              height: 55,
+                                                              width: 55,
+                                                              fit: BoxFit
+                                                                  .contain,
+                                                              image: NetworkImage(
+                                                                  "${searchList[index].productImages[0].productImage}"),
+                                                            )
+                                                          : Image(
+                                                              image: AssetImage(
+                                                                "assets/images/placeholder.webp",
+                                                              ),
+                                                              height: 55,
+                                                              width: 55,
+                                                              fit: BoxFit.cover,
+                                                            ),
+                                                    )
+                                                  : ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      child: Image(
+                                                        image: AssetImage(
+                                                          "assets/images/placeholder.webp",
+                                                        ),
+                                                        height: 55,
+                                                        width: 55,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                            ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Flexible(
+                                              child: Container(
+                                                height: 48,
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Container(
+                                                      width: width * 0.70,
+                                                      child: variantName.isEmpty
+                                                          ? AutoSizeText(
+                                                              "${searchList[index].productName} ",
+                                                              maxLines: 2,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600),
+                                                              maxFontSize: 15,
+                                                              minFontSize: 12,
+                                                            )
+                                                          : AutoSizeText(
+                                                              "${searchList[index].productName} ($variantName)",
+                                                              maxLines: 2,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600),
+                                                              maxFontSize: 15,
+                                                              minFontSize: 12,
+                                                            ),
+                                                    ),
+                                                    Container(
+                                                      width: width * 0.70,
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              new RichText(
+                                                                text:
+                                                                    new TextSpan(
+                                                                  text:
+                                                                      '\u20B9 ${double.parse(searchList[index].sellingPrice) * searchList[index].count}  ',
+                                                                  style: TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      color:
+                                                                          ColorPrimary),
+                                                                  children: <
+                                                                      TextSpan>[
+                                                                    new TextSpan(
+                                                                      text:
+                                                                          '\u20B9${double.parse(searchList[index].mrp) * searchList[index].count}',
+                                                                      style:
+                                                                          new TextStyle(
+                                                                        color: Colors
+                                                                            .grey,
+                                                                        decoration:
+                                                                            TextDecoration.lineThrough,
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          Container(
+                                                            height: 20,
+                                                            decoration: BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            25),
+                                                                border: Border.all(
+                                                                    color: Colors
+                                                                        .black)),
+                                                            child: Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .min,
+                                                              children: [
+                                                                BlocBuilder<
+                                                                    SearchAllBloc,
+                                                                    SearchAllState>(
+                                                                  builder:
+                                                                      (context,
+                                                                          state) {
+                                                                    if (state
+                                                                        is GetDecrementState) {
+                                                                      searchList[index]
+                                                                              .count =
+                                                                          state
+                                                                              .count;
+                                                                    }
+                                                                    return Container(
+                                                                      height:
+                                                                          20,
+                                                                      width: 20,
+                                                                      child: IconButton(
+                                                                          padding: EdgeInsets.all(0),
+                                                                          onPressed: () async {
+                                                                            log("true===>$count");
+                                                                            if (await Network.isConnected()) {
+                                                                              searchList[index].count > 1 ? searchAllBloc.add(GetIncrementEvent(count: searchList[index].count--)) : Fluttertoast.showToast(msg: "product_cant_be_in_negative_key".tr(), backgroundColor: ColorPrimary);
+                                                                            } else {
+                                                                              Fluttertoast.showToast(msg: "please_check_your_internet_connection_key".tr(), backgroundColor: ColorPrimary);
+                                                                            }
+                                                                          },
+                                                                          iconSize: 20,
+                                                                          splashRadius: 10,
+                                                                          icon: Icon(
+                                                                            Icons.remove,
+                                                                          )),
+                                                                    );
+                                                                  },
+                                                                ),
+                                                                Container(
+                                                                  width: 20,
+                                                                  height: 20,
+                                                                  color:
+                                                                      ColorPrimary,
+                                                                  child: Center(
+                                                                    child:
+                                                                        AutoSizeText(
+                                                                      "${searchList[index].count}",
+                                                                      style:
+                                                                          TextStyle(
+                                                                        color: Colors
+                                                                            .white,
+                                                                      ),
+                                                                      maxFontSize:
+                                                                          14,
+                                                                      minFontSize:
+                                                                          10,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                BlocBuilder<
+                                                                    SearchAllBloc,
+                                                                    SearchAllState>(
+                                                                  builder:
+                                                                      (context,
+                                                                          state) {
+                                                                    if (state
+                                                                        is GetDecrementState) {
+                                                                      searchList[index]
+                                                                              .count =
+                                                                          state
+                                                                              .count;
+                                                                    }
+                                                                    return Container(
+                                                                      height:
+                                                                          20,
+                                                                      width: 20,
+                                                                      child: IconButton(
+                                                                          padding: EdgeInsets.all(0),
+                                                                          onPressed: () async {
+                                                                            log("true===>$count");
+                                                                            if (await Network.isConnected()) {
+                                                                              searchAllBloc.add(GetIncrementEvent(count: searchList[index].count++));
+                                                                            } else {
+                                                                              Fluttertoast.showToast(msg: "please_check_your_internet_connection_key".tr(), backgroundColor: ColorPrimary);
+                                                                            }
+                                                                          },
+                                                                          iconSize: 20,
+                                                                          splashRadius: 10,
+                                                                          icon: Icon(
+                                                                            Icons.add,
+                                                                          )),
+                                                                    );
+                                                                  },
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            new RichText(
-                                              text: new TextSpan(
-                                                text:
-                                                    '\u20B9 ${double.parse(searchList[index].sellingPrice) * searchList[index].count}  ',
-                                                style: TextStyle(
-                                                    color: ColorPrimary),
-                                                children: <TextSpan>[
-                                                  new TextSpan(
-                                                    text:
-                                                        '\u20B9${double.parse(searchList[index].mrp) * searchList[index].count}',
-                                                    style: new TextStyle(
-                                                      color: Colors.grey,
-                                                      decoration: TextDecoration
-                                                          .lineThrough,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
                                             Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.end,
+                                                  MainAxisAlignment.start,
                                               children: [
                                                 Container(
-                                                  height: 20,
                                                   child: Center(
                                                     child: Row(
                                                       children: [
-                                                        Container(
-                                                            child: Image.asset(
-                                                          "assets/images/point.png",
-                                                          scale: 2.5,
-                                                        )),
-                                                        AutoSizeText(
-                                                          " ${(double.parse(searchList[index].redeemCoins) * searchList[index].count).toStringAsFixed(2)}",
-                                                          maxFontSize: 13,
-                                                          minFontSize: 11,
+                                                        Text(
+                                                          "redeem_key".tr() +
+                                                              ": ",
                                                           style: TextStyle(
+                                                              fontSize: 12,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w600,
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
+                                                              color:
+                                                                  Colors.grey),
+                                                        ),
+                                                        Container(
+                                                            child: Image.asset(
+                                                          "assets/images/point.png",
+                                                          width: 13,
+                                                          height: 13,
+                                                        )),
+                                                        Text(
+                                                          " ${(double.parse(searchList[index].redeemCoins) * searchList[index].count).toStringAsFixed(2)}",
+                                                          style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
                                                               color:
                                                                   ColorPrimary),
                                                         ),
@@ -304,416 +512,87 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                     ),
                                                   ),
                                                 ),
-                                                SizedBox(
-                                                  width: 10,
+                                              ],
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  "earn_key".tr() + ": ",
+                                                  style: TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      color: Colors.grey),
+                                                ),
+                                                Container(
+                                                    child: Image.asset(
+                                                  "assets/images/point.png",
+                                                  height: 13,
+                                                  width: 13,
+                                                )),
+                                                Text(
+                                                  " ${(double.parse(searchList[index].earningCoins) * searchList[index].count).toStringAsFixed(2)}",
+                                                  style: TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      color: ColorPrimary),
                                                 ),
                                               ],
                                             ),
-
-                                            // Row(
-                                            //     mainAxisAlignment:
-                                            //         MainAxisAlignment.end,
-                                            //     children: [
-                                            //       searchList[index]
-                                            //                   .productOption
-                                            //                   .length >=
-                                            //               1
-                                            //           ? Text(
-                                            //               "${searchList[index].productOption[0].optionName} ${searchList[index].productOption[0].value}",
-                                            //               style: TextStyle(
-                                            //                   fontSize: 15,
-                                            //                   color:
-                                            //                       ColorTextPrimary),
-                                            //             )
-                                            //           : Text(
-                                            //               "${searchList[index].productOption.length}",
-                                            //               style: TextStyle(
-                                            //                   fontSize: 15,
-                                            //                   color:
-                                            //                       ColorTextPrimary),
-                                            //             ),
-                                            //       SizedBox(
-                                            //         width: 10,
-                                            //       ),
-                                            //     ]),
                                           ],
                                         ),
-                                        Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                    // color: Colors.amber,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            25),
-                                                    border: Border.all(
-                                                        color: Colors.black)),
-                                                height: 25,
-                                                // width: 90,
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  children: [
-                                                    BlocBuilder<SearchAllBloc,
-                                                        SearchAllState>(
-                                                      builder:
-                                                          (context, state) {
-                                                        if (state
-                                                            is GetDecrementState) {
-                                                          searchList[index]
-                                                                  .count =
-                                                              state.count;
-                                                        }
-                                                        return Container(
-                                                          height: 30,
-                                                          width: 30,
-                                                          child: IconButton(
-                                                              padding:
-                                                                  EdgeInsets
-                                                                      .all(0),
-                                                              onPressed:
-                                                                  () async {
-                                                                log("true===>$count");
-                                                                if (await Network
-                                                                    .isConnected()) {
-                                                                  searchList[index]
-                                                                              .count >
-                                                                          1
-                                                                      ? searchAllBloc.add(
-                                                                          GetIncrementEvent(
-                                                                              count: searchList[index]
-                                                                                  .count--))
-                                                                      : Fluttertoast.showToast(
-                                                                          msg: "product_cant_be_in_negative_key"
-                                                                              .tr(),
-                                                                          backgroundColor:
-                                                                              ColorPrimary);
-                                                                } else {
-                                                                  Fluttertoast.showToast(
-                                                                      msg: "please_check_your_internet_connection_key"
-                                                                          .tr(),
-                                                                      backgroundColor:
-                                                                          ColorPrimary);
-                                                                }
-                                                              },
-                                                              iconSize: 20,
-                                                              splashRadius: 10,
-                                                              icon: Icon(
-                                                                Icons.remove,
-                                                              )),
-                                                        );
-                                                      },
-                                                    ),
-                                                    Container(
-                                                      width: 20,
-                                                      height: 25,
-                                                      color: ColorPrimary,
-                                                      child: Center(
-                                                        child: AutoSizeText(
-                                                          "${searchList[index].count}",
-                                                          style: TextStyle(
-                                                            color: Colors.white,
-                                                          ),
-                                                          maxFontSize: 14,
-                                                          minFontSize: 10,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    BlocBuilder<SearchAllBloc,
-                                                        SearchAllState>(
-                                                      builder:
-                                                          (context, state) {
-                                                        if (state
-                                                            is GetDecrementState) {
-                                                          searchList[index]
-                                                                  .count =
-                                                              state.count;
-                                                        }
-                                                        return Container(
-                                                          height: 30,
-                                                          width: 30,
-                                                          child: IconButton(
-                                                              padding:
-                                                                  EdgeInsets
-                                                                      .all(0),
-                                                              onPressed:
-                                                                  () async {
-                                                                log("true===>$count");
-                                                                if (await Network
-                                                                    .isConnected()) {
-                                                                  // searchList[index].count <
-                                                                  //         searchList[index]
-                                                                  //             .stock
-                                                                  //     ?
-
-                                                                  searchAllBloc.add(
-                                                                      GetIncrementEvent(
-                                                                          count:
-                                                                              searchList[index].count++));
-                                                                  // : Fluttertoast.showToast(
-                                                                  //     msg:
-                                                                  //         "Stock Limit reached",
-                                                                  //     backgroundColor:
-                                                                  //         ColorPrimary);
-                                                                } else {
-                                                                  Fluttertoast.showToast(
-                                                                      msg: "please_check_your_internet_connection_key"
-                                                                          .tr(),
-                                                                      backgroundColor:
-                                                                          ColorPrimary);
-                                                                }
-                                                              },
-                                                              iconSize: 20,
-                                                              splashRadius: 10,
-                                                              icon: Icon(
-                                                                Icons.add,
-                                                              )),
-                                                        );
-                                                      },
-                                                    ),
-                                                    // InkWell(
-                                                    //   onTap: () {
-                                                    //     _showModal(context);
-                                                    //   },
-                                                    //   child: Container(
-                                                    //     padding:
-                                                    //         EdgeInsets.only(left: 3),
-                                                    //     decoration: BoxDecoration(
-                                                    //       color: ColorPrimary,
-                                                    //       borderRadius:
-                                                    //           BorderRadius.circular(25),
-                                                    //     ),
-                                                    //     height: 20,
-                                                    //     child: Row(
-                                                    //       mainAxisSize:
-                                                    //           MainAxisSize.min,
-                                                    //       children: [
-                                                    //         Container(
-                                                    //             height: 17,
-                                                    //             width: 17,
-                                                    //             decoration: BoxDecoration(
-                                                    //                 color: Colors.white,
-                                                    //                 borderRadius:
-                                                    //                     BorderRadius
-                                                    //                         .circular(
-                                                    //                             50)),
-                                                    //             child: Icon(
-                                                    //               Icons.add_outlined,
-                                                    //               size: 15,
-                                                    //             )),
-                                                    //         Text(
-                                                    //           "  ADD  ",
-                                                    //           style: TextStyle(
-                                                    //               color: Colors.white,
-                                                    //               fontSize: 12),
-                                                    //         ),
-                                                    //       ],
-                                                    //     ),
-                                                    //   ),
-                                                    // ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
-                                                children: [
-                                                  Container(
-                                                      child: Image.asset(
-                                                    "assets/images/point.png",
-                                                    scale: 2.5,
-                                                  )),
-                                                  Text(
-                                                    " ${(double.parse(searchList[index].earningCoins) * searchList[index].count).toStringAsFixed(2)}",
-                                                    style: TextStyle(
-                                                        fontSize: 17,
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                        color: ColorPrimary),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 10,
-                                                  ),
-                                                ],
-                                              )
-
-                                              // Row(
-                                              //     mainAxisAlignment:
-                                              //         MainAxisAlignment.end,
-                                              //     children: [
-                                              //       searchList[index]
-                                              //                   .productOption
-                                              //                   .length >=
-                                              //               2
-                                              //           ? Text(
-                                              //               "${searchList[index].productOption[1].optionName} ${searchList[index].productOption[1].value}",
-                                              //               style: TextStyle(
-                                              //                   fontSize: 15,
-                                              //                   color:
-                                              //                       ColorTextPrimary),
-                                              //             )
-                                              //           : Text(
-                                              //               "${searchList[index].productOption.length}",
-                                              //               style: TextStyle(
-                                              //                   fontSize: 15,
-                                              //                   color:
-                                              //                       ColorTextPrimary),
-                                              //             ),
-                                              //       SizedBox(
-                                              //         width: 10,
-                                              //       ),
-                                              //     ]),
-                                            ]),
                                       ],
                                     ),
                                   ),
-                                  // trailing: ButtonTheme(
-                                  //   minWidth: 80,
-                                  //   height: 32,
-                                  //   // ignore: deprecated_member_use
-                                  //   child: RaisedButton(
-                                  //     padding: EdgeInsets.all(0),
-                                  //     color: Color.fromRGBO(102, 87, 244, 1),
-                                  //     shape: RoundedRectangleBorder(
-                                  //       borderRadius: BorderRadius.circular(7),
-                                  //     ),
-                                  //     onPressed: () async {
-                                  //       FocusScope.of(context).unfocus();
-                                  //       //int id;
-                                  //       // if (_tap == true) {
-                                  //       //   _tap = false;
-                                  //       //   getVendorId(
-                                  //       //       category[index].id, category[index].categoryName);
-                                  //       // }
-                                  //     },
-                                  //     child: Text(
-                                  //       "See Category",
-                                  //       style: TextStyle(
-                                  //           color: Colors.white,
-                                  //           fontSize: 12,
-                                  //           fontWeight: FontWeight.w600),
-                                  //     ),
-                                  //   ),
-                                  //  ),
                                 ),
-                              ),
-                              Positioned(
-                                top: 25,
-                                left: 0,
-                                child: Container(
-                                  margin: EdgeInsets.only(
-                                      left: 10, right: 30, bottom: 10),
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey.shade200,
-                                    borderRadius: BorderRadius.circular(5),
+                                Positioned(
+                                  top: 10,
+                                  right: 14,
+                                  child: BlocBuilder<SearchAllBloc,
+                                      SearchAllState>(
+                                    builder: (context, state) {
+                                      if (state is GetCheckBoxState) {
+                                        searchList[state.index].check =
+                                            state.check;
+                                      }
+                                      return Checkbox(
+                                        side: BorderSide(color: Colors.black87),
+                                        materialTapTargetSize:
+                                            MaterialTapTargetSize.shrinkWrap,
+
+                                        // checkColor: Colors.indigo,
+                                        value: searchList[index].check,
+                                        activeColor: ColorPrimary,
+                                        onChanged: (newvalue) async {
+                                          if (await Network.isConnected()) {
+                                            log("true===>");
+                                            searchAllBloc.add(GetCheckBoxEvent(
+                                                check: newvalue!,
+                                                index: index));
+                                            selectedProductList =
+                                                searchList[index];
+                                          } else {
+                                            Fluttertoast.showToast(
+                                                msg:
+                                                    "please_check_your_internet_connection_key"
+                                                        .tr(),
+                                                backgroundColor: ColorPrimary);
+                                          }
+                                        },
+                                      );
+                                    },
                                   ),
-                                  child:
-                                      searchList[index].productImages.isNotEmpty
-                                          ? ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              child: searchList[index]
-                                                      .productImages[0]
-                                                      .productImage
-                                                      .isNotEmpty
-                                                  ? Image(
-                                                      height: 60,
-                                                      width: 60,
-                                                      fit: BoxFit.contain,
-                                                      image: NetworkImage(
-                                                          "${searchList[index].productImages[0].productImage}"),
-                                                    )
-                                                  : Image(
-                                                      image: AssetImage(
-                                                        "assets/images/placeholder.webp",
-                                                      ),
-                                                      height: 60,
-                                                      width: 60,
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                            )
-                                          : ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              child: Image(
-                                                image: AssetImage(
-                                                  "assets/images/placeholder.webp",
-                                                ),
-                                                height: 60,
-                                                width: 60,
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                ),
-                                //  Container(
-                                //   margin: EdgeInsets.only(left: 10, right: 30, bottom: 10),
-
-                                //   height: 70,
-                                //   width: 70,
-                                //   decoration: BoxDecoration(
-                                //       color: Colors.grey.shade200,
-                                //       borderRadius: BorderRadius.circular(5),
-                                //       image: DecorationImage(
-                                //         image: searchList[index].productImages.isEmpty
-                                //             ? NetworkImage(
-                                //                 "https://www.google.com/imgres?imgurl=https%3A%2F%2Fimage.shutterstock.com%2Fimage-vector%2Fempty-placeholder-image-icon-design-260nw-1366372628.jpg&imgrefurl=https%3A%2F%2Fwww.shutterstock.com%2Fsearch%2Fplaceholder%2Bimage&tbnid=S28DYxXD39mDFM&vet=12ahUKEwisjfyBifTyAhXXe30KHWYkCGIQMygPegUIARDwAQ..i&docid=_eukPVibkcyRgM&w=260&h=280&q=image%20place%20holder%20image&ved=2ahUKEwisjfyBifTyAhXXe30KHWYkCGIQMygPegUIARDwAQ")
-                                //             : NetworkImage("${searchList[index].productImages[0]}"),
-                                //         fit: BoxFit.contain,
-                                //       )),
-                                //   // child: Image.asset(
-                                //   //   "assets/images/wallpaperflare.com_wallpaper.jpg",
-                                //   //   fit: BoxFit.fill,
-                                //   //   height: 80,
-                                //   //   width: 80,
-                                //   // ),
-                                // ),
-                              ),
-                              Positioned(
-                                top: 8,
-                                right: 8,
-                                child:
-                                    BlocBuilder<SearchAllBloc, SearchAllState>(
-                                  builder: (context, state) {
-                                    if (state is GetCheckBoxState) {
-                                      searchList[state.index].check =
-                                          state.check;
-                                    }
-                                    return Checkbox(
-                                      materialTapTargetSize:
-                                          MaterialTapTargetSize.shrinkWrap,
-
-                                      // checkColor: Colors.indigo,
-                                      value: searchList[index].check,
-                                      activeColor: ColorPrimary,
-                                      onChanged: (newvalue) async {
-                                        if (await Network.isConnected()) {
-                                          log("true===>");
-                                          searchAllBloc.add(GetCheckBoxEvent(
-                                              check: newvalue!, index: index));
-                                          selectedProductList =
-                                              searchList[index];
-                                        } else {
-                                          Fluttertoast.showToast(
-                                              msg:
-                                                  "please_check_your_internet_connection_key"
-                                                      .tr(),
-                                              backgroundColor: ColorPrimary);
-                                        }
-                                      },
-                                    );
-                                  },
-                                ),
-                              )
-                            ],
-
-                            //   ),
-                          );
-                        },
-                      ),
-                    );
-                  }),
+                                )
+                              ],
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  ),
                   BlocBuilder<SearchAllBloc, SearchAllState>(
                     builder: (context, state) {
                       return searchList.isEmpty

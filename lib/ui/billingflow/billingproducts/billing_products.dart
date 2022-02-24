@@ -140,7 +140,7 @@ class _BillingProductsState extends State<BillingProducts> {
                   Navigator.pop(context, index);
                 },
                 icon: Icon(Icons.arrow_back_ios)),
-            centerTitle: false,
+            centerTitle: true,
             title: Text(
               "billing_products_key".tr(),
               style: TextStyle(
@@ -162,7 +162,7 @@ class _BillingProductsState extends State<BillingProducts> {
                     }
                     return Text(" ${widget.coin.toStringAsFixed(2)} ",
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 17,
                           fontWeight: FontWeight.w600,
                         ));
                   },
@@ -176,7 +176,7 @@ class _BillingProductsState extends State<BillingProducts> {
               calculateAmounts(productList);
             }
             return ListView.builder(
-              //    padding: EdgeInsets.all(10),
+              padding: EdgeInsets.only(top: 10, bottom: 10),
               itemCount: productList.length,
               itemBuilder: (context, index) {
                 String variantName = "";
@@ -195,9 +195,9 @@ class _BillingProductsState extends State<BillingProducts> {
                 return Stack(
                   children: [
                     Container(
-                      height: 100,
+                      height: 96,
                       margin: EdgeInsets.only(
-                          top: 10, bottom: 10, left: 30, right: 10),
+                          left: 14, right: 14, top: 10, bottom: 10),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         boxShadow: [
@@ -209,256 +209,277 @@ class _BillingProductsState extends State<BillingProducts> {
                         ],
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: ListTile(
-                        minLeadingWidth: 20,
-                        contentPadding: EdgeInsets.only(left: 50),
-                        title: Container(
-                          transform: Matrix4.translationValues(0, -2, 0),
-                          padding: EdgeInsets.symmetric(vertical: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.58,
-                                      child: variantName.isEmpty
-                                          ? AutoSizeText(
-                                              "${productList[index].productName} ",
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w600),
-                                              maxFontSize: 13,
-                                              minFontSize: 10,
-                                            )
-                                          : AutoSizeText(
-                                              "${productList[index].productName} ($variantName)",
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w600),
-                                              maxFontSize: 13,
-                                              minFontSize: 10,
-                                            ),
-                                    ),
-                                    Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          Container(
-                                            width: 50,
-                                            child: AutoSizeText(
-                                              "qty_key".tr() +
-                                                  ": ${productList[index].count}",
-                                              maxLines: 1,
-                                              style: TextStyle(
-                                                color: Colors.grey,
-                                              ),
-                                              maxFontSize: 15,
-                                              minFontSize: 10,
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 5,
-                                          )
-                                        ])
-                                  ]),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          AutoSizeText(
-                                            "\u20B9",
-                                            style: TextStyle(
-                                              color: ColorPrimary,
-                                            ),
-                                            maxFontSize: 17,
-                                            minFontSize: 13,
-                                          ),
-                                          AutoSizeText(
-                                            " ${(double.parse(productList[index].sellingPrice) * productList[index].count).toStringAsFixed(2)} ",
-                                            style:
-                                                TextStyle(color: ColorPrimary),
-                                            maxFontSize: 15,
-                                            minFontSize: 11,
-                                          ),
-                                          InkWell(
-                                            onTap: () async {
-                                              // i = 0;
-                                              if (await Network.isConnected()) {
-                                                _displayDialog(
-                                                    context,
-                                                    index,
-                                                    0,
-                                                    "edit_amount_key".tr(),
-                                                    "enter_amount_key".tr());
-                                              } else {
-                                                Fluttertoast.showToast(
-                                                    msg:
-                                                        "please_check_your_internet_connection_key"
-                                                            .tr(),
-                                                    backgroundColor:
-                                                        ColorPrimary);
-                                              }
-                                            },
-                                            child: Container(
-                                              height: 20,
-                                              child: Image.asset(
-                                                  "assets/images/edit.png"),
-                                            ),
-                                          ),
-                                          // Text(
-                                          //   " \u20B9",
-                                          // ),
-                                          // Text(
-                                          //     "${double.parse(productList[index].mrp) * productList[index].count}",
-                                          //     style: TextStyle(
-                                          //         color: Colors.grey,
-                                          //         decoration: TextDecoration
-                                          //             .lineThrough,
-                                          //         fontSize: 14)),
-                                        ]),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.shade200,
+                                    borderRadius: BorderRadius.circular(5),
                                   ),
-                                  Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: productList[index]
+                                            .productImages
+                                            .isNotEmpty
+                                        ? Image(
+                                            height: 55,
+                                            width: 55,
+                                            fit: BoxFit.contain,
+                                            image: NetworkImage(
+                                                "${productList[index].productImages[0].productImage}"),
+                                          )
+                                        : Image(
+                                            image: AssetImage(
+                                              "assets/images/placeholder.webp",
+                                            ),
+                                            height: 55,
+                                            width: 55,
+                                            fit: BoxFit.cover,
+                                          ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Flexible(
+                                  child: Container(
+                                    height: 48,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        AutoSizeText(
-                                          "earning_key".tr(),
-                                          maxFontSize: 15,
-                                          minFontSize: 11,
+                                        Container(
+                                          width: width * 0.70,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Container(
+                                                child: variantName.isEmpty
+                                                    ? AutoSizeText(
+                                                        "${productList[index].productName} ",
+                                                        maxLines: 2,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w600),
+                                                        maxFontSize: 15,
+                                                        minFontSize: 12,
+                                                      )
+                                                    : AutoSizeText(
+                                                        "${productList[index].productName} ($variantName)",
+                                                        maxLines: 2,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w600),
+                                                        maxFontSize: 15,
+                                                        minFontSize: 12,
+                                                      ),
+                                              ),
+                                              Container(
+                                                margin: const EdgeInsets.only(
+                                                    top: 4),
+                                                height: 15,
+                                                child: AutoSizeText(
+                                                  "qty_key".tr() +
+                                                      ": ${productList[index].count}",
+                                                  maxLines: 1,
+                                                  style: TextStyle(
+                                                      color: Colors.grey,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                  maxFontSize: 11,
+                                                  minFontSize: 10,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                         Container(
-                                          height: 17,
-                                          width: 17,
-                                          child: Image.asset(
-                                              "assets/images/point.png"),
-                                        ),
-                                        AutoSizeText(
-                                          " ${((double.parse(productList[index].earningCoins) * (productList[index].count)).toStringAsFixed(2))}",
-                                          style: TextStyle(
-                                            color: ColorPrimary,
-                                          ),
-                                          maxFontSize: 15,
-                                          minFontSize: 11,
-                                        ),
-                                        SizedBox(
-                                          width: 5,
-                                        )
-                                      ])
-                                ],
-                              ),
-                              Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          BlocBuilder<BillingProductsBloc,
-                                              BillingProductsState>(
-                                            builder: (context, state) {
-                                              return Checkbox(
-                                                materialTapTargetSize:
-                                                    MaterialTapTargetSize
-                                                        .shrinkWrap,
+                                          width: width * 0.70,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  new RichText(
+                                                    text: new TextSpan(
+                                                      text:
+                                                          '\u20B9 ${double.parse(productList[index].sellingPrice) * productList[index].count}  ',
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: ColorPrimary),
+                                                      children: <TextSpan>[
+                                                        new TextSpan(
+                                                          text:
+                                                              '\u20B9${double.parse(productList[index].mrp) * productList[index].count}',
+                                                          style: new TextStyle(
+                                                            color: Colors.grey,
+                                                            decoration:
+                                                                TextDecoration
+                                                                    .lineThrough,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  BlocBuilder<
+                                                      BillingProductsBloc,
+                                                      BillingProductsState>(
+                                                    builder: (context, state) {
+                                                      return SizedBox(
+                                                        width: 20,
+                                                        height: 10,
+                                                        child: Checkbox(
+                                                          shape: RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          4)),
+                                                          side: BorderSide(
+                                                              color:
+                                                                  Colors.grey),
+                                                          materialTapTargetSize:
+                                                              MaterialTapTargetSize
+                                                                  .shrinkWrap,
 
-                                                // checkColor: Colors.indigo,
-                                                value: productList[index]
-                                                    .billingcheck,
-                                                activeColor: ColorPrimary,
-                                                onChanged: (newvalue) async {
-                                                  log("true===>");
-                                                  if (await Network
-                                                      .isConnected()) {
-                                                    billingProductsBloc.add(
-                                                        CheckedBillingProductsEvent(
-                                                            check: newvalue!,
-                                                            index: index));
-                                                    selectedProductList =
-                                                        productList[index];
-                                                  } else {
-                                                    Fluttertoast.showToast(
-                                                        msg:
-                                                            "please_check_your_internet_connection_key"
-                                                                .tr(),
-                                                        backgroundColor:
-                                                            ColorPrimary);
-                                                  }
-                                                },
-                                              );
-                                            },
+                                                          // checkColor: Colors.indigo,
+                                                          value:
+                                                              productList[index]
+                                                                  .billingcheck,
+                                                          activeColor:
+                                                              ColorPrimary,
+                                                          onChanged:
+                                                              (newvalue) async {
+                                                            log("true===>");
+                                                            if (await Network
+                                                                .isConnected()) {
+                                                              billingProductsBloc.add(
+                                                                  CheckedBillingProductsEvent(
+                                                                      check:
+                                                                          newvalue!,
+                                                                      index:
+                                                                          index));
+                                                              selectedProductList =
+                                                                  productList[
+                                                                      index];
+                                                            } else {
+                                                              Fluttertoast.showToast(
+                                                                  msg:
+                                                                      "please_check_your_internet_connection_key"
+                                                                          .tr(),
+                                                                  backgroundColor:
+                                                                      ColorPrimary);
+                                                            }
+                                                          },
+                                                        ),
+                                                      );
+                                                    },
+                                                  ),
+                                                  Text(
+                                                    "  " + "redeem_key".tr(),
+                                                    style: TextStyle(
+                                                        fontSize: 12,
+                                                        color: Colors.grey),
+                                                  ),
+                                                ],
+                                              )
+                                            ],
                                           ),
-                                          Text(" " + "redeem_key".tr(),
-                                              style: TextStyle(fontSize: 14)),
-                                        ]),
-                                    Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          Text("redeem_key".tr(),
-                                              style: TextStyle(fontSize: 14)),
-                                          Container(
-                                            height: 17,
-                                            width: 17,
-                                            child: Image.asset(
-                                                "assets/images/point.png"),
-                                          ),
-                                          Text(
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      child: Center(
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              "redeem_key".tr() + ": ",
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.grey),
+                                            ),
+                                            Container(
+                                                child: Image.asset(
+                                              "assets/images/point.png",
+                                              width: 13,
+                                              height: 13,
+                                            )),
+                                            Text(
                                               " ${(double.parse(productList[index].redeemCoins) * productList[index].count).toStringAsFixed(2)}",
                                               style: TextStyle(
-                                                  color: ColorPrimary,
-                                                  fontSize: 15)),
-                                          SizedBox(
-                                            width: 5,
-                                          )
-                                        ])
-                                  ])
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      top: 30,
-                      left: 0,
-                      child: Container(
-                        margin:
-                            EdgeInsets.only(left: 10, right: 30, bottom: 10),
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade200,
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: productList[index].productImages.isNotEmpty
-                              ? Image(
-                                  height: 60,
-                                  width: 60,
-                                  fit: BoxFit.contain,
-                                  image: NetworkImage(
-                                      "${productList[index].productImages[0].productImage}"),
-                                )
-                              : Image(
-                                  image: AssetImage(
-                                    "assets/images/placeholder.webp",
-                                  ),
-                                  height: 60,
-                                  width: 60,
-                                  fit: BoxFit.cover,
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: ColorPrimary),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "earn_key".tr() + ": ",
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.grey),
+                                    ),
+                                    Container(
+                                        child: Image.asset(
+                                      "assets/images/point.png",
+                                      height: 13,
+                                      width: 13,
+                                    )),
+                                    Text(
+                                      " ${(double.parse(productList[index].earningCoins) * productList[index].count).toStringAsFixed(2)}",
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w700,
+                                          color: ColorPrimary),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -512,108 +533,129 @@ class _BillingProductsState extends State<BillingProducts> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  BlocBuilder<BillingProductsBloc, BillingProductsState>(
-                      builder: (context, state) {
-                    if (state is IntitalBillingProductstate) {
-                      calculateAmounts(productList);
-                    }
-                    return Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 10.0, right: 10.0, top: 15, bottom: 5),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "total_pay_amount_key".tr(),
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w700),
-                                ),
-                                Row(
+                  Padding(
+                    padding: const EdgeInsets.all(28),
+                    child:
+                        BlocBuilder<BillingProductsBloc, BillingProductsState>(
+                            builder: (context, state) {
+                      if (state is IntitalBillingProductstate) {
+                        calculateAmounts(productList);
+                      }
+                      return Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black12,
+                                blurRadius: 8,
+                              ),
+                            ]),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 10.0, right: 10.0, top: 15, bottom: 5),
+                              child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text("\u20B9 ",
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w700,
-                                            color: ColorPrimary)),
-                                    Text("${totalPay.toStringAsFixed(2)}",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w700,
-                                            color: ColorPrimary)),
-                                  ],
-                                ),
-                              ]),
-                        ),
-                        Divider(
-                          height: 1,
-                          color: ColorTextPrimary,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 10.0, right: 10.0, top: 15, bottom: 5),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "redeem_coins_key".tr(),
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w700),
-                                ),
-                                Row(
+                                    Text(
+                                      "total_pay_amount_key".tr(),
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text("\u20B9 ",
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w700,
+                                                color: ColorPrimary)),
+                                        Text("${totalPay.toStringAsFixed(2)}",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w700,
+                                                color: ColorPrimary)),
+                                      ],
+                                    ),
+                                  ]),
+                            ),
+                            Divider(
+                              height: 1,
+                              color: ColorTextPrimary,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 10.0, right: 10.0, top: 15, bottom: 5),
+                              child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Container(
-                                        child: Image.asset(
-                                      "assets/images/point.png",
-                                      scale: 2.5,
-                                    )),
-                                    Text(" ${redeemCoins.toStringAsFixed(2)}",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w700,
-                                            color: ColorPrimary)),
-                                  ],
-                                ),
-                              ]),
-                        ),
-                        Divider(
-                          height: 1,
-                          color: ColorTextPrimary,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 10.0, right: 10.0, top: 15, bottom: 5),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "earn_coins_key".tr(),
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w700),
-                                ),
-                                Row(
+                                    Text(
+                                      "redeem_coins_key".tr(),
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Container(
+                                            child: Image.asset(
+                                          "assets/images/point.png",
+                                          width: 16,
+                                          height: 16,
+                                        )),
+                                        Text(
+                                            " ${redeemCoins.toStringAsFixed(2)}",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w700,
+                                                color: ColorPrimary)),
+                                      ],
+                                    ),
+                                  ]),
+                            ),
+                            Divider(
+                              height: 1,
+                              color: ColorTextPrimary,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 10.0, right: 10.0, top: 15, bottom: 5),
+                              child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Container(
-                                        child: Image.asset(
-                                      "assets/images/point.png",
-                                      scale: 2.5,
-                                    )),
-                                    Text(" ${earnCoins.toStringAsFixed(2)}",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w700,
-                                            color: ColorPrimary)),
-                                  ],
-                                ),
-                              ]),
+                                    Text(
+                                      "earn_coins_key".tr(),
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Container(
+                                            child: Image.asset(
+                                          "assets/images/point.png",
+                                          width: 16,
+                                          height: 16,
+                                        )),
+                                        Text(" ${earnCoins.toStringAsFixed(2)}",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w700,
+                                                color: ColorPrimary)),
+                                      ],
+                                    ),
+                                  ]),
+                            ),
+                          ],
                         ),
-                      ],
-                    );
-                  }),
+                      );
+                    }),
+                  ),
                   BlocConsumer<BillingProductsBloc, BillingProductsState>(
                     listener: (context, state) async {
                       if (state is PayBillingProductsState) {
