@@ -81,6 +81,10 @@ class _ReportTypeScreenState extends State<ReportTypeScreen> {
                                 type: PageTransitionType.fade));
                       }
                     },
+                    leading: Image.asset(
+                      "assets/images/rt${index + 1}.png",
+                      scale: 1.5,
+                    ),
                     title: Text("${options[index]["title"]}"),
                     trailing: Icon(Icons.keyboard_arrow_right_outlined),
                   ),
@@ -93,9 +97,7 @@ class _ReportTypeScreenState extends State<ReportTypeScreen> {
                       width: 5,
                       decoration: BoxDecoration(
                           color: ColorPrimary,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(5),
-                              bottomLeft: Radius.circular(5))),
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
                     ))
               ],
             ),
