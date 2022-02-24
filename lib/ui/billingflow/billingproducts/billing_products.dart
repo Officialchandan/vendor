@@ -249,7 +249,11 @@ class _BillingProductsState extends State<BillingProducts> {
                                 ),
                                 Flexible(
                                   child: Container(
-                                    height: 48,
+                                    height:
+                                        productList[index].productName.length >
+                                                15
+                                            ? 54
+                                            : 48,
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
@@ -261,9 +265,10 @@ class _BillingProductsState extends State<BillingProducts> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Container(
+                                                width: width * 0.55,
                                                 child: variantName.isEmpty
                                                     ? AutoSizeText(
-                                                        "${productList[index].productName} ",
+                                                        "${productList[index].productName}",
                                                         maxLines: 2,
                                                         overflow: TextOverflow
                                                             .ellipsis,
@@ -534,7 +539,7 @@ class _BillingProductsState extends State<BillingProducts> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(28),
+                    padding: const EdgeInsets.all(20),
                     child:
                         BlocBuilder<BillingProductsBloc, BillingProductsState>(
                             builder: (context, state) {

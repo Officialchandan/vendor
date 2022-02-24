@@ -270,7 +270,12 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                             ),
                                             Flexible(
                                               child: Container(
-                                                height: 48,
+                                                height: searchList[index]
+                                                            .productName
+                                                            .length >
+                                                        18
+                                                    ? 54
+                                                    : 48,
                                                 child: Column(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment
