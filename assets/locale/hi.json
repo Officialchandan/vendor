@@ -38,6 +38,7 @@
     "sale_amount_key" : "बिक्री की राशि",
     "hourly_report_key" : "प्रति घंटा रिपोर्ट",
     "day_key" : "दिन",
+    "earn_key":"कमाई",
     "sale_key" : "बिक्री",
     "sale_amt_inr_key" : "बिक्री रकम (रुपया)",
     "sales_report_key" : "बिक्री रिपोर्ट",
