@@ -1,10 +1,14 @@
+import 'dart:developer';
+
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:vendor/model/get_due_amount_response.dart';
 import 'package:vendor/ui/performance_tracker/money_due_upi/bloc/money_due_bloc.dart';
 import 'package:vendor/ui/performance_tracker/money_due_upi/bloc/money_due_event.dart';
 import 'package:vendor/ui/performance_tracker/money_due_upi/bloc/money_due_state.dart';
+import 'package:vendor/ui/performance_tracker/money_due_upi/normal_ledger/normal_ledger.dart';
 import 'package:vendor/utility/color.dart';
 
 class MoneyDueScreen extends StatefulWidget {
@@ -162,11 +166,16 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(right: 20.0),
-                                child: GestureDetector(
-                                  child: Stack(
-                                    clipBehavior: Clip.none,
-                                    children: [
-                                      Container(
+                                child: Stack(
+                                  clipBehavior: Clip.none,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        log("hiiiii");
+                                        Navigator.push(context,
+                                            PageTransition(child: NormalLedger(), type: PageTransitionType.fade));
+                                      },
+                                      child: Container(
                                         padding: EdgeInsets.fromLTRB(18, 20, 18, 0),
                                         decoration: BoxDecoration(
                                           color: Colors.white,
@@ -212,61 +221,60 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                           ],
                                         ),
                                       ),
-                                      Positioned(
-                                        top: -27,
-                                        child: Container(
-                                          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colors.grey.withOpacity(0.1),
-                                                spreadRadius: 1,
-                                                blurRadius: 7,
-                                                offset: Offset(0, -6), // changes position of shadow
-                                              ),
-                                            ],
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(10),
-                                              topRight: Radius.circular(5),
+                                    ),
+                                    Positioned(
+                                      top: -27,
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.grey.withOpacity(0.1),
+                                              spreadRadius: 1,
+                                              blurRadius: 7,
+                                              offset: Offset(0, -6), // changes position of shadow
                                             ),
-                                          ),
-                                          child: Image.asset("assets/images/money-due1.png", width: 27),
-                                        ),
-                                      ),
-                                      Positioned(
-                                        top: -14,
-                                        right: 28,
-                                        child: Container(
-                                          width: 32,
-                                          height: 14,
-                                          decoration: BoxDecoration(
-                                            color: Color(0xff6657f4).withOpacity(0.10),
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(5),
-                                              topRight: Radius.circular(5),
-                                            ),
+                                          ],
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(10),
+                                            topRight: Radius.circular(5),
                                           ),
                                         ),
+                                        child: Image.asset("assets/images/money-due1.png", width: 27),
                                       ),
-                                      Positioned(
-                                        top: -8,
-                                        right: 15,
-                                        child: Container(
-                                          width: 32,
-                                          height: 8,
-                                          decoration: BoxDecoration(
-                                            color: Color(0xff6657f4).withOpacity(0.25),
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(5),
-                                              topRight: Radius.circular(5),
-                                            ),
+                                    ),
+                                    Positioned(
+                                      top: -14,
+                                      right: 28,
+                                      child: Container(
+                                        width: 32,
+                                        height: 14,
+                                        decoration: BoxDecoration(
+                                          color: Color(0xff6657f4).withOpacity(0.10),
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(5),
+                                            topRight: Radius.circular(5),
                                           ),
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                  onTap: () {},
+                                    ),
+                                    Positioned(
+                                      top: -8,
+                                      right: 15,
+                                      child: Container(
+                                        width: 32,
+                                        height: 8,
+                                        decoration: BoxDecoration(
+                                          color: Color(0xff6657f4).withOpacity(0.25),
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(5),
+                                            topRight: Radius.circular(5),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                               GestureDetector(
