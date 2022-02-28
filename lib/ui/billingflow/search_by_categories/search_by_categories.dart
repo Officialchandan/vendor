@@ -190,7 +190,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                             return Stack(
                               children: [
                                 Container(
-                                  height: 96,
+                                  height: 98,
                                   width: MediaQuery.of(context).size.width,
                                   margin: EdgeInsets.only(
                                       left: 14, right: 14, top: 10, bottom: 10),
@@ -273,52 +273,62 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                             Flexible(
                                               child: Container(
                                                 height: searchList[index]
-                                                            .productName
-                                                            .length >
-                                                        18
-                                                    ? 54
+                                                                .productName
+                                                                .length +
+                                                            variantName.length >
+                                                        30
+                                                    ? 58
                                                     : 48,
                                                 child: Column(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment
                                                           .spaceBetween,
                                                   children: [
-                                                    Container(
-                                                      width: width * 0.70,
-                                                      child: variantName.isEmpty
-                                                          ? AutoSizeText(
-                                                              "${searchList[index].productName} ",
-                                                              maxLines: 2,
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600),
-                                                              maxFontSize: 15,
-                                                              minFontSize: 12,
-                                                            )
-                                                          : AutoSizeText(
-                                                              "${searchList[index].productName} ($variantName)",
-                                                              maxLines: 2,
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600),
-                                                              maxFontSize: 15,
-                                                              minFontSize: 12,
-                                                            ),
+                                                    Row(
+                                                      children: [
+                                                        Container(
+                                                          width: width * 0.60,
+                                                          child: variantName
+                                                                  .isEmpty
+                                                              ? AutoSizeText(
+                                                                  "${searchList[index].productName} ",
+                                                                  maxLines: 2,
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600),
+                                                                  maxFontSize:
+                                                                      15,
+                                                                  minFontSize:
+                                                                      12,
+                                                                )
+                                                              : AutoSizeText(
+                                                                  "${searchList[index].productName} ($variantName)",
+                                                                  maxLines: 2,
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600),
+                                                                  maxFontSize:
+                                                                      15,
+                                                                  minFontSize:
+                                                                      12,
+                                                                ),
+                                                        ),
+                                                      ],
                                                     ),
                                                     Container(
-                                                      width: width * 0.70,
+                                                      width: width * 0.71,
                                                       child: Row(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment

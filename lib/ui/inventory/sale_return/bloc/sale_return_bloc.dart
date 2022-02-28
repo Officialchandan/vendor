@@ -34,7 +34,8 @@ class SaleReturnBloc extends Bloc<SaleReturnEvent, SaleReturnState> {
   Stream<SaleReturnState> getPurchasedProduct(String mobile) async* {
     if (await Network.isConnected()) {
       Map input = {"mobile": mobile};
-      GetPurchasedProductResponse response = await apiProvider.getPurchasedProduct(input);
+      GetPurchasedProductResponse response =
+          await apiProvider.getPurchasedProduct(input);
 
       if (response.success) {
         yield GetProductSuccessState(purchaseList: response.data!);
@@ -51,7 +52,8 @@ class SaleReturnBloc extends Bloc<SaleReturnEvent, SaleReturnState> {
       CommonResponse response = await apiProvider.saleReturnApi(input);
 
       if (response.success) {
-        yield ProductReturnSuccessState(message: response.message, input: input);
+        yield ProductReturnSuccessState(
+            message: response.message, input: input);
       } else {
         Utility.showToast(response.message);
       }
