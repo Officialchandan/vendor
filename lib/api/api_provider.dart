@@ -51,6 +51,7 @@ import 'package:vendor/model/partial_user_register.dart';
 import 'package:vendor/model/product_by_category_response.dart';
 import 'package:vendor/model/product_variant_response.dart';
 import 'package:vendor/model/qr_code.dart';
+import 'package:vendor/model/sale_return_resonse.dart';
 import 'package:vendor/model/upload_image_response.dart';
 import 'package:vendor/model/vendor_profile_response.dart';
 import 'package:vendor/model/verify_otp.dart';
@@ -260,14 +261,14 @@ class ApiProvider {
     }
   }
 
-  Future<CommonResponse> saleReturnApi(Map input) async {
+  Future<SaleReturnResponse> saleReturnApi(Map input) async {
     try {
       Response res = await dio.post(
         Endpoint.SALES_RETURN,
         data: input,
       );
 
-      return CommonResponse.fromJson(res.toString());
+      return SaleReturnResponse.fromJson(res.toString());
     } catch (error) {
       String message = "";
       if (error is DioError) {
@@ -277,7 +278,7 @@ class ApiProvider {
         message = "Please try again later!";
       }
       print("Exception occurred: $message stackTrace: $error");
-      return CommonResponse(success: false, message: message);
+      return SaleReturnResponse(success: false, message: message);
     }
   }
 

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:developer';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -34,9 +35,9 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
   TextEditingController edtProducts = TextEditingController();
   TextEditingController _textFieldController = TextEditingController();
   TextEditingController edtReason = TextEditingController();
-  List<PurchaseProductModel> purchasedList = [];
-  List<PurchaseProductModel> returnProductList = [];
-  StreamController<List<PurchaseProductModel>> streamController =
+  List<SaleReturnProducts> purchasedList = [];
+  List<SaleReturnProducts> returnProductList = [];
+  StreamController<List<SaleReturnProducts>> streamController =
       StreamController();
   SaleReturnBloc saleReturnBloc = SaleReturnBloc();
   bool checked = false;
@@ -49,7 +50,12 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
       child: BlocListener<SaleReturnBloc, SaleReturnState>(
         listener: (context, state) {
           if (state is ProductReturnSuccessState) {
-            _displayDialog(context, state.input);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        SaleReturnProductDetails(saleReturnData: state.data)));
+            // displayDialog(context, state.input);
           }
           if (state is VerifyOtpSuccessState) {
             // Navigator.pushAndRemoveUntil(
@@ -79,7 +85,6 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                         // saleReturnBloc
                         //     .add(GetPurchasedProductEvent(mobile: text));
                         getPurchasedProduct(text);
-
                         Timer(Duration(milliseconds: 500), () {
                           FocusScope.of(context).unfocus();
                         });
@@ -112,10 +117,6 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
           bottomNavigationBar: InkWell(
             onTap: () {
               submit();
-              // Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //         builder: (context) => SaleReturnProductDetails()));
             },
             child: Container(
               height: 50,
@@ -207,11 +208,13 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
       Utility.showToast("Please select product to be return!");
     } else {
       String productId = "";
+      String orderId = "";
       String qty = "";
 
       for (int i = 0; i < returnProductList.length; i++) {
         if (i == returnProductList.length - 1) {
           productId += returnProductList[i].productId.toString();
+          orderId += returnProductList[i].orderId.toString();
           qty += returnProductList[i].returnQty.toString();
         } else {
           productId += returnProductList[i].productId.toString() + ",";
@@ -224,6 +227,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
       input["vendor_id"] =
           await SharedPref.getIntegerPreference(SharedPref.VENDORID);
       input["product_id"] = productId;
+      input["order_id"] = orderId;
       input["qty"] = qty;
       input["reason"] = edtReason.text.trim();
 
@@ -231,7 +235,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
     }
   }
 
-  _displayDialog(BuildContext context, Map input) async {
+  displayDialog(BuildContext context, Map input) async {
     return showDialog(
         context: context,
         builder: (context) {
@@ -328,7 +332,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
   }
 
   Widget showProduct() {
-    return StreamBuilder<List<PurchaseProductModel>>(
+    return StreamBuilder<List<SaleReturnProducts>>(
       stream: streamController.stream,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
@@ -360,176 +364,6 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                           ],
                           borderRadius: BorderRadius.circular(10),
                         ),
-
-                        // child: Stack(
-                        //   children: [
-                        //     Padding(
-                        //       padding: const EdgeInsets.only(left: 40),
-                        //       child: Card(
-                        //         elevation: 1,
-                        //         shape: RoundedRectangleBorder(
-                        //           borderRadius: BorderRadius.circular(10),
-                        //         ),
-                        //         child: ListTile(
-                        //           contentPadding: EdgeInsets.only(
-                        //               left: 50, right: 5, top: 5, bottom: 5),
-                        //           title: Container(
-                        //               child: Column(
-                        //             mainAxisAlignment:
-                        //                 MainAxisAlignment.spaceEvenly,
-                        //             crossAxisAlignment: CrossAxisAlignment.start,
-                        //             mainAxisSize: MainAxisSize.min,
-                        //             children: [
-                        //               Text("${snapshot.data![index].productName}"),
-                        //               const SizedBox(
-                        //                 height: 10,
-                        //               ),
-                        //               RichText(
-                        //                   text: TextSpan(children: [
-                        //                 TextSpan(
-                        //                     text:
-                        //                         "₹ ${snapshot.data![index].price}\t",
-                        //                     style: TextStyle(color: ColorPrimary)),
-                        //                 // TextSpan(
-                        //                 //     text: "₹ ${product.total}",
-                        //                 //     style: TextStyle(color: Colors.black, decoration: TextDecoration.lineThrough))
-                        //               ])),
-                        //               const SizedBox(
-                        //                 height: 10,
-                        //               ),
-                        //               Row(
-                        //                   mainAxisAlignment:
-                        //                       MainAxisAlignment.spaceBetween,
-                        //                   children: [
-                        //                     Container(
-                        //                       decoration: BoxDecoration(
-                        //                           // color: Colors.amber,
-                        //                           borderRadius:
-                        //                               BorderRadius.circular(25),
-                        //                           border: Border.all(
-                        //                               color: Colors.black)),
-                        //                       height: 25,
-                        //                       // width: 90,
-                        //                       child: Row(
-                        //                         mainAxisSize: MainAxisSize.min,
-                        //                         children: [
-                        //                           Container(
-                        //                             height: 25,
-                        //                             width: 30,
-                        //                             child: IconButton(
-                        //                                 padding: EdgeInsets.all(0),
-                        //                                 onPressed: () {
-                        //                                   if (snapshot.data![index]
-                        //                                           .returnQty >
-                        //                                       1) {
-                        //                                     snapshot.data![index]
-                        //                                             .returnQty =
-                        //                                         snapshot
-                        //                                                 .data![
-                        //                                                     index]
-                        //                                                 .returnQty -
-                        //                                             1;
-                        //                                     streamController
-                        //                                         .add(purchasedList);
-                        //                                   }
-                        //                                 },
-                        //                                 iconSize: 20,
-                        //                                 splashRadius: 10,
-                        //                                 icon: Icon(
-                        //                                   Icons.remove,
-                        //                                 )),
-                        //                           ),
-                        //                           Container(
-                        //                             width: 20,
-                        //                             height: 25,
-                        //                             color: ColorPrimary,
-                        //                             child: Center(
-                        //                               child: Text(
-                        //                                 "${snapshot.data![index].returnQty}",
-                        //                                 style: TextStyle(
-                        //                                     color: Colors.white,
-                        //                                     fontSize: 14),
-                        //                               ),
-                        //                             ),
-                        //                           ),
-                        //                           Container(
-                        //                             height: 25,
-                        //                             width: 30,
-                        //                             child: IconButton(
-                        //                                 padding: EdgeInsets.all(0),
-                        //                                 onPressed: () {
-                        //                                   if (snapshot.data![index]
-                        //                                           .returnQty <
-                        //                                       snapshot.data![index]
-                        //                                           .qty) {
-                        //                                     snapshot.data![index]
-                        //                                             .returnQty =
-                        //                                         snapshot
-                        //                                                 .data![
-                        //                                                     index]
-                        //                                                 .returnQty +
-                        //                                             1;
-                        //                                     streamController
-                        //                                         .add(purchasedList);
-                        //                                   } else {
-                        //                                     Utility.showToast(
-                        //                                         "Can't return more than ${snapshot.data![index].qty} products");
-                        //                                   }
-                        //                                 },
-                        //                                 iconSize: 20,
-                        //                                 splashRadius: 10,
-                        //                                 icon: Icon(
-                        //                                   Icons.add,
-                        //                                 )),
-                        //                           )
-                        //                         ],
-                        //                       ),
-                        //                     ),
-                        //                   ]),
-                        //             ],
-                        //           )),
-                        //           trailing: Checkbox(
-                        //             value: snapshot.data![index].checked,
-                        //             onChanged: (value) {
-                        //               snapshot.data![index].checked = value!;
-                        //               streamController.add(purchasedList);
-                        //             },
-                        //           ),
-                        //         ),
-                        //       ),
-                        //     ),
-                        //     Positioned(
-                        //       child: Container(
-                        //         child: Center(
-                        //           child: ClipRRect(
-                        //             borderRadius: BorderRadius.circular(10),
-                        //             child: snapshot
-                        //                     .data![index].productImages.isNotEmpty
-                        //                 ? Image(
-                        //                     height: 60,
-                        //                     width: 60,
-                        //                     fit: BoxFit.contain,
-                        //                     image: NetworkImage(snapshot
-                        //                         .data![index].productImages.first),
-                        //                   )
-                        //                 : Image(
-                        //                     image: AssetImage(
-                        //                       "assets/images/placeholder.webp",
-                        //                     ),
-                        //                     height: 60,
-                        //                     width: 60,
-                        //                     fit: BoxFit.cover,
-                        //                   ),
-                        //           ),
-                        //         ),
-                        //       ),
-                        //       left: 20,
-                        //       top: 0,
-                        //       bottom: 0,
-                        //     )
-                        //   ],
-                        // ),
-
                         child: Padding(
                           padding: const EdgeInsets.all(10),
                           child: Row(
@@ -544,9 +378,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                                           width: 65,
                                           fit: BoxFit.contain,
                                           image: NetworkImage(snapshot
-                                              .data![index]
-                                              .productImages
-                                              .first),
+                                              .data![index].productImages),
                                         )
                                       : Image(
                                           image: AssetImage(
@@ -563,148 +395,197 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                               ),
                               Flexible(
                                 child: Container(
-                                    height: 70,
-                                    width: MediaQuery.of(context).size.width *
-                                        0.70,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            AutoSizeText(
-                                              snapshot.data![index].productName,
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w600),
-                                              maxFontSize: 15,
-                                              minFontSize: 12,
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                RichText(
-                                                    text: TextSpan(children: [
-                                                  TextSpan(
-                                                      text:
-                                                          "₹ ${snapshot.data![index].price}\t" +
-                                                              " ",
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.70,
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          AutoSizeText(
+                                            snapshot.data![index].productName,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w600),
+                                            maxFontSize: 15,
+                                            minFontSize: 12,
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              RichText(
+                                                  text: TextSpan(children: [
+                                                TextSpan(
+                                                    text:
+                                                        "₹ ${snapshot.data![index].price}\t" +
+                                                            " ",
+                                                    style: TextStyle(
+                                                        color: ColorPrimary,
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                                TextSpan(
+                                                    text:
+                                                        "₹ ${snapshot.data![index].total}",
+                                                    style: TextStyle(
+                                                        color: Colors.black87,
+                                                        decoration:
+                                                            TextDecoration
+                                                                .lineThrough))
+                                              ])),
+                                            ],
+                                          ),
+                                          snapshot.data![index].categoryName
+                                                  .isNotEmpty
+                                              ? Container(
+                                                  decoration: BoxDecoration(
+                                                      color: Color(0xffcadafa),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20)),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(2),
+                                                    child: Text(
+                                                      "  Direct Billing  ",
                                                       style: TextStyle(
-                                                          color: ColorPrimary,
-                                                          fontSize: 14,
-                                                          fontWeight:
-                                                              FontWeight.bold)),
-                                                  TextSpan(
-                                                      text:
-                                                          "₹ ${snapshot.data![index].total}",
-                                                      style: TextStyle(
-                                                          color: Colors.black87,
-                                                          decoration:
-                                                              TextDecoration
-                                                                  .lineThrough))
-                                                ])),
-                                              ],
-                                            ),
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(25),
-                                                  border: Border.all(
-                                                      color: Colors.black)),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  Container(
-                                                    height: 20,
-                                                    width: 20,
-                                                    child: IconButton(
-                                                        padding:
-                                                            EdgeInsets.all(0),
-                                                        onPressed: () {
-                                                          if (snapshot
-                                                                  .data![index]
-                                                                  .returnQty >
-                                                              1) {
-                                                            snapshot
-                                                                .data![index]
-                                                                .returnQty = snapshot
-                                                                    .data![
-                                                                        index]
-                                                                    .returnQty -
-                                                                1;
-                                                            streamController.add(
-                                                                purchasedList);
-                                                          }
-                                                        },
-                                                        iconSize: 20,
-                                                        splashRadius: 10,
-                                                        icon: Icon(
-                                                          Icons.remove,
-                                                        )),
-                                                  ),
-                                                  Container(
-                                                    width: 20,
-                                                    height: 20,
-                                                    color: ColorPrimary,
-                                                    child: Center(
-                                                      child: Text(
-                                                        "${snapshot.data![index].returnQty}",
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 14),
-                                                      ),
+                                                          fontSize: 11,
+                                                          color: Color(
+                                                              0xff5086ed)),
                                                     ),
                                                   ),
-                                                  Container(
-                                                    height: 20,
-                                                    width: 20,
-                                                    child: IconButton(
-                                                      padding:
-                                                          EdgeInsets.all(0),
-                                                      onPressed: () {
-                                                        if (snapshot
-                                                                .data![index]
-                                                                .returnQty <
-                                                            snapshot
-                                                                .data![index]
-                                                                .qty) {
-                                                          snapshot.data![index]
-                                                                  .returnQty =
+                                                )
+                                              : Container(
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              25),
+                                                      border: Border.all(
+                                                          color: Colors.black)),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      Container(
+                                                        height: 20,
+                                                        width: 20,
+                                                        child: IconButton(
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    0),
+                                                            onPressed: () {
+                                                              if (snapshot
+                                                                      .data![
+                                                                          index]
+                                                                      .returnQty >
+                                                                  1) {
+                                                                snapshot
+                                                                    .data![
+                                                                        index]
+                                                                    .returnQty = snapshot
+                                                                        .data![
+                                                                            index]
+                                                                        .returnQty -
+                                                                    1;
+                                                                streamController
+                                                                    .add(
+                                                                        purchasedList);
+                                                              }
+                                                            },
+                                                            iconSize: 20,
+                                                            splashRadius: 10,
+                                                            icon: Icon(
+                                                              Icons.remove,
+                                                            )),
+                                                      ),
+                                                      Container(
+                                                        width: 20,
+                                                        height: 20,
+                                                        color: ColorPrimary,
+                                                        child: Center(
+                                                          child: Text(
+                                                            "${snapshot.data![index].returnQty}",
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 14),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        height: 20,
+                                                        width: 20,
+                                                        child: IconButton(
+                                                          padding:
+                                                              EdgeInsets.all(0),
+                                                          onPressed: () {
+                                                            if (snapshot
+                                                                    .data![
+                                                                        index]
+                                                                    .returnQty <
+                                                                snapshot
+                                                                    .data![
+                                                                        index]
+                                                                    .qty) {
                                                               snapshot
+                                                                  .data![index]
+                                                                  .returnQty = snapshot
                                                                       .data![
                                                                           index]
                                                                       .returnQty +
                                                                   1;
-                                                          streamController.add(
-                                                              purchasedList);
-                                                        } else {
-                                                          Utility.showToast(
-                                                              "Can't return more than ${snapshot.data![index].qty} products");
-                                                        }
-                                                      },
-                                                      iconSize: 20,
-                                                      splashRadius: 10,
-                                                      icon: Icon(
-                                                        Icons.add,
-                                                      ),
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    )),
+                                                              streamController.add(
+                                                                  purchasedList);
+                                                            } else {
+                                                              Utility.showToast(
+                                                                  "Can't return more than ${snapshot.data![index].qty} products");
+                                                            }
+                                                          },
+                                                          iconSize: 20,
+                                                          splashRadius: 10,
+                                                          icon: Icon(
+                                                            Icons.add,
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            DateFormat("dd MMM HH:MM").format(
+                                                    DateTime.parse(snapshot
+                                                        .data![index]
+                                                        .dateTime)) +
+                                                " " +
+                                                DateFormat.jm()
+                                                    .format(DateTime.parse(
+                                                        snapshot.data![index]
+                                                            .dateTime))
+                                                    .toLowerCase(),
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black87),
+                                          )
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
                               ),
                             ],
                           ),
@@ -712,8 +593,8 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                       ),
                     ),
                     Positioned(
-                      right: 10,
-                      top: 6,
+                      right: 9,
+                      top: 4,
                       child: Checkbox(
                         activeColor: ColorPrimary,
                         value: snapshot.data![index].checked,
@@ -756,8 +637,48 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
       GetPurchasedProductResponse response =
           await apiProvider.getPurchasedProduct(input);
       if (response.success) {
-        purchasedList = response.data!;
-        streamController.add(purchasedList);
+        List<SaleReturnProducts> products = [];
+        for (var i in response.data!) {
+          SaleReturnProducts categoryWise = SaleReturnProducts(
+            orderId: i.orderId,
+            categoryName: "",
+            dateTime: i.dateTime,
+            productId: i.productId,
+            productName: i.productName,
+            productImages: i.productImages.isEmpty ? "" : i.productImages.first,
+            vendorId: i.vendorId,
+            customerId: i.customerId,
+            earningCoins: i.earningCoins,
+            redeemCoins: i.redeemCoins,
+            qty: i.qty,
+            price: i.price,
+            total: i.total,
+            mobile: "",
+          );
+          products.add(categoryWise);
+        }
+
+        for (var i in response.directBilling!) {
+          SaleReturnProducts directBilling = SaleReturnProducts(
+            orderId: i.orderId.toString(),
+            categoryName: i.categoryName,
+            dateTime: i.dateTime,
+            productId: "",
+            productName: i.categoryName,
+            productImages: "",
+            vendorId: i.vendorId.toString(),
+            customerId: "",
+            earningCoins: "",
+            redeemCoins: i.redeemedCoins,
+            qty: 0,
+            price: "",
+            total: i.totalPay,
+            mobile: i.mobile,
+          );
+          products.add(directBilling);
+        }
+        purchasedList = products;
+        streamController.add(products);
       } else {
         Utility.showToast(response.message);
       }
