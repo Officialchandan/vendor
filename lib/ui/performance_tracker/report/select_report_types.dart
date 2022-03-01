@@ -38,25 +38,25 @@ class _SelectReportTypeScreenState extends State<SelectReportTypeScreen> {
     {
       "title": "daily_sales_key".tr(),
       "subTitle": "click_here_to_add_product_key".tr(),
-      "image": "assets/images/tr-ic1.png",
+      "image": "assets/images/rt1.png",
       "id": 1
     },
     {
       "title": "coin_generated_key".tr(),
       "subTitle": "click_here_to_add_product_key".tr(),
-      "image": "assets/images/tr-ic2.png",
+      "image": "assets/images/rt2.png",
       "id": 2
     },
     {
       "title": "sale_return_key".tr(),
       "subTitle": "click_here_to_add_product_key".tr(),
-      "image": "assets/images/tr-ic3.png",
+      "image": "assets/images/rt8.png",
       "id": 3
     },
     {
       "title": "ready_stock_key".tr(),
       "subTitle": "click_here_to_add_product_key".tr(),
-      "image": "assets/images/tr-ic3.png",
+      "image": "assets/images/rt4.png",
       "id": 4
     },
     // {"title": "Purchase return", "subTitle": "click here to add product", "image": "assets/images/tr-ic3.png", "id": 5},
@@ -64,13 +64,13 @@ class _SelectReportTypeScreenState extends State<SelectReportTypeScreen> {
     {
       "title": "product_redeemed_key".tr(),
       "subTitle": "click_here_to_add_product_key".tr(),
-      "image": "assets/images/tr-ic3.png",
+      "image": "assets/images/rt7.png",
       "id": 7
     },
     {
       "title": "coin_redeemed_key".tr(),
       "subTitle": "click_here_to_add_product_key".tr(),
-      "image": "assets/images/tr-ic3.png",
+      "image": "assets/images/rt3.png",
       "id": 8
     },
   ];
@@ -94,6 +94,7 @@ class _SelectReportTypeScreenState extends State<SelectReportTypeScreen> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: ListTile(
+                    horizontalTitleGap: 0,
                     onTap: () {
                       if (options[index]["id"] == 1) {
                         Navigator.push(
@@ -129,6 +130,12 @@ class _SelectReportTypeScreenState extends State<SelectReportTypeScreen> {
                                 type: PageTransitionType.fade));
                       } else {}
                     },
+                    leading: Image.asset(
+                      "${options[index]["image"]}",
+                      width: 24,
+                      height: 24,
+                      fit: BoxFit.cover,
+                    ),
                     title: Text("${options[index]["title"]}"),
                     trailing: Icon(Icons.keyboard_arrow_right_outlined),
                   ),

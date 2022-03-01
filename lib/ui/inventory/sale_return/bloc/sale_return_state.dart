@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:vendor/model/get_purchased_product_response.dart';
+import 'package:vendor/model/sale_return_resonse.dart';
 
 class SaleReturnState extends Equatable {
   @override
@@ -23,8 +24,10 @@ class GetProductSuccessState extends SaleReturnState {
 class ProductReturnSuccessState extends SaleReturnState {
   final message;
   final Map input;
+  final SaleReturnData data;
 
-  ProductReturnSuccessState({this.message, required this.input});
+  ProductReturnSuccessState(
+      {this.message, required this.input, required this.data});
 
   @override
   List<Object?> get props => [message, input];

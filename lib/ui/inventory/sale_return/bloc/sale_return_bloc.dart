@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/model/common_response.dart';
 import 'package:vendor/model/get_purchased_product_response.dart';
+import 'package:vendor/model/sale_return_resonse.dart';
 import 'package:vendor/ui/inventory/sale_return/bloc/sale_return_event.dart';
 import 'package:vendor/ui/inventory/sale_return/bloc/sale_return_state.dart';
 import 'package:vendor/utility/constant.dart';
@@ -34,7 +35,8 @@ class SaleReturnBloc extends Bloc<SaleReturnEvent, SaleReturnState> {
   Stream<SaleReturnState> getPurchasedProduct(String mobile) async* {
     if (await Network.isConnected()) {
       Map input = {"mobile": mobile};
-      GetPurchasedProductResponse response = await apiProvider.getPurchasedProduct(input);
+      GetPurchasedProductResponse response =
+          await apiProvider.getPurchasedProduct(input);
 
       if (response.success) {
         yield GetProductSuccessState(purchaseList: response.data!);
@@ -48,10 +50,11 @@ class SaleReturnBloc extends Bloc<SaleReturnEvent, SaleReturnState> {
 
   Stream<SaleReturnState> saleReturnApi(Map input) async* {
     if (await Network.isConnected()) {
-      CommonResponse response = await apiProvider.saleReturnApi(input);
+      SaleReturnResponse response = await apiProvider.saleReturnApi(input);
 
       if (response.success) {
-        yield ProductReturnSuccessState(message: response.message, input: input);
+        yield ProductReturnSuccessState(
+            message: response.message, input: input, data: response.data!);
       } else {
         Utility.showToast(response.message);
       }
