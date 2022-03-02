@@ -39,6 +39,11 @@ class _DailyReportDataGridState extends State<DailyReportDataGrid> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              icon: Icon(Icons.arrow_back_ios)),
           title: Text("sales_report_key".tr()),
           actions: [
             IconButton(
@@ -320,7 +325,8 @@ class ReportDataSource extends DataGridSource {
               DataGridCell<String>(columnName: 'Mobile', value: e['mobile']),
               DataGridCell<String>(
                   columnName: 'Purchase Price', value: e['purchase_price']),
-              DataGridCell<String>(columnName: 'MRP', value: e['mrp']),
+              DataGridCell<String>(
+                  columnName: 'MRP', value: e['mrp'].toString()),
               DataGridCell<String>(columnName: 'Total', value: e['total']),
               DataGridCell<String>(
                   columnName: 'Earning Coins', value: e['earning_coins']),
@@ -370,6 +376,7 @@ class RadioListBuilderState extends State<RadioListBuilder> {
       padding: const EdgeInsetsDirectional.only(top: 10),
       itemBuilder: (context, index) {
         return RadioListTile(
+          activeColor: ColorPrimary,
           contentPadding: const EdgeInsets.only(left: 20),
           value: index,
           groupValue: value,

@@ -5,6 +5,7 @@ import 'package:vendor/model/product_model.dart';
 import 'package:vendor/ui/inventory/suggested_product/bloc/suggested_product_bloc.dart';
 import 'package:vendor/ui/inventory/suggested_product/bloc/suggested_product_event.dart';
 import 'package:vendor/ui/inventory/suggested_product/bloc/suggested_product_state.dart';
+import 'package:vendor/utility/color.dart';
 
 class SuggestedProductList extends StatefulWidget {
   final List<ProductModel> products;
@@ -77,6 +78,7 @@ class _SuggestedProductListState extends State<SuggestedProductList> {
                           // widget.products[state.index].check = state.check;
                         }
                         return Checkbox(
+                          activeColor: ColorPrimary,
                           value: widget.products[index].check,
                           onChanged: (value) {
                             BlocProvider.of<SuggestedProductBloc>(context)

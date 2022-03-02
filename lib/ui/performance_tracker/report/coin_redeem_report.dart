@@ -70,6 +70,7 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
               children: [
                 Expanded(
                   child: RadioListTile(
+                      activeColor: ColorPrimary,
                       title: Text("date_wise_key".tr()),
                       value: 1,
                       groupValue: groupValue,
@@ -80,6 +81,7 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
                 ),
                 Expanded(
                   child: RadioListTile(
+                      activeColor: ColorPrimary,
                       title: Text("date_wise_key".tr()),
                       value: 2,
                       groupValue: groupValue,

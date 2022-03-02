@@ -41,6 +41,11 @@ class _GeneratedCoinReportDataGridState
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              icon: Icon(Icons.arrow_back_ios)),
           title: Text("generate_coin_report_key".tr()),
           actions: [
             IconButton(
@@ -274,7 +279,7 @@ class ReportDataSource extends DataGridSource {
   ReportDataSource({required List<Map<String, dynamic>> reportData}) {
     _reportData = reportData
         .map<DataGridRow>((e) => DataGridRow(cells: [
-              DataGridCell<int>(
+              DataGridCell<String>(
                   columnName: 'Category Name', value: e['category_name']),
               DataGridCell<String>(
                   columnName: 'Product Name', value: e['product_name']),
@@ -330,6 +335,7 @@ class RadioListBuilderState extends State<RadioListBuilder> {
       padding: const EdgeInsetsDirectional.only(top: 10),
       itemBuilder: (context, index) {
         return RadioListTile(
+          activeColor: ColorPrimary,
           contentPadding: const EdgeInsets.only(left: 20),
           value: index,
           groupValue: value,

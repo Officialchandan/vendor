@@ -29,6 +29,7 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
                         bottom: BorderSide(width: 1, color: Color(0xffa2a2a2))),
                   ),
                   child: RadioListTile<int>(
+                    activeColor: ColorPrimary,
                     contentPadding: EdgeInsets.all(0),
                     title: Text("${Constant.langList[index]["name"]}",
                         style: TextStyle(
