@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../../widget/calendar_bottom_sheet.dart';
+import '../../../widget/calendar_bottom_sheet.dart';
 
 class ReddemCoinHistory extends StatefulWidget {
   const ReddemCoinHistory({Key? key}) : super(key: key);

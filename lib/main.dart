@@ -18,7 +18,7 @@ import 'package:vendor/ui/home/bottom_navigation_home.dart';
 import 'package:vendor/ui/home/home.dart';
 import 'package:vendor/ui/language/select_language.dart';
 import 'package:vendor/ui/login/login_screen.dart';
-import 'package:vendor/ui/performance_tracker/money_due_upi/money_due_screen.dart';
+import 'package:vendor/ui/money_due_upi/money_due_screen.dart';
 import 'package:vendor/ui/splash/splash_screen.dart';
 import 'package:vendor/ui_without_inventory/home/bottom_navigation_bar.dart';
 import 'package:vendor/ui_without_inventory/home/home.dart';

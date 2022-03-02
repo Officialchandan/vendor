@@ -5,15 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/model/get_due_amount_response.dart';
-import 'package:vendor/ui/performance_tracker/money_due_upi/bloc/money_due_bloc.dart';
-import 'package:vendor/ui/performance_tracker/money_due_upi/bloc/money_due_event.dart';
-import 'package:vendor/ui/performance_tracker/money_due_upi/bloc/money_due_state.dart';
-import 'package:vendor/ui/performance_tracker/money_due_upi/free_coins/free_coins_history.dart';
-import 'package:vendor/ui/performance_tracker/money_due_upi/normal_ledger/normal_ledger.dart';
-import 'package:vendor/ui/performance_tracker/money_due_upi/redeem_coin/reddem_coin_history.dart';
-import 'package:vendor/ui/performance_tracker/money_due_upi/sales_return/sales_return.dart';
-import 'package:vendor/ui/performance_tracker/money_due_upi/upi_transfer/upi_transfer_screen.dart';
-
+import 'package:vendor/ui/money_due_upi/bloc/money_due_bloc.dart';
+import 'package:vendor/ui/money_due_upi/bloc/money_due_event.dart';
+import 'package:vendor/ui/money_due_upi/bloc/money_due_state.dart';
+import 'package:vendor/ui/money_due_upi/free_coins/free_coins_history.dart';
+import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger.dart';
+import 'package:vendor/ui/money_due_upi/redeem_coin/reddem_coin_history.dart';
+import 'package:vendor/ui/money_due_upi/sales_return/sales_return.dart';
+import 'package:vendor/ui/money_due_upi/upi_transfer/upi_transfer_screen.dart';
 import 'package:vendor/utility/color.dart';
 
 class MoneyDueScreen extends StatefulWidget {
@@ -724,8 +723,8 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                               ],
                             ),
                             onTap: () {
-                              Navigator.push(context,
-                                  PageTransition(child: FreeCoinsHistory(), type: PageTransitionType.fade));
+                              Navigator.push(
+                                  context, PageTransition(child: FreeCoinsHistory(), type: PageTransitionType.fade));
                             },
                           ),
                         ),
