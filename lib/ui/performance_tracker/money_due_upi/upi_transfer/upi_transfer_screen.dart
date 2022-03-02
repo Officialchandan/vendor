@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../widget/calendar_bottom_sheet.dart';
+
 class UpiTransferHistory extends StatefulWidget {
   const UpiTransferHistory({Key? key}) : super(key: key);
 
@@ -9,6 +11,8 @@ class UpiTransferHistory extends StatefulWidget {
 }
 
 class _UpiTransferHistoryState extends State<UpiTransferHistory> {
+  String startDate = "";
+  String endDate = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,9 +22,25 @@ class _UpiTransferHistoryState extends State<UpiTransferHistory> {
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
         actions: [
-          Icon(
-            Icons.filter_alt,
-            color: Colors.white,
+          GestureDetector(
+            onTap: () {
+              showModalBottomSheet(
+                  shape: RoundedRectangleBorder(),
+                  context: context,
+                  builder: (context) {
+                    return CalendarBottomSheet(onSelect: (startDate, endDate) {
+                      this.startDate = startDate;
+                      this.endDate = endDate;
+                      print("startDate->$startDate");
+                      print("endDate->$endDate");
+                      // getCustomer();
+                    });
+                  });
+            },
+            child: Icon(
+              Icons.filter_alt,
+              color: Colors.white,
+            ),
           ),
           Center(child: Text("Filter   ")),
         ],

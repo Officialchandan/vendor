@@ -11,159 +11,203 @@ class NormalLedger extends StatefulWidget {
   _NormalLedgerState createState() => _NormalLedgerState();
 }
 
-class _NormalLedgerState extends State<NormalLedger> {
+class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMixin {
+  TabController? _tabController;
+  List<String> months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  DateTime? dateTime;
+  DateTime now = DateTime.now();
+  String year = "";
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    log("${now}");
+    year = (now.year).toString();
+    _tabController = TabController(length: 12, vsync: this, initialIndex: now.month - 1);
+    log("${year}");
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Master Ledger",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        ),
-      ),
-      body: Container(
-        child: Column(
-          children: [
-            Container(
-              height: 50,
-              color: Colors.grey[100],
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      showPicker();
-                    },
-                    child: Container(
-                      width: 100,
-                      height: 35,
-                      decoration: BoxDecoration(color: Colors.grey[350], borderRadius: BorderRadius.circular(5)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text(
-                            "Week",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Icon(
-                            Icons.arrow_drop_down,
-                            color: Colors.black,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 25,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      showDaysPicker();
-                    },
-                    child: Container(
-                      width: 100,
-                      height: 35,
-                      decoration: BoxDecoration(color: Colors.grey[350], borderRadius: BorderRadius.circular(5)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text(
-                            "Day",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Icon(Icons.arrow_drop_down)
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+    return DefaultTabController(
+      length: months.length,
+      initialIndex: 0,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            "Master Ledger",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          ),
+          bottom: PreferredSize(
+            child: Container(
+              color: ColorPrimary,
+              child: TabBar(
+                indicatorWeight: 3,
+                isScrollable: true,
+                controller: _tabController,
+                indicatorColor: ColorPrimary,
+                unselectedLabelColor: Colors.white,
+                labelColor: Colors.white,
+                labelStyle: const TextStyle(
+                  fontSize: 18,
+                  letterSpacing: 0.67,
+                  fontWeight: FontWeight.w500,
+                ),
+                tabs: List.generate(months.length, (index) {
+                  return Tab(
+                    text: months[index].toString(),
+                  );
+                  log("${months.length}");
+                }),
               ),
             ),
-            Expanded(
-              child: ListView.builder(
-                  itemCount: 20,
-                  padding: EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 5),
-                  itemBuilder: (context, index) {
-                    return Stack(children: [
-                      Container(
-                        margin: EdgeInsets.only(top: 15),
-                        padding: EdgeInsets.all(0),
-                        height: 70,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.white,
-                            border: Border.all(color: Colors.white38),
-                            boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 1.0, spreadRadius: 1)]),
-                        child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                          Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "    +91 23689745035",
-                                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                                ),
-                                Text("    5.30 PM"),
-                              ]),
-                          Row(
-                            children: [
-                              Center(
-                                child: Container(
-                                  height: 20,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20), color: Colors.orange.shade50),
-                                  child: Text(
-                                    "  Pending  ",
-                                    style: TextStyle(color: Colors.orange, fontSize: 12, fontWeight: FontWeight.w400),
-                                  ),
-                                ),
+            preferredSize: const Size.fromHeight(50),
+          ),
+        ),
+        body: Container(
+          child: Column(
+            children: [
+              Container(
+                height: 50,
+                color: Colors.grey[100],
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        showPicker();
+                      },
+                      child: Container(
+                        width: 100,
+                        height: 35,
+                        decoration: BoxDecoration(color: Colors.grey[350], borderRadius: BorderRadius.circular(5)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              "Week",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
                               ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Container(
-                                width: 90,
-                              )
-                            ],
-                          ),
-                        ]),
-                      ),
-                      Positioned(
-                          top: 10,
-                          left: 0,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.only(topLeft: Radius.circular(30)),
-                            child: Transform.rotate(
-                              angle: 12.0,
-                              //turns: new AlwaysStoppedAnimation(330 / 360),
-                              child: Container(color: Colors.red, child: new Text("Lorem ")),
                             ),
-                          )),
-                      Positioned(
-                        right: 0,
-                        top: 15,
-                        child: Container(
-                          alignment: Alignment.center,
-                          width: 90,
+                            Icon(
+                              Icons.arrow_drop_down,
+                              color: Colors.black,
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 25,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        showDaysPicker();
+                      },
+                      child: Container(
+                        width: 100,
+                        height: 35,
+                        decoration: BoxDecoration(color: Colors.grey[350], borderRadius: BorderRadius.circular(5)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              "Day",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Icon(Icons.arrow_drop_down)
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: ListView.builder(
+                    itemCount: 20,
+                    padding: EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 5),
+                    itemBuilder: (context, index) {
+                      return Stack(children: [
+                        Container(
+                          margin: EdgeInsets.only(top: 15),
+                          padding: EdgeInsets.all(0),
                           height: 70,
                           decoration: BoxDecoration(
-                              color: Colors.red.shade50,
-                              borderRadius:
-                                  BorderRadius.only(bottomRight: Radius.circular(10), topRight: Radius.circular(10))),
-                          child: Text(
-                            " \u20B9 206.67 ",
-                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.red),
-                          ),
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.white,
+                              border: Border.all(color: Colors.white38),
+                              boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 1.0, spreadRadius: 1)]),
+                          child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                            Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "    +91 23689745035",
+                                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                                  ),
+                                  Text("    5.30 PM"),
+                                ]),
+                            Row(
+                              children: [
+                                Center(
+                                  child: Container(
+                                    height: 20,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20), color: Colors.orange.shade50),
+                                    child: Text(
+                                      "  Pending  ",
+                                      style: TextStyle(color: Colors.orange, fontSize: 12, fontWeight: FontWeight.w400),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Container(
+                                  width: 90,
+                                )
+                              ],
+                            ),
+                          ]),
                         ),
-                      )
-                    ]);
-                  }),
-            )
-          ],
+                        Positioned(
+                            top: 10,
+                            left: 0,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.only(topLeft: Radius.circular(30)),
+                              child: Transform.rotate(
+                                angle: 12.0,
+                                //turns: new AlwaysStoppedAnimation(330 / 360),
+                                child: Container(color: Colors.red, child: new Text("Lorem ")),
+                              ),
+                            )),
+                        Positioned(
+                          right: 0,
+                          top: 15,
+                          child: Container(
+                            alignment: Alignment.center,
+                            width: 90,
+                            height: 70,
+                            decoration: BoxDecoration(
+                                color: Colors.red.shade50,
+                                borderRadius:
+                                    BorderRadius.only(bottomRight: Radius.circular(10), topRight: Radius.circular(10))),
+                            child: Text(
+                              " \u20B9 206.67 ",
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.red),
+                            ),
+                          ),
+                        )
+                      ]);
+                    }),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -312,6 +356,7 @@ class _NormalLedgerState extends State<NormalLedger> {
                 children: [
                   GestureDetector(
                     onTap: () {
+                      log("${_tabController!.index}");
                       Navigator.pop(context);
                     },
                     child: Container(

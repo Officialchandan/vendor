@@ -1,4 +1,5 @@
 import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -61,7 +62,9 @@ ThemeData themeData(context) => ThemeData(
       color: ColorPrimary,
       opacity: 1,
     ),
-
+    bottomSheetTheme: BottomSheetThemeData(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(topRight: Radius.circular(25), topLeft: Radius.circular(25)))),
     // accentTextTheme: Theme.of(context).textTheme,
     unselectedWidgetColor: Colors.black,
     fontFamily: GoogleFonts.openSans().fontFamily,
@@ -134,8 +137,7 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
     "high_importance_channel", "High Importance Notification",
     importance: Importance.high, playSound: true);
 
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
 final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
@@ -181,14 +183,13 @@ void main() async {
     RemoteNotification? notification = message.notification;
     AndroidNotification? android = message.notification?.android;
     if (notification != null && android != null) {
-      Navigator.push(navigationService.navigatorKey.currentContext!,
-          MaterialPageRoute(builder: (_) => MoneyDueScreen(true)));
+      Navigator.push(
+          navigationService.navigatorKey.currentContext!, MaterialPageRoute(builder: (_) => MoneyDueScreen(true)));
     }
   });
 
   await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>()
+      .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(channel);
   configEasyLoading();
 
@@ -200,8 +201,7 @@ void main() async {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: ColorPrimary,
   ));
-  SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   dio.interceptors.add(LogInterceptor(
       responseBody: true,
       responseHeader: false,
@@ -215,10 +215,7 @@ void main() async {
   // assets/locale
   runApp(
     EasyLocalization(
-        supportedLocales: Constant.language,
-        path: 'assets/locale',
-        fallbackLocale: Locale('en'),
-        child: MyApp()),
+        supportedLocales: Constant.language, path: 'assets/locale', fallbackLocale: Locale('en'), child: MyApp()),
   );
 }
 
@@ -250,29 +247,22 @@ class _MyAppState extends State<MyApp> {
       onGenerateRoute: (route) {
         switch (route.name) {
           case "/":
-            return PageTransition(
-                type: PageTransitionType.fade, child: SplashScreen());
+            return PageTransition(type: PageTransitionType.fade, child: SplashScreen());
 
           case Routes.SplashScreen:
-            return PageTransition(
-                type: PageTransitionType.fade, child: SplashScreen());
+            return PageTransition(type: PageTransitionType.fade, child: SplashScreen());
 
           case Routes.SelectLanguage:
-            return PageTransition(
-                type: PageTransitionType.fade, child: SelectLanguage());
+            return PageTransition(type: PageTransitionType.fade, child: SelectLanguage());
 
           case Routes.LoginScreen:
-            return PageTransition(
-                type: PageTransitionType.fade, child: LoginScreen());
+            return PageTransition(type: PageTransitionType.fade, child: LoginScreen());
 
           case Routes.HomeScreen:
-            return PageTransition(
-                type: PageTransitionType.fade, child: HomeScreen());
+            return PageTransition(type: PageTransitionType.fade, child: HomeScreen());
 
           case Routes.HomeScreenWithoutInventory:
-            return PageTransition(
-                type: PageTransitionType.fade,
-                child: HomeScreenWithoutInventory());
+            return PageTransition(type: PageTransitionType.fade, child: HomeScreenWithoutInventory());
 
           case Routes.BOTTOM_NAVIGATION_HOME:
             int index = route.arguments as int;
