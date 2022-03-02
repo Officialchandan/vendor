@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vendor/utility/color.dart';
+import 'package:vendor/widget/calendar_bottom_sheet.dart';
 
 class FreeCoinsHistory extends StatefulWidget {
   const FreeCoinsHistory({Key? key}) : super(key: key);
@@ -10,6 +11,8 @@ class FreeCoinsHistory extends StatefulWidget {
 }
 
 class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
+  String startDate = "";
+  String endDate = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,11 +22,30 @@ class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
         actions: [
-          Icon(
-            Icons.filter_alt,
-            color: Colors.white,
+          GestureDetector(
+            onTap: () {
+              showModalBottomSheet(
+                  context: context,
+                  builder: (context) {
+                    return CalendarBottomSheet(onSelect: (startDate, endDate) {
+                      this.startDate = startDate;
+                      this.endDate = endDate;
+                      print("startDate->$startDate");
+                      print("endDate->$endDate");
+                      // getCustomer();
+                    });
+                  });
+              print("startDate--->$startDate");
+              print("endDate--->$endDate");
+            },
+            child: Row(children: [
+              Icon(
+                Icons.filter_alt,
+                color: Colors.white,
+              ),
+              Center(child: Text("Filter   ")),
+            ]),
           ),
-          Center(child: Text("Filter   ")),
         ],
       ),
       body: Container(

@@ -25,7 +25,6 @@ class _UpiTransferHistoryState extends State<UpiTransferHistory> {
           GestureDetector(
             onTap: () {
               showModalBottomSheet(
-                  shape: RoundedRectangleBorder(),
                   context: context,
                   builder: (context) {
                     return CalendarBottomSheet(onSelect: (startDate, endDate) {
@@ -36,13 +35,17 @@ class _UpiTransferHistoryState extends State<UpiTransferHistory> {
                       // getCustomer();
                     });
                   });
+              print("startDate--->$startDate");
+              print("endDate--->$endDate");
             },
-            child: Icon(
-              Icons.filter_alt,
-              color: Colors.white,
-            ),
+            child: Row(children: [
+              Icon(
+                Icons.filter_alt,
+                color: Colors.white,
+              ),
+              Center(child: Text("Filter   ")),
+            ]),
           ),
-          Center(child: Text("Filter   ")),
         ],
       ),
       body: Container(
