@@ -67,6 +67,7 @@ class _GeneratedCoinReportState extends State<GeneratedCoinReport> {
               children: [
                 Expanded(
                   child: RadioListTile(
+                      activeColor: ColorPrimary,
                       title: Text("date_wise_key".tr()),
                       value: 1,
                       groupValue: groupValue,
@@ -77,6 +78,7 @@ class _GeneratedCoinReportState extends State<GeneratedCoinReport> {
                 ),
                 Expanded(
                   child: RadioListTile(
+                      activeColor: ColorPrimary,
                       title: Text("day_wise_key".tr()),
                       value: 2,
                       groupValue: groupValue,

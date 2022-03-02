@@ -41,6 +41,11 @@ class _RedeemCoinReportDataGridState extends State<RedeemCoinReportDataGrid> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              icon: Icon(Icons.arrow_back_ios)),
           title: Text("coin_redeemed_reports_key".tr()),
           actions: [
             IconButton(
@@ -287,6 +292,7 @@ class RadioListBuilderState extends State<RadioListBuilder> {
       padding: const EdgeInsetsDirectional.only(top: 10),
       itemBuilder: (context, index) {
         return RadioListTile(
+          activeColor: ColorPrimary,
           contentPadding: const EdgeInsets.only(left: 20),
           value: index,
           groupValue: value,

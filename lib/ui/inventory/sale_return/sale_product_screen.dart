@@ -240,6 +240,7 @@ class _SaleProductScreenState extends State<SaleProductScreen> {
                                     ],
                                   )),
                                   trailing: Checkbox(
+                                    activeColor: ColorPrimary,
                                     value: product.checked,
                                     onChanged: (value) {
                                       product.checked = value!;

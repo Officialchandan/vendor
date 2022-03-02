@@ -1,5 +1,6 @@
 import 'dart:collection';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -26,6 +27,7 @@ import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/utility.dart';
 import 'package:vendor/widget/category_bottom_sheet.dart';
+import 'package:vendor/widget/custom_bottom_sheet.dart';
 
 import '../../../main.dart';
 
@@ -39,11 +41,13 @@ class DailyReport extends StatefulWidget {
 }
 
 class _DailyReportState extends State<DailyReport> {
-  String selectedDate = '';
+  String startDate = '';
+  String endDate = '';
   int groupValue = 1;
-
+  Option? days;
   TextEditingController edtCategory = TextEditingController();
   TextEditingController edtProducts = TextEditingController();
+  TextEditingController edtDays = TextEditingController();
   DateRangePickerController dateRangePickerController =
       DateRangePickerController();
   CategoryModel? categoryModel;
@@ -76,35 +80,80 @@ class _DailyReportState extends State<DailyReport> {
         padding: const EdgeInsets.all(15),
         child: Column(
           children: [
-            SfDateRangePicker(
-                controller: dateRangePickerController,
-                maxDate: DateTime.now(),
-                minDate: DateTime(2000),
-                enablePastDates: true,
-                monthCellStyle: DateRangePickerMonthCellStyle(
-                    weekendTextStyle: TextStyle(color: Colors.grey.shade300),
-                    disabledDatesTextStyle:
-                        TextStyle(color: Colors.grey.shade300)),
-                monthViewSettings: DateRangePickerMonthViewSettings(
-                  enableSwipeSelection: true,
-                  showTrailingAndLeadingDates: true,
-                  firstDayOfWeek: 1,
-                  weekendDays: [],
-                  // showWeekNumber: true
+            Text("view_report_by_key".tr()),
+            Row(
+              children: [
+                Expanded(
+                  child: RadioListTile(
+                      activeColor: ColorPrimary,
+                      title: Text("date_wise_key".tr()),
+                      value: 1,
+                      groupValue: groupValue,
+                      onChanged: (value) {
+                        groupValue = value as int;
+                        setState(() {});
+                      }),
                 ),
-                allowViewNavigation: true,
-                todayHighlightColor: Colors.grey.shade300,
-                headerStyle: DateRangePickerHeaderStyle(
-                  textStyle: TextStyle(color: ColorPrimary),
+                Expanded(
+                  child: RadioListTile(
+                      activeColor: ColorPrimary,
+                      title: Text("day_wise_key".tr()),
+                      value: 2,
+                      groupValue: groupValue,
+                      onChanged: (value) {
+                        groupValue = value as int;
+                        setState(() {});
+                      }),
                 ),
-                yearCellStyle: DateRangePickerYearCellStyle(
-                    textStyle: TextStyle(color: Colors.black)),
-                showNavigationArrow: false,
-                selectionMode: DateRangePickerSelectionMode.single,
-                endRangeSelectionColor: ColorPrimary,
-                startRangeSelectionColor: ColorPrimary,
-                rangeSelectionColor: Colors.blue.shade50,
-                onSelectionChanged: _onSelectionChanged),
+              ],
+            ),
+            groupValue == 1
+                ? SfDateRangePicker(
+                    controller: dateRangePickerController,
+                    maxDate: DateTime.now(),
+                    minDate: DateTime(2000),
+                    enablePastDates: true,
+                    monthCellStyle: DateRangePickerMonthCellStyle(
+                        weekendTextStyle:
+                            TextStyle(color: Colors.grey.shade300),
+                        disabledDatesTextStyle:
+                            TextStyle(color: Colors.grey.shade300)),
+                    monthViewSettings: DateRangePickerMonthViewSettings(
+                      enableSwipeSelection: true,
+                      showTrailingAndLeadingDates: true,
+                      firstDayOfWeek: 1,
+                      weekendDays: [],
+                      // showWeekNumber: true
+                    ),
+                    allowViewNavigation: true,
+                    todayHighlightColor: Colors.grey.shade300,
+                    headerStyle: DateRangePickerHeaderStyle(
+                      textStyle: TextStyle(color: ColorPrimary),
+                    ),
+                    yearCellStyle: DateRangePickerYearCellStyle(
+                        textStyle: TextStyle(color: Colors.black)),
+                    showNavigationArrow: false,
+                    selectionMode: DateRangePickerSelectionMode.range,
+                    endRangeSelectionColor: ColorPrimary,
+                    startRangeSelectionColor: ColorPrimary,
+                    rangeSelectionColor: Colors.blue.shade50,
+                    onSelectionChanged: _onSelectionChanged)
+                : TextFormField(
+                    controller: edtDays,
+                    onTap: () {
+                      selectDays(context);
+                    },
+                    readOnly: true,
+                    decoration: InputDecoration(
+                        hintText: "choose_report_days_key".tr(),
+                        suffixIcon: Icon(
+                          Icons.keyboard_arrow_right_sharp,
+                          color: ColorPrimary,
+                        ),
+                        suffixIconConstraints:
+                            BoxConstraints(maxWidth: 20, maxHeight: 20)),
+                  ),
+
             SizedBox(
               height: 10,
             ),
@@ -228,15 +277,12 @@ class _DailyReportState extends State<DailyReport> {
   }
 
   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
-    print(args.value);
-    print(args);
     setState(() {
-      if (args.value is DateTime) {
-        DateTime d = args.value as DateTime;
+      if (args.value is PickerDateRange) {
+        startDate = Utility.getFormatDate(args.value.startDate);
 
-        debugPrint("weekday--->${d.weekday}");
-
-        selectedDate = Utility.getFormatDate(args.value);
+        endDate =
+            Utility.getFormatDate(args.value.endDate ?? args.value.startDate);
 
         // code to disable sunday
         // if (d.weekday == 7) {
@@ -246,8 +292,6 @@ class _DailyReportState extends State<DailyReport> {
         //   selectedDate = Utility.getFormatDate(args.value);
         // }
       }
-
-      print("_selectedDate$selectedDate");
     });
   }
 
@@ -260,7 +304,13 @@ class _DailyReportState extends State<DailyReport> {
       input["vendor_id"] =
           await SharedPref.getIntegerPreference(SharedPref.VENDORID);
       // input["vendor_id"] = "1";
-      input["date"] = selectedDate;
+
+      if (groupValue == 1) {
+        input["from_date"] = startDate;
+        input["to_date"] = endDate;
+      } else {
+        input["days"] = days!.optionId;
+      }
 
       if (widget.chatPapdi == 0) {
         input["category_id"] = categoryModel == null ? "" : categoryModel!.id;
@@ -300,13 +350,13 @@ class _DailyReportState extends State<DailyReport> {
             debugPrint("element-->$element");
 
             reportList.add(element);
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => DailyReportDataGrid(
-                          reportData: reportList,
-                        ))).then((value) => reportList.clear());
           });
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => DailyReportDataGrid(
+                        reportData: reportList,
+                      ))).then((value) => reportList.clear());
 
           // reportList = report;
 
@@ -354,7 +404,7 @@ class _DailyReportState extends State<DailyReport> {
 
     sheet1.getRangeByIndex(1, 1, 1, reportList.first.keys.length).merge();
     sheet1.getRangeByIndex(rowIndex, columnIndex).value =
-        "Daily Report ($selectedDate)";
+        "Daily Report ($startDate)";
     sheet1.getRangeByIndex(rowIndex, columnIndex).rowHeight = 30;
     sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign =
         xls.HAlignType.center;
@@ -487,7 +537,7 @@ class _DailyReportState extends State<DailyReport> {
       savedDir.create();
     }
 
-    String fileName = "Daily_Report_$selectedDate" + ".xlsx";
+    String fileName = "Daily_Report_$startDate" + ".xlsx";
 
     final File file =
         File(Platform.isWindows ? '$path\\$fileName' : '$path/$fileName');
@@ -532,7 +582,7 @@ class _DailyReportState extends State<DailyReport> {
       savedDir.create();
     }
 
-    String fileName = "daily_report_key$selectedDate".tr() + ".pdf";
+    String fileName = "daily_report_key$startDate".tr() + ".pdf";
 
     final File file =
         File(Platform.isWindows ? '$path\\$fileName' : '$path/$fileName');
@@ -544,6 +594,34 @@ class _DailyReportState extends State<DailyReport> {
     print("savedDir${file.path}");
     // await helper.saveAndLaunchFile(bytes, 'DataGrid.pdf');
     document.dispose();
+  }
+
+  void selectDays(BuildContext context) async {
+    final List<Option> options = [
+      Option(optionName: "1" + "day_key".tr(), optionId: "1"),
+      Option(optionName: "5" + "days_key".tr(), optionId: "5"),
+      Option(optionName: "7" + "days_key".tr(), optionId: "7"),
+      Option(optionName: "15" + "days_key".tr(), optionId: "15"),
+      Option(optionName: "30" + "days_key".tr(), optionId: "30"),
+    ];
+    showModalBottomSheet(
+        context: context,
+        isDismissible: true,
+        enableDrag: true,
+        isScrollControlled: true,
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(25), topLeft: Radius.circular(25))),
+        builder: (context) {
+          return CustomBottomSheet(
+            onOptionSelect: (Option option) {
+              edtDays.text = option.optionName;
+              days = option;
+            },
+            options: options,
+          );
+        });
   }
 }
 

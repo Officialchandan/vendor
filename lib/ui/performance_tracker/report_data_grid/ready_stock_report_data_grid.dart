@@ -40,6 +40,11 @@ class _ReadyStockReportDataGridState extends State<ReadyStockReportDataGrid> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              icon: Icon(Icons.arrow_back_ios)),
           title: Text("ready_stock_report_key".tr()),
           actions: [
             IconButton(
@@ -296,6 +301,7 @@ class RadioListBuilderState extends State<RadioListBuilder> {
       padding: const EdgeInsetsDirectional.only(top: 10),
       itemBuilder: (context, index) {
         return RadioListTile(
+          activeColor: ColorPrimary,
           contentPadding: const EdgeInsets.only(left: 20),
           value: index,
           groupValue: value,

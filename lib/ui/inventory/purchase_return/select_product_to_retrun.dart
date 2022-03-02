@@ -261,6 +261,7 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
                                 ],
                               )),
                               trailing: Checkbox(
+                                activeColor: ColorPrimary,
                                 value: product.check,
                                 onChanged: (value) {
                                   products[index].check = value!;

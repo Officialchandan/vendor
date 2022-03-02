@@ -73,6 +73,7 @@ class _SelectSubCategoryState extends State<SelectSubCategory> {
                     SubCategoryModel subCategory = snap.data![index];
                     return ListTile(
                       leading: Checkbox(
+                        activeColor: ColorPrimary,
                         onChanged: (check) {
                           subCategoryList[index].check = check!;
                           controller.add(subCategoryList);

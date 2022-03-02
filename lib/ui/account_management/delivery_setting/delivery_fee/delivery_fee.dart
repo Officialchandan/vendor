@@ -45,6 +45,7 @@ class _DeliveryFeeState extends State<DeliveryFee> {
                 children: [
                   Expanded(
                     child: RadioListTile<FreePaidRadio>(
+                      activeColor: ColorPrimary,
                       dense: true,
                       contentPadding: EdgeInsets.all(0),
                       title: Text("free_delivery_key".tr(),
@@ -63,6 +64,7 @@ class _DeliveryFeeState extends State<DeliveryFee> {
                   ),
                   Expanded(
                     child: RadioListTile<FreePaidRadio>(
+                      activeColor: ColorPrimary,
                       dense: true,
                       contentPadding: EdgeInsets.all(0),
                       title: Text("paid_delivery_key".tr(),
