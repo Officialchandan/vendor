@@ -53,8 +53,16 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>
-                        SaleReturnProductDetails(saleReturnData: state.data)));
+                    builder: (context) => SaleReturnProductDetails(
+                        saleReturnData: state.data))).then((value) {
+              log("Order Id >>>> " + value.toString());
+              if (value != null) {
+                returnProductList.clear();
+                purchasedList
+                    .removeWhere((element) => element.orderId == value);
+                streamController.add(purchasedList);
+              }
+            });
             // displayDialog(context, state.input);
           }
           if (state is VerifyOtpSuccessState) {

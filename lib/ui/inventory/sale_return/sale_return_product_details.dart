@@ -457,10 +457,12 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
       CommonResponse response = await apiProvider.saleReturnOtpApi(input);
 
       if (response.success) {
+        Navigator.of(context).pop(); //? For alert box
+        Navigator.of(context).pop(saleReturnData.orderId); //? For screen
+        Utility.showToast(response.message);
       } else {
         Utility.showToast(response.message);
       }
-      Utility.showToast(response.message);
     } else {
       Utility.showToast(Constant.INTERNET_ALERT_MSG);
     }
