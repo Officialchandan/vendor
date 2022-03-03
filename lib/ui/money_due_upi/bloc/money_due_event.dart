@@ -8,3 +8,8 @@ class MoneyDueEvent extends Equatable {
 class GetDueAmount extends MoneyDueEvent {}
 
 class GetCategories extends MoneyDueEvent {}
+
+class GetFreeCoins extends MoneyDueEvent {
+  @override
+  List<Object?> get props => [];
+}

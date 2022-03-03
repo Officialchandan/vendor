@@ -15,6 +15,12 @@ import 'package:vendor/ui/money_due_upi/sales_return/sales_return.dart';
 import 'package:vendor/ui/money_due_upi/upi_transfer/upi_transfer_screen.dart';
 import 'package:vendor/utility/color.dart';
 
+import '../../main.dart';
+import '../../model/get_vendor_free_coin.dart';
+import '../../utility/constant.dart';
+import '../../utility/network.dart';
+import '../../utility/utility.dart';
+
 class MoneyDueScreen extends StatefulWidget {
   bool? isShow;
   MoneyDueScreen(this.isShow);
@@ -27,10 +33,26 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
 
   List<CategoryDueAmount> categoryDue = [];
   String dueAmount = "0.0";
-
+  GetVendorFreeCoinData? freecoin;
   @override
   void initState() {
     super.initState();
+    getFreeCoin();
+  }
+
+  getFreeCoin() async {
+    if (await Network.isConnected()) {
+      GetVendorFreeCoinResponse response = await apiProvider.getVendorFreeCoins();
+      if (response.success) {
+        freecoin = response.data;
+        log("$freecoin");
+        setState(() {});
+      } else {
+        Utility.showToast(response.message);
+      }
+    } else {
+      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+    }
   }
 
   @override
@@ -625,7 +647,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                               children: [
                                 Container(
                                   width: MediaQuery.of(context).size.width,
-                                  padding: EdgeInsets.fromLTRB(18, 20, 18, 0),
+                                  padding: EdgeInsets.fromLTRB(18, 7, 18, 5),
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     boxShadow: [
@@ -642,31 +664,56 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                       bottomRight: Radius.circular(10),
                                     ),
                                   ),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text("Free Coins",
+                                  child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text("Free Coins",
+                                            style: TextStyle(
+                                                color: Colors.black, fontSize: 16.3, fontWeight: FontWeight.w600)),
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        Container(
+                                          height: 1,
+                                          width: 70,
+                                          color: ColorTextPrimary,
+                                        ),
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        Text("Free Coin History",
+                                            style: TextStyle(
+                                                color: Color(0xff303030), fontSize: 12, fontWeight: FontWeight.w400)),
+                                        SizedBox(
+                                          height: 10,
+                                        )
+                                      ],
+                                    ),
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "Remaining",
                                           style: TextStyle(
-                                              color: Colors.black, fontSize: 16.3, fontWeight: FontWeight.w600)),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Container(
-                                        height: 1,
-                                        width: 70,
-                                        color: ColorTextPrimary,
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Text("Free Coin History",
-                                          style: TextStyle(
-                                              color: Color(0xff303030), fontSize: 12, fontWeight: FontWeight.w400)),
-                                      SizedBox(
-                                        height: 10,
-                                      )
-                                    ],
-                                  ),
+                                              fontSize: 11, color: ColorTextPrimary, fontWeight: FontWeight.w500),
+                                        ),
+                                        Text(
+                                          "${double.parse(freecoin!.availableCoins).toStringAsFixed(2)}",
+                                          style:
+                                              TextStyle(fontSize: 14, color: ColorPrimary, fontWeight: FontWeight.bold),
+                                        ),
+                                        Text("Out of",
+                                            style: TextStyle(
+                                                fontSize: 11, color: ColorTextPrimary, fontWeight: FontWeight.w500)),
+                                        Text(
+                                          "${double.parse(freecoin!.totalCoins).toStringAsFixed(2)}",
+                                          style:
+                                              TextStyle(fontSize: 14, color: ColorPrimary, fontWeight: FontWeight.bold),
+                                        )
+                                      ],
+                                    )
+                                  ]),
                                 ),
                                 Positioned(
                                   top: -27,

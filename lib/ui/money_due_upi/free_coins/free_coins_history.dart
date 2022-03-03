@@ -13,6 +13,13 @@ class FreeCoinsHistory extends StatefulWidget {
 class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
   String startDate = "";
   String endDate = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
