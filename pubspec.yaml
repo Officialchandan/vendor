@@ -51,6 +51,8 @@ dependencies:
   http:
   url_launcher:
 
+  #time line tile
+  timeline_tile:
 
   #date range picker
   syncfusion_flutter_datepicker:

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:vendor/ui/money_due_upi/sales_return/sales_detail_return/sales_detail_return.dart';
 
 import '../../../widget/calendar_bottom_sheet.dart';
 
@@ -64,8 +65,10 @@ class _SalesReturnHistoryState extends State<SalesReturnHistory> {
 
                   // fillColor: Colors.black,
                   hintText: "Search Here...",
-                  hintStyle: GoogleFonts.openSans(fontWeight: FontWeight.w600, color: Colors.black),
-                  contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                  hintStyle: GoogleFonts.openSans(
+                      fontWeight: FontWeight.w600, color: Colors.black),
+                  contentPadding:
+                      const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.white),
                   ),
@@ -88,8 +91,19 @@ class _SalesReturnHistoryState extends State<SalesReturnHistory> {
                           borderRadius: BorderRadius.circular(10),
                           color: Colors.white,
                           border: Border.all(color: Colors.white38),
-                          boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 1.0, spreadRadius: 1)]),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black12,
+                                blurRadius: 1.0,
+                                spreadRadius: 1)
+                          ]),
                       child: ListTile(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SalesReturnDetails()));
+                        },
                         isThreeLine: true,
                         leading: Container(
                           height: 50,
@@ -102,38 +116,53 @@ class _SalesReturnHistoryState extends State<SalesReturnHistory> {
                             "assets/images/wallpaperflare.com_wallpaper.jpg",
                           ),
                         ),
-                        title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                          Text(
-                            "Geroge Walker",
-                            style: TextStyle(fontWeight: FontWeight.w600),
-                          ),
-                          Container(
-                            height: 20,
-                            decoration:
-                                BoxDecoration(borderRadius: BorderRadius.circular(20), color: Colors.orange.shade50),
-                            child: Text(
-                              "  Pay: \u20B966.67   ",
-                              style: TextStyle(color: Colors.orange, fontSize: 12, fontWeight: FontWeight.w400),
-                            ),
-                          ),
-                        ]),
+                        title: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Geroge Walker",
+                                style: TextStyle(fontWeight: FontWeight.w600),
+                              ),
+                              Container(
+                                height: 20,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: Colors.orange.shade50),
+                                child: Text(
+                                  "  Pay: \u20B966.67   ",
+                                  style: TextStyle(
+                                      color: Colors.orange,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                              ),
+                            ]),
                         subtitle: Padding(
                           padding: const EdgeInsets.only(top: 8.0),
-                          child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                            Text(
-                              " +91 7560123694",
-                              style: TextStyle(color: Colors.orange, fontSize: 12, fontWeight: FontWeight.w400),
-                            ),
-                            Container(
-                              height: 20,
-                              decoration:
-                                  BoxDecoration(borderRadius: BorderRadius.circular(20), color: Colors.orange.shade50),
-                              child: Text(
-                                "  Pending  ",
-                                style: TextStyle(color: Colors.orange, fontSize: 12, fontWeight: FontWeight.w400),
-                              ),
-                            ),
-                          ]),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  " +91 7560123694",
+                                  style: TextStyle(
+                                      color: Colors.orange,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                                Container(
+                                  height: 20,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: Colors.orange.shade50),
+                                  child: Text(
+                                    "  Pending  ",
+                                    style: TextStyle(
+                                        color: Colors.orange,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                ),
+                              ]),
                         ),
                       ),
                     );
