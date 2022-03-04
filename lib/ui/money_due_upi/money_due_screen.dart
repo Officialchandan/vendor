@@ -15,11 +15,7 @@ import 'package:vendor/ui/money_due_upi/sales_return/sales_return.dart';
 import 'package:vendor/ui/money_due_upi/upi_transfer/upi_transfer_screen.dart';
 import 'package:vendor/utility/color.dart';
 
-import '../../main.dart';
 import '../../model/get_vendor_free_coin.dart';
-import '../../utility/constant.dart';
-import '../../utility/network.dart';
-import '../../utility/utility.dart';
 
 class MoneyDueScreen extends StatefulWidget {
   bool? isShow;
@@ -37,22 +33,14 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
   @override
   void initState() {
     super.initState();
-    getFreeCoin();
+    moneyDueBloc.add(GetFreeCoins());
   }
 
-  getFreeCoin() async {
-    if (await Network.isConnected()) {
-      GetVendorFreeCoinResponse response = await apiProvider.getVendorFreeCoins();
-      if (response.success) {
-        freecoin = response.data;
-        log("$freecoin");
-        setState(() {});
-      } else {
-        Utility.showToast(response.message);
-      }
-    } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
-    }
+  @override
+  void didUpdateWidget(covariant MoneyDueScreen oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+    moneyDueBloc.add(GetFreeCoins());
   }
 
   @override
@@ -690,29 +678,42 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                         )
                                       ],
                                     ),
-                                    Column(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          "Remaining",
-                                          style: TextStyle(
-                                              fontSize: 11, color: ColorTextPrimary, fontWeight: FontWeight.w500),
-                                        ),
-                                        Text(
-                                          "${double.parse(freecoin!.availableCoins).toStringAsFixed(2)}",
-                                          style:
-                                              TextStyle(fontSize: 14, color: ColorPrimary, fontWeight: FontWeight.bold),
-                                        ),
-                                        Text("Out of",
+                                    BlocConsumer<MoneyDueBloc, MoneyDueState>(listener: (context, state) {
+                                      if (state is GetFreeCoinState) {}
+                                      ;
+                                    }, builder: (context, state) {
+                                      if (state is GetFreeCoinState) {
+                                        freecoin = state.data;
+                                        log("${freecoin}");
+                                      }
+
+                                      if (freecoin == null) {
+                                        return Container(height: 70, child: Center(child: CircularProgressIndicator()));
+                                      }
+                                      return Column(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "Remaining",
                                             style: TextStyle(
-                                                fontSize: 11, color: ColorTextPrimary, fontWeight: FontWeight.w500)),
-                                        Text(
-                                          "${double.parse(freecoin!.totalCoins).toStringAsFixed(2)}",
-                                          style:
-                                              TextStyle(fontSize: 14, color: ColorPrimary, fontWeight: FontWeight.bold),
-                                        )
-                                      ],
-                                    )
+                                                fontSize: 11, color: ColorTextPrimary, fontWeight: FontWeight.w500),
+                                          ),
+                                          Text(
+                                            "${double.parse(freecoin!.availableCoins).toStringAsFixed(2)}",
+                                            style: TextStyle(
+                                                fontSize: 14, color: ColorPrimary, fontWeight: FontWeight.bold),
+                                          ),
+                                          Text("Out of",
+                                              style: TextStyle(
+                                                  fontSize: 11, color: ColorTextPrimary, fontWeight: FontWeight.w500)),
+                                          Text(
+                                            "${double.parse(freecoin!.totalCoins).toStringAsFixed(2)}",
+                                            style: TextStyle(
+                                                fontSize: 14, color: ColorPrimary, fontWeight: FontWeight.bold),
+                                          )
+                                        ],
+                                      );
+                                    })
                                   ]),
                                 ),
                                 Positioned(

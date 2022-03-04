@@ -162,4 +162,6 @@ class Endpoint {
   static const String UPDATE_NOTIFICATION_STATUS = "updateSendNotificationStatus";
 
   static const String GET_VENDOR_FREE_COINS = "getVendorFreeCoins";
+
+  static const String GET_VENDOR_COINS_HISTORY = "getVendorCoinsHistory";
 }

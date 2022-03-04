@@ -26,6 +26,7 @@ import 'package:vendor/model/daily_sale_amount.dart';
 import 'package:vendor/model/daily_walkin.dart';
 import 'package:vendor/model/direct_billing.dart';
 import 'package:vendor/model/direct_billing_otp.dart';
+import 'package:vendor/model/free_coin_history.dart';
 import 'package:vendor/model/get_brands_response.dart';
 import 'package:vendor/model/get_categories_response.dart';
 import 'package:vendor/model/get_colors_response.dart';
@@ -1483,6 +1484,27 @@ class ApiProvider {
       }
       print("Exception occurred: $message stackTrace: $error");
       return GetVendorFreeCoinResponse(success: false, message: message);
+    }
+  }
+
+  Future<GetFreeCoinHistoryResponse> getVendorFreeCoinsHistory() async {
+    try {
+      Map input = HashMap<String, dynamic>();
+      log("------->res");
+      input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      Response res = await dio.post(Endpoint.GET_VENDOR_COINS_HISTORY, data: input);
+
+      return GetFreeCoinHistoryResponse.fromJson(res.toString());
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return GetFreeCoinHistoryResponse(success: false, message: message);
     }
   }
 }

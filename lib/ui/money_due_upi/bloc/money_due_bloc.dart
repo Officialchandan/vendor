@@ -8,6 +8,8 @@ import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/utility.dart';
 
+import '../../../model/get_vendor_free_coin.dart';
+
 class MoneyDueBloc extends Bloc<MoneyDueEvent, MoneyDueState> {
   MoneyDueBloc() : super(MoneyDueInitialState());
 
@@ -18,6 +20,9 @@ class MoneyDueBloc extends Bloc<MoneyDueEvent, MoneyDueState> {
     }
     if (event is GetCategories) {
       yield* getCategories();
+    }
+    if (event is GetFreeCoins) {
+      yield* getFreeCoinApi();
     }
   }
 
@@ -38,6 +43,22 @@ class MoneyDueBloc extends Bloc<MoneyDueEvent, MoneyDueState> {
         yield GetCategoriesState(categories: response.data!);
       else
         yield GetCategoriesState(categories: []);
+    } else {
+      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+    }
+  }
+
+  Stream<MoneyDueState> getFreeCoinApi() async* {
+    if (await Network.isConnected()) {
+      GetVendorFreeCoinResponse response = await apiProvider.getVendorFreeCoins();
+      if (response.success) {
+        yield GetFreeCoinState(data: response.data);
+      } else {
+        yield GetFreeCoinFailureState(
+          message: response.message,
+          succes: response.success,
+        );
+      }
     } else {
       Utility.showToast(Constant.INTERNET_ALERT_MSG);
     }

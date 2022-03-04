@@ -1,0 +1,35 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vendor/main.dart';
+import 'package:vendor/model/free_coin_history.dart';
+import 'package:vendor/ui/money_due_upi/free_coins/free_coins_history_bloc/free_coin_history_event.dart';
+import 'package:vendor/ui/money_due_upi/free_coins/free_coins_history_bloc/free_coin_history_state.dart';
+import 'package:vendor/utility/constant.dart';
+import 'package:vendor/utility/network.dart';
+import 'package:vendor/utility/utility.dart';
+
+class FreeCoinHistoryBloc extends Bloc<FreeCoinHistoryEvent, FreeCoinHistoryState> {
+  FreeCoinHistoryBloc() : super(GetFreeCoinHistoryInitialState());
+
+  @override
+  Stream<FreeCoinHistoryState> mapEventToState(FreeCoinHistoryEvent event) async* {
+    if (event is GetFreeCoinsHistoryEvent) {
+      yield* getFreeCoinHistoryApi();
+    }
+    if (event is FindUserEvent) {
+      yield GetFreeCoinUserSearchState(searchword: event.searchkeyword);
+    }
+  }
+
+  Stream<FreeCoinHistoryState> getFreeCoinHistoryApi() async* {
+    if (await Network.isConnected()) {
+      GetFreeCoinHistoryResponse response = await apiProvider.getVendorFreeCoinsHistory();
+      if (response.success) {
+        yield GetFreeCoinHistoryState(data: response.data);
+      } else {
+        yield GetFreeCoinHistoryFailureState(succes: response.success, message: response.message);
+      }
+    } else {
+      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+    }
+  }
+}

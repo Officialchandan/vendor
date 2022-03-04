@@ -13,7 +13,7 @@ class GetFreeCoinHistoryResponse {
 
   bool success;
   String message;
-  Data? data;
+  List<GetFreeCoinHistoryData>? data;
 
   factory GetFreeCoinHistoryResponse.fromJson(String str) => GetFreeCoinHistoryResponse.fromMap(json.decode(str));
 
@@ -22,18 +22,20 @@ class GetFreeCoinHistoryResponse {
   factory GetFreeCoinHistoryResponse.fromMap(Map<String, dynamic> json) => GetFreeCoinHistoryResponse(
         success: json["success"] == null ? null : json["success"],
         message: json["message"] == null ? null : json["message"],
-        data: json["data"] == null ? null : Data.fromMap(json["data"]),
+        data: json["data"] == null
+            ? []
+            : List<GetFreeCoinHistoryData>.from(json["data"].map((x) => GetFreeCoinHistoryData.fromMap(x))),
       );
 
   Map<String, dynamic> toMap() => {
         "success": success == null ? null : success,
         "message": message == null ? null : message,
-        "data": data == null ? null : data!.toMap(),
+        "data": data == null ? null : List<dynamic>.from(data!.map((x) => x.toMap())),
       };
 }
 
-class Data {
-  Data({
+class GetFreeCoinHistoryData {
+  GetFreeCoinHistoryData({
     required this.vendorId,
     required this.customerName,
     required this.orderId,
@@ -51,11 +53,11 @@ class Data {
   String dateTime;
   List<OrderDetail> orderDetails;
 
-  factory Data.fromJson(String str) => Data.fromMap(json.decode(str));
+  factory GetFreeCoinHistoryData.fromJson(String str) => GetFreeCoinHistoryData.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory Data.fromMap(Map<String, dynamic> json) => Data(
+  factory GetFreeCoinHistoryData.fromMap(Map<String, dynamic> json) => GetFreeCoinHistoryData(
         vendorId: json["vendor_id"] == null ? null : json["vendor_id"],
         customerName: json["customer_name"] == null ? "" : json["customer_name"].toString(),
         orderId: json["order_id"] == null ? null : json["order_id"],

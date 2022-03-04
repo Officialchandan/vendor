@@ -26,3 +26,31 @@ class GetCategoriesState extends MoneyDueState {
   @override
   List<Object?> get props => [categories];
 }
+
+class GetFreeCoinInitialState extends MoneyDueState {
+  @override
+  List<Object?> get props => [];
+}
+
+class GetFreeCoinState extends MoneyDueState {
+  final data;
+  GetFreeCoinState({
+    this.data,
+  });
+  @override
+  List<Object?> get props => [data];
+}
+
+class GetFreeCoinFailureState extends MoneyDueState {
+  final message;
+  final succes;
+
+  GetFreeCoinFailureState({this.message, this.succes});
+  @override
+  List<Object?> get props => [message, succes];
+}
+
+class GetFreeCoinLoadingState extends MoneyDueState {
+  @override
+  List<Object?> get props => [];
+}
