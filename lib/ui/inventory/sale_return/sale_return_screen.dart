@@ -93,6 +93,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                         // saleReturnBloc
                         //     .add(GetPurchasedProductEvent(mobile: text));
                         getPurchasedProduct(text);
+
                         Timer(Duration(milliseconds: 500), () {
                           FocusScope.of(context).unfocus();
                         });
@@ -343,6 +344,9 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
     return StreamBuilder<List<SaleReturnProducts>>(
       stream: streamController.stream,
       builder: (context, snapshot) {
+        // if (snapshot.connectionState == ConnectionState.waiting) {
+        //   return Center(child: CircularProgressIndicator());
+        // }
         if (snapshot.hasData) {
           return ListView.separated(
               padding: const EdgeInsets.only(bottom: 10),
