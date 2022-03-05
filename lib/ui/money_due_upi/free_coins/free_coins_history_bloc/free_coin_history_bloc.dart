@@ -13,16 +13,16 @@ class FreeCoinHistoryBloc extends Bloc<FreeCoinHistoryEvent, FreeCoinHistoryStat
   @override
   Stream<FreeCoinHistoryState> mapEventToState(FreeCoinHistoryEvent event) async* {
     if (event is GetFreeCoinsHistoryEvent) {
-      yield* getFreeCoinHistoryApi();
+      yield* getFreeCoinHistoryApi(event.input);
     }
     if (event is FindUserEvent) {
       yield GetFreeCoinUserSearchState(searchword: event.searchkeyword);
     }
   }
 
-  Stream<FreeCoinHistoryState> getFreeCoinHistoryApi() async* {
+  Stream<FreeCoinHistoryState> getFreeCoinHistoryApi(input) async* {
     if (await Network.isConnected()) {
-      GetFreeCoinHistoryResponse response = await apiProvider.getVendorFreeCoinsHistory();
+      GetFreeCoinHistoryResponse response = await apiProvider.getVendorFreeCoinsHistory(input);
       if (response.success) {
         yield GetFreeCoinHistoryState(data: response.data);
       } else {

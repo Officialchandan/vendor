@@ -40,7 +40,6 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
   void didUpdateWidget(covariant MoneyDueScreen oldWidget) {
     // TODO: implement didUpdateWidget
     super.didUpdateWidget(oldWidget);
-    moneyDueBloc.add(GetFreeCoins());
   }
 
   @override
@@ -85,6 +84,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                               moneyDueBloc.add(GetDueAmount());
                             }
                             if (state is GetDueAmountState) {
+                              moneyDueBloc.add(GetFreeCoins());
                               dueAmount = state.dueAmount;
                               categoryDue = state.categoryDue;
                             }
@@ -678,42 +678,51 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                         )
                                       ],
                                     ),
-                                    BlocConsumer<MoneyDueBloc, MoneyDueState>(listener: (context, state) {
-                                      if (state is GetFreeCoinState) {}
-                                      ;
-                                    }, builder: (context, state) {
-                                      if (state is GetFreeCoinState) {
-                                        freecoin = state.data;
-                                        log("${freecoin}");
-                                      }
+                                    BlocConsumer<MoneyDueBloc, MoneyDueState>(
+                                        bloc: moneyDueBloc,
+                                        listener: (context, state) {
+                                          if (state is GetFreeCoinState) {
+                                            freecoin = state.data;
+                                            log("=====>${freecoin}");
+                                          }
+                                        },
+                                        builder: (context, state) {
+                                          log("state=====>${state}");
+                                          if (state is GetFreeCoinState) {
+                                            freecoin = state.data;
+                                            log("=====>${freecoin}");
+                                          }
 
-                                      if (freecoin == null) {
-                                        return Container(height: 70, child: Center(child: CircularProgressIndicator()));
-                                      }
-                                      return Column(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            "Remaining",
-                                            style: TextStyle(
-                                                fontSize: 11, color: ColorTextPrimary, fontWeight: FontWeight.w500),
-                                          ),
-                                          Text(
-                                            "${double.parse(freecoin!.availableCoins).toStringAsFixed(2)}",
-                                            style: TextStyle(
-                                                fontSize: 14, color: ColorPrimary, fontWeight: FontWeight.bold),
-                                          ),
-                                          Text("Out of",
-                                              style: TextStyle(
-                                                  fontSize: 11, color: ColorTextPrimary, fontWeight: FontWeight.w500)),
-                                          Text(
-                                            "${double.parse(freecoin!.totalCoins).toStringAsFixed(2)}",
-                                            style: TextStyle(
-                                                fontSize: 14, color: ColorPrimary, fontWeight: FontWeight.bold),
-                                          )
-                                        ],
-                                      );
-                                    })
+                                          if (freecoin == null) {
+                                            return Container(
+                                                height: 70, child: Center(child: CircularProgressIndicator()));
+                                          }
+                                          return Column(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                "Remaining",
+                                                style: TextStyle(
+                                                    fontSize: 11, color: ColorTextPrimary, fontWeight: FontWeight.w500),
+                                              ),
+                                              Text(
+                                                "${double.parse(freecoin!.availableCoins).toStringAsFixed(2)}",
+                                                style: TextStyle(
+                                                    fontSize: 14, color: ColorPrimary, fontWeight: FontWeight.bold),
+                                              ),
+                                              Text("Out of",
+                                                  style: TextStyle(
+                                                      fontSize: 11,
+                                                      color: ColorTextPrimary,
+                                                      fontWeight: FontWeight.w500)),
+                                              Text(
+                                                "${double.parse(freecoin!.totalCoins).toStringAsFixed(2)}",
+                                                style: TextStyle(
+                                                    fontSize: 14, color: ColorPrimary, fontWeight: FontWeight.bold),
+                                              )
+                                            ],
+                                          );
+                                        })
                                   ]),
                                 ),
                                 Positioned(
