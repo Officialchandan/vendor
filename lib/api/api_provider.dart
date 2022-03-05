@@ -1487,11 +1487,11 @@ class ApiProvider {
     }
   }
 
-  Future<GetFreeCoinHistoryResponse> getVendorFreeCoinsHistory() async {
+  Future<GetFreeCoinHistoryResponse> getVendorFreeCoinsHistory(Map<String, dynamic> input) async {
     try {
-      Map input = HashMap<String, dynamic>();
+      // input = HashMap<String, dynamic>();
       log("------->res");
-      input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+
       Response res = await dio.post(Endpoint.GET_VENDOR_COINS_HISTORY, data: input);
 
       return GetFreeCoinHistoryResponse.fromJson(res.toString());

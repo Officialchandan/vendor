@@ -6,6 +6,8 @@ class FreeCoinHistoryEvent extends Equatable {
 }
 
 class GetFreeCoinsHistoryEvent extends FreeCoinHistoryEvent {
+  final Map<String, dynamic> input;
+  GetFreeCoinsHistoryEvent({required this.input});
   @override
   List<Object?> get props => [];
 }
