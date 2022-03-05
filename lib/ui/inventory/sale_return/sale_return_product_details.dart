@@ -334,7 +334,9 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
             color: ColorPrimary,
             child: Center(
               child: Text(
-                "done_key".tr(),
+                widget.saleReturnData.productId.isEmpty
+                    ? "cancel_key".tr()
+                    : "done_key".tr(),
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,
