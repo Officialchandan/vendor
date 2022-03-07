@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:vendor/ui/money_due_upi/sales_return/sales_detail_return/sales_detail_return.dart';
+import 'package:vendor/ui/money_due_upi/sales_return/sales_return_details/sales_return_details.dart';
 
 import '../../../widget/calendar_bottom_sheet.dart';
 
@@ -98,6 +98,7 @@ class _SalesReturnHistoryState extends State<SalesReturnHistory> {
                                 spreadRadius: 1)
                           ]),
                       child: ListTile(
+                        selectedTileColor: Colors.transparent,
                         onTap: () {
                           Navigator.push(
                               context,

@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:vendor/ui/custom_widget/app_bar.dart';
 import 'package:vendor/utility/color.dart';
-import 'package:vendor/widget/sales_return_details_bottom_sheet.dart';
 
-class SalesReturnDetails extends StatefulWidget {
-  const SalesReturnDetails({Key? key}) : super(key: key);
+class NormalLedgerDetails extends StatefulWidget {
+  NormalLedgerDetails({Key? key}) : super(key: key);
 
   @override
-  _SalesReturnDetailsState createState() => _SalesReturnDetailsState();
+  State<NormalLedgerDetails> createState() => _NormalLedgerDetailsState();
 }
 
-class _SalesReturnDetailsState extends State<SalesReturnDetails> {
+class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -23,21 +21,9 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
             icon: Icon(Icons.arrow_back_ios),
           ),
           title: Text(
-            "Sales Return Details",
+            "Normal Ledger Details",
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          actions: [
-            IconButton(
-              onPressed: () {
-                showModalBottomSheet(
-                    context: context,
-                    builder: (context) {
-                      return SalesReturnDetailsSheet();
-                    });
-              },
-              icon: Icon(Icons.info),
-            ),
-          ],
         ),
         body: Container(
           width: MediaQuery.of(context).size.width,
@@ -65,6 +51,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                         Padding(
                           padding: const EdgeInsets.only(left: 14, right: 14),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
                                 "George Walker",
@@ -72,6 +59,13 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black87),
+                              ),
+                              Text(
+                                "George Walker",
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey),
                               ),
                             ],
                           ),
@@ -90,18 +84,18 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                               ),
                               Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.red.shade200,
+                                  color: RejectedTextBgColor,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.only(
-                                      left: 8, right: 8, top: 3, bottom: 3),
+                                      left: 6, right: 6, top: 1, bottom: 1),
                                   child: Text(
-                                    "Pay: 66.67",
+                                    "Pending",
                                     style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.red),
+                                        color: RejectedTextColor),
                                   ),
                                 ),
                               ),
@@ -190,9 +184,6 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                                             Container(
                                               child: Flexible(
                                                 child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceAround,
                                                   children: [
                                                     Row(
                                                       mainAxisAlignment:
@@ -221,20 +212,33 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                                                         ),
                                                       ],
                                                     ),
+                                                    SizedBox(
+                                                      height: 4,
+                                                    ),
                                                     Row(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
-                                                              .start,
+                                                              .spaceBetween,
                                                       children: [
                                                         Text(
                                                           "20 x \u20B9 200",
                                                           style: TextStyle(
-                                                              fontSize: 13,
+                                                              fontSize: 12,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold,
                                                               color:
                                                                   Colors.grey),
+                                                        ),
+                                                        Text(
+                                                          "Commission \u20B940",
+                                                          style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color: Colors
+                                                                  .black87),
                                                         ),
                                                       ],
                                                     ),
@@ -249,10 +253,10 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                                   ),
                                   Positioned(
                                     top: 4,
-                                    right: 35,
+                                    right: 25,
                                     child: Container(
                                       decoration: BoxDecoration(
-                                        color: Colors.pink.shade200,
+                                        color: RejectedTextBgColor,
                                         borderRadius: BorderRadius.circular(8),
                                         boxShadow: [
                                           BoxShadow(
@@ -265,9 +269,9 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                                         padding: const EdgeInsets.only(
                                             left: 5, right: 5),
                                         child: Text(
-                                          " Redeemed ",
+                                          "Redeemed",
                                           style: TextStyle(
-                                              color: Colors.pink,
+                                              color: RejectedTextColor,
                                               fontWeight: FontWeight.bold,
                                               fontSize: 10),
                                         ),
@@ -333,18 +337,33 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Sales Return History",
+                                "Commission Amount",
                                 style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black87),
                               ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
                               Text(
-                                "4 Mar 2022 3:25 pm",
+                                "Total Commission",
                                 style: TextStyle(
-                                    fontSize: 11,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.grey),
+                                    color: Colors.black87),
+                              ),
+                              Text(
+                                "\u20B9240",
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black87),
                               ),
                             ],
                           ),
@@ -355,166 +374,18 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Earn Coins",
+                                "Redeemed Amount",
                                 style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black87),
                               ),
-                              Row(
-                                children: [
-                                  Image.asset(
-                                    "assets/images/point.png",
-                                    width: 14,
-                                    height: 14,
-                                  ),
-                                  Text(
-                                    "-300 (\u20B9100)",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.red),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
                               Text(
-                                "Redeem Coins",
+                                "\u20B9-33.33",
                                 style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.black87),
-                              ),
-                              Row(
-                                children: [
-                                  Image.asset(
-                                    "assets/images/point.png",
-                                    width: 14,
-                                    height: 14,
-                                  ),
-                                  Text(
-                                    "-100 (\u20B933.33)",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.green),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Customer Coins Balance",
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black87),
-                              ),
-                              Row(
-                                children: [
-                                  Image.asset(
-                                    "assets/images/point.png",
-                                    width: 14,
-                                    height: 14,
-                                  ),
-                                  Text(
-                                    "0 (\u20B90)",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black87),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Net Balance",
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black87),
-                              ),
-                              Row(
-                                children: [
-                                  Image.asset(
-                                    "assets/images/point.png",
-                                    width: 14,
-                                    height: 14,
-                                  ),
-                                  Text(
-                                    "-200 (\u20B966.67)",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.red),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Amount Return to Customer",
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black87),
-                              ),
-                              Row(
-                                children: [
-                                  Image.asset(
-                                    "assets/images/point.png",
-                                    width: 14,
-                                    height: 14,
-                                  ),
-                                  Text(
-                                    "\u20B92300",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black87),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text(
-                                "Sum(\u20B92266 - \u20B66.67 = \u20b62300)",
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.grey),
+                                    color: Colors.red),
                               ),
                             ],
                           ),
@@ -529,7 +400,15 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                   child: Container(
                     height: 50,
                     decoration: BoxDecoration(
-                      color: ColorPrimary,
+                      gradient: LinearGradient(
+                        begin: Alignment.bottomLeft,
+                        end: Alignment.topRight,
+                        // stops: [0.1, 0.5, 0.7, 0.9],
+                        colors: [
+                          RedLightColor,
+                          RedDarkColor,
+                        ],
+                      ),
                       borderRadius: BorderRadius.circular(8),
                       boxShadow: [
                         BoxShadow(
@@ -551,7 +430,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                                 color: Colors.white),
                           ),
                           Text(
-                            "\u20B966.67",
+                            "\u20B9206.67",
                             style: TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.bold,

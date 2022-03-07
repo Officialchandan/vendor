@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:vendor/utility/color.dart';
 
 import '../../../widget/calendar_bottom_sheet.dart';
 
@@ -63,8 +64,10 @@ class _UpiTransferHistoryState extends State<UpiTransferHistory> {
 
                   // fillColor: Colors.black,
                   hintText: "Search Here...",
-                  hintStyle: GoogleFonts.openSans(fontWeight: FontWeight.w600, color: Colors.black),
-                  contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                  hintStyle: GoogleFonts.openSans(
+                      fontWeight: FontWeight.w600, color: Colors.black),
+                  contentPadding:
+                      const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.white),
                   ),
@@ -89,48 +92,69 @@ class _UpiTransferHistoryState extends State<UpiTransferHistory> {
                             borderRadius: BorderRadius.circular(10),
                             color: Colors.white,
                             border: Border.all(color: Colors.white38),
-                            boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 1.0, spreadRadius: 1)]),
-                        child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                          Padding(
-                            padding: EdgeInsets.only(left: 12.0),
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "20 Feb 2022 - 5.30 PM",
-                                    style: TextStyle(fontWeight: FontWeight.w600),
-                                  ),
-                                  Container(
-                                    height: 20,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20), color: Colors.orange.shade50),
-                                    child: Text(
-                                      "  Pending  ",
-                                      style: TextStyle(color: Colors.orange, fontSize: 12, fontWeight: FontWeight.w400),
-                                    ),
-                                  ),
-                                ]),
-                          ),
-                          Container(
-                            width: 90,
-                          ),
-                        ]),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.black12,
+                                  blurRadius: 1.0,
+                                  spreadRadius: 1)
+                            ]),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(left: 12.0),
+                                child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "20 Feb 2022 - 5.30 PM",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                      Container(
+                                        height: 20,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            color: Colors.orange.shade50),
+                                        child: Text(
+                                          "  Pending  ",
+                                          style: TextStyle(
+                                              color: Colors.orange,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                      ),
+                                    ]),
+                              ),
+                              Container(
+                                width: 90,
+                              ),
+                            ]),
                       ),
                       Positioned(
                         right: 0,
                         top: 15,
                         child: Container(
                           alignment: Alignment.center,
-                          width: 90,
+                          width: 70,
                           height: 70,
                           decoration: BoxDecoration(
                               color: Colors.red.shade50,
-                              borderRadius:
-                                  BorderRadius.only(bottomRight: Radius.circular(10), topRight: Radius.circular(10))),
-                          child: Text(
-                            " \u20B9 206.67 ",
-                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.red),
+                              borderRadius: BorderRadius.only(
+                                  bottomRight: Radius.circular(10),
+                                  topRight: Radius.circular(10))),
+                          child: Center(
+                            child: Text(
+                              " \u20B9206",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: ColorPrimary),
+                            ),
                           ),
                         ),
                       )

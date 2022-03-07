@@ -387,23 +387,30 @@ class _BillingProductsState extends State<BillingProducts> {
                                                             onChanged:
                                                                 (newvalue) async {
                                                               log("true===>");
-                                                              if (await Network
-                                                                  .isConnected()) {
-                                                                billingProductsBloc.add(
-                                                                    CheckedBillingProductsEvent(
-                                                                        check:
-                                                                            newvalue!,
-                                                                        index:
-                                                                            index));
-                                                                selectedProductList =
-                                                                    productList[
-                                                                        index];
-                                                              } else {
-                                                                Fluttertoast.showToast(
-                                                                    msg: "please_check_your_internet_connection_key"
-                                                                        .tr(),
-                                                                    backgroundColor:
-                                                                        ColorPrimary);
+
+                                                              if (double.parse(
+                                                                      widget
+                                                                          .coin
+                                                                          .toString()) >=
+                                                                  3) {
+                                                                if (await Network
+                                                                    .isConnected()) {
+                                                                  billingProductsBloc.add(
+                                                                      CheckedBillingProductsEvent(
+                                                                          check:
+                                                                              newvalue!,
+                                                                          index:
+                                                                              index));
+                                                                  selectedProductList =
+                                                                      productList[
+                                                                          index];
+                                                                } else {
+                                                                  Fluttertoast.showToast(
+                                                                      msg: "please_check_your_internet_connection_key"
+                                                                          .tr(),
+                                                                      backgroundColor:
+                                                                          ColorPrimary);
+                                                                }
                                                               }
                                                             },
                                                           ),
