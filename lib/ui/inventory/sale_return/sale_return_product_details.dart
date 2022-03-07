@@ -74,8 +74,8 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                         end: Alignment.bottomLeft,
                         // stops: [0.1, 0.5, 0.7, 0.9],
                         colors: [
-                          Color(0xffbe1919),
-                          Color(0xffec4b4b),
+                          RedDarkColor,
+                          RedLightColor,
                         ],
                       ),
                     ),
@@ -302,10 +302,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                       begin: Alignment.topRight,
                       end: Alignment.bottomLeft,
                       stops: [-1, 0.4],
-                      colors: [
-                        Color(0xff8e82ff),
-                        Color(0xff6657f4),
-                      ],
+                      colors: [PurpleLightColor, PurpleDarkColor],
                     ),
                   ),
                   child: Center(
@@ -334,7 +331,9 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
             color: ColorPrimary,
             child: Center(
               child: Text(
-                "done_key".tr(),
+                widget.saleReturnData.productId.isEmpty
+                    ? "cancel_key".tr()
+                    : "done_key".tr(),
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,

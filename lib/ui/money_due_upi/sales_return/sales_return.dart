@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:vendor/ui/money_due_upi/sales_return/sales_detail_return/sales_detail_return.dart';
+import 'package:vendor/ui/money_due_upi/sales_return/sales_return_details/sales_return_details.dart';
+import 'package:vendor/utility/color.dart';
 
 import '../../../widget/calendar_bottom_sheet.dart';
 
@@ -98,6 +99,7 @@ class _SalesReturnHistoryState extends State<SalesReturnHistory> {
                                 spreadRadius: 1)
                           ]),
                       child: ListTile(
+                        selectedTileColor: Colors.transparent,
                         onTap: () {
                           Navigator.push(
                               context,
@@ -124,14 +126,14 @@ class _SalesReturnHistoryState extends State<SalesReturnHistory> {
                                 style: TextStyle(fontWeight: FontWeight.w600),
                               ),
                               Container(
-                                height: 20,
+                                // height: 20,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20),
-                                    color: Colors.orange.shade50),
+                                    color: RejectedTextBgColor),
                                 child: Text(
-                                  "  Pay: \u20B966.67   ",
+                                  "  Pay: \u20B966.67  ",
                                   style: TextStyle(
-                                      color: Colors.orange,
+                                      color: RejectedTextColor,
                                       fontSize: 12,
                                       fontWeight: FontWeight.w400),
                                 ),
@@ -150,14 +152,14 @@ class _SalesReturnHistoryState extends State<SalesReturnHistory> {
                                       fontWeight: FontWeight.w400),
                                 ),
                                 Container(
-                                  height: 20,
+                                  // height: 20,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(20),
-                                      color: Colors.orange.shade50),
+                                      color: DirectBillTextBgColor),
                                   child: Text(
-                                    "  Pending  ",
+                                    "  Direct Billing  ",
                                     style: TextStyle(
-                                        color: Colors.orange,
+                                        color: DirectBillingTextColor,
                                         fontSize: 12,
                                         fontWeight: FontWeight.w400),
                                   ),

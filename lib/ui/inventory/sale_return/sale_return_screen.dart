@@ -461,7 +461,8 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                                                   .isNotEmpty
                                               ? Container(
                                                   decoration: BoxDecoration(
-                                                      color: Color(0xffcadafa),
+                                                      color:
+                                                          DirectBillTextBgColor,
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               20)),
@@ -472,8 +473,8 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                                                       "  Direct Billing  ",
                                                       style: TextStyle(
                                                           fontSize: 11,
-                                                          color: Color(
-                                                              0xff5086ed)),
+                                                          color:
+                                                              DirectBillingTextColor),
                                                     ),
                                                   ),
                                                 )
