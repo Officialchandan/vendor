@@ -501,6 +501,8 @@ class _DirectBillingState extends State<DirectBilling> {
     input["earning_coins"] = datas!.earningCoins;
     input["myprofit_revenue"] = datas!.myprofitRevenue;
 
+    input["vendor_available_coins"] = datas!.vendorAvailableCoins;
+
     log("=====? $input");
     directBillingCustomerNumberResponseBloc.add(GetDirectBillingOtpEvent(input: input));
   }
