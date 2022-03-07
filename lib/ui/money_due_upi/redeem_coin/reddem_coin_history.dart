@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vendor/ui/money_due_upi/redeem_coin/redeem_coin_details/redeem_coin_detalis.dart';
+import 'package:vendor/utility/color.dart';
 
 import '../../../widget/calendar_bottom_sheet.dart';
 
@@ -147,7 +148,7 @@ class _ReddemCoinHistoryState extends State<ReddemCoinHistory> {
                                           Text(
                                             "  Redeemed:",
                                             style: TextStyle(
-                                                color: Colors.orange,
+                                                color: Colors.black,
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.w400),
                                           ),
@@ -156,7 +157,7 @@ class _ReddemCoinHistoryState extends State<ReddemCoinHistory> {
                                           Text(
                                             "900 (\u20B9 100)  ",
                                             style: TextStyle(
-                                                color: Colors.orange,
+                                                color: ColorPrimary,
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.w400),
                                           ),

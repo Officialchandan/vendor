@@ -353,7 +353,15 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                   child: Container(
                     height: 50,
                     decoration: BoxDecoration(
-                      color: Colors.red,
+                      gradient: LinearGradient(
+                        begin: Alignment.topRight,
+                        end: Alignment.bottomLeft,
+                        // stops: [0.1, 0.5, 0.7, 0.9],
+                        colors: [
+                          RedDarkColor,
+                          RedLightColor,
+                        ],
+                      ),
                       borderRadius: BorderRadius.circular(8),
                       boxShadow: [
                         BoxShadow(

@@ -90,7 +90,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                               ),
                               Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.red.shade200,
+                                  color: RejectedTextBgColor,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: Padding(
@@ -101,7 +101,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                                     style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.red),
+                                        color: RejectedTextColor),
                                   ),
                                 ),
                               ),
@@ -252,7 +252,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                                     right: 25,
                                     child: Container(
                                       decoration: BoxDecoration(
-                                        color: Colors.pink.shade200,
+                                        color: RejectedTextBgColor,
                                         borderRadius: BorderRadius.circular(8),
                                         boxShadow: [
                                           BoxShadow(
@@ -267,7 +267,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                                         child: Text(
                                           "Redeemed",
                                           style: TextStyle(
-                                              color: Colors.pink,
+                                              color: RejectedTextColor,
                                               fontWeight: FontWeight.bold,
                                               fontSize: 10),
                                         ),
@@ -529,7 +529,14 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                   child: Container(
                     height: 50,
                     decoration: BoxDecoration(
-                      color: ColorPrimary,
+                      gradient: LinearGradient(
+                        begin: Alignment.topRight,
+                        end: Alignment.bottomLeft,
+                        colors: [
+                          PurpleDarkColor,
+                          PurpleLightColor,
+                        ],
+                      ),
                       borderRadius: BorderRadius.circular(8),
                       boxShadow: [
                         BoxShadow(
