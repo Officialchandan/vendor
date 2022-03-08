@@ -47,7 +47,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
     return BlocProvider<MoneyDueBloc>(
       create: (context) => moneyDueBloc,
       child: Scaffold(
-          backgroundColor: Colors.red,
+          backgroundColor: Colors.white,
           appBar: AppBar(
             title: Text("money_due_upi_key".tr()),
             automaticallyImplyLeading: widget.isShow!,

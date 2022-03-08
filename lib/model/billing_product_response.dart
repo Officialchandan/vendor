@@ -15,18 +15,14 @@ class BillingProductResponse {
   String message;
   BillingProductData? data;
 
-  factory BillingProductResponse.fromJson(String str) =>
-      BillingProductResponse.fromMap(json.decode(str));
+  factory BillingProductResponse.fromJson(String str) => BillingProductResponse.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory BillingProductResponse.fromMap(Map<String, dynamic> json) =>
-      BillingProductResponse(
+  factory BillingProductResponse.fromMap(Map<String, dynamic> json) => BillingProductResponse(
         success: json["success"] == null ? null : json["success"],
         message: json["message"] == null ? null : json["message"],
-        data: json["data"] == null
-            ? null
-            : BillingProductData.fromMap(json["data"]),
+        data: json["data"] == null ? null : BillingProductData.fromMap(json["data"]),
       );
 
   Map<String, dynamic> toMap() => {
@@ -49,6 +45,7 @@ class BillingProductData {
     required this.myprofitrevenue,
     required this.orderDate,
     required this.qrCodeStatus,
+    required this.vendorAvailableCoins,
   });
 
   int orderId;
@@ -62,14 +59,13 @@ class BillingProductData {
   String myprofitrevenue;
   String orderDate;
   int qrCodeStatus;
+  String vendorAvailableCoins;
 
-  factory BillingProductData.fromJson(String str) =>
-      BillingProductData.fromMap(json.decode(str));
+  factory BillingProductData.fromJson(String str) => BillingProductData.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory BillingProductData.fromMap(Map<String, dynamic> json) =>
-      BillingProductData(
+  factory BillingProductData.fromMap(Map<String, dynamic> json) => BillingProductData(
         orderId: json["order_id"] == null ? null : json["order_id"],
         customerId: json["customer_id"] == null ? null : json["customer_id"],
         mobile: json["mobile"] == null ? null : json["mobile"],
@@ -78,13 +74,10 @@ class BillingProductData {
         totalPay: json["total_pay"].toString(),
         redeemCoins: json["redeem_coins"].toString(),
         earningCoins: json["earning_coins"].toString(),
-        myprofitrevenue: json["myprofit_revenue"] == null
-            ? ""
-            : json["myprofit_revenue"].toString(),
-        orderDate:
-            json["order_date"] == null ? "" : json["order_date"].toString(),
-        qrCodeStatus:
-            json["qr_code_status"] == null ? null : json["qr_code_status"],
+        myprofitrevenue: json["myprofit_revenue"] == null ? "" : json["myprofit_revenue"].toString(),
+        orderDate: json["order_date"] == null ? "" : json["order_date"].toString(),
+        qrCodeStatus: json["qr_code_status"] == null ? null : json["qr_code_status"],
+        vendorAvailableCoins: json["vendor_available_coins"] == null ? "" : json["vendor_available_coins"].toString(),
       );
 
   Map<String, dynamic> toMap() => {
@@ -99,5 +92,6 @@ class BillingProductData {
         "myprofit_revenue": myprofitrevenue,
         "order_date": orderDate,
         "qr_code_status": qrCodeStatus == null ? null : qrCodeStatus,
+        "vendor_available_coins": vendorAvailableCoins == null ? null : vendorAvailableCoins,
       };
 }

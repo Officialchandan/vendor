@@ -1,6 +1,7 @@
 class Endpoint {
-  static const String BASE_URL = "http://vendor.tekzee.in/api/v1/";
-
+  // static const String BASE_URL = "http://vendor.tekzee.in/api/v1/";
+  // http://vendor.myprofitinc.com/
+  static const String BASE_URL = "http://vendor.myprofitinc.com/api/v1/";
   static const String GENERATE_OTP = "genereateOTP";
 
   static const String VERIFY_OTP = "verifyOTP";
@@ -164,4 +165,8 @@ class Endpoint {
   static const String GET_VENDOR_FREE_COINS = "getVendorFreeCoins";
 
   static const String GET_VENDOR_COINS_HISTORY = "getVendorCoinsHistory";
+
+  static const String GET_VALIDATE_APP_VERSION = "validateAppVersion";
+
+  static const String GET_MASTER_LEDGER_HISTORY = "getMasterLedger";
 }

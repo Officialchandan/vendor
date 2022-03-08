@@ -1,7 +1,9 @@
 import 'dart:collection';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:vendor/api/Endpoint.dart';
 import 'package:vendor/api/server_error.dart';
 import 'package:vendor/model/add_product_response.dart';
@@ -32,6 +34,7 @@ import 'package:vendor/model/get_categories_response.dart';
 import 'package:vendor/model/get_colors_response.dart';
 import 'package:vendor/model/get_customer_product_response.dart';
 import 'package:vendor/model/get_due_amount_response.dart';
+import 'package:vendor/model/get_master_ledger_history.dart';
 import 'package:vendor/model/get_my_customer_response.dart';
 import 'package:vendor/model/get_purchased_product_response.dart';
 import 'package:vendor/model/get_size_response.dart';
@@ -55,6 +58,7 @@ import 'package:vendor/model/product_variant_response.dart';
 import 'package:vendor/model/qr_code.dart';
 import 'package:vendor/model/sale_return_resonse.dart';
 import 'package:vendor/model/upload_image_response.dart';
+import 'package:vendor/model/validate_app_version.dart';
 import 'package:vendor/model/vendor_profile_response.dart';
 import 'package:vendor/model/verify_otp.dart';
 import 'package:vendor/ui/notification_screen/model/notification_response.dart';
@@ -105,6 +109,30 @@ class ApiProvider {
       }
       print("Exception occurred: $message stackTrace: $error");
       return LoginResponse(success: false, message: message);
+    }
+  }
+
+  Future<ValidateAppVersionResponse> validateAppVersion() async {
+    try {
+      PackageInfo _packageInfo = await PackageInfo.fromPlatform();
+      Map<String, dynamic> input = {
+        "app_name": "vendor_app",
+        "app_version": "${_packageInfo.version}",
+        "device_type": Platform.isAndroid ? "1" : "2"
+      };
+      Response res = await dio.post(Endpoint.GET_VALIDATE_APP_VERSION, data: input);
+
+      return ValidateAppVersionResponse.fromJson(res.toString());
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Something Went wrong";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return ValidateAppVersionResponse(success: false, message: message);
     }
   }
 
@@ -1505,6 +1533,24 @@ class ApiProvider {
       }
       print("Exception occurred: $message stackTrace: $error");
       return GetFreeCoinHistoryResponse(success: false, message: message);
+    }
+  }
+
+  Future<GetNormalLedgerHistoryResponse> getNormalLedgerHistory(Map<String, dynamic> input) async {
+    try {
+      Response res = await dio.post(Endpoint.GET_MASTER_LEDGER_HISTORY, data: input);
+
+      return GetNormalLedgerHistoryResponse.fromJson(res.toString());
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return GetNormalLedgerHistoryResponse(success: false, message: message);
     }
   }
 }

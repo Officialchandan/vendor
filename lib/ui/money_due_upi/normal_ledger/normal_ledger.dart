@@ -1,9 +1,15 @@
+import 'dart:collection';
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_bloc/normal_ledger_bloc.dart';
+import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_bloc/normal_ledger_event.dart';
+import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_bloc/normal_ledger_state.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_details/noraml_ledger_details.dart';
 import 'package:vendor/utility/color.dart';
+import 'package:vendor/utility/sharedpref.dart';
 
 class NormalLedger extends StatefulWidget {
   const NormalLedger({Key? key}) : super(key: key);
@@ -12,257 +18,268 @@ class NormalLedger extends StatefulWidget {
   _NormalLedgerState createState() => _NormalLedgerState();
 }
 
-class _NormalLedgerState extends State<NormalLedger>
-    with TickerProviderStateMixin {
+class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMixin {
   TabController? _tabController;
-  List<String> months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec"
-  ];
+  List<String> months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   DateTime? dateTime;
   DateTime now = DateTime.now();
   String year = "";
+  String startDate = "";
+  String endDate = "";
+  NormalLedgerHistoryBloc _normalLedgerHistoryBloc = NormalLedgerHistoryBloc();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     log("${now}");
     year = (now.year).toString();
-    _tabController =
-        TabController(length: 12, vsync: this, initialIndex: now.month - 1);
+    _tabController = TabController(length: 12, vsync: this, initialIndex: now.month - 1);
     log("${year}");
+    normalLedgerApiCall(context);
+  }
+
+  Future<void> normalLedgerApiCall(BuildContext context) async {
+    Map<String, dynamic> input = HashMap<String, dynamic>();
+    input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    input["from_date"] = "2022-01-01";
+    input["to_date"] = "2022-03-05";
+    _normalLedgerHistoryBloc.add(GetNormalLedgerHistoryEvent(input: input));
   }
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: months.length,
-      initialIndex: 0,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Master Ledger",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-          ),
-          bottom: PreferredSize(
-            child: Container(
-              color: ColorPrimary,
-              child: TabBar(
-                indicatorWeight: 3,
-                isScrollable: true,
-                controller: _tabController,
-                indicatorColor: ColorPrimary,
-                unselectedLabelColor: Colors.white,
-                labelColor: Colors.white,
-                labelStyle: const TextStyle(
-                  fontSize: 18,
-                  letterSpacing: 0.67,
-                  fontWeight: FontWeight.w500,
-                ),
-                tabs: List.generate(months.length, (index) {
-                  return Tab(
-                    text: months[index].toString(),
-                  );
-                  log("${months.length}");
-                }),
-              ),
+    return BlocProvider<NormalLedgerHistoryBloc>(
+      create: (context) => _normalLedgerHistoryBloc,
+      child: DefaultTabController(
+        length: months.length,
+        initialIndex: 0,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(
+              "Master Ledger",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
-            preferredSize: const Size.fromHeight(50),
-          ),
-        ),
-        body: Container(
-          child: Column(
-            children: [
-              Container(
-                height: 50,
-                color: Colors.grey[100],
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        showPicker();
-                      },
-                      child: Container(
-                        width: 100,
-                        height: 35,
-                        decoration: BoxDecoration(
-                            color: Colors.grey[350],
-                            borderRadius: BorderRadius.circular(5)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Text(
-                              "Week",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Icon(
-                              Icons.arrow_drop_down,
-                              color: Colors.black,
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 25,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        showDaysPicker();
-                      },
-                      child: Container(
-                        width: 100,
-                        height: 35,
-                        decoration: BoxDecoration(
-                            color: Colors.grey[350],
-                            borderRadius: BorderRadius.circular(5)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Text(
-                              "Day",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Icon(Icons.arrow_drop_down)
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
+            bottom: PreferredSize(
+              child: Container(
+                color: ColorPrimary,
+                child: TabBar(
+                  indicatorWeight: 3,
+                  isScrollable: true,
+                  controller: _tabController,
+                  indicatorColor: ColorPrimary,
+                  unselectedLabelColor: Colors.white,
+                  labelColor: Colors.white,
+                  labelStyle: const TextStyle(
+                    fontSize: 18,
+                    letterSpacing: 0.67,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  tabs: List.generate(months.length, (index) {
+                    return Tab(
+                      text: months[index].toString(),
+                    );
+                    log("${months.length}");
+                  }),
                 ),
               ),
-              Expanded(
-                child: ListView.builder(
-                    itemCount: 20,
-                    padding: EdgeInsets.only(
-                        left: 20, right: 20, bottom: 20, top: 5),
-                    itemBuilder: (context, index) {
-                      return Stack(children: [
-                        Container(
-                          margin: EdgeInsets.only(top: 15),
-                          padding: EdgeInsets.all(0),
-                          height: 70,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
+              preferredSize: const Size.fromHeight(50),
+            ),
+          ),
+          body: BlocBuilder<NormalLedgerHistoryBloc, NormalLedgerHistoryState>(builder: (context, state) {
+            return Container(
+              child: Column(
+                children: [
+                  Container(
+                    height: 50,
+                    color: Colors.grey[100],
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            showPicker();
+                          },
+                          child: Container(
+                            width: 100,
+                            height: 35,
+                            decoration: BoxDecoration(color: Colors.grey[350], borderRadius: BorderRadius.circular(5)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Text(
+                                  "Week",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.arrow_drop_down,
+                                  color: Colors.black,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 25,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            showDaysPicker();
+                          },
+                          child: Container(
+                            width: 100,
+                            height: 35,
+                            decoration: BoxDecoration(color: Colors.grey[350], borderRadius: BorderRadius.circular(5)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Text(
+                                  "Day",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Icon(Icons.arrow_drop_down)
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                        itemCount: 20,
+                        padding: EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 5),
+                        itemBuilder: (context, index) {
+                          return Container(
+                            margin: EdgeInsets.symmetric(vertical: 5),
+                            decoration: BoxDecoration(
                               color: Colors.white,
-                              border: Border.all(color: Colors.white38),
                               boxShadow: [
                                 BoxShadow(
-                                    color: Colors.black12,
-                                    blurRadius: 1.0,
-                                    spreadRadius: 1)
-                              ]),
-                          child: InkWell(
-                            splashColor: Colors.transparent,
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          NormalLedgerDetails()));
-                            },
-                            child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "    +91 23689745035",
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Text("    5.30 PM"),
-                                      ]),
-                                  Row(
-                                    children: [
-                                      Center(
-                                        child: Container(
-                                          height: 20,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              color: PendingTextBgColor),
-                                          child: Text(
-                                            "  Pending  ",
-                                            style: TextStyle(
-                                                color: PendingTextColor,
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w400),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Container(
-                                        width: 90,
-                                      )
-                                    ],
-                                  ),
-                                ]),
-                          ),
-                        ),
-                        Positioned(
-                            top: 10,
-                            left: 0,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(30)),
-                              child: Transform.rotate(
-                                angle: 12.0,
-                                //turns: new AlwaysStoppedAnimation(330 / 360),
-                                child: Container(
-                                    color: Colors.red,
-                                    child: new Text("Lorem ")),
-                              ),
-                            )),
-                        Positioned(
-                          right: 0,
-                          top: 15,
-                          child: Container(
-                            alignment: Alignment.center,
-                            width: 90,
-                            height: 70,
-                            decoration: BoxDecoration(
-                                color: Colors.red.shade50,
-                                borderRadius: BorderRadius.only(
-                                    bottomRight: Radius.circular(10),
-                                    topRight: Radius.circular(10))),
-                            child: Text(
-                              " \u20B9 206.67 ",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                  color: Colors.red),
+                                  color: Colors.grey.withOpacity(0.2),
+                                  spreadRadius: 2,
+                                  blurRadius: 10,
+                                  offset: Offset(0, 0), // changes position of shadow
+                                ),
+                              ],
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                          ),
-                        )
-                      ]);
-                    }),
-              )
-            ],
-          ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(top: 20),
+                                    padding: EdgeInsets.only(bottom: 12, top: 3),
+                                    // height: 70,
+                                    // decoration: BoxDecoration(
+                                    //     borderRadius: BorderRadius.circular(10),
+                                    //     color: Colors.white,
+                                    //     border: Border.all(color: Colors.white38),
+                                    //     boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 1.0, spreadRadius: 1)]),
+                                    child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      onTap: () {
+                                        Navigator.push(
+                                            context, MaterialPageRoute(builder: (context) => NormalLedgerDetails()));
+                                      },
+                                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                                        Column(
+                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "    +91 23689745035",
+                                                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                                              ),
+                                              Text(
+                                                "    5.30 PM",
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                            ]),
+                                        Row(
+                                          children: [
+                                            Center(
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
+                                                decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(20), color: PendingTextBgColor),
+                                                child: Text(
+                                                  "Pending",
+                                                  style: TextStyle(
+                                                      color: PendingTextColor,
+                                                      fontSize: 10,
+                                                      fontWeight: FontWeight.w400),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            Container(
+                                              width: 90,
+                                            )
+                                          ],
+                                        ),
+                                      ]),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    top: -28,
+                                    left: -25,
+                                    child: Transform.rotate(
+                                      angle: -0.6,
+                                      child: Container(
+                                        padding: EdgeInsets.fromLTRB(18, 32, 30, 2),
+                                        decoration: BoxDecoration(
+                                          color: Color(0xff6657f4),
+                                        ),
+                                        child: Text("Return",
+                                            style: TextStyle(
+                                                color: Colors.white, fontSize: 10, fontWeight: FontWeight.w400)),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    right: 0,
+                                    top: 0,
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      width: 90,
+                                      height: 76,
+                                      decoration: BoxDecoration(
+                                          color: Colors.red.shade50,
+                                          borderRadius: BorderRadius.only(
+                                              bottomRight: Radius.circular(10), topRight: Radius.circular(10))),
+                                      child: Text(
+                                        " \u20B9 206.67 ",
+                                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.red),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          );
+                          // Positioned(
+                          //     top: 10,
+                          //     left: 0,
+                          //
+                          //
+                          // ),
+
+                          // ]);
+                        }),
+                  )
+                ],
+              ),
+            );
+          }),
         ),
       ),
     );
@@ -315,8 +332,7 @@ class _NormalLedgerState extends State<NormalLedger>
                     ),
                   ),
                   Container(
-                      height:
-                          MediaQuery.of(context).copyWith().size.height * 0.30,
+                      height: MediaQuery.of(context).copyWith().size.height * 0.30,
                       color: Colors.white,
                       child: CupertinoPicker(
                         children: Weeks,
@@ -329,8 +345,7 @@ class _NormalLedgerState extends State<NormalLedger>
                         itemExtent: 25,
                         diameterRatio: 1,
                         useMagnifier: true,
-                        scrollController:
-                            FixedExtentScrollController(initialItem: 1),
+                        scrollController: FixedExtentScrollController(initialItem: 1),
                         magnification: 1.3,
                         looping: true,
                       )),
@@ -360,10 +375,7 @@ class _NormalLedgerState extends State<NormalLedger>
                           height: 30,
                           child: Text(
                             "Done",
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: ColorPrimary),
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: ColorPrimary),
                           ),
                         ),
                       )
@@ -385,73 +397,66 @@ class _NormalLedgerState extends State<NormalLedger>
         builder: (BuildContext context) {
           return Container(
             height: MediaQuery.of(context).copyWith().size.height * 0.40,
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Text(
+                "Select Days",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Container(
+                  height: MediaQuery.of(context).copyWith().size.height * 0.30,
+                  color: Colors.white,
+                  child: CupertinoPicker(
+                    children: days,
+                    onSelectedItemChanged: (value) {
+                      log("$value");
+                      // Text text = countries[value];
+                      // selectedValue = text.data.toString();
+                      setState(() {});
+                    },
+                    itemExtent: 25,
+                    diameterRatio: 1,
+                    useMagnifier: true,
+                    scrollController: FixedExtentScrollController(initialItem: 1),
+                    magnification: 1.3,
+                    looping: true,
+                  )),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text(
-                    "Select Days",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Container(
-                      height:
-                          MediaQuery.of(context).copyWith().size.height * 0.30,
-                      color: Colors.white,
-                      child: CupertinoPicker(
-                        children: days,
-                        onSelectedItemChanged: (value) {
-                          log("$value");
-                          // Text text = countries[value];
-                          // selectedValue = text.data.toString();
-                          setState(() {});
-                        },
-                        itemExtent: 25,
-                        diameterRatio: 1,
-                        useMagnifier: true,
-                        scrollController:
-                            FixedExtentScrollController(initialItem: 1),
-                        magnification: 1.3,
-                        looping: true,
-                      )),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          log("${_tabController!.index}");
-                          Navigator.pop(context);
-                        },
-                        child: Container(
-                          height: 30,
-                          child: Text(
-                            "Cancel",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                  GestureDetector(
+                    onTap: () {
+                      log("${_tabController!.index}");
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      height: 30,
+                      child: Text(
+                        "Cancel",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Container(
-                          height: 30,
-                          child: Text(
-                            "Done",
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: ColorPrimary),
-                          ),
-                        ),
-                      )
-                    ],
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      height: 30,
+                      child: Text(
+                        "Done",
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: ColorPrimary),
+                      ),
+                    ),
                   )
-                ]),
+                ],
+              )
+            ]),
           );
         });
   }
