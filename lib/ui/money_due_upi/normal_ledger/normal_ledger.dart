@@ -4,12 +4,15 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vendor/ui/money_due_upi/free_coins/free_coins_history_bloc/free_coin_history_state.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_bloc/normal_ledger_bloc.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_bloc/normal_ledger_event.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_bloc/normal_ledger_state.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_details/noraml_ledger_details.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
+
+import '../../../model/get_master_ledger_history.dart';
 
 class NormalLedger extends StatefulWidget {
   const NormalLedger({Key? key}) : super(key: key);
@@ -26,6 +29,7 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
   String year = "";
   String startDate = "";
   String endDate = "";
+  List<CommonLedgerHistory>? _commonLedgerHistory;
   NormalLedgerHistoryBloc _normalLedgerHistoryBloc = NormalLedgerHistoryBloc();
   @override
   void initState() {
@@ -41,8 +45,8 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
   Future<void> normalLedgerApiCall(BuildContext context) async {
     Map<String, dynamic> input = HashMap<String, dynamic>();
     input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
-    input["from_date"] = "2022-01-01";
-    input["to_date"] = "2022-03-05";
+    input["from_date"] = "";
+    input["to_date"] = "";
     _normalLedgerHistoryBloc.add(GetNormalLedgerHistoryEvent(input: input));
   }
 
@@ -86,6 +90,21 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
             ),
           ),
           body: BlocBuilder<NormalLedgerHistoryBloc, NormalLedgerHistoryState>(builder: (context, state) {
+            if (state is GetNormalLedgerHistoryInitialState) {
+              normalLedgerApiCall(context);
+            }
+            if (state is GetNormalLedgerHistoryState) {
+              _commonLedgerHistory = state.data!;
+            }
+            if (_commonLedgerHistory == null) {
+              return Center(child: CircularProgressIndicator());
+            }
+            if (state is GetFreeCoinHistoryFailureState) {
+              return Container(
+                height: MediaQuery.of(context).size.height,
+                child: Image.asset("assets/images/no_data.gif"),
+              );
+            }
             return Container(
               child: Column(
                 children: [
@@ -150,53 +169,58 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                   ),
                   Expanded(
                     child: ListView.builder(
-                        itemCount: 20,
+                        itemCount: _commonLedgerHistory!.length,
                         padding: EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 5),
                         itemBuilder: (context, index) {
-                          return Container(
-                            margin: EdgeInsets.symmetric(vertical: 5),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.2),
-                                  spreadRadius: 2,
-                                  blurRadius: 10,
-                                  offset: Offset(0, 0), // changes position of shadow
-                                ),
-                              ],
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(top: 20),
-                                    padding: EdgeInsets.only(bottom: 12, top: 3),
-                                    // height: 70,
-                                    // decoration: BoxDecoration(
-                                    //     borderRadius: BorderRadius.circular(10),
-                                    //     color: Colors.white,
-                                    //     border: Border.all(color: Colors.white38),
-                                    //     boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 1.0, spreadRadius: 1)]),
-                                    child: InkWell(
-                                      splashColor: Colors.transparent,
-                                      onTap: () {
-                                        Navigator.push(
-                                            context, MaterialPageRoute(builder: (context) => NormalLedgerDetails()));
-                                      },
+                          return InkWell(
+                            splashColor: Colors.transparent,
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => NormalLedgerDetails(
+                                            commonLedgerHistory: _commonLedgerHistory!,
+                                            index: index,
+                                          )));
+                            },
+                            child: Container(
+                              margin: EdgeInsets.symmetric(vertical: 5),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    spreadRadius: 2,
+                                    blurRadius: 10,
+                                    offset: Offset(0, 0), // changes position of shadow
+                                  ),
+                                ],
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(top: 20),
+                                      padding: EdgeInsets.only(bottom: 12, top: 3),
+                                      // height: 70,
+                                      // decoration: BoxDecoration(
+                                      //     borderRadius: BorderRadius.circular(10),
+                                      //     color: Colors.white,
+                                      //     border: Border.all(color: Colors.white38),
+                                      //     boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 1.0, spreadRadius: 1)]),
                                       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                                         Column(
                                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                "    +91 23689745035",
+                                                "    +91 ${_commonLedgerHistory![index].mobile}",
                                                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                                               ),
                                               Text(
-                                                "    5.30 PM",
+                                                "    ${_commonLedgerHistory![index].dateTime}",
                                                 style: TextStyle(
                                                   fontSize: 12,
                                                 ),
@@ -205,18 +229,33 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                                         Row(
                                           children: [
                                             Center(
-                                              child: Container(
-                                                padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
-                                                decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(20), color: PendingTextBgColor),
-                                                child: Text(
-                                                  "Pending",
-                                                  style: TextStyle(
-                                                      color: PendingTextColor,
-                                                      fontSize: 10,
-                                                      fontWeight: FontWeight.w400),
-                                                ),
-                                              ),
+                                              child: _commonLedgerHistory![index].status == 0
+                                                  ? Container(
+                                                      padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
+                                                      decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(20),
+                                                          color: PendingTextBgColor),
+                                                      child: Text(
+                                                        "Pending",
+                                                        style: TextStyle(
+                                                            color: PendingTextColor,
+                                                            fontSize: 10,
+                                                            fontWeight: FontWeight.w400),
+                                                      ),
+                                                    )
+                                                  : Container(
+                                                      padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+                                                      decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(20),
+                                                          color: ApproveTextBgColor),
+                                                      child: Text(
+                                                        "Paid",
+                                                        style: TextStyle(
+                                                            color: ApproveTextColor,
+                                                            fontSize: 10,
+                                                            fontWeight: FontWeight.w400),
+                                                      ),
+                                                    ),
                                             ),
                                             SizedBox(
                                               width: 5,
@@ -228,41 +267,46 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                                         ),
                                       ]),
                                     ),
-                                  ),
-                                  Positioned(
-                                    top: -28,
-                                    left: -25,
-                                    child: Transform.rotate(
-                                      angle: -0.6,
+                                    _commonLedgerHistory![index].isReturn == 1
+                                        ? Positioned(
+                                            top: -28,
+                                            left: -25,
+                                            child: Transform.rotate(
+                                              angle: -0.6,
+                                              child: Container(
+                                                padding: EdgeInsets.fromLTRB(18, 32, 30, 2),
+                                                decoration: BoxDecoration(
+                                                  color: Color(0xff6657f4),
+                                                ),
+                                                child: Text("Return",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 10,
+                                                        fontWeight: FontWeight.w400)),
+                                              ),
+                                            ),
+                                          )
+                                        : Container(),
+                                    Positioned(
+                                      right: 0,
+                                      top: 0,
                                       child: Container(
-                                        padding: EdgeInsets.fromLTRB(18, 32, 30, 2),
+                                        alignment: Alignment.center,
+                                        width: 90,
+                                        height: 76,
                                         decoration: BoxDecoration(
-                                          color: Color(0xff6657f4),
+                                            color: Colors.red.shade50,
+                                            borderRadius: BorderRadius.only(
+                                                bottomRight: Radius.circular(10), topRight: Radius.circular(10))),
+                                        child: Text(
+                                          " \u20B9 ${_commonLedgerHistory![index].myprofitRevenue} ",
+                                          style:
+                                              TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.red),
                                         ),
-                                        child: Text("Return",
-                                            style: TextStyle(
-                                                color: Colors.white, fontSize: 10, fontWeight: FontWeight.w400)),
                                       ),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    right: 0,
-                                    top: 0,
-                                    child: Container(
-                                      alignment: Alignment.center,
-                                      width: 90,
-                                      height: 76,
-                                      decoration: BoxDecoration(
-                                          color: Colors.red.shade50,
-                                          borderRadius: BorderRadius.only(
-                                              bottomRight: Radius.circular(10), topRight: Radius.circular(10))),
-                                      child: Text(
-                                        " \u20B9 206.67 ",
-                                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.red),
-                                      ),
-                                    ),
-                                  )
-                                ],
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           );

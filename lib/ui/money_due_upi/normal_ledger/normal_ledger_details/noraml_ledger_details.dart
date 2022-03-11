@@ -1,14 +1,42 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:vendor/model/get_master_ledger_history.dart';
 import 'package:vendor/utility/color.dart';
 
 class NormalLedgerDetails extends StatefulWidget {
-  NormalLedgerDetails({Key? key}) : super(key: key);
+  final List<CommonLedgerHistory> commonLedgerHistory;
+  final int index;
+  NormalLedgerDetails({Key? key, required this.commonLedgerHistory, required this.index}) : super(key: key);
 
   @override
   State<NormalLedgerDetails> createState() => _NormalLedgerDetailsState();
 }
 
 class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
+  late List<CommonLedgerHistory> commonLedgerHistory;
+  late int index;
+  double reddem = 0, finalamount = 0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    commonLedgerHistory = widget.commonLedgerHistory;
+    index = widget.index;
+    log("$index");
+    calculation();
+  }
+
+  void calculation() {
+    commonLedgerHistory[index].orderDetails!.forEach((element) {
+      reddem += double.parse(element.redeemCoins);
+      log("$reddem");
+      if (double.parse(commonLedgerHistory[index].myprofitRevenue) > reddem)
+        log("${double.parse(commonLedgerHistory[index].myprofitRevenue)}");
+      finalamount = double.parse(commonLedgerHistory[index].myprofitRevenue) - reddem;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -31,19 +59,13 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(
-                      left: 20, right: 20, top: 20, bottom: 20),
+                  padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
                   child: Container(
                     height: 70,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(8),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.black12,
-                            spreadRadius: 4,
-                            blurRadius: 10)
-                      ],
+                      boxShadow: [BoxShadow(color: Colors.black12, spreadRadius: 4, blurRadius: 10)],
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -54,18 +76,12 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "George Walker",
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black87),
+                                "${commonLedgerHistory[index].firstName}",
+                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black87),
                               ),
                               Text(
-                                "George Walker",
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.grey),
+                                "${commonLedgerHistory[index].dateTime}",
+                                style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey),
                               ),
                             ],
                           ),
@@ -76,11 +92,8 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "+91 1234567890",
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.grey),
+                                "+91 ${commonLedgerHistory[index].mobile}",
+                                style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.grey),
                               ),
                               Container(
                                 decoration: BoxDecoration(
@@ -88,14 +101,11 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 6, right: 6, top: 1, bottom: 1),
+                                  padding: const EdgeInsets.only(left: 6, right: 6, top: 2, bottom: 2),
                                   child: Text(
                                     "Pending",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: RejectedTextColor),
+                                    style:
+                                        TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: RejectedTextColor),
                                   ),
                                 ),
                               ),
@@ -107,18 +117,12 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(
-                      left: 20, right: 20, top: 0, bottom: 20),
+                  padding: const EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 20),
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(8),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.black12,
-                            spreadRadius: 4,
-                            blurRadius: 10)
-                      ],
+                      boxShadow: [BoxShadow(color: Colors.black12, spreadRadius: 4, blurRadius: 10)],
                     ),
                     child: Column(
                       children: [
@@ -128,10 +132,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                             padding: const EdgeInsets.only(left: 14, top: 10),
                             child: Text(
                               "All Items",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black87),
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87),
                             ),
                           ),
                         ),
@@ -139,9 +140,9 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           height: 5,
                         ),
                         Container(
-                          height: 80,
+                          height: commonLedgerHistory[index].orderDetails!.length == 1 ? 80 : 160,
                           child: ListView.builder(
-                            itemCount: 1,
+                            itemCount: commonLedgerHistory[index].orderDetails!.length,
                             itemBuilder: ((context, index) {
                               return Stack(
                                 children: [
@@ -161,19 +162,18 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                                       child: Padding(
                                         padding: const EdgeInsets.all(8),
                                         child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.start,
                                           children: [
                                             Container(
                                               child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
+                                                borderRadius: BorderRadius.circular(8),
                                                 child: Container(
                                                   color: Colors.amber,
-                                                  child: Image.asset(
-                                                    "assets/images/point.png",
+                                                  child: Image.network(
+                                                    "${commonLedgerHistory[index].orderDetails![index].productImage}",
                                                     height: 45,
                                                     width: 45,
+                                                    fit: BoxFit.cover,
                                                   ),
                                                 ),
                                               ),
@@ -186,29 +186,21 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                                                 child: Column(
                                                   children: [
                                                     Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                       children: [
                                                         Text(
-                                                          "Shirt",
+                                                          "${commonLedgerHistory[index].orderDetails![index].productName}",
                                                           style: TextStyle(
                                                               fontSize: 15,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color: Colors
-                                                                  .black87),
+                                                              fontWeight: FontWeight.bold,
+                                                              color: Colors.black87),
                                                         ),
                                                         Text(
-                                                          "\u20B9 400",
+                                                          "\u20B9 ${commonLedgerHistory[index].orderDetails![index].total}",
                                                           style: TextStyle(
                                                               fontSize: 13,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color:
-                                                                  ColorPrimary),
+                                                              fontWeight: FontWeight.bold,
+                                                              color: ColorPrimary),
                                                         ),
                                                       ],
                                                     ),
@@ -216,29 +208,21 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                                                       height: 4,
                                                     ),
                                                     Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                       children: [
                                                         Text(
-                                                          "20 x \u20B9 200",
+                                                          "${commonLedgerHistory[index].orderDetails![index].qty} x \u20B9 ${commonLedgerHistory[index].orderDetails![index].price}",
                                                           style: TextStyle(
                                                               fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color:
-                                                                  Colors.grey),
+                                                              fontWeight: FontWeight.bold,
+                                                              color: Colors.grey),
                                                         ),
                                                         Text(
-                                                          "Commission \u20B940",
+                                                          "Commission \u20B9${commonLedgerHistory[index].myprofitRevenue}",
                                                           style: TextStyle(
                                                               fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color: Colors
-                                                                  .black87),
+                                                              fontWeight: FontWeight.bold,
+                                                              color: Colors.black87),
                                                         ),
                                                       ],
                                                     ),
@@ -258,22 +242,14 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                                       decoration: BoxDecoration(
                                         color: RejectedTextBgColor,
                                         borderRadius: BorderRadius.circular(8),
-                                        boxShadow: [
-                                          BoxShadow(
-                                              color: Colors.black12,
-                                              spreadRadius: 4,
-                                              blurRadius: 10)
-                                        ],
+                                        boxShadow: [BoxShadow(color: Colors.black12, spreadRadius: 4, blurRadius: 10)],
                                       ),
                                       child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 5, right: 5),
+                                        padding: const EdgeInsets.only(left: 5, right: 5, top: 1, bottom: 1),
                                         child: Text(
                                           "Redeemed",
                                           style: TextStyle(
-                                              color: RejectedTextColor,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 10),
+                                              color: RejectedTextColor, fontWeight: FontWeight.bold, fontSize: 10),
                                         ),
                                       ),
                                     ),
@@ -287,24 +263,17 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           height: 5,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(
-                              left: 14, right: 14, bottom: 10),
+                          padding: const EdgeInsets.only(left: 14, right: 14, bottom: 10),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
                                 "Amount Paid By Customer",
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black87),
+                                style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.black87),
                               ),
                               Text(
-                                "\u20B9 2266.67",
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.bold,
-                                    color: ColorPrimary),
+                                "\u20B9 ${commonLedgerHistory[index].orderTotal}",
+                                style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: ColorPrimary),
                               ),
                             ],
                           ),
@@ -314,22 +283,15 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(
-                      left: 20, right: 20, top: 0, bottom: 20),
+                  padding: const EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 20),
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(8),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.black12,
-                            spreadRadius: 4,
-                            blurRadius: 10)
-                      ],
+                      boxShadow: [BoxShadow(color: Colors.black12, spreadRadius: 4, blurRadius: 10)],
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.only(
-                          left: 14, right: 14, top: 14, bottom: 14),
+                      padding: const EdgeInsets.only(left: 14, right: 14, top: 14, bottom: 14),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -338,10 +300,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                             children: [
                               Text(
                                 "Commission Amount",
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black87),
+                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black87),
                               ),
                             ],
                           ),
@@ -353,17 +312,11 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                             children: [
                               Text(
                                 "Total Commission",
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black87),
+                                style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
                               ),
                               Text(
-                                "\u20B9240",
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black87),
+                                "\u20B9${commonLedgerHistory[index].myprofitRevenue}",
+                                style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
                               ),
                             ],
                           ),
@@ -375,18 +328,17 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                             children: [
                               Text(
                                 "Redeemed Amount",
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black87),
+                                style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
                               ),
-                              Text(
-                                "\u20B9-33.33",
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.red),
-                              ),
+                              commonLedgerHistory[index].orderDetails![0].redeemCoins == 0
+                                  ? Text(
+                                      "\u20B9 0",
+                                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
+                                    )
+                                  : Text(
+                                      "\u20B9-${commonLedgerHistory[index].orderDetails![0].redeemCoins}",
+                                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
+                                    ),
                             ],
                           ),
                         ],
@@ -395,8 +347,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(
-                      left: 20, right: 20, top: 0, bottom: 20),
+                  padding: const EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 20),
                   child: Container(
                     height: 50,
                     decoration: BoxDecoration(
@@ -410,12 +361,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                         ],
                       ),
                       borderRadius: BorderRadius.circular(8),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.black12,
-                            spreadRadius: 4,
-                            blurRadius: 10)
-                      ],
+                      boxShadow: [BoxShadow(color: Colors.black12, spreadRadius: 4, blurRadius: 10)],
                     ),
                     child: Padding(
                       padding: const EdgeInsets.only(left: 14, right: 14),
@@ -424,17 +370,11 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                         children: [
                           Text(
                             "Amount Paid To My Profit",
-                            style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
+                            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
                           ),
                           Text(
-                            "\u20B9206.67",
-                            style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
+                            "\u20B9 $finalamount",
+                            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
                           ),
                         ],
                       ),

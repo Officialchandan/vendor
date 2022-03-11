@@ -1537,10 +1537,10 @@ class ApiProvider {
   }
 
   Future<GetNormalLedgerHistoryResponse> getNormalLedgerHistory(Map<String, dynamic> input) async {
-    try {
-      Response res = await dio.post(Endpoint.GET_MASTER_LEDGER_HISTORY, data: input);
+     try {
+    Response res = await dio.post(Endpoint.GET_MASTER_LEDGER_HISTORY, data: input);
 
-      return GetNormalLedgerHistoryResponse.fromJson(res.toString());
+    return GetNormalLedgerHistoryResponse.fromJson(res.toString());
     } catch (error) {
       String message = "";
       if (error is DioError) {

@@ -12,12 +12,11 @@ class GetNormalLedgerHistoryInitialState extends NormalLedgerHistoryState {
 }
 
 class GetNormalLedgerHistoryState extends NormalLedgerHistoryState {
-  final List<GetNormalLedgerHistoryData>? data;
+  final List<CommonLedgerHistory>? data;
 
-  final List<GetNormalLedgerHistoryDirectBilling>? directdata;
-  GetNormalLedgerHistoryState({this.data, this.directdata});
+  GetNormalLedgerHistoryState({this.data});
   @override
-  List<Object?> get props => [data, directdata];
+  List<Object?> get props => [data];
 }
 
 class GetNormalLedgerHistoryLoadingState extends NormalLedgerHistoryState {
