@@ -625,20 +625,14 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                           backgroundColor: ColorPrimary);
                                     } else {
                                       Navigator.push(
-                                              context,
-                                              PageTransition(
-                                                  child: BillingProducts(
-                                                    billingItemList: product,
-                                                    mobile: widget.mobile,
-                                                    coin: double.parse(
-                                                        widget.coin),
-                                                  ),
-                                                  type:
-                                                      PageTransitionType.fade))
-                                          .then((value) {
-                                        log("==>[$value]");
-                                        log("===>${value}");
-                                      });
+                                          context,
+                                          PageTransition(
+                                              child: BillingProducts(
+                                                billingItemList: product,
+                                                mobile: widget.mobile,
+                                                coin: double.parse(widget.coin),
+                                              ),
+                                              type: PageTransitionType.fade));
                                     }
                                   } else {
                                     Fluttertoast.showToast(

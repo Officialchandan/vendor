@@ -12,6 +12,11 @@ class CheckerBillingProductstate extends BillingProductsState {
   List<Object?> get props => [check, index];
 }
 
+class BillingProductLoadingState extends BillingProductsState {
+  @override
+  List<Object?> get props => [];
+}
+
 class DeleteBillingProductState extends BillingProductsState {
   final int index;
 
@@ -26,7 +31,8 @@ class EditBillingProductState extends BillingProductsState {
   final int index;
   final double earningCoin;
 
-  EditBillingProductState({required this.price, required this.index, required this.earningCoin});
+  EditBillingProductState(
+      {required this.price, required this.index, required this.earningCoin});
 
   @override
   List<Object?> get props => [price, index, earningCoin];
@@ -88,7 +94,8 @@ class PayBillingProductsStateFailureState extends BillingProductsState {
   final String message;
   final succes;
 
-  PayBillingProductsStateFailureState({required this.message, required this.succes});
+  PayBillingProductsStateFailureState(
+      {required this.message, required this.succes});
 
   @override
   List<Object?> get props => [message, succes];

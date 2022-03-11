@@ -24,6 +24,7 @@ class BillingProductsBloc
     }
 
     if (event is DeleteBillingProductsEvent) {
+      yield BillingProductLoadingState();
       yield DeleteBillingProductState(index: event.index);
     }
     if (event is CheckedBillingProductsEvent) {
