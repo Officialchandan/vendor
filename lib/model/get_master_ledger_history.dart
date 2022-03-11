@@ -45,6 +45,7 @@ class GetNormalLedgerHistoryResponse {
 class GetNormalLedgerHistoryData {
   GetNormalLedgerHistoryData({
     required this.vendorId,
+    required this.firstName,
     required this.mobile,
     required this.orderId,
     required this.billingId,
@@ -56,6 +57,7 @@ class GetNormalLedgerHistoryData {
   });
 
   int vendorId;
+  String firstName;
   String mobile;
   String orderId;
   String billingId;
@@ -71,6 +73,7 @@ class GetNormalLedgerHistoryData {
 
   factory GetNormalLedgerHistoryData.fromMap(Map<String, dynamic> json) => GetNormalLedgerHistoryData(
         vendorId: json["vendor_id"] == null ? "" : json["vendor_id"],
+        firstName: json["first_name"] == null ? "" : json["first_name"],
         mobile: json["mobile"] == null ? "" : json["mobile"].toString(),
         orderId: json["order_id"] == null ? "" : json["order_id"].toString(),
         billingId: json["billing_id"].toString(),
@@ -85,6 +88,7 @@ class GetNormalLedgerHistoryData {
 
   Map<String, dynamic> toMap() => {
         "vendor_id": vendorId == null ? null : vendorId,
+        "first_name": firstName == null ? null : firstName,
         "mobile": mobile == null ? null : mobile,
         "order_id": orderId == null ? null : orderId,
         "billing_id": billingId,
@@ -101,6 +105,7 @@ class OrderDetail {
     required this.orderId,
     required this.productId,
     required this.productName,
+    required this.productImage,
     required this.price,
     required this.qty,
     required this.total,
@@ -114,6 +119,7 @@ class OrderDetail {
   int orderId;
   int productId;
   String productName;
+  String productImage;
   String price;
   int qty;
   String total;
@@ -131,6 +137,7 @@ class OrderDetail {
         orderId: json["order_id"] == null ? "" : json["order_id"],
         productId: json["product_id"] == null ? "" : json["product_id"],
         productName: json["product_name"] == null ? "" : json["product_name"].toString(),
+        productImage: json["product_image"] == null ? null : json["product_image"],
         price: json["price"] == null ? "" : json["price"].toString(),
         qty: json["qty"] == null ? "" : json["qty"],
         total: json["total"] == null ? "" : json["total"].toString(),
@@ -145,6 +152,7 @@ class OrderDetail {
         "order_id": orderId == null ? null : orderId,
         "product_id": productId == null ? null : productId,
         "product_name": productName == null ? null : productName,
+        "product_image": productImage == null ? null : productImage,
         "price": price == null ? null : price,
         "qty": qty == null ? null : qty,
         "total": total == null ? null : total,
@@ -160,6 +168,7 @@ class GetNormalLedgerHistoryDirectBilling {
   GetNormalLedgerHistoryDirectBilling({
     required this.vendorId,
     required this.billingId,
+    required this.firstName,
     required this.mobile,
     required this.orderTotal,
     required this.myprofitRevenue,
@@ -171,6 +180,7 @@ class GetNormalLedgerHistoryDirectBilling {
 
   int vendorId;
   int billingId;
+  String firstName;
   String mobile;
   String orderTotal;
   String myprofitRevenue;
@@ -187,6 +197,7 @@ class GetNormalLedgerHistoryDirectBilling {
   factory GetNormalLedgerHistoryDirectBilling.fromMap(Map<String, dynamic> json) => GetNormalLedgerHistoryDirectBilling(
         vendorId: json["vendor_id"] == null ? "" : json["vendor_id"],
         billingId: json["billing_id"] == null ? "" : json["billing_id"],
+        firstName: json["first_name"] == null ? "" : json["first_name"],
         mobile: json["mobile"] == null ? "" : json["mobile"].toString(),
         orderTotal: json["order_total"] == null ? "" : json["order_total"].toString(),
         myprofitRevenue: json["myprofit_revenue"] == null ? "" : json["myprofit_revenue"].toString(),
@@ -201,6 +212,7 @@ class GetNormalLedgerHistoryDirectBilling {
   Map<String, dynamic> toMap() => {
         "vendor_id": vendorId == null ? null : vendorId,
         "billing_id": billingId == null ? null : billingId,
+        "first_name": firstName == null ? null : firstName,
         "mobile": mobile == null ? null : mobile,
         "order_total": orderTotal == null ? null : orderTotal,
         "myprofit_revenue": myprofitRevenue == null ? null : myprofitRevenue,
@@ -216,20 +228,19 @@ class BillingDetail {
     required this.billingId,
     required this.categoryId,
     required this.categoryName,
-    required this.firstName,
-    required this.mobile,
-    required this.coinDeducted,
-    required this.coinEarn,
+    required this.categoryImage,
+    required this.redeemCoins,
+    required this.earningCoins,
+    required this.amountPaid,
   });
 
   int billingId;
   String categoryId;
   String categoryName;
-  String firstName;
-  String mobile;
-  String coinDeducted;
-  String coinEarn;
-
+  String categoryImage;
+  String redeemCoins;
+  String earningCoins;
+  String amountPaid;
   factory BillingDetail.fromJson(String str) => BillingDetail.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
@@ -238,26 +249,27 @@ class BillingDetail {
         billingId: json["billing_id"] == null ? "" : json["billing_id"],
         categoryId: json["category_id"] == null ? "" : json["category_id"].toString(),
         categoryName: json["category_name"] == null ? "" : json["category_name"].toString(),
-        firstName: json["first_name"] == null ? "" : json["first_name"].toString(),
-        mobile: json["mobile"] == null ? "" : json["mobile"].toString(),
-        coinDeducted: json["coin_deducted"] == null ? "" : json["coin_deducted"].toString(),
-        coinEarn: json["coin_earn"] == null ? "" : json["coin_earn"].toString(),
+        categoryImage: json["category_image"] == null ? null : json["category_image"],
+        redeemCoins: json["redeem_coins"] == null ? "" : json["redeem_coins"].toString(),
+        earningCoins: json["earning_coins"] == null ? "" : json["earning_coins"].toString(),
+        amountPaid: json["amount_paid"] == null ? "" : json["amount_paid"],
       );
 
   Map<String, dynamic> toMap() => {
         "billing_id": billingId == null ? null : billingId,
         "category_id": categoryId == null ? null : categoryId,
         "category_name": categoryName == null ? null : categoryName,
-        "first_name": firstName == null ? null : firstName,
-        "mobile": mobile == null ? null : mobile,
-        "coin_deducted": coinDeducted == null ? null : coinDeducted,
-        "coin_earn": coinEarn == null ? null : coinEarn,
+        "category_image": categoryImage == null ? null : categoryImage,
+        "redeem_coins": redeemCoins == null ? null : redeemCoins,
+        "earning_coins": earningCoins == null ? null : earningCoins,
+        "amount_paid": amountPaid == null ? null : amountPaid,
       };
 }
 
 class CommonLedgerHistory {
   CommonLedgerHistory({
     required this.vendorId,
+    required this.firstName,
     required this.mobile,
     this.orderId,
     required this.billingId,
@@ -269,22 +281,28 @@ class CommonLedgerHistory {
     this.isReturn,
     this.billingDetails,
   });
-  int vendorId;
+  String vendorId;
+  String firstName;
   String mobile;
   String? orderId;
   String billingId;
   String orderTotal;
   String myprofitRevenue;
-  int status;
+  String status;
   String dateTime;
-  int? isReturn;
-  List<OrderDetail>? orderDetails;
-  List<BillingDetail>? billingDetails;
+  String? isReturn;
+  List<CommonData>? orderDetails;
+  List<CommonData>? billingDetails;
 }
 
 class CommonData {
   CommonData({
     required this.orderId,
+    required this.billingId,
+    required this.categoryId,
+    required this.categoryName,
+    required this.categoryImage,
+    required this.productImage,
     required this.productId,
     required this.productName,
     required this.price,
@@ -296,34 +314,20 @@ class CommonData {
     required this.myprofitRevenue,
     required this.isReturn,
   });
-  int orderId;
-  int productId;
+  String orderId;
+  String billingId;
+  String categoryId;
+  String categoryName;
+  String categoryImage;
+  String productImage;
+  String productId;
   String productName;
   String price;
-  int qty;
+  String qty;
   String total;
   String amountPaid;
   String redeemCoins;
   String earningCoins;
   String myprofitRevenue;
-  int isReturn;
-}
-
-class CommonDirectData {
-  CommonDirectData({
-    required this.billingId,
-    required this.categoryId,
-    required this.categoryName,
-    required this.firstName,
-    required this.mobile,
-    required this.coinDeducted,
-    required this.coinEarn,
-  });
-  int billingId;
-  String categoryId;
-  String categoryName;
-  String firstName;
-  String mobile;
-  String coinDeducted;
-  String coinEarn;
+  String isReturn;
 }
