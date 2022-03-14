@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vendor/main.dart';
-import 'package:vendor/model/free_coin_history.dart';
 import 'package:vendor/ui/money_due_upi/free_coins/free_coins_history_bloc/free_coin_history_event.dart';
 import 'package:vendor/ui/money_due_upi/free_coins/free_coins_history_bloc/free_coin_history_state.dart';
+import 'package:vendor/ui/money_due_upi/normal_ledger/model/normal_ladger_response.dart';
 import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/utility.dart';
@@ -22,7 +22,7 @@ class FreeCoinHistoryBloc extends Bloc<FreeCoinHistoryEvent, FreeCoinHistoryStat
 
   Stream<FreeCoinHistoryState> getFreeCoinHistoryApi(input) async* {
     if (await Network.isConnected()) {
-      GetFreeCoinHistoryResponse response = await apiProvider.getVendorFreeCoinsHistory(input);
+      NormalLedgerResponse response = await apiProvider.getVendorFreeCoinsHistory(input);
       if (response.success) {
         yield GetFreeCoinHistoryState(data: response.data);
       } else {

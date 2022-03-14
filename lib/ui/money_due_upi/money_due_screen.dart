@@ -76,7 +76,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                       // mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
-                          height: 40,
+                          height: MediaQuery.of(context).size.width * 0.08,
                         ),
                         BlocBuilder<MoneyDueBloc, MoneyDueState>(
                           builder: (context, state) {
@@ -177,6 +177,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                         Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(right: 20.0),
@@ -404,6 +405,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                         Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(right: 20.0),

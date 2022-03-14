@@ -1,11 +1,11 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:vendor/model/free_coin_history.dart';
+import 'package:vendor/ui/money_due_upi/normal_ledger/model/normal_ladger_response.dart';
 import 'package:vendor/utility/color.dart';
 
 class FreeCoinDetail extends StatefulWidget {
-  final GetFreeCoinHistoryData freecoindetail;
+  final OrderData freecoindetail;
   FreeCoinDetail({required this.freecoindetail});
 
   @override
@@ -13,7 +13,7 @@ class FreeCoinDetail extends StatefulWidget {
 }
 
 class _FreeCoinDetailState extends State<FreeCoinDetail> {
-  GetFreeCoinHistoryData? freecoindetails;
+  OrderData? freecoindetails;
   double count = 0;
   @override
   void initState() {
@@ -58,7 +58,7 @@ class _FreeCoinDetailState extends State<FreeCoinDetail> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "${freecoindetails!.customerName}",
+                          "${freecoindetails!.firstName}",
                           style: TextStyle(fontWeight: FontWeight.w400, fontSize: 13, color: ColorTextPrimary),
                         ),
                         Text(
@@ -120,9 +120,9 @@ class _FreeCoinDetailState extends State<FreeCoinDetail> {
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(8),
                                     child: Container(
-                                      color: Colors.amber,
+                                      color: Colors.white,
                                       child: Image.asset(
-                                        "assets/images/point.png",
+                                        "assets/images/account-ic6.png",
                                         height: 45,
                                         width: 45,
                                       ),

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/model/normal_ladger_response.dart';
 import 'package:vendor/utility/color.dart';
@@ -32,7 +33,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
 
   void calculation() {
     if (widget.order.orderType == 1) {
-      reddem = double.parse(widget.order.billingDetails.first.redeemedCoins);
+      reddem = double.parse(widget.order.billingDetails.first.redeemeCoins);
       if (double.parse(widget.order.myprofitRevenue) > reddem) {
         log("${double.parse(widget.order.myprofitRevenue)}");
         finalamount = double.parse(widget.order.myprofitRevenue) - reddem;
@@ -96,7 +97,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black87),
                               ),
                               Text(
-                                "${widget.order.dateTime}",
+                                "${DateFormat("yyyy MM dd ").format(widget.order.dateTime)}(${DateFormat.jm().format(widget.order.dateTime)})",
                                 style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey),
                               ),
                             ],
@@ -195,7 +196,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                                                     child: ClipRRect(
                                                       borderRadius: BorderRadius.circular(8),
                                                       child: Container(
-                                                        color: Colors.amber,
+                                                        color: Colors.white,
                                                         child: Image.network(
                                                           "${widget.order.orderDetails[index].productImage}",
                                                           height: 45,
@@ -513,8 +514,8 @@ class DirectBillingListItem extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8),
                         child: Container(
                           color: Colors.amber,
-                          child: Image.network(
-                            "${detail.categoryImage}",
+                          child: Image.asset(
+                            "assets/images/account-ic6.png",
                             height: 45,
                             width: 45,
                             fit: BoxFit.cover,
@@ -567,7 +568,7 @@ class DirectBillingListItem extends StatelessWidget {
               ),
             ),
           ),
-          double.parse(detail.redeemedCoins) > 0
+          double.parse(detail.redeemeCoins) > 0
               ? Positioned(
                   top: 4,
                   right: 20,

@@ -1,9 +1,12 @@
 import 'dart:collection';
 import 'dart:developer';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:vendor/ui/money_due_upi/free_coins/free_coins_history_bloc/free_coin_history_state.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/model/normal_ladger_response.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_bloc/normal_ledger_bloc.dart';
@@ -32,11 +35,12 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
   String startDate = "";
   String endDate = "";
   List<CommonLedgerHistory>? _commonLedgerHistory;
+  List<OrderData> searchList = [];
 
   List<OrderData> orderList = [];
 
   NormalLedgerHistoryBloc _normalLedgerHistoryBloc = NormalLedgerHistoryBloc();
-
+  TextEditingController _searchController = TextEditingController();
   @override
   void initState() {
     // TODO: implement initState
@@ -51,8 +55,8 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
   Future<void> normalLedgerApiCall(BuildContext context) async {
     Map<String, dynamic> input = HashMap<String, dynamic>();
     input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
-    input["from_date"] = "";
-    input["to_date"] = "";
+    input["from_date"] = startDate.isEmpty ? "" : startDate.toString();
+    input["to_date"] = endDate.isEmpty ? startDate.toString() : endDate.toString();
     _normalLedgerHistoryBloc.add(GetNormalLedgerHistoryEvent(input: input));
   }
 
@@ -80,7 +84,7 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                           this.endDate = endDate;
                           print("startDate->$startDate");
                           print("endDate->$endDate");
-                          // filterApiCall(context);
+                          normalLedgerApiCall(context);
                           // getCustomer();
                         });
                       });
@@ -136,22 +140,52 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
             }*/
             if (state is GetNormalLedgerState) {
               orderList = state.orderList;
+              searchList = orderList;
             }
-            /*if (_commonLedgerHistory == null) {
-              log("===>$_commonLedgerHistory");
-              return Center(child: CircularProgressIndicator());
-            }*/
+
             if (orderList.isEmpty) {
               log("===>$_commonLedgerHistory");
               return Center(child: CircularProgressIndicator());
             }
-
+            if (state is GetNormalLedgerUserSearchState) {
+              if (state.searchword.isEmpty) {
+                searchList = orderList;
+              } else {
+                List<OrderData> list = [];
+                orderList.forEach((element) {
+                  if (element.mobile.toLowerCase().contains(state.searchword.toLowerCase())) {
+                    list.add(element);
+                    log("how much -->${state.searchword}");
+                  }
+                });
+                if (list == null) {
+                  return Container(
+                    height: MediaQuery.of(context).size.height,
+                    child: Image.asset("assets/images/no_data.gif"),
+                  );
+                } else {
+                  searchList = list;
+                }
+              }
+            }
+            // if (_commonLedgerHistory == null) {
+            //   log("===>$_commonLedgerHistory");
+            //   return Center(child: CircularProgressIndicator());
+            // }
             if (state is GetFreeCoinHistoryFailureState) {
               return Container(
                 height: MediaQuery.of(context).size.height,
                 child: Image.asset("assets/images/no_data.gif"),
               );
             }
+
+            if (state is GetNormalLedgerHistoryFailureState) {
+              return Container(
+                height: MediaQuery.of(context).size.height,
+                child: Image.asset("assets/images/no_data.gif"),
+              );
+            }
+
             return Container(
               child: Column(
                 children: [
@@ -214,9 +248,41 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                   //     ],
                   //   ),
                   // ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0, right: 15, top: 15),
+                    child: TextFormField(
+                      cursorColor: ColorPrimary,
+                      controller: _searchController,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.search,
+                          color: Colors.black,
+                        ),
+                        filled: true,
+
+                        // fillColor: Colors.black,
+                        hintText: "Search Here...",
+
+                        hintStyle: GoogleFonts.openSans(fontWeight: FontWeight.w600, color: Colors.black),
+                        contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      onChanged: (text) {
+                        _normalLedgerHistoryBloc.add(GetFindUserEvent(searchkeyword: text));
+                      },
+                    ),
+                  ),
                   Expanded(
                     child: ListView.builder(
-                        itemCount: orderList.length,
+                        itemCount: searchList.length,
                         padding: EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 5),
                         itemBuilder: (context, index) {
                           return InkWell(
@@ -227,7 +293,7 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                                   MaterialPageRoute(
                                       builder: (context) => NormalLedgerDetails(
                                             // commonLedgerHistory: _commonLedgerHistory!,
-                                            order: orderList[index],
+                                            order: searchList[index],
                                           )));
                             },
                             child: Container(
@@ -263,11 +329,11 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                "    +91 ${orderList[index].mobile}",
+                                                "    +91 ${searchList[index].mobile}",
                                                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                                               ),
                                               Text(
-                                                "    ${orderList[index].dateTime}",
+                                                "    ${DateFormat("yyyy MM dd ").format(searchList[index].dateTime)}(${DateFormat.jm().format(searchList[index].dateTime)})",
                                                 style: TextStyle(
                                                   fontSize: 12,
                                                 ),
@@ -276,7 +342,7 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                                         Row(
                                           children: [
                                             Center(
-                                              child: orderList[index].status == 1
+                                              child: searchList[index].status == 1
                                                   ? Container(
                                                       padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
                                                       decoration: BoxDecoration(
@@ -314,7 +380,7 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                                         ),
                                       ]),
                                     ),
-                                    orderList[index].isReturn == 1
+                                    searchList[index].isReturn == 1
                                         ? Positioned(
                                             top: -28,
                                             left: -25,
@@ -342,15 +408,16 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                                         width: 90,
                                         height: 76,
                                         decoration: BoxDecoration(
-                                            color: orderList[index].status == 1 ? RejectedTextBgColor : GreenBoxBgColor,
+                                            color:
+                                                searchList[index].status == 1 ? RejectedTextBgColor : GreenBoxBgColor,
                                             borderRadius: BorderRadius.only(
                                                 bottomRight: Radius.circular(10), topRight: Radius.circular(10))),
                                         child: Text(
-                                          " \u20B9 ${orderList[index].myprofitRevenue} ",
+                                          " \u20B9 ${searchList[index].myprofitRevenue} ",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 14,
-                                              color: orderList[index].status == 1
+                                              color: searchList[index].status == 1
                                                   ? RejectedBoxTextColor
                                                   : GreenBoxTextColor),
                                         ),

@@ -44,7 +44,6 @@ class OrderData {
     required this.firstName,
     required this.mobile,
     required this.orderId,
-    required this.billingId,
     required this.orderTotal,
     required this.myprofitRevenue,
     required this.status,
@@ -52,11 +51,12 @@ class OrderData {
     required this.isReturn,
     required this.orderDetails,
     required this.billingDetails,
+    required this.vendorGivenCoins,
     // required this.orderType,
   });
 
   String vendorId;
-  String billingId;
+
   String firstName;
   String mobile;
   String orderId;
@@ -67,6 +67,7 @@ class OrderData {
   int isReturn;
   List<OrderDetail> orderDetails;
   List<BillingDetail> billingDetails;
+  String vendorGivenCoins;
   int orderType = 0;
 
   factory OrderData.fromJson(String str) => OrderData.fromMap(json.decode(str));
@@ -78,7 +79,7 @@ class OrderData {
         firstName: json["first_name"] == null ? "" : json["first_name"],
         mobile: json["mobile"] == null ? "" : json["mobile"],
         orderId: json["order_id"] == null ? "" : json["order_id"].toString(),
-        billingId: json["billing_id"] == null ? "" : json["billing_id"].toString(),
+        vendorGivenCoins: json["vendor_given_coins"] == null ? "" : json["vendor_given_coins"].toString(),
         orderTotal: json["order_total"] == null ? "0" : json["order_total"].toString(),
         myprofitRevenue: json["myprofit_revenue"] == null ? "" : json["myprofit_revenue"].toString(),
         status: json["status"] == null ? -1 : json["status"],
@@ -98,6 +99,7 @@ class OrderData {
         "first_name": firstName == null ? null : firstName,
         "mobile": mobile == null ? null : mobile,
         "order_id": orderId == null ? null : orderId,
+        "vendor_given_coins": vendorGivenCoins == null ? null : vendorGivenCoins,
         "order_total": orderTotal == null ? null : orderTotal,
         "myprofit_revenue": myprofitRevenue == null ? null : myprofitRevenue,
         "status": status == null ? null : status,
@@ -108,7 +110,7 @@ class OrderData {
 
   @override
   String toString() {
-    return 'OrderData{vendorId: $vendorId, billingId: $billingId, firstName: $firstName, mobile: $mobile, orderId: $orderId, orderTotal: $orderTotal, myprofitRevenue: $myprofitRevenue, status: $status, dateTime: $dateTime, isReturn: $isReturn, orderDetails: $orderDetails, billingDetails: $billingDetails, orderType: $orderType}';
+    return 'OrderData{vendorId: $vendorId, firstName: $firstName, mobile: $mobile, orderId: $orderId, orderTotal: $orderTotal, myprofitRevenue: $myprofitRevenue, status: $status, dateTime: $dateTime, isReturn: $isReturn, orderDetails: $orderDetails, billingDetails: $billingDetails, orderType: $orderType}';
   }
 }
 
@@ -236,20 +238,19 @@ class OrderDetail {
 
 class BillingDetail {
   BillingDetail({
-    required this.billingId,
     required this.categoryId,
     required this.categoryName,
     required this.categoryImage,
-    required this.redeemedCoins,
+    required this.redeemeCoins,
     required this.earningCoins,
     required this.amountPaid,
   });
 
-  int billingId;
   String categoryId;
+
   String categoryName;
   String categoryImage;
-  String redeemedCoins;
+  String redeemeCoins;
   String earningCoins;
   String amountPaid;
 
@@ -258,21 +259,19 @@ class BillingDetail {
   String toJson() => json.encode(toMap());
 
   factory BillingDetail.fromMap(Map<String, dynamic> json) => BillingDetail(
-        billingId: json["billing_id"] == null ? 0 : json["billing_id"],
-        categoryId: json["category_id"] == null ? "" : json["category_id"],
-        categoryName: json["category_name"] == null ? "" : json["category_name"],
-        categoryImage: json["category_image"] == null ? "" : json["category_image"],
-        redeemedCoins: json["redeemed_coins"] == null ? "" : json["redeemed_coins"],
-        earningCoins: json["earning_coins"] == null ? "" : json["earning_coins"],
-        amountPaid: json["amount_paid"] == null ? "" : json["amount_paid"],
+        categoryId: json["category_id"] == null ? "0" : json["category_id"],
+        categoryName: json["category_name"] == null ? "" : json["category_name"].toString(),
+        categoryImage: json["category_image"] == null ? "" : json["category_image"].toString(),
+        redeemeCoins: json["redeeme_coins"] == null ? "0" : json["redeeme_coins"].toString(),
+        earningCoins: json["earning_coins"] == null ? "0" : json["earning_coins"].toString(),
+        amountPaid: json["amount_paid"] == null ? "0" : json["amount_paid"].toString(),
       );
 
   Map<String, dynamic> toMap() => {
-        "billing_id": billingId == null ? null : billingId,
         "category_id": categoryId == null ? null : categoryId,
         "category_name": categoryName == null ? null : categoryName,
         "category_image": categoryImage == null ? null : categoryImage,
-        "redeemed_coins": redeemedCoins == null ? null : redeemedCoins,
+        "redeeme_coins": redeemeCoins == null ? null : redeemeCoins,
         "earning_coins": earningCoins == null ? null : earningCoins,
         "amount_paid": amountPaid == null ? null : amountPaid,
       };

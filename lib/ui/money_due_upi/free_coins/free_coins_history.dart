@@ -6,10 +6,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:vendor/model/free_coin_history.dart';
 import 'package:vendor/ui/money_due_upi/free_coins/free_coins_history_bloc/free_coin_history_bloc.dart';
 import 'package:vendor/ui/money_due_upi/free_coins/free_coins_history_bloc/free_coin_history_event.dart';
 import 'package:vendor/ui/money_due_upi/free_coins/free_coins_history_bloc/free_coin_history_state.dart';
+import 'package:vendor/ui/money_due_upi/normal_ledger/model/normal_ladger_response.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/widget/calendar_bottom_sheet.dart';
@@ -28,8 +28,8 @@ class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
   String endDate = "";
   TextEditingController _searchController = TextEditingController();
   FreeCoinHistoryBloc freeCoinHistoryBloc = FreeCoinHistoryBloc();
-  List<GetFreeCoinHistoryData> searchList = [];
-  List<GetFreeCoinHistoryData>? freecoinsdata;
+  List<OrderData> searchList = [];
+  List<OrderData>? freecoinsdata;
   @override
   void initState() {
     // TODO: implement initState
@@ -95,17 +95,12 @@ class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
           if (freecoinsdata == null) {
             return Center(child: CircularProgressIndicator());
           }
-          if (state is GetFreeCoinHistoryFailureState) {
-            return Container(
-              height: MediaQuery.of(context).size.height,
-              child: Image.asset("assets/images/no_data.gif"),
-            );
-          }
+
           if (state is GetFreeCoinUserSearchState) {
             if (state.searchword.isEmpty) {
               searchList = freecoinsdata!;
             } else {
-              List<GetFreeCoinHistoryData> list = [];
+              List<OrderData> list = [];
               freecoinsdata!.forEach((element) {
                 if (element.mobile.toLowerCase().contains(state.searchword.toLowerCase())) {
                   list.add(element);
@@ -120,6 +115,12 @@ class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
               } else {
                 searchList = list;
               }
+            }
+            if (state is GetFreeCoinHistoryFailureState) {
+              return Container(
+                height: MediaQuery.of(context).size.height,
+                child: Image.asset("assets/images/no_data.gif"),
+              );
             }
           }
           return Container(
@@ -227,7 +228,7 @@ class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
                                           scale: 2.5,
                                         ),
                                         Text(
-                                          " ${searchList[index].orderDetails[index].earningCoins} ",
+                                          " ${searchList[index].firstName} ",
                                           style:
                                               TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: ColorPrimary),
                                         ),

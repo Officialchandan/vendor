@@ -18,7 +18,7 @@ class NormalLedgerHistoryBloc extends Bloc<NormalLedgerHistoryEvent, NormalLedge
       yield* getNormalLedgerHistoryApi(event.input);
     }
     if (event is GetFindUserEvent) {
-      yield GetFreeCoinUserSearchState(searchword: event.searchkeyword);
+      yield GetNormalLedgerUserSearchState(searchword: event.searchkeyword);
     }
   }
 

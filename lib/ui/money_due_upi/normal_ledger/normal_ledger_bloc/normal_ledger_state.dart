@@ -41,9 +41,9 @@ class GetNormalLedgerHistoryFailureState extends NormalLedgerHistoryState {
   List<Object?> get props => [message, succes];
 }
 
-class GetFreeCoinUserSearchState extends NormalLedgerHistoryState {
+class GetNormalLedgerUserSearchState extends NormalLedgerHistoryState {
   final String searchword;
-  GetFreeCoinUserSearchState({required this.searchword});
+  GetNormalLedgerUserSearchState({required this.searchword});
 
   @override
   // TODO: implement props
