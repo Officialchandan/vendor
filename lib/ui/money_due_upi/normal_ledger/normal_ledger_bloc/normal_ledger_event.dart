@@ -11,3 +11,10 @@ class GetNormalLedgerHistoryEvent extends NormalLedgerHistoryEvent {
   @override
   List<Object?> get props => [];
 }
+
+class GetFindUserEvent extends NormalLedgerHistoryEvent {
+  final searchkeyword;
+
+  GetFindUserEvent({required this.searchkeyword});
+  List<Object?> get props => [searchkeyword];
+}

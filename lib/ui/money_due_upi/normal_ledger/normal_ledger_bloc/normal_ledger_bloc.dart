@@ -1,6 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vendor/main.dart';
-import 'package:vendor/model/get_master_ledger_history.dart';
+import 'package:vendor/ui/money_due_upi/normal_ledger/model/normal_ladger_response.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_bloc/normal_ledger_event.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_bloc/normal_ledger_state.dart';
 import 'package:vendor/utility/constant.dart';
@@ -15,12 +17,32 @@ class NormalLedgerHistoryBloc extends Bloc<NormalLedgerHistoryEvent, NormalLedge
     if (event is GetNormalLedgerHistoryEvent) {
       yield* getNormalLedgerHistoryApi(event.input);
     }
+    if (event is GetFindUserEvent) {
+      yield GetFreeCoinUserSearchState(searchword: event.searchkeyword);
+    }
   }
 
   Stream<NormalLedgerHistoryState> getNormalLedgerHistoryApi(input) async* {
+    log("===>getNormalLedgerHistoryApi");
     if (await Network.isConnected()) {
-      GetNormalLedgerHistoryResponse response = await apiProvider.getNormalLedgerHistory(input);
+      NormalLedgerResponse response = await apiProvider.getNormalLedgerHistory(input);
       if (response.success) {
+        List<OrderData> orderList = [];
+        // orderList.addAll(response.data);
+        // orderList.addAll(response.directBilling);
+
+        await Future.forEach(response.data, (OrderData order) async {
+          order.orderType = 0;
+          orderList.add(order);
+        });
+        await Future.forEach(response.directBilling, (OrderData order) async {
+          order.orderType = 1;
+          orderList.add(order);
+        });
+        orderList.sort((a, b) => b.dateTime.compareTo(a.dateTime));
+        yield GetNormalLedgerState(orderList: orderList);
+
+        /*
         List<CommonLedgerHistory> products = [];
         for (GetNormalLedgerHistoryData data in response.data!) {
           List<CommonData> listOrderDetail = [];
@@ -42,6 +64,7 @@ class NormalLedgerHistoryBloc extends Bloc<NormalLedgerHistoryEvent, NormalLedge
                 earningCoins: element.earningCoins,
                 myprofitRevenue: element.myprofitRevenue,
                 isReturn: element.isReturn.toString());
+
             listOrderDetail.add(commonData);
           });
           CommonLedgerHistory commonLedgerHistory = CommonLedgerHistory(
@@ -54,10 +77,11 @@ class NormalLedgerHistoryBloc extends Bloc<NormalLedgerHistoryEvent, NormalLedge
             myprofitRevenue: data.myprofitRevenue,
             status: data.status.toString(),
             dateTime: data.dateTime,
-            isReturn: "",
+            isReturn: data.isReturn.toString(),
             orderDetails: listOrderDetail,
             billingDetails: [],
           );
+          commonLedgerHistory.billingType = 0;
           products.add(commonLedgerHistory);
         }
         for (GetNormalLedgerHistoryDirectBilling data in response.directBilling!) {
@@ -81,6 +105,7 @@ class NormalLedgerHistoryBloc extends Bloc<NormalLedgerHistoryEvent, NormalLedge
               myprofitRevenue: "",
               isReturn: "",
             );
+
             listOrderDetail.add(commonData);
           });
           CommonLedgerHistory commonLedgerHistory = CommonLedgerHistory(
@@ -97,9 +122,12 @@ class NormalLedgerHistoryBloc extends Bloc<NormalLedgerHistoryEvent, NormalLedge
             orderDetails: [],
             billingDetails: listOrderDetail,
           );
+          log("====>${commonLedgerHistory}");
+          commonLedgerHistory.billingType = 1;
           products.add(commonLedgerHistory);
         }
-        yield GetNormalLedgerHistoryState(data: products);
+        log("====>${products[0].myprofitRevenue}");*/
+        // yield GetNormalLedgerHistoryState(data: products);
       } else {
         yield GetNormalLedgerHistoryFailureState(succes: response.success, message: response.message);
       }

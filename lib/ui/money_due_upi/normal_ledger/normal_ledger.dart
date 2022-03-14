@@ -5,12 +5,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vendor/ui/money_due_upi/free_coins/free_coins_history_bloc/free_coin_history_state.dart';
+import 'package:vendor/ui/money_due_upi/normal_ledger/model/normal_ladger_response.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_bloc/normal_ledger_bloc.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_bloc/normal_ledger_event.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_bloc/normal_ledger_state.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_details/noraml_ledger_details.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
+import 'package:vendor/widget/calendar_bottom_sheet.dart';
 
 import '../../../model/get_master_ledger_history.dart';
 
@@ -30,7 +32,11 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
   String startDate = "";
   String endDate = "";
   List<CommonLedgerHistory>? _commonLedgerHistory;
+
+  List<OrderData> orderList = [];
+
   NormalLedgerHistoryBloc _normalLedgerHistoryBloc = NormalLedgerHistoryBloc();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -39,7 +45,7 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
     year = (now.year).toString();
     _tabController = TabController(length: 12, vsync: this, initialIndex: now.month - 1);
     log("${year}");
-    normalLedgerApiCall(context);
+    // normalLedgerApiCall(context);
   }
 
   Future<void> normalLedgerApiCall(BuildContext context) async {
@@ -63,42 +69,83 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
               "Master Ledger",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
-            bottom: PreferredSize(
-              child: Container(
-                color: ColorPrimary,
-                child: TabBar(
-                  indicatorWeight: 3,
-                  isScrollable: true,
-                  controller: _tabController,
-                  indicatorColor: ColorPrimary,
-                  unselectedLabelColor: Colors.white,
-                  labelColor: Colors.white,
-                  labelStyle: const TextStyle(
-                    fontSize: 18,
-                    letterSpacing: 0.67,
-                    fontWeight: FontWeight.w500,
+            actions: [
+              GestureDetector(
+                onTap: () {
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return CalendarBottomSheet(onSelect: (startDate, endDate) {
+                          this.startDate = startDate;
+                          this.endDate = endDate;
+                          print("startDate->$startDate");
+                          print("endDate->$endDate");
+                          // filterApiCall(context);
+                          // getCustomer();
+                        });
+                      });
+                  print("startDate---1>$startDate");
+                  print("endDate---1>$endDate");
+                },
+                child: Row(children: [
+                  Icon(
+                    Icons.filter_alt,
+                    color: Colors.white,
                   ),
-                  tabs: List.generate(months.length, (index) {
-                    return Tab(
-                      text: months[index].toString(),
-                    );
-                    log("${months.length}");
-                  }),
-                ),
+                  Center(child: Text("Filter   ")),
+                ]),
               ),
-              preferredSize: const Size.fromHeight(50),
-            ),
+            ],
+            // bottom: PreferredSize(
+            //   child: Container(
+            //     color: ColorPrimary,
+            //     child: TabBar(
+            //       indicatorWeight: 3,
+            //       isScrollable: true,
+            //       controller: _tabController,
+            //       indicatorColor: ColorPrimary,
+            //       unselectedLabelColor: Colors.white,
+            //       labelColor: Colors.white,
+            //       labelStyle: const TextStyle(
+            //         fontSize: 18,
+            //         letterSpacing: 0.67,
+            //         fontWeight: FontWeight.w500,
+            //       ),
+            //       onTap: (a) {
+            //         log("$a");
+            //       },
+            //       tabs: List.generate(months.length, (index) {
+            //         return Tab(
+            //           text: months[index].toString(),
+            //         );
+            //         log("${months.length}");
+            //         log("${_tabController?.length}");
+            //       }),
+            //     ),
+            //   ),
+            //   preferredSize: const Size.fromHeight(50),
+            // ),
           ),
           body: BlocBuilder<NormalLedgerHistoryBloc, NormalLedgerHistoryState>(builder: (context, state) {
+            log("state===>$state");
             if (state is GetNormalLedgerHistoryInitialState) {
               normalLedgerApiCall(context);
             }
-            if (state is GetNormalLedgerHistoryState) {
+            /* if (state is GetNormalLedgerHistoryState) {
               _commonLedgerHistory = state.data!;
+            }*/
+            if (state is GetNormalLedgerState) {
+              orderList = state.orderList;
             }
-            if (_commonLedgerHistory == null) {
+            /*if (_commonLedgerHistory == null) {
+              log("===>$_commonLedgerHistory");
+              return Center(child: CircularProgressIndicator());
+            }*/
+            if (orderList.isEmpty) {
+              log("===>$_commonLedgerHistory");
               return Center(child: CircularProgressIndicator());
             }
+
             if (state is GetFreeCoinHistoryFailureState) {
               return Container(
                 height: MediaQuery.of(context).size.height,
@@ -108,68 +155,68 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
             return Container(
               child: Column(
                 children: [
-                  Container(
-                    height: 50,
-                    color: Colors.grey[100],
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            showPicker();
-                          },
-                          child: Container(
-                            width: 100,
-                            height: 35,
-                            decoration: BoxDecoration(color: Colors.grey[350], borderRadius: BorderRadius.circular(5)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text(
-                                  "Week",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Icon(
-                                  Icons.arrow_drop_down,
-                                  color: Colors.black,
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 25,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            showDaysPicker();
-                          },
-                          child: Container(
-                            width: 100,
-                            height: 35,
-                            decoration: BoxDecoration(color: Colors.grey[350], borderRadius: BorderRadius.circular(5)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text(
-                                  "Day",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Icon(Icons.arrow_drop_down)
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  // Container(
+                  //   height: 50,
+                  //   color: Colors.grey[100],
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  //     children: [
+                  //       GestureDetector(
+                  //         onTap: () {
+                  //           showPicker();
+                  //         },
+                  //         child: Container(
+                  //           width: 100,
+                  //           height: 35,
+                  //           decoration: BoxDecoration(color: Colors.grey[350], borderRadius: BorderRadius.circular(5)),
+                  //           child: Row(
+                  //             mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  //             children: [
+                  //               Text(
+                  //                 "Week",
+                  //                 style: TextStyle(
+                  //                   fontWeight: FontWeight.bold,
+                  //                 ),
+                  //               ),
+                  //               Icon(
+                  //                 Icons.arrow_drop_down,
+                  //                 color: Colors.black,
+                  //               )
+                  //             ],
+                  //           ),
+                  //         ),
+                  //       ),
+                  //       SizedBox(
+                  //         width: 25,
+                  //       ),
+                  //       GestureDetector(
+                  //         onTap: () {
+                  //           showDaysPicker();
+                  //         },
+                  //         child: Container(
+                  //           width: 100,
+                  //           height: 35,
+                  //           decoration: BoxDecoration(color: Colors.grey[350], borderRadius: BorderRadius.circular(5)),
+                  //           child: Row(
+                  //             mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  //             children: [
+                  //               Text(
+                  //                 "Day",
+                  //                 style: TextStyle(
+                  //                   fontWeight: FontWeight.bold,
+                  //                 ),
+                  //               ),
+                  //               Icon(Icons.arrow_drop_down)
+                  //             ],
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   Expanded(
                     child: ListView.builder(
-                        itemCount: _commonLedgerHistory!.length,
+                        itemCount: orderList.length,
                         padding: EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 5),
                         itemBuilder: (context, index) {
                           return InkWell(
@@ -179,8 +226,8 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => NormalLedgerDetails(
-                                            commonLedgerHistory: _commonLedgerHistory!,
-                                            index: index,
+                                            // commonLedgerHistory: _commonLedgerHistory!,
+                                            order: orderList[index],
                                           )));
                             },
                             child: Container(
@@ -216,11 +263,11 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                "    +91 ${_commonLedgerHistory![index].mobile}",
+                                                "    +91 ${orderList[index].mobile}",
                                                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                                               ),
                                               Text(
-                                                "    ${_commonLedgerHistory![index].dateTime}",
+                                                "    ${orderList[index].dateTime}",
                                                 style: TextStyle(
                                                   fontSize: 12,
                                                 ),
@@ -229,7 +276,7 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                                         Row(
                                           children: [
                                             Center(
-                                              child: _commonLedgerHistory![index].status == 0
+                                              child: orderList[index].status == 1
                                                   ? Container(
                                                       padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
                                                       decoration: BoxDecoration(
@@ -267,7 +314,7 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                                         ),
                                       ]),
                                     ),
-                                    _commonLedgerHistory![index].isReturn == 1
+                                    orderList[index].isReturn == 1
                                         ? Positioned(
                                             top: -28,
                                             left: -25,
@@ -295,13 +342,17 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                                         width: 90,
                                         height: 76,
                                         decoration: BoxDecoration(
-                                            color: Colors.red.shade50,
+                                            color: orderList[index].status == 1 ? RejectedTextBgColor : GreenBoxBgColor,
                                             borderRadius: BorderRadius.only(
                                                 bottomRight: Radius.circular(10), topRight: Radius.circular(10))),
                                         child: Text(
-                                          " \u20B9 ${_commonLedgerHistory![index].myprofitRevenue} ",
-                                          style:
-                                              TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.red),
+                                          " \u20B9 ${orderList[index].myprofitRevenue} ",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 14,
+                                              color: orderList[index].status == 1
+                                                  ? RejectedBoxTextColor
+                                                  : GreenBoxTextColor),
                                         ),
                                       ),
                                     )

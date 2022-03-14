@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:vendor/model/get_master_ledger_history.dart';
+import 'package:vendor/ui/money_due_upi/normal_ledger/model/normal_ladger_response.dart';
 
 class NormalLedgerHistoryState extends Equatable {
   @override
@@ -19,6 +20,14 @@ class GetNormalLedgerHistoryState extends NormalLedgerHistoryState {
   List<Object?> get props => [data];
 }
 
+class GetNormalLedgerState extends NormalLedgerHistoryState {
+  final List<OrderData> orderList;
+
+  GetNormalLedgerState({required this.orderList});
+  @override
+  List<Object?> get props => [orderList];
+}
+
 class GetNormalLedgerHistoryLoadingState extends NormalLedgerHistoryState {
   @override
   List<Object?> get props => [];
@@ -30,4 +39,13 @@ class GetNormalLedgerHistoryFailureState extends NormalLedgerHistoryState {
   GetNormalLedgerHistoryFailureState({this.message, this.succes});
   @override
   List<Object?> get props => [message, succes];
+}
+
+class GetFreeCoinUserSearchState extends NormalLedgerHistoryState {
+  final String searchword;
+  GetFreeCoinUserSearchState({required this.searchword});
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [searchword];
 }

@@ -50,6 +50,7 @@ class GetNormalLedgerHistoryData {
     required this.orderId,
     required this.billingId,
     required this.orderTotal,
+    required this.isReturn,
     required this.myprofitRevenue,
     required this.status,
     required this.dateTime,
@@ -62,6 +63,7 @@ class GetNormalLedgerHistoryData {
   String orderId;
   String billingId;
   String orderTotal;
+  int isReturn;
   String myprofitRevenue;
   int status;
   String dateTime;
@@ -72,14 +74,15 @@ class GetNormalLedgerHistoryData {
   String toJson() => json.encode(toMap());
 
   factory GetNormalLedgerHistoryData.fromMap(Map<String, dynamic> json) => GetNormalLedgerHistoryData(
-        vendorId: json["vendor_id"] == null ? "" : json["vendor_id"],
+        vendorId: json["vendor_id"] == null ? 0 : json["vendor_id"],
         firstName: json["first_name"] == null ? "" : json["first_name"],
         mobile: json["mobile"] == null ? "" : json["mobile"].toString(),
         orderId: json["order_id"] == null ? "" : json["order_id"].toString(),
         billingId: json["billing_id"].toString(),
         orderTotal: json["order_total"] == null ? "" : json["order_total"].toString(),
+        isReturn: json["is_return"] == null ? -1 : json["is_return"],
         myprofitRevenue: json["myprofit_revenue"] == null ? "" : json["myprofit_revenue"].toString(),
-        status: json["status"] == null ? "" : json["status"],
+        status: json["status"] == null ? -1 : json["status"],
         dateTime: json["date_time"] == null ? "" : json["date_time"].toString(),
         orderDetails: json["order_details"] == null
             ? []
@@ -93,6 +96,7 @@ class GetNormalLedgerHistoryData {
         "order_id": orderId == null ? null : orderId,
         "billing_id": billingId,
         "order_total": orderTotal == null ? null : orderTotal,
+        "is_return": isReturn == null ? null : isReturn,
         "myprofit_revenue": myprofitRevenue == null ? null : myprofitRevenue,
         "status": status == null ? null : status,
         "date_time": dateTime == null ? null : dateTime.toString(),
@@ -134,18 +138,18 @@ class OrderDetail {
   String toJson() => json.encode(toMap());
 
   factory OrderDetail.fromMap(Map<String, dynamic> json) => OrderDetail(
-        orderId: json["order_id"] == null ? "" : json["order_id"],
-        productId: json["product_id"] == null ? "" : json["product_id"],
+        orderId: json["order_id"] == null ? 0 : json["order_id"],
+        productId: json["product_id"] == null ? 0 : json["product_id"],
         productName: json["product_name"] == null ? "" : json["product_name"].toString(),
         productImage: json["product_image"] == null ? null : json["product_image"],
         price: json["price"] == null ? "" : json["price"].toString(),
-        qty: json["qty"] == null ? "" : json["qty"],
+        qty: json["qty"] == null ? 0 : json["qty"],
         total: json["total"] == null ? "" : json["total"].toString(),
         amountPaid: json["amount_paid"] == null ? "" : json["amount_paid"].toString(),
         redeemCoins: json["redeem_coins"] == null ? "" : json["redeem_coins"].toString(),
         earningCoins: json["earning_coins"] == null ? "" : json["earning_coins"].toString(),
         myprofitRevenue: json["myprofit_revenue"] == null ? "" : json["myprofit_revenue"].toString(),
-        isReturn: json["is_return"] == null ? "" : json["is_return"],
+        isReturn: json["is_return"] == null ? 0 : json["is_return"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -195,14 +199,14 @@ class GetNormalLedgerHistoryDirectBilling {
   String toJson() => json.encode(toMap());
 
   factory GetNormalLedgerHistoryDirectBilling.fromMap(Map<String, dynamic> json) => GetNormalLedgerHistoryDirectBilling(
-        vendorId: json["vendor_id"] == null ? "" : json["vendor_id"],
-        billingId: json["billing_id"] == null ? "" : json["billing_id"],
+        vendorId: json["vendor_id"] == null ? 0 : json["vendor_id"],
+        billingId: json["billing_id"] == null ? 0 : json["billing_id"],
         firstName: json["first_name"] == null ? "" : json["first_name"],
         mobile: json["mobile"] == null ? "" : json["mobile"].toString(),
         orderTotal: json["order_total"] == null ? "" : json["order_total"].toString(),
         myprofitRevenue: json["myprofit_revenue"] == null ? "" : json["myprofit_revenue"].toString(),
-        status: json["status"] == null ? "" : json["status"],
-        isReturn: json["is_return"] == null ? "" : json["is_return"],
+        status: json["status"] == null ? 0 : json["status"],
+        isReturn: json["is_return"] == null ? 0 : json["is_return"],
         dateTime: json["date_time"] == null ? "" : json["date_time"].toString(),
         billingDetails: json["billing_details"] == null
             ? []
@@ -246,7 +250,7 @@ class BillingDetail {
   String toJson() => json.encode(toMap());
 
   factory BillingDetail.fromMap(Map<String, dynamic> json) => BillingDetail(
-        billingId: json["billing_id"] == null ? "" : json["billing_id"],
+        billingId: json["billing_id"] == null ? 0 : json["billing_id"],
         categoryId: json["category_id"] == null ? "" : json["category_id"].toString(),
         categoryName: json["category_name"] == null ? "" : json["category_name"].toString(),
         categoryImage: json["category_image"] == null ? null : json["category_image"],
@@ -278,7 +282,7 @@ class CommonLedgerHistory {
     required this.status,
     required this.dateTime,
     this.orderDetails,
-    this.isReturn,
+    required this.isReturn,
     this.billingDetails,
   });
   String vendorId;
@@ -290,9 +294,10 @@ class CommonLedgerHistory {
   String myprofitRevenue;
   String status;
   String dateTime;
-  String? isReturn;
+  String isReturn;
   List<CommonData>? orderDetails;
   List<CommonData>? billingDetails;
+  int billingType = 0;
 }
 
 class CommonData {
