@@ -87,7 +87,7 @@ class OrderData {
         status: json["status"] == null ? -1 : json["status"],
         dateTime: json["date_time"] == null ? DateTime.now() : DateTime.parse(json["date_time"]),
         isReturn: json["is_return"] == null ? -1 : json["is_return"],
-    totalearningcoins: json["total_earning_coins"] == null ? "" : json["total_earning_coins"].toString(),
+        totalearningcoins: json["total_earning_coins"] == null ? "" : json["total_earning_coins"].toString(),
         orderDetails: json["order_details"] == null
             ? []
             : List<OrderDetail>.from(json["order_details"].map((x) => OrderDetail.fromMap(x))),
@@ -108,7 +108,7 @@ class OrderData {
         "status": status == null ? null : status,
         "date_time": dateTime == null ? null : dateTime.toIso8601String(),
         "is_return": isReturn == null ? null : isReturn,
-    "total_earning_coins": totalearningcoins == null ? null : totalearningcoins,
+        "total_earning_coins": totalearningcoins == null ? null : totalearningcoins,
         "order_details": orderDetails == null ? null : List<dynamic>.from(orderDetails.map((x) => x.toMap())),
       };
 
