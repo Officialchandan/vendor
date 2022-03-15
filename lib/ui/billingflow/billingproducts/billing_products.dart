@@ -801,6 +801,7 @@ class _BillingProductsState extends State<BillingProducts> {
     input["total_redeem"] = otpVerifyList!.redeemCoins;
     input["total_earning"] = otpVerifyList!.earningCoins;
     input["myprofit_revenue"] = "${otpVerifyList!.myprofitrevenue}";
+    input["vendor_available_coins"] = "${otpVerifyList!.vendorAvailableCoins}";
 
     log("=====? $input");
 

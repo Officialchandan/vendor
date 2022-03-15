@@ -26,6 +26,7 @@ class FreeCoinsHistory extends StatefulWidget {
 class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
   String startDate = "";
   String endDate = "";
+  double earning = 0;
   TextEditingController _searchController = TextEditingController();
   FreeCoinHistoryBloc freeCoinHistoryBloc = FreeCoinHistoryBloc();
   List<OrderData> searchList = [];
@@ -34,7 +35,6 @@ class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    filterApiCall(context);
   }
 
   Future<void> filterApiCall(BuildContext context) async {
@@ -44,6 +44,17 @@ class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
     input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     log("=====? $input");
     freeCoinHistoryBloc.add(GetFreeCoinsHistoryEvent(input: input));
+  }
+
+  void calculation() {
+    if (searchList[0].orderType == 1) {
+      earning = double.parse(searchList[0].billingDetails.first.earningCoins);
+    } else {
+      searchList[0].orderDetails.forEach((element) {
+        earning += double.parse(element.earningCoins);
+        log("$earning");
+      });
+    }
   }
 
   @override
@@ -165,6 +176,7 @@ class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: () {
+                            log("=======${searchList[index]}");
                             Navigator.push(
                                 context,
                                 PageTransition(
@@ -227,11 +239,17 @@ class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
                                           "assets/images/point.png",
                                           scale: 2.5,
                                         ),
-                                        Text(
-                                          " ${searchList[index].firstName} ",
-                                          style:
-                                              TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: ColorPrimary),
-                                        ),
+                                        searchList[index].orderType == 0
+                                            ? Text(
+                                                " ${searchList[index].totalearningcoins} ",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold, fontSize: 16, color: ColorPrimary),
+                                              )
+                                            : Text(
+                                                " ${searchList[index].billingDetails[0].earningCoins} ",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold, fontSize: 16, color: ColorPrimary),
+                                              ),
                                       ]),
                                     ]),
                               ),

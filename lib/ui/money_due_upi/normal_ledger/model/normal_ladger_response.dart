@@ -49,6 +49,7 @@ class OrderData {
     required this.status,
     required this.dateTime,
     required this.isReturn,
+    required this.totalearningcoins,
     required this.orderDetails,
     required this.billingDetails,
     required this.vendorGivenCoins,
@@ -65,6 +66,7 @@ class OrderData {
   int status;
   DateTime dateTime;
   int isReturn;
+  String totalearningcoins;
   List<OrderDetail> orderDetails;
   List<BillingDetail> billingDetails;
   String vendorGivenCoins;
@@ -85,6 +87,7 @@ class OrderData {
         status: json["status"] == null ? -1 : json["status"],
         dateTime: json["date_time"] == null ? DateTime.now() : DateTime.parse(json["date_time"]),
         isReturn: json["is_return"] == null ? -1 : json["is_return"],
+    totalearningcoins: json["total_earning_coins"] == null ? "" : json["total_earning_coins"].toString(),
         orderDetails: json["order_details"] == null
             ? []
             : List<OrderDetail>.from(json["order_details"].map((x) => OrderDetail.fromMap(x))),
@@ -105,6 +108,7 @@ class OrderData {
         "status": status == null ? null : status,
         "date_time": dateTime == null ? null : dateTime.toIso8601String(),
         "is_return": isReturn == null ? null : isReturn,
+    "total_earning_coins": totalearningcoins == null ? null : totalearningcoins,
         "order_details": orderDetails == null ? null : List<dynamic>.from(orderDetails.map((x) => x.toMap())),
       };
 
@@ -239,6 +243,7 @@ class OrderDetail {
 class BillingDetail {
   BillingDetail({
     required this.categoryId,
+    required this.total,
     required this.categoryName,
     required this.categoryImage,
     required this.redeemCoins,
@@ -247,7 +252,7 @@ class BillingDetail {
   });
 
   String categoryId;
-
+  String total;
   String categoryName;
   String categoryImage;
   String redeemCoins;
@@ -260,6 +265,7 @@ class BillingDetail {
 
   factory BillingDetail.fromMap(Map<String, dynamic> json) => BillingDetail(
         categoryId: json["category_id"] == null ? "0" : json["category_id"],
+        total: json["total"] == null ? "0" : json["total"].toString(),
         categoryName: json["category_name"] == null ? "" : json["category_name"].toString(),
         categoryImage: json["category_image"] == null ? "" : json["category_image"].toString(),
         redeemCoins: json["redeeme_coins"] == null ? "0" : json["redeeme_coins"].toString(),
@@ -269,6 +275,7 @@ class BillingDetail {
 
   Map<String, dynamic> toMap() => {
         "category_id": categoryId == null ? null : categoryId,
+        "total": total == null ? null : total,
         "category_name": categoryName == null ? null : categoryName,
         "category_image": categoryImage == null ? null : categoryImage,
         "redeeme_coins": redeemCoins == null ? null : redeemCoins,

@@ -15,6 +15,7 @@ class FreeCoinDetail extends StatefulWidget {
 class _FreeCoinDetailState extends State<FreeCoinDetail> {
   OrderData? freecoindetails;
   double count = 0;
+  double reddem = 0, finalamount = 0;
   @override
   void initState() {
     // TODO: implement initState
@@ -22,7 +23,25 @@ class _FreeCoinDetailState extends State<FreeCoinDetail> {
     log("${widget.freecoindetail.mobile}");
     // log("${widget.freecoindetail.orderDetails[0].redeemCoins}");
     freecoindetails = widget.freecoindetail;
-    count = double.parse(freecoindetails!.orderDetails.length.toString());
+    count = freecoindetails!.orderType == 0
+        ? double.parse(freecoindetails!.orderDetails.length.toString())
+        : double.parse(freecoindetails!.billingDetails.length.toString());
+    log("====>$count");
+    log("====>${freecoindetails!.orderType}");
+    calculation();
+  }
+
+  void calculation() {
+    if (widget.freecoindetail.orderType == 1) {
+      reddem = double.parse(double.parse(widget.freecoindetail.billingDetails.first.redeemCoins).toStringAsFixed(2));
+      finalamount = double.parse(widget.freecoindetail.orderTotal);
+    } else {
+      widget.freecoindetail.orderDetails.forEach((element) {
+        reddem += double.parse(double.parse(element.redeemCoins).toStringAsFixed(2));
+        log("$reddem");
+        finalamount += double.parse(element.amountPaid);
+      });
+    }
   }
 
   @override
@@ -104,7 +123,9 @@ class _FreeCoinDetailState extends State<FreeCoinDetail> {
                     Container(
                       height: count == 1 ? 90 : 165,
                       child: ListView.builder(
-                        itemCount: freecoindetails!.orderDetails.length,
+                        itemCount: freecoindetails!.orderType == 0
+                            ? freecoindetails!.orderDetails.length
+                            : freecoindetails!.billingDetails.length,
                         itemBuilder: ((context, index) {
                           return Container(
                             margin: EdgeInsets.only(top: 5, bottom: 5, left: 5, right: 5),
@@ -151,7 +172,7 @@ class _FreeCoinDetailState extends State<FreeCoinDetail> {
                                                           color: Colors.black87),
                                                     )
                                                   : Text(
-                                                      "${freecoindetails!.billingDetails[index].categoryName}",
+                                                      "${freecoindetails!.billingDetails[0].categoryName}",
                                                       style: TextStyle(
                                                           fontSize: 15,
                                                           fontWeight: FontWeight.bold,
@@ -159,14 +180,14 @@ class _FreeCoinDetailState extends State<FreeCoinDetail> {
                                                     ),
                                               freecoindetails!.orderType == 0
                                                   ? Text(
-                                                      "\u20B9 ${freecoindetails!.orderTotal}",
+                                                      "\u20B9 ${freecoindetails!.orderDetails[0].total}",
                                                       style: TextStyle(
                                                           fontSize: 13,
                                                           fontWeight: FontWeight.bold,
                                                           color: ColorPrimary),
                                                     )
                                                   : Text(
-                                                      "\u20B9 ${freecoindetails!.orderTotal}",
+                                                      "\u20B9 ${freecoindetails!.billingDetails[0].total}",
                                                       style: TextStyle(
                                                           fontSize: 13,
                                                           fontWeight: FontWeight.bold,
@@ -257,18 +278,11 @@ class _FreeCoinDetailState extends State<FreeCoinDetail> {
                               //         style:
                               //             TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: ColorTextPrimary),
                               //       )
-                              //     :
-                              freecoindetails!.orderType == 0
-                                  ? Text(
-                                      " ${double.parse(freecoindetails!.orderDetails[0].redeemCoins).toStringAsFixed(2)} (\u20B9${(double.parse(freecoindetails!.orderDetails[0].redeemCoins) / 3).toStringAsFixed(2)})",
-                                      style:
-                                          TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: ColorTextPrimary),
-                                    )
-                                  : Text(
-                                      " ${double.parse(freecoindetails!.billingDetails[0].redeemCoins).toStringAsFixed(2)} (\u20B9${(double.parse(freecoindetails!.billingDetails[0].redeemCoins) / 3).toStringAsFixed(2)})",
-                                      style:
-                                          TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: ColorTextPrimary),
-                                    )
+                              //
+                              Text(
+                                " $reddem (\u20B9${double.parse((reddem / 3).toString()).toStringAsFixed(2)})",
+                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: ColorTextPrimary),
+                              )
                             ],
                           ),
                         ],
@@ -283,15 +297,10 @@ class _FreeCoinDetailState extends State<FreeCoinDetail> {
                             "Amount Paid By Customer",
                             style: TextStyle(fontWeight: FontWeight.w400, fontSize: 13, color: ColorTextPrimary),
                           ),
-                          freecoindetails!.orderType == 0
-                              ? Text(
-                                  "\u20B9 ${double.parse(freecoindetails!.orderDetails[0].amountPaid).toStringAsFixed(2)}",
-                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: ColorPrimary),
-                                )
-                              : Text(
-                                  "\u20B9 ${double.parse(freecoindetails!.billingDetails[0].amountPaid).toStringAsFixed(2)}",
-                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: ColorPrimary),
-                                ),
+                          Text(
+                            "\u20B9 ${finalamount.toStringAsFixed(2)}",
+                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: ColorPrimary),
+                          ),
                         ],
                       ),
                     ),
