@@ -1516,12 +1516,11 @@ class ApiProvider {
   }
 
   Future<NormalLedgerResponse> getVendorFreeCoinsHistory(Map<String, dynamic> input) async {
-    //   try {
-    // input = HashMap<String, dynamic>();
-    log("------->res");
+    try {
+      // input = HashMap<String, dynamic>();
+      log("------->res");
 
-      Response res =
-          await dio.post(Endpoint.GET_VENDOR_COINS_HISTORY, data: input);
+      Response res = await dio.post(Endpoint.GET_VENDOR_COINS_HISTORY, data: input);
 
       return NormalLedgerResponse.fromJson(res.toString());
     } catch (error) {
@@ -1533,8 +1532,25 @@ class ApiProvider {
         message = "Please try again later!";
       }
       print("Exception occurred: $message stackTrace: $error");
-      return NormalLedgerResponse(
-          success: false, message: message, data: [], directBilling: []);
+      return NormalLedgerResponse(success: false, message: message, data: [], directBilling: []);
+    }
+  }
+
+  Future<NormalLedgerResponse> getNormalLedgerHistory(Map<String, dynamic> input) async {
+    try {
+      Response res = await dio.post(Endpoint.GET_MASTER_LEDGER_HISTORY, data: input);
+
+      return NormalLedgerResponse.fromJson(res.toString());
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return NormalLedgerResponse(success: false, message: message, data: [], directBilling: []);
     }
   }
 
