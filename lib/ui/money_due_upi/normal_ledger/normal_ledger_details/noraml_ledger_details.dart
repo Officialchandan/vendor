@@ -33,7 +33,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
 
   void calculation() {
     if (widget.order.orderType == 1) {
-      reddem = double.parse(widget.order.billingDetails.first.redeemeCoins);
+      reddem = double.parse(widget.order.billingDetails.first.redeemCoins);
       if (double.parse(widget.order.myprofitRevenue) > reddem) {
         log("${double.parse(widget.order.myprofitRevenue)}");
         finalamount = double.parse(widget.order.myprofitRevenue) - reddem;
@@ -568,7 +568,7 @@ class DirectBillingListItem extends StatelessWidget {
               ),
             ),
           ),
-          double.parse(detail.redeemeCoins) > 0
+          double.parse(detail.redeemCoins) > 0
               ? Positioned(
                   top: 4,
                   right: 20,

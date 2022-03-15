@@ -24,7 +24,17 @@ class FreeCoinHistoryBloc extends Bloc<FreeCoinHistoryEvent, FreeCoinHistoryStat
     if (await Network.isConnected()) {
       NormalLedgerResponse response = await apiProvider.getVendorFreeCoinsHistory(input);
       if (response.success) {
-        yield GetFreeCoinHistoryState(data: response.data);
+        List<OrderData> orderList = [];
+        await Future.forEach(response.data, (OrderData order) async {
+          order.orderType = 0;
+          orderList.add(order);
+        });
+        await Future.forEach(response.directBilling, (OrderData order) async {
+          order.orderType = 1;
+          orderList.add(order);
+        });
+        orderList.sort((a, b) => b.dateTime.compareTo(a.dateTime));
+        yield GetFreeCoinHistoryState(data: orderList);
       } else {
         yield GetFreeCoinHistoryFailureState(succes: response.success, message: response.message);
       }

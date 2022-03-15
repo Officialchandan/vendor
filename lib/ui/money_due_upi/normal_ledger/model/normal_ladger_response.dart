@@ -241,7 +241,7 @@ class BillingDetail {
     required this.categoryId,
     required this.categoryName,
     required this.categoryImage,
-    required this.redeemeCoins,
+    required this.redeemCoins,
     required this.earningCoins,
     required this.amountPaid,
   });
@@ -250,7 +250,7 @@ class BillingDetail {
 
   String categoryName;
   String categoryImage;
-  String redeemeCoins;
+  String redeemCoins;
   String earningCoins;
   String amountPaid;
 
@@ -262,7 +262,7 @@ class BillingDetail {
         categoryId: json["category_id"] == null ? "0" : json["category_id"],
         categoryName: json["category_name"] == null ? "" : json["category_name"].toString(),
         categoryImage: json["category_image"] == null ? "" : json["category_image"].toString(),
-        redeemeCoins: json["redeeme_coins"] == null ? "0" : json["redeeme_coins"].toString(),
+        redeemCoins: json["redeeme_coins"] == null ? "0" : json["redeeme_coins"].toString(),
         earningCoins: json["earning_coins"] == null ? "0" : json["earning_coins"].toString(),
         amountPaid: json["amount_paid"] == null ? "0" : json["amount_paid"].toString(),
       );
@@ -271,7 +271,7 @@ class BillingDetail {
         "category_id": categoryId == null ? null : categoryId,
         "category_name": categoryName == null ? null : categoryName,
         "category_image": categoryImage == null ? null : categoryImage,
-        "redeeme_coins": redeemeCoins == null ? null : redeemeCoins,
+        "redeeme_coins": redeemCoins == null ? null : redeemCoins,
         "earning_coins": earningCoins == null ? null : earningCoins,
         "amount_paid": amountPaid == null ? null : amountPaid,
       };
