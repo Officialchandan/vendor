@@ -1520,38 +1520,22 @@ class ApiProvider {
     // input = HashMap<String, dynamic>();
     log("------->res");
 
-    Response res = await dio.post(Endpoint.GET_VENDOR_COINS_HISTORY, data: input);
-
-    return NormalLedgerResponse.fromJson(res.toString());
-    // } catch (error) {
-    //   String message = "";
-    //   if (error is DioError) {
-    //     ServerError e = ServerError.withError(error: error);
-    //     message = e.getErrorMessage();
-    //   } else {
-    //     message = "Please try again later!";
-    //   }
-    //   print("Exception occurred: $message stackTrace: $error");
-    //   return NormalLedgerResponse(success: false, message: message, data: [], directBilling: []);
-    // }
-  }
-
-  Future<NormalLedgerResponse> getNormalLedgerHistory(Map<String, dynamic> input) async {
-  //  try {
-      Response res = await dio.post(Endpoint.GET_MASTER_LEDGER_HISTORY, data: input);
+      Response res =
+          await dio.post(Endpoint.GET_VENDOR_COINS_HISTORY, data: input);
 
       return NormalLedgerResponse.fromJson(res.toString());
-    // } catch (error) {
-    //   String message = "";
-    //   if (error is DioError) {
-    //     ServerError e = ServerError.withError(error: error);
-    //     message = e.getErrorMessage();
-    //   } else {
-    //     message = "Please try again later!";
-    //   }
-    //   print("Exception occurred: $message stackTrace: $error");
-    //   return NormalLedgerResponse(success: false, message: message, data: [], directBilling: []);
-    // }
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return NormalLedgerResponse(
+          success: false, message: message, data: [], directBilling: []);
+    }
   }
 
   Future<UpiRedeemCoinResponse> upiRedeemCoin(Map<String, dynamic> input) async {

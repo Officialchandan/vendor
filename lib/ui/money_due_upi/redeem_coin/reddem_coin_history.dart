@@ -23,9 +23,10 @@ class ReddemCoinHistory extends StatefulWidget {
 class _ReddemCoinHistoryState extends State<ReddemCoinHistory> {
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
-
+  TextEditingController searchController = TextEditingController();
   RedeemCoinBloc redeemCoinBloc = RedeemCoinBloc();
   List<CoinDetail> redeemData = [];
+  List<CoinDetail> searchList = [];
   String startDate = "";
   String endDate = "";
 
@@ -84,13 +85,13 @@ class _ReddemCoinHistoryState extends State<ReddemCoinHistory> {
                   padding:
                       const EdgeInsets.only(left: 15.0, right: 15, top: 15),
                   child: TextFormField(
+                    controller: searchController,
                     decoration: InputDecoration(
                       prefixIcon: Icon(
                         Icons.search,
                         color: Colors.black,
                       ),
                       filled: true,
-
                       // fillColor: Colors.black,
                       hintText: "Search Here...",
                       hintStyle: GoogleFonts.openSans(
@@ -105,6 +106,9 @@ class _ReddemCoinHistoryState extends State<ReddemCoinHistory> {
                         borderRadius: BorderRadius.circular(5),
                       ),
                     ),
+                    onChanged: (value) {
+                      redeemCoinBloc.add(RedeemDataSearchEvent(keyWord: value));
+                    },
                   ),
                 ),
                 Expanded(
@@ -122,6 +126,38 @@ class _ReddemCoinHistoryState extends State<ReddemCoinHistory> {
                       }
                       if (state is GetRedeemCoinState) {
                         redeemData = state.data;
+                      }
+                      if (state is GetSearchDataState) {
+                        if (state.data.isEmpty) {
+                          searchList = redeemData;
+                        } else {
+                          List<CoinDetail> list = [];
+                          redeemData.forEach((element) {
+                            if (element.productName
+                                .toLowerCase()
+                                .contains(state.data.toLowerCase())) {
+                              list.add(element);
+                            }
+                          });
+                          if (list.isEmpty) {
+                            return Container(
+                              height: MediaQuery.of(context).size.height,
+                              child: Image.asset("assets/images/no_data.gif"),
+                            );
+                          } else {
+                            searchList = list;
+                            return ListView.builder(
+                              padding: EdgeInsets.only(left: 15, right: 15),
+                              itemCount: searchList.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  child: DirectBillingList(
+                                      detail: searchList[index]),
+                                );
+                              },
+                            );
+                          }
+                        }
                       }
                       return ListView.builder(
                         padding: EdgeInsets.only(left: 15, right: 15),
@@ -154,10 +190,15 @@ class _ReddemCoinHistoryState extends State<ReddemCoinHistory> {
   }
 }
 
-class DirectBillingList extends StatelessWidget {
+class DirectBillingList extends StatefulWidget {
   final CoinDetail detail;
   const DirectBillingList({Key? key, required this.detail}) : super(key: key);
 
+  @override
+  State<DirectBillingList> createState() => _DirectBillingListState();
+}
+
+class _DirectBillingListState extends State<DirectBillingList> {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
@@ -175,8 +216,12 @@ class DirectBillingList extends StatelessWidget {
         child: InkWell(
           splashColor: Colors.transparent,
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => RedeemCoinDetails()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => RedeemCoinDetails(
+                          detail: widget.detail,
+                        )));
           },
           child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
             SizedBox(width: 10),
@@ -186,7 +231,7 @@ class DirectBillingList extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
               ),
-              child: Image.network("${detail.image}"),
+              child: Image.network("${widget.detail.image}"),
             ),
             Padding(
               padding: EdgeInsets.only(left: 12.0),
@@ -195,10 +240,10 @@ class DirectBillingList extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "${detail.productName}",
+                      "${widget.detail.productName}",
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
-                    Text("mobile: ${detail.mobile}"),
+                    Text("mobile: ${widget.detail.mobile}"),
                     Container(
                       height: 20,
                       decoration: BoxDecoration(
@@ -214,7 +259,7 @@ class DirectBillingList extends StatelessWidget {
                         ),
                         Image.asset("assets/images/point.png"),
                         Text(
-                          " ${detail.orderTotal} (\u20B9)  ${(double.parse(detail.orderTotal) / 3).toStringAsFixed(2)}",
+                          "${widget.detail.totalRedeemCoins} (\u20B9 ${(double.parse(widget.detail.totalRedeemCoins) / 3).toStringAsFixed(2)})",
                           style: TextStyle(
                               color: ColorPrimary,
                               fontSize: 12,
