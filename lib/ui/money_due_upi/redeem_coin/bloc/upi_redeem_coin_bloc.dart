@@ -15,6 +15,9 @@ class RedeemCoinBloc extends Bloc<RedeemCoinEvents, RedeemCoinStates> {
       yield RedeemCoinLoadingState();
       yield* getRedeemCoinData(event);
     }
+    if (event is RedeemDataSearchEvent) {
+      yield GetSearchDataState(data: event.keyWord);
+    }
   }
 
   Stream<RedeemCoinStates> getRedeemCoinData(
@@ -30,26 +33,35 @@ class RedeemCoinBloc extends Bloc<RedeemCoinEvents, RedeemCoinStates> {
           detail.billingType = 0;
 
           if (detail.orderDetails.isNotEmpty) {
-            detail.image = detail.orderDetails.first.productImage;
+            if (detail.image.isEmpty) {
+              detail.image = detail.orderDetails.first.productImage;
+            }
+            if (detail.productName.isEmpty) {
+              detail.productName = detail.orderDetails.first.productName;
+            }
           }
-          if (detail.orderDetails.isNotEmpty) {
-            detail.productName = detail.orderDetails.first.productName;
-          }
+
           orderList.add(detail);
         });
 
         await Future.forEach(response.directBilling, (CoinDetail detail) {
           if (detail.billingDetails.isNotEmpty) {
-            detail.image = detail.billingDetails.first.categoryImage;
+            if (detail.image.isEmpty) {
+              detail.image = detail.billingDetails.first.categoryImage;
+            }
+            if (detail.productName.isEmpty) {
+              detail.productName = detail.billingDetails.first.categoryName;
+            }
+            if (detail.totalRedeemCoins.isEmpty) {
+              detail.totalRedeemCoins = detail.billingDetails.first.redeemCoins;
+            }
           }
 
-          if (detail.billingDetails.isNotEmpty) {
-            detail.productName = detail.billingDetails.first.categoryName;
-          }
           detail.billingType = 1;
           orderList.add(detail);
         });
-
+        orderList
+            .sort(((a, b) => a.dateTime.compareTo(b.dateTime))); // Recent First
         yield GetRedeemCoinState(data: orderList);
       } else {
         yield RedeemCoinFailureState(message: response.message);

@@ -1,14 +1,36 @@
+import 'dart:async';
+import 'dart:developer';
+
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:vendor/ui/money_due_upi/redeem_coin/response/redeem_coin_response.dart';
 import 'package:vendor/utility/color.dart';
 
 class RedeemCoinDetails extends StatefulWidget {
-  RedeemCoinDetails({Key? key}) : super(key: key);
+  final CoinDetail detail;
+
+  RedeemCoinDetails({Key? key, required this.detail}) : super(key: key);
 
   @override
   State<RedeemCoinDetails> createState() => _RedeemCoinDetailsState();
 }
 
 class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
+  CoinDetail? details;
+  List<CommonDetails> commonDetails = [];
+  StreamController<List<CommonDetails>> detailsController = StreamController();
+  double totalAmt = 0;
+  double totalRedeemCoins = 0;
+  double totalEarnCoin = 0;
+  double totalPayAmt = 0;
+  @override
+  void initState() {
+    super.initState();
+    details = widget.detail;
+    getAllItems(details!);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -54,14 +76,15 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "George Walker",
+                                "${details!.firstName}",
                                 style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black87),
                               ),
                               Text(
-                                "7 Oct 2021 4:50 pm",
+                                "${DateFormat("dd MMM yyyy").format(DateTime.parse(details!.dateTime))}" +
+                                    " ${DateFormat.jm().format(DateTime.parse(details!.dateTime)).toLowerCase()}",
                                 style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold,
@@ -76,7 +99,7 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "+91 1234567890",
+                                "${details!.mobile}",
                                 style: TextStyle(
                                     fontSize: 13,
                                     fontWeight: FontWeight.bold,
@@ -122,112 +145,150 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                           height: 5,
                         ),
                         Container(
-                          height: 80,
-                          child: ListView.builder(
-                            itemCount: 1,
-                            itemBuilder: ((context, index) {
-                              return Stack(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(10),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey.shade200,
-                                        borderRadius: BorderRadius.circular(8),
-                                        // boxShadow: [
-                                        //   BoxShadow(
-                                        //       color: Colors.black12,
-                                        //       spreadRadius: 4,
-                                        //       blurRadius: 10)
-                                        // ],
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                              child: ClipRRect(
+                          height: commonDetails.length >= 2 ? 160 : 80,
+                          child: StreamBuilder<List<CommonDetails>>(
+                              stream: detailsController.stream,
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }
+                                if (snapshot.hasData) {
+                                  var product = snapshot.data!;
+                                  return ListView.builder(
+                                    itemCount: snapshot.data!.length,
+                                    itemBuilder: ((context, index) {
+                                      return Stack(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(10),
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                color: Colors.grey.shade200,
                                                 borderRadius:
                                                     BorderRadius.circular(8),
-                                                child: Container(
-                                                  color: Colors.amber,
-                                                  child: Image.asset(
-                                                    "assets/images/point.png",
-                                                    height: 45,
-                                                    width: 45,
-                                                  ),
-                                                ),
                                               ),
-                                            ),
-                                            SizedBox(
-                                              width: 10,
-                                            ),
-                                            Container(
-                                              child: Flexible(
-                                                child: Column(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
                                                   children: [
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Text(
-                                                          "Shirt",
-                                                          style: TextStyle(
-                                                              fontSize: 15,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color: Colors
-                                                                  .black87),
+                                                    Container(
+                                                      child: ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                        child: Container(
+                                                          child: product[index]
+                                                                  .image
+                                                                  .isEmpty
+                                                              ? Image.asset(
+                                                                  "assets/images/placeholder.webp",
+                                                                  width: 45,
+                                                                  height: 45,
+                                                                  fit: BoxFit
+                                                                      .cover)
+                                                              : CachedNetworkImage(
+                                                                  imageUrl: product[
+                                                                          index]
+                                                                      .image,
+                                                                  progressIndicatorBuilder:
+                                                                      (context,
+                                                                              url,
+                                                                              downloadProgress) =>
+                                                                          Center(
+                                                                            child:
+                                                                                CircularProgressIndicator(value: downloadProgress.progress),
+                                                                          ),
+                                                                  errorWidget: (context,
+                                                                          url,
+                                                                          error) =>
+                                                                      Image.asset(
+                                                                          "assets/images/placeholder.webp"),
+                                                                  width: 45,
+                                                                  height: 45,
+                                                                  fit: BoxFit
+                                                                      .cover),
                                                         ),
-                                                        Text(
-                                                          "\u20B9 400",
-                                                          style: TextStyle(
-                                                              fontSize: 13,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color:
-                                                                  ColorPrimary),
-                                                        ),
-                                                      ],
+                                                      ),
                                                     ),
                                                     SizedBox(
-                                                      height: 4,
+                                                      width: 10,
                                                     ),
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          "20 x \u20B9 200",
-                                                          style: TextStyle(
-                                                              fontSize: 13,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color:
-                                                                  Colors.grey),
+                                                    Container(
+                                                      child: Flexible(
+                                                        child: Column(
+                                                          children: [
+                                                            Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                Text(
+                                                                  "${product[index].categoryName.isEmpty ? product[index].productName : product[index].categoryName}",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          15,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      color: Colors
+                                                                          .black87),
+                                                                ),
+                                                                Text(
+                                                                  "\u20B9 ${product[index].total}",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          13,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      color:
+                                                                          ColorPrimary),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            SizedBox(
+                                                              height: 4,
+                                                            ),
+                                                            Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Text(
+                                                                  "${product[index].qty} x \u20B9 ${product[index].price} ",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          13,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      color: Colors
+                                                                          .grey),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ],
                                                         ),
-                                                      ],
-                                                    ),
+                                                      ),
+                                                    )
                                                   ],
                                                 ),
                                               ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              );
-                            }),
-                          ),
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    }),
+                                  );
+                                }
+                                return Container();
+                              }),
                         ),
                         SizedBox(
                           height: 5,
@@ -252,7 +313,7 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                                   Row(
                                     children: [
                                       Text(
-                                        "\u20B94450",
+                                        "\u20B9 ${totalAmt.toStringAsFixed(2)}",
                                         style: TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.bold,
@@ -284,7 +345,7 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                                         height: 14,
                                       ),
                                       Text(
-                                        "300 (\u20B9100)",
+                                        " ${totalRedeemCoins.toStringAsFixed(2)} (\u20B9 ${(totalRedeemCoins / 3).toStringAsFixed(2)})",
                                         style: TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.bold,
@@ -308,12 +369,21 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                                         fontWeight: FontWeight.bold,
                                         color: Colors.black87),
                                   ),
-                                  Text(
-                                    "\u20B9500",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black87),
+                                  Row(
+                                    children: [
+                                      Image.asset(
+                                        "assets/images/point.png",
+                                        width: 14,
+                                        height: 14,
+                                      ),
+                                      Text(
+                                        " ${totalEarnCoin.toStringAsFixed(2)}",
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black87),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -332,7 +402,7 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                                         color: Colors.black87),
                                   ),
                                   Text(
-                                    "\u20B92300",
+                                    "\u20B9 ${totalPayAmt.toStringAsFixed(2)}",
                                     style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold,
@@ -390,7 +460,7 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                                 width: 14,
                               ),
                               Text(
-                                " 300 (\u20B9100)",
+                                " ${totalRedeemCoins.toStringAsFixed(2)} (\u20B9 ${(totalRedeemCoins / 3).toStringAsFixed(2)})",
                                 style: TextStyle(
                                     fontSize: 13,
                                     fontWeight: FontWeight.bold,
@@ -409,5 +479,52 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
         ),
       ),
     );
+  }
+
+  getAllItems(CoinDetail details) {
+    for (var product in details.orderDetails) {
+      CommonDetails productDetails = CommonDetails(
+        productId: product.productId,
+        productName: product.productName,
+        image: product.productImage,
+        qty: product.qty,
+        price: product.price,
+        total: product.total,
+        amountPaid: product.amountPaid,
+        redeemCoins: product.redeemCoins,
+        earningCoins: product.earningCoins,
+        categoryId: "",
+        categoryName: "",
+      );
+      commonDetails.add(productDetails);
+    }
+
+    for (var product in details.billingDetails) {
+      CommonDetails productDetails = CommonDetails(
+        productId: "",
+        productName: "",
+        image: product.categoryImage,
+        qty: "",
+        price: "",
+        total: "",
+        amountPaid: product.amountPaid,
+        redeemCoins: product.redeemCoins,
+        earningCoins: product.earningCoins,
+        categoryId: product.categoryId,
+        categoryName: product.categoryName,
+      );
+      commonDetails.add(productDetails);
+    }
+
+    for (var count in commonDetails) {
+      totalAmt += double.parse(count.total.isEmpty ? "0" : count.total);
+      totalRedeemCoins +=
+          double.parse(count.redeemCoins.isEmpty ? "0" : count.redeemCoins);
+      totalEarnCoin +=
+          double.parse(count.earningCoins.isEmpty ? "0" : count.earningCoins);
+    }
+
+    totalPayAmt = totalAmt - totalRedeemCoins / 3;
+    detailsController.add(commonDetails);
   }
 }

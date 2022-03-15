@@ -17,6 +17,13 @@ class GetRedeemCoinState extends RedeemCoinStates {
   List<Object?> get props => [data];
 }
 
+class GetSearchDataState extends RedeemCoinStates {
+  GetSearchDataState({required this.data});
+  final String data;
+  @override
+  List<Object?> get props => [data];
+}
+
 class RedeemCoinFailureState extends RedeemCoinStates {
   RedeemCoinFailureState({required this.message});
   final String message;

@@ -52,7 +52,8 @@ class CoinDetail {
       required this.orderTotal,
       required this.dateTime,
       required this.orderDetails,
-      required this.billingDetails});
+      required this.billingDetails,
+      required this.totalRedeemCoins});
 
   String orderId;
   String firstName;
@@ -60,6 +61,7 @@ class CoinDetail {
   String orderTotal;
   String dateTime;
   String image = "";
+  String totalRedeemCoins = "";
   String productName = "";
   int billingType = 0;
   List<OrderDetail> orderDetails;
@@ -86,6 +88,9 @@ class CoinDetail {
             ? []
             : List<BillingDetail>.from(
                 json["billing_details"].map((x) => BillingDetail.fromMap(x))),
+        totalRedeemCoins: json["total_redeem_coins"] == null
+            ? ""
+            : json["total_redeem_coins"].toString(),
       );
 
   Map<String, dynamic> toMap() => {
@@ -94,9 +99,14 @@ class CoinDetail {
         "mobile": mobile == null ? null : mobile,
         "order_total": orderTotal == null ? null : orderTotal,
         "date_time": dateTime == null ? null : dateTime,
+        "total_redeem_coins":
+            totalRedeemCoins == null ? null : totalRedeemCoins,
         "order_details": orderDetails == null
-            ? null
+            ? []
             : List<dynamic>.from(orderDetails.map((x) => x.toMap())),
+        "billing_details": billingDetails == null
+            ? []
+            : List<dynamic>.from(billingDetails.map((x) => x.toMap())),
       };
 }
 
@@ -167,7 +177,7 @@ class BillingDetail {
     required this.categoryName,
     required this.categoryImage,
     required this.amountPaid,
-    required this.redeemedCoins,
+    required this.redeemCoins,
     required this.earningCoins,
   });
 
@@ -175,7 +185,7 @@ class BillingDetail {
   String categoryName;
   String categoryImage;
   String amountPaid;
-  String redeemedCoins;
+  String redeemCoins;
   String earningCoins;
 
   factory BillingDetail.fromJson(String str) =>
@@ -194,9 +204,8 @@ class BillingDetail {
             : json["category_image"].toString(),
         amountPaid:
             json["amount_paid"] == null ? "" : json["amount_paid"].toString(),
-        redeemedCoins: json["redeemed_coins"] == null
-            ? ""
-            : json["redeemed_coins"].toString(),
+        redeemCoins:
+            json["redeem_coins"] == null ? "" : json["redeem_coins"].toString(),
         earningCoins: json["earning_coins"] == null
             ? ""
             : json["earning_coins"].toString(),
@@ -207,7 +216,35 @@ class BillingDetail {
         "category_name": categoryName == null ? null : categoryName,
         "category_image": categoryImage == null ? null : categoryImage,
         "amount_paid": amountPaid == null ? null : amountPaid,
-        "redeemed_coins": redeemedCoins == null ? null : redeemedCoins,
+        "redeemed_coins": redeemCoins == null ? null : redeemCoins,
         "earning_coins": earningCoins == null ? null : earningCoins,
       };
+}
+
+class CommonDetails {
+  CommonDetails({
+    required this.productId,
+    required this.productName,
+    required this.image,
+    required this.qty,
+    required this.price,
+    required this.total,
+    required this.amountPaid,
+    required this.redeemCoins,
+    required this.earningCoins,
+    required this.categoryId,
+    required this.categoryName,
+  });
+
+  String productId;
+  String productName;
+  String categoryId;
+  String categoryName;
+  String image;
+  String qty;
+  String price;
+  String total;
+  String amountPaid;
+  String redeemCoins;
+  String earningCoins;
 }

@@ -11,3 +11,10 @@ class GetRedeemCoinDataEvent extends RedeemCoinEvents {
   @override
   List<Object?> get props => [input];
 }
+
+class RedeemDataSearchEvent extends RedeemCoinEvents {
+  RedeemDataSearchEvent({required this.keyWord});
+  final String keyWord;
+  @override
+  List<Object?> get props => [keyWord];
+}
