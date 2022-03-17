@@ -2,6 +2,8 @@
     <domain-config cleartextTrafficPermitted="true">
 
         <domain includeSubdomains="true">vendor.tekzee.in</domain>
+        <domain includeSubdomains="true">vendor.myprofitinc.com</domain>
+        <domain includeSubdomains="true">www.myprofitinc.com</domain>
 <!--        <domain includeSubdomains="true">52.59.56.185</domain>-->
 
     </domain-config>
