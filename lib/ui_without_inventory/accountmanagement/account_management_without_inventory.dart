@@ -34,15 +34,20 @@ class AccountManagementWithoutInventoryScreen extends StatefulWidget {
 class _AccountManagementWithoutInventoryScreenState
     extends State<AccountManagementWithoutInventoryScreen> {
   List<String> textList = [
-    "discount_codes_key".tr(),
+    // "discount_codes_key".tr(),
     "settings_key".tr(),
-    "delivery_setting_key".tr(),
-    "gift_scheme_key".tr(),
+    "Privacy Policy",
+    "Terms & Conditions", "Cancellation & Refund Policy",
+    "About Us",
+    "Contact Us",
+
+    // "delivery_setting_key".tr(),
+    // "gift_scheme_key".tr(),
     // "video_tutorials_key".tr(),
     // "share_store_link_key".tr(),
-    "get_store_qr_code_key".tr(),
-    "add_business_hours_key".tr(),
-    "t&c_with_signature".tr(),
+    // "get_store_qr_code_key".tr(),
+    // "add_business_hours_key".tr(),
+    // "t&c_with_signature".tr(),
     "logout_key".tr(),
   ];
 
@@ -210,28 +215,56 @@ class _AccountManagementWithoutInventoryScreenState
             }),
           ),
         ),
+        bottomNavigationBar: Container(
+          height: 50,
+          width: MediaQuery.of(context).size.width,
+          color: ColorPrimary,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 4),
+                child: Text(
+                  "Powered By ",
+                  style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
+              ),
+              Text(
+                " Tech Points Concepts Pvt Ltd",
+                style: TextStyle(
+                    fontSize: 15,
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
 
   Future<void> onClick(BuildContext context, int currentIndex, var data) async {
     switch (currentIndex) {
-      case 1:
+      case 0:
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => AccountSettings()),
         );
         break;
+      // case 6:
+      //   Navigator.push(
+      //     context,
+      //     MaterialPageRoute(
+      //         builder: (context) => TermsAndCondition(
+      //               vendorDetailData: data,
+      //             )),
+      //   );
+      //   break;
       case 6:
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => TermsAndCondition(
-                    vendorDetailData: data,
-                  )),
-        );
-        break;
-      case 7:
         logoutDialog(context);
         break;
     }
