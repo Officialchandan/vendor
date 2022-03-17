@@ -386,7 +386,7 @@ class _LoginScreenState extends State<LoginScreen> {
             bottomNavigationBar: Container(
               height: 50,
               width: MediaQuery.of(context).size.width,
-              color: ColorPrimary,
+              color: Colors.white,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -394,13 +394,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: const EdgeInsets.only(top: 4),
                     child: Text(
                       "Powered By ",
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),
+                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black54),
                     ),
                   ),
                   Text(
-                    " Tech Points Concepts Pvt Ltd",
+                    "Tech Points Concepts Pvt Ltd",
                     style: TextStyle(
-                        fontSize: 15, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold, color: Colors.white),
+                        fontSize: 15, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold, color: ColorPrimary),
                   ),
                 ],
               ),

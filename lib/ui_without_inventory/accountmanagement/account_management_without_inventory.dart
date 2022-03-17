@@ -15,7 +15,7 @@ import 'package:vendor/api/server_error.dart';
 import 'package:vendor/model/log_out.dart';
 import 'package:vendor/model/vendor_profile_response.dart';
 import 'package:vendor/ui/login/login_screen.dart';
-import 'package:vendor/ui/privacy_policy/privacy_policy.dart';
+import 'package:vendor/ui/web_view_screen/webview_screen.dart';
 import 'package:vendor/ui_without_inventory/account_settings/account_settings.dart';
 import 'package:vendor/ui_without_inventory/home/home.dart';
 import 'package:vendor/utility/color.dart';
@@ -194,7 +194,7 @@ class _AccountManagementWithoutInventoryScreenState extends State<AccountManagem
             }),
           ),
         ),
-        bottomNavigationBar: Container(
+        /*   bottomNavigationBar: Container(
           height: 50,
           width: MediaQuery.of(context).size.width,
           color: ColorPrimary,
@@ -215,7 +215,7 @@ class _AccountManagementWithoutInventoryScreenState extends State<AccountManagem
               ),
             ],
           ),
-        ),
+        ),*/
       ),
     );
   }
@@ -234,7 +234,7 @@ class _AccountManagementWithoutInventoryScreenState extends State<AccountManagem
           MaterialPageRoute(
               builder: (context) => WebViewScreen(
                     title: "about_us".tr(),
-                    url: "http://www.myprofitinc.com/privacy_policy.html",
+                    url: "http://vendor.myprofitinc.com/aboutus",
                   )),
         );
         break;
@@ -244,7 +244,7 @@ class _AccountManagementWithoutInventoryScreenState extends State<AccountManagem
           MaterialPageRoute(
               builder: (context) => WebViewScreen(
                     title: tr("contact_us"),
-                    url: "http://www.myprofitinc.com/privacy_policy.html",
+                    url: "http://vendor.myprofitinc.com/contact",
                   )),
         );
         break;
@@ -254,7 +254,7 @@ class _AccountManagementWithoutInventoryScreenState extends State<AccountManagem
           MaterialPageRoute(
               builder: (context) => WebViewScreen(
                     title: tr("privacy_policy"),
-                    url: "http://www.myprofitinc.com/privacy_policy.html",
+                    url: "http://vendor.myprofitinc.com/privacypolicy",
                   )),
         );
         break;
@@ -264,7 +264,7 @@ class _AccountManagementWithoutInventoryScreenState extends State<AccountManagem
           MaterialPageRoute(
               builder: (context) => WebViewScreen(
                     title: tr("terms_conditions"),
-                    url: "http://www.myprofitinc.com/privacy_policy.html",
+                    url: "http://vendor.myprofitinc.com/terms/",
                   )),
         );
         break;
@@ -274,7 +274,7 @@ class _AccountManagementWithoutInventoryScreenState extends State<AccountManagem
           MaterialPageRoute(
               builder: (context) => WebViewScreen(
                     title: tr("cancellation_refund_policy"),
-                    url: "http://www.myprofitinc.com/privacy_policy.html",
+                    url: "http://vendor.myprofitinc.com/refundpolicy",
                   )),
         );
         break;

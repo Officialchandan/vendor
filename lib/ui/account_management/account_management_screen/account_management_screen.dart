@@ -17,7 +17,7 @@ import 'package:vendor/ui/account_management/account_management_screen/account_m
 import 'package:vendor/ui/account_management/settings/settings.dart';
 import 'package:vendor/ui/home/home.dart';
 import 'package:vendor/ui/login/login_screen.dart';
-import 'package:vendor/ui/privacy_policy/privacy_policy.dart';
+import 'package:vendor/ui/web_view_screen/webview_screen.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/sharedpref.dart';
@@ -201,7 +201,7 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
             }),
           ),
         ),
-        bottomNavigationBar: Container(
+        /* bottomNavigationBar: Container(
           height: 50,
           width: MediaQuery.of(context).size.width,
           color: ColorPrimary,
@@ -222,7 +222,7 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
               ),
             ],
           ),
-        ),
+        ),*/
       ),
     );
   }
@@ -276,7 +276,7 @@ Future<void> onClick(BuildContext context, int currentIndex, var data) async {
         MaterialPageRoute(
             builder: (context) => WebViewScreen(
                   title: "about_us".tr(),
-                  url: "http://www.myprofitinc.com/privacy_policy.html",
+                  url: "http://vendor.myprofitinc.com/aboutus",
                 )),
       );
       break;
@@ -286,7 +286,7 @@ Future<void> onClick(BuildContext context, int currentIndex, var data) async {
         MaterialPageRoute(
             builder: (context) => WebViewScreen(
                   title: tr("contact_us"),
-                  url: "http://www.myprofitinc.com/privacy_policy.html",
+                  url: "http://vendor.myprofitinc.com/contact",
                 )),
       );
       break;
@@ -296,7 +296,7 @@ Future<void> onClick(BuildContext context, int currentIndex, var data) async {
         MaterialPageRoute(
             builder: (context) => WebViewScreen(
                   title: tr("privacy_policy"),
-                  url: "http://www.myprofitinc.com/privacy_policy.html",
+                  url: "http://vendor.myprofitinc.com/privacypolicy",
                 )),
       );
       break;
@@ -306,7 +306,7 @@ Future<void> onClick(BuildContext context, int currentIndex, var data) async {
         MaterialPageRoute(
             builder: (context) => WebViewScreen(
                   title: tr("terms_conditions"),
-                  url: "http://www.myprofitinc.com/privacy_policy.html",
+                  url: "http://vendor.myprofitinc.com/terms/",
                 )),
       );
       break;
@@ -316,7 +316,7 @@ Future<void> onClick(BuildContext context, int currentIndex, var data) async {
         MaterialPageRoute(
             builder: (context) => WebViewScreen(
                   title: tr("cancellation_refund_policy"),
-                  url: "http://www.myprofitinc.com/privacy_policy.html",
+                  url: "http://vendor.myprofitinc.com/refundpolicy",
                 )),
       );
       break;
