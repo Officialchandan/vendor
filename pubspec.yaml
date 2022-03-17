@@ -65,6 +65,8 @@ dependencies:
   image_picker:
   modal_bottom_sheet:
 
+ # web view
+  webview_flutter: 
 
   expandable: ^5.0.1
   #image view

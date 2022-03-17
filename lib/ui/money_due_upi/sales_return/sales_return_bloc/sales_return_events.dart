@@ -1,24 +1,14 @@
 import 'package:equatable/equatable.dart';
+import 'package:vendor/ui/inventory/sale_return/bloc/sale_return_event.dart';
 
-class SalesReturnStates extends Equatable {
+class SalesReturnEvents extends Equatable {
   @override
   List<Object?> get props => [];
 }
 
-class SalesReturnInitialState extends SalesReturnStates {}
-
-class SalesReturnLoadingState extends SalesReturnStates {}
-
-class SalesReturnSuccessState extends SalesReturnStates {
-  final String response;
-  SalesReturnSuccessState({required this.response});
+class GetSalesReturnHistoryEvent extends SalesReturnEvents {
+  final Map input;
+  GetSalesReturnHistoryEvent({required this.input});
   @override
-  List<Object?> get props => [response];
-}
-
-class SalesReturnFailureState extends SalesReturnStates {
-  final String message;
-  SalesReturnFailureState({required this.message});
-  @override
-  List<Object?> get props => [message];
+  List<Object?> get props => [input];
 }

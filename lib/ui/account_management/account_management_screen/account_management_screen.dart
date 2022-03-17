@@ -22,6 +22,7 @@ import 'package:vendor/ui/account_management/terms_and_condition/terms_and_condi
 import 'package:vendor/ui/account_management/video_tutorial/video_tutorial.dart';
 import 'package:vendor/ui/home/home.dart';
 import 'package:vendor/ui/login/login_screen.dart';
+import 'package:vendor/ui/privacy_policy/privacy_policy.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/sharedpref.dart';
@@ -39,15 +40,20 @@ class AccountManagementScreen extends StatefulWidget {
 
 class _AccountManagementScreenState extends State<AccountManagementScreen> {
   List<String> textList = [
-    "discount_codes_key".tr(),
+    // "discount_codes_key".tr(),
     "settings_key".tr(),
-    "delivery_setting_key".tr(),
-    "gift_scheme_key".tr(),
+    "Privacy Policy",
+    "Terms & Conditions", "Cancellation & Refund Policy",
+    "About Us",
+    "Contact Us",
+
+    // "delivery_setting_key".tr(),
+    // "gift_scheme_key".tr(),
     // "video_tutorials_key".tr(),
     // "share_store_link_key".tr(),
-    "get_store_qr_code_key".tr(),
-    "add_business_hours_key".tr(),
-    "t&c_with_signature".tr(),
+    // "get_store_qr_code_key".tr(),
+    // "add_business_hours_key".tr(),
+    // "t&c_with_signature".tr(),
     "logout_key".tr(),
   ];
 
@@ -220,6 +226,34 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
             }),
           ),
         ),
+        bottomNavigationBar: Container(
+          height: 50,
+          width: MediaQuery.of(context).size.width,
+          color: ColorPrimary,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 4),
+                child: Text(
+                  "Powered By ",
+                  style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
+              ),
+              Text(
+                " Tech Points Concepts Pvt Ltd",
+                style: TextStyle(
+                    fontSize: 15,
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -257,56 +291,60 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
 
 Future<void> onClick(BuildContext context, int currentIndex, var data) async {
   switch (currentIndex) {
+    // case 0:
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => DiscountCodes()),
+    //   );
+    // break;
     case 0:
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => DiscountCodes()),
-      );
-      break;
-    case 1:
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => Settings()),
       );
       break;
-    case 2:
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => DeliverySetting()),
-      );
-      break;
-    case 3:
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => GiftScheme()),
-      );
-      break;
     case 1:
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => VideoTutorial()),
-      );
-      break;
-    case 2:
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
-      );
-      break;
-    case 3:
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => StoreQRCode()),
-      );
-      break;
-    case 6:
-      Navigator.push(
-        context,
         MaterialPageRoute(
-            builder: (context) => TermsAndCondition(vendorDetailData: data)),
+            builder: (context) => WebViewScreen(
+                  title: "Privacy Policy",
+                  url: "http://www.myprofitinc.com/privacy_policy.html",
+                )),
       );
       break;
-    case 7:
+    // case 3:
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => GiftScheme()),
+    //   );
+    //   break;
+    // case 1:
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => VideoTutorial()),
+    //   );
+    //   break;
+    // case 2:
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => HomeScreen()),
+    //   );
+    //   break;
+    // case 3:
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => StoreQRCode()),
+    //   );
+    //   break;
+    // case 6:
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (context) => TermsAndCondition(vendorDetailData: data)),
+    //   );
+    //   break;
+    case 6:
       logoutDialog(context);
       break;
   }

@@ -431,6 +431,34 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
+            bottomNavigationBar: Container(
+              height: 50,
+              width: MediaQuery.of(context).size.width,
+              color: ColorPrimary,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: Text(
+                      "Powered By ",
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
+                  ),
+                  Text(
+                    " Tech Points Concepts Pvt Ltd",
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                ],
+              ),
+            ),
           );
         },
       ),
