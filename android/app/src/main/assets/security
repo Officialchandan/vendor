@@ -1,0 +1,4 @@
+keystore file : /myprofit_vendor/android/app/src/main/assets/vendor.jks
+keystore pass : 123456
+alias : myprofit_vendor, vendor
+alias pass : 123456
