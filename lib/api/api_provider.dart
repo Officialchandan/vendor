@@ -1664,22 +1664,22 @@ class ApiProvider {
 
   Future<UpiSalesReturnResponse> upiSalesReturn(
       Map<String, dynamic> input) async {
-    try {
-      Response res =
-          await dio.post(Endpoint.GET_SALES_RETURN_HISTORY, data: input);
+    // try {
+    Response res =
+        await dio.post(Endpoint.GET_SALES_RETURN_HISTORY, data: input);
 
-      return UpiSalesReturnResponse.fromJson(res.toString());
-    } catch (error) {
-      String message = "";
-      if (error is DioError) {
-        ServerError e = ServerError.withError(error: error);
-        message = e.getErrorMessage();
-      } else {
-        message = "Please try again later!";
-      }
-      print("Exception occurred: $message stackTrace: $error");
-      return UpiSalesReturnResponse(
-          success: false, message: "", directBilling: [], data: []);
-    }
+    return UpiSalesReturnResponse.fromJson(res.toString());
+    // } catch (error) {
+    //   String message = "";
+    //   if (error is DioError) {
+    //     ServerError e = ServerError.withError(error: error);
+    //     message = e.getErrorMessage();
+    //   } else {
+    //     message = "Please try again later!";
+    //   }
+    //   print("Exception occurred: $message stackTrace: $error");
+    //   return UpiSalesReturnResponse(
+    //       success: false, message: "", directBilling: [], data: []);
+    // }
   }
 }

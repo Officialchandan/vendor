@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:vendor/ui/money_due_upi/sales_return/response/upi_sales_return_response.dart';
 
 class SalesReturnStates extends Equatable {
   @override
@@ -9,9 +10,9 @@ class SalesReturnInitialState extends SalesReturnStates {}
 
 class SalesReturnLoadingState extends SalesReturnStates {}
 
-class SalesReturnSuccessState extends SalesReturnStates {
-  final String response;
-  SalesReturnSuccessState({required this.response});
+class SalesReturnHistoryState extends SalesReturnStates {
+  final List<BillingDetails> response;
+  SalesReturnHistoryState({required this.response});
   @override
   List<Object?> get props => [response];
 }

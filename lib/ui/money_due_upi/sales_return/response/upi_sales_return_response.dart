@@ -45,6 +45,8 @@ class UpiSalesReturnResponse {
 
 class BillingDetails {
   BillingDetails({
+    required this.vendorName,
+    required this.vendorImage,
     required this.vendorId,
     required this.orderId,
     required this.mobile,
@@ -59,6 +61,8 @@ class BillingDetails {
     required this.billingDetails,
   });
 
+  String vendorName;
+  String vendorImage;
   String vendorId;
   String orderId;
   String mobile;
@@ -69,6 +73,7 @@ class BillingDetails {
   String amountPaidToMyProfit;
   String amountPaidToVendor;
   String billingId;
+  int billingType = 0;
   List<OrderDetail> orderDetails;
   List<DirectBillingDetails> billingDetails;
   factory BillingDetails.fromJson(String str) =>
@@ -77,6 +82,10 @@ class BillingDetails {
   String toJson() => json.encode(toMap());
 
   factory BillingDetails.fromMap(Map<String, dynamic> json) => BillingDetails(
+        vendorName:
+            json["vendor_name"] == null ? "" : json["vendor_name"].toString(),
+        vendorImage:
+            json["vendor_image"] == null ? "" : json["vendor_image"].toString(),
         vendorId: json["vendor_id"] == null ? "" : json["vendor_id"].toString(),
         orderId: json["order_id"] == null ? "" : json["order_id"].toString(),
         mobile: json["mobile"] == null ? "" : json["mobile"].toString(),
@@ -84,8 +93,8 @@ class BillingDetails {
             ? ""
             : json["return_coins_customer"].toString(),
         returnAmountCustomer: json["return_amount_customer"] == null
-            ? null
-            : json["return_amount_customer"].toDouble(),
+            ? ""
+            : json["return_amount_customer"].toString(),
         dateTime: json["date_time"] == null ? "" : json["date_time"].toString(),
         customerCoinBalance: json["customer_coin_balance"] == null
             ? ""
@@ -100,7 +109,8 @@ class BillingDetails {
             ? []
             : List<OrderDetail>.from(
                 json["order_details"].map((x) => OrderDetail.fromMap(x))),
-        billingId: json["billing_id"] == null ? null : json["billing_id"],
+        billingId:
+            json["billing_id"] == null ? "" : json["billing_id"].toString(),
         billingDetails: json["billing_details"] == null
             ? []
             : List<DirectBillingDetails>.from(json["billing_details"]
@@ -108,6 +118,8 @@ class BillingDetails {
       );
 
   Map<String, dynamic> toMap() => {
+        "vendor_name": vendorId == null ? null : vendorName,
+        "vendor_image": orderId == null ? null : vendorImage,
         "vendor_id": vendorId == null ? null : vendorId,
         "order_id": orderId == null ? null : orderId,
         "mobile": mobile == null ? null : mobile,
