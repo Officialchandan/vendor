@@ -492,7 +492,7 @@ class _BillingProductsState extends State<BillingProducts> {
                         child: Column(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 15, bottom: 5),
+                              padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 10, bottom: 5),
                               child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                                 Text(
                                   "total_pay_amount_key".tr(),
@@ -510,12 +510,12 @@ class _BillingProductsState extends State<BillingProducts> {
                                 ),
                               ]),
                             ),
-                            Divider(
-                              height: 1,
-                              color: ColorTextPrimary,
-                            ),
+                            // Divider(
+                            //   height: 1,
+                            //   color: ColorTextPrimary,
+                            // ),
                             Padding(
-                              padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 15, bottom: 5),
+                              padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 10, bottom: 5),
                               child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                                 Text(
                                   "redeem_coins_key".tr(),
@@ -536,12 +536,12 @@ class _BillingProductsState extends State<BillingProducts> {
                                 ),
                               ]),
                             ),
-                            Divider(
-                              height: 1,
-                              color: ColorTextPrimary,
-                            ),
+                            // Divider(
+                            //   height: 1,
+                            //   color: ColorTextPrimary,
+                            // ),
                             Padding(
-                              padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 15, bottom: 5),
+                              padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 10, bottom: 15),
                               child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                                 Text(
                                   "earn_coins_key".tr(),

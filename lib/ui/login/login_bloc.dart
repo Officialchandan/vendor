@@ -39,6 +39,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       EasyLoading.dismiss();
       log("$result");
       if (result.success) {
+        baseOptions.headers
+            .addAll({"languagecode": "${await SharedPref.getStringPreference(SharedPref.SELECTEDLANG)}"});
         yield GetLoginState(result);
       } else {
         yield GetLoginFailureState(message: result.message);

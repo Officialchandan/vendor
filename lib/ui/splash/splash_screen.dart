@@ -109,6 +109,7 @@ class _SplashScreenState extends State<SplashScreen> {
       String token = await SharedPref.getStringPreference(SharedPref.TOKEN);
       int vendorId = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
       int statusId = await SharedPref.getIntegerPreference(SharedPref.USERSTATUS);
+      baseOptions.headers.addAll({"languagecode": "${await SharedPref.getStringPreference(SharedPref.SELECTEDLANG)}"});
       print("token-->$token");
       print("vendorId-->$vendorId");
       if (token.isEmpty) {

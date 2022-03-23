@@ -398,7 +398,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   Text(
-                    "Tech Points Concepts Pvt Ltd",
+                    "TechPoints Concepts Pvt Ltd",
                     style: TextStyle(
                         fontSize: 15, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold, color: ColorPrimary),
                   ),
