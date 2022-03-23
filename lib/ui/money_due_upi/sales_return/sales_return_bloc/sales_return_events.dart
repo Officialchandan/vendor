@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:vendor/ui/inventory/sale_return/bloc/sale_return_event.dart';
 
 class SalesReturnEvents extends Equatable {
   @override
@@ -7,7 +6,7 @@ class SalesReturnEvents extends Equatable {
 }
 
 class GetSalesReturnHistoryEvent extends SalesReturnEvents {
-  final Map input;
+  final Map<String, dynamic> input;
   GetSalesReturnHistoryEvent({required this.input});
   @override
   List<Object?> get props => [input];
