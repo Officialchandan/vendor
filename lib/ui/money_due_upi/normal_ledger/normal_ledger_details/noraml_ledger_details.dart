@@ -103,74 +103,11 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
         categoryImage: "",
         categoryName: "",
       );
-      productDetails.add(normalBillingProducts);
-    }
-
-    for (var products in details!.billingDetails) {
-      CommonSaleReturnProductDetails normalBillingProducts = CommonSaleReturnProductDetails(
-        orderId: "",
-        mobile: products.mobile,
-        productId: "",
-        productName: "",
-        productImage: "",
-        qty: "1",
-        price: "",
-        total: products.total,
-        amountPaid: products.amountPaid,
-        redeemCoins: products.redeemCoins,
-        earningCoins: products.earningCoins,
-        myProfitRevenue: products.myProfitRevenue,
-        billingId: products.billingId,
-        categoryId: products.categoryId,
-        categoryImage: products.categoryImage,
-        categoryName: products.categoryName,
-      );
-
+      log("------>${normalBillingProducts.orderId}");
       productDetails.add(normalBillingProducts);
     }
     // Amount Paid
-    productDetails.forEach((element) {
-      amtPaid += double.parse(element.amountPaid);
-    });
-
-    // Redeem Coin
-    productDetails.forEach((element) {
-      redeemCoins += double.parse(element.redeemCoins);
-    });
-
-    // Earn Coins
-    productDetails.forEach((element) {
-      earnCoins += double.parse(element.earningCoins);
-    });
-
-    // Net Balance
-    if (redeemCoins >= earnCoins) {
-      netBalance = 0;
-    } else if (earnCoins > redeemCoins && earnCoins != 0) {
-      netBalance = earnCoins - redeemCoins;
-      log("message >>> $netBalance");
-      if (double.parse(details!.customerCoinBalance) != 0) {
-        if (double.parse(details!.customerCoinBalance) >= netBalance) {
-          log("message2 >>> $netBalance");
-          netBalance = 0;
-        } else {
-          log("message3 >>> $netBalance");
-          netBalance = netBalance - double.parse(details!.customerCoinBalance);
-        }
-      } else {
-        netBalance = double.parse(details!.returnAmountCustomer) - netBalance / 3;
-      }
-    } else {
-      if (double.parse(details!.customerCoinBalance) != 0) {
-        if (double.parse(details!.customerCoinBalance) >= earnCoins) {
-          netBalance = 0;
-        } else {
-          netBalance = earnCoins - double.parse(details!.customerCoinBalance);
-        }
-      } else {
-        netBalance = double.parse(details!.returnAmountCustomer) - earnCoins / 3;
-      }
-    }
+//    }
   }
 
   @override
@@ -201,7 +138,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                     if (state is NormalLedgerDetailHistoryState) {
                       billingDetails = state.response;
 
-                      salesreturnCalculations();
+                      //salesreturnCalculations();
                     }
                     if (state is NormalLedgerDetailLoadingState) {
                       return Center(
@@ -641,8 +578,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                               style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black87),
                             ),
                             Text(
-                              "${DateFormat("dd MMM yyyy").format(DateTime.parse(details!.dateTime))}  " +
-                                  "${DateFormat.jm().format(DateTime.parse(details!.dateTime)).toLowerCase()}",
+                              "4 Mar 2022 3:25 pm",
                               style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.grey),
                             ),
                           ],
@@ -665,7 +601,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                                   height: 14,
                                 ),
                                 Text(
-                                  "$earnCoins (\u20B9 ${(earnCoins / 3).toStringAsFixed(2)})",
+                                  "-300 (\u20B9100)",
                                   style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
                                 ),
                               ],
@@ -690,7 +626,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                                   height: 14,
                                 ),
                                 Text(
-                                  "${(redeemCoins).toStringAsFixed(2)} (\u20B9 ${(redeemCoins / 3).toStringAsFixed(2)}",
+                                  "-100 (\u20B933.33)",
                                   style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.green),
                                 ),
                               ],
@@ -715,7 +651,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                                   height: 14,
                                 ),
                                 Text(
-                                  "${details!.customerCoinBalance} (\u20B9 ${(double.parse(details!.customerCoinBalance) / 3).toStringAsFixed(2)})",
+                                  "0 (\u20B90)",
                                   style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
                                 ),
                               ],
@@ -740,7 +676,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                                   height: 14,
                                 ),
                                 Text(
-                                  "${(netBalance).toStringAsFixed(2)}  (\u20B9${(netBalance / 3).toStringAsFixed(2)})",
+                                  "-200 (\u20B966.67)",
                                   style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
                                 ),
                               ],
@@ -764,17 +700,10 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                                   width: 14,
                                   height: 14,
                                 ),
-                                netBalance == 0
-                                    ? Text(
-                                        "\u20B9 $amtPaid",
-                                        style:
-                                            TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
-                                      )
-                                    : Text(
-                                        "\u20B9 ${(amtPaid - netBalance).toStringAsFixed(2)}",
-                                        style:
-                                            TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
-                                      ),
+                                Text(
+                                  "\u20B92300",
+                                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                                ),
                               ],
                             ),
                           ],
@@ -786,7 +715,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
-                              "Sum(\u20B9 $amtPaid  - \u20B9 $netBalance = \u20B9 ${(amtPaid - netBalance).toStringAsFixed(2)})",
+                              "Sum(\u20B92266 - \u20B66.67 = \u20b62300)",
                               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey),
                             ),
                           ],
@@ -851,29 +780,29 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
                             )
                             /* widget.order.orderType == 1
-                                    ? widget.order.orderDetails[0].redeemCoins == "0"
-                                        ? Text(
-                                            "\u20B9 0",
-                                            style:
-                                                TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
-                                          )
-                                        : Text(
-                                            "\u20B9-${widget.order.orderDetails[0].redeemCoins}",
-                                            style:
-                                                TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
-                                          )
+                                  ? widget.order.orderDetails[0].redeemCoins == "0"
+                                      ? Text(
+                                          "\u20B9 0",
+                                          style:
+                                              TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
+                                        )
+                                      : Text(
+                                          "\u20B9-${widget.order.orderDetails[0].redeemCoins}",
+                                          style:
+                                              TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
+                                        )
 
-                                    : widget.order.billingDetails[0].redeemedCoins == "0"
-                                        ? Text(
-                                            "\u20B9 0",
-                                            style:
-                                                TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
-                                          )
-                                        : Text(
-                                            "\u20B9-${widget.order.billingDetails[0].redeemedCoins}",
-                                            style:
-                                                TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
-                                          ),*/
+                                  : widget.order.billingDetails[0].redeemedCoins == "0"
+                                      ? Text(
+                                          "\u20B9 0",
+                                          style:
+                                              TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
+                                        )
+                                      : Text(
+                                          "\u20B9-${widget.order.billingDetails[0].redeemedCoins}",
+                                          style:
+                                              TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
+                                        ),*/
                           ],
                         ),
                       ],
