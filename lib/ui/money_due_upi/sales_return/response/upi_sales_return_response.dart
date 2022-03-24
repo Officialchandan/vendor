@@ -45,6 +45,7 @@ class UpiSalesReturnResponse {
 
 class BillingDetails {
   BillingDetails({
+    required this.customerId,
     required this.vendorName,
     required this.vendorImage,
     required this.vendorId,
@@ -61,6 +62,7 @@ class BillingDetails {
     required this.billingDetails,
   });
 
+  String customerId;
   String vendorName;
   String vendorImage;
   String vendorId;
@@ -82,6 +84,8 @@ class BillingDetails {
   String toJson() => json.encode(toMap());
 
   factory BillingDetails.fromMap(Map<String, dynamic> json) => BillingDetails(
+        customerId:
+            json["customer_id"] == null ? "" : json["customer_id"].toString(),
         vendorName:
             json["vendor_name"] == null ? "" : json["vendor_name"].toString(),
         vendorImage:
@@ -118,6 +122,7 @@ class BillingDetails {
       );
 
   Map<String, dynamic> toMap() => {
+        "customer_id": customerId == null ? null : customerId,
         "vendor_name": vendorId == null ? null : vendorName,
         "store_images": orderId == null ? null : vendorImage,
         "vendor_id": vendorId == null ? null : vendorId,
