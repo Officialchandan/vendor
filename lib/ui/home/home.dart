@@ -1,5 +1,6 @@
 import 'dart:collection';
 import 'dart:developer';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int count = 0;
   int isReadCount = 0;
   int totalNotification = 0;
+  String message = "";
   List<String> name = [
     "billing_key".tr(),
     "inventory_key".tr(),
@@ -58,8 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
     "assets/images/home3.png",
   ];
   onShareWithEmptyOrigin(BuildContext context) async {
-    await Share.share(
-        "https://play.google.com/store/apps/details?id=com.tencent.ig");
+    await Share.share("https://play.google.com/store/apps/details?id=com.tencent.ig");
   }
 
   @override
@@ -134,16 +135,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   Icons.notifications,
                 ),
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => NotificationScreen(
-                                notificationData: notificationData!,
-                              ))).then((value) {
-                    setState(() {
-                      count -= value as int;
-                    });
-                  });
+                  message == ""
+                      ? Fluttertoast.showToast(msg: "No Notification available")
+                      : Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => NotificationScreen(
+                                    notificationData: notificationData!,
+                                  ))).then((value) {
+                          setState(() {
+                            count -= value as int;
+                          });
+                        });
                 },
               ),
               notificationData != null
@@ -215,8 +218,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 routeManager(index);
               } else {
                 Fluttertoast.showToast(
-                    msg: "please_check_your_internet_connection_key".tr(),
-                    backgroundColor: ColorPrimary);
+                    msg: "please_check_your_internet_connection_key".tr(), backgroundColor: ColorPrimary);
               }
             },
             child: Container(
@@ -285,8 +287,7 @@ class _HomeScreenState extends State<HomeScreen> {
   routeManager(index) {
     log("$index");
     index == 0
-        ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME,
-            arguments: index)
+        ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: index)
         : index == 1
             ? Navigator.push(
                 context,
@@ -297,35 +298,26 @@ class _HomeScreenState extends State<HomeScreen> {
                   type: PageTransitionType.fade,
                 ))
             : index == 2
-                ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME,
-                    arguments: index)
+                ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: index)
                 : index == 3
-                    ? Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => VideoTutorial()))
+                    ? Navigator.push(context, MaterialPageRoute(builder: (context) => VideoTutorial()))
                     : index == 4
-                        ? Navigator.pushNamed(
-                            context, Routes.BOTTOM_NAVIGATION_HOME,
-                            arguments: 3)
+                        ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: 3)
                         : index == 5
-                            ? Navigator.pushNamed(
-                                context, Routes.BOTTOM_NAVIGATION_HOME,
-                                arguments: 4)
-                            : Navigator.pushNamed(
-                                context, Routes.BOTTOM_NAVIGATION_HOME,
-                                arguments: 4);
+                            ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: 4)
+                            : Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: 4);
   }
 
   getNotifications() async {
-    String userId =
-        (await SharedPref.getIntegerPreference(SharedPref.VENDORID)).toString();
+    String userId = (await SharedPref.getIntegerPreference(SharedPref.VENDORID)).toString();
     Map input = HashMap();
     input["vendor_id"] = userId;
     if (await Network.isConnected()) {
       NotificationResponse response = await apiProvider.getNotifications(input);
-      if (response.success) {
+      if (response.success && response.message != "") {
+        log("--->${response.data}");
         notificationData = response.data;
+
         totalNotification = response.data!.length;
         response.data!.forEach((element) {
           if (element.isRead == 1) {
@@ -335,7 +327,8 @@ class _HomeScreenState extends State<HomeScreen> {
           count = totalNotification - isReadCount;
         });
       } else {
-        Utility.showToast(response.message);
+        response.message == "" ? Container() : Utility.showToast(response.message);
+        message = response.message;
       }
     } else {
       Utility.showToast(Constant.INTERNET_ALERT_MSG);
