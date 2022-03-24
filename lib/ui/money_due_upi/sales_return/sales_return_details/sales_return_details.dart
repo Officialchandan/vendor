@@ -168,7 +168,9 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                 showModalBottomSheet(
                     context: context,
                     builder: (context) {
-                      return SalesReturnDetailsSheet();
+                      return SalesReturnDetailsSheet(
+                        customerId: details!.customerId,
+                      );
                     });
               },
               icon: Icon(Icons.info),

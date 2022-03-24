@@ -200,4 +200,7 @@ class Endpoint {
   static const String GET_MASTER_LEDGER_HISTORY = "getMasterLedger";
 
   static const String GET_SALES_RETURN_HISTORY = "getSaleReturnOrder";
+
+  static const String GET_CUSTOMER_REDEEM_COIN_HISTORY =
+      "getCustomerSpendCoinsHistory";
 }

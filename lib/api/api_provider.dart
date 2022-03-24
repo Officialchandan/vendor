@@ -60,6 +60,7 @@ import 'package:vendor/model/validate_app_version.dart';
 import 'package:vendor/model/vendor_profile_response.dart';
 import 'package:vendor/model/verify_otp.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/model/normal_ladger_response.dart';
+import 'package:vendor/ui/money_due_upi/redeem_coin/customer_coin_history_response.dart';
 import 'package:vendor/ui/money_due_upi/redeem_coin/response/redeem_coin_response.dart';
 import 'package:vendor/ui/money_due_upi/sales_return/response/upi_sales_return_response.dart';
 import 'package:vendor/ui/notification_screen/model/notification_response.dart';
@@ -1680,6 +1681,26 @@ class ApiProvider {
       print("Exception occurred: $message stackTrace: $error");
       return UpiSalesReturnResponse(
           success: false, message: "", directBilling: [], data: []);
+    }
+  }
+
+  Future<CustomerRedeemCoinHistory> redeemCoinHistory(
+      Map<String, dynamic> input) async {
+    try {
+      Response res = await dio.post(Endpoint.GET_CUSTOMER_REDEEM_COIN_HISTORY,
+          data: input);
+
+      return CustomerRedeemCoinHistory.fromJson(res.toString());
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return CustomerRedeemCoinHistory(success: false, message: "", data: []);
     }
   }
 }
