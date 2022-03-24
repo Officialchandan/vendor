@@ -15,6 +15,9 @@ class SalesReturnBloc extends Bloc<SalesReturnEvents, SalesReturnStates> {
       yield SalesReturnLoadingState();
       yield* getSaleReturn(event);
     }
+    if (event is GetSalesReturnDataSearchEvent) {
+      yield SalesReturnDataSearchState(keyWord: event.keyWord);
+    }
   }
 
   Stream<SalesReturnStates> getSaleReturn(
