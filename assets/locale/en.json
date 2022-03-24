@@ -338,5 +338,6 @@
   "contact_us": "Contact Us",
   "privacy_policy": "Privacy Policy",
   "terms_conditions": "Terms & Conditions",
-  "cancellation_refund_policy": "Payment & Refund Policy"
+  "cancellation_refund_policy": "Payment & Refund Policy",
+  "You_dont_have_enough_coins":"You don't have enough coins"
 }

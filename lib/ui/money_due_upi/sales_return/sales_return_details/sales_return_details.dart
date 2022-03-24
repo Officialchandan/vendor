@@ -96,6 +96,10 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
       productDetails.add(normalBillingProducts);
     }
 
+    calculation();
+  }
+
+  calculation() {
     // Amount Paid
     productDetails.forEach((element) {
       amtPaid += double.parse(element.amountPaid);

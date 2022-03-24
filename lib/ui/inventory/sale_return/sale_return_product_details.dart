@@ -44,9 +44,14 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
             double.parse(widget.saleReturnData.earnCoins))
         .toStringAsFixed(2);
 
-    this.returnAmount = (double.parse(adjustedBalance!) / 3 -
-            double.parse(widget.saleReturnData.amountPaid))
-        .toStringAsFixed(2);
+    if ((double.parse(adjustedBalance!) / 3 >=
+        double.parse(widget.saleReturnData.amountPaid))) {
+    } else {
+      this.returnAmount = (double.parse(widget.saleReturnData.amountPaid) -
+              double.parse(adjustedBalance!) / 3)
+          .toStringAsFixed(2);
+    }
+
     super.initState();
   }
 
