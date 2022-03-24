@@ -28,6 +28,7 @@ class NormalLedgerDetailBloc extends Bloc<NormalLedgerDetailEvents, NormalLedger
         });
 
         log("Length >>>> " + billingDetails.length.toString());
+        log("Length >>>> " + billingDetails[0].orderDetails.length.toString());
         yield NormalLedgerDetailHistoryState(response: billingDetails);
       } else {
         yield NormalLedgerDetailFailureState(message: response.message);
