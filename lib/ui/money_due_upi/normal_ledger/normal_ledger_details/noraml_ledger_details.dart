@@ -1,9 +1,13 @@
+import 'dart:collection';
 import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/model/normal_ladger_response.dart';
+import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_details/normal_ledger_detail_bloc/normal_ledger_detail_bloc.dart';
+import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_details/normal_ledger_detail_bloc/normal_ledger_detail_event.dart';
 import 'package:vendor/utility/color.dart';
+import 'package:vendor/utility/sharedpref.dart';
 
 class NormalLedgerDetails extends StatefulWidget {
   // final List<OrderData> commonLedgerHistory;
@@ -19,7 +23,7 @@ class NormalLedgerDetails extends StatefulWidget {
 class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
   // late List<CommonLedgerHistory> commonLedgerHistory;
   double reddem = 0, finalamount = 0;
-
+  NormalLedgerDetailBloc normalLedgerDetailBloc = NormalLedgerDetailBloc();
   @override
   void initState() {
     // TODO: implement initState
@@ -29,6 +33,17 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
     log("orderType-->${widget.order.orderType}");
     log("order-->${widget.order.toString()}");
     calculation();
+  }
+
+  getNormalLedgerData() async {
+    var vendorId = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+
+    Map<String, dynamic> input = HashMap();
+    input['vendor_id'] = vendorId;
+    input['order_id'] = widget.order.orderId;
+    input["from_date"] = "";
+    input["to_date"] = "";
+    normalLedgerDetailBloc.add(GetNormalLedgerDetailHistoryEvent(input: input));
   }
 
   void calculation() {
@@ -41,6 +56,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
         finalamount = reddem - double.parse(widget.order.myprofitRevenue);
       }
     } else {
+      getNormalLedgerData();
       widget.order.orderDetails.forEach((element) {
         reddem += double.parse(element.redeemCoins);
         log("$reddem");
@@ -470,6 +486,350 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           ),
                         ),
                 ),
+                widget.order.isReturn == 1
+                    ? Padding(
+                        padding: const EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 20),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                            boxShadow: [BoxShadow(color: Colors.black12, spreadRadius: 4, blurRadius: 10)],
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 14, right: 14, top: 14, bottom: 14),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Sales Return History",
+                                      style:
+                                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black87),
+                                    ),
+                                    Text(
+                                      "4 Mar 2022 3:25 pm",
+                                      style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.grey),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Earn Coins",
+                                      style:
+                                          TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Image.asset(
+                                          "assets/images/point.png",
+                                          width: 14,
+                                          height: 14,
+                                        ),
+                                        Text(
+                                          "-300 (\u20B9100)",
+                                          style:
+                                              TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Redeem Coins",
+                                      style:
+                                          TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Image.asset(
+                                          "assets/images/point.png",
+                                          width: 14,
+                                          height: 14,
+                                        ),
+                                        Text(
+                                          "-100 (\u20B933.33)",
+                                          style:
+                                              TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.green),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Customer Coins Balance",
+                                      style:
+                                          TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Image.asset(
+                                          "assets/images/point.png",
+                                          width: 14,
+                                          height: 14,
+                                        ),
+                                        Text(
+                                          "0 (\u20B90)",
+                                          style: TextStyle(
+                                              fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Net Balance",
+                                      style:
+                                          TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Image.asset(
+                                          "assets/images/point.png",
+                                          width: 14,
+                                          height: 14,
+                                        ),
+                                        Text(
+                                          "-200 (\u20B966.67)",
+                                          style:
+                                              TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Amount Return to Customer",
+                                      style:
+                                          TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Image.asset(
+                                          "assets/images/point.png",
+                                          width: 14,
+                                          height: 14,
+                                        ),
+                                        Text(
+                                          "\u20B92300",
+                                          style: TextStyle(
+                                              fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      "Sum(\u20B92266 - \u20B66.67 = \u20b62300)",
+                                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                    : Container(),
+                widget.order.isReturn == 1
+                    ? Padding(
+                        padding: const EdgeInsets.only(left: 15, right: 15, top: 0, bottom: 20),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                            boxShadow: [BoxShadow(color: Colors.black12, spreadRadius: 4, blurRadius: 10)],
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 14),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Sales Return History",
+                                      style:
+                                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black87),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Amount Return To Vendor",
+                                      style:
+                                          TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                                    ),
+                                    Text(
+                                      "\u20B9${widget.order.myprofitRevenue}",
+                                      style:
+                                          TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Amount Return To MyProfit",
+                                      style:
+                                          TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                                    ),
+                                    Text(
+                                      "\u20B9 $reddem",
+                                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
+                                    )
+                                    /* widget.order.orderType == 1
+                                  ? widget.order.orderDetails[0].redeemCoins == "0"
+                                      ? Text(
+                                          "\u20B9 0",
+                                          style:
+                                              TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
+                                        )
+                                      : Text(
+                                          "\u20B9-${widget.order.orderDetails[0].redeemCoins}",
+                                          style:
+                                              TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
+                                        )
+
+                                  : widget.order.billingDetails[0].redeemedCoins == "0"
+                                      ? Text(
+                                          "\u20B9 0",
+                                          style:
+                                              TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
+                                        )
+                                      : Text(
+                                          "\u20B9-${widget.order.billingDetails[0].redeemedCoins}",
+                                          style:
+                                              TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
+                                        ),*/
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                    : Container(),
+                widget.order.isReturn == 1
+                    ? Padding(
+                        padding: const EdgeInsets.only(left: 15, right: 15, top: 0, bottom: 20),
+                        child: double.parse(widget.order.myprofitRevenue) > reddem
+                            ? Container(
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    begin: Alignment.bottomLeft,
+                                    end: Alignment.topRight,
+                                    // stops: [0.1, 0.5, 0.7, 0.9],
+                                    colors: [
+                                      RedLightColor,
+                                      RedDarkColor,
+                                    ],
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                  boxShadow: [BoxShadow(color: Colors.black12, spreadRadius: 4, blurRadius: 10)],
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 14, right: 14),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Amount Paid To My Profit",
+                                        style:
+                                            TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
+                                      ),
+                                      Text(
+                                        "\u20B9 $finalamount",
+                                        style:
+                                            TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            : Container(
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    begin: Alignment.bottomLeft,
+                                    end: Alignment.topRight,
+                                    // stops: [0.1, 0.5, 0.7, 0.9],
+                                    colors: [
+                                      GreenLightColor,
+                                      GreenDarkColor,
+                                    ],
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                  boxShadow: [BoxShadow(color: Colors.black12, spreadRadius: 4, blurRadius: 10)],
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 14, right: 14),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Amount Paid To Vendor",
+                                        style:
+                                            TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
+                                      ),
+                                      Text(
+                                        "\u20B9 $finalamount",
+                                        style:
+                                            TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                      )
+                    : Container(),
               ],
             ),
           ),
