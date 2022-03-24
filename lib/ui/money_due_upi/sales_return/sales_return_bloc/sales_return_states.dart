@@ -23,3 +23,10 @@ class SalesReturnFailureState extends SalesReturnStates {
   @override
   List<Object?> get props => [message];
 }
+
+class SalesReturnDataSearchState extends SalesReturnStates {
+  final String keyWord;
+  SalesReturnDataSearchState({required this.keyWord});
+  @override
+  List<Object?> get props => [keyWord];
+}

@@ -85,7 +85,7 @@ class BillingDetails {
         vendorName:
             json["vendor_name"] == null ? "" : json["vendor_name"].toString(),
         vendorImage:
-            json["vendor_image"] == null ? "" : json["vendor_image"].toString(),
+            json["store_images"] == null ? "" : json["store_images"].toString(),
         vendorId: json["vendor_id"] == null ? "" : json["vendor_id"].toString(),
         orderId: json["order_id"] == null ? "" : json["order_id"].toString(),
         mobile: json["mobile"] == null ? "" : json["mobile"].toString(),
@@ -119,7 +119,7 @@ class BillingDetails {
 
   Map<String, dynamic> toMap() => {
         "vendor_name": vendorId == null ? null : vendorName,
-        "vendor_image": orderId == null ? null : vendorImage,
+        "store_images": orderId == null ? null : vendorImage,
         "vendor_id": vendorId == null ? null : vendorId,
         "order_id": orderId == null ? null : orderId,
         "mobile": mobile == null ? null : mobile,
@@ -287,4 +287,43 @@ class DirectBillingDetails {
         "myprofit_revenue": myProfitRevenue == null ? null : myProfitRevenue,
         "total": total == null ? null : total,
       };
+}
+
+class CommonSaleReturnProductDetails {
+  CommonSaleReturnProductDetails({
+    required this.orderId,
+    required this.mobile,
+    required this.productId,
+    required this.productName,
+    required this.productImage,
+    required this.qty,
+    required this.price,
+    required this.total,
+    required this.amountPaid,
+    required this.redeemCoins,
+    required this.earningCoins,
+    required this.myProfitRevenue,
+    required this.billingId,
+    required this.categoryId,
+    required this.categoryName,
+    required this.categoryImage,
+  });
+  String orderId;
+  String mobile;
+  String productId;
+  String productName;
+  String productImage;
+  String qty;
+  String price;
+  String total;
+  String amountPaid;
+  String redeemCoins;
+  String earningCoins;
+  String myProfitRevenue;
+
+  String billingId;
+
+  String categoryId;
+  String categoryName;
+  String categoryImage;
 }

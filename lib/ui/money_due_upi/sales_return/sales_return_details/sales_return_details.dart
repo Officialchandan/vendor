@@ -1,16 +1,148 @@
+import 'dart:developer';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
+import 'package:vendor/ui/money_due_upi/sales_return/response/upi_sales_return_response.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/widget/sales_return_details_bottom_sheet.dart';
 
 class SalesReturnDetails extends StatefulWidget {
-  const SalesReturnDetails({Key? key}) : super(key: key);
+  final BillingDetails billingDetails;
+  const SalesReturnDetails({required this.billingDetails, Key? key})
+      : super(key: key);
 
   @override
   _SalesReturnDetailsState createState() => _SalesReturnDetailsState();
 }
 
 class _SalesReturnDetailsState extends State<SalesReturnDetails> {
+  List<CommonSaleReturnProductDetails> productDetails = [];
+  BillingDetails? details;
+  String amtPaidStatus = "";
+  String payAmt = "";
+  double amtPaid = 0;
+  double redeemCoins = 0;
+  double earnCoins = 0;
+  double netBalance = 0;
+  double amtReturnToCustomer = 0;
+  @override
+  void initState() {
+    super.initState();
+    this.details = widget.billingDetails;
+
+    if (double.parse(details!.amountPaidToMyProfit) >
+        double.parse(details!.amountPaidToVendor)) {
+      amtPaidStatus = "1";
+      // red
+      payAmt = (double.parse(details!.amountPaidToMyProfit) -
+              double.parse(details!.amountPaidToVendor))
+          .toStringAsFixed(2);
+    }
+    if (double.parse(details!.amountPaidToMyProfit) <
+        double.parse(details!.amountPaidToVendor)) {
+      amtPaidStatus = "0";
+      // green
+      payAmt = (double.parse(details!.amountPaidToVendor) -
+              double.parse(details!.amountPaidToMyProfit))
+          .toStringAsFixed(2);
+    }
+
+    for (var products in details!.orderDetails) {
+      CommonSaleReturnProductDetails normalBillingProducts =
+          CommonSaleReturnProductDetails(
+        orderId: products.orderId,
+        mobile: products.mobile,
+        productId: products.productId,
+        productName: products.productName,
+        productImage: products.productImage,
+        qty: products.qty,
+        price: products.price,
+        total: products.total,
+        amountPaid: products.amountPaid,
+        redeemCoins: products.redeemCoins,
+        earningCoins: products.earningCoins,
+        myProfitRevenue: products.myProfitRevenue,
+        billingId: "",
+        categoryId: "",
+        categoryImage: "",
+        categoryName: "",
+      );
+      productDetails.add(normalBillingProducts);
+    }
+
+    for (var products in details!.billingDetails) {
+      CommonSaleReturnProductDetails normalBillingProducts =
+          CommonSaleReturnProductDetails(
+        orderId: "",
+        mobile: products.mobile,
+        productId: "",
+        productName: "",
+        productImage: "",
+        qty: "1",
+        price: "",
+        total: products.total,
+        amountPaid: products.amountPaid,
+        redeemCoins: products.redeemCoins,
+        earningCoins: products.earningCoins,
+        myProfitRevenue: products.myProfitRevenue,
+        billingId: products.billingId,
+        categoryId: products.categoryId,
+        categoryImage: products.categoryImage,
+        categoryName: products.categoryName,
+      );
+
+      productDetails.add(normalBillingProducts);
+    }
+
+    // Amount Paid
+    productDetails.forEach((element) {
+      amtPaid += double.parse(element.amountPaid);
+    });
+
+    // Redeem Coin
+    productDetails.forEach((element) {
+      redeemCoins += double.parse(element.redeemCoins);
+    });
+
+    // Earn Coins
+    productDetails.forEach((element) {
+      earnCoins += double.parse(element.earningCoins);
+    });
+
+    // Net Balance
+    if (redeemCoins >= earnCoins) {
+      netBalance = 0;
+    } else if (earnCoins > redeemCoins && earnCoins != 0) {
+      netBalance = earnCoins - redeemCoins;
+      log("message >>> $netBalance");
+      if (double.parse(details!.customerCoinBalance) != 0) {
+        if (double.parse(details!.customerCoinBalance) >= netBalance) {
+          log("message2 >>> $netBalance");
+          netBalance = 0;
+        } else {
+          log("message3 >>> $netBalance");
+          netBalance = netBalance - double.parse(details!.customerCoinBalance);
+        }
+      } else {
+        netBalance =
+            double.parse(details!.returnAmountCustomer) - netBalance / 3;
+      }
+    } else {
+      if (double.parse(details!.customerCoinBalance) != 0) {
+        if (double.parse(details!.customerCoinBalance) >= earnCoins) {
+          netBalance = 0;
+        } else {
+          netBalance = earnCoins - double.parse(details!.customerCoinBalance);
+        }
+      } else {
+        netBalance =
+            double.parse(details!.returnAmountCustomer) - earnCoins / 3;
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -67,7 +199,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                           child: Row(
                             children: [
                               Text(
-                                "George Walker",
+                                "${details!.vendorName}",
                                 style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
@@ -82,7 +214,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "+91 1234567890",
+                                "${details!.mobile}",
                                 style: TextStyle(
                                     fontSize: 13,
                                     fontWeight: FontWeight.bold,
@@ -90,21 +222,25 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                               ),
                               Container(
                                 decoration: BoxDecoration(
-                                  color: RejectedTextBgColor,
-                                  borderRadius: BorderRadius.circular(10),
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: amtPaidStatus == "0"
+                                      ? ApproveTextBgColor
+                                      : RejectedTextBgColor,
                                 ),
                                 child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 6, right: 6, top: 1, bottom: 1),
+                                  padding:
+                                      const EdgeInsets.only(top: 2, bottom: 2),
                                   child: Text(
-                                    "Pay: 66.67",
+                                    "  Pay: \u20B9 $payAmt  ",
                                     style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: RejectedTextColor),
+                                        color: amtPaidStatus == "0"
+                                            ? ApproveTextColor
+                                            : RejectedTextColor,
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                 ),
-                              ),
+                              )
                             ],
                           ),
                         ),
@@ -145,9 +281,9 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                           height: 5,
                         ),
                         Container(
-                          height: 80,
+                          height: productDetails.length >= 2 ? 160 : 80,
                           child: ListView.builder(
-                            itemCount: 1,
+                            itemCount: productDetails.length,
                             itemBuilder: ((context, index) {
                               return Stack(
                                 children: [
@@ -173,15 +309,35 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                                             Container(
                                               child: ClipRRect(
                                                 borderRadius:
-                                                    BorderRadius.circular(8),
-                                                child: Container(
-                                                  color: Colors.amber,
-                                                  child: Image.asset(
-                                                    "assets/images/point.png",
-                                                    height: 45,
-                                                    width: 45,
-                                                  ),
-                                                ),
+                                                    BorderRadius.circular(5),
+                                                child: CachedNetworkImage(
+                                                    imageUrl: productDetails[
+                                                                index]
+                                                            .categoryImage
+                                                            .isEmpty
+                                                        ? productDetails[index]
+                                                            .productImage
+                                                        : productDetails[index]
+                                                            .categoryImage,
+                                                    progressIndicatorBuilder:
+                                                        (context, url,
+                                                                downloadProgress) =>
+                                                            Center(
+                                                              child: CircularProgressIndicator(
+                                                                  value: downloadProgress
+                                                                      .progress),
+                                                            ),
+                                                    errorWidget:
+                                                        (context, url, error) =>
+                                                            Image.asset(
+                                                              "assets/images/placeholder.webp",
+                                                              fit: BoxFit.cover,
+                                                              width: 55,
+                                                              height: 55,
+                                                            ),
+                                                    width: 55,
+                                                    height: 55,
+                                                    fit: BoxFit.cover),
                                               ),
                                             ),
                                             SizedBox(
@@ -197,7 +353,15 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                                                               .spaceBetween,
                                                       children: [
                                                         Text(
-                                                          "Shirt",
+                                                          productDetails[index]
+                                                                  .categoryName
+                                                                  .isEmpty
+                                                              ? productDetails[
+                                                                      index]
+                                                                  .productName
+                                                              : productDetails[
+                                                                      index]
+                                                                  .categoryName,
                                                           style: TextStyle(
                                                               fontSize: 15,
                                                               fontWeight:
@@ -207,7 +371,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                                                                   .black87),
                                                         ),
                                                         Text(
-                                                          "\u20B9 400",
+                                                          "\u20B9 ${productDetails[index].total}",
                                                           style: TextStyle(
                                                               fontSize: 13,
                                                               fontWeight:
@@ -227,7 +391,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                                                               .start,
                                                       children: [
                                                         Text(
-                                                          "20 x \u20B9 200",
+                                                          "${productDetails[index].qty} x \u20B9 ${details!.billingType == 1 ? productDetails[index].total : productDetails[index].price}",
                                                           style: TextStyle(
                                                               fontSize: 13,
                                                               fontWeight:
@@ -247,33 +411,36 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                                       ),
                                     ),
                                   ),
-                                  Positioned(
-                                    top: 4,
-                                    right: 25,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: RejectedTextBgColor,
-                                        borderRadius: BorderRadius.circular(8),
-                                        boxShadow: [
-                                          BoxShadow(
-                                              color: Colors.black12,
-                                              spreadRadius: 4,
-                                              blurRadius: 10)
-                                        ],
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 5, right: 5),
-                                        child: Text(
-                                          "Redeemed",
-                                          style: TextStyle(
-                                              color: RejectedTextColor,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 10),
-                                        ),
-                                      ),
-                                    ),
-                                  )
+                                  redeemCoins == 0
+                                      ? SizedBox()
+                                      : Positioned(
+                                          top: 4,
+                                          right: 25,
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: RejectedTextBgColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                    color: Colors.black12,
+                                                    spreadRadius: 4,
+                                                    blurRadius: 10)
+                                              ],
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 5, right: 5),
+                                              child: Text(
+                                                "Redeemed",
+                                                style: TextStyle(
+                                                    color: RejectedTextColor,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 10),
+                                              ),
+                                            ),
+                                          ),
+                                        )
                                 ],
                               );
                             }),
@@ -296,7 +463,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                                     color: Colors.black87),
                               ),
                               Text(
-                                "\u20B9 2266.67",
+                                "\u20B9 $amtPaid",
                                 style: TextStyle(
                                     fontSize: 13,
                                     fontWeight: FontWeight.bold,
@@ -340,7 +507,8 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                                     color: Colors.black87),
                               ),
                               Text(
-                                "4 Mar 2022 3:25 pm",
+                                "${DateFormat("dd MMM yyyy").format(DateTime.parse(details!.dateTime))}  " +
+                                    "${DateFormat.jm().format(DateTime.parse(details!.dateTime)).toLowerCase()}",
                                 style: TextStyle(
                                     fontSize: 11,
                                     fontWeight: FontWeight.bold,
@@ -369,7 +537,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                                     height: 14,
                                   ),
                                   Text(
-                                    "-300 (\u20B9100)",
+                                    "$earnCoins (\u20B9 ${(earnCoins / 3).toStringAsFixed(2)})",
                                     style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold,
@@ -400,7 +568,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                                     height: 14,
                                   ),
                                   Text(
-                                    "-100 (\u20B933.33)",
+                                    "${(redeemCoins).toStringAsFixed(2)} (\u20B9 ${(redeemCoins / 3).toStringAsFixed(2)}",
                                     style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold,
@@ -431,7 +599,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                                     height: 14,
                                   ),
                                   Text(
-                                    "0 (\u20B90)",
+                                    "${details!.customerCoinBalance} (\u20B9 ${(double.parse(details!.customerCoinBalance) / 3).toStringAsFixed(2)})",
                                     style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold,
@@ -462,7 +630,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                                     height: 14,
                                   ),
                                   Text(
-                                    "-200 (\u20B966.67)",
+                                    "${(netBalance).toStringAsFixed(2)}  (\u20B9${(netBalance / 3).toStringAsFixed(2)})",
                                     style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold,
@@ -492,13 +660,21 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                                     width: 14,
                                     height: 14,
                                   ),
-                                  Text(
-                                    "\u20B92300",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black87),
-                                  ),
+                                  netBalance == 0
+                                      ? Text(
+                                          "\u20B9 $amtPaid",
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black87),
+                                        )
+                                      : Text(
+                                          "\u20B9 ${(amtPaid - netBalance).toStringAsFixed(2)}",
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black87),
+                                        ),
                                 ],
                               ),
                             ],
@@ -510,7 +686,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Text(
-                                "Sum(\u20B92266 - \u20B66.67 = \u20b62300)",
+                                "Sum(\u20B9 $amtPaid  - \u20B9 $netBalance = \u20B9 ${(amtPaid - netBalance).toStringAsFixed(2)})",
                                 style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold,
@@ -551,14 +727,16 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Amount Paid To My Profit",
+                            amtPaidStatus == "1"
+                                ? "Amount Paid To My Profit"
+                                : "Amount Paid To Vendor",
                             style: TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white),
                           ),
                           Text(
-                            "\u20B966.67",
+                            "\u20B9 $payAmt",
                             style: TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.bold,

@@ -11,3 +11,10 @@ class GetSalesReturnHistoryEvent extends SalesReturnEvents {
   @override
   List<Object?> get props => [input];
 }
+
+class GetSalesReturnDataSearchEvent extends SalesReturnEvents {
+  final String keyWord;
+  GetSalesReturnDataSearchEvent({required this.keyWord});
+  @override
+  List<Object?> get props => [keyWord];
+}

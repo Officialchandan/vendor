@@ -1,8 +1,10 @@
 import 'dart:collection';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:vendor/ui/inventory/sale_return/bloc/sale_return_bloc.dart';
 import 'package:vendor/ui/money_due_upi/sales_return/response/upi_sales_return_response.dart';
 import 'package:vendor/ui/money_due_upi/sales_return/sales_return_bloc/sales_return_bloc.dart';
@@ -22,15 +24,18 @@ class SalesReturnHistory extends StatefulWidget {
 }
 
 class _SalesReturnHistoryState extends State<SalesReturnHistory> {
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
   SalesReturnBloc saleReturnBloc = SalesReturnBloc();
   List<BillingDetails> billingDetails = [];
+  List<BillingDetails> searchList = [];
   String startDate = "";
   String endDate = "";
 
   @override
   void initState() {
     super.initState();
-    getSalesReturnData("", "");
+    getSalesReturnData(startDate, endDate);
   }
 
   @override
@@ -68,63 +73,108 @@ class _SalesReturnHistoryState extends State<SalesReturnHistory> {
             ),
           ],
         ),
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 15.0, right: 15, top: 15),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: Colors.black,
-                  ),
-                  filled: true,
+        body: SmartRefresher(
+          controller: _refreshController,
+          enablePullDown: true,
+          enablePullUp: false,
+          onRefresh: () {
+            getSalesReturnData(startDate, endDate);
+          },
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 15.0, right: 15, top: 15),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(
+                      Icons.search,
+                      color: Colors.black,
+                    ),
+                    filled: true,
 
-                  // fillColor: Colors.black,
-                  hintText: "Search Here...",
-                  hintStyle: GoogleFonts.openSans(
-                      fontWeight: FontWeight.w600, color: Colors.black),
-                  contentPadding:
-                      const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
+                    // fillColor: Colors.black,
+                    hintText: "Search Here...",
+                    hintStyle: GoogleFonts.openSans(
+                        fontWeight: FontWeight.w600, color: Colors.black),
+                    contentPadding: const EdgeInsets.only(
+                        left: 14.0, bottom: 8.0, top: 8.0),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
                   ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
+                  onChanged: (value) {
+                    saleReturnBloc
+                        .add(GetSalesReturnDataSearchEvent(keyWord: value));
+                  },
                 ),
               ),
-            ),
-            Expanded(
-              child: BlocBuilder<SalesReturnBloc, SalesReturnStates>(
-                builder: ((context, state) {
-                  if (state is SalesReturnHistoryState) {
-                    billingDetails = state.response;
-                  }
-                  if (state is SalesReturnLoadingState) {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  if (state is SalesReturnFailureState) {
-                    return Center(
-                      child: Text(state.message),
-                    );
-                  }
-                  return ListView.builder(
-                      padding: EdgeInsets.only(left: 15, right: 15, top: 15),
-                      itemCount: billingDetails.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          child: BillingDetailsWidget(
-                              details: billingDetails[index]),
-                        );
-                      });
-                }),
+              Expanded(
+                child: BlocBuilder<SalesReturnBloc, SalesReturnStates>(
+                  builder: ((context, state) {
+                    if (state is SalesReturnHistoryState) {
+                      billingDetails = state.response;
+                    }
+                    if (state is SalesReturnLoadingState) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    if (state is SalesReturnFailureState) {
+                      return Center(
+                        child: Image.asset("assets/images/no_data.gif"),
+                      );
+                    }
+                    if (state is SalesReturnDataSearchState) {
+                      if (state.keyWord.isEmpty) {
+                        searchList = billingDetails;
+                      } else {
+                        List<BillingDetails> list = [];
+                        billingDetails.forEach((element) {
+                          if (element.vendorName
+                              .toLowerCase()
+                              .contains(state.keyWord.toLowerCase())) {
+                            list.add(element);
+                          }
+                        });
+                        if (list.isEmpty) {
+                          return Container(
+                            height: MediaQuery.of(context).size.height,
+                            child: Image.asset("assets/images/no_data.gif"),
+                          );
+                        } else {
+                          searchList = list;
+                          return ListView.builder(
+                              padding:
+                                  EdgeInsets.only(left: 15, right: 15, top: 15),
+                              itemCount: searchList.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  child: BillingDetailsWidget(
+                                      details: billingDetails[index]),
+                                );
+                              });
+                        }
+                      }
+                    }
+
+                    return ListView.builder(
+                        padding: EdgeInsets.only(left: 15, right: 15, top: 15),
+                        itemCount: billingDetails.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            child: BillingDetailsWidget(
+                                details: billingDetails[index]),
+                          );
+                        });
+                  }),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -137,6 +187,7 @@ class _SalesReturnHistoryState extends State<SalesReturnHistory> {
     input["from_date"] = startDate;
     input["to_date"] = endDate;
     saleReturnBloc.add(GetSalesReturnHistoryEvent(input: input));
+    _refreshController.refreshCompleted();
   }
 }
 
@@ -177,83 +228,155 @@ class _BillingDetailsWidgetState extends State<BillingDetailsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 15),
-      height: 70,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.white,
-          border: Border.all(color: Colors.white38),
-          boxShadow: [
-            BoxShadow(color: Colors.black12, blurRadius: 1.0, spreadRadius: 1)
-          ]),
-      child: ListTile(
-        selectedTileColor: Colors.transparent,
-        onTap: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => SalesReturnDetails()));
-        },
-        isThreeLine: true,
-        leading: Container(
-          height: 50,
-          width: 50,
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => SalesReturnDetails(
+                      billingDetails: billingDetails!,
+                    )));
+      },
+      child: Container(
+          margin: EdgeInsets.only(bottom: 20),
+          height: billingDetails!.billingType == 1 ? 102 : 82,
           decoration: BoxDecoration(
-            color: Colors.red,
-            borderRadius: BorderRadius.circular(5),
-          ),
-          child: Image.asset(
-            "assets/images/wallpaperflare.com_wallpaper.jpg",
-          ),
-        ),
-        title:
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Text(
-            "Geroge Walker",
-            style: TextStyle(fontWeight: FontWeight.w600),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color:
-                  colorStatus == "0" ? ApproveTextBgColor : RejectedTextBgColor,
-            ),
-            child: Text(
-              "  Pay: \u20B9 $payAmt ",
-              style: TextStyle(
-                  color:
-                      colorStatus == "0" ? ApproveTextColor : RejectedTextColor,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400),
-            ),
-          )
-        ]),
-        subtitle: Padding(
-          padding: const EdgeInsets.only(top: 8.0),
-          child:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text(
-              " +91 7560123694",
-              style: TextStyle(
-                  color: Colors.orange,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400),
-            ),
-            Container(
-              // height: 20,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: DirectBillTextBgColor),
-              child: Text(
-                "  Direct Billing  ",
-                style: TextStyle(
-                    color: DirectBillingTextColor,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400),
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(color: Colors.black12, blurRadius: 4, spreadRadius: 1)
+              ]),
+          child: Column(
+            children: [
+              billingDetails!.billingType == 1
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          height: 20,
+                          width: 70,
+                          decoration: BoxDecoration(
+                            color: ColorPrimary,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10),
+                            ),
+                          ),
+                          child: Center(
+                            child: Text(
+                              "Direct Billing",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                        Text(
+                          "Cancelled      ",
+                          style: TextStyle(
+                              color: RejectedTextColor,
+                              fontSize: 11,
+                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    )
+                  : SizedBox(),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Row(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(5),
+                      child: CachedNetworkImage(
+                          imageUrl: billingDetails!.vendorImage,
+                          progressIndicatorBuilder:
+                              (context, url, downloadProgress) => Center(
+                                    child: CircularProgressIndicator(
+                                        value: downloadProgress.progress),
+                                  ),
+                          errorWidget: (context, url, error) => Image.asset(
+                                "assets/images/placeholder.webp",
+                                fit: BoxFit.cover,
+                                width: 55,
+                                height: 55,
+                              ),
+                          width: 55,
+                          height: 55,
+                          fit: BoxFit.cover),
+                    ),
+                    SizedBox(
+                      width: 14,
+                    ),
+                    Flexible(
+                      child: Container(
+                        height: 60,
+                        width: MediaQuery.of(context).size.width * 0.70,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "${billingDetails!.vendorName}",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: colorStatus == "0"
+                                          ? ApproveTextBgColor
+                                          : RejectedTextBgColor,
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 2, bottom: 2),
+                                      child: Text(
+                                        "  Pay: \u20B9 $payAmt  ",
+                                        style: TextStyle(
+                                            color: colorStatus == "0"
+                                                ? ApproveTextColor
+                                                : RejectedTextColor,
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  )
+                                ]),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "${billingDetails!.mobile}",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ]),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ),
-          ]),
-        ),
-      ),
+            ],
+          )),
     );
   }
 }
