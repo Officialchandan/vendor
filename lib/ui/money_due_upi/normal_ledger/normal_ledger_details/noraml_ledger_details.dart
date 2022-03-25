@@ -178,6 +178,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                     }
                     if (state is NormalLedgerDetailHistoryState) {
                       billingDetails = state.response;
+                      details = billingDetails.first;
 
                       salesreturnCalculations();
                     }
