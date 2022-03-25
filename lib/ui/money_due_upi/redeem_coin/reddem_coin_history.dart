@@ -133,6 +133,7 @@ class _ReddemCoinHistoryState extends State<ReddemCoinHistory> {
                         } else {
                           List<CoinDetail> list = [];
                           redeemData.forEach((element) {
+
                             if (element.productName
                                 .toLowerCase()
                                 .contains(state.data.toLowerCase())) {
