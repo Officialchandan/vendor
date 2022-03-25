@@ -160,6 +160,7 @@ class _ReddemCoinHistoryState extends State<ReddemCoinHistory> {
                           }
                         }
                       }
+                      //
                       return ListView.builder(
                         padding: EdgeInsets.only(left: 15, right: 15),
                         itemCount: redeemData.length,
