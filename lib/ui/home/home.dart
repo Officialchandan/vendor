@@ -135,18 +135,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   Icons.notifications,
                 ),
                 onPressed: () {
-                  message == ""
-                      ? Fluttertoast.showToast(msg: "No Notification available")
-                      : Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => NotificationScreen(
-                                    notificationData: notificationData!,
-                                  ))).then((value) {
-                          setState(() {
-                            count -= value as int;
-                          });
-                        });
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => NotificationScreen(
+                                notificationData: notificationData!,
+                              ))).then((value) {
+                    setState(() {
+                      count -= value as int;
+                    });
+                  });
                 },
               ),
               notificationData != null

@@ -2,8 +2,10 @@ import 'dart:developer';
 
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:paytm_allinonesdk/paytm_allinonesdk.dart';
 import 'package:vendor/model/get_due_amount_response.dart';
 import 'package:vendor/ui/money_due_upi/bloc/money_due_bloc.dart';
 import 'package:vendor/ui/money_due_upi/bloc/money_due_event.dart';
@@ -30,6 +32,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
   List<CategoryDueAmount> categoryDue = [];
   String dueAmount = "0.0";
   GetVendorFreeCoinData? freecoin;
+  String result = "";
   @override
   void initState() {
     super.initState();
@@ -40,6 +43,26 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
   void didUpdateWidget(covariant MoneyDueScreen oldWidget) {
     // TODO: implement didUpdateWidget
     super.didUpdateWidget(oldWidget);
+  }
+
+  payment() {
+    var response = AllInOneSdk.startTransaction("mid", "orderId", "amount", "txnToken", "callbackUrl", true, true);
+    response.then((value) {
+      print(value);
+      setState(() {
+        result = value.toString();
+      });
+    }).catchError((onError) {
+      if (onError is PlatformException) {
+        setState(() {
+          result = '${onError.message.toString() + ' \n  ' + onError.details.toString()}';
+        });
+      } else {
+        setState(() {
+          result = onError.toString();
+        });
+      }
+    });
   }
 
   @override
@@ -795,7 +818,9 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
             ),
           ),
           bottomNavigationBar: MaterialButton(
-            onPressed: () {},
+            onPressed: () {
+              payment();
+            },
             color: ColorPrimary,
             height: 50,
             shape: RoundedRectangleBorder(),
