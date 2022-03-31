@@ -3,10 +3,7 @@ import 'dart:developer';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
-
 import 'package:share/share.dart';
-
-import 'package:vendor/ui_without_inventory/performancetracker/upi/due_amount_screen.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/routs.dart';
 
@@ -14,12 +11,10 @@ class HomeScreenWithoutInventory extends StatefulWidget {
   HomeScreenWithoutInventory({Key? key}) : super(key: key);
 
   @override
-  _HomeScreenWithoutInventoryState createState() =>
-      _HomeScreenWithoutInventoryState();
+  _HomeScreenWithoutInventoryState createState() => _HomeScreenWithoutInventoryState();
 }
 
-class _HomeScreenWithoutInventoryState
-    extends State<HomeScreenWithoutInventory> {
+class _HomeScreenWithoutInventoryState extends State<HomeScreenWithoutInventory> {
   List<String> name = [
     "billing_key".tr(),
     "performance_tracker_key".tr(),
@@ -41,8 +36,7 @@ class _HomeScreenWithoutInventoryState
   ];
 
   _onShareWithEmptyOrigin(BuildContext context) async {
-    await Share.share(
-        "https://play.google.com/store/apps/details?id=com.tencent.ig");
+    await Share.share("https://play.google.com/store/apps/details?id=com.tencent.ig");
   }
 
   @override
@@ -68,9 +62,7 @@ class _HomeScreenWithoutInventoryState
                 _onShareWithEmptyOrigin(context);
               },
               child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(5))),
                 child: Row(
                   children: [
                     Icon(
@@ -83,10 +75,7 @@ class _HomeScreenWithoutInventoryState
                     ),
                     Text(
                       "share_store_key".tr(),
-                      style: TextStyle(
-                          color: ColorPrimary,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 12),
+                      style: TextStyle(color: ColorPrimary, fontWeight: FontWeight.w600, fontSize: 12),
                     ),
                     SizedBox(
                       width: 5,
@@ -150,8 +139,7 @@ class _HomeScreenWithoutInventoryState
                             ),
                             AutoSizeText(
                               description[index],
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 12),
+                              style: TextStyle(color: Colors.white, fontSize: 12),
                               maxFontSize: 13,
                               minFontSize: 11,
                             ),
@@ -166,18 +154,13 @@ class _HomeScreenWithoutInventoryState
   routeManager(index) {
     log("$index");
     index == 0
-        ? Navigator.pushNamed(
-            context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY,
-            arguments: index)
+        ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY, arguments: index)
         : index == 1
-            ? Navigator.pushNamed(
-                context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY,
-                arguments: index)
-            : index != 2
-                ? Navigator.pushNamed(
-                    context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY,
-                    arguments: 2)
-                : Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => DueAmountScreen()));
+            ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY, arguments: index)
+            : index == 2
+                ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY, arguments: index)
+                : index == 3
+                    ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY, arguments: 3)
+                    : Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY, arguments: 3);
   }
 }

@@ -468,7 +468,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
     input["myprofit_revenue"] = datas!.myProfitRevenue;
     SharedPref.setStringPreference(SharedPref.VendorCoin, datas!.vendorAvailableCoins);
     input["vendor_available_coins"] = datas!.vendorAvailableCoins;
-
+    log("=====? $input");
     directBillingCustomerNumberResponseBloc.add(GetChatPapdiBillingOtpEvent(input: input));
   }
 
