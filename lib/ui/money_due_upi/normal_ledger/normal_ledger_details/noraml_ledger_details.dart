@@ -35,7 +35,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
   double redeemCoins = 0;
   double earnCoins = 0;
   double netBalance = 0;
-  double amtReturnToCustomer = 0;
+  double amtreturn = 0;
   NormalLedgerDetailBloc normalLedgerDetailBloc = NormalLedgerDetailBloc();
   @override
   void initState() {
@@ -148,6 +148,12 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
       } else {
         netBalance = double.parse(details!.returnAmountCustomer) - earnCoins / 3;
       }
+    }
+
+    if (double.parse(details!.amountPaidToVendor) > double.parse(details!.amountPaidToMyProfit)) {
+      amtreturn = double.parse(details!.amountPaidToVendor) - double.parse(details!.amountPaidToMyProfit);
+    } else {
+      amtreturn = double.parse(details!.amountPaidToMyProfit) - double.parse(details!.amountPaidToVendor);
     }
   }
 
@@ -810,7 +816,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
                             ),
                             Text(
-                              "\u20B9${widget.order.myprofitRevenue}",
+                              "\u20B9${details!.amountPaidToVendor}",
                               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
                             ),
                           ],
@@ -826,7 +832,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
                             ),
                             Text(
-                              "\u20B9 $reddem",
+                              "\u20B9 ${details!.amountPaidToMyProfit}",
                               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
                             )
                             /* widget.order.orderType == 1
@@ -864,7 +870,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
         widget.order.isReturn == 1
             ? Padding(
                 padding: const EdgeInsets.only(left: 15, right: 15, top: 0, bottom: 20),
-                child: double.parse(widget.order.myprofitRevenue) > reddem
+                child: double.parse(details!.amountPaidToMyProfit) < double.parse(details!.amountPaidToVendor)
                     ? Container(
                         height: 50,
                         decoration: BoxDecoration(

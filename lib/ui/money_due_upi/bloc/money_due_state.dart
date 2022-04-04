@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:vendor/model/get_categories_response.dart';
 import 'package:vendor/model/get_due_amount_response.dart';
 
 class MoneyDueState extends Equatable {
@@ -16,15 +15,6 @@ class GetDueAmountState extends MoneyDueState {
 
   @override
   List<Object?> get props => [dueAmount, categoryDue];
-}
-
-class GetCategoriesState extends MoneyDueState {
-  final List<CategoryModel> categories;
-
-  GetCategoriesState({required this.categories});
-
-  @override
-  List<Object?> get props => [categories];
 }
 
 class GetFreeCoinInitialState extends MoneyDueState {
@@ -51,6 +41,36 @@ class GetFreeCoinFailureState extends MoneyDueState {
 }
 
 class GetFreeCoinLoadingState extends MoneyDueState {
+  @override
+  List<Object?> get props => [];
+}
+
+class GetPaymentTransictionInitialState extends MoneyDueState {
+  @override
+  List<Object?> get props => [];
+}
+
+class GetPaymentTransictionState extends MoneyDueState {
+  final signature;
+  final txnToken;
+  final mid;
+  final orderId;
+  final callbackUrl;
+  GetPaymentTransictionState({this.signature, this.txnToken, this.mid, this.orderId, this.callbackUrl});
+  @override
+  List<Object?> get props => [signature, txnToken, mid, orderId, callbackUrl];
+}
+
+class GetPaymentTransictionFailureState extends MoneyDueState {
+  final message;
+  final succes;
+
+  GetPaymentTransictionFailureState({this.message, this.succes});
+  @override
+  List<Object?> get props => [message, succes];
+}
+
+class GetPaymentTransictionLoadingState extends MoneyDueState {
   @override
   List<Object?> get props => [];
 }

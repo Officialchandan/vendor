@@ -1,8 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:vendor/ui_without_inventory/accountmanagement/account_management_without_inventory.dart';
 import 'package:vendor/ui_without_inventory/chatpapdi_billing/chatpapdi_billing.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/performance_tracker.dart';
-
+import 'package:vendor/ui_without_inventory/performancetracker/upi/due_amount_screen.dart';
 import 'package:vendor/utility/color.dart';
 
 class BottomNavigationHomeWithOutInventory extends StatefulWidget {
@@ -11,19 +12,17 @@ class BottomNavigationHomeWithOutInventory extends StatefulWidget {
   BottomNavigationHomeWithOutInventory({this.index = 0});
 
   @override
-  _BottomNavigationHomeWithOutInventoryState createState() =>
-      _BottomNavigationHomeWithOutInventoryState();
+  _BottomNavigationHomeWithOutInventoryState createState() => _BottomNavigationHomeWithOutInventoryState();
 }
 
-class _BottomNavigationHomeWithOutInventoryState
-    extends State<BottomNavigationHomeWithOutInventory>
+class _BottomNavigationHomeWithOutInventoryState extends State<BottomNavigationHomeWithOutInventory>
     with TickerProviderStateMixin {
   TabController? _tabController;
 
   @override
   void initState() {
     _tabController = TabController(
-      length: 3,
+      length: 4,
       initialIndex: widget.index,
       vsync: this,
     );
@@ -33,7 +32,7 @@ class _BottomNavigationHomeWithOutInventoryState
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 4,
       initialIndex: widget.index,
       child: Scaffold(
         body: TabBarView(
@@ -42,6 +41,7 @@ class _BottomNavigationHomeWithOutInventoryState
           children: [
             ChatPapdiBilling(),
             PerformanceTrackerWithoutInventory(),
+            DueAmountScreen(),
             AccountManagementWithoutInventoryScreen(),
           ],
         ),
@@ -89,8 +89,7 @@ class _BottomBarState extends State<BottomBar> {
     return TabBar(
       controller: widget.tabController,
       indicator: UnderlineTabIndicator(
-          borderSide: BorderSide(
-              width: 3, color: ColorPrimary, style: BorderStyle.solid),
+          borderSide: BorderSide(width: 3, color: ColorPrimary, style: BorderStyle.solid),
           insets: EdgeInsets.fromLTRB(30, 0, 30, 54)),
       labelColor: ColorPrimary,
       unselectedLabelColor: Colors.grey.shade500,
@@ -126,8 +125,21 @@ class _BottomBarState extends State<BottomBar> {
           iconMargin: EdgeInsets.all(0),
         ),
         Tab(
-          text: 'Account',
+          text: 'upi_key'.tr(),
           icon: widget.tabController.index == 2
+              ? Image.asset(
+                  "assets/images/f7-a.png",
+                  scale: 2,
+                )
+              : Image.asset(
+                  "assets/images/f7.png",
+                  scale: 2,
+                ),
+          iconMargin: EdgeInsets.all(0),
+        ),
+        Tab(
+          text: 'Account',
+          icon: widget.tabController.index == 3
               ? Image.asset(
                   "assets/images/f6-a.png",
                   scale: 2,
@@ -201,6 +213,16 @@ class _MBottomNavigationBarState extends State<MBottomNavigationBar> {
               scale: 2,
             ),
             label: "Performance"),
+        BottomNavigationBarItem(
+            icon: Image.asset(
+              "assets/images/f7.png",
+              scale: 2,
+            ),
+            activeIcon: Image.asset(
+              "assets/images/f7-a.png",
+              scale: 2,
+            ),
+            label: "upi_key".tr()),
         BottomNavigationBarItem(
             icon: Image.asset(
               "assets/images/f6.png",

@@ -1,9 +1,12 @@
+import 'dart:collection';
 import 'dart:developer';
 
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:paytm_allinonesdk/paytm_allinonesdk.dart';
 import 'package:vendor/model/get_due_amount_response.dart';
 import 'package:vendor/ui/money_due_upi/bloc/money_due_bloc.dart';
 import 'package:vendor/ui/money_due_upi/bloc/money_due_event.dart';
@@ -14,6 +17,7 @@ import 'package:vendor/ui/money_due_upi/redeem_coin/reddem_coin_history.dart';
 import 'package:vendor/ui/money_due_upi/sales_return/sales_return.dart';
 import 'package:vendor/ui/money_due_upi/upi_transfer/upi_transfer_screen.dart';
 import 'package:vendor/utility/color.dart';
+import 'package:vendor/utility/sharedpref.dart';
 
 import '../../model/get_vendor_free_coin.dart';
 
@@ -30,6 +34,8 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
   List<CategoryDueAmount> categoryDue = [];
   String dueAmount = "0.0";
   GetVendorFreeCoinData? freecoin;
+  String result = "";
+  String mid = "", orderId = "", token = "", callbackurl = "";
   @override
   void initState() {
     super.initState();
@@ -40,6 +46,40 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
   void didUpdateWidget(covariant MoneyDueScreen oldWidget) {
     // TODO: implement didUpdateWidget
     super.didUpdateWidget(oldWidget);
+  }
+
+  payment() {
+    var response = AllInOneSdk.startTransaction(mid, orderId, dueAmount, token, callbackurl, false, true);
+    // log("response ${response.}");
+    response.then((value) {
+      print(value);
+      setState(() {
+        result = value.toString();
+        log("====>result1$result");
+      });
+    }).catchError((onError) {
+      if (onError is PlatformException) {
+        setState(() {
+          result = '${onError.message.toString() + ' \n  ' + onError.details.toString()}';
+          log("====>result2$result");
+        });
+      } else {
+        setState(() {
+          result = onError.toString();
+          log("====>result3$result");
+        });
+      }
+    });
+  }
+
+  Future<void> paymentTransiction(BuildContext context) async {
+    Map<String, dynamic> input = HashMap<String, dynamic>();
+    input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    input["amount"] = dueAmount;
+
+    log("=====? $input");
+
+    moneyDueBloc.add(GetInitiateTransiction(input));
   }
 
   @override
@@ -85,8 +125,16 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                             }
                             if (state is GetDueAmountState) {
                               moneyDueBloc.add(GetFreeCoins());
+
                               dueAmount = state.dueAmount;
                               categoryDue = state.categoryDue;
+                              paymentTransiction(context);
+                            }
+                            if (state is GetPaymentTransictionState) {
+                              mid = state.mid;
+                              orderId = state.orderId;
+                              token = state.txnToken;
+                              callbackurl = state.callbackUrl;
                             }
 
                             return Text(
@@ -795,7 +843,9 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
             ),
           ),
           bottomNavigationBar: MaterialButton(
-            onPressed: () {},
+            onPressed: () {
+              payment();
+            },
             color: ColorPrimary,
             height: 50,
             shape: RoundedRectangleBorder(),

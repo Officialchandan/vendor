@@ -7,4 +7,14 @@ class MoneyDueEvent extends Equatable {
 
 class GetDueAmount extends MoneyDueEvent {}
 
-class GetCategories extends MoneyDueEvent {}
+class GetFreeCoins extends MoneyDueEvent {
+  @override
+  List<Object?> get props => [];
+}
+
+class GetInitiateTransiction extends MoneyDueEvent {
+  final Map<String, dynamic> input;
+  GetInitiateTransiction(this.input);
+  @override
+  List<Object?> get props => [input];
+}

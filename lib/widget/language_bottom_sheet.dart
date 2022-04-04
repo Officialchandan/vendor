@@ -36,12 +36,18 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
                         style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w500)),
                     value: index,
                     groupValue: _groupValue,
-                    onChanged: (value) {
+                    onChanged: (value) async {
                       setState(() {
                         _groupValue = value!;
-                        baseOptions.headers
-                            .addAll({"languagecode": "${SharedPref.getStringPreference(SharedPref.SELECTEDLANG)}"});
+                        print("x===>${_groupValue}");
                       });
+                      _groupValue == 0
+                          ? baseOptions.headers.addAll({
+                              "languagecode": "${await SharedPref.setStringPreference(SharedPref.SELECTEDLANG, "en")}"
+                            })
+                          : baseOptions.headers.addAll({
+                              "languagecode": "${await SharedPref.setStringPreference(SharedPref.SELECTEDLANG, "hi")}"
+                            });
                     },
                   ),
                 );

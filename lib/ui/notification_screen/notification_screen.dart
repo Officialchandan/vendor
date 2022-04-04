@@ -1,5 +1,5 @@
 import 'dart:collection';
-import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
@@ -10,12 +10,12 @@ import 'package:vendor/ui/notification_screen/model/notification_response.dart';
 import 'package:vendor/ui/notification_screen/model/notification_status.dart';
 import 'package:vendor/utility/routs.dart';
 import 'package:vendor/utility/sharedpref.dart';
+
 import '../../main.dart';
 
 class NotificationScreen extends StatefulWidget {
   final List<NotificationData> notificationData;
-  NotificationScreen({Key? key, required this.notificationData})
-      : super(key: key);
+  NotificationScreen({Key? key, required this.notificationData}) : super(key: key);
 
   @override
   _NotificationScreenState createState() => _NotificationScreenState();
@@ -50,11 +50,15 @@ class _NotificationScreenState extends State<NotificationScreen> {
             ),
             centerTitle: true,
           ),
-          body: Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              color: Colors.white,
-              child: showNotifications(widget.notificationData)),
+          body: widget.notificationData.isEmpty
+              ? Center(
+                  child: Image.asset("assets/images/no_data.gif"),
+                )
+              : Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  color: Colors.white,
+                  child: showNotifications(widget.notificationData)),
         ),
       ),
     );
@@ -94,9 +98,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           style: TextStyle(
-                            color: data[index].isRead == 1
-                                ? Colors.grey
-                                : Colors.black87,
+                            color: data[index].isRead == 1 ? Colors.grey : Colors.black87,
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
                           ),
@@ -116,9 +118,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
                           style: TextStyle(
-                            color: data[index].isRead == 1
-                                ? Colors.grey
-                                : Colors.black87,
+                            color: data[index].isRead == 1 ? Colors.grey : Colors.black87,
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
                           ),
@@ -133,16 +133,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        DateFormat("dd MMM")
-                                .format(DateTime.parse(data[index].createdAt)) +
+                        DateFormat("dd MMM").format(DateTime.parse(data[index].createdAt)) +
                             " " +
-                            DateFormat.jm()
-                                .format(DateTime.parse(data[index].createdAt))
-                                .toLowerCase(),
+                            DateFormat.jm().format(DateTime.parse(data[index].createdAt)).toLowerCase(),
                         style: TextStyle(
-                            color: data[index].isRead == 1
-                                ? Colors.grey
-                                : Colors.black54,
+                            color: data[index].isRead == 1 ? Colors.grey : Colors.black54,
                             fontSize: 12,
                             fontWeight: FontWeight.bold),
                       ),
@@ -162,25 +157,20 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   Future<NotificationStatusResponse> markAsRead(int id) async {
     Map input = HashMap();
-    String userId =
-        (await SharedPref.getIntegerPreference(SharedPref.VENDORID)).toString();
+    String userId = (await SharedPref.getIntegerPreference(SharedPref.VENDORID)).toString();
 
     input["id"] = id;
     input["vendor_id"] = userId;
 
     try {
-      Response res =
-          await dio.post(Endpoint.UPDATE_NOTIFICATION_STATUS, data: input);
+      Response res = await dio.post(Endpoint.UPDATE_NOTIFICATION_STATUS, data: input);
 
-      NotificationStatusResponse response =
-          NotificationStatusResponse.fromJson(res.toString());
+      NotificationStatusResponse response = NotificationStatusResponse.fromJson(res.toString());
       Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: 2);
       if (response.success) {
-        return NotificationStatusResponse(
-            message: response.message, success: true);
+        return NotificationStatusResponse(message: response.message, success: true);
       } else {
-        return NotificationStatusResponse(
-            message: "Data not found!", success: false);
+        return NotificationStatusResponse(message: "Data not found!", success: false);
       }
     } catch (error) {
       String message = "";

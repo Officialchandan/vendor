@@ -3,8 +3,8 @@ import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/model/normal_ladger_response.dart';
-import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_bloc/normal_ledger_event.dart';
-import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_bloc/normal_ledger_state.dart';
+import 'package:vendor/ui_without_inventory/performancetracker/upi/master_ledger/bloc/master_ledger_history_event.dart';
+import 'package:vendor/ui_without_inventory/performancetracker/upi/master_ledger/bloc/master_ledger_history_state.dart';
 import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/utility.dart';
@@ -31,10 +31,10 @@ class NormalLedgerHistoryBloc extends Bloc<NormalLedgerHistoryEvent, NormalLedge
         // orderList.addAll(response.data);
         // orderList.addAll(response.directBilling);
 
-        // await Future.forEach(response.data, (OrderData order) async {
-        //   order.orderType = 0;
-        //   orderList.add(order);
-        // });
+        await Future.forEach(response.data, (OrderData order) async {
+          order.orderType = 0;
+          orderList.add(order);
+        });
         await Future.forEach(response.directBilling, (OrderData order) async {
           order.orderType = 1;
           orderList.add(order);
