@@ -8,11 +8,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:vendor/ui/money_due_upi/free_coins/free_coins_history_bloc/free_coin_history_state.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/model/normal_ladger_response.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_bloc/normal_ledger_bloc.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_bloc/normal_ledger_event.dart';
-import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_bloc/normal_ledger_state.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_details/noraml_ledger_details.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
@@ -138,20 +136,21 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
             onRefresh: () {
               normalLedgerApiCall(context);
             },
-            child: Column(children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 15.0, right: 15, top: 15),
-                child: TextFormField(
-                  cursorColor: ColorPrimary,
-                  controller: _searchController,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.search,
-                      color: Colors.black,
-                    ),
-                    filled: true,
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0, right: 15, top: 15),
+                  child: TextFormField(
+                    cursorColor: ColorPrimary,
+                    controller: _searchController,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: Colors.black,
+                      ),
+                      filled: true,
 
                       // fillColor: Colors.black,
                       hintText: "search_here_key".tr(),

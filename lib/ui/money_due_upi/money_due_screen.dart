@@ -58,6 +58,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
   GetVendorFreeCoinData? freecoin;
   String result = "";
   String mid = "", orderId = "", token = "", callbackurl = "";
+  int condition = 0;
   @override
   void initState() {
     super.initState();
@@ -106,11 +107,17 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double mwidth = MediaQuery.of(context).size.width;
+    double mheight = MediaQuery.of(context).size.height;
     return BlocProvider<MoneyDueBloc>(
       create: (context) => moneyDueBloc,
       child: Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
+            systemOverlayStyle: SystemUiOverlayStyle(
+              statusBarColor: condition == 0 ? ApproveTextColor : ColorPrimary,
+            ),
+            backgroundColor: condition == 0 ? ApproveTextColor : ColorPrimary,
             title: Text("money_due_upi_key".tr()),
             automaticallyImplyLeading: widget.isShow!,
             elevation: 0,
@@ -132,7 +139,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                   Container(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.width * 50,
-                    color: ColorPrimary,
+                    color: condition == 0 ? ApproveTextColor : ColorPrimary,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       // mainAxisAlignment: MainAxisAlignment.center,
@@ -189,731 +196,1446 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                 offset: Offset(0.0, 1.0), //(x,y)
                                 color: Colors.white)
                           ]),
-                      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                        Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Text(
-                            "types_of_money_due_key".tr(),
-                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
-                          ),
-                        ),
-                        // BlocBuilder<MoneyDueBloc, MoneyDueState>(
-                        //   builder: (context, state) {
-                        //     if (state is MoneyDueInitialState) {
-                        //       moneyDueBloc.add(GetDueAmount());
-                        //     }
-                        //     if (state is GetDueAmountState) {
-                        //       dueAmount = state.dueAmount;
-                        //       categoryDue = state.categoryDue;
-                        //     }
-                        //
-                        //     return Column(
-                        //       children: List.generate(
-                        //           categoryDue.length,
-                        //           (index) => Container(
-                        //                 margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                        //                 decoration: BoxDecoration(
-                        //                   color: ColorPrimary,
-                        //                   borderRadius: BorderRadius.circular(6),
-                        //                 ),
-                        //                 child: Container(
-                        //                   margin: EdgeInsets.only(
-                        //                     left: 3,
-                        //                   ),
-                        //                   decoration: BoxDecoration(
-                        //                     color: Colors.grey.shade50,
-                        //                     borderRadius: BorderRadius.only(
-                        //                         topRight: Radius.circular(5), bottomRight: Radius.circular(5)),
-                        //                   ),
-                        //                   child: ListTile(
-                        //                     onTap: () {},
-                        //                     leading: Image(
-                        //                       image: NetworkImage("${categoryDue[index].image}"),
-                        //                       height: 30,
-                        //                       width: 30,
-                        //                       fit: BoxFit.contain,
-                        //                     ),
-                        //                     title: Text("${categoryDue[index].categoryName}"),
-                        //                     // subtitle: Text("${categoryDue[index]["subTitle"]}"),
-                        //
-                        //                     trailing: Text("₹ ${categoryDue[index].myprofitRevenue}"),
-                        //                   ),
-                        //                 ),
-                        //               )),
-                        //     );
-                        //   },
-                        // ),
-
-                        Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
+                      child: condition == 0
+                          ? Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                               Padding(
-                                padding: const EdgeInsets.only(right: 20.0),
-                                child: Stack(
-                                  clipBehavior: Clip.none,
+                                padding: const EdgeInsets.all(15.0),
+                                child: Text(
+                                  "types_of_money_due_key".tr(),
+                                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
+                                ),
+                              ),
+                              // BlocBuilder<MoneyDueBloc, MoneyDueState>(
+                              //   builder: (context, state) {
+                              //     if (state is MoneyDueInitialState) {
+                              //       moneyDueBloc.add(GetDueAmount());
+                              //     }
+                              //     if (state is GetDueAmountState) {
+                              //       dueAmount = state.dueAmount;
+                              //       categoryDue = state.categoryDue;
+                              //     }
+                              //
+                              //     return Column(
+                              //       children: List.generate(
+                              //           categoryDue.length,
+                              //           (index) => Container(
+                              //                 margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                              //                 decoration: BoxDecoration(
+                              //                   color: ColorPrimary,
+                              //                   borderRadius: BorderRadius.circular(6),
+                              //                 ),
+                              //                 child: Container(
+                              //                   margin: EdgeInsets.only(
+                              //                     left: 3,
+                              //                   ),
+                              //                   decoration: BoxDecoration(
+                              //                     color: Colors.grey.shade50,
+                              //                     borderRadius: BorderRadius.only(
+                              //                         topRight: Radius.circular(5), bottomRight: Radius.circular(5)),
+                              //                   ),
+                              //                   child: ListTile(
+                              //                     onTap: () {},
+                              //                     leading: Image(
+                              //                       image: NetworkImage("${categoryDue[index].image}"),
+                              //                       height: 30,
+                              //                       width: 30,
+                              //                       fit: BoxFit.contain,
+                              //                     ),
+                              //                     title: Text("${categoryDue[index].categoryName}"),
+                              //                     // subtitle: Text("${categoryDue[index]["subTitle"]}"),
+                              //
+                              //                     trailing: Text("₹ ${categoryDue[index].myprofitRevenue}"),
+                              //                   ),
+                              //                 ),
+                              //               )),
+                              //     );
+                              //   },
+                              // ),
+
+                              Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     GestureDetector(
                                       onTap: () {
-                                        log("hiiiii");
                                         Navigator.push(context,
-                                            PageTransition(child: NormalLedger(), type: PageTransitionType.fade));
+                                            PageTransition(child: UpiTransferHistory(), type: PageTransitionType.fade));
                                       },
-                                      child: Container(
-                                        padding: EdgeInsets.fromLTRB(18, 20, 18, 0),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.withOpacity(0.2),
-                                              spreadRadius: 2,
-                                              blurRadius: 10,
-                                              offset: Offset(0, 0), // changes position of shadow
-                                            ),
-                                          ],
-                                          borderRadius: BorderRadius.only(
-                                            topRight: Radius.circular(10),
-                                            bottomLeft: Radius.circular(10),
-                                            bottomRight: Radius.circular(10),
-                                          ),
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text("normal_ledger_key".tr(),
-                                                style: TextStyle(
-                                                    color: Colors.black, fontSize: 16.3, fontWeight: FontWeight.w600)),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            SizedBox(
-                                              height: 10,
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: -27,
-                                      child: Container(
-                                        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.withOpacity(0.1),
-                                              spreadRadius: 1,
-                                              blurRadius: 7,
-                                              offset: Offset(0, -6), // changes position of shadow
-                                            ),
-                                          ],
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(10),
-                                            topRight: Radius.circular(5),
-                                          ),
-                                        ),
-                                        child: Image.asset("assets/images/money-due1.png", width: 27),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: -14,
-                                      right: 28,
-                                      child: Container(
-                                        width: 32,
-                                        height: 14,
-                                        decoration: BoxDecoration(
-                                          color: Color(0xff6657f4).withOpacity(0.10),
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(5),
-                                            topRight: Radius.circular(5),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: -8,
-                                      right: 15,
-                                      child: Container(
-                                        width: 32,
-                                        height: 8,
-                                        decoration: BoxDecoration(
-                                          color: Color(0xff6657f4).withOpacity(0.25),
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(5),
-                                            topRight: Radius.circular(5),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(context,
-                                      PageTransition(child: UpiTransferHistory(), type: PageTransitionType.fade));
-                                },
-                                child: Stack(
-                                  clipBehavior: Clip.none,
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.fromLTRB(18, 20, 18, 0),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.2),
-                                            spreadRadius: 2,
-                                            blurRadius: 10,
-                                            offset: Offset(0, 0), // changes position of shadow
-                                          ),
-                                        ],
-                                        borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(10),
-                                          bottomLeft: Radius.circular(10),
-                                          bottomRight: Radius.circular(10),
-                                        ),
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                      child: Stack(
+                                        clipBehavior: Clip.none,
                                         children: [
-                                          Text("Daily Ledger",
-                                              style: TextStyle(
-                                                  color: Colors.black, fontSize: 16.3, fontWeight: FontWeight.w600)),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
                                           Container(
-                                            height: 1,
-                                            width: 70,
-                                            color: ColorTextPrimary,
-                                          ),
-                                          SizedBox(
-                                            height: 10,
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: -27,
-                                      child: Container(
-                                        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.withOpacity(0.1),
-                                              spreadRadius: 1,
-                                              blurRadius: 7,
-                                              offset: Offset(0, -6), // changes position of shadow
-                                            ),
-                                          ],
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(10),
-                                            topRight: Radius.circular(5),
-                                          ),
-                                        ),
-                                        child: Image.asset("assets/images/money-due2.png", width: 27),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: -14,
-                                      right: 28,
-                                      child: Container(
-                                        width: 32,
-                                        height: 14,
-                                        decoration: BoxDecoration(
-                                          color: Color(0xff6657f4).withOpacity(0.10),
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(5),
-                                            topRight: Radius.circular(5),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: -8,
-                                      right: 15,
-                                      child: Container(
-                                        width: 32,
-                                        height: 8,
-                                        decoration: BoxDecoration(
-                                          color: Color(0xff6657f4).withOpacity(0.25),
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(5),
-                                            topRight: Radius.circular(5),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 20.0),
-                                child: GestureDetector(
-                                  child: Stack(
-                                    clipBehavior: Clip.none,
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.fromLTRB(18, 20, 18, 0),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.withOpacity(0.2),
-                                              spreadRadius: 2,
-                                              blurRadius: 10,
-                                              offset: Offset(0, 0), // changes position of shadow
-                                            ),
-                                          ],
-                                          borderRadius: BorderRadius.only(
-                                            topRight: Radius.circular(10),
-                                            bottomLeft: Radius.circular(10),
-                                            bottomRight: Radius.circular(10),
-                                          ),
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text("upi_transfer_key".tr(),
-                                                style: TextStyle(
-                                                    color: Colors.black, fontSize: 16.3, fontWeight: FontWeight.w600)),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            SizedBox(
-                                              height: 10,
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      Positioned(
-                                        top: -27,
-                                        child: Container(
-                                          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colors.grey.withOpacity(0.1),
-                                                spreadRadius: 1,
-                                                blurRadius: 7,
-                                                offset: Offset(0, -6), // changes position of shadow
+                                            height: 70,
+                                            width: mwidth * 0.42,
+                                            padding: EdgeInsets.fromLTRB(18, 20, 18, 0),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.grey.withOpacity(0.2),
+                                                  spreadRadius: 2,
+                                                  blurRadius: 10,
+                                                  offset: Offset(0, 0), // changes position of shadow
+                                                ),
+                                              ],
+                                              borderRadius: BorderRadius.only(
+                                                topRight: Radius.circular(10),
+                                                bottomLeft: Radius.circular(10),
+                                                bottomRight: Radius.circular(10),
                                               ),
-                                            ],
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(10),
-                                              topRight: Radius.circular(5),
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text("Daily Ledger",
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 16.3,
+                                                        fontWeight: FontWeight.w600)),
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                )
+                                              ],
                                             ),
                                           ),
-                                          child: Image.asset("assets/images/money-due3.png", width: 27),
-                                        ),
-                                      ),
-                                      Positioned(
-                                        top: -14,
-                                        right: 28,
-                                        child: Container(
-                                          width: 32,
-                                          height: 14,
-                                          decoration: BoxDecoration(
-                                            color: Color(0xff6657f4).withOpacity(0.10),
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(5),
-                                              topRight: Radius.circular(5),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Positioned(
-                                        top: -8,
-                                        right: 15,
-                                        child: Container(
-                                          width: 32,
-                                          height: 8,
-                                          decoration: BoxDecoration(
-                                            color: Color(0xff6657f4).withOpacity(0.25),
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(5),
-                                              topRight: Radius.circular(5),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  onTap: () {
-                                    Navigator.push(context,
-                                        PageTransition(child: SalesReturnHistory(), type: PageTransitionType.fade));
-                                  },
-                                ),
-                              ),
-                              GestureDetector(
-                                child: Stack(
-                                  clipBehavior: Clip.none,
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.fromLTRB(18, 20, 18, 0),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.2),
-                                            spreadRadius: 2,
-                                            blurRadius: 10,
-                                            offset: Offset(0, 0), // changes position of shadow
-                                          ),
-                                        ],
-                                        borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(10),
-                                          bottomLeft: Radius.circular(10),
-                                          bottomRight: Radius.circular(10),
-                                        ),
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text("sales_return_key".tr(),
-                                              style: TextStyle(
-                                                  color: Colors.black, fontSize: 16.3, fontWeight: FontWeight.w600)),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          Container(
-                                            height: 1,
-                                            width: 70,
-                                            color: ColorTextPrimary,
-                                          ),
-                                          SizedBox(
-                                            height: 10,
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: -27,
-                                      child: Container(
-                                        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.withOpacity(0.1),
-                                              spreadRadius: 1,
-                                              blurRadius: 7,
-                                              offset: Offset(0, -6), // changes position of shadow
-                                            ),
-                                          ],
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(10),
-                                            topRight: Radius.circular(5),
-                                          ),
-                                        ),
-                                        child: Image.asset("assets/images/money-due4.png", width: 27),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: -14,
-                                      right: 28,
-                                      child: Container(
-                                        width: 32,
-                                        height: 14,
-                                        decoration: BoxDecoration(
-                                          color: Color(0xff6657f4).withOpacity(0.10),
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(5),
-                                            topRight: Radius.circular(5),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: -8,
-                                      right: 15,
-                                      child: Container(
-                                        width: 32,
-                                        height: 8,
-                                        decoration: BoxDecoration(
-                                          color: Color(0xff6657f4).withOpacity(0.25),
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(5),
-                                            topRight: Radius.circular(5),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                onTap: () {
-                                  Navigator.push(context,
-                                      PageTransition(child: ReddemCoinHistory(), type: PageTransitionType.fade));
-                                },
-                              )
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 20.0),
-                                child: GestureDetector(
-                                  child: Stack(
-                                    clipBehavior: Clip.none,
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.fromLTRB(18, 20, 18, 0),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.withOpacity(0.2),
-                                              spreadRadius: 2,
-                                              blurRadius: 10,
-                                              offset: Offset(0, 0), // changes position of shadow
-                                            ),
-                                          ],
-                                          borderRadius: BorderRadius.only(
-                                            topRight: Radius.circular(10),
-                                            bottomLeft: Radius.circular(10),
-                                            bottomRight: Radius.circular(10),
-                                          ),
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text("redeem_coins_key".tr(),
-                                                style: TextStyle(
-                                                    color: Colors.black, fontSize: 16.3, fontWeight: FontWeight.w600)),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            SizedBox(
-                                              height: 10,
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      Positioned(
-                                        top: -27,
-                                        child: Container(
-                                          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colors.grey.withOpacity(0.1),
-                                                spreadRadius: 1,
-                                                blurRadius: 7,
-                                                offset: Offset(0, -6), // changes position of shadow
+                                          Positioned(
+                                            top: -27,
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey.withOpacity(0.1),
+                                                    spreadRadius: 1,
+                                                    blurRadius: 7,
+                                                    offset: Offset(0, -6), // changes position of shadow
+                                                  ),
+                                                ],
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(10),
+                                                  topRight: Radius.circular(5),
+                                                ),
                                               ),
-                                            ],
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(10),
-                                              topRight: Radius.circular(5),
+                                              child: Image.asset("assets/images/money-due2.png", width: 27),
                                             ),
                                           ),
-                                          child: Image.asset("assets/images/money-due3.png", width: 27),
-                                        ),
-                                      ),
-                                      Positioned(
-                                        top: -14,
-                                        right: 28,
-                                        child: Container(
-                                          width: 32,
-                                          height: 14,
-                                          decoration: BoxDecoration(
-                                            color: Color(0xff6657f4).withOpacity(0.10),
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(5),
-                                              topRight: Radius.circular(5),
+                                          Positioned(
+                                            top: -14,
+                                            right: 28,
+                                            child: Container(
+                                              width: 32,
+                                              height: 14,
+                                              decoration: BoxDecoration(
+                                                color: Color(0xff6657f4).withOpacity(0.10),
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(5),
+                                                  topRight: Radius.circular(5),
+                                                ),
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ),
-                                      Positioned(
-                                        top: -8,
-                                        right: 15,
-                                        child: Container(
-                                          width: 32,
-                                          height: 8,
-                                          decoration: BoxDecoration(
-                                            color: Color(0xff6657f4).withOpacity(0.25),
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(5),
-                                              topRight: Radius.circular(5),
+                                          Positioned(
+                                            top: -8,
+                                            right: 15,
+                                            child: Container(
+                                              width: 32,
+                                              height: 8,
+                                              decoration: BoxDecoration(
+                                                color: Color(0xff6657f4).withOpacity(0.25),
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(5),
+                                                  topRight: Radius.circular(5),
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  onTap: () {
-                                    Navigator.push(context,
-                                        PageTransition(child: SalesReturnHistory(), type: PageTransitionType.fade));
-                                  },
-                                ),
-                              ),
-                              GestureDetector(
-                                child: Stack(
-                                  clipBehavior: Clip.none,
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.fromLTRB(18, 20, 18, 0),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.2),
-                                            spreadRadius: 2,
-                                            blurRadius: 10,
-                                            offset: Offset(0, 0), // changes position of shadow
                                           ),
                                         ],
-                                        borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(10),
-                                          bottomLeft: Radius.circular(10),
-                                          bottomRight: Radius.circular(10),
-                                        ),
                                       ),
-                                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 0.0),
+                                      child: GestureDetector(
+                                        child: Stack(
+                                          clipBehavior: Clip.none,
                                           children: [
-                                            Text("free_coins_key".tr(),
-                                                style: TextStyle(
-                                                    color: Colors.black, fontSize: 14.3, fontWeight: FontWeight.w600)),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            SizedBox(
-                                              height: 10,
-                                            )
-                                          ],
-                                        ),
-                                        BlocConsumer<MoneyDueBloc, MoneyDueState>(
-                                            bloc: moneyDueBloc,
-                                            listener: (context, state) {
-                                              if (state is GetFreeCoinState) {
-                                                freecoin = state.data;
-                                                log("=====>${freecoin}");
-                                              }
-                                            },
-                                            builder: (context, state) {
-                                              log("state=====>${state}");
-                                              if (state is GetFreeCoinState) {
-                                                freecoin = state.data;
-                                                log("=====>${freecoin}");
-                                              }
-
-                                              if (freecoin == null) {
-                                                return Container(
-                                                    height: 70, child: Center(child: CircularProgressIndicator()));
-                                              }
-                                              return Column(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            Container(
+                                              width: mwidth * 0.42,
+                                              height: 70,
+                                              padding: EdgeInsets.fromLTRB(18, 20, 18, 0),
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey.withOpacity(0.2),
+                                                    spreadRadius: 2,
+                                                    blurRadius: 10,
+                                                    offset: Offset(0, 0), // changes position of shadow
+                                                  ),
+                                                ],
+                                                borderRadius: BorderRadius.only(
+                                                  topRight: Radius.circular(10),
+                                                  bottomLeft: Radius.circular(10),
+                                                  bottomRight: Radius.circular(10),
+                                                ),
+                                              ),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(
-                                                    "remaining_key".tr(),
-                                                    style: TextStyle(
-                                                        fontSize: 9,
-                                                        color: ColorTextPrimary,
-                                                        fontWeight: FontWeight.w500),
+                                                  SizedBox(
+                                                    height: 5,
                                                   ),
-                                                  Text(
-                                                    "${double.parse(freecoin!.availableCoins).toStringAsFixed(2)}",
-                                                    style: TextStyle(
-                                                        fontSize: 12, color: ColorPrimary, fontWeight: FontWeight.bold),
-                                                  ),
-                                                  Text("out_of_key".tr(),
+                                                  Text("upi_transfer_key".tr(),
                                                       style: TextStyle(
-                                                          fontSize: 9,
-                                                          color: ColorTextPrimary,
-                                                          fontWeight: FontWeight.w500)),
-                                                  Text(
-                                                    "${double.parse(freecoin!.totalCoins).toStringAsFixed(2)}",
-                                                    style: TextStyle(
-                                                        fontSize: 12, color: ColorPrimary, fontWeight: FontWeight.bold),
+                                                          color: Colors.black,
+                                                          fontSize: 16.3,
+                                                          fontWeight: FontWeight.w600)),
+                                                  SizedBox(
+                                                    height: 10,
                                                   )
                                                 ],
-                                              );
-                                            })
-                                      ]),
-                                    ),
-                                    Positioned(
-                                      top: -27,
-                                      child: Container(
-                                        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.withOpacity(0.1),
-                                              spreadRadius: 1,
-                                              blurRadius: 7,
-                                              offset: Offset(0, -6), // changes position of shadow
+                                              ),
+                                            ),
+                                            Positioned(
+                                              top: -27,
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.grey.withOpacity(0.1),
+                                                      spreadRadius: 1,
+                                                      blurRadius: 7,
+                                                      offset: Offset(0, -6), // changes position of shadow
+                                                    ),
+                                                  ],
+                                                  borderRadius: BorderRadius.only(
+                                                    topLeft: Radius.circular(10),
+                                                    topRight: Radius.circular(5),
+                                                  ),
+                                                ),
+                                                child: Image.asset("assets/images/money-due3.png", width: 27),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              top: -14,
+                                              right: 28,
+                                              child: Container(
+                                                width: 32,
+                                                height: 14,
+                                                decoration: BoxDecoration(
+                                                  color: Color(0xff6657f4).withOpacity(0.10),
+                                                  borderRadius: BorderRadius.only(
+                                                    topLeft: Radius.circular(5),
+                                                    topRight: Radius.circular(5),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              top: -8,
+                                              right: 15,
+                                              child: Container(
+                                                width: 32,
+                                                height: 8,
+                                                decoration: BoxDecoration(
+                                                  color: Color(0xff6657f4).withOpacity(0.25),
+                                                  borderRadius: BorderRadius.only(
+                                                    topLeft: Radius.circular(5),
+                                                    topRight: Radius.circular(5),
+                                                  ),
+                                                ),
+                                              ),
                                             ),
                                           ],
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(10),
-                                            topRight: Radius.circular(5),
-                                          ),
                                         ),
-                                        child: Image.asset("assets/images/money-due4.png", width: 27),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: -14,
-                                      right: 28,
-                                      child: Container(
-                                        width: 32,
-                                        height: 14,
-                                        decoration: BoxDecoration(
-                                          color: Color(0xff6657f4).withOpacity(0.10),
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(5),
-                                            topRight: Radius.circular(5),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: -8,
-                                      right: 15,
-                                      child: Container(
-                                        width: 32,
-                                        height: 8,
-                                        decoration: BoxDecoration(
-                                          color: Color(0xff6657f4).withOpacity(0.25),
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(5),
-                                            topRight: Radius.circular(5),
-                                          ),
-                                        ),
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              PageTransition(
+                                                  child: SalesReturnHistory(), type: PageTransitionType.fade));
+                                        },
                                       ),
                                     ),
                                   ],
                                 ),
-                                onTap: () {
-                                  Navigator.push(context,
-                                      PageTransition(child: FreeCoinsHistory(), type: PageTransitionType.fade));
-                                },
-                              )
-                            ],
-                          ),
-                        ),
-                      ]),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    GestureDetector(
+                                      child: Stack(
+                                        clipBehavior: Clip.none,
+                                        children: [
+                                          Container(
+                                            height: 70,
+                                            width: mwidth * 0.42,
+                                            padding: EdgeInsets.fromLTRB(18, 20, 18, 0),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.grey.withOpacity(0.2),
+                                                  spreadRadius: 2,
+                                                  blurRadius: 10,
+                                                  offset: Offset(0, 0), // changes position of shadow
+                                                ),
+                                              ],
+                                              borderRadius: BorderRadius.only(
+                                                topRight: Radius.circular(10),
+                                                bottomLeft: Radius.circular(10),
+                                                bottomRight: Radius.circular(10),
+                                              ),
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text("sales_return_key".tr(),
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 16.3,
+                                                        fontWeight: FontWeight.w600)),
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: -27,
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey.withOpacity(0.1),
+                                                    spreadRadius: 1,
+                                                    blurRadius: 7,
+                                                    offset: Offset(0, -6), // changes position of shadow
+                                                  ),
+                                                ],
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(10),
+                                                  topRight: Radius.circular(5),
+                                                ),
+                                              ),
+                                              child: Image.asset("assets/images/money-due4.png", width: 27),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: -14,
+                                            right: 28,
+                                            child: Container(
+                                              width: 32,
+                                              height: 14,
+                                              decoration: BoxDecoration(
+                                                color: Color(0xff6657f4).withOpacity(0.10),
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(5),
+                                                  topRight: Radius.circular(5),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: -8,
+                                            right: 15,
+                                            child: Container(
+                                              width: 32,
+                                              height: 8,
+                                              decoration: BoxDecoration(
+                                                color: Color(0xff6657f4).withOpacity(0.25),
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(5),
+                                                  topRight: Radius.circular(5),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      onTap: () {
+                                        Navigator.push(context,
+                                            PageTransition(child: ReddemCoinHistory(), type: PageTransitionType.fade));
+                                      },
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 0.0),
+                                      child: GestureDetector(
+                                        child: Stack(
+                                          clipBehavior: Clip.none,
+                                          children: [
+                                            Container(
+                                              height: 70,
+                                              width: mwidth * 0.42,
+                                              padding: EdgeInsets.fromLTRB(18, 20, 18, 0),
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey.withOpacity(0.2),
+                                                    spreadRadius: 2,
+                                                    blurRadius: 10,
+                                                    offset: Offset(0, 0), // changes position of shadow
+                                                  ),
+                                                ],
+                                                borderRadius: BorderRadius.only(
+                                                  topRight: Radius.circular(10),
+                                                  bottomLeft: Radius.circular(10),
+                                                  bottomRight: Radius.circular(10),
+                                                ),
+                                              ),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text("redeem_coins_key".tr(),
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 16.3,
+                                                          fontWeight: FontWeight.w600)),
+                                                  SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            Positioned(
+                                              top: -27,
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.grey.withOpacity(0.1),
+                                                      spreadRadius: 1,
+                                                      blurRadius: 7,
+                                                      offset: Offset(0, -6), // changes position of shadow
+                                                    ),
+                                                  ],
+                                                  borderRadius: BorderRadius.only(
+                                                    topLeft: Radius.circular(10),
+                                                    topRight: Radius.circular(5),
+                                                  ),
+                                                ),
+                                                child: Image.asset("assets/images/money-due3.png", width: 27),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              top: -27,
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.grey.withOpacity(0.1),
+                                                      spreadRadius: 1,
+                                                      blurRadius: 7,
+                                                      offset: Offset(0, -6), // changes position of shadow
+                                                    ),
+                                                  ],
+                                                  borderRadius: BorderRadius.only(
+                                                    topLeft: Radius.circular(10),
+                                                    topRight: Radius.circular(5),
+                                                  ),
+                                                ),
+                                                child: Image.asset("assets/images/money-due3.png", width: 27),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              top: -14,
+                                              right: 28,
+                                              child: Container(
+                                                width: 32,
+                                                height: 14,
+                                                decoration: BoxDecoration(
+                                                  color: Color(0xff6657f4).withOpacity(0.10),
+                                                  borderRadius: BorderRadius.only(
+                                                    topLeft: Radius.circular(5),
+                                                    topRight: Radius.circular(5),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              top: -8,
+                                              right: 15,
+                                              child: Container(
+                                                width: 32,
+                                                height: 8,
+                                                decoration: BoxDecoration(
+                                                  color: Color(0xff6657f4).withOpacity(0.25),
+                                                  borderRadius: BorderRadius.only(
+                                                    topLeft: Radius.circular(5),
+                                                    topRight: Radius.circular(5),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              PageTransition(
+                                                  child: SalesReturnHistory(), type: PageTransitionType.fade));
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(0.0),
+                                      child: Stack(
+                                        clipBehavior: Clip.none,
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              log("hiiiii");
+                                              Navigator.push(context,
+                                                  PageTransition(child: NormalLedger(), type: PageTransitionType.fade));
+                                            },
+                                            child: Container(
+                                              height: 70,
+                                              width: mwidth * 0.88,
+                                              padding: EdgeInsets.fromLTRB(18, 20, 18, 0),
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey.withOpacity(0.2),
+                                                    spreadRadius: 2,
+                                                    blurRadius: 10,
+                                                    offset: Offset(0, 0), // changes position of shadow
+                                                  ),
+                                                ],
+                                                borderRadius: BorderRadius.only(
+                                                  topRight: Radius.circular(10),
+                                                  bottomLeft: Radius.circular(10),
+                                                  bottomRight: Radius.circular(10),
+                                                ),
+                                              ),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text("normal_ledger_key".tr(),
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 16.3,
+                                                          fontWeight: FontWeight.w600)),
+                                                  SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: -27,
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey.withOpacity(0.1),
+                                                    spreadRadius: 1,
+                                                    blurRadius: 7,
+                                                    offset: Offset(0, -6), // changes position of shadow
+                                                  ),
+                                                ],
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(10),
+                                                  topRight: Radius.circular(5),
+                                                ),
+                                              ),
+                                              child: Image.asset("assets/images/money-due1.png", width: 27),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: -14,
+                                            right: 28,
+                                            child: Container(
+                                              width: 32,
+                                              height: 14,
+                                              decoration: BoxDecoration(
+                                                color: Color(0xff6657f4).withOpacity(0.10),
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(5),
+                                                  topRight: Radius.circular(5),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: -8,
+                                            right: 15,
+                                            child: Container(
+                                              width: 32,
+                                              height: 8,
+                                              decoration: BoxDecoration(
+                                                color: Color(0xff6657f4).withOpacity(0.25),
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(5),
+                                                  topRight: Radius.circular(5),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ])
+                          : Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                              Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: Text(
+                                  "types_of_money_due_key".tr(),
+                                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
+                                ),
+                              ),
+                              // BlocBuilder<MoneyDueBloc, MoneyDueState>(
+                              //   builder: (context, state) {
+                              //     if (state is MoneyDueInitialState) {
+                              //       moneyDueBloc.add(GetDueAmount());
+                              //     }
+                              //     if (state is GetDueAmountState) {
+                              //       dueAmount = state.dueAmount;
+                              //       categoryDue = state.categoryDue;
+                              //     }
+                              //
+                              //     return Column(
+                              //       children: List.generate(
+                              //           categoryDue.length,
+                              //           (index) => Container(
+                              //                 margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                              //                 decoration: BoxDecoration(
+                              //                   color: ColorPrimary,
+                              //                   borderRadius: BorderRadius.circular(6),
+                              //                 ),
+                              //                 child: Container(
+                              //                   margin: EdgeInsets.only(
+                              //                     left: 3,
+                              //                   ),
+                              //                   decoration: BoxDecoration(
+                              //                     color: Colors.grey.shade50,
+                              //                     borderRadius: BorderRadius.only(
+                              //                         topRight: Radius.circular(5), bottomRight: Radius.circular(5)),
+                              //                   ),
+                              //                   child: ListTile(
+                              //                     onTap: () {},
+                              //                     leading: Image(
+                              //                       image: NetworkImage("${categoryDue[index].image}"),
+                              //                       height: 30,
+                              //                       width: 30,
+                              //                       fit: BoxFit.contain,
+                              //                     ),
+                              //                     title: Text("${categoryDue[index].categoryName}"),
+                              //                     // subtitle: Text("${categoryDue[index]["subTitle"]}"),
+                              //
+                              //                     trailing: Text("₹ ${categoryDue[index].myprofitRevenue}"),
+                              //                   ),
+                              //                 ),
+                              //               )),
+                              //     );
+                              //   },
+                              // ),
+
+                              Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(0.0),
+                                      child: Stack(
+                                        clipBehavior: Clip.none,
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              log("hiiiii");
+                                              Navigator.push(context,
+                                                  PageTransition(child: NormalLedger(), type: PageTransitionType.fade));
+                                            },
+                                            child: Container(
+                                              height: 70,
+                                              width: mwidth * 0.42,
+                                              padding: EdgeInsets.fromLTRB(18, 20, 18, 0),
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey.withOpacity(0.2),
+                                                    spreadRadius: 2,
+                                                    blurRadius: 10,
+                                                    offset: Offset(0, 0), // changes position of shadow
+                                                  ),
+                                                ],
+                                                borderRadius: BorderRadius.only(
+                                                  topRight: Radius.circular(10),
+                                                  bottomLeft: Radius.circular(10),
+                                                  bottomRight: Radius.circular(10),
+                                                ),
+                                              ),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text("normal_ledger_key".tr(),
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 16.3,
+                                                          fontWeight: FontWeight.w600)),
+                                                  SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: -27,
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey.withOpacity(0.1),
+                                                    spreadRadius: 1,
+                                                    blurRadius: 7,
+                                                    offset: Offset(0, -6), // changes position of shadow
+                                                  ),
+                                                ],
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(10),
+                                                  topRight: Radius.circular(5),
+                                                ),
+                                              ),
+                                              child: Image.asset("assets/images/money-due1.png", width: 27),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: -14,
+                                            right: 28,
+                                            child: Container(
+                                              width: 32,
+                                              height: 14,
+                                              decoration: BoxDecoration(
+                                                color: Color(0xff6657f4).withOpacity(0.10),
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(5),
+                                                  topRight: Radius.circular(5),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: -8,
+                                            right: 15,
+                                            child: Container(
+                                              width: 32,
+                                              height: 8,
+                                              decoration: BoxDecoration(
+                                                color: Color(0xff6657f4).withOpacity(0.25),
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(5),
+                                                  topRight: Radius.circular(5),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(context,
+                                            PageTransition(child: UpiTransferHistory(), type: PageTransitionType.fade));
+                                      },
+                                      child: Stack(
+                                        clipBehavior: Clip.none,
+                                        children: [
+                                          Container(
+                                            height: 70,
+                                            width: mwidth * 0.42,
+                                            padding: EdgeInsets.fromLTRB(18, 20, 18, 0),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.grey.withOpacity(0.2),
+                                                  spreadRadius: 2,
+                                                  blurRadius: 10,
+                                                  offset: Offset(0, 0), // changes position of shadow
+                                                ),
+                                              ],
+                                              borderRadius: BorderRadius.only(
+                                                topRight: Radius.circular(10),
+                                                bottomLeft: Radius.circular(10),
+                                                bottomRight: Radius.circular(10),
+                                              ),
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text("Daily Ledger",
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 16.3,
+                                                        fontWeight: FontWeight.w600)),
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: -27,
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey.withOpacity(0.1),
+                                                    spreadRadius: 1,
+                                                    blurRadius: 7,
+                                                    offset: Offset(0, -6), // changes position of shadow
+                                                  ),
+                                                ],
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(10),
+                                                  topRight: Radius.circular(5),
+                                                ),
+                                              ),
+                                              child: Image.asset("assets/images/money-due2.png", width: 27),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: -14,
+                                            right: 28,
+                                            child: Container(
+                                              width: 32,
+                                              height: 14,
+                                              decoration: BoxDecoration(
+                                                color: Color(0xff6657f4).withOpacity(0.10),
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(5),
+                                                  topRight: Radius.circular(5),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: -8,
+                                            right: 15,
+                                            child: Container(
+                                              width: 32,
+                                              height: 8,
+                                              decoration: BoxDecoration(
+                                                color: Color(0xff6657f4).withOpacity(0.25),
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(5),
+                                                  topRight: Radius.circular(5),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 0.0),
+                                      child: GestureDetector(
+                                        child: Stack(
+                                          clipBehavior: Clip.none,
+                                          children: [
+                                            Container(
+                                              width: mwidth * 0.42,
+                                              height: 70,
+                                              padding: EdgeInsets.fromLTRB(18, 20, 18, 0),
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey.withOpacity(0.2),
+                                                    spreadRadius: 2,
+                                                    blurRadius: 10,
+                                                    offset: Offset(0, 0), // changes position of shadow
+                                                  ),
+                                                ],
+                                                borderRadius: BorderRadius.only(
+                                                  topRight: Radius.circular(10),
+                                                  bottomLeft: Radius.circular(10),
+                                                  bottomRight: Radius.circular(10),
+                                                ),
+                                              ),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  Text("upi_transfer_key".tr(),
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 16.3,
+                                                          fontWeight: FontWeight.w600)),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            Positioned(
+                                              top: -27,
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.grey.withOpacity(0.1),
+                                                      spreadRadius: 1,
+                                                      blurRadius: 7,
+                                                      offset: Offset(0, -6), // changes position of shadow
+                                                    ),
+                                                  ],
+                                                  borderRadius: BorderRadius.only(
+                                                    topLeft: Radius.circular(10),
+                                                    topRight: Radius.circular(5),
+                                                  ),
+                                                ),
+                                                child: Image.asset("assets/images/money-due3.png", width: 27),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              top: -14,
+                                              right: 28,
+                                              child: Container(
+                                                width: 32,
+                                                height: 14,
+                                                decoration: BoxDecoration(
+                                                  color: Color(0xff6657f4).withOpacity(0.10),
+                                                  borderRadius: BorderRadius.only(
+                                                    topLeft: Radius.circular(5),
+                                                    topRight: Radius.circular(5),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              top: -8,
+                                              right: 15,
+                                              child: Container(
+                                                width: 32,
+                                                height: 8,
+                                                decoration: BoxDecoration(
+                                                  color: Color(0xff6657f4).withOpacity(0.25),
+                                                  borderRadius: BorderRadius.only(
+                                                    topLeft: Radius.circular(5),
+                                                    topRight: Radius.circular(5),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              PageTransition(
+                                                  child: SalesReturnHistory(), type: PageTransitionType.fade));
+                                        },
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      child: Stack(
+                                        clipBehavior: Clip.none,
+                                        children: [
+                                          Container(
+                                            height: 70,
+                                            width: mwidth * 0.42,
+                                            padding: EdgeInsets.fromLTRB(18, 20, 18, 0),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.grey.withOpacity(0.2),
+                                                  spreadRadius: 2,
+                                                  blurRadius: 10,
+                                                  offset: Offset(0, 0), // changes position of shadow
+                                                ),
+                                              ],
+                                              borderRadius: BorderRadius.only(
+                                                topRight: Radius.circular(10),
+                                                bottomLeft: Radius.circular(10),
+                                                bottomRight: Radius.circular(10),
+                                              ),
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text("sales_return_key".tr(),
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 16.3,
+                                                        fontWeight: FontWeight.w600)),
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: -27,
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey.withOpacity(0.1),
+                                                    spreadRadius: 1,
+                                                    blurRadius: 7,
+                                                    offset: Offset(0, -6), // changes position of shadow
+                                                  ),
+                                                ],
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(10),
+                                                  topRight: Radius.circular(5),
+                                                ),
+                                              ),
+                                              child: Image.asset("assets/images/money-due4.png", width: 27),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: -14,
+                                            right: 28,
+                                            child: Container(
+                                              width: 32,
+                                              height: 14,
+                                              decoration: BoxDecoration(
+                                                color: Color(0xff6657f4).withOpacity(0.10),
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(5),
+                                                  topRight: Radius.circular(5),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: -8,
+                                            right: 15,
+                                            child: Container(
+                                              width: 32,
+                                              height: 8,
+                                              decoration: BoxDecoration(
+                                                color: Color(0xff6657f4).withOpacity(0.25),
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(5),
+                                                  topRight: Radius.circular(5),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      onTap: () {
+                                        Navigator.push(context,
+                                            PageTransition(child: ReddemCoinHistory(), type: PageTransitionType.fade));
+                                      },
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 0.0),
+                                      child: GestureDetector(
+                                        child: Stack(
+                                          clipBehavior: Clip.none,
+                                          children: [
+                                            Container(
+                                              height: 70,
+                                              width: mwidth * 0.42,
+                                              padding: EdgeInsets.fromLTRB(18, 20, 18, 0),
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey.withOpacity(0.2),
+                                                    spreadRadius: 2,
+                                                    blurRadius: 10,
+                                                    offset: Offset(0, 0), // changes position of shadow
+                                                  ),
+                                                ],
+                                                borderRadius: BorderRadius.only(
+                                                  topRight: Radius.circular(10),
+                                                  bottomLeft: Radius.circular(10),
+                                                  bottomRight: Radius.circular(10),
+                                                ),
+                                              ),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text("redeem_coins_key".tr(),
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 16.3,
+                                                          fontWeight: FontWeight.w600)),
+                                                  SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            Positioned(
+                                              top: -27,
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.grey.withOpacity(0.1),
+                                                      spreadRadius: 1,
+                                                      blurRadius: 7,
+                                                      offset: Offset(0, -6), // changes position of shadow
+                                                    ),
+                                                  ],
+                                                  borderRadius: BorderRadius.only(
+                                                    topLeft: Radius.circular(10),
+                                                    topRight: Radius.circular(5),
+                                                  ),
+                                                ),
+                                                child: Image.asset("assets/images/money-due3.png", width: 27),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              top: -27,
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.grey.withOpacity(0.1),
+                                                      spreadRadius: 1,
+                                                      blurRadius: 7,
+                                                      offset: Offset(0, -6), // changes position of shadow
+                                                    ),
+                                                  ],
+                                                  borderRadius: BorderRadius.only(
+                                                    topLeft: Radius.circular(10),
+                                                    topRight: Radius.circular(5),
+                                                  ),
+                                                ),
+                                                child: Image.asset("assets/images/money-due3.png", width: 27),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              top: -14,
+                                              right: 28,
+                                              child: Container(
+                                                width: 32,
+                                                height: 14,
+                                                decoration: BoxDecoration(
+                                                  color: Color(0xff6657f4).withOpacity(0.10),
+                                                  borderRadius: BorderRadius.only(
+                                                    topLeft: Radius.circular(5),
+                                                    topRight: Radius.circular(5),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              top: -8,
+                                              right: 15,
+                                              child: Container(
+                                                width: 32,
+                                                height: 8,
+                                                decoration: BoxDecoration(
+                                                  color: Color(0xff6657f4).withOpacity(0.25),
+                                                  borderRadius: BorderRadius.only(
+                                                    topLeft: Radius.circular(5),
+                                                    topRight: Radius.circular(5),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              PageTransition(
+                                                  child: SalesReturnHistory(), type: PageTransitionType.fade));
+                                        },
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      child: Stack(
+                                        clipBehavior: Clip.none,
+                                        children: [
+                                          Container(
+                                            width: mwidth * 0.42,
+                                            height: 70,
+                                            padding: EdgeInsets.fromLTRB(18, 20, 18, 0),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.grey.withOpacity(0.2),
+                                                  spreadRadius: 2,
+                                                  blurRadius: 10,
+                                                  offset: Offset(0, 0), // changes position of shadow
+                                                ),
+                                              ],
+                                              borderRadius: BorderRadius.only(
+                                                topRight: Radius.circular(10),
+                                                bottomLeft: Radius.circular(10),
+                                                bottomRight: Radius.circular(10),
+                                              ),
+                                            ),
+                                            child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                                              Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text("free_coins_key".tr(),
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 14.3,
+                                                          fontWeight: FontWeight.w600)),
+                                                  SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  )
+                                                ],
+                                              ),
+                                              // BlocConsumer<MoneyDueBloc, MoneyDueState>(
+                                              //     bloc: moneyDueBloc,
+                                              //     listener: (context, state) {
+                                              //       if (state is GetFreeCoinState) {
+                                              //         freecoin = state.data;
+                                              //         log("=====>${freecoin}");
+                                              //       }
+                                              //     },
+                                              //     builder: (context, state) {
+                                              //       log("state=====>${state}");
+                                              //       if (state is GetFreeCoinState) {
+                                              //         freecoin = state.data;
+                                              //         log("=====>${freecoin}");
+                                              //       }
+                                              //
+                                              //       if (freecoin == null) {
+                                              //         return Container(
+                                              //             height: 70, child: Center(child: CircularProgressIndicator()));
+                                              //       }
+                                              //       return Column(
+                                              //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              //         children: [
+                                              //           Text(
+                                              //             "remaining_key".tr(),
+                                              //             style: TextStyle(
+                                              //                 fontSize: 9,
+                                              //                 color: ColorTextPrimary,
+                                              //                 fontWeight: FontWeight.w500),
+                                              //           ),
+                                              //           Text(
+                                              //             "${double.parse(freecoin!.availableCoins).toStringAsFixed(2)}",
+                                              //             style: TextStyle(
+                                              //                 fontSize: 12, color: ColorPrimary, fontWeight: FontWeight.bold),
+                                              //           ),
+                                              //           Text("out_of_key".tr(),
+                                              //               style: TextStyle(
+                                              //                   fontSize: 9,
+                                              //                   color: ColorTextPrimary,
+                                              //                   fontWeight: FontWeight.w500)),
+                                              //           Text(
+                                              //             "${double.parse(freecoin!.totalCoins).toStringAsFixed(2)}",
+                                              //             style: TextStyle(
+                                              //                 fontSize: 12, color: ColorPrimary, fontWeight: FontWeight.bold),
+                                              //           )
+                                              //         ],
+                                              //       );
+                                              //     })
+                                            ]),
+                                          ),
+                                          Positioned(
+                                              top: -0,
+                                              right: 02,
+                                              child: BlocConsumer<MoneyDueBloc, MoneyDueState>(
+                                                  bloc: moneyDueBloc,
+                                                  listener: (context, state) {
+                                                    if (state is GetFreeCoinState) {
+                                                      freecoin = state.data;
+                                                      log("=====>${freecoin}");
+                                                    }
+                                                  },
+                                                  builder: (context, state) {
+                                                    log("state=====>${state}");
+                                                    if (state is GetFreeCoinState) {
+                                                      freecoin = state.data;
+                                                      log("=====>${freecoin}");
+                                                    }
+
+                                                    if (freecoin == null) {
+                                                      return Container(
+                                                          height: 70,
+                                                          child: Center(child: CircularProgressIndicator()));
+                                                    }
+                                                    return Column(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                                      children: [
+                                                        Text(
+                                                          "remaining_key".tr(),
+                                                          style: TextStyle(
+                                                              fontSize: 11,
+                                                              color: ColorTextPrimary,
+                                                              fontWeight: FontWeight.w500),
+                                                        ),
+                                                        Text(
+                                                          "${double.parse(freecoin!.availableCoins).toStringAsFixed(2)}",
+                                                          style: TextStyle(
+                                                              fontSize: 14,
+                                                              color: ColorPrimary,
+                                                              fontWeight: FontWeight.bold),
+                                                        ),
+                                                        Text(
+                                                          "out_of_key".tr(),
+                                                          style: TextStyle(
+                                                              fontSize: 11,
+                                                              color: ColorTextPrimary,
+                                                              fontWeight: FontWeight.w500),
+                                                        ),
+                                                        Text(
+                                                          "${double.parse(freecoin!.totalCoins).toStringAsFixed(2)}",
+                                                          style: TextStyle(
+                                                              fontSize: 14,
+                                                              color: ColorPrimary,
+                                                              fontWeight: FontWeight.bold),
+                                                        )
+                                                      ],
+                                                    );
+                                                  })),
+                                          Positioned(
+                                            top: -27,
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey.withOpacity(0.1),
+                                                    spreadRadius: 1,
+                                                    blurRadius: 7,
+                                                    offset: Offset(0, -6), // changes position of shadow
+                                                  ),
+                                                ],
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(10),
+                                                  topRight: Radius.circular(5),
+                                                ),
+                                              ),
+                                              child: Image.asset("assets/images/money-due4.png", width: 27),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: -14,
+                                            right: 28,
+                                            child: Container(
+                                              width: 32,
+                                              height: 14,
+                                              decoration: BoxDecoration(
+                                                color: Color(0xff6657f4).withOpacity(0.10),
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(5),
+                                                  topRight: Radius.circular(5),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: -8,
+                                            right: 15,
+                                            child: Container(
+                                              width: 32,
+                                              height: 8,
+                                              decoration: BoxDecoration(
+                                                color: Color(0xff6657f4).withOpacity(0.25),
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(5),
+                                                  topRight: Radius.circular(5),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      onTap: () {
+                                        Navigator.push(context,
+                                            PageTransition(child: FreeCoinsHistory(), type: PageTransitionType.fade));
+                                      },
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ]),
                     ),
                   )
                 ],
