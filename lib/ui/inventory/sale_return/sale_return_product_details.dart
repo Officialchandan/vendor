@@ -88,7 +88,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         AutoSizeText(
-                          "Customer Coin Balance",
+                          "customer_coin_balance_key".tr(),
                           maxLines: 1,
                           maxFontSize: 16,
                           minFontSize: 12,
@@ -135,7 +135,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Return Calculation",
+                          "return_calculation_key".tr(),
                           style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
@@ -148,7 +148,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Amount Paid",
+                              "amt_paid_key".tr(),
                               style: TextStyle(
                                   fontSize: 13, color: Colors.black87),
                             ),
@@ -168,7 +168,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Earn Coins",
+                              "earn_coins_key".tr(),
                               style: TextStyle(
                                   fontSize: 13, color: Colors.black87),
                             ),
@@ -199,7 +199,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Redeem Coins",
+                              "redeem_coins_key".tr(),
                               style: TextStyle(
                                   fontSize: 13, color: Colors.black87),
                             ),
@@ -230,7 +230,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Customer Coin Balance",
+                              "customer_coin_balance_key".tr(),
                               style: TextStyle(
                                   fontSize: 13, color: Colors.black87),
                             ),
@@ -259,7 +259,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Adjusted Balance",
+                              "adj_balance_key".tr(),
                               style: TextStyle(
                                   fontSize: 13, color: Colors.black87),
                             ),
@@ -285,7 +285,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                           height: 10,
                         ),
                         Text(
-                          "Amount To Be Returned To Customer",
+                          "amt_return_to_customer_key".tr(),
                           style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.bold,

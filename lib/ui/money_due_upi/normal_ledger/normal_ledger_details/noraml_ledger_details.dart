@@ -170,7 +170,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
             icon: Icon(Icons.arrow_back_ios),
           ),
           title: Text(
-            "Normal Ledger Details",
+            "normal_ledger_details_key".tr(),
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
@@ -260,12 +260,18 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           padding: const EdgeInsets.only(left: 8, right: 8, top: 2, bottom: 2),
                           child: widget.order.status == 1
                               ? Text(
-                                  "Pending",
-                                  style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: RejectedTextColor),
+                                  "pending_key".tr(),
+                                  style: TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold,
+                                      color: RejectedTextColor),
                                 )
                               : Text(
-                                  "Paid",
-                                  style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: GreenBoxTextColor),
+                                  "paid_key".tr(),
+                                  style: TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold,
+                                      color: GreenBoxTextColor),
                                 ),
                         ),
                       ),
@@ -291,8 +297,11 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 14, top: 10),
                     child: Text(
-                      "All Items",
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87),
+                      "all_items_key".tr(),
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87),
                     ),
                   ),
                 ),
@@ -383,7 +392,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                                                             color: Colors.grey),
                                                       ),
                                                       Text(
-                                                        "Commission \u20B9${widget.order.myprofitRevenue}",
+                                                        "${"commission_key".tr()} \u20B9${widget.order.myprofitRevenue}",
                                                         style: TextStyle(
                                                             fontSize: 11,
                                                             fontWeight: FontWeight.bold,
@@ -415,7 +424,11 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                                             ],
                                           ),
                                           child: Padding(
-                                            padding: const EdgeInsets.only(left: 5, right: 5, top: 1, bottom: 1),
+                                            padding: const EdgeInsets.only(
+                                                left: 5,
+                                                right: 5,
+                                                top: 1,
+                                                bottom: 1),
                                             child: Text(
                                               "Redeemed",
                                               style: TextStyle(
@@ -470,8 +483,11 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Commission Amount",
-                        style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black87),
+                        "commission_amt_key".tr(),
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87),
                       ),
                     ],
                   ),
@@ -482,8 +498,11 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Total Commission",
-                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                        "total_commission_key".tr(),
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87),
                       ),
                       Text(
                         "\u20B9${widget.order.myprofitRevenue}",
@@ -498,8 +517,11 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Redeemed Amount",
-                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                        "redeemed_amount_key".tr(),
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87),
                       ),
                       Text(
                         "\u20B9 $reddem",
@@ -560,8 +582,11 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Amount Paid To My Profit",
-                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
+                          "amt_paid_to_my_profit_key".tr(),
+                          style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
                         ),
                         Text(
                           "\u20B9 $finalamount",
@@ -592,8 +617,11 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Amount Paid To Vendor",
-                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
+                          "amt_paid_to_vendor_key".tr(),
+                          style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
                         ),
                         Text(
                           "\u20B9 $finalamount",
@@ -622,8 +650,11 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Sales Return History",
-                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black87),
+                              "sales_return_history_key".tr(),
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black87),
                             ),
                             Text(
                               "${DateFormat("dd MMM yyyy").format(DateTime.parse(details!.dateTime))}  " +
@@ -639,8 +670,11 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Earn Coins",
-                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                              "earn_coins_key".tr(),
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black87),
                             ),
                             Row(
                               children: [
@@ -664,8 +698,11 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Redeem Coins",
-                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                              "redeem_coins_key".tr(),
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black87),
                             ),
                             Row(
                               children: [
@@ -689,8 +726,11 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Customer Coins Balance",
-                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                              "customer_coin_balance_key".tr(),
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black87),
                             ),
                             Row(
                               children: [
@@ -714,8 +754,11 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Net Balance",
-                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                              "net_balance_key".tr(),
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black87),
                             ),
                             Row(
                               children: [
@@ -739,8 +782,11 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Amount Return to Customer",
-                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                              "amt_return_to_customer_key".tr(),
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black87),
                             ),
                             Row(
                               children: [
@@ -771,8 +817,11 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
-                              "Sum(\u20B9 $amtPaid  - \u20B9 $netBalance = \u20B9 ${(amtPaid - netBalance).toStringAsFixed(2)})",
-                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey),
+                              "${"sum_key".tr()} (\u20B9 $amtPaid  - \u20B9 $netBalance = \u20B9 ${(amtPaid - netBalance).toStringAsFixed(2)})",
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey),
                             ),
                           ],
                         ),
@@ -800,8 +849,11 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Sales Return History",
-                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black87),
+                              "sales_return_history_key".tr(),
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black87),
                             ),
                           ],
                         ),
@@ -812,8 +864,11 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Amount Return To Vendor",
-                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                              "amt_return_to_vendor_key".tr(),
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black87),
                             ),
                             Text(
                               "\u20B9${details!.amountPaidToVendor}",
@@ -828,8 +883,11 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Amount Return To MyProfit",
-                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                              "amt_return_to_my_profit_key".tr(),
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black87),
                             ),
                             Text(
                               "\u20B9 ${details!.amountPaidToMyProfit}",
@@ -892,8 +950,11 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Amount Paid To My Profit",
-                                style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
+                                "amt_paid_to_my_profit_key".tr(),
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
                               ),
                               Text(
                                 "\u20B9 $finalamount",
@@ -924,8 +985,11 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Amount Paid To Vendor",
-                                style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
+                                "amt_paid_to_vendor_key".tr(),
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
                               ),
                               Text(
                                 "\u20B9 $finalamount",
@@ -1013,8 +1077,11 @@ class DirectBillingListItem extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Commission \u20B9${commission}",
-                                  style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.black87),
+                                  "${"commission_key".tr()} \u20B9${commission}",
+                                  style: TextStyle(
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black87),
                                 ),
                               ],
                             ),
@@ -1040,8 +1107,11 @@ class DirectBillingListItem extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 5, right: 5, top: 1, bottom: 1),
                       child: Text(
-                        "Redeemed",
-                        style: TextStyle(color: RejectedTextColor, fontWeight: FontWeight.bold, fontSize: 9),
+                        "redeemed_key".tr(),
+                        style: TextStyle(
+                            color: RejectedTextColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 9),
                       ),
                     ),
                   ),

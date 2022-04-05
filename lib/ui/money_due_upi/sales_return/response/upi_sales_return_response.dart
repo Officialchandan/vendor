@@ -101,9 +101,9 @@ class BillingDetails {
             ? "0"
             : json["return_amount_customer"].toString(),
         dateTime: json["date_time"] == null ? "" : json["date_time"].toString(),
-        customerCoinBalance: json["customer_coin_balance"] == null
+        customerCoinBalance: json["customer_coin_balance_key"] == null
             ? "0"
-            : json["customer_coin_balance"].toString(),
+            : json["customer_coin_balance_key"].toString(),
         amountPaidToMyProfit: json["amount_paid_to_myProfit"] == null
             ? "0"
             : json["amount_paid_to_myProfit"].toString(),
@@ -134,7 +134,7 @@ class BillingDetails {
         "return_amount_customer":
             returnAmountCustomer == null ? null : returnAmountCustomer,
         "date_time": dateTime == null ? null : dateTime,
-        "customer_coin_balance":
+        "customer_coin_balance_key":
             customerCoinBalance == null ? null : customerCoinBalance,
         "amount_paid_to_myProfit":
             amountPaidToMyProfit == null ? null : amountPaidToMyProfit,

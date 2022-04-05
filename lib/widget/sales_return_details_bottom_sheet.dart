@@ -1,10 +1,9 @@
 import 'dart:async';
 import 'dart:collection';
-import 'dart:developer';
-
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+
 import 'package:timeline_tile/timeline_tile.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/ui/money_due_upi/redeem_coin/customer_coin_history_response.dart';
@@ -45,7 +44,7 @@ class _SalesReturnDetailsSheetState extends State<SalesReturnDetailsSheet> {
               children: [
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: Text("Redeem History",
+                  child: Text("redeem_history_key".tr(),
                       style: TextStyle(
                           color: Colors.black87,
                           fontSize: 16,
@@ -194,7 +193,7 @@ class _SalesReturnDetailsSheetState extends State<SalesReturnDetailsSheet> {
                     Navigator.of(context).pop();
                   },
                   child: Text(
-                    "Close",
+                    "close_key".tr(),
                     style: TextStyle(
                         color: Colors.black87,
                         fontSize: 16,
