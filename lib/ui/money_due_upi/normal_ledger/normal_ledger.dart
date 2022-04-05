@@ -8,11 +8,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:vendor/ui/money_due_upi/free_coins/free_coins_history_bloc/free_coin_history_state.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/model/normal_ladger_response.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_bloc/normal_ledger_bloc.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_bloc/normal_ledger_event.dart';
-import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_bloc/normal_ledger_state.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_details/noraml_ledger_details.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
@@ -138,201 +136,198 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
             onRefresh: () {
               normalLedgerApiCall(context);
             },
-            child: Column(children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 15.0, right: 15, top: 15),
-                child: TextFormField(
-                  cursorColor: ColorPrimary,
-                  controller: _searchController,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.search,
-                      color: Colors.black,
-                    ),
-                    filled: true,
-
-                        // fillColor: Colors.black,
-                        hintText: "search_here_key".tr(),
-
-                        hintStyle: GoogleFonts.openSans(fontWeight: FontWeight.w600, color: Colors.black),
-                        contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0, right: 15, top: 15),
+                  child: TextFormField(
+                    cursorColor: ColorPrimary,
+                    controller: _searchController,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: Colors.black,
                       ),
-                      onChanged: (text) {
-                        _normalLedgerHistoryBloc.add(GetFindUserEvent(searchkeyword: text));
-                      },
+                      filled: true,
+
+                      // fillColor: Colors.black,
+                      hintText: "search_here_key".tr(),
+
+                      hintStyle: GoogleFonts.openSans(fontWeight: FontWeight.w600, color: Colors.black),
+                      contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
                     ),
+                    onChanged: (text) {
+                      _normalLedgerHistoryBloc.add(GetFindUserEvent(searchkeyword: text));
+                    },
                   ),
-                  Expanded(
-                    child: ListView.builder(
-                        itemCount: searchList.length,
-                        padding: EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 5),
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                            splashColor: Colors.transparent,
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => NormalLedgerDetails(
-                                            // commonLedgerHistory: _commonLedgerHistory!,
-                                            order: searchList[index],
-                                          )));
-                            },
-                            child: Container(
-                              margin: EdgeInsets.symmetric(vertical: 5),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.2),
-                                    spreadRadius: 2,
-                                    blurRadius: 10,
-                                    offset: Offset(0, 0), // changes position of shadow
-                                  ),
-                                ],
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Stack(
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.only(top: 20),
-                                      padding: EdgeInsets.only(bottom: 12, top: 3),
-                                      // height: 70,
-                                      // decoration: BoxDecoration(
-                                      //     borderRadius: BorderRadius.circular(10),
-                                      //     color: Colors.white,
-                                      //     border: Border.all(color: Colors.white38),
-                                      //     boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 1.0, spreadRadius: 1)]),
-                                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                        Column(
-                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                "    +91 ${searchList[index].mobile}",
-                                                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                                              ),
-                                              Text(
-                                                "    ${DateFormat("yyyy MM dd ").format(searchList[index].dateTime)}(${DateFormat.jm().format(searchList[index].dateTime)})",
-                                                style: TextStyle(
-                                                  fontSize: 12,
-                                                ),
-                                              ),
-                                            ]),
-                                        Row(
-                                          children: [
-                                            Center(
-                                              child: searchList[index].status == 1
-                                                  ? Container(
-                                                      padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
-                                                      decoration: BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(20),
-                                                          color: PendingTextBgColor),
-                                                      child: Text(
-                                                        "Pending",
-                                                        style: TextStyle(
-                                                            color: PendingTextColor,
-                                                            fontSize: 10,
-                                                            fontWeight: FontWeight.w400),
-                                                      ),
-                                                    )
-                                                  : Container(
-                                                      padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
-                                                      decoration: BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(20),
-                                                          color: ApproveTextBgColor),
-                                                      child: Text(
-                                                      "paid_key".tr(),
-                                                        style: TextStyle(
-                                                            color: ApproveTextColor,
-                                                            fontSize: 10,
-                                                            fontWeight: FontWeight.w400),
-                                                      ),
-                                                    ),
-                                            ),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            Container(
-                                              width: 90,
-                                            )
-                                          ],
-                                        ),
-                                      ]),
-                                    ),
-                                    searchList[index].isReturn == 1
-                                        ? Positioned(
-                                            top: -28,
-                                            left: -25,
-                                            child: Transform.rotate(
-                                              angle: -0.6,
-                                              child: Container(
-                                                padding: EdgeInsets.fromLTRB(18, 32, 30, 2),
-                                                decoration: BoxDecoration(
-                                                  color: Color(0xff6657f4),
-                                                ),
-                                                child: Text("return_key".tr(),
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 10,
-                                                        fontWeight: FontWeight.w400)),
-                                              ),
-                                            ),
-                                          )
-                                        : Container(),
-                                    Positioned(
-                                      right: 0,
-                                      top: 0,
-                                      child: Container(
-                                        alignment: Alignment.center,
-                                        width: 90,
-                                        height: 76,
-                                        decoration: BoxDecoration(
-                                            color:
-                                                searchList[index].status == 1 ? RejectedTextBgColor : GreenBoxBgColor,
-                                            borderRadius: BorderRadius.only(
-                                                bottomRight: Radius.circular(10), topRight: Radius.circular(10))),
-                                        child: Text(
-                                          " \u20B9 ${searchList[index].myprofitRevenue} ",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 14,
-                                              color: searchList[index].status == 1
-                                                  ? RejectedBoxTextColor
-                                                  : GreenBoxTextColor),
-                                        ),
-                                      ),
-                                    )
-                                  ],
+                ),
+                Expanded(
+                  child: ListView.builder(
+                      itemCount: searchList.length,
+                      padding: EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 5),
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          splashColor: Colors.transparent,
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => NormalLedgerDetails(
+                                          // commonLedgerHistory: _commonLedgerHistory!,
+                                          order: searchList[index],
+                                        )));
+                          },
+                          child: Container(
+                            margin: EdgeInsets.symmetric(vertical: 5),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.2),
+                                  spreadRadius: 2,
+                                  blurRadius: 10,
+                                  offset: Offset(0, 0), // changes position of shadow
                                 ),
+                              ],
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(top: 20),
+                                    padding: EdgeInsets.only(bottom: 12, top: 3),
+                                    // height: 70,
+                                    // decoration: BoxDecoration(
+                                    //     borderRadius: BorderRadius.circular(10),
+                                    //     color: Colors.white,
+                                    //     border: Border.all(color: Colors.white38),
+                                    //     boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 1.0, spreadRadius: 1)]),
+                                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                                      Column(
+                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "    +91 ${searchList[index].mobile}",
+                                              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                                            ),
+                                            Text(
+                                              "    ${DateFormat("yyyy MM dd ").format(searchList[index].dateTime)}(${DateFormat.jm().format(searchList[index].dateTime)})",
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ]),
+                                      Row(
+                                        children: [
+                                          Center(
+                                            child: searchList[index].status == 1
+                                                ? Container(
+                                                    padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
+                                                    decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(20),
+                                                        color: PendingTextBgColor),
+                                                    child: Text(
+                                                      "Pending",
+                                                      style: TextStyle(
+                                                          color: PendingTextColor,
+                                                          fontSize: 10,
+                                                          fontWeight: FontWeight.w400),
+                                                    ),
+                                                  )
+                                                : Container(
+                                                    padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+                                                    decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(20),
+                                                        color: ApproveTextBgColor),
+                                                    child: Text(
+                                                      "paid_key".tr(),
+                                                      style: TextStyle(
+                                                          color: ApproveTextColor,
+                                                          fontSize: 10,
+                                                          fontWeight: FontWeight.w400),
+                                                    ),
+                                                  ),
+                                          ),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          Container(
+                                            width: 90,
+                                          )
+                                        ],
+                                      ),
+                                    ]),
+                                  ),
+                                  searchList[index].isReturn == 1
+                                      ? Positioned(
+                                          top: -28,
+                                          left: -25,
+                                          child: Transform.rotate(
+                                            angle: -0.6,
+                                            child: Container(
+                                              padding: EdgeInsets.fromLTRB(18, 32, 30, 2),
+                                              decoration: BoxDecoration(
+                                                color: Color(0xff6657f4),
+                                              ),
+                                              child: Text("return_key".tr(),
+                                                  style: TextStyle(
+                                                      color: Colors.white, fontSize: 10, fontWeight: FontWeight.w400)),
+                                            ),
+                                          ),
+                                        )
+                                      : Container(),
+                                  Positioned(
+                                    right: 0,
+                                    top: 0,
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      width: 90,
+                                      height: 76,
+                                      decoration: BoxDecoration(
+                                          color: searchList[index].status == 1 ? RejectedTextBgColor : GreenBoxBgColor,
+                                          borderRadius: BorderRadius.only(
+                                              bottomRight: Radius.circular(10), topRight: Radius.circular(10))),
+                                      child: Text(
+                                        " \u20B9 ${searchList[index].myprofitRevenue} ",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
+                                            color: searchList[index].status == 1
+                                                ? RejectedBoxTextColor
+                                                : GreenBoxTextColor),
+                                      ),
+                                    ),
+                                  )
+                                ],
                               ),
                             ),
-                          );
-                          // Positioned(
-                          //     top: 10,
-                          //     left: 0,
-                          //
-                          //
-                          // ),
+                          ),
+                        );
+                        // Positioned(
+                        //     top: 10,
+                        //     left: 0,
+                        //
+                        //
+                        // ),
 
-                          // ]);
-                        }),
-                  )
-                ],
-              ),
-            );
-          }),
+                        // ]);
+                      }),
+                )
+              ],
+            ),
+          ),
         ),
       ),
     );
