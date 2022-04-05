@@ -99,10 +99,11 @@ class PurchaseProductModel {
         productName:
             json["product_name"] == null ? "" : json["product_name"].toString(),
         qty: json["qty"] == null ? 0 : json["qty"],
-        price: json["price"] == null ? "" : json["price"].toString(),
-        total: json["total"] == null ? "" : json["total"].toString(),
-        redeemCoins:
-            json["redeem_coins"] == null ? "" : json["redeem_coins"].toString(),
+        price: json["price"] == null ? "0" : json["price"].toString(),
+        total: json["total"] == null ? "0" : json["total"].toString(),
+        redeemCoins: json["redeem_coins"] == null
+            ? "0"
+            : json["redeem_coins"].toString(),
         earningCoins: json["earning_coins"] == null
             ? ""
             : json["earning_coins"].toString(),
@@ -160,16 +161,17 @@ class DirectBilling {
 
   factory DirectBilling.fromMap(Map<String, dynamic> json) => DirectBilling(
         orderId: json["order_id"] == null ? 0 : json["order_id"],
-        vendorId: json["vendor_id"] == null ? "" : json["vendor_id"],
+        vendorId: json["vendor_id"] == null ? "0" : json["vendor_id"],
         categoryId:
-            json["category_id"] == null ? "" : json["category_id"].toString(),
+            json["category_id"] == null ? "0" : json["category_id"].toString(),
         mobile: json["mobile"] == null ? "" : json["mobile"].toString(),
-        totalPay: json["total_pay"] == null ? "" : json["total_pay"].toString(),
+        totalPay:
+            json["total_pay"] == null ? "0" : json["total_pay"].toString(),
         redeemedCoins: json["redeemed_coins"] == null
-            ? ""
+            ? "0"
             : json["redeemed_coins"].toString(),
         dateTime: json["date_time"] == null ? "" : json["date_time"],
-        amount: json["amount"] == null ? "" : json["amount"].toString(),
+        amount: json["amount"] == null ? "0" : json["amount"].toString(),
         categoryName:
             json["category_name"] == null ? "" : json["category_name"],
       );

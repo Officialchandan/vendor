@@ -28,12 +28,12 @@ class SaleReturnProductDetails extends StatefulWidget {
 
 class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
   TextEditingController _textFieldController = TextEditingController();
-  String? coinBalance;
-  String? amountPaid;
-  String? earingCoins;
-  String? adjustedBalance;
-  String? returnAmount;
-  String? redeemCoins;
+  String? coinBalance = "0";
+  String? amountPaid = "0";
+  String? earingCoins = "0";
+  String? adjustedBalance = "0";
+  String? returnAmount = "0";
+  String? redeemCoins = "0";
   @override
   void initState() {
     this.coinBalance = widget.saleReturnData.walletBalance;
