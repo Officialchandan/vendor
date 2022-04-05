@@ -31,10 +31,10 @@ class NormalLedgerHistoryBloc extends Bloc<NormalLedgerHistoryEvent, NormalLedge
         // orderList.addAll(response.data);
         // orderList.addAll(response.directBilling);
 
-        // await Future.forEach(response.data, (OrderData order) async {
-        //   order.orderType = 0;
-        //   orderList.add(order);
-        // });
+        await Future.forEach(response.data, (OrderData order) async {
+          order.orderType = 0;
+          orderList.add(order);
+        });
         await Future.forEach(response.directBilling, (OrderData order) async {
           order.orderType = 1;
           orderList.add(order);

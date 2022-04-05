@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:collection';
 import 'dart:developer';
 
@@ -29,6 +30,28 @@ class MoneyDueScreen extends StatefulWidget {
 }
 
 class _MoneyDueScreenState extends State<MoneyDueScreen> {
+  static const platform = MethodChannel('samples.flutter.dev/battery');
+  static const paytmUpiPayment = MethodChannel("com.myprofit.vendor/paytmUpiPayment");
+  // Get battery level.
+  String _batteryLevel = 'Unknown battery level.';
+
+  Future<void> _getBatteryLevel() async {
+    String batteryLevel;
+
+    try {
+      final int result = await platform.invokeMethod('getBatteryLevel');
+      log("battery level 1-->$result");
+      batteryLevel = 'Battery level at $result % .';
+    } on PlatformException catch (e) {
+      batteryLevel = "Failed to get battery level: '${e.message}'.";
+      log("battery level 1-->$batteryLevel");
+    }
+
+    setState(() {
+      _batteryLevel = batteryLevel;
+    });
+  }
+
   MoneyDueBloc moneyDueBloc = MoneyDueBloc();
 
   List<CategoryDueAmount> categoryDue = [];
@@ -55,6 +78,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
       print(value);
       setState(() {
         result = value.toString();
+
         log("====>result1$result");
       });
     }).catchError((onError) {
@@ -835,6 +859,11 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                             },
                           ),
                         ),
+                        Text("battery$_batteryLevel"),
+                        ElevatedButton(
+                          child: const Text('Get Battery Level'),
+                          onPressed: _getBatteryLevel,
+                        ),
                       ]),
                     ),
                   )
@@ -844,7 +873,16 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
           ),
           bottomNavigationBar: MaterialButton(
             onPressed: () {
-              payment();
+              Map<String, dynamic> map = {};
+
+              map["mid"] = mid;
+              map["orderId"] = orderId;
+              map["token"] = token;
+              map["callbackurl"] = callbackurl;
+              map["amount"] = dueAmount;
+              callPaytmUpi(map);
+
+              // payment();
             },
             color: ColorPrimary,
             height: 50,
@@ -855,5 +893,14 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
             ),
           )),
     );
+  }
+
+  void callPaytmUpi(Map<String, dynamic> value) async {
+    try {
+      final int result = await platform.invokeMethod('paytmUpiPayment', value);
+      log("result-->$result");
+    } on PlatformException catch (e) {
+      log("exception-->$e");
+    }
   }
 }

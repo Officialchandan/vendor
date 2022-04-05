@@ -13,33 +13,24 @@ class UpiSalesReturnResponse {
   List<BillingDetails> data;
   List<BillingDetails> directBilling;
 
-  factory UpiSalesReturnResponse.fromJson(String str) =>
-      UpiSalesReturnResponse.fromMap(json.decode(str));
+  factory UpiSalesReturnResponse.fromJson(String str) => UpiSalesReturnResponse.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory UpiSalesReturnResponse.fromMap(Map<String, dynamic> json) =>
-      UpiSalesReturnResponse(
+  factory UpiSalesReturnResponse.fromMap(Map<String, dynamic> json) => UpiSalesReturnResponse(
         success: json["success"] == null ? null : json["success"],
         message: json["message"] == null ? null : json["message"],
-        data: json["data"] == null
-            ? []
-            : List<BillingDetails>.from(
-                json["data"].map((x) => BillingDetails.fromMap(x))),
+        data: json["data"] == null ? [] : List<BillingDetails>.from(json["data"].map((x) => BillingDetails.fromMap(x))),
         directBilling: json["direct_billing"] == null
             ? []
-            : List<BillingDetails>.from(
-                json["direct_billing"].map((x) => BillingDetails.fromMap(x))),
+            : List<BillingDetails>.from(json["direct_billing"].map((x) => BillingDetails.fromMap(x))),
       );
 
   Map<String, dynamic> toMap() => {
         "success": success == null ? null : success,
         "message": message == null ? null : message,
-        "data":
-            data == null ? [] : List<dynamic>.from(data.map((x) => x.toMap())),
-        "direct_billing": directBilling == null
-            ? []
-            : List<dynamic>.from(directBilling.map((x) => x.toMap())),
+        "data": data == null ? [] : List<dynamic>.from(data.map((x) => x.toMap())),
+        "direct_billing": directBilling == null ? [] : List<dynamic>.from(directBilling.map((x) => x.toMap())),
       };
 }
 
@@ -78,47 +69,31 @@ class BillingDetails {
   int billingType = 0;
   List<OrderDetail> orderDetails;
   List<DirectBillingDetails> billingDetails;
-  factory BillingDetails.fromJson(String str) =>
-      BillingDetails.fromMap(json.decode(str));
+  factory BillingDetails.fromJson(String str) => BillingDetails.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
   factory BillingDetails.fromMap(Map<String, dynamic> json) => BillingDetails(
-        customerId:
-            json["customer_id"] == null ? "" : json["customer_id"].toString(),
-        vendorName:
-            json["vendor_name"] == null ? "" : json["vendor_name"].toString(),
-        vendorImage:
-            json["store_images"] == null ? "" : json["store_images"].toString(),
+        customerId: json["customer_id"] == null ? "" : json["customer_id"].toString(),
+        vendorName: json["vendor_name"] == null ? "" : json["vendor_name"].toString(),
+        vendorImage: json["store_images"] == null ? "" : json["store_images"].toString(),
         vendorId: json["vendor_id"] == null ? "" : json["vendor_id"].toString(),
         orderId: json["order_id"] == null ? "" : json["order_id"].toString(),
         mobile: json["mobile"] == null ? "" : json["mobile"].toString(),
-        returnCoinsCustomer: json["return_coins_customer"] == null
-            ? ""
-            : json["return_coins_customer"].toString(),
-        returnAmountCustomer: json["return_amount_customer"] == null
-            ? ""
-            : json["return_amount_customer"].toString(),
+        returnCoinsCustomer: json["return_coins_customer"] == null ? "" : json["return_coins_customer"].toString(),
+        returnAmountCustomer: json["return_amount_customer"] == null ? "" : json["return_amount_customer"].toString(),
         dateTime: json["date_time"] == null ? "" : json["date_time"].toString(),
-        customerCoinBalance: json["customer_coin_balance"] == null
-            ? ""
-            : json["customer_coin_balance"].toString(),
-        amountPaidToMyProfit: json["amount_paid_to_myProfit"] == null
-            ? ""
-            : json["amount_paid_to_myProfit"].toString(),
-        amountPaidToVendor: json["amount_paid_to_vendor"] == null
-            ? ""
-            : json["amount_paid_to_vendor"].toString(),
+        customerCoinBalance: json["customer_coin_balance"] == null ? "" : json["customer_coin_balance"].toString(),
+        amountPaidToMyProfit:
+            json["amount_paid_to_myProfit"] == null ? "0" : json["amount_paid_to_myProfit"].toString(),
+        amountPaidToVendor: json["amount_paid_to_vendor"] == null ? "0" : json["amount_paid_to_vendor"].toString(),
         orderDetails: json["order_details"] == null
             ? []
-            : List<OrderDetail>.from(
-                json["order_details"].map((x) => OrderDetail.fromMap(x))),
-        billingId:
-            json["billing_id"] == null ? "" : json["billing_id"].toString(),
+            : List<OrderDetail>.from(json["order_details"].map((x) => OrderDetail.fromMap(x))),
+        billingId: json["billing_id"] == null ? "" : json["billing_id"].toString(),
         billingDetails: json["billing_details"] == null
             ? []
-            : List<DirectBillingDetails>.from(json["billing_details"]
-                .map((x) => DirectBillingDetails.fromMap(x))),
+            : List<DirectBillingDetails>.from(json["billing_details"].map((x) => DirectBillingDetails.fromMap(x))),
       );
 
   Map<String, dynamic> toMap() => {
@@ -128,24 +103,15 @@ class BillingDetails {
         "vendor_id": vendorId == null ? null : vendorId,
         "order_id": orderId == null ? null : orderId,
         "mobile": mobile == null ? null : mobile,
-        "return_coins_customer":
-            returnCoinsCustomer == null ? null : returnCoinsCustomer,
-        "return_amount_customer":
-            returnAmountCustomer == null ? null : returnAmountCustomer,
+        "return_coins_customer": returnCoinsCustomer == null ? null : returnCoinsCustomer,
+        "return_amount_customer": returnAmountCustomer == null ? null : returnAmountCustomer,
         "date_time": dateTime == null ? null : dateTime,
-        "customer_coin_balance":
-            customerCoinBalance == null ? null : customerCoinBalance,
-        "amount_paid_to_myProfit":
-            amountPaidToMyProfit == null ? null : amountPaidToMyProfit,
-        "amount_paid_to_vendor":
-            amountPaidToVendor == null ? null : amountPaidToVendor,
-        "order_details": orderDetails == null
-            ? null
-            : List<dynamic>.from(orderDetails.map((x) => x.toMap())),
+        "customer_coin_balance": customerCoinBalance == null ? null : customerCoinBalance,
+        "amount_paid_to_myProfit": amountPaidToMyProfit == null ? null : amountPaidToMyProfit,
+        "amount_paid_to_vendor": amountPaidToVendor == null ? null : amountPaidToVendor,
+        "order_details": orderDetails == null ? null : List<dynamic>.from(orderDetails.map((x) => x.toMap())),
         "billing_id": billingId == null ? null : billingId,
-        "billing_details": billingDetails == null
-            ? []
-            : List<dynamic>.from(billingDetails.map((x) => x.toMap())),
+        "billing_details": billingDetails == null ? [] : List<dynamic>.from(billingDetails.map((x) => x.toMap())),
       };
 }
 
@@ -178,34 +144,23 @@ class OrderDetail {
   String earningCoins;
   String myProfitRevenue;
 
-  factory OrderDetail.fromJson(String str) =>
-      OrderDetail.fromMap(json.decode(str));
+  factory OrderDetail.fromJson(String str) => OrderDetail.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
   factory OrderDetail.fromMap(Map<String, dynamic> json) => OrderDetail(
         orderId: json["order_id"] == null ? "" : json["order_id"].toString(),
         mobile: json["mobile"] == null ? "" : json["mobile"].toString(),
-        productId:
-            json["product_id"] == null ? "" : json["product_id"].toString(),
-        productName:
-            json["product_name"] == null ? "" : json["product_name"].toString(),
-        productImage: json["product_image"] == null
-            ? ""
-            : json["product_image"].toString(),
+        productId: json["product_id"] == null ? "" : json["product_id"].toString(),
+        productName: json["product_name"] == null ? "" : json["product_name"].toString(),
+        productImage: json["product_image"] == null ? "" : json["product_image"].toString(),
         qty: json["qty"] == null ? "" : json["qty"].toString(),
         price: json["price"] == null ? "" : json["price"].toString(),
         total: json["total"] == null ? "" : json["total"].toString(),
-        amountPaid:
-            json["amount_paid"] == null ? "" : json["amount_paid"].toString(),
-        redeemCoins:
-            json["redeem_coins"] == null ? "" : json["redeem_coins"].toString(),
-        earningCoins: json["earning_coins"] == null
-            ? ""
-            : json["earning_coins"].toString(),
-        myProfitRevenue: json["myprofit_revenue"] == null
-            ? ".toString()"
-            : json["myprofit_revenue"].toString(),
+        amountPaid: json["amount_paid"] == null ? "" : json["amount_paid"].toString(),
+        redeemCoins: json["redeem_coins"] == null ? "" : json["redeem_coins"].toString(),
+        earningCoins: json["earning_coins"] == null ? "" : json["earning_coins"].toString(),
+        myProfitRevenue: json["myprofit_revenue"] == null ? ".toString()" : json["myprofit_revenue"].toString(),
       );
 
   Map<String, dynamic> toMap() => {
@@ -249,34 +204,20 @@ class DirectBillingDetails {
   String myProfitRevenue;
   String total;
 
-  factory DirectBillingDetails.fromJson(String str) =>
-      DirectBillingDetails.fromMap(json.decode(str));
+  factory DirectBillingDetails.fromJson(String str) => DirectBillingDetails.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory DirectBillingDetails.fromMap(Map<String, dynamic> json) =>
-      DirectBillingDetails(
-        billingId:
-            json["billing_id"] == null ? "" : json["billing_id"].toString(),
+  factory DirectBillingDetails.fromMap(Map<String, dynamic> json) => DirectBillingDetails(
+        billingId: json["billing_id"] == null ? "" : json["billing_id"].toString(),
         mobile: json["mobile"] == null ? "" : json["mobile"].toString(),
-        categoryId:
-            json["category_id"] == null ? "" : json["category_id"].toString(),
-        categoryName: json["category_name"] == null
-            ? ""
-            : json["category_name"].toString(),
-        categoryImage: json["category_image"] == null
-            ? ""
-            : json["category_image"].toString(),
-        amountPaid:
-            json["amount_paid"] == null ? "" : json["amount_paid"].toString(),
-        redeemCoins:
-            json["redeem_coins"] == null ? "" : json["redeem_coins"].toString(),
-        earningCoins: json["earning_coins"] == null
-            ? ""
-            : json["earning_coins"].toString(),
-        myProfitRevenue: json["myprofit_revenue"] == null
-            ? ""
-            : json["myprofit_revenue"].toString(),
+        categoryId: json["category_id"] == null ? "" : json["category_id"].toString(),
+        categoryName: json["category_name"] == null ? "" : json["category_name"].toString(),
+        categoryImage: json["category_image"] == null ? "" : json["category_image"].toString(),
+        amountPaid: json["amount_paid"] == null ? "" : json["amount_paid"].toString(),
+        redeemCoins: json["redeem_coins"] == null ? "" : json["redeem_coins"].toString(),
+        earningCoins: json["earning_coins"] == null ? "" : json["earning_coins"].toString(),
+        myProfitRevenue: json["myprofit_revenue"] == null ? "" : json["myprofit_revenue"].toString(),
         total: json["total"] == null ? "" : json["total"].toString(),
       );
 
