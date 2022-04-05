@@ -101,7 +101,7 @@
   "done_key": "किया हुआ",
   "e_shop_key": "ई की दुकान",
   "staff_key": "कर्मचारी",
-  "Billing_key": "बिलिंग",
+  "Billing_key": "बीजक",
   "inventory_key": "सूची",
   "performance_key": "प्रदर्शन",
   "account_key": "लेखा",
@@ -226,7 +226,7 @@
   "myprofitstore_alexa_key": "myprofitstore.com/alexa",
   "scan_qr_to_check_our_products_key": "हमारे उत्पादों की जांच के लिए क्यूआर स्कैन करें",
   "download_qr_key": "क्यूआर . डाउनलोड करें",
-  "direct_billing_key": "प्रत्यक्ष बिलिंग",
+  "direct_billing_key": "प्रत्यक्ष",
   "enter_customer_phone_number_key": "ग्राहक फोन नंबर दर्ज करें",
   "mobile_number_key": "एक ग्राहक फोन नंबर दर्ज करें",
   "enter_customer_name_key": "ग्राहक का नाम दर्ज करें",
@@ -361,5 +361,10 @@
   "select_week_key":"सप्ताह चुनें",
   "select_days_key":"दिन चुनें",
   "search_here_key":"यहाँ ढूँढे...",
-  "pending_key":"लंबित"
+  "pending_key":"लंबित",
+
+  "cancelled_key":"रद्द",
+  "sales_return_details_key":"बिक्री वापसी विवरण",
+  "amt_paid_by_customer_key":"ग्राहक द्वारा भुगतान की गई राशि",
+  "customer_coin_balance":"ग्राहक सिक्के शेष"
 }
