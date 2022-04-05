@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vendor/utility/color.dart';
@@ -44,7 +45,7 @@ class _UpiTransferHistoryState extends State<UpiTransferHistory> {
                 Icons.filter_alt,
                 color: Colors.white,
               ),
-              Center(child: Text("Filter   ")),
+              Center(child: Text("filter_key".tr() + "   ")),
             ]),
           ),
         ],
@@ -63,7 +64,7 @@ class _UpiTransferHistoryState extends State<UpiTransferHistory> {
                   filled: true,
 
                   // fillColor: Colors.black,
-                  hintText: "Search Here...",
+                  hintText: "search_here_key".tr(),
                   hintStyle: GoogleFonts.openSans(
                       fontWeight: FontWeight.w600, color: Colors.black),
                   contentPadding:
@@ -121,7 +122,7 @@ class _UpiTransferHistoryState extends State<UpiTransferHistory> {
                                                 BorderRadius.circular(20),
                                             color: Colors.orange.shade50),
                                         child: Text(
-                                          "  Pending  ",
+                                          "  " + "pending_key".tr() + "  ",
                                           style: TextStyle(
                                               color: Colors.orange,
                                               fontSize: 12,
