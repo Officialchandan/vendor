@@ -91,8 +91,18 @@ class _BillingScreenState extends State<BillingScreen> {
           builder: (context, state) {
             return Scaffold(
               appBar: AppBar(
-                title: Text("billing_key".tr(), style: TextStyle(fontWeight: FontWeight.w600)),
-                leadingWidth: 140,
+                title: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Text("billing_key".tr(), style: TextStyle(fontWeight: FontWeight.w600)),
+                  SizedBox(width: 2),
+                  Image.asset(
+                    "assets/images/point.png",
+                    scale: 2,
+                  ),
+                  SizedBox(
+                    width: 35,
+                  ),
+                ]),
+                leadingWidth: 100,
                 leading: userStatus == 1
                     ? Padding(
                         padding: const EdgeInsets.only(top: 15.0, bottom: 15, left: 20),
@@ -104,14 +114,14 @@ class _BillingScreenState extends State<BillingScreen> {
                           child: Container(
                             decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5)),
                             child: Center(
-                              child: Row(children: [
+                              child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                                 Text(
                                   "direct_billing_key".tr(),
                                   style: TextStyle(color: ColorPrimary, fontWeight: FontWeight.bold),
                                 ),
                                 Image.asset(
                                   "assets/images/point.png",
-                                  scale: 2,
+                                  scale: 3,
                                 ),
                               ]),
                             ),

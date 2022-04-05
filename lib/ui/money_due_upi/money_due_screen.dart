@@ -11,6 +11,7 @@ import 'package:vendor/model/get_due_amount_response.dart';
 import 'package:vendor/ui/money_due_upi/bloc/money_due_bloc.dart';
 import 'package:vendor/ui/money_due_upi/bloc/money_due_event.dart';
 import 'package:vendor/ui/money_due_upi/bloc/money_due_state.dart';
+import 'package:vendor/ui/money_due_upi/free_coins/free_coins_history.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger.dart';
 import 'package:vendor/ui/money_due_upi/redeem_coin/reddem_coin_history.dart';
 import 'package:vendor/ui/money_due_upi/sales_return/sales_return.dart';
@@ -286,11 +287,6 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                             SizedBox(
                                               height: 5,
                                             ),
-                                            Container(
-                                              height: 1,
-                                              width: 70,
-                                              color: ColorTextPrimary,
-                                            ),
                                             SizedBox(
                                               height: 10,
                                             )
@@ -494,11 +490,6 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                                     color: Colors.black, fontSize: 16.3, fontWeight: FontWeight.w600)),
                                             SizedBox(
                                               height: 5,
-                                            ),
-                                            Container(
-                                              height: 1,
-                                              width: 70,
-                                              color: ColorTextPrimary,
                                             ),
                                             SizedBox(
                                               height: 10,
@@ -708,11 +699,6 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                             SizedBox(
                                               height: 5,
                                             ),
-                                            Container(
-                                              height: 1,
-                                              width: 70,
-                                              color: ColorTextPrimary,
-                                            ),
                                             SizedBox(
                                               height: 10,
                                             )
@@ -810,11 +796,6 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                                     color: Colors.black, fontSize: 14.3, fontWeight: FontWeight.w600)),
                                             SizedBox(
                                               height: 5,
-                                            ),
-                                            Container(
-                                              height: 1,
-                                              width: 70,
-                                              color: ColorTextPrimary,
                                             ),
                                             SizedBox(
                                               height: 10,
@@ -926,7 +907,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                 ),
                                 onTap: () {
                                   Navigator.push(context,
-                                      PageTransition(child: ReddemCoinHistory(), type: PageTransitionType.fade));
+                                      PageTransition(child: FreeCoinsHistory(), type: PageTransitionType.fade));
                                 },
                               )
                             ],

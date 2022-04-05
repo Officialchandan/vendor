@@ -1013,10 +1013,6 @@ class DirectBillingListItem extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "sadasd",
-                                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey),
-                                ),
-                                Text(
                                   "Commission \u20B9${commission}",
                                   style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.black87),
                                 ),

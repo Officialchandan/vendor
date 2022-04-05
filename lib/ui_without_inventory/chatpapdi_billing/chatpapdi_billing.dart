@@ -478,33 +478,56 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
         context: context,
         builder: (context) {
           return ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: 400),
+            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
             child: AlertDialog(
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-              title: RichText(
-                text: TextSpan(
-                  text: "$text",
-                  style: GoogleFonts.openSans(
-                    fontSize: 18.0,
-                    color: ColorPrimary,
-                    fontWeight: FontWeight.w600,
-                  ),
+              title: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                Image.asset(
+                  "assets/images/otp-wallet.png",
+                  fit: BoxFit.cover,
+                  height: 70,
                 ),
-              ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Image.asset(
+                    "assets/images/point.png",
+                    scale: 3,
+                  ),
+                  Text(
+                    " $text ",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.openSans(
+                      fontSize: 17.0,
+                      color: ColorPrimary,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ]),
+                Text("Coins generated succesfully\n in customer Wallet",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.openSans(
+                      fontSize: 17.0,
+                      color: ColorTextPrimary,
+                      fontWeight: FontWeight.w600,
+                    )),
+              ]),
               content: TextFormField(
                 controller: otpController,
                 cursorColor: ColorPrimary,
+                maxLength: 6,
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 decoration: InputDecoration(
                   // filled: true,
-
+                  counterText: "",
                   // fillColor: Colors.black,
                   hintText: "$hinttext`",
                   hintStyle: GoogleFonts.openSans(
                     fontWeight: FontWeight.w600,
                   ),
-                  contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                  contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 0.0),
                 ),
               ),
               actions: <Widget>[
@@ -551,10 +574,8 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                     ),
                   ),
                 ),
-                Container(
-                  height: 20,
-                  width: MediaQuery.of(context).size.width * 0.95,
-                  color: Colors.transparent,
+                SizedBox(
+                  height: 10,
                 )
               ],
             ),
