@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -45,7 +46,7 @@ class _SalesReturnHistoryState extends State<SalesReturnHistory> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            "Sales Return",
+            "sales_return_key".tr(),
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           ),
           actions: [
@@ -68,7 +69,7 @@ class _SalesReturnHistoryState extends State<SalesReturnHistory> {
                   Icons.filter_alt,
                   color: Colors.white,
                 ),
-                Center(child: Text("Filter   ")),
+                Center(child: Text("${"filter_key".tr()}   ")),
               ]),
             ),
           ],
@@ -93,7 +94,7 @@ class _SalesReturnHistoryState extends State<SalesReturnHistory> {
                     filled: true,
 
                     // fillColor: Colors.black,
-                    hintText: "Search Here...",
+                    hintText: "search_here_key".tr(),
                     hintStyle: GoogleFonts.openSans(
                         fontWeight: FontWeight.w600, color: Colors.black),
                     contentPadding: const EdgeInsets.only(
@@ -202,25 +203,45 @@ class BillingDetailsWidget extends StatefulWidget {
 class _BillingDetailsWidgetState extends State<BillingDetailsWidget> {
   BillingDetails? billingDetails;
 
-  String payAmt = "";
+  String payAmt = "0";
   String colorStatus = "";
   @override
   void initState() {
     this.billingDetails = widget.details;
-    if (double.parse(billingDetails!.amountPaidToMyProfit) >
-        double.parse(billingDetails!.amountPaidToVendor)) {
+    if (double.parse(billingDetails!.amountPaidToMyProfit.isEmpty
+            ? "0"
+            : billingDetails!.amountPaidToMyProfit.isEmpty
+                ? "0"
+                : billingDetails!.amountPaidToMyProfit) >
+        double.parse(billingDetails!.amountPaidToVendor.isEmpty
+            ? "0"
+            : billingDetails!.amountPaidToVendor)) {
       colorStatus = "1";
       // red
-      payAmt = (double.parse(billingDetails!.amountPaidToMyProfit) -
-              double.parse(billingDetails!.amountPaidToVendor))
+      payAmt = (double.parse(billingDetails!.amountPaidToMyProfit.isEmpty
+                  ? "0"
+                  : billingDetails!.amountPaidToMyProfit.isEmpty
+                      ? "0"
+                      : billingDetails!.amountPaidToMyProfit) -
+              double.parse(billingDetails!.amountPaidToVendor.isEmpty
+                  ? "0"
+                  : billingDetails!.amountPaidToVendor))
           .toStringAsFixed(2);
     }
-    if (double.parse(billingDetails!.amountPaidToMyProfit) <
-        double.parse(billingDetails!.amountPaidToVendor)) {
+    if (double.parse(billingDetails!.amountPaidToMyProfit.isEmpty
+            ? "0"
+            : billingDetails!.amountPaidToMyProfit) <
+        double.parse(billingDetails!.amountPaidToVendor.isEmpty
+            ? "0"
+            : billingDetails!.amountPaidToVendor)) {
       colorStatus = "0";
       // green
-      payAmt = (double.parse(billingDetails!.amountPaidToVendor) -
-              double.parse(billingDetails!.amountPaidToMyProfit))
+      payAmt = (double.parse(billingDetails!.amountPaidToVendor.isEmpty
+                  ? "0"
+                  : billingDetails!.amountPaidToVendor) -
+              double.parse(billingDetails!.amountPaidToMyProfit.isEmpty
+                  ? "0"
+                  : billingDetails!.amountPaidToMyProfit))
           .toStringAsFixed(2);
     }
     super.initState();
@@ -263,7 +284,7 @@ class _BillingDetailsWidgetState extends State<BillingDetailsWidget> {
                           ),
                           child: Center(
                             child: Text(
-                              "Direct Billing",
+                              "direct_billing_key".tr(),
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 10,
@@ -272,7 +293,7 @@ class _BillingDetailsWidgetState extends State<BillingDetailsWidget> {
                           ),
                         ),
                         Text(
-                          "Cancelled      ",
+                          " ${"cancelled_key".tr()}   ",
                           style: TextStyle(
                               color: RejectedTextColor,
                               fontSize: 11,
@@ -328,27 +349,6 @@ class _BillingDetailsWidgetState extends State<BillingDetailsWidget> {
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: colorStatus == "0"
-                                          ? ApproveTextBgColor
-                                          : RejectedTextBgColor,
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 2, bottom: 2),
-                                      child: Text(
-                                        "  Pay: \u20B9 $payAmt  ",
-                                        style: TextStyle(
-                                            color: colorStatus == "0"
-                                                ? ApproveTextColor
-                                                : RejectedTextColor,
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  )
                                 ]),
                             SizedBox(
                               height: 5,
@@ -366,6 +366,27 @@ class _BillingDetailsWidgetState extends State<BillingDetailsWidget> {
                                           fontSize: 13,
                                           fontWeight: FontWeight.bold),
                                     ),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        color: colorStatus == "0"
+                                            ? ApproveTextBgColor
+                                            : RejectedTextBgColor,
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 2, bottom: 2),
+                                        child: Text(
+                                          "  ${"pay_key".tr()}: \u20B9 $payAmt  ",
+                                          style: TextStyle(
+                                              color: colorStatus == "0"
+                                                  ? ApproveTextColor
+                                                  : RejectedTextColor,
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    )
                                   ]),
                             ),
                           ],

@@ -16,7 +16,7 @@
   "amount_spent_here_key": "Amount spent here",
   "amount_spend_key": "Amount spend ",
   "submit_button_key": "SUBMIT",
-  "billing_key": "Billing",
+  "billing_key": "Invoice",
   "performance_tracker_key": "Performance Tracker + Reports",
   "gift_scheme_key": "Gift Scheme",
   "gift_received_key": "Gift Received",
@@ -222,7 +222,7 @@
   "myprofitstore_alexa_key": "myprofitstore.com/alexa",
   "scan_qr_to_check_our_products_key": "Scan QR to check our products",
   "download_qr_key": "Download QR",
-  "direct_billing_key": "Direct Billing",
+  "direct_billing_key": "Direct",
   "enter_customer_phone_number_key": "Enter Customer phone number",
   "mobile_number_key": "Mobile Number",
   "enter_customer_name_key": "Enter Customer Name",
@@ -356,6 +356,11 @@
   "select_week_key":"Select Week",
   "select_days_key":"Select Days",
   "search_here_key":"Search Here...",
-  "pending_key":"Pending"
+  "pending_key":"Pending",
+ 
+  "cancelled_key":"Cancelled",
+  "sales_return_details_key":"Sales Return Details",
+  "amt_paid_by_customer_key":"Amount Paid By Customer"
+
   
 }

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
@@ -21,7 +22,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
   List<CommonSaleReturnProductDetails> productDetails = [];
   BillingDetails? details;
   String amtPaidStatus = "";
-  String payAmt = "";
+  String payAmt = "0";
   double amtPaid = 0;
   double redeemCoins = 0;
   double earnCoins = 0;
@@ -159,7 +160,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
             icon: Icon(Icons.arrow_back_ios),
           ),
           title: Text(
-            "Sales Return Details",
+            "sales_return_details_key".tr(),
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           actions: [
@@ -237,7 +238,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                                   padding:
                                       const EdgeInsets.only(top: 2, bottom: 2),
                                   child: Text(
-                                    "  Pay: \u20B9 $payAmt  ",
+                                    "  ${"pay_key".tr()}: \u20B9 $payAmt  ",
                                     style: TextStyle(
                                         color: amtPaidStatus == "0"
                                             ? ApproveTextColor
@@ -275,7 +276,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 14, top: 10),
                             child: Text(
-                              "All Items",
+                              "all_items_key".tr(),
                               style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -438,7 +439,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                                               padding: const EdgeInsets.only(
                                                   left: 5, right: 5),
                                               child: Text(
-                                                "Redeemed",
+                                                "redeemed_key".tr(),
                                                 style: TextStyle(
                                                     color: RejectedTextColor,
                                                     fontWeight: FontWeight.bold,
@@ -462,7 +463,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Amount Paid By Customer",
+                                "amt_paid_by_customer_key".tr(),
                                 style: TextStyle(
                                     fontSize: 13,
                                     fontWeight: FontWeight.bold,
@@ -506,7 +507,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Sales Return History",
+                                "sales_return_history_key".tr(),
                                 style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
@@ -529,7 +530,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Earn Coins",
+                                "earn_coins_key".tr(),
                                 style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold,
@@ -560,7 +561,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Redeem Coins",
+                                "redeem_coins_key".tr(),
                                 style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold,
@@ -591,7 +592,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Customer Coins Balance",
+                                "customer_coin_balance".tr(),
                                 style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold,
