@@ -43,7 +43,7 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
             icon: Icon(Icons.arrow_back_ios),
           ),
           title: Text(
-            "Redeem Coins Details",
+            "redeem_coin_details_key".tr(),
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
@@ -133,7 +133,7 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 14, top: 10),
                             child: Text(
-                              "All Items",
+                              "all_items_key".tr(),
                               style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -304,7 +304,7 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "Total Amount",
+                                    "total_amount_key".tr(),
                                     style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold,
@@ -331,7 +331,7 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "Redeem Coins",
+                                    "redeem_coins_key".tr(),
                                     style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold,
@@ -363,7 +363,7 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "Earn Coins",
+                                    "earn_coins_key".tr(),
                                     style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold,
@@ -395,7 +395,7 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "Pay Amount",
+                                    "pay_amt_key".tr(),
                                     style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold,
@@ -446,7 +446,7 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Redeemed Coins",
+                            "redeemed_coins_key".tr(),
                             style: TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.bold,

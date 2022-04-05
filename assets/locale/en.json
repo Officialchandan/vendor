@@ -238,8 +238,8 @@
   "redeem_coins_key": "Redeem Coins",
   "earn_coins_key": "Earn Coins",
   "coins_generated_successfully_in_customer_wallet_key": "Coins generated successfully in customer Wallet",
-  "total_payable_amount_key": "Total Payable Amount",
-  "total_coin_deducted_key": "Total Coin Deducted",
+  "total_payable_amount_key": "Payable Amount",
+  "total_coin_deducted_key": "Coin Deducted",
   "please_enter_number_first_key": "Please enter number First",
   "please_enter_10_digits_number_key": "Please enter 10 digits mobile number",
   "redeemed_coins_key": "Redeemed Coins",
@@ -348,6 +348,7 @@
   "coin_history_key":"Coin History",
   "free_coins_key":"Free Coins",
   "free_coins_history_key":"Free Coins History",
+  "free_coins_details_key":"Free Coins Details",
   "remaining_key":"Remaining",
   "out_of_key":"Out of",
   "master_ledger_key":"Master Ledger",
@@ -360,7 +361,26 @@
  
   "cancelled_key":"Cancelled",
   "sales_return_details_key":"Sales Return Details",
-  "amt_paid_by_customer_key":"Amount Paid By Customer"
-
-  
+  "amt_paid_by_customer_key":"Amount Paid By Customer",
+  "customer_coin_balance_key":"Customer Coins Balance",
+  "net_balance_key":"Net Balance",
+  "amt_return_to_customer_key":"Amount Return to Customer",
+  "sum_key":"Sum",
+  "amt_paid_to_my_profit_key":"Amount Paid To My Profit",
+  "amt_paid_to_vendor_key":"Amount Paid To Vendor",
+  "redeem_history_key":"Redeem History",
+  "mobile_key":"Mobile",
+  "redeem_coin_details_key":"Redeem Coins Details",
+  "pay_amt_key":"Pay Amount",
+  "normal_ledger_details_key":"Normal Ledger Details",
+  "commission_key":"Commission",
+  "commission_amt_key":"Commission amount",
+  "total_commission_key":"Total commission",
+  "amt_return_to_vendor_key":"Amount Return To Vendor",
+  "amt_return_to_my_profit_key":"Amount Return To MyProfit",
+ 
+  "select_return_product_key":"Select Return Products",
+  "return_calculation_key":"Return Calculation",
+  "amt_paid_key":"Amount Paid",
+  "adj_balance_key":"Adjusted Balance"
 }

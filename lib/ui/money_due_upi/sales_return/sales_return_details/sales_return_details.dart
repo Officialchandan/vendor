@@ -592,7 +592,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "customer_coin_balance".tr(),
+                                "customer_coin_balance_key".tr(),
                                 style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold,
@@ -623,7 +623,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Net Balance",
+                                "net_balance_key".tr(),
                                 style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold,
@@ -654,7 +654,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Amount Return to Customer",
+                                "amt_return_to_customer_key".tr(),
                                 style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold,
@@ -693,7 +693,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Text(
-                                "Sum(\u20B9 $amtPaid  - \u20B9 $netBalance = \u20B9 ${(amtPaid - netBalance).toStringAsFixed(2)})",
+                                "${"sum_key".tr()} (\u20B9 $amtPaid  - \u20B9 $netBalance = \u20B9 ${(amtPaid - netBalance).toStringAsFixed(2)})",
                                 style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold,
@@ -735,8 +735,8 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                         children: [
                           Text(
                             amtPaidStatus == "1"
-                                ? "Amount Paid To My Profit"
-                                : "Amount Paid To Vendor",
+                                ? "amt_paid_to_my_profit_key".tr()
+                                : "amt_paid_to_vendor_key".tr(),
                             style: TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.bold,

@@ -110,7 +110,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "Select Return Products",
+                      "select_return_product_key".tr(),
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
