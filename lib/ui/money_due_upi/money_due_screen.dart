@@ -62,6 +62,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
   @override
   void initState() {
     super.initState();
+
     moneyDueBloc.add(GetFreeCoins());
   }
 
