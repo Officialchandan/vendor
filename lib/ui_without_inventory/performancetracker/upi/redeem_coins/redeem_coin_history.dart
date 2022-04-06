@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,7 +21,8 @@ class ReddemCoinHistory extends StatefulWidget {
 }
 
 class _ReddemCoinHistoryState extends State<ReddemCoinHistory> {
-  RefreshController _refreshController = RefreshController(initialRefresh: false);
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
   TextEditingController searchController = TextEditingController();
   RedeemCoinBloc redeemCoinBloc = RedeemCoinBloc();
   List<CoinDetail> redeemData = [];
@@ -41,7 +43,7 @@ class _ReddemCoinHistoryState extends State<ReddemCoinHistory> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            "Redeem Coins",
+            "redeem_coins_key".tr(),
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           ),
           actions: [
@@ -50,7 +52,8 @@ class _ReddemCoinHistoryState extends State<ReddemCoinHistory> {
                 showModalBottomSheet(
                     context: context,
                     builder: (context) {
-                      return CalendarBottomSheet(onSelect: (startDate, endDate) {
+                      return CalendarBottomSheet(
+                          onSelect: (startDate, endDate) {
                         this.startDate = startDate;
                         this.endDate = endDate;
                         getRedeemCoin(startDate, endDate);
@@ -63,7 +66,7 @@ class _ReddemCoinHistoryState extends State<ReddemCoinHistory> {
                   Icons.filter_alt,
                   color: Colors.white,
                 ),
-                Center(child: Text("Filter   ")),
+                Center(child: Text("${"filter_key".tr()}   ")),
               ]),
             ),
           ],
@@ -79,7 +82,8 @@ class _ReddemCoinHistoryState extends State<ReddemCoinHistory> {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 15.0, right: 15, top: 15),
+                  padding:
+                      const EdgeInsets.only(left: 15.0, right: 15, top: 15),
                   child: TextFormField(
                     controller: searchController,
                     decoration: InputDecoration(
@@ -89,9 +93,11 @@ class _ReddemCoinHistoryState extends State<ReddemCoinHistory> {
                       ),
                       filled: true,
                       // fillColor: Colors.black,
-                      hintText: "Search Here...",
-                      hintStyle: GoogleFonts.openSans(fontWeight: FontWeight.w600, color: Colors.black),
-                      contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                      hintText: "search_here_key".tr(),
+                      hintStyle: GoogleFonts.openSans(
+                          fontWeight: FontWeight.w600, color: Colors.black),
+                      contentPadding: const EdgeInsets.only(
+                          left: 14.0, bottom: 8.0, top: 8.0),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.white),
                       ),
@@ -127,7 +133,9 @@ class _ReddemCoinHistoryState extends State<ReddemCoinHistory> {
                         } else {
                           List<CoinDetail> list = [];
                           redeemData.forEach((element) {
-                            if (element.productName.toLowerCase().contains(state.data.toLowerCase())) {
+                            if (element.productName
+                                .toLowerCase()
+                                .contains(state.data.toLowerCase())) {
                               list.add(element);
                             }
                           });
@@ -143,7 +151,8 @@ class _ReddemCoinHistoryState extends State<ReddemCoinHistory> {
                               itemCount: searchList.length,
                               itemBuilder: (context, index) {
                                 return Container(
-                                  child: DirectBillingList(detail: searchList[index]),
+                                  child: DirectBillingList(
+                                      detail: searchList[index]),
                                 );
                               },
                             );
@@ -201,7 +210,9 @@ class _DirectBillingListState extends State<DirectBillingList> {
             borderRadius: BorderRadius.circular(10),
             color: Colors.white,
             border: Border.all(color: Colors.white38),
-            boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 1.0, spreadRadius: 1)]),
+            boxShadow: [
+              BoxShadow(color: Colors.black12, blurRadius: 1.0, spreadRadius: 1)
+            ]),
         child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
           SizedBox(width: 10),
           Container(
@@ -222,19 +233,27 @@ class _DirectBillingListState extends State<DirectBillingList> {
                     "${widget.detail.productName}",
                     style: TextStyle(fontWeight: FontWeight.w600),
                   ),
-                  Text("mobile: ${widget.detail.mobile}"),
+                  Text("${"mobile_key".tr()}" ": ${widget.detail.mobile}"),
                   Container(
                     height: 20,
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: Colors.grey.shade200),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.grey.shade200),
                     child: Row(children: [
                       Text(
-                        "  Redeemed: ",
-                        style: TextStyle(color: Colors.black, fontSize: 12, fontWeight: FontWeight.w400),
+                        "  ${"redeemed_key".tr()}: ",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400),
                       ),
                       Image.asset("assets/images/point.png"),
                       Text(
                         "${widget.detail.totalRedeemCoins} (\u20B9 ${(double.parse(widget.detail.totalRedeemCoins) / 3).toStringAsFixed(2)})",
-                        style: TextStyle(color: ColorPrimary, fontSize: 12, fontWeight: FontWeight.w400),
+                        style: TextStyle(
+                            color: ColorPrimary,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400),
                       ),
                     ]),
                   ),
