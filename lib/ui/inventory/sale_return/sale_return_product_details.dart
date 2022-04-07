@@ -384,9 +384,11 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
               content: TextFormField(
                 controller: _textFieldController,
                 cursorColor: ColorPrimary,
+                maxLength: 6,
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 decoration: InputDecoration(
+                  counterText: "",
                   filled: true,
 
                   // fillColor: Colors.black,
@@ -449,26 +451,99 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
   }
 
   verifyOTP(SaleReturnData saleReturnData) async {
-    Map<String, dynamic> input = HashMap();
-    input["mobile"] = saleReturnData.mobile;
-    input["otp"] = "123456";
-    input["vendor_id"] = saleReturnData.vendorId;
-    input["order_id"] = saleReturnData.orderId;
-    input["product_id"] = saleReturnData.productId;
-    input["qty"] = saleReturnData.qty;
-    input["reason"] = saleReturnData.reason;
-    if (await Network.isConnected()) {
-      CommonResponse response = await apiProvider.saleReturnOtpApi(input);
+    if (_textFieldController.text.length == 6) {
+      Map<String, dynamic> input = HashMap();
+      input["mobile"] = saleReturnData.mobile;
+      input["otp"] = _textFieldController.text;
+      input["vendor_id"] = saleReturnData.vendorId;
+      input["order_id"] = saleReturnData.orderId;
+      input["product_id"] = saleReturnData.productId;
+      input["qty"] = saleReturnData.qty;
+      input["reason"] = saleReturnData.reason;
+      if (await Network.isConnected()) {
+        CommonResponse response = await apiProvider.saleReturnOtpApi(input);
 
-      if (response.success) {
-        Navigator.of(context).pop(); //? For alert box
-        Navigator.of(context).pop(saleReturnData.orderId); //? For screen
-        Utility.showToast(response.message);
+        if (response.success) {
+          Navigator.of(context).pop(); //? For alert box
+          successDialog(context, saleReturnData);
+
+          // Navigator.of(context).pop(saleReturnData.orderId); //? For screen
+          Utility.showToast(response.message);
+        } else {
+          Utility.showToast(response.message);
+        }
       } else {
-        Utility.showToast(response.message);
+        Utility.showToast(Constant.INTERNET_ALERT_MSG);
       }
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast("please_enter_6_digit_valid_otp_key".tr());
     }
+  }
+
+  successDialog(BuildContext context, SaleReturnData returnData) async {
+    return showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            contentPadding: const EdgeInsets.all(0),
+            titlePadding: const EdgeInsets.all(0),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            title: Center(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 20, bottom: 10),
+                child: Container(
+                  height: 60,
+                  width: 60,
+                  child: Image.asset(
+                    "assets/images/3x/tick.png",
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
+            content: Container(
+              height: 50,
+              child: Center(
+                child: Text(
+                  "product_return_successfully".tr(),
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
+                ),
+              ),
+            ),
+            actions: <Widget>[
+              Center(
+                child: MaterialButton(
+                  minWidth: MediaQuery.of(context).size.width * 0.40,
+                  height: 45,
+                  padding: const EdgeInsets.all(8.0),
+                  textColor: Colors.white,
+                  color: ColorPrimary,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  onPressed: () {
+                    Navigator.of(context).pop(); //? For alert box
+                    Navigator.of(context)
+                        .pop(returnData.orderId); //? For screen
+                  },
+                  child: new Text(
+                    "done_key".tr(),
+                    style: GoogleFonts.openSans(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w600,
+                        decoration: TextDecoration.none),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              )
+            ],
+          );
+        });
   }
 }
