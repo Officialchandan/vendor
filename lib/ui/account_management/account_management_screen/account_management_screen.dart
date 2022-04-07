@@ -60,13 +60,12 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
   ];
 
   List<String> imageList = [
-    "assets/images/account-ic9.png",
+    "assets/images/account-ic2.png",
     "assets/images/setting-ic2.png",
-    "assets/images/setting-ic2.png",
-    "assets/images/setting-ic2.png",
-    "assets/images/setting-ic2.png",
-    "assets/images/setting-ic2.png",
-    "assets/images/account-ic7.png",
+    "assets/images/account-ic13.png",
+    "assets/images/account-ic11.png",
+    "assets/images/account-ic10.png",
+    "assets/images/account-ic12.png",
     "assets/images/account-ic8.png",
   ];
   var message;
@@ -310,8 +309,8 @@ Future<void> onClick(BuildContext context, int currentIndex, var data) async {
         context,
         MaterialPageRoute(
             builder: (context) => WebViewScreen(
-                  title: "privacy_policy_key",
-                  url: "http://www.myprofitinc.com/privacy_policy.html",
+                  title: "about_us_key".tr(),
+                  url: "http://vendor.myprofitinc.com/aboutus",
                 )),
       );
       break;
@@ -321,7 +320,7 @@ Future<void> onClick(BuildContext context, int currentIndex, var data) async {
         MaterialPageRoute(
             builder: (context) => WebViewScreen(
                   title: tr("contact_us_key"),
-                  url: "http://www.myprofitinc.com/privacy_policy.html",
+                  url: "http://vendor.myprofitinc.com/contact",
                 )),
       );
       break;
@@ -331,7 +330,7 @@ Future<void> onClick(BuildContext context, int currentIndex, var data) async {
         MaterialPageRoute(
             builder: (context) => WebViewScreen(
                   title: tr("privacy_policy_key"),
-                  url: "http://www.myprofitinc.com/privacy_policy.html",
+                  url: "http://vendor.myprofitinc.com/privacypolicy",
                 )),
       );
       break;
@@ -341,7 +340,7 @@ Future<void> onClick(BuildContext context, int currentIndex, var data) async {
         MaterialPageRoute(
             builder: (context) => WebViewScreen(
                   title: tr("terms_conditions_key"),
-                  url: "http://www.myprofitinc.com/privacy_policy.html",
+                  url: "http://vendor.myprofitinc.com/terms",
                 )),
       );
       break;
@@ -351,7 +350,7 @@ Future<void> onClick(BuildContext context, int currentIndex, var data) async {
         MaterialPageRoute(
             builder: (context) => WebViewScreen(
                   title: tr("cancellation_refund_policy_key"),
-                  url: "http://www.myprofitinc.com/privacy_policy.html",
+                  url: "http://vendor.myprofitinc.com/refundpolicy",
                 )),
       );
       break;

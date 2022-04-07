@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPref {
   static const LOGIN = "Login";
+  static const COMMISSION = "commission";
   static const TOKEN = "token";
   static const SELECTEDLANG = "selectedlan";
   static const VENDORID = "vendorid";

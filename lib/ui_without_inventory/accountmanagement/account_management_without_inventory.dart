@@ -57,11 +57,10 @@ class _AccountManagementWithoutInventoryScreenState
   List<String> imageList = [
     "assets/images/account-ic2.png",
     "assets/images/setting-ic2.png",
-    "assets/images/setting-ic2.png",
-    "assets/images/setting-ic2.png",
-    "assets/images/setting-ic2.png",
-    "assets/images/setting-ic2.png",
-    "assets/images/account-ic7.png",
+    "assets/images/account-ic13.png",
+    "assets/images/account-ic11.png",
+    "assets/images/account-ic10.png",
+    "assets/images/account-ic12.png",
     "assets/images/account-ic8.png",
   ];
   var message;
@@ -288,7 +287,7 @@ class _AccountManagementWithoutInventoryScreenState
           MaterialPageRoute(
               builder: (context) => WebViewScreen(
                     title: tr("terms_conditions_key"),
-                    url: "http://vendor.myprofitinc.com/terms/",
+                    url: "http://vendor.myprofitinc.com/terms",
                   )),
         );
         break;
