@@ -23,7 +23,8 @@ class SearchAllProduct extends StatefulWidget {
   SearchAllProduct({required this.mobile, required this.coin});
 
   @override
-  _SearchAllProductState createState() => _SearchAllProductState(this.mobile, this.coin);
+  _SearchAllProductState createState() =>
+      _SearchAllProductState(this.mobile, this.coin);
 }
 
 class _SearchAllProductState extends State<SearchAllProduct> {
@@ -79,7 +80,8 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                       hintStyle: GoogleFonts.openSans(
                         fontWeight: FontWeight.w600,
                       ),
-                      contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                      contentPadding: const EdgeInsets.only(
+                          left: 14.0, bottom: 8.0, top: 8.0),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.white),
                       ),
@@ -89,7 +91,8 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                       ),
                     ),
                     onChanged: (text) {
-                      searchAllBloc.add(FindCategoriesEvent(searchkeyword: text));
+                      searchAllBloc
+                          .add(FindCategoriesEvent(searchkeyword: text));
                     },
                   ),
                   leadingWidth: 30,
@@ -109,7 +112,8 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                         log("chal pdi api");
                       }
                       if (state is GetSearchFailureState) {
-                        Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
+                        Fluttertoast.showToast(
+                            msg: state.message, backgroundColor: ColorPrimary);
                       }
                     },
                     builder: (context, state) {
@@ -132,7 +136,9 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                         } else {
                           List<ProductModel> list = [];
                           products.forEach((element) {
-                            if (element.productName.toLowerCase().contains(state.searchword.toLowerCase())) {
+                            if (element.productName
+                                .toLowerCase()
+                                .contains(state.searchword.toLowerCase())) {
                               list.add(element);
                               log("how much -->${state.searchword}");
                             }
@@ -166,19 +172,29 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                             String variantName = "";
                             ProductModel product = searchList[index];
                             if (product.productOption.isNotEmpty) {
-                              for (int i = 0; i < product.productOption.length; i++) {
+                              for (int i = 0;
+                                  i < product.productOption.length;
+                                  i++) {
                                 if (product.productOption.length - 1 == i)
-                                  variantName += product.productOption[i].value.toString();
+                                  variantName +=
+                                      product.productOption[i].value.toString();
                                 else
-                                  variantName += product.productOption[i].value.toString() + ", ";
+                                  variantName += product.productOption[i].value
+                                          .toString() +
+                                      ", ";
                               }
                             }
                             return Stack(
                               children: [
                                 Container(
-                                  height: searchList[index].productName.length + variantName.length > 30 ? 110 : 98,
+                                  height: searchList[index].productName.length +
+                                              variantName.length >
+                                          30
+                                      ? 110
+                                      : 98,
                                   width: MediaQuery.of(context).size.width,
-                                  margin: EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 10),
+                                  margin: EdgeInsets.only(
+                                      left: 14, right: 14, top: 10, bottom: 10),
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     boxShadow: [
@@ -193,24 +209,35 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                   child: Padding(
                                     padding: const EdgeInsets.all(10),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Row(
-                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
                                           children: [
                                             Container(
                                               decoration: BoxDecoration(
                                                 color: Colors.grey.shade200,
-                                                borderRadius: BorderRadius.circular(5),
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
                                               ),
-                                              child: searchList[index].productImages.isNotEmpty
+                                              child: searchList[index]
+                                                      .productImages
+                                                      .isNotEmpty
                                                   ? ClipRRect(
-                                                      borderRadius: BorderRadius.circular(10),
-                                                      child: searchList[index].productImages[0].productImage.isNotEmpty
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      child: searchList[index]
+                                                              .productImages[0]
+                                                              .productImage
+                                                              .isNotEmpty
                                                           ? Image(
                                                               height: 55,
                                                               width: 55,
-                                                              fit: BoxFit.contain,
+                                                              fit: BoxFit
+                                                                  .contain,
                                                               image: NetworkImage(
                                                                   "${searchList[index].productImages[0].productImage}"),
                                                             )
@@ -224,7 +251,9 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                             ),
                                                     )
                                                   : ClipRRect(
-                                                      borderRadius: BorderRadius.circular(10),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
                                                       child: Image(
                                                         image: AssetImage(
                                                           "assets/images/placeholder.webp",
@@ -240,34 +269,57 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                             ),
                                             Flexible(
                                               child: Container(
-                                                height: searchList[index].productName.length + variantName.length > 30
+                                                height: searchList[index]
+                                                                .productName
+                                                                .length +
+                                                            variantName.length >
+                                                        30
                                                     ? 68
                                                     : 48,
                                                 child: Column(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   children: [
                                                     Row(
                                                       children: [
                                                         Container(
                                                           width: width * 0.60,
-                                                          child: variantName.isEmpty
+                                                          child: variantName
+                                                                  .isEmpty
                                                               ? AutoSizeText(
                                                                   "${searchList[index].productName} ",
                                                                   maxLines: 2,
-                                                                  overflow: TextOverflow.ellipsis,
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
                                                                   style: TextStyle(
-                                                                      color: Colors.black, fontWeight: FontWeight.w600),
-                                                                  maxFontSize: 15,
-                                                                  minFontSize: 12,
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600),
+                                                                  maxFontSize:
+                                                                      15,
+                                                                  minFontSize:
+                                                                      12,
                                                                 )
                                                               : AutoSizeText(
                                                                   "${searchList[index].productName} ($variantName)",
                                                                   maxLines: 2,
-                                                                  overflow: TextOverflow.ellipsis,
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
                                                                   style: TextStyle(
-                                                                      color: Colors.black, fontWeight: FontWeight.w600),
-                                                                  maxFontSize: 15,
-                                                                  minFontSize: 12,
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600),
+                                                                  maxFontSize:
+                                                                      15,
+                                                                  minFontSize:
+                                                                      12,
                                                                 ),
                                                         ),
                                                       ],
@@ -275,24 +327,37 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                     Container(
                                                       width: width * 0.71,
                                                       child: Row(
-                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
                                                         children: [
                                                           Row(
-                                                            mainAxisAlignment: MainAxisAlignment.start,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
                                                             children: [
                                                               new RichText(
-                                                                text: new TextSpan(
+                                                                text:
+                                                                    new TextSpan(
                                                                   text:
                                                                       '\u20B9 ${double.parse(searchList[index].sellingPrice) * searchList[index].count}  ',
                                                                   style: TextStyle(
-                                                                      fontWeight: FontWeight.bold, color: ColorPrimary),
-                                                                  children: <TextSpan>[
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      color:
+                                                                          ColorPrimary),
+                                                                  children: <
+                                                                      TextSpan>[
                                                                     new TextSpan(
                                                                       text:
                                                                           '\u20B9${double.parse(searchList[index].mrp) * searchList[index].count}',
-                                                                      style: new TextStyle(
-                                                                        color: Colors.grey,
-                                                                        decoration: TextDecoration.lineThrough,
+                                                                      style:
+                                                                          new TextStyle(
+                                                                        color: Colors
+                                                                            .grey,
+                                                                        decoration:
+                                                                            TextDecoration.lineThrough,
                                                                       ),
                                                                     ),
                                                                   ],
@@ -301,40 +366,46 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                             ],
                                                           ),
                                                           Container(
-                                                            height: 20,
+                                                            height: 22,
                                                             decoration: BoxDecoration(
-                                                                borderRadius: BorderRadius.circular(25),
-                                                                border: Border.all(color: Colors.black)),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            25),
+                                                                border: Border.all(
+                                                                    color: Colors
+                                                                        .black)),
                                                             child: Row(
-                                                              mainAxisSize: MainAxisSize.min,
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .min,
                                                               children: [
-                                                                BlocBuilder<SearchAllBloc, SearchAllState>(
-                                                                  builder: (context, state) {
-                                                                    if (state is GetDecrementState) {
-                                                                      searchList[index].count = state.count;
+                                                                BlocBuilder<
+                                                                    SearchAllBloc,
+                                                                    SearchAllState>(
+                                                                  builder:
+                                                                      (context,
+                                                                          state) {
+                                                                    if (state
+                                                                        is GetDecrementState) {
+                                                                      searchList[index]
+                                                                              .count =
+                                                                          state
+                                                                              .count;
                                                                     }
                                                                     return Container(
-                                                                      height: 20,
-                                                                      width: 20,
+                                                                      height:
+                                                                          20,
+                                                                      width: 22,
                                                                       child: IconButton(
                                                                           padding: EdgeInsets.all(0),
                                                                           onPressed: () async {
-                                                                            log("true===>$count");
                                                                             if (await Network.isConnected()) {
-                                                                              searchList[index].count > 1
-                                                                                  ? searchAllBloc.add(GetIncrementEvent(
-                                                                                      count: searchList[index].count--))
-                                                                                  : Fluttertoast.showToast(
-                                                                                      msg:
-                                                                                          "product_cant_be_in_negative_key"
-                                                                                              .tr(),
-                                                                                      backgroundColor: ColorPrimary);
+                                                                              if (searchList[index].count > 1) {
+                                                                                searchAllBloc.add(GetIncrementEvent(count: searchList[index].count--));
+                                                                              }
                                                                             } else {
-                                                                              Fluttertoast.showToast(
-                                                                                  msg:
-                                                                                      "please_check_your_internet_connection_key"
-                                                                                          .tr(),
-                                                                                  backgroundColor: ColorPrimary);
+                                                                              Fluttertoast.showToast(msg: "please_check_your_internet_connection_key".tr(), backgroundColor: ColorPrimary);
                                                                             }
                                                                           },
                                                                           iconSize: 20,
@@ -346,41 +417,52 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                                   },
                                                                 ),
                                                                 Container(
-                                                                  width: 20,
-                                                                  height: 20,
-                                                                  color: ColorPrimary,
+                                                                  width: 22,
+                                                                  height: 22,
+                                                                  color:
+                                                                      ColorPrimary,
                                                                   child: Center(
-                                                                    child: AutoSizeText(
+                                                                    child:
+                                                                        AutoSizeText(
                                                                       "${searchList[index].count}",
-                                                                      style: TextStyle(
-                                                                        color: Colors.white,
+                                                                      style:
+                                                                          TextStyle(
+                                                                        color: Colors
+                                                                            .white,
                                                                       ),
-                                                                      maxFontSize: 14,
-                                                                      minFontSize: 10,
+                                                                      maxFontSize:
+                                                                          14,
+                                                                      minFontSize:
+                                                                          10,
                                                                     ),
                                                                   ),
                                                                 ),
-                                                                BlocBuilder<SearchAllBloc, SearchAllState>(
-                                                                  builder: (context, state) {
-                                                                    if (state is GetDecrementState) {
-                                                                      searchList[index].count = state.count;
+                                                                BlocBuilder<
+                                                                    SearchAllBloc,
+                                                                    SearchAllState>(
+                                                                  builder:
+                                                                      (context,
+                                                                          state) {
+                                                                    if (state
+                                                                        is GetDecrementState) {
+                                                                      searchList[index]
+                                                                              .count =
+                                                                          state
+                                                                              .count;
                                                                     }
                                                                     return Container(
-                                                                      height: 20,
-                                                                      width: 20,
+                                                                      height:
+                                                                          20,
+                                                                      width: 22,
                                                                       child: IconButton(
                                                                           padding: EdgeInsets.all(0),
                                                                           onPressed: () async {
                                                                             log("true===>$count");
                                                                             if (await Network.isConnected()) {
-                                                                              searchAllBloc.add(GetIncrementEvent(
-                                                                                  count: searchList[index].count++));
+                                                                              searchAllBloc.add(GetIncrementEvent(count: searchList[index].count++));
+                                                                              searchAllBloc.add(GetCheckBoxEvent(check: true, index: index));
                                                                             } else {
-                                                                              Fluttertoast.showToast(
-                                                                                  msg:
-                                                                                      "please_check_your_internet_connection_key"
-                                                                                          .tr(),
-                                                                                  backgroundColor: ColorPrimary);
+                                                                              Fluttertoast.showToast(msg: "please_check_your_internet_connection_key".tr(), backgroundColor: ColorPrimary);
                                                                             }
                                                                           },
                                                                           iconSize: 20,
@@ -404,21 +486,27 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                           ],
                                         ),
                                         Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
                                               children: [
                                                 Container(
                                                   child: Center(
                                                     child: Row(
                                                       children: [
                                                         Text(
-                                                          "redeem_key".tr() + ": ",
+                                                          "redeem_key".tr() +
+                                                              ": ",
                                                           style: TextStyle(
                                                               fontSize: 12,
-                                                              fontWeight: FontWeight.w600,
-                                                              color: Colors.grey),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              color:
+                                                                  Colors.grey),
                                                         ),
                                                         Container(
                                                             child: Image.asset(
@@ -430,8 +518,11 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                           " ${(double.parse(searchList[index].redeemCoins) * searchList[index].count).toStringAsFixed(2)}",
                                                           style: TextStyle(
                                                               fontSize: 12,
-                                                              fontWeight: FontWeight.w600,
-                                                              color: ColorPrimary),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              color:
+                                                                  ColorPrimary),
                                                         ),
                                                       ],
                                                     ),
@@ -440,12 +531,16 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                               ],
                                             ),
                                             Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
                                               children: [
                                                 Text(
                                                   "earn_key".tr() + ": ",
                                                   style: TextStyle(
-                                                      fontSize: 12, fontWeight: FontWeight.w700, color: Colors.grey),
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      color: Colors.grey),
                                                 ),
                                                 Container(
                                                     child: Image.asset(
@@ -456,7 +551,10 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                 Text(
                                                   " ${(double.parse(searchList[index].earningCoins) * searchList[index].count).toStringAsFixed(2)}",
                                                   style: TextStyle(
-                                                      fontSize: 12, fontWeight: FontWeight.w700, color: ColorPrimary),
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      color: ColorPrimary),
                                                 ),
                                               ],
                                             ),
@@ -469,14 +567,18 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                 Positioned(
                                   top: 10,
                                   right: 14,
-                                  child: BlocBuilder<SearchAllBloc, SearchAllState>(
+                                  child: BlocBuilder<SearchAllBloc,
+                                      SearchAllState>(
                                     builder: (context, state) {
                                       if (state is GetCheckBoxState) {
-                                        searchList[state.index].check = state.check;
+                                        searchList[state.index].check =
+                                            state.check;
                                       }
+
                                       return Checkbox(
                                         side: BorderSide(color: Colors.black87),
-                                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                        materialTapTargetSize:
+                                            MaterialTapTargetSize.shrinkWrap,
 
                                         // checkColor: Colors.indigo,
                                         value: searchList[index].check,
@@ -484,11 +586,16 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                         onChanged: (newvalue) async {
                                           if (await Network.isConnected()) {
                                             log("true===>");
-                                            searchAllBloc.add(GetCheckBoxEvent(check: newvalue!, index: index));
-                                            selectedProductList = searchList[index];
+                                            searchAllBloc.add(GetCheckBoxEvent(
+                                                check: newvalue!,
+                                                index: index));
+                                            selectedProductList =
+                                                searchList[index];
                                           } else {
                                             Fluttertoast.showToast(
-                                                msg: "please_check_your_internet_connection_key".tr(),
+                                                msg:
+                                                    "please_check_your_internet_connection_key"
+                                                        .tr(),
                                                 backgroundColor: ColorPrimary);
                                           }
                                         },
@@ -511,13 +618,17 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                               bottom: 0,
                               child: GestureDetector(
                                 onTap: () async {
-                                  List<ProductModel> product = searchList.where((element) => element.check).toList();
+                                  List<ProductModel> product = searchList
+                                      .where((element) => element.check)
+                                      .toList();
                                   log("$product");
                                   if (await Network.isConnected()) {
                                     // Navigator.pop(context);
                                     if (product.length == 0) {
                                       Fluttertoast.showToast(
-                                          msg: "please_atleast_one_product_key".tr(), backgroundColor: ColorPrimary);
+                                          msg: "please_atleast_one_product_key"
+                                              .tr(),
+                                          backgroundColor: ColorPrimary);
                                     } else {
                                       Navigator.push(
                                           context,
@@ -531,7 +642,8 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                     }
                                   } else {
                                     Fluttertoast.showToast(
-                                        msg: "please_check_your_internet_connection_key",
+                                        msg:
+                                            "please_check_your_internet_connection_key",
                                         backgroundColor: Colors.amber);
                                   }
                                 },
@@ -541,7 +653,9 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                   child: Center(
                                     child: Text(
                                       "done_key".tr(),
-                                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                   height: height * 0.07,
@@ -605,7 +719,9 @@ class _SizeColorBottomSheetState extends State<SizeColorBottomSheet> {
                     Container(
                       width: 30,
                       height: 30,
-                      decoration: BoxDecoration(color: Colors.amber, borderRadius: BorderRadius.circular(50)),
+                      decoration: BoxDecoration(
+                          color: Colors.amber,
+                          borderRadius: BorderRadius.circular(50)),
                       child: Center(child: Text("m_key".tr())),
                     ),
                   ]);
@@ -631,7 +747,9 @@ class _SizeColorBottomSheetState extends State<SizeColorBottomSheet> {
                     Container(
                       width: 30,
                       height: 30,
-                      decoration: BoxDecoration(color: ColorPrimary, borderRadius: BorderRadius.circular(50)),
+                      decoration: BoxDecoration(
+                          color: ColorPrimary,
+                          borderRadius: BorderRadius.circular(50)),
                       child: Center(
                           child: Icon(
                         Icons.check,
@@ -657,7 +775,10 @@ class _SizeColorBottomSheetState extends State<SizeColorBottomSheet> {
                 ),
                 Text(
                   "done_key".tr(),
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: ColorPrimary),
+                  style: TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold,
+                      color: ColorPrimary),
                 ),
               ],
             ),

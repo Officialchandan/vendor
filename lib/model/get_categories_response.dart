@@ -38,6 +38,7 @@ class GetCategoriesResponse {
 class CategoryModel {
   CategoryModel({
     required this.id,
+    required this.commission,
     this.categoryName,
     this.image,
   });
@@ -45,6 +46,7 @@ class CategoryModel {
   String id;
   String? categoryName;
   String? image;
+  String commission;
   bool? isChecked = false;
 
   factory CategoryModel.fromJson(String str) =>
@@ -57,11 +59,13 @@ class CategoryModel {
         categoryName:
             json["category_name"] == null ? "" : json["category_name"],
         image: json["image"] == null ? "" : json["image"],
+        commission: json["commission"] == null ? "" : json["commission"],
       );
 
   Map<String, dynamic> toMap() => {
         "category_id": id,
         "category_name": categoryName,
         "image": image,
+        "commission": commission
       };
 }

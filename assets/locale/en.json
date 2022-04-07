@@ -384,5 +384,7 @@
   "select_return_product_key":"Select Return Products",
   "return_calculation_key":"Return Calculation",
   "amt_paid_key":"Amount Paid",
-  "adj_balance_key":"Adjusted Balance"
+  "adj_balance_key":"Adjusted Balance",
+  "hooray_you_saved":"Hooray, You saved",
+  "product_return_successfully":"Product Return successfully"
 }
