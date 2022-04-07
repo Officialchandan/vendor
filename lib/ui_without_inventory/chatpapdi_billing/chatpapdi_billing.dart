@@ -391,7 +391,16 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text("earn_coins_key".tr()),
-                              Text("\u20B9 $amount"),
+                              Row(
+                                children: [
+                                  Container(
+                                      child: Image.asset(
+                                    "assets/images/point.png",
+                                    scale: 3,
+                                  )),
+                                  Text(" $earningCoins"),
+                                ],
+                              ),
                             ],
                           ),
                           SizedBox(
@@ -545,9 +554,8 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
   }
 
   void calculateEarnCoins(double amount) async {
-    var c = await SharedPref.getStringPreference(SharedPref.COMMISSION);
-
     if (amount.toString().isNotEmpty) {
+      var c = await SharedPref.getStringPreference(SharedPref.COMMISSION);
       double commission = double.parse(c);
       String freeCoins =
           await SharedPref.getStringPreference(SharedPref.VendorCoin);
