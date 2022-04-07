@@ -19,7 +19,6 @@ import 'package:vendor/ui/home/bottom_navigation_home.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/validator.dart';
-import 'package:vendor/widget/coin_genrate_pop.dart';
 
 class DirectBilling extends StatefulWidget {
   DirectBilling({Key? key}) : super(key: key);
@@ -290,10 +289,8 @@ class _DirectBillingState extends State<DirectBilling> {
                                   if (categoryList.length == 1) {
                                     checkbox = true;
                                     categoryList[index].isChecked = true;
-                                    if (!categoryIdList
-                                        .contains(categoryList[index].id)) {
-                                      categoryIdList
-                                          .add(categoryList[index].id);
+                                    if (!categoryIdList.contains(categoryList[index].id)) {
+                                      categoryIdList.add(categoryList[index].id);
                                     }
                                   }
                                 }
@@ -340,44 +337,34 @@ class _DirectBillingState extends State<DirectBilling> {
                                 if (amountController.text.length > 0) {
                                   if (double.parse(coins) >= 3) {
                                     calculation(amountController.text);
-                                    calculateEarnCoins(
-                                        double.parse(amountController.text));
+                                    calculateEarnCoins(double.parse(amountController.text));
 
                                     setState(() {
                                       redeem = redeems;
                                     });
                                   } else {
                                     Fluttertoast.showToast(
-                                        msg: "You_dont_have_enough_coins".tr(),
-                                        backgroundColor: ColorPrimary);
+                                        msg: "You_dont_have_enough_coins".tr(), backgroundColor: ColorPrimary);
                                   }
                                 } else {
                                   Fluttertoast.showToast(
-                                      msg: "please_enter_amount_key".tr(),
-                                      backgroundColor: ColorPrimary);
+                                      msg: "please_enter_amount_key".tr(), backgroundColor: ColorPrimary);
                                 }
                               } else {
                                 Fluttertoast.showToast(
-                                    msg: "please_enter_10_digits_number_key"
-                                        .tr(),
-                                    backgroundColor: ColorPrimary);
+                                    msg: "please_enter_10_digits_number_key".tr(), backgroundColor: ColorPrimary);
                               }
                               if (redeem == true) {
                                 redeemDialog(context);
                               }
-                              calculation(amountController.text.isEmpty
-                                  ? "0"
-                                  : amountController.text);
-                              calculateEarnCoins(double.parse(
-                                  amountController.text.isEmpty
-                                      ? "0"
-                                      : amountController.text));
+                              calculation(amountController.text.isEmpty ? "0" : amountController.text);
+                              calculateEarnCoins(
+                                  double.parse(amountController.text.isEmpty ? "0" : amountController.text));
                             },
                           ),
                           Text(
                             "  " + "redeemed_coins_key".tr(),
-                            style: TextStyle(
-                                fontSize: 17, color: ColorTextPrimary),
+                            style: TextStyle(fontSize: 17, color: ColorTextPrimary),
                           ),
                         ],
                       ),
@@ -450,16 +437,14 @@ class _DirectBillingState extends State<DirectBilling> {
                       padding: EdgeInsets.all(10),
                       width: MediaQuery.of(context).size.width,
                       height: 50,
-                      decoration: BoxDecoration(
-                          color: ColorPrimary,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey,
-                              offset: Offset(0.0, 1.0), //(x,y)
-                              blurRadius: 6.0,
-                            ),
-                          ]),
+                      decoration:
+                          BoxDecoration(color: ColorPrimary, borderRadius: BorderRadius.circular(10), boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey,
+                          offset: Offset(0.0, 1.0), //(x,y)
+                          blurRadius: 6.0,
+                        ),
+                      ]),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -673,13 +658,85 @@ class _DirectBillingState extends State<DirectBilling> {
         }).then((value) => otpController.clear());
   }
 
+  _displayDialogs(BuildContext context, hinttext, status, data) async {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
+            child: AlertDialog(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              title: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                Image.asset(
+                  "assets/images/otp-wallet.png",
+                  fit: BoxFit.cover,
+                  height: 70,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Image.asset(
+                    "assets/images/point.png",
+                    scale: 3,
+                  ),
+                  Text(
+                    " ${double.parse(hinttext).toStringAsFixed(2)} ",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.openSans(
+                      fontSize: 17.0,
+                      color: ColorPrimary,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ]),
+                Text("Coins generated succesfully\n in customer Wallet",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.openSans(
+                      fontSize: 17.0,
+                      color: ColorTextPrimary,
+                      fontWeight: FontWeight.w600,
+                    )),
+              ]),
+              actions: <Widget>[
+                Center(
+                  child: MaterialButton(
+                    minWidth: MediaQuery.of(context).size.width * 0.40,
+                    height: 50,
+                    padding: const EdgeInsets.all(8.0),
+                    textColor: Colors.white,
+                    color: ColorPrimary,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    onPressed: () {
+                      status == 1
+                          ? Navigator.push(context, MaterialPageRoute(builder: (context) => Scanner(data: data!)))
+                          : Navigator.pushAndRemoveUntil(
+                              context,
+                              PageTransition(child: BottomNavigationHome(), type: PageTransitionType.fade),
+                              ModalRoute.withName("/"));
+                    },
+                    child: new Text(
+                      "done_key".tr(),
+                      style: GoogleFonts.openSans(
+                          fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                )
+              ],
+            ),
+          );
+        });
+  }
+
   void calculateEarnCoins(double amount) async {
     if (amount.toString().isNotEmpty) {
       double commission = double.parse(categoryList.first.commission);
-      String freeCoins =
-          await SharedPref.getStringPreference(SharedPref.VendorCoin);
-      amount =
-          double.parse(freeCoins) != 0 ? amount : amount - (amount * 18) / 100;
+      String freeCoins = await SharedPref.getStringPreference(SharedPref.VendorCoin);
+      amount = double.parse(freeCoins) != 0 ? amount : amount - (amount * 18) / 100;
       amount = (amount * commission) / 100;
       amount = amount - 0.50;
       amount = amount / 2;
@@ -753,8 +810,7 @@ class _DirectBillingState extends State<DirectBilling> {
           return AlertDialog(
             contentPadding: const EdgeInsets.all(0),
             titlePadding: const EdgeInsets.all(0),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             title: Image.asset(
               "assets/images/3x/hooray-banner.png",
               fit: BoxFit.cover,
@@ -767,17 +823,11 @@ class _DirectBillingState extends State<DirectBilling> {
                   children: [
                     Text(
                       "hooray_you_saved".tr(),
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black),
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
                     ),
                     Text(
                       " \u20B9${(double.parse(coinss) / 3).toStringAsFixed(0)}",
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: ColorPrimary),
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: ColorPrimary),
                     ),
                   ],
                 ),
@@ -791,17 +841,14 @@ class _DirectBillingState extends State<DirectBilling> {
                   padding: const EdgeInsets.all(8.0),
                   textColor: Colors.white,
                   color: ColorPrimary,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   onPressed: () {
                     Navigator.pop(context);
                   },
                   child: new Text(
                     "done_key".tr(),
                     style: GoogleFonts.openSans(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w600,
-                        decoration: TextDecoration.none),
+                        fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
                   ),
                 ),
               ),
