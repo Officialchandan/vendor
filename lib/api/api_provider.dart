@@ -56,6 +56,7 @@ import 'package:vendor/model/product_by_category_response.dart';
 import 'package:vendor/model/product_variant_response.dart';
 import 'package:vendor/model/qr_code.dart';
 import 'package:vendor/model/sale_return_resonse.dart';
+import 'package:vendor/model/upi_transfer_history.dart';
 import 'package:vendor/model/upload_image_response.dart';
 import 'package:vendor/model/validate_app_version.dart';
 import 'package:vendor/model/vendor_profile_response.dart';
@@ -1630,6 +1631,28 @@ class ApiProvider {
       print("Exception occurred: $message stackTrace: $error");
       return CustomerRedeemCoinHistory(success: false, message: "", data: []);
     }
+  }
+
+  Future<UpiTansferResponse> upiPaymentHistory() async {
+    int inputs = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    log("-------->${inputs}");
+    Map<String, dynamic> input = HashMap<String, dynamic>();
+    input["vendor_id"] = inputs;
+    //try {
+    Response res = await dio.post(Endpoint.UPI_PAYMENT_HISTORY, data: input);
+
+    return UpiTansferResponse.fromJson(res.toString());
+    // } catch (error) {
+    //   String message = "";
+    //   if (error is DioError) {
+    //     ServerError e = ServerError.withError(error: error);
+    //     message = e.getErrorMessage();
+    //   } else {
+    //     message = "Please try again later!";
+    //   }
+    //   print("Exception occurred: $message stackTrace: $error");
+    //   return UpiTansferResponse(success: false, message: "", data: []);
+    // }
   }
 
   Future<IntiatePaymnetResponse> initiatePayment(Map<String, dynamic> input) async {

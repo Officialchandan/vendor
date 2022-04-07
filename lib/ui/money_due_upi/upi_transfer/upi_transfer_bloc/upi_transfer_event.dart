@@ -1,0 +1,19 @@
+import 'package:equatable/equatable.dart';
+
+class UpiTansferHistoryEvent extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
+
+class GetUpiTansferHistoryEvent extends UpiTansferHistoryEvent {
+  GetUpiTansferHistoryEvent();
+  @override
+  List<Object?> get props => [];
+}
+
+class FindUserEvent extends UpiTansferHistoryEvent {
+  final searchkeyword;
+
+  FindUserEvent({required this.searchkeyword});
+  List<Object?> get props => [searchkeyword];
+}

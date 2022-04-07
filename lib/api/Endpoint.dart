@@ -177,5 +177,8 @@ class Endpoint {
   static const String GET_CUSTOMER_REDEEM_COIN_HISTORY = "getCustomerSpendCoinsHistory";
 
   static const String GET_INITIATE_PAYMENT_RESPONSE = "initiatePayment";
+
   static const String CHECK_PAYMENT = "checkOnlinePayment";
+
+  static const String UPI_PAYMENT_HISTORY = "getUpiHistory";
 }
