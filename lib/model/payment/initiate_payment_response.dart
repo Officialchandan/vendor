@@ -23,18 +23,22 @@ class IntiatePaymnetResponse {
   String orderId;
   String callbackUrl;
 
-  factory IntiatePaymnetResponse.fromJson(String str) => IntiatePaymnetResponse.fromMap(json.decode(str));
+  factory IntiatePaymnetResponse.fromJson(String str) =>
+      IntiatePaymnetResponse.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory IntiatePaymnetResponse.fromMap(Map<String, dynamic> json) => IntiatePaymnetResponse(
+  factory IntiatePaymnetResponse.fromMap(Map<String, dynamic> json) =>
+      IntiatePaymnetResponse(
         success: json["success"] == null ? 0 : json["success"],
         message: json["message"] == null ? "" : json["message"].toString(),
-        signature: json["signature"] == null ? "" : json["signature"].toString(),
+        signature:
+            json["signature"] == null ? "" : json["signature"].toString(),
         txnToken: json["txnToken"] == null ? "" : json["txnToken"].toString(),
         mid: json["mid"] == null ? "" : json["mid"].toString(),
         orderId: json["orderId"] == null ? "" : json["orderId"].toString(),
-        callbackUrl: json["callbackUrl"] == null ? null : json["callbackUrl"],
+        callbackUrl:
+            json["callbackUrl"] == null ? "" : json["callbackUrl"].toString(),
       );
 
   Map<String, dynamic> toMap() => {

@@ -466,7 +466,7 @@ class _DirectBillingState extends State<DirectBilling> {
                                   "assets/images/point.png",
                                   scale: 3,
                                 )),
-                                Text(" $coinss")
+                                Text(" $earningCoins")
                               ]),
                             ],
                           ),
