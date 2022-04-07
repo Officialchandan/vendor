@@ -38,7 +38,7 @@ class _DirectBillingState extends State<DirectBilling> {
   var checkbox = false;
   var message = "";
   var status1, succes;
-  String earningCoins = "0";
+  String earningCoins = "0.0";
   bool? status, redeem = false;
   List<CategoryModel> categoryList = [];
   bool valuefirst = false;
@@ -305,9 +305,9 @@ class _DirectBillingState extends State<DirectBilling> {
                             if (length.isEmpty) {
                               log("if$length");
                               log("if$coins");
-                              coinss = 0.toString();
-                              amount = 0.toString();
-                              earningCoins = 0.toString();
+                              coinss = 0.0.toString();
+                              amount = 0.0.toString();
+                              earningCoins = 0.0.toString();
                               redeem = false;
                             } else {
                               log("else$length");
@@ -605,7 +605,7 @@ class _DirectBillingState extends State<DirectBilling> {
         double amounts = double.parse(length) * 3;
         log("amount1===>$amounts");
         coinss = amounts.toStringAsFixed(2);
-        amount = 0.toString();
+        amount = 0.0.toString();
         log("coins1===>$coins");
       } else {
         int i = 1;
@@ -620,7 +620,7 @@ class _DirectBillingState extends State<DirectBilling> {
         }
       }
     } else {
-      coinss = 0.toString();
+      coinss = 0.0.toString();
       amount = length.toString();
     }
   }
@@ -783,6 +783,7 @@ class _DirectBillingState extends State<DirectBilling> {
       amount = amount - 0.50;
       amount = amount / 2;
       amount = amount * 3;
+      amount = amount < 0 ? 0 : amount;
       earningCoins = amount.toStringAsFixed(2);
     } else {
       earningCoins = "0.0";

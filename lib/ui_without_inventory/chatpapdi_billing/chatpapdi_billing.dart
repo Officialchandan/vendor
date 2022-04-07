@@ -32,7 +32,8 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
 
   TextEditingController amountController = TextEditingController();
   TextEditingController otpController = TextEditingController();
-  ChatPapdiBillingCustomerNumberResponseBloc directBillingCustomerNumberResponseBloc =
+  ChatPapdiBillingCustomerNumberResponseBloc
+      directBillingCustomerNumberResponseBloc =
       ChatPapdiBillingCustomerNumberResponseBloc();
   var value = true;
   var message = "";
@@ -40,7 +41,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
   bool valuefirst = false;
   String coins = "0.0";
   var status1;
-
+  String earningCoins = "0.0";
   String coinss = "0.0";
 
   String amount = "0.0";
@@ -58,7 +59,8 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
         )),
         Text(
           "  $coins",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: ColorPrimary),
+          style: TextStyle(
+              fontSize: 20, fontWeight: FontWeight.w700, color: ColorPrimary),
         ),
       ],
     );
@@ -68,18 +70,22 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
   Widget build(BuildContext context) {
     return BlocProvider<ChatPapdiBillingCustomerNumberResponseBloc>(
       create: (context) => directBillingCustomerNumberResponseBloc,
-      child: BlocConsumer<ChatPapdiBillingCustomerNumberResponseBloc, ChatPapdiBillingCustomerNumberResponseState>(
+      child: BlocConsumer<ChatPapdiBillingCustomerNumberResponseBloc,
+          ChatPapdiBillingCustomerNumberResponseState>(
         listener: (context, state) {},
         builder: (context, state) {
           return Scaffold(
               appBar: AppBar(
-                title: Text("billing_key".tr(), style: TextStyle(fontWeight: FontWeight.w600)),
+                title: Text("billing_key".tr(),
+                    style: TextStyle(fontWeight: FontWeight.w600)),
                 leading: IconButton(
                   icon: Icon(Icons.arrow_back_ios),
                   onPressed: () {
                     Navigator.pushAndRemoveUntil(
                         context,
-                        PageTransition(child: HomeScreenWithoutInventory(), type: PageTransitionType.fade),
+                        PageTransition(
+                            child: HomeScreenWithoutInventory(),
+                            type: PageTransitionType.fade),
                         ModalRoute.withName("/"));
                   },
                 ),
@@ -93,13 +99,15 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                       BlocConsumer<ChatPapdiBillingCustomerNumberResponseBloc,
                           ChatPapdiBillingCustomerNumberResponseState>(
                         listener: (context, state) async {
-                          if (state is GetChatPapdiBillingCustomerNumberResponseState) {
+                          if (state
+                              is GetChatPapdiBillingCustomerNumberResponseState) {
                             coins = state.data.toString();
                             status1 = state.status;
                             log("staus=>$status1}");
                           }
 
-                          if (state is GetChatPapdiBillingCustomerNumberResponseFailureState) {
+                          if (state
+                              is GetChatPapdiBillingCustomerNumberResponseFailureState) {
                             status1 = state.status;
                           }
                           if (state is GetChatPapdiBillingFailureState) {
@@ -111,22 +119,32 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                             message = state.message;
                             status = state.succes;
                             datas = state.data;
-                            _displayDialog(context, 1, "please_enter_password_key".tr(), "enter_otp_key".tr());
+                            _displayDialog(
+                                context,
+                                1,
+                                "please_enter_password_key".tr(),
+                                "enter_otp_key".tr());
                           }
 
                           if (state is GetChatPapdiBillingLoadingstate) {}
 
                           if (state is GetChatPapdiBillingFailureState) {
                             message = state.message;
-                            Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
+                            Fluttertoast.showToast(
+                                msg: state.message,
+                                backgroundColor: ColorPrimary);
                           }
                           if (state is GetChatPapdiBillingOtpState) {
-                            Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
+                            Fluttertoast.showToast(
+                                msg: state.message,
+                                backgroundColor: ColorPrimary);
                             passing = state.data;
                             // var result = await
                             datas!.qrCodeStatus == 0
-                                ? _displayDialogs(context, passing!.earningCoins, 0, "")
-                                : _displayDialogs(context, passing!.earningCoins, 1, passing);
+                                ? _displayDialogs(
+                                    context, passing!.earningCoins, 0, "")
+                                : _displayDialogs(
+                                    context, passing!.earningCoins, 1, passing);
                             // log("-------$result --------");
                             // Navigator.pushReplacement(
                             //     context,
@@ -136,7 +154,9 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                           }
                           if (state is GetChatPapdiBillingOtpLoadingstate) {}
                           if (state is GetChatPapdiBillingOtpFailureState) {
-                            Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
+                            Fluttertoast.showToast(
+                                msg: state.message,
+                                backgroundColor: ColorPrimary);
                           }
                           if (state is GetChatPapdiPartialUserState) {
                             succes = state.succes;
@@ -156,30 +176,41 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                           TextFormField(
                               controller: mobileController,
                               keyboardType: TextInputType.number,
-                              validator: (numb) => Validator.validateMobile(numb!, context),
-                              autovalidateMode: AutovalidateMode.onUserInteraction,
-                              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                              validator: (numb) =>
+                                  Validator.validateMobile(numb!, context),
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
                               maxLength: 10,
                               decoration: InputDecoration(
-                                hintText: 'enter_customer_phone_number_key'.tr(),
+                                hintText:
+                                    'enter_customer_phone_number_key'.tr(),
                                 labelText: 'mobile_number_key'.tr(),
                                 counterText: "",
                                 contentPadding: EdgeInsets.all(0),
                                 fillColor: Colors.transparent,
-                                enabledBorder:
-                                    UnderlineInputBorder(borderSide: BorderSide(color: ColorTextPrimary, width: 1.5)),
-                                focusedBorder:
-                                    UnderlineInputBorder(borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
-                                border: UnderlineInputBorder(borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
+                                enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: ColorTextPrimary, width: 1.5)),
+                                focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: ColorPrimary, width: 1.5)),
+                                border: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: ColorPrimary, width: 1.5)),
                               ),
                               onChanged: (length) {
                                 if (mobileController.text.length == 10) {
                                   directBillingCustomerNumberResponseBloc.add(
-                                      GetChatPapdiBillingCustomerNumberResponseEvent(mobile: mobileController.text));
+                                      GetChatPapdiBillingCustomerNumberResponseEvent(
+                                          mobile: mobileController.text));
                                 }
                                 if (mobileController.text.length == 9) {
                                   directBillingCustomerNumberResponseBloc.add(
-                                      GetChatPapdiBillingCustomerNumberResponseEvent(mobile: mobileController.text));
+                                      GetChatPapdiBillingCustomerNumberResponseEvent(
+                                          mobile: mobileController.text));
                                   coins = "0";
                                 }
                               }),
@@ -196,11 +227,15 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                                     contentPadding: EdgeInsets.all(0),
                                     fillColor: Colors.transparent,
                                     enabledBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(color: ColorTextPrimary, width: 1.5)),
-                                    focusedBorder:
-                                        UnderlineInputBorder(borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
-                                    border:
-                                        UnderlineInputBorder(borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
+                                        borderSide: BorderSide(
+                                            color: ColorTextPrimary,
+                                            width: 1.5)),
+                                    focusedBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: ColorPrimary, width: 1.5)),
+                                    border: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: ColorPrimary, width: 1.5)),
                                   ),
                                   onChanged: (length) {})
                               : Container(),
@@ -214,7 +249,9 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                           controller: amountController,
                           keyboardType: TextInputType.number,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
-                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
                           maxLength: 10,
                           decoration: InputDecoration(
                             hintText: 'amount_spent_here_key'.tr(),
@@ -222,19 +259,25 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                             counterText: "",
                             contentPadding: EdgeInsets.all(0),
                             fillColor: Colors.transparent,
-                            enabledBorder:
-                                UnderlineInputBorder(borderSide: BorderSide(color: ColorTextPrimary, width: 1.5)),
-                            focusedBorder:
-                                UnderlineInputBorder(borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
-                            border: UnderlineInputBorder(borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
+                            enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: ColorTextPrimary, width: 1.5)),
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: ColorPrimary, width: 1.5)),
+                            border: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: ColorPrimary, width: 1.5)),
                           ),
                           onChanged: (length) {
                             if (length.isEmpty) {
-                              coinss = 0.toString();
-                              amount = 0.toString();
+                              coinss = 0.0.toString();
+                              amount = 0.0.toString();
+                              earningCoins = 0.0.toString();
                               redeem = false;
                             } else {
                               calculation(length);
+                              calculateEarnCoins(double.parse(length));
                             }
                             setState(() {});
                           },
@@ -259,7 +302,8 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                         child: Row(
                           children: [
                             Checkbox(
-                              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              materialTapTargetSize:
+                                  MaterialTapTargetSize.shrinkWrap,
                               value: this.redeem,
                               checkColor: Colors.white,
                               // value: widget
@@ -274,27 +318,46 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                                   if (amountController.text.length > 0) {
                                     if (double.parse(coins) >= 3) {
                                       calculation(amountController.text);
+                                      calculateEarnCoins(
+                                          double.parse(amountController.text));
                                       setState(() {
                                         redeem = redeems;
                                       });
                                     } else {
                                       Fluttertoast.showToast(
-                                          msg: "You_dont_have_enough_coins".tr(), backgroundColor: ColorPrimary);
+                                          msg:
+                                              "You_dont_have_enough_coins".tr(),
+                                          backgroundColor: ColorPrimary);
                                     }
                                   } else {
                                     Fluttertoast.showToast(
-                                        msg: "please_enter_number_first_key".tr(), backgroundColor: ColorPrimary);
+                                        msg: "please_enter_number_first_key"
+                                            .tr(),
+                                        backgroundColor: ColorPrimary);
                                   }
                                 } else {
                                   Fluttertoast.showToast(
-                                      msg: "please_enter_10_digits_number_key".tr(), backgroundColor: ColorPrimary);
+                                      msg: "please_enter_10_digits_number_key"
+                                          .tr(),
+                                      backgroundColor: ColorPrimary);
                                 }
-                                calculation(amountController.text.isEmpty ? "0" : amountController.text);
+
+                                if (redeem == true) {
+                                  redeemDialog(context);
+                                }
+                                calculation(amountController.text.isEmpty
+                                    ? "0"
+                                    : amountController.text);
+                                calculateEarnCoins(double.parse(
+                                    amountController.text.isEmpty
+                                        ? "0"
+                                        : amountController.text));
                               },
                             ),
                             Text(
                               "  " + "redeemed_coins_key".tr(),
-                              style: TextStyle(fontSize: 17, color: ColorTextPrimary),
+                              style: TextStyle(
+                                  fontSize: 17, color: ColorTextPrimary),
                             ),
                           ],
                         ),
@@ -306,14 +369,16 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                         padding: EdgeInsets.all(10),
                         width: MediaQuery.of(context).size.width,
                         height: 120,
-                        decoration:
-                            BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10), boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey,
-                            offset: Offset(0.0, 1.0), //(x,y)
-                            blurRadius: 6.0,
-                          ),
-                        ]),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey,
+                                offset: Offset(0.0, 1.0), //(x,y)
+                                blurRadius: 6.0,
+                              ),
+                            ]),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -329,8 +394,17 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text("total_payable_amount_key".tr()),
-                                Text("\u20B9 $amount"),
+                                Text("earn_coins_key".tr()),
+                                Row(
+                                  children: [
+                                    Container(
+                                        child: Image.asset(
+                                      "assets/images/point.png",
+                                      scale: 3,
+                                    )),
+                                    Text(" $earningCoins"),
+                                  ],
+                                ),
                               ],
                             ),
                             SizedBox(
@@ -356,6 +430,41 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                           ],
                         ),
                       ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        width: MediaQuery.of(context).size.width,
+                        height: 50,
+                        decoration: BoxDecoration(
+                            color: ColorPrimary,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey,
+                                offset: Offset(0.0, 1.0), //(x,y)
+                                blurRadius: 6.0,
+                              ),
+                            ]),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "total_payable_amount_key".tr(),
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                            Text(
+                              "\u20B9 $amount",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -373,25 +482,33 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
 
                               if (succes == true) {}
                             } else {
-                              Fluttertoast.showToast(msg: "please_enter_name_key".tr(), backgroundColor: ColorPrimary);
+                              Fluttertoast.showToast(
+                                  msg: "please_enter_name_key".tr(),
+                                  backgroundColor: ColorPrimary);
                             }
                           } else {
-                            Fluttertoast.showToast(msg: "please_enter_amount_key".tr(), backgroundColor: ColorPrimary);
+                            Fluttertoast.showToast(
+                                msg: "please_enter_amount_key".tr(),
+                                backgroundColor: ColorPrimary);
                           }
                         } else {
                           Fluttertoast.showToast(
-                              msg: "please_enter_10_digits_number_key".tr(), backgroundColor: ColorPrimary);
+                              msg: "please_enter_10_digits_number_key".tr(),
+                              backgroundColor: ColorPrimary);
                         }
                       } else {
                         if (mobileController.text.length == 10) {
                           if (amountController.text.length >= 0) {
                             directBilling(context);
                           } else {
-                            Fluttertoast.showToast(msg: "please_enter_amount_key", backgroundColor: ColorPrimary);
+                            Fluttertoast.showToast(
+                                msg: "please_enter_amount_key",
+                                backgroundColor: ColorPrimary);
                           }
                         } else {
                           Fluttertoast.showToast(
-                              msg: "please_enter_10_digits_number_key".tr(), backgroundColor: ColorPrimary);
+                              msg: "please_enter_10_digits_number_key".tr(),
+                              backgroundColor: ColorPrimary);
                         }
                       }
                     },
@@ -403,7 +520,10 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                       width: MediaQuery.of(context).size.width,
                       child: Center(
                         child: Text("submit_button_key".tr(),
-                            style: TextStyle(fontSize: 17, color: Colors.white, fontWeight: FontWeight.w600)),
+                            style: TextStyle(
+                                fontSize: 17,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600)),
                       ),
                     ),
                   ),
@@ -420,7 +540,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
         double amounts = double.parse(length) * 3;
 
         coinss = amounts.toStringAsFixed(2);
-        amount = 0.toString();
+        amount = 0.0.toString();
       } else {
         int i = 1;
         var rs;
@@ -431,8 +551,28 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
         }
       }
     } else {
-      coinss = 0.toString();
+      coinss = 0.0.toString();
       amount = length.toString();
+    }
+  }
+
+  void calculateEarnCoins(double amount) async {
+    var c = await SharedPref.getStringPreference(SharedPref.COMMISSION);
+
+    if (amount.toString().isNotEmpty) {
+      double commission = double.parse(c);
+      String freeCoins =
+          await SharedPref.getStringPreference(SharedPref.VendorCoin);
+      amount =
+          double.parse(freeCoins) != 0 ? amount : amount - (amount * 18) / 100;
+      amount = (amount * commission) / 100;
+      amount = amount - 0.50;
+      amount = amount / 2;
+      amount = amount * 3;
+      amount = amount < 0 ? 0 : amount;
+      earningCoins = amount.toStringAsFixed(2);
+    } else {
+      earningCoins = "0.0";
     }
   }
 
@@ -441,23 +581,27 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
     input["mobile"] = mobileController.text;
     input["first_name"] = nameController.text;
 
-    directBillingCustomerNumberResponseBloc.add(GetChatPapdiPartialUserRegisterEvent(input: input));
+    directBillingCustomerNumberResponseBloc
+        .add(GetChatPapdiPartialUserRegisterEvent(input: input));
   }
 
   Future<void> directBilling(BuildContext context) async {
     Map<String, dynamic> input = HashMap<String, dynamic>();
     input["mobile"] = mobileController.text;
     input["bill_amount"] = amountController.text;
-    input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    input["vendor_id"] =
+        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     input["total_pay"] = amount;
     input["coin_deducted"] = coinss;
 
-    directBillingCustomerNumberResponseBloc.add(GetChatPapdiBillingEvent(input: input));
+    directBillingCustomerNumberResponseBloc
+        .add(GetChatPapdiBillingEvent(input: input));
   }
 
   Future<void> verifyOtp(BuildContext context) async {
     Map<String, dynamic> input = HashMap<String, dynamic>();
-    input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    input["vendor_id"] =
+        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     input["bill_id"] = datas!.billId;
 
     input["otp"] = otpController.text;
@@ -465,10 +609,12 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
     input["coin_deducted"] = datas!.coinDeducted;
     input["earning_coins"] = datas!.earningCoins;
     input["myprofit_revenue"] = datas!.myProfitRevenue;
-    SharedPref.setStringPreference(SharedPref.VendorCoin, datas!.vendorAvailableCoins);
+    SharedPref.setStringPreference(
+        SharedPref.VendorCoin, datas!.vendorAvailableCoins);
     input["vendor_available_coins"] = datas!.vendorAvailableCoins;
     log("=====? $input");
-    directBillingCustomerNumberResponseBloc.add(GetChatPapdiBillingOtpEvent(input: input));
+    directBillingCustomerNumberResponseBloc
+        .add(GetChatPapdiBillingOtpEvent(input: input));
   }
 
   _displayDialog(BuildContext context, index, text, hinttext) async {
@@ -479,7 +625,8 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
           return ConstrainedBox(
             constraints: BoxConstraints(maxWidth: 400),
             child: AlertDialog(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
               title: RichText(
                 text: TextSpan(
                   text: "$text",
@@ -506,7 +653,8 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                   hintStyle: GoogleFonts.openSans(
                     fontWeight: FontWeight.w600,
                   ),
-                  contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                  contentPadding:
+                      const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
                 ),
               ),
               actions: <Widget>[
@@ -517,12 +665,15 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                     padding: const EdgeInsets.all(8.0),
                     textColor: Colors.white,
                     color: ColorPrimary,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
                     onPressed: () async {
                       if (status1 == 0) {
                         log("index->$index");
                         Map<String, dynamic> input = HashMap<String, dynamic>();
-                        input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+                        input["vendor_id"] =
+                            await SharedPref.getIntegerPreference(
+                                SharedPref.VENDORID);
                         input["bill_id"] = datas!.billId;
 
                         input["otp"] = otpController.text;
@@ -530,11 +681,14 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                         input["coin_deducted"] = datas!.coinDeducted;
                         input["earning_coins"] = datas!.earningCoins;
                         input["myprofit_revenue"] = datas!.myProfitRevenue;
-                        SharedPref.setStringPreference(SharedPref.VendorCoin, datas!.vendorAvailableCoins);
-                        input["vendor_available_coins"] = datas!.vendorAvailableCoins;
+                        SharedPref.setStringPreference(
+                            SharedPref.VendorCoin, datas!.vendorAvailableCoins);
+                        input["vendor_available_coins"] =
+                            datas!.vendorAvailableCoins;
                         log("=====? $input");
 
-                        directBillingCustomerNumberResponseBloc.add(GetChatPapdiBillingOtpEvent(input: input));
+                        directBillingCustomerNumberResponseBloc
+                            .add(GetChatPapdiBillingOtpEvent(input: input));
 
                         // otpController.clear();
                         // mobileController.clear();
@@ -550,7 +704,9 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                     child: new Text(
                       "submit_button_key".tr(),
                       style: GoogleFonts.openSans(
-                          fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
+                          fontSize: 17,
+                          fontWeight: FontWeight.w600,
+                          decoration: TextDecoration.none),
                     ),
                   ),
                 ),
@@ -571,41 +727,45 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
         barrierDismissible: false,
         builder: (context) {
           return ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
+            constraints:
+                BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
             child: AlertDialog(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-              title: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                Image.asset(
-                  "assets/images/otp-wallet.png",
-                  fit: BoxFit.cover,
-                  height: 70,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Image.asset(
-                    "assets/images/point.png",
-                    scale: 3,
-                  ),
-                  Text(
-                    " $hinttext ",
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.openSans(
-                      fontSize: 17.0,
-                      color: ColorPrimary,
-                      fontWeight: FontWeight.w600,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      "assets/images/otp-wallet.png",
+                      fit: BoxFit.cover,
+                      height: 70,
                     ),
-                  ),
-                ]),
-                Text("Coins generated succesfully\n in customer Wallet",
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.openSans(
-                      fontSize: 17.0,
-                      color: ColorTextPrimary,
-                      fontWeight: FontWeight.w600,
-                    )),
-              ]),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      Image.asset(
+                        "assets/images/point.png",
+                        scale: 3,
+                      ),
+                      Text(
+                        " $hinttext ",
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.openSans(
+                          fontSize: 17.0,
+                          color: ColorPrimary,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ]),
+                    Text("Coins generated succesfully\n in customer Wallet",
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.openSans(
+                          fontSize: 17.0,
+                          color: ColorTextPrimary,
+                          fontWeight: FontWeight.w600,
+                        )),
+                  ]),
               actions: <Widget>[
                 Center(
                   child: MaterialButton(
@@ -614,20 +774,28 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                     padding: const EdgeInsets.all(8.0),
                     textColor: Colors.white,
                     color: ColorPrimary,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
                     onPressed: () {
                       status == 1
-                          ? Navigator.push(context, MaterialPageRoute(builder: (context) => Scanner(data: passing!)))
+                          ? Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      Scanner(data: passing!)))
                           : Navigator.pushAndRemoveUntil(
                               context,
                               PageTransition(
-                                  child: BottomNavigationHomeWithOutInventory(), type: PageTransitionType.fade),
+                                  child: BottomNavigationHomeWithOutInventory(),
+                                  type: PageTransitionType.fade),
                               ModalRoute.withName("/"));
                     },
                     child: new Text(
                       "done_key".tr(),
                       style: GoogleFonts.openSans(
-                          fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
+                          fontSize: 17,
+                          fontWeight: FontWeight.w600,
+                          decoration: TextDecoration.none),
                     ),
                   ),
                 ),
@@ -636,6 +804,74 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                 )
               ],
             ),
+          );
+        });
+  }
+
+  redeemDialog(BuildContext context) async {
+    return showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            contentPadding: const EdgeInsets.all(0),
+            titlePadding: const EdgeInsets.all(0),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            title: Image.asset(
+              "assets/images/3x/hooray-banner.png",
+              fit: BoxFit.cover,
+            ),
+            content: Container(
+              height: 50,
+              child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "hooray_you_saved".tr(),
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
+                    ),
+                    Text(
+                      " \u20B9${(double.parse(coinss) / 3).toStringAsFixed(0)}",
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: ColorPrimary),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            actions: <Widget>[
+              Center(
+                child: MaterialButton(
+                  minWidth: MediaQuery.of(context).size.width * 0.40,
+                  height: 45,
+                  padding: const EdgeInsets.all(8.0),
+                  textColor: Colors.white,
+                  color: ColorPrimary,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: new Text(
+                    "done_key".tr(),
+                    style: GoogleFonts.openSans(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w600,
+                        decoration: TextDecoration.none),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              )
+            ],
           );
         });
   }

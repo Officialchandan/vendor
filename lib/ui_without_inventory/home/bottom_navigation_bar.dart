@@ -12,10 +12,12 @@ class BottomNavigationHomeWithOutInventory extends StatefulWidget {
   BottomNavigationHomeWithOutInventory({this.index = 0});
 
   @override
-  _BottomNavigationHomeWithOutInventoryState createState() => _BottomNavigationHomeWithOutInventoryState();
+  _BottomNavigationHomeWithOutInventoryState createState() =>
+      _BottomNavigationHomeWithOutInventoryState();
 }
 
-class _BottomNavigationHomeWithOutInventoryState extends State<BottomNavigationHomeWithOutInventory>
+class _BottomNavigationHomeWithOutInventoryState
+    extends State<BottomNavigationHomeWithOutInventory>
     with TickerProviderStateMixin {
   TabController? _tabController;
 
@@ -89,7 +91,8 @@ class _BottomBarState extends State<BottomBar> {
     return TabBar(
       controller: widget.tabController,
       indicator: UnderlineTabIndicator(
-          borderSide: BorderSide(width: 3, color: ColorPrimary, style: BorderStyle.solid),
+          borderSide: BorderSide(
+              width: 3, color: ColorPrimary, style: BorderStyle.solid),
           insets: EdgeInsets.fromLTRB(30, 0, 30, 54)),
       labelColor: ColorPrimary,
       unselectedLabelColor: Colors.grey.shade500,
@@ -99,20 +102,20 @@ class _BottomBarState extends State<BottomBar> {
       },
       tabs: [
         Tab(
-          text: 'Billing',
+          text: 'billing_key'.tr(),
           icon: widget.tabController.index == 0
               ? Image.asset(
-                  "assets/images/f1-a.png",
+                  "assets/images/point.png",
                   scale: 2,
                 )
               : Image.asset(
-                  "assets/images/f1.png",
+                  "assets/images/point.png",
                   scale: 2,
                 ),
           iconMargin: EdgeInsets.all(0),
         ),
         Tab(
-          text: 'Performance',
+          text: 'performance_key'.tr(),
           icon: widget.tabController.index == 1
               ? Image.asset(
                   "assets/images/f5-a.png",
@@ -138,7 +141,7 @@ class _BottomBarState extends State<BottomBar> {
           iconMargin: EdgeInsets.all(0),
         ),
         Tab(
-          text: 'Account',
+          text: 'account_key'.tr(),
           icon: widget.tabController.index == 3
               ? Image.asset(
                   "assets/images/f6-a.png",
@@ -194,25 +197,27 @@ class _MBottomNavigationBarState extends State<MBottomNavigationBar> {
       elevation: 5,
       items: [
         BottomNavigationBarItem(
-            icon: Image.asset(
-              "assets/images/f1.png",
-              scale: 2,
-            ),
-            activeIcon: Image.asset(
-              "assets/images/f1-a.png",
-              scale: 2,
-            ),
-            label: "Billing"),
+          icon: Image.asset(
+            "assets/images/point.png",
+            scale: 2,
+          ),
+          activeIcon: Image.asset(
+            "assets/images/point.png",
+            scale: 2,
+          ),
+          label: 'billing_key'.tr(),
+        ),
         BottomNavigationBarItem(
-            icon: Image.asset(
-              "assets/images/f5.png",
-              scale: 2,
-            ),
-            activeIcon: Image.asset(
-              "assets/images/f5-a.png",
-              scale: 2,
-            ),
-            label: "Performance"),
+          icon: Image.asset(
+            "assets/images/f5.png",
+            scale: 2,
+          ),
+          activeIcon: Image.asset(
+            "assets/images/f5-a.png",
+            scale: 2,
+          ),
+          label: 'performance_key'.tr(),
+        ),
         BottomNavigationBarItem(
             icon: Image.asset(
               "assets/images/f7.png",
@@ -232,7 +237,7 @@ class _MBottomNavigationBarState extends State<MBottomNavigationBar> {
               "assets/images/f6-a.png",
               scale: 2,
             ),
-            label: "Account"),
+            label: "account_key".tr()),
       ],
     );
   }

@@ -5,18 +5,20 @@
 import 'dart:convert';
 
 class LoginResponse {
-  LoginResponse(
-      {required this.success,
-      this.vendorId,
-      this.token,
-      this.tokenType,
-      required this.message,
-      this.vendorStatus,
-      this.vendorName,
-      this.vendorMobile,
-      this.ownerName,
-      this.deviceToken,
-      this.vendorCoins});
+  LoginResponse({
+    required this.success,
+    this.vendorId,
+    this.token,
+    this.tokenType,
+    required this.message,
+    this.vendorStatus,
+    this.vendorName,
+    this.vendorMobile,
+    this.ownerName,
+    this.deviceToken,
+    this.vendorCoins,
+    this.commission,
+  });
 
   bool success;
   int? vendorId;
@@ -29,8 +31,10 @@ class LoginResponse {
   String? ownerName;
   String? deviceToken;
   String? vendorCoins;
+  String? commission;
 
-  factory LoginResponse.fromJson(String str) => LoginResponse.fromMap(json.decode(str));
+  factory LoginResponse.fromJson(String str) =>
+      LoginResponse.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
@@ -40,12 +44,19 @@ class LoginResponse {
         token: json["token"] == null ? null : json["token"],
         tokenType: json["token_type"] == null ? null : json["token_type"],
         message: json["message"] == null ? null : json["message"],
-        vendorStatus: json["vendor_status"] == null ? null : json["vendor_status"],
+        vendorStatus:
+            json["vendor_status"] == null ? null : json["vendor_status"],
         vendorName: json["vendor_name"] == null ? null : json["vendor_name"],
-        vendorMobile: json["vendor_mobile"] == null ? null : json["vendor_mobile"],
+        vendorMobile:
+            json["vendor_mobile"] == null ? null : json["vendor_mobile"],
         ownerName: json["owner_name"] == null ? null : json["owner_name"],
-        deviceToken: json["device_token"] == null ? "" : json["device_token"].toString(),
-        vendorCoins: json["vendor_coins"] == null ? "" : json["vendor_coins"].toString(),
+        deviceToken:
+            json["device_token"] == null ? "" : json["device_token"].toString(),
+        vendorCoins:
+            json["vendor_coins"] == null ? "" : json["vendor_coins"].toString(),
+        commission: json["vendor_commission"] == null
+            ? ""
+            : json["vendor_commission"].toString(),
       );
 
   Map<String, dynamic> toMap() => {
@@ -60,5 +71,6 @@ class LoginResponse {
         "owner_name": ownerName == null ? null : ownerName,
         "device_token": deviceToken == null ? null : deviceToken,
         "vendor_coins": vendorCoins == null ? null : vendorCoins,
+        "vendor_commission": commission == null ? null : commission,
       };
 }
