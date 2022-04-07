@@ -122,11 +122,11 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                           }
                           if (state is GetChatPapdiBillingOtpState) {
                             Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
-                            passing = state.data;
+
                             // var result = await
                             datas!.qrCodeStatus == 0
-                                ? _displayDialogs(context, passing!.earningCoins, 0, "")
-                                : _displayDialogs(context, passing!.earningCoins, 1, passing);
+                                ? _displayDialogs(context, datas!.earningCoins, 0, "")
+                                : _displayDialogs(context, datas!.earningCoins, 1, datas);
                             // log("-------$result --------");
                             // Navigator.pushReplacement(
                             //     context,
@@ -565,7 +565,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
         }).then((value) => otpController.clear());
   }
 
-  _displayDialogs(BuildContext context, hinttext, status, data) async {
+  _displayDialogs(BuildContext context, hinttext, sta, data) async {
     return showDialog(
         context: context,
         barrierDismissible: false,
@@ -616,8 +616,8 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                     color: ColorPrimary,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                     onPressed: () {
-                      status == 1
-                          ? Navigator.push(context, MaterialPageRoute(builder: (context) => Scanner(data: passing!)))
+                      sta == 1
+                          ? Navigator.push(context, MaterialPageRoute(builder: (context) => Scanner(data: datas!)))
                           : Navigator.pushAndRemoveUntil(
                               context,
                               PageTransition(

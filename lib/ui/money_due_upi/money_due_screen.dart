@@ -118,7 +118,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
       map["ORDER_ID"] = orderId;
 
       CommonResponse res = await apiProvider.checkPaymentStatus(map);
-      res.success == true ? _displayDialogs(context,1):_displayDialogs(context, 0);
+      res.success == true ? _displayDialogs(context, 1) : _displayDialogs(context, 0);
       log("Response--->$res");
     } catch (error) {
       String message = "";
@@ -203,6 +203,14 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
 
                               dueAmount = state.dueAmount;
                               categoryDue = state.categoryDue;
+                            }
+                            if (state is GetFreeCoinState) {
+                              freecoin = state.data;
+                              if (freecoin!.availableCoins == "0") {
+                                condition = 0;
+                                setState(() {});
+                              }
+                              log("=====>${freecoin}");
                             }
 
                             return Text(
@@ -860,53 +868,6 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                   style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
                                 ),
                               ),
-                              // BlocBuilder<MoneyDueBloc, MoneyDueState>(
-                              //   builder: (context, state) {
-                              //     if (state is MoneyDueInitialState) {
-                              //       moneyDueBloc.add(GetDueAmount());
-                              //     }
-                              //     if (state is GetDueAmountState) {
-                              //       dueAmount = state.dueAmount;
-                              //       categoryDue = state.categoryDue;
-                              //     }
-                              //
-                              //     return Column(
-                              //       children: List.generate(
-                              //           categoryDue.length,
-                              //           (index) => Container(
-                              //                 margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                              //                 decoration: BoxDecoration(
-                              //                   color: ColorPrimary,
-                              //                   borderRadius: BorderRadius.circular(6),
-                              //                 ),
-                              //                 child: Container(
-                              //                   margin: EdgeInsets.only(
-                              //                     left: 3,
-                              //                   ),
-                              //                   decoration: BoxDecoration(
-                              //                     color: Colors.grey.shade50,
-                              //                     borderRadius: BorderRadius.only(
-                              //                         topRight: Radius.circular(5), bottomRight: Radius.circular(5)),
-                              //                   ),
-                              //                   child: ListTile(
-                              //                     onTap: () {},
-                              //                     leading: Image(
-                              //                       image: NetworkImage("${categoryDue[index].image}"),
-                              //                       height: 30,
-                              //                       width: 30,
-                              //                       fit: BoxFit.contain,
-                              //                     ),
-                              //                     title: Text("${categoryDue[index].categoryName}"),
-                              //                     // subtitle: Text("${categoryDue[index]["subTitle"]}"),
-                              //
-                              //                     trailing: Text("₹ ${categoryDue[index].myprofitRevenue}"),
-                              //                   ),
-                              //                 ),
-                              //               )),
-                              //     );
-                              //   },
-                              // ),
-
                               Padding(
                                 padding: const EdgeInsets.all(20.0),
                                 child: Row(
@@ -1789,8 +1750,8 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                     color: ColorPrimary,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                     onPressed: () {
-                   Navigator.pop(context,true);
-                           Navigator.pushAndRemoveUntil(
+                      Navigator.pop(context, true);
+                      Navigator.pushAndRemoveUntil(
                           context,
                           PageTransition(child: MoneyDueScreen(false), type: PageTransitionType.fade),
                           ModalRoute.withName("/"));

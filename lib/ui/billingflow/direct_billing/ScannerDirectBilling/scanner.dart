@@ -6,9 +6,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:vendor/model/direct_billing.dart';
-import 'package:vendor/ui/billingflow/billing/billing.dart';
 import 'package:vendor/ui/billingflow/direct_billing/ScannerDirectBilling/scanner_bloc.dart';
 import 'package:vendor/ui/billingflow/direct_billing/ScannerDirectBilling/scanner_event.dart';
 import 'package:vendor/ui/billingflow/direct_billing/ScannerDirectBilling/scanner_state.dart';
@@ -42,8 +42,7 @@ class _ScannerState extends State<Scanner> {
   }
 
   add() {
-    return Navigator.push(
-        context, MaterialPageRoute(builder: (context) => ChatPapdiBilling()));
+    return Navigator.push(context, MaterialPageRoute(builder: (context) => ChatPapdiBilling()));
   }
 
   Future<void> scanner(BuildContext context) async {
@@ -76,8 +75,7 @@ class _ScannerState extends State<Scanner> {
           // TODO: implement listener
           if (state is GetScannerState) {
             // Navigator.of(context).pop(result!.code);
-            Fluttertoast.showToast(
-                msg: state.message, backgroundColor: ColorPrimary);
+            Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
           }
           if (state is GetScannerStateLoadingstate) {}
           if (state is IntitalScannerstate) {}
@@ -88,8 +86,7 @@ class _ScannerState extends State<Scanner> {
             return Scaffold(
               body: Column(
                 children: <Widget>[
-                  Container(
-                      height: height * 0.80, child: _buildQrView(context)),
+                  Container(height: height * 0.80, child: _buildQrView(context)),
                   Container(
                     child: FittedBox(
                       fit: BoxFit.contain,
@@ -110,8 +107,7 @@ class _ScannerState extends State<Scanner> {
                                   // Fluttertoast.showToast(
                                   //     msg: "${}");
                                 },
-                                child: const Text('Done',
-                                    style: TextStyle(fontSize: 20)),
+                                child: const Text('Done', style: TextStyle(fontSize: 20)),
                               ),
                             )
                           // Text(
@@ -153,8 +149,7 @@ class _ScannerState extends State<Scanner> {
                                       future: controller?.getCameraInfo(),
                                       builder: (context, snapshot) {
                                         if (snapshot.data != null) {
-                                          return Text(
-                                              'Camera facing ${describeEnum(snapshot.data!)}');
+                                          return Text('Camera facing ${describeEnum(snapshot.data!)}');
                                         } else {
                                           return const Text('loading');
                                         }
@@ -167,16 +162,13 @@ class _ScannerState extends State<Scanner> {
                                 child: ElevatedButton(
                                   onPressed: () async {
                                     Navigator.pop(context);
-                                    CoinDialog.displayCoinDialog(context);
-                                    // Navigator.pushAndRemoveUntil(
-                                    //     context,
-                                    //     MaterialPageRoute(
-                                    //         builder: (context) =>
-                                    //             BillingScreen()),
-                                    //     (route) => false);
+                                    // CoinDialog.displayCoinDialog(context);
+                                    Navigator.pushAndRemoveUntil(
+                                        context,
+                                        PageTransition(child: BottomNavigationHome(), type: PageTransitionType.fade),
+                                        ModalRoute.withName("/"));
                                   },
-                                  child: const Text('Skip',
-                                      style: TextStyle(fontSize: 20)),
+                                  child: const Text('Skip', style: TextStyle(fontSize: 20)),
                                 ),
                               ),
                             ],
@@ -237,21 +229,15 @@ class _ScannerState extends State<Scanner> {
 
   Widget _buildQrView(BuildContext context) {
     // For this example we check how width or tall the device is and change the scanArea and overlay accordingly.
-    var scanArea = (MediaQuery.of(context).size.width < 400 ||
-            MediaQuery.of(context).size.height < 400)
-        ? 200.0
-        : 300.0;
+    var scanArea =
+        (MediaQuery.of(context).size.width < 400 || MediaQuery.of(context).size.height < 400) ? 200.0 : 300.0;
     // To ensure the Scanner view is properly sizes after rotation
     // we need to listen for Flutter SizeChanged notification and update controller
     return QRView(
       key: qrKey,
       onQRViewCreated: _onQRViewCreated,
       overlay: QrScannerOverlayShape(
-          borderColor: Colors.red,
-          borderRadius: 10,
-          borderLength: 30,
-          borderWidth: 10,
-          cutOutSize: scanArea),
+          borderColor: Colors.red, borderRadius: 10, borderLength: 30, borderWidth: 10, cutOutSize: scanArea),
       onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
     );
   }

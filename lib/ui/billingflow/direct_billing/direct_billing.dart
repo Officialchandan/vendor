@@ -8,16 +8,17 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:vendor/model/direct_billing.dart';
 import 'package:vendor/model/get_categories_response.dart';
 import 'package:vendor/ui/billingflow/direct_billing/ScannerDirectBilling/scanner.dart';
 import 'package:vendor/ui/billingflow/direct_billing/direct_bloc.dart';
 import 'package:vendor/ui/billingflow/direct_billing/direct_event.dart';
 import 'package:vendor/ui/billingflow/direct_billing/direct_state.dart';
+import 'package:vendor/ui/home/bottom_navigation_home.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/validator.dart';
-import 'package:vendor/widget/coin_genrate_pop.dart';
 
 class DirectBilling extends StatefulWidget {
   DirectBilling({Key? key}) : super(key: key);
@@ -126,8 +127,7 @@ class _DirectBillingState extends State<DirectBilling> {
                           status = state.succes;
                           datas = state.data;
 
-                          _displayDialog(context, 1, "${double.parse(datas!.earningCoins).toStringAsFixed(2)}".tr(),
-                              "please_enter_password_key".tr());
+                          _displayDialog(context, 1, "please_enter_password_key".tr(), "enter_otp_key".tr());
                         }
 
                         if (state is GetDirectBillingLoadingstate) {}
@@ -140,9 +140,8 @@ class _DirectBillingState extends State<DirectBilling> {
                           Navigator.pop(context);
                           Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
                           int.parse(datas!.qrCodeStatus) == 0
-                              ? CoinDialog.displayCoinDialog(context)
-                              : Navigator.pushReplacement(
-                                  context, MaterialPageRoute(builder: (BuildContext context) => Scanner(data: datas!)));
+                              ? _displayDialogs(context, datas!.earningCoins, 0, "")
+                              : _displayDialogs(context, datas!.earningCoins, 1, datas);
                         }
                         if (state is GetDirectBillingOtpLoadingstate) {}
                         if (state is GetDirectBillingOtpFailureState) {
@@ -570,38 +569,15 @@ class _DirectBillingState extends State<DirectBilling> {
             constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
             child: AlertDialog(
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-              title: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                Image.asset(
-                  "assets/images/otp-wallet.png",
-                  fit: BoxFit.cover,
-                  height: 70,
+              title: Text(
+                " $text ",
+                textAlign: TextAlign.center,
+                style: GoogleFonts.openSans(
+                  fontSize: 17.0,
+                  color: ColorPrimary,
+                  fontWeight: FontWeight.w600,
                 ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Image.asset(
-                    "assets/images/point.png",
-                    scale: 3,
-                  ),
-                  Text(
-                    " $text ",
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.openSans(
-                      fontSize: 17.0,
-                      color: ColorPrimary,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ]),
-                Text("Coins generated succesfully\n in customer Wallet",
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.openSans(
-                      fontSize: 17.0,
-                      color: ColorTextPrimary,
-                      fontWeight: FontWeight.w600,
-                    )),
-              ]),
+              ),
               content: TextFormField(
                 controller: otpController,
                 cursorColor: ColorPrimary,
@@ -654,6 +630,80 @@ class _DirectBillingState extends State<DirectBilling> {
             ),
           );
         }).then((value) => otpController.clear());
+  }
+
+  _displayDialogs(BuildContext context, hinttext, status, data) async {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
+            child: AlertDialog(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              title: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                Image.asset(
+                  "assets/images/otp-wallet.png",
+                  fit: BoxFit.cover,
+                  height: 70,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Image.asset(
+                    "assets/images/point.png",
+                    scale: 3,
+                  ),
+                  Text(
+                    " ${double.parse(hinttext).toStringAsFixed(2)} ",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.openSans(
+                      fontSize: 17.0,
+                      color: ColorPrimary,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ]),
+                Text("Coins generated succesfully\n in customer Wallet",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.openSans(
+                      fontSize: 17.0,
+                      color: ColorTextPrimary,
+                      fontWeight: FontWeight.w600,
+                    )),
+              ]),
+              actions: <Widget>[
+                Center(
+                  child: MaterialButton(
+                    minWidth: MediaQuery.of(context).size.width * 0.40,
+                    height: 50,
+                    padding: const EdgeInsets.all(8.0),
+                    textColor: Colors.white,
+                    color: ColorPrimary,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    onPressed: () {
+                      status == 1
+                          ? Navigator.push(context, MaterialPageRoute(builder: (context) => Scanner(data: data!)))
+                          : Navigator.pushAndRemoveUntil(
+                              context,
+                              PageTransition(child: BottomNavigationHome(), type: PageTransitionType.fade),
+                              ModalRoute.withName("/"));
+                    },
+                    child: new Text(
+                      "done_key".tr(),
+                      style: GoogleFonts.openSans(
+                          fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                )
+              ],
+            ),
+          );
+        });
   }
 
   Widget buildList(list) {
