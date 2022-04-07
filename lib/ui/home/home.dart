@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int totalNotification = 0;
   String message = "";
   List<String> name = [
-    "billing_key".tr(),
+    "coins_key".tr(),
     "inventory_key".tr(),
     "money_due_upi_key".tr(),
     "video_tutorials_key".tr(),
@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
     "account_management_key".tr(),
   ];
   List<String> description = [
-    "billing_description_key".tr(),
+    "generate_redeem_key".tr(),
     "inventory_description_key".tr(),
     "money_due_upi_description_key".tr(),
     "video_tutorials_description_key".tr(),
@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   List<String> images = [
-    "assets/images/home1.png",
+    "assets/images/point.png",
     "assets/images/home2.png",
     "assets/images/tr-ic3.png",
     "assets/images/home6.png",

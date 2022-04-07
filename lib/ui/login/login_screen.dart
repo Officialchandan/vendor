@@ -363,16 +363,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                     SizedBox(
                                       height: 25,
                                     ),
-                                    Center(
-                                      child: Text(
-                                        "forget_your_password_key".tr(),
-                                        style: GoogleFonts.openSans(
-                                            fontSize: 17,
-                                            color: ColorTextPrimary,
-                                            fontWeight: FontWeight.w600,
-                                            decoration: TextDecoration.none),
-                                      ),
-                                    ),
                                   ]),
                             ),
                           ]),

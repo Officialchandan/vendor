@@ -13,10 +13,7 @@ import 'package:vendor/model/verify_otp.dart';
 import 'package:vendor/ui/billingflow/Scanner/scanner_bloc.dart';
 import 'package:vendor/ui/billingflow/Scanner/scanner_event.dart';
 import 'package:vendor/ui/billingflow/Scanner/scanner_state.dart';
-import 'package:vendor/ui/billingflow/billing/billing.dart';
 import 'package:vendor/ui/home/bottom_navigation_home.dart';
-
-import 'package:vendor/utility/sharedpref.dart';
 
 import '../../../widget/coin_genrate_pop.dart';
 
@@ -76,7 +73,9 @@ class _ScannerState extends State<Scanner> {
     //           )),
     // );
     Navigator.pop(context);
-    CoinDialog.displayCoinDialog(context);
+    Navigator.pushAndRemoveUntil(context, PageTransition(child: BottomNavigationHome(), type: PageTransitionType.fade),
+        ModalRoute.withName("/"));
+    // CoinDialog.displayCoinDialog(context);
     // Navigator.pushAndRemoveUntil(
     //     context,
     //     MaterialPageRoute(
@@ -116,9 +115,7 @@ class _ScannerState extends State<Scanner> {
                   builder: (contex, snap) {
                     return Column(
                       children: <Widget>[
-                        Container(
-                            height: height * 0.80,
-                            child: _buildQrView(context)),
+                        Container(height: height * 0.80, child: _buildQrView(context)),
                         Container(
                           child: FittedBox(
                             fit: BoxFit.contain,
@@ -133,17 +130,13 @@ class _ScannerState extends State<Scanner> {
                                         log("message=>${result!.code}");
                                         log("data==>${widget.data}");
                                         scanner(context);
-                                        Fluttertoast.showToast(
-                                            msg: "Scan QRcode Succesfully");
+                                        Fluttertoast.showToast(msg: "Scan QRcode Succesfully");
                                       },
-                                      child: const Text('Done',
-                                          style: TextStyle(fontSize: 20)),
+                                      child: const Text('Done', style: TextStyle(fontSize: 20)),
                                     ),
                                   )
                                 else
-                                  Container(
-                                      height: height * 0.05,
-                                      child: const Text('Scan a code')),
+                                  Container(height: height * 0.05, child: const Text('Scan a code')),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -173,8 +166,7 @@ class _ScannerState extends State<Scanner> {
                                             future: controller?.getCameraInfo(),
                                             builder: (context, snapshot) {
                                               if (snapshot.data != null) {
-                                                return Text(
-                                                    'Camera facing ${describeEnum(snapshot.data!)}');
+                                                return Text('Camera facing ${describeEnum(snapshot.data!)}');
                                               } else {
                                                 return const Text('loading');
                                               }
@@ -187,8 +179,7 @@ class _ScannerState extends State<Scanner> {
                                       margin: const EdgeInsets.all(8),
                                       child: ElevatedButton(
                                         onPressed: () async {
-                                          Fluttertoast.showToast(
-                                              msg: "Skiped QR code ");
+                                          Fluttertoast.showToast(msg: "Skiped QR code ");
                                           Navigator.pop(context);
                                           CoinDialog.displayCoinDialog(context);
                                           // Navigator.pushAndRemoveUntil(
@@ -199,8 +190,7 @@ class _ScannerState extends State<Scanner> {
                                           //             PageTransitionType.fade),
                                           //     ModalRoute.withName("/"));
                                         },
-                                        child: const Text('Skip',
-                                            style: TextStyle(fontSize: 20)),
+                                        child: const Text('Skip', style: TextStyle(fontSize: 20)),
                                       ),
                                     ),
                                   ],
@@ -262,21 +252,15 @@ class _ScannerState extends State<Scanner> {
 
   Widget _buildQrView(BuildContext context) {
     // For this example we check how width or tall the device is and change the scanArea and overlay accordingly.
-    var scanArea = (MediaQuery.of(context).size.width < 400 ||
-            MediaQuery.of(context).size.height < 400)
-        ? 200.0
-        : 300.0;
+    var scanArea =
+        (MediaQuery.of(context).size.width < 400 || MediaQuery.of(context).size.height < 400) ? 200.0 : 300.0;
     // To ensure the Scanner view is properly sizes after rotation
     // we need to listen for Flutter SizeChanged notification and update controller
     return QRView(
       key: qrKey,
       onQRViewCreated: _onQRViewCreated,
       overlay: QrScannerOverlayShape(
-          borderColor: Colors.red,
-          borderRadius: 10,
-          borderLength: 30,
-          borderWidth: 10,
-          cutOutSize: scanArea),
+          borderColor: Colors.red, borderRadius: 10, borderLength: 30, borderWidth: 10, cutOutSize: scanArea),
       onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
     );
   }

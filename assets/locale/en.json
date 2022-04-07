@@ -237,6 +237,8 @@
   "redeem_key": "Redeem",
   "redeem_coins_key": "Redeem Coins",
   "earn_coins_key": "Earn Coins",
+  "coins_key" : "Coins",
+  "generate_redeem_key": "Generate & Redeem",
   "coins_generated_successfully_in_customer_wallet_key": "Coins generated successfully in customer Wallet",
   "total_payable_amount_key": "Payable Amount",
   "total_coin_deducted_key": "Coin Deducted",

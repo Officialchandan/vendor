@@ -13,11 +13,11 @@ import 'package:vendor/ui_without_inventory/chatpapdi_billing/ScannerChatPapdi/s
 import 'package:vendor/ui_without_inventory/chatpapdi_billing/chatpapdi_bloc.dart';
 import 'package:vendor/ui_without_inventory/chatpapdi_billing/chatpapdi_event.dart';
 import 'package:vendor/ui_without_inventory/chatpapdi_billing/chatpapdi_state.dart';
+import 'package:vendor/ui_without_inventory/home/bottom_navigation_bar.dart';
 import 'package:vendor/ui_without_inventory/home/home.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/validator.dart';
-import 'package:vendor/widget/coin_chatpapdi_genrated.dart';
 
 class ChatPapdiBilling extends StatefulWidget {
   ChatPapdiBilling({Key? key}) : super(key: key);
@@ -122,12 +122,11 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                           }
                           if (state is GetChatPapdiBillingOtpState) {
                             Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
-
+                            passing = state.data;
                             // var result = await
                             datas!.qrCodeStatus == 0
-                                ? CoinDialogChatpapdi.displayCoinDialog(context)
-                                : Navigator.push(
-                                    context, MaterialPageRoute(builder: (context) => Scanner(data: datas!)));
+                                ? _displayDialogs(context, passing!.earningCoins, 0, "")
+                                : _displayDialogs(context, passing!.earningCoins, 1, passing);
                             // log("-------$result --------");
                             // Navigator.pushReplacement(
                             //     context,
@@ -478,56 +477,36 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
         context: context,
         builder: (context) {
           return ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
+            constraints: BoxConstraints(maxWidth: 400),
             child: AlertDialog(
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-              title: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                Image.asset(
-                  "assets/images/otp-wallet.png",
-                  fit: BoxFit.cover,
-                  height: 70,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Image.asset(
-                    "assets/images/point.png",
-                    scale: 3,
+              title: RichText(
+                text: TextSpan(
+                  text: "$text",
+                  style: GoogleFonts.openSans(
+                    fontSize: 18.0,
+                    color: ColorPrimary,
+                    fontWeight: FontWeight.w600,
                   ),
-                  Text(
-                    " $text ",
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.openSans(
-                      fontSize: 17.0,
-                      color: ColorPrimary,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ]),
-                Text("Coins generated succesfully\n in customer Wallet",
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.openSans(
-                      fontSize: 17.0,
-                      color: ColorTextPrimary,
-                      fontWeight: FontWeight.w600,
-                    )),
-              ]),
+                ),
+              ),
               content: TextFormField(
                 controller: otpController,
                 cursorColor: ColorPrimary,
-                maxLength: 6,
                 keyboardType: TextInputType.number,
+                maxLength: 6,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 decoration: InputDecoration(
                   // filled: true,
                   counterText: "",
+
                   // fillColor: Colors.black,
-                  hintText: "$hinttext`",
+                  hintText: "$hinttext",
+
                   hintStyle: GoogleFonts.openSans(
                     fontWeight: FontWeight.w600,
                   ),
-                  contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 0.0),
+                  contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
                 ),
               ),
               actions: <Widget>[
@@ -551,7 +530,8 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                         input["coin_deducted"] = datas!.coinDeducted;
                         input["earning_coins"] = datas!.earningCoins;
                         input["myprofit_revenue"] = datas!.myProfitRevenue;
-
+                        SharedPref.setStringPreference(SharedPref.VendorCoin, datas!.vendorAvailableCoins);
+                        input["vendor_available_coins"] = datas!.vendorAvailableCoins;
                         log("=====? $input");
 
                         directBillingCustomerNumberResponseBloc.add(GetChatPapdiBillingOtpEvent(input: input));
@@ -568,6 +548,83 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                       }
                     },
                     child: new Text(
+                      "submit_button_key".tr(),
+                      style: GoogleFonts.openSans(
+                          fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
+                    ),
+                  ),
+                ),
+                Container(
+                  height: 20,
+                  width: MediaQuery.of(context).size.width * 0.95,
+                  color: Colors.transparent,
+                )
+              ],
+            ),
+          );
+        }).then((value) => otpController.clear());
+  }
+
+  _displayDialogs(BuildContext context, hinttext, status, data) async {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
+            child: AlertDialog(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              title: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                Image.asset(
+                  "assets/images/otp-wallet.png",
+                  fit: BoxFit.cover,
+                  height: 70,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Image.asset(
+                    "assets/images/point.png",
+                    scale: 3,
+                  ),
+                  Text(
+                    " $hinttext ",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.openSans(
+                      fontSize: 17.0,
+                      color: ColorPrimary,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ]),
+                Text("Coins generated succesfully\n in customer Wallet",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.openSans(
+                      fontSize: 17.0,
+                      color: ColorTextPrimary,
+                      fontWeight: FontWeight.w600,
+                    )),
+              ]),
+              actions: <Widget>[
+                Center(
+                  child: MaterialButton(
+                    minWidth: MediaQuery.of(context).size.width * 0.40,
+                    height: 50,
+                    padding: const EdgeInsets.all(8.0),
+                    textColor: Colors.white,
+                    color: ColorPrimary,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    onPressed: () {
+                      status == 1
+                          ? Navigator.push(context, MaterialPageRoute(builder: (context) => Scanner(data: passing!)))
+                          : Navigator.pushAndRemoveUntil(
+                              context,
+                              PageTransition(
+                                  child: BottomNavigationHomeWithOutInventory(), type: PageTransitionType.fade),
+                              ModalRoute.withName("/"));
+                    },
+                    child: new Text(
                       "done_key".tr(),
                       style: GoogleFonts.openSans(
                           fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
@@ -580,6 +637,6 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
               ],
             ),
           );
-        }).then((value) => otpController.clear());
+        });
   }
 }

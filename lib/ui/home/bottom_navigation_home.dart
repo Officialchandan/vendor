@@ -99,14 +99,14 @@ class _BottomBarState extends State<BottomBar> {
       },
       tabs: [
         Tab(
-          text: 'billing_key'.tr(),
+          text: 'coins_key'.tr(),
           icon: widget.tabController.index == 0
               ? Image.asset(
-                  "assets/images/f1-a.png",
+                  "assets/images/point.png",
                   scale: 2,
                 )
               : Image.asset(
-                  "assets/images/f1.png",
+                  "assets/images/point.png",
                   scale: 2,
                 ),
           iconMargin: EdgeInsets.all(0),
@@ -222,11 +222,11 @@ class _MBottomNavigationBarState extends State<MBottomNavigationBar> {
       items: [
         BottomNavigationBarItem(
             icon: Image.asset(
-              "assets/images/f1.png",
+              "assets/images/point.png",
               scale: 2,
             ),
             activeIcon: Image.asset(
-              "assets/images/f1-a.png",
+              "assets/images/point.png",
               scale: 2,
             ),
             label: "billing_key".tr()),

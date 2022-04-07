@@ -57,7 +57,7 @@ ThemeData themeData(context) => ThemeData(
 
     // backgroundColor: Colors.white,
     scaffoldBackgroundColor: Colors.white,
-    splashColor: Colors.black,
+    splashColor: Colors.transparent,
     iconTheme: IconThemeData(
       color: ColorPrimary,
       opacity: 1,

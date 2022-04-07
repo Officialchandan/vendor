@@ -1,12 +1,17 @@
 import 'dart:collection';
 import 'dart:developer';
 
+import 'package:dio/dio.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:paytm_allinonesdk/paytm_allinonesdk.dart';
+import 'package:vendor/api/server_error.dart';
+import 'package:vendor/main.dart';
+import 'package:vendor/model/common_response.dart';
 import 'package:vendor/model/get_due_amount_response.dart';
 import 'package:vendor/ui/money_due_upi/bloc/money_due_bloc.dart';
 import 'package:vendor/ui/money_due_upi/bloc/money_due_event.dart';
@@ -58,7 +63,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
   GetVendorFreeCoinData? freecoin;
   String result = "";
   String mid = "", orderId = "", token = "", callbackurl = "";
-  int condition = 0;
+  int condition = 1;
   @override
   void initState() {
     super.initState();
@@ -73,13 +78,19 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
   }
 
   payment() {
-    var response = AllInOneSdk.startTransaction(mid, orderId, dueAmount, token, callbackurl, false, true);
+    var response = AllInOneSdk.startTransaction(mid, orderId, "1", token, callbackurl, false, true);
     // log("response ${response.}");
     response.then((value) {
       print(value);
+
       setState(() {
         result = value.toString();
+
         log("====>result1$result");
+        processTransictionApi(
+          mid: value!["MID"],
+          orderId: value["ORDERID"],
+        );
       });
     }).catchError((onError) {
       if (onError is PlatformException) {
@@ -96,10 +107,35 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
     });
   }
 
+  void processTransictionApi({required String mid, required String orderId}) async {
+    try {
+      log("inputs--->yha tak");
+      // String url = "https://securegw.paytm.in/theia/api/v1/processTransaction"; live
+      String url = "http://vendor.myprofitinc.com/api/v1/checkOnlinePayment"; //staging
+      Map<String, dynamic> map = {};
+
+      map["mid"] = mid;
+      map["ORDER_ID"] = orderId;
+
+      CommonResponse res = await apiProvider.checkPaymentStatus(map);
+      res.success == true ? _displayDialogs(context,1):_displayDialogs(context, 0);
+      log("Response--->$res");
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+    }
+  }
+
   Future<void> paymentTransiction(BuildContext context) async {
     Map<String, dynamic> input = HashMap<String, dynamic>();
     input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
-    input["amount"] = dueAmount;
+    input["amount"] = 1;
 
     log("=====? $input");
 
@@ -148,7 +184,16 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                         SizedBox(
                           height: MediaQuery.of(context).size.width * 0.08,
                         ),
-                        BlocBuilder<MoneyDueBloc, MoneyDueState>(
+                        BlocConsumer<MoneyDueBloc, MoneyDueState>(
+                          listener: (context, state) {
+                            if (state is GetPaymentTransictionState) {
+                              mid = state.mid;
+                              orderId = state.orderId;
+                              token = state.txnToken;
+                              callbackurl = state.callbackUrl;
+                              payment();
+                            }
+                          },
                           builder: (context, state) {
                             if (state is MoneyDueInitialState) {
                               moneyDueBloc.add(GetDueAmount());
@@ -158,13 +203,6 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
 
                               dueAmount = state.dueAmount;
                               categoryDue = state.categoryDue;
-                              paymentTransiction(context);
-                            }
-                            if (state is GetPaymentTransictionState) {
-                              mid = state.mid;
-                              orderId = state.orderId;
-                              token = state.txnToken;
-                              callbackurl = state.callbackUrl;
                             }
 
                             return Text(
@@ -1645,18 +1683,9 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
           ),
           bottomNavigationBar: MaterialButton(
             onPressed: () {
-              Map<String, dynamic> map = {};
-
-              map["mid"] = mid;
-              map["orderId"] = orderId;
-              map["token"] = token;
-              map["callbackurl"] = callbackurl;
-              map["amount"] = dueAmount;
-              callPaytmUpi(map);
-
-              // payment();
+              paymentTransiction(context);
             },
-            color: ColorPrimary,
+            color: condition == 0 ? PurpleLightColor : ColorPrimary,
             height: 50,
             shape: RoundedRectangleBorder(),
             child: Text(
@@ -1667,12 +1696,118 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
     );
   }
 
-  void callPaytmUpi(Map<String, dynamic> value) async {
-    try {
-      final int result = await platform.invokeMethod('paytmUpiPayment', value);
-      log("result-->$result");
-    } on PlatformException catch (e) {
-      log("exception-->$e");
-    }
+  // void processTransictionApi() async {
+  //   try {
+  //     log("inputs--->yha tak");
+  //     // String url = "https://securegw.paytm.in/theia/api/v1/processTransaction"; live
+  //     String url = "https://securegw-stage.paytm.in/theia/api/v1/processTransaction"; //staging
+  //
+  //     Map<String, dynamic> querymap = {};
+  //     querymap["mid"] = mid;
+  //     querymap["orderId"] = orderId;
+  //
+  //     Map<String, dynamic> headermap = {};
+  //     headermap["txnToken"] = token;
+  //
+  //     Map<String, dynamic> map = {};
+  //     map["requestType"] = "NATIVE";
+  //     map["mid"] = mid;
+  //     map["orderId"] = orderId;
+  //     map["paymentMode"] = "UPI_INTENT";
+  //     Response res = await dio.post(url, data: map, queryParameters: querymap, options: Options(headers: headermap));
+  //     log("Response--->$res");
+  //   } catch (error) {
+  //     String message = "";
+  //     if (error is DioError) {
+  //       ServerError e = ServerError.withError(error: error);
+  //       message = e.getErrorMessage();
+  //     } else {
+  //       message = "Please try again later!";
+  //     }
+  //     print("Exception occurred: $message stackTrace: $error");
+  //   }
+  // }
+  //
+  // void callPaytmUpi(Map<String, dynamic> value) async {
+  //   try {
+  //     final String result = await platform.invokeMethod('paytmUpiPayment', value);
+  //     //processTransictionApi();
+  //     log("result-->$result");
+  //   } on PlatformException catch (e) {
+  //     log("exception-->$e");
+  //   }
+  // }
+
+  _displayDialogs(BuildContext context, status) async {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
+            child: AlertDialog(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              title: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                Image.asset(
+                  "assets/images/otp-wallet.png",
+                  fit: BoxFit.cover,
+                  height: 70,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Image.asset(
+                    "assets/images/point.png",
+                    scale: 3,
+                  ),
+                  Text(
+                    " $status ",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.openSans(
+                      fontSize: 17.0,
+                      color: ColorPrimary,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ]),
+                Text("Coins generated succesfully\n in customer Wallet",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.openSans(
+                      fontSize: 17.0,
+                      color: ColorTextPrimary,
+                      fontWeight: FontWeight.w600,
+                    )),
+              ]),
+              actions: <Widget>[
+                Center(
+                  child: MaterialButton(
+                    minWidth: MediaQuery.of(context).size.width * 0.40,
+                    height: 50,
+                    padding: const EdgeInsets.all(8.0),
+                    textColor: Colors.white,
+                    color: ColorPrimary,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    onPressed: () {
+                   Navigator.pop(context,true);
+                           Navigator.pushAndRemoveUntil(
+                          context,
+                          PageTransition(child: MoneyDueScreen(false), type: PageTransitionType.fade),
+                          ModalRoute.withName("/"));
+                    },
+                    child: new Text(
+                      "done_key".tr(),
+                      style: GoogleFonts.openSans(
+                          fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                )
+              ],
+            ),
+          );
+        });
   }
 }

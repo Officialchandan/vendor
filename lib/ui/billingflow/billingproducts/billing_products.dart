@@ -583,11 +583,12 @@ class _BillingProductsState extends State<BillingProducts> {
                         otpVerifyList = state.data;
                         log("${otpVerifyList!.otp}");
                         _displayDialog(
-                            context,
-                            0,
-                            1,
-                            "${double.parse(otpVerifyList!.earningCoins).toStringAsFixed(2)}".tr(),
-                            "please_enter_password_key".tr());
+                          context,
+                          0,
+                          1,
+                          "please_enter_password_key".tr(),
+                          "enter_otp_key".tr(),
+                        );
                       }
                       if (state is PayBillingProductsStateFailureState) {
                         message = state.message;
@@ -602,8 +603,8 @@ class _BillingProductsState extends State<BillingProducts> {
                         passing = state.data;
                         Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
                         otpVerifyList!.qrCodeStatus == 0
-                            ? d._displayCoinDialog(context)
-                            : Navigator.push(context, MaterialPageRoute(builder: (context) => Scanner(data: passing!)));
+                            ? _displayDialogs(context, passing!.earningCoins, 0, "")
+                            : _displayDialogs(context, passing!.earningCoins, 1, passing);
                         //log("-------$result --------");
                         // codes = result;
                         // Navigator.push(
@@ -718,41 +719,19 @@ class _BillingProductsState extends State<BillingProducts> {
         barrierDismissible: false,
         builder: (context) {
           return ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
+            constraints: BoxConstraints(maxWidth: 400),
             child: AlertDialog(
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-              title: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                Image.asset(
-                  "assets/images/otp-wallet.png",
-                  fit: BoxFit.cover,
-                  height: 70,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Image.asset(
-                    "assets/images/point.png",
-                    scale: 3,
+              title: RichText(
+                text: TextSpan(
+                  text: "$text",
+                  style: GoogleFonts.openSans(
+                    fontSize: 18.0,
+                    color: ColorPrimary,
+                    fontWeight: FontWeight.w600,
                   ),
-                  Text(
-                    " $text ",
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.openSans(
-                      fontSize: 17.0,
-                      color: ColorPrimary,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ]),
-                Text("Coins generated succesfully\n in customer Wallet",
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.openSans(
-                      fontSize: 17.0,
-                      color: ColorTextPrimary,
-                      fontWeight: FontWeight.w600,
-                    )),
-              ]),
+                ),
+              ),
               content: TextFormField(
                 controller: _textFieldController,
                 cursorColor: ColorPrimary,
@@ -769,7 +748,7 @@ class _BillingProductsState extends State<BillingProducts> {
                   hintStyle: GoogleFonts.openSans(
                     fontWeight: FontWeight.w600,
                   ),
-                  contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 0.0),
+                  contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
                 ),
               ),
               actions: <Widget>[
@@ -805,6 +784,82 @@ class _BillingProductsState extends State<BillingProducts> {
                       } else {
                         verifyOtp(context);
                       }
+                    },
+                    child: new Text(
+                      "submit_button_key".tr(),
+                      style: GoogleFonts.openSans(
+                          fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
+                    ),
+                  ),
+                ),
+                Container(
+                  height: 20,
+                  width: MediaQuery.of(context).size.width * 0.95,
+                  color: Colors.transparent,
+                )
+              ],
+            ),
+          );
+        });
+  }
+
+  _displayDialogs(BuildContext context, hinttext, status, data) async {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
+            child: AlertDialog(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              title: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                Image.asset(
+                  "assets/images/otp-wallet.png",
+                  fit: BoxFit.cover,
+                  height: 70,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Image.asset(
+                    "assets/images/point.png",
+                    scale: 3,
+                  ),
+                  Text(
+                    " $hinttext ",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.openSans(
+                      fontSize: 17.0,
+                      color: ColorPrimary,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ]),
+                Text("Coins generated succesfully\n in customer Wallet",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.openSans(
+                      fontSize: 17.0,
+                      color: ColorTextPrimary,
+                      fontWeight: FontWeight.w600,
+                    )),
+              ]),
+              actions: <Widget>[
+                Center(
+                  child: MaterialButton(
+                    minWidth: MediaQuery.of(context).size.width * 0.40,
+                    height: 50,
+                    padding: const EdgeInsets.all(8.0),
+                    textColor: Colors.white,
+                    color: ColorPrimary,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    onPressed: () {
+                      status == 1
+                          ? Navigator.push(context, MaterialPageRoute(builder: (context) => Scanner(data: passing!)))
+                          : Navigator.pushAndRemoveUntil(
+                              context,
+                              PageTransition(child: BottomNavigationHome(), type: PageTransitionType.fade),
+                              ModalRoute.withName("/"));
                     },
                     child: new Text(
                       "done_key".tr(),
