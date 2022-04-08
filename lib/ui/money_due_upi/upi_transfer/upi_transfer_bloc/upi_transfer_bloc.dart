@@ -15,21 +15,22 @@ class UpiTansferHistoryBloc extends Bloc<UpiTansferHistoryEvent, UpiTansferHisto
   @override
   Stream<UpiTansferHistoryState> mapEventToState(UpiTansferHistoryEvent event) async* {
     if (event is GetUpiTansferHistoryEvent) {
-      yield* getUpiTansferHistoryApi();
+      yield* getUpiTansferHistoryApi(event.input);
     }
     if (event is FindUserEvent) {
-      yield GetFreeCoinUserSearchState(searchword: event.searchkeyword);
+      yield GetTansferHistoryUserSearchState(searchword: event.searchkeyword);
     }
   }
 
-  Stream<UpiTansferHistoryState> getUpiTansferHistoryApi() async* {
+  Stream<UpiTansferHistoryState> getUpiTansferHistoryApi(input) async* {
     if (await Network.isConnected()) {
       log("=====>");
-      UpiTansferResponse response = await apiProvider.upiPaymentHistory();
+      UpiTansferResponse response = await apiProvider.upiPaymentHistory(input);
       if (response.success) {
         List<UpiTansferData> orderList = [];
-
+        orderList = response.data!;
         orderList.sort((a, b) => b.txnDate.compareTo(a.txnDate));
+        // log(orderList);
         yield GetUpiTansferHistoryState(data: orderList);
       } else {
         yield GetUpiTansferHistoryFailureState(succes: response.success, message: response.message);

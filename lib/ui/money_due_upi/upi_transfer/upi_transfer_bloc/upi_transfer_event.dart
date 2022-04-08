@@ -6,7 +6,8 @@ class UpiTansferHistoryEvent extends Equatable {
 }
 
 class GetUpiTansferHistoryEvent extends UpiTansferHistoryEvent {
-  GetUpiTansferHistoryEvent();
+  final Map<String, dynamic> input;
+  GetUpiTansferHistoryEvent({required this.input});
   @override
   List<Object?> get props => [];
 }

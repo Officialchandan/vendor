@@ -1,10 +1,16 @@
+import 'dart:collection';
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vendor/ui/money_due_upi/upi_transfer/upi_transfer_bloc/upi_transfer_bloc.dart';
 import 'package:vendor/ui/money_due_upi/upi_transfer/upi_transfer_bloc/upi_transfer_event.dart';
+import 'package:vendor/ui/money_due_upi/upi_transfer/upi_transfer_bloc/upi_transfer_state.dart';
 import 'package:vendor/utility/color.dart';
+import 'package:vendor/utility/sharedpref.dart';
 
+import '../../../model/upi_transfer_history.dart';
 import '../../../widget/calendar_bottom_sheet.dart';
 
 class UpiTransferHistory extends StatefulWidget {
@@ -17,143 +23,148 @@ class UpiTransferHistory extends StatefulWidget {
 class _UpiTransferHistoryState extends State<UpiTransferHistory> {
   String startDate = "";
   String endDate = "";
+  List<UpiTansferData> searchList = [];
+  List<UpiTansferData> upiList = [];
+  int vendorid = 0;
   UpiTansferHistoryBloc upiTansferHistoryBloc = UpiTansferHistoryBloc();
+  Future<void> filterApiCall(BuildContext context) async {
+    Map<String, dynamic> input = HashMap<String, dynamic>();
+    input["from_date"] = startDate.isEmpty ? "" : startDate.toString();
+    input["to_date"] = endDate.isEmpty ? startDate.toString() : endDate.toString();
+    input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    log("=====? $input");
+    upiTansferHistoryBloc.add(GetUpiTansferHistoryEvent(input: input));
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    upiTansferHistoryBloc.add(GetUpiTansferHistoryEvent());
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "UPI Transfer",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        ),
-        actions: [
-          GestureDetector(
-            onTap: () {
-              showModalBottomSheet(
-                  context: context,
-                  builder: (context) {
-                    return CalendarBottomSheet(onSelect: (startDate, endDate) {
-                      this.startDate = startDate;
-                      this.endDate = endDate;
-                      print("startDate->$startDate");
-                      print("endDate->$endDate");
-                      // getCustomer();
-                    });
-                  });
-              print("startDate--->$startDate");
-              print("endDate--->$endDate");
-            },
-            child: Row(children: [
-              Icon(
-                Icons.filter_alt,
-                color: Colors.white,
-              ),
-              Center(child: Text("filter_key".tr() + "   ")),
-            ]),
+    return BlocProvider<UpiTansferHistoryBloc>(
+      create: (context) => upiTansferHistoryBloc,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            "UPI Transfer",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           ),
-        ],
-      ),
-      body: Container(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 15.0, right: 15, top: 15),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: Colors.black,
-                  ),
-                  filled: true,
-
-                  // fillColor: Colors.black,
-                  hintText: "search_here_key".tr(),
-                  hintStyle: GoogleFonts.openSans(fontWeight: FontWeight.w600, color: Colors.black),
-                  contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
+          actions: [
+            GestureDetector(
+              onTap: () {
+                showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return CalendarBottomSheet(onSelect: (startDate, endDate) {
+                        this.startDate = startDate;
+                        this.endDate = endDate;
+                        print("startDate->$startDate");
+                        print("endDate->$endDate");
+                        filterApiCall(context);
+                        // getCustomer();
+                      });
+                    });
+                print("startDate--->$startDate");
+                print("endDate--->$endDate");
+              },
+              child: Row(children: [
+                Icon(
+                  Icons.filter_alt,
+                  color: Colors.white,
                 ),
-              ),
+                Center(child: Text("filter_key".tr() + "   ")),
+              ]),
             ),
-            Expanded(
-              child: ListView.builder(
-                  padding: EdgeInsets.only(left: 15, right: 15),
-                  itemCount: 20,
-                  itemBuilder: (context, index) {
-                    return Stack(children: [
-                      Container(
-                        margin: EdgeInsets.only(top: 15),
-                        padding: EdgeInsets.all(0),
-                        height: 70,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.white,
-                            border: Border.all(color: Colors.white38),
-                            boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 1.0, spreadRadius: 1)]),
-                        child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                          Padding(
-                            padding: EdgeInsets.only(left: 12.0),
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "20 Feb 2022 - 5.30 PM",
-                                    style: TextStyle(fontWeight: FontWeight.w600),
-                                  ),
-                                  Container(
-                                    height: 20,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20), color: Colors.orange.shade50),
-                                    child: Text(
-                                      "  " + "pending_key".tr() + "  ",
-                                      style: TextStyle(color: Colors.orange, fontSize: 12, fontWeight: FontWeight.w400),
-                                    ),
-                                  ),
-                                ]),
-                          ),
-                          Container(
-                            width: 90,
-                          ),
-                        ]),
-                      ),
-                      Positioned(
-                        right: 0,
-                        top: 15,
-                        child: Container(
-                          alignment: Alignment.center,
-                          width: 70,
-                          height: 70,
-                          decoration: BoxDecoration(
-                              color: Colors.red.shade50,
-                              borderRadius:
-                                  BorderRadius.only(bottomRight: Radius.circular(10), topRight: Radius.circular(10))),
-                          child: Center(
-                            child: Text(
-                              " \u20B9206",
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: ColorPrimary),
-                            ),
-                          ),
-                        ),
-                      )
-                    ]);
-                  }),
-            )
           ],
         ),
+        body: Container(child: BlocBuilder<UpiTansferHistoryBloc, UpiTansferHistoryState>(builder: (context, state) {
+          if (state is GetUpiTansferHistoryInitialState) {
+            filterApiCall(context);
+          }
+          if (state is GetUpiTansferHistoryState) {
+            log("--->ye estate hai bhiya");
+            upiList = state.data!;
+            searchList = upiList;
+            log("--->ye estate hai bhiya${upiList}");
+          }
+          if (upiList == null) {
+            return Center(child: CircularProgressIndicator());
+          }
+          if (state is GetUpiTansferHistoryFailureState) {
+            return Center(
+              child: Image.asset("assets/images/no_data.gif"),
+            );
+          }
+
+          return ListView.builder(
+              padding: EdgeInsets.only(left: 15, right: 15, top: 15),
+              itemCount: upiList.length,
+              itemBuilder: (context, index) {
+                return Stack(children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 15),
+                    padding: EdgeInsets.all(0),
+                    height: 70,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white,
+                        border: Border.all(color: Colors.white38),
+                        boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 1.0, spreadRadius: 1)]),
+                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 12.0),
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "${upiList[index].txnDate}",
+                                style: TextStyle(fontWeight: FontWeight.w600),
+                              ),
+                              Container(
+                                height: 20,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20), color: Colors.orange.shade50),
+                                child: Text(
+                                  "  " + "pending_key".tr() + "  ",
+                                  style: TextStyle(color: Colors.orange, fontSize: 12, fontWeight: FontWeight.w400),
+                                ),
+                              ),
+                            ]),
+                      ),
+                      Container(
+                        width: 90,
+                      ),
+                    ]),
+                  ),
+                  Positioned(
+                    right: 0,
+                    top: 15,
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: 70,
+                      height: 70,
+                      decoration: BoxDecoration(
+                          color: Colors.red.shade50,
+                          borderRadius:
+                              BorderRadius.only(bottomRight: Radius.circular(10), topRight: Radius.circular(10))),
+                      child: Center(
+                        child: Text(
+                          " \u20B9" + "${upiList[index].txnAmount}  ",
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: ColorPrimary),
+                        ),
+                      ),
+                    ),
+                  )
+                ]);
+              });
+        })
+            //return ListWidget();
+
+            ),
       ),
     );
   }

@@ -31,9 +31,9 @@ class GetUpiTansferHistoryFailureState extends UpiTansferHistoryState {
   List<Object?> get props => [message, succes];
 }
 
-class GetFreeCoinUserSearchState extends UpiTansferHistoryState {
+class GetTansferHistoryUserSearchState extends UpiTansferHistoryState {
   final String searchword;
-  GetFreeCoinUserSearchState({required this.searchword});
+  GetTansferHistoryUserSearchState({required this.searchword});
 
   @override
   // TODO: implement props

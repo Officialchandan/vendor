@@ -1633,7 +1633,7 @@ class ApiProvider {
     }
   }
 
-  Future<UpiTansferResponse> upiPaymentHistory() async {
+  Future<UpiTansferResponse> upiPaymentHistory(input) async {
     int inputs = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     log("-------->${inputs}");
     Map<String, dynamic> input = HashMap<String, dynamic>();
