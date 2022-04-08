@@ -14,6 +14,7 @@ import 'package:vendor/main.dart';
 import 'package:vendor/model/common_response.dart';
 import 'package:vendor/model/get_due_amount_response.dart';
 import 'package:vendor/model/get_vendor_free_coin.dart';
+import 'package:vendor/ui/money_due_upi/daily_ledger/daily_ledger.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/upi/bloc/due_amount_bloc.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/upi/bloc/due_amount_event.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/upi/bloc/due_amount_state.dart';
@@ -36,7 +37,7 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
   String dueAmount = "0.0";
   String result = "";
   String mid = "", orderId = "", token = "", callbackurl = "";
-  int condition = 0;
+  int condition = 1;
   @override
   void initState() {
     super.initState();
@@ -80,7 +81,7 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
   Future<void> paymentTransiction(BuildContext context) async {
     Map<String, dynamic> input = HashMap<String, dynamic>();
     input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
-    input["amount"] = dueAmount;
+    input["amount"] = 1;
 
     log("=====? $input");
 
@@ -120,8 +121,12 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
       create: (context) => moneyDueBloc,
       child: Scaffold(
           appBar: AppBar(
+            systemOverlayStyle: SystemUiOverlayStyle(
+              statusBarColor: condition == 0 ? ApproveTextColor : ColorPrimary,
+            ),
             title: Text("money_due_upi_key".tr()),
             elevation: 0,
+            backgroundColor: condition == 0 ? ApproveTextColor : ColorPrimary,
           ),
           body: SingleChildScrollView(
             child: Container(
@@ -158,7 +163,7 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                               log("due ammount ---> ${state.dueAmount}");
                               dueAmount = state.dueAmount;
                               categoryDue = state.categoryDue;
-                              paymentTransiction(context);
+                              //  paymentTransiction(context);
                             }
                             if (state is GetPaymentTransictionState) {
                               mid = state.mid;
@@ -320,8 +325,8 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  // Navigator.push(context,
-                                  //     PageTransition(child: UpiTransferHistory(), type: PageTransitionType.fade));
+                                  Navigator.push(
+                                      context, PageTransition(child: DailyLedger(), type: PageTransitionType.fade));
                                 },
                                 child: Stack(
                                   clipBehavior: Clip.none,
@@ -349,7 +354,7 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text("upi_transfer_key".tr(),
+                                          Text("Daily Ledger".tr(),
                                               style: TextStyle(
                                                   color: Colors.black, fontSize: 16.3, fontWeight: FontWeight.w600)),
                                           SizedBox(
@@ -457,11 +462,6 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                                                   color: Colors.black, fontSize: 16.3, fontWeight: FontWeight.w600)),
                                           SizedBox(
                                             height: 5,
-                                          ),
-                                          Container(
-                                            height: 1,
-                                            width: 70,
-                                            color: ColorTextPrimary,
                                           ),
                                           SizedBox(
                                             height: 10,
@@ -694,11 +694,6 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                                                       fontWeight: FontWeight.w600)),
                                               SizedBox(
                                                 height: 5,
-                                              ),
-                                              Container(
-                                                height: 1,
-                                                width: 65,
-                                                color: ColorTextPrimary,
                                               ),
                                             ],
                                           ),

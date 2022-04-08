@@ -7,26 +7,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:vendor/ui/money_due_upi/free_coins/free_coins_history_bloc/free_coin_history_state.dart';
+import 'package:vendor/model/get_master_ledger_history.dart';
+import 'package:vendor/ui/money_due_upi/daily_ledger/daily_ledger_bloc/daily_ledger_bloc.dart';
+import 'package:vendor/ui/money_due_upi/daily_ledger/daily_ledger_bloc/daily_ledger_event.dart';
+import 'package:vendor/ui/money_due_upi/daily_ledger/daily_ledger_bloc/daily_ledger_state.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/model/normal_ladger_response.dart';
-import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_bloc/normal_ledger_bloc.dart';
-import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_bloc/normal_ledger_event.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_bloc/normal_ledger_state.dart';
-import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_details/noraml_ledger_details.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
-import 'package:vendor/widget/calendar_bottom_sheet.dart';
 
-import '../../../model/get_master_ledger_history.dart';
-
-class NormalLedger extends StatefulWidget {
-  const NormalLedger({Key? key}) : super(key: key);
+class DailyLedger extends StatefulWidget {
+  const DailyLedger({Key? key}) : super(key: key);
 
   @override
-  _NormalLedgerState createState() => _NormalLedgerState();
+  _DailyLedgerState createState() => _DailyLedgerState();
 }
 
-class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMixin {
+class _DailyLedgerState extends State<DailyLedger> with TickerProviderStateMixin {
   TabController? _tabController;
   List<String> months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   DateTime? dateTime;
@@ -39,7 +36,7 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
 
   List<OrderData> orderList = [];
 
-  NormalLedgerHistoryBloc _normalLedgerHistoryBloc = NormalLedgerHistoryBloc();
+  DailyLedgerHistoryBloc _dailyLedgerHistoryBloc = DailyLedgerHistoryBloc();
   TextEditingController _searchController = TextEditingController();
   @override
   void initState() {
@@ -53,53 +50,33 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
   }
 
   Future<void> normalLedgerApiCall(BuildContext context) async {
+    DateTime datenow = DateTime.now();
+    String date = DateFormat("yyyy/MM/dd").format(datenow);
+
     Map<String, dynamic> input = HashMap<String, dynamic>();
     input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
-    input["from_date"] = startDate.isEmpty ? "" : startDate.toString();
-    input["to_date"] = endDate.isEmpty ? startDate.toString() : endDate.toString();
-    _normalLedgerHistoryBloc.add(GetNormalLedgerHistoryEvent(input: input));
+    // input["from_date"] = startDate.isEmpty ? "" : startDate.toString();
+    // input["to_date"] = endDate.isEmpty ? startDate.toString() : endDate.toString();
+    input["date"] = "2022-03-15";
+
+    log("input---->${input}");
+    _dailyLedgerHistoryBloc.add(GetDailyLedgerHistoryEvent(input: input));
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<NormalLedgerHistoryBloc>(
-      create: (context) => _normalLedgerHistoryBloc,
+    return BlocProvider<DailyLedgerHistoryBloc>(
+      create: (context) => _dailyLedgerHistoryBloc,
       child: DefaultTabController(
         length: months.length,
         initialIndex: 0,
         child: Scaffold(
           appBar: AppBar(
             title: Text(
-              "Master Ledger",
+              "Daily Ledger",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
-            actions: [
-              GestureDetector(
-                onTap: () {
-                  showModalBottomSheet(
-                      context: context,
-                      builder: (context) {
-                        return CalendarBottomSheet(onSelect: (startDate, endDate) {
-                          this.startDate = startDate;
-                          this.endDate = endDate;
-                          print("startDate->$startDate");
-                          print("endDate->$endDate");
-                          normalLedgerApiCall(context);
-                          // getCustomer();
-                        });
-                      });
-                  print("startDate---1>$startDate");
-                  print("endDate---1>$endDate");
-                },
-                child: Row(children: [
-                  Icon(
-                    Icons.filter_alt,
-                    color: Colors.white,
-                  ),
-                  Center(child: Text("Filter   ")),
-                ]),
-              ),
-            ],
+
             // bottom: PreferredSize(
             //   child: Container(
             //     color: ColorPrimary,
@@ -130,15 +107,15 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
             //   preferredSize: const Size.fromHeight(50),
             // ),
           ),
-          body: BlocBuilder<NormalLedgerHistoryBloc, NormalLedgerHistoryState>(builder: (context, state) {
+          body: BlocBuilder<DailyLedgerHistoryBloc, DailyLedgerHistoryState>(builder: (context, state) {
             log("state===>$state");
-            if (state is GetNormalLedgerHistoryInitialState) {
+            if (state is GetDailyLedgerHistoryInitialState) {
               normalLedgerApiCall(context);
             }
             /* if (state is GetNormalLedgerHistoryState) {
               _commonLedgerHistory = state.data!;
             }*/
-            if (state is GetNormalLedgerState) {
+            if (state is GetDailyLedgerState) {
               orderList = state.orderList;
               searchList = orderList;
             }
@@ -147,7 +124,7 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
               log("===>$_commonLedgerHistory");
               return Center(child: CircularProgressIndicator());
             }
-            if (state is GetNormalLedgerUserSearchState) {
+            if (state is GetDailyLedgerUserSearchState) {
               if (state.searchword.isEmpty) {
                 searchList = orderList;
               } else {
@@ -172,18 +149,12 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
             //   log("===>$_commonLedgerHistory");
             //   return Center(child: CircularProgressIndicator());
             // }
-            if (state is GetFreeCoinHistoryFailureState) {
-              return Container(
-                height: MediaQuery.of(context).size.height,
-                child: Image.asset("assets/images/no_data.gif"),
-              );
+            if (state is GetNormalLedgerHistoryFailureState) {
+              return Center(child: Image.asset("assets/images/no_data.gif"));
             }
 
-            if (state is GetNormalLedgerHistoryFailureState) {
-              return Container(
-                height: MediaQuery.of(context).size.height,
-                child: Image.asset("assets/images/no_data.gif"),
-              );
+            if (state is GetDailyLedgerHistoryFailureState) {
+              return Center(child: Image.asset("assets/images/no_data.gif"));
             }
 
             return Container(
@@ -276,7 +247,7 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                         ),
                       ),
                       onChanged: (text) {
-                        _normalLedgerHistoryBloc.add(GetFindUserEvent(searchkeyword: text));
+                        _dailyLedgerHistoryBloc.add(GetFindUserEvent(searchkeyword: text));
                       },
                     ),
                   ),
@@ -288,13 +259,13 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                           return InkWell(
                             splashColor: Colors.transparent,
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => NormalLedgerDetails(
-                                            // commonLedgerHistory: _commonLedgerHistory!,
-                                            order: searchList[index],
-                                          )));
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => NormalLedgerDetails(
+                              //           // commonLedgerHistory: _commonLedgerHistory!,
+                              //           order: searchList[index],
+                              //         )));
                             },
                             child: Container(
                               margin: EdgeInsets.symmetric(vertical: 5),

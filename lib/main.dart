@@ -101,10 +101,10 @@ ThemeData themeData(context) => ThemeData(
         errorStyle: TextStyle(color: Colors.red, fontSize: 15)),
     appBarTheme: AppBarTheme(
       elevation: 1,
-      // systemOverlayStyle: SystemUiOverlayStyle(
-      //   statusBarColor: Colors.red,
-      //   // statusBarIconBrightness: Brightness.light,
-      // ),
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: ColorPrimary,
+        // statusBarIconBrightness: Brightness.light,
+      ),
       brightness: Brightness.dark,
       backgroundColor: ColorPrimary,
       iconTheme: IconThemeData(

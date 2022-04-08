@@ -16,6 +16,7 @@ import 'package:vendor/model/get_due_amount_response.dart';
 import 'package:vendor/ui/money_due_upi/bloc/money_due_bloc.dart';
 import 'package:vendor/ui/money_due_upi/bloc/money_due_event.dart';
 import 'package:vendor/ui/money_due_upi/bloc/money_due_state.dart';
+import 'package:vendor/ui/money_due_upi/daily_ledger/daily_ledger.dart';
 import 'package:vendor/ui/money_due_upi/free_coins/free_coins_history.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger.dart';
 import 'package:vendor/ui/money_due_upi/redeem_coin/reddem_coin_history.dart';
@@ -203,7 +204,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                               log("due ammount ---> ${state.dueAmount}");
                               dueAmount = state.dueAmount;
                               categoryDue = state.categoryDue;
-                              paymentTransiction(context);
+                              // paymentTransiction(context);
                             }
                             if (state is GetFreeCoinState) {
                               freecoin = state.data;
@@ -260,7 +261,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                     GestureDetector(
                                       onTap: () {
                                         Navigator.push(context,
-                                            PageTransition(child: UpiTransferHistory(), type: PageTransitionType.fade));
+                                            PageTransition(child: DailyLedger(), type: PageTransitionType.fade));
                                       },
                                       child: Stack(
                                         clipBehavior: Clip.none,
@@ -933,7 +934,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                     GestureDetector(
                                       onTap: () {
                                         Navigator.push(context,
-                                            PageTransition(child: UpiTransferHistory(), type: PageTransitionType.fade));
+                                            PageTransition(child: DailyLedger(), type: PageTransitionType.fade));
                                       },
                                       child: Stack(
                                         clipBehavior: Clip.none,
