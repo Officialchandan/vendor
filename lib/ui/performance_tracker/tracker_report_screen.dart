@@ -29,12 +29,12 @@ class _TrackerReportDashboardState extends State<TrackerReportDashboard> {
       "image": "assets/images/tr-ic2.png",
       "id": 2
     },
-    {
-      "title": "money_due_upi_key".tr(),
-      "subTitle": "click_here_to_add_product_key".tr(),
-      "image": "assets/images/tr-ic3.png",
-      "id": 3
-    },
+    // {
+    //   "title": "money_due_upi_key".tr(),
+    //   "subTitle": "click_here_to_add_product_key".tr(),
+    //   "image": "assets/images/tr-ic3.png",
+    //   "id": 3
+    // },
     {
       "title": "my_customers_key".tr(),
       "subTitle": "click_here_to_view_customer_key".tr(),
@@ -68,24 +68,38 @@ class _TrackerReportDashboardState extends State<TrackerReportDashboard> {
                       if (await Network.isConnected()) {
                         if (options[index]["id"] == 2) {
                           Navigator.push(
-                              context, PageTransition(child: SelectReportTypeScreen(), type: PageTransitionType.fade));
+                              context,
+                              PageTransition(
+                                  child: SelectReportTypeScreen(),
+                                  type: PageTransitionType.fade));
                         }
                         if (options[index]["id"] == 3) {
                           Navigator.push(
-                              context, PageTransition(child: MoneyDueScreen(true), type: PageTransitionType.fade));
+                              context,
+                              PageTransition(
+                                  child: MoneyDueScreen(true),
+                                  type: PageTransitionType.fade));
                         }
                         if (options[index]["id"] == 4) {
                           Navigator.push(
-                              context, PageTransition(child: MyCustomerScreen(), type: PageTransitionType.fade));
+                              context,
+                              PageTransition(
+                                  child: MyCustomerScreen(),
+                                  type: PageTransitionType.fade));
                         }
 
                         if (options[index]["id"] == 1) {
-                          Navigator.push(context,
-                              PageTransition(child: PerformanceTrackerByCategory(), type: PageTransitionType.fade));
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  child: PerformanceTrackerByCategory(),
+                                  type: PageTransitionType.fade));
                         }
                       } else {
                         Fluttertoast.showToast(
-                            msg: "please_check_your_internet_connection_key".tr(), backgroundColor: ColorPrimary);
+                            msg: "please_check_your_internet_connection_key"
+                                .tr(),
+                            backgroundColor: ColorPrimary);
                       }
                     },
                     leading: Image(
@@ -106,7 +120,9 @@ class _TrackerReportDashboardState extends State<TrackerReportDashboard> {
                       width: 5,
                       decoration: BoxDecoration(
                           color: ColorPrimary,
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(5),
+                              bottomLeft: Radius.circular(5))),
                     ))
               ],
             ),

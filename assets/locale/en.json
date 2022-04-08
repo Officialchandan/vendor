@@ -386,5 +386,7 @@
   "amt_paid_key":"Amount Paid",
   "adj_balance_key":"Adjusted Balance",
   "hooray_you_saved":"Hooray, You saved",
-  "product_return_successfully":"Product Return successfully"
+  "product_return_successfully":"Product Return successfully",
+  "rejected_key":"Rejected",
+  "accepted_key":"Accepted"
 }

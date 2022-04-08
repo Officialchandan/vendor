@@ -98,6 +98,10 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                           FocusScope.of(context).unfocus();
                         });
                       }
+                      if (text.length == 0) {
+                        purchasedList = [];
+                        streamController.add([]);
+                      }
                     },
                     autofocus: true,
                     keyboardType: TextInputType.phone,
@@ -105,21 +109,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                         counterText: "", labelText: "mobile_number_key".tr()),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, bottom: 14, top: 4),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "select_return_product_key".tr(),
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.67,
-                  child: showProduct(),
-                )
+                showProduct()
               ],
             ),
           ),
@@ -129,7 +119,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
             },
             child: Container(
               height: 50,
-              width: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.height - 56,
               color: ColorPrimary,
               child: Center(
                 child: Text(
@@ -341,304 +331,354 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
   }
 
   Widget showProduct() {
-    return StreamBuilder<List<SaleReturnProducts>>(
-      stream: streamController.stream,
-      builder: (context, snapshot) {
-        // if (snapshot.connectionState == ConnectionState.waiting) {
-        //   return Center(child: CircularProgressIndicator());
-        // }
-        if (snapshot.hasData) {
-          return ListView.separated(
-              padding: const EdgeInsets.only(bottom: 10),
-              itemBuilder: (context, index) {
-                return Stack(
+    return Container(
+      child: Column(
+        children: [
+          StreamBuilder<List<SaleReturnProducts>>(
+            stream: streamController.stream,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Text("Enter mobile number to get purchase product");
+              }
+
+              if (snapshot.hasData) {
+                return Column(
                   children: [
-                    InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () async {
-                        // await Navigator.push(context, MaterialPageRoute(builder: (_) => EditProductScreen(product: product)));
-                        // getProducts();
-                      },
-                      child: Container(
-                        height: 90,
-                        margin: EdgeInsets.only(
-                            left: 14, right: 14, top: 10, bottom: 10),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey,
-                              offset: Offset(0.0, 1.0), //(x,y)
-                              blurRadius: 6.0,
+                    purchasedList.isEmpty
+                        ? Container()
+                        : Padding(
+                            padding: const EdgeInsets.only(
+                                left: 20, bottom: 14, top: 4),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "select_return_product_key".tr(),
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                              ),
                             ),
-                          ],
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Row(
-                            children: [
-                              Container(
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: snapshot
-                                          .data![index].productImages.isNotEmpty
-                                      ? Image(
-                                          height: 65,
-                                          width: 65,
-                                          fit: BoxFit.contain,
-                                          image: NetworkImage(snapshot
-                                              .data![index].productImages),
-                                        )
-                                      : Image(
-                                          image: AssetImage(
-                                            "assets/images/placeholder.webp",
-                                          ),
-                                          height: 60,
-                                          width: 60,
-                                          fit: BoxFit.cover,
+                          ),
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.65,
+                      child: ListView.separated(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          itemBuilder: (context, index) {
+                            return Stack(
+                              children: [
+                                InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    // await Navigator.push(context, MaterialPageRoute(builder: (_) => EditProductScreen(product: product)));
+                                    // getProducts();
+                                  },
+                                  child: Container(
+                                    height: 90,
+                                    margin: EdgeInsets.only(
+                                        left: 14,
+                                        right: 14,
+                                        top: 10,
+                                        bottom: 10),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey,
+                                          offset: Offset(0.0, 1.0), //(x,y)
+                                          blurRadius: 6.0,
                                         ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Flexible(
-                                child: Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.70,
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                      ],
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(10),
+                                      child: Row(
                                         children: [
-                                          AutoSizeText(
-                                            snapshot.data![index].productName,
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.w600),
-                                            maxFontSize: 15,
-                                            minFontSize: 12,
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              RichText(
-                                                  text: TextSpan(children: [
-                                                TextSpan(
-                                                    text:
-                                                        "₹ ${snapshot.data![index].price}\t" +
-                                                            " ",
-                                                    style: TextStyle(
-                                                        color: ColorPrimary,
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
-                                                TextSpan(
-                                                    text:
-                                                        "₹ ${snapshot.data![index].total}",
-                                                    style: TextStyle(
-                                                        color: Colors.black87,
-                                                        decoration:
-                                                            TextDecoration
-                                                                .lineThrough))
-                                              ])),
-                                            ],
-                                          ),
-                                          snapshot.data![index].categoryName
-                                                  .isNotEmpty
-                                              ? Container(
-                                                  decoration: BoxDecoration(
-                                                      color:
-                                                          DirectBillTextBgColor,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              20)),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(2),
-                                                    child: Text(
-                                                      "  Direct Billing  ",
-                                                      style: TextStyle(
-                                                          fontSize: 11,
-                                                          color:
-                                                              DirectBillingTextColor),
+                                          Container(
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              child: snapshot.data![index]
+                                                      .productImages.isNotEmpty
+                                                  ? Image(
+                                                      height: 65,
+                                                      width: 65,
+                                                      fit: BoxFit.contain,
+                                                      image: NetworkImage(
+                                                          snapshot.data![index]
+                                                              .productImages),
+                                                    )
+                                                  : Image(
+                                                      image: AssetImage(
+                                                        "assets/images/placeholder.webp",
+                                                      ),
+                                                      height: 60,
+                                                      width: 60,
+                                                      fit: BoxFit.cover,
                                                     ),
-                                                  ),
-                                                )
-                                              : Container(
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              25),
-                                                      border: Border.all(
-                                                          color: Colors.black)),
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Flexible(
+                                            child: Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.70,
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceAround,
+                                                children: [
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
                                                     children: [
-                                                      Container(
-                                                        height: 20,
-                                                        width: 20,
-                                                        child: IconButton(
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    0),
-                                                            onPressed: () {
-                                                              if (snapshot
-                                                                      .data![
-                                                                          index]
-                                                                      .returnQty >
-                                                                  1) {
-                                                                snapshot
-                                                                    .data![
-                                                                        index]
-                                                                    .returnQty = snapshot
-                                                                        .data![
-                                                                            index]
-                                                                        .returnQty -
-                                                                    1;
-                                                                streamController
-                                                                    .add(
-                                                                        purchasedList);
-                                                              }
-                                                            },
-                                                            iconSize: 20,
-                                                            splashRadius: 10,
-                                                            icon: Icon(
-                                                              Icons.remove,
-                                                            )),
+                                                      AutoSizeText(
+                                                        snapshot.data![index]
+                                                            .productName,
+                                                        maxLines: 2,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w600),
+                                                        maxFontSize: 15,
+                                                        minFontSize: 12,
                                                       ),
-                                                      Container(
-                                                        width: 20,
-                                                        height: 20,
-                                                        color: ColorPrimary,
-                                                        child: Center(
-                                                          child: Text(
-                                                            "${snapshot.data![index].returnQty}",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontSize: 14),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Container(
-                                                        height: 20,
-                                                        width: 20,
-                                                        child: IconButton(
-                                                          padding:
-                                                              EdgeInsets.all(0),
-                                                          onPressed: () {
-                                                            if (snapshot
-                                                                    .data![
-                                                                        index]
-                                                                    .returnQty <
-                                                                snapshot
-                                                                    .data![
-                                                                        index]
-                                                                    .qty) {
-                                                              snapshot
-                                                                  .data![index]
-                                                                  .returnQty = snapshot
-                                                                      .data![
-                                                                          index]
-                                                                      .returnQty +
-                                                                  1;
-                                                              streamController.add(
-                                                                  purchasedList);
-                                                            } else {
-                                                              Utility.showToast(
-                                                                  "Can't return more than ${snapshot.data![index].qty} products");
-                                                            }
-                                                          },
-                                                          iconSize: 20,
-                                                          splashRadius: 10,
-                                                          icon: Icon(
-                                                            Icons.add,
-                                                          ),
-                                                        ),
-                                                      )
                                                     ],
                                                   ),
-                                                ),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                          RichText(
+                                                              text: TextSpan(
+                                                                  children: [
+                                                                TextSpan(
+                                                                    text:
+                                                                        "₹ ${snapshot.data![index].price}\t" +
+                                                                            " ",
+                                                                    style: TextStyle(
+                                                                        color:
+                                                                            ColorPrimary,
+                                                                        fontSize:
+                                                                            14,
+                                                                        fontWeight:
+                                                                            FontWeight.bold)),
+                                                                TextSpan(
+                                                                    text:
+                                                                        "₹ ${snapshot.data![index].total}",
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .black87,
+                                                                        decoration:
+                                                                            TextDecoration.lineThrough))
+                                                              ])),
+                                                        ],
+                                                      ),
+                                                      snapshot
+                                                              .data![index]
+                                                              .categoryName
+                                                              .isNotEmpty
+                                                          ? Container(
+                                                              decoration: BoxDecoration(
+                                                                  color:
+                                                                      DirectBillTextBgColor,
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              20)),
+                                                              child: Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .all(2),
+                                                                child: Text(
+                                                                  "  Direct Billing  ",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          11,
+                                                                      color:
+                                                                          DirectBillingTextColor),
+                                                                ),
+                                                              ),
+                                                            )
+                                                          : Container(
+                                                              decoration: BoxDecoration(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              25),
+                                                                  border: Border.all(
+                                                                      color: Colors
+                                                                          .black)),
+                                                              child: Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .min,
+                                                                children: [
+                                                                  Container(
+                                                                    height: 20,
+                                                                    width: 20,
+                                                                    child: IconButton(
+                                                                        padding: EdgeInsets.all(0),
+                                                                        onPressed: () {
+                                                                          if (snapshot.data![index].returnQty >
+                                                                              1) {
+                                                                            snapshot.data![index].returnQty =
+                                                                                snapshot.data![index].returnQty - 1;
+                                                                            streamController.add(purchasedList);
+                                                                          }
+                                                                        },
+                                                                        iconSize: 20,
+                                                                        splashRadius: 10,
+                                                                        icon: Icon(
+                                                                          Icons
+                                                                              .remove,
+                                                                        )),
+                                                                  ),
+                                                                  Container(
+                                                                    width: 20,
+                                                                    height: 20,
+                                                                    color:
+                                                                        ColorPrimary,
+                                                                    child:
+                                                                        Center(
+                                                                      child:
+                                                                          Text(
+                                                                        "${snapshot.data![index].returnQty}",
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                Colors.white,
+                                                                            fontSize: 14),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  Container(
+                                                                    height: 20,
+                                                                    width: 20,
+                                                                    child:
+                                                                        IconButton(
+                                                                      padding:
+                                                                          EdgeInsets.all(
+                                                                              0),
+                                                                      onPressed:
+                                                                          () {
+                                                                        if (snapshot.data![index].returnQty <
+                                                                            snapshot.data![index].qty) {
+                                                                          snapshot
+                                                                              .data![index]
+                                                                              .returnQty = snapshot.data![index].returnQty + 1;
+                                                                          streamController
+                                                                              .add(purchasedList);
+                                                                        } else {
+                                                                          Utility.showToast(
+                                                                              "Can't return more than ${snapshot.data![index].qty} products");
+                                                                        }
+                                                                      },
+                                                                      iconSize:
+                                                                          20,
+                                                                      splashRadius:
+                                                                          10,
+                                                                      icon:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .add,
+                                                                      ),
+                                                                    ),
+                                                                  )
+                                                                ],
+                                                              ),
+                                                            ),
+                                                    ],
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                        DateFormat("dd MMM HH:MM")
+                                                                .format(DateTime
+                                                                    .parse(snapshot
+                                                                        .data![
+                                                                            index]
+                                                                        .dateTime)) +
+                                                            " " +
+                                                            DateFormat.jm()
+                                                                .format(DateTime
+                                                                    .parse(snapshot
+                                                                        .data![
+                                                                            index]
+                                                                        .dateTime))
+                                                                .toLowerCase(),
+                                                        style: TextStyle(
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color:
+                                                                Colors.black87),
+                                                      )
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
                                         ],
                                       ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            DateFormat("dd MMM HH:MM").format(
-                                                    DateTime.parse(snapshot
-                                                        .data![index]
-                                                        .dateTime)) +
-                                                " " +
-                                                DateFormat.jm()
-                                                    .format(DateTime.parse(
-                                                        snapshot.data![index]
-                                                            .dateTime))
-                                                    .toLowerCase(),
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black87),
-                                          )
-                                        ],
-                                      )
-                                    ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      right: 9,
-                      top: 4,
-                      child: Checkbox(
-                        activeColor: ColorPrimary,
-                        value: snapshot.data![index].checked,
-                        onChanged: (value) {
-                          if (value == true) {
-                            snapshot.data!.forEach((element) {
-                              element.checked = false;
-                            });
-                            returnProductList.clear();
-                            snapshot.data![index].checked = value!;
-                            returnProductList.add(snapshot.data![index]);
-                          }
-                          if (value == false) {
-                            snapshot.data![index].checked = value!;
-                            returnProductList.remove(snapshot.data![index]);
-                          }
+                                Positioned(
+                                  right: 9,
+                                  top: 4,
+                                  child: Checkbox(
+                                    activeColor: ColorPrimary,
+                                    value: snapshot.data![index].checked,
+                                    onChanged: (value) {
+                                      if (value == true) {
+                                        snapshot.data!.forEach((element) {
+                                          element.checked = false;
+                                        });
+                                        returnProductList.clear();
+                                        snapshot.data![index].checked = value!;
+                                        returnProductList
+                                            .add(snapshot.data![index]);
+                                      }
+                                      if (value == false) {
+                                        snapshot.data![index].checked = value!;
+                                        returnProductList
+                                            .remove(snapshot.data![index]);
+                                      }
 
-                          streamController.add(purchasedList);
-                        },
-                      ),
-                    )
+                                      streamController.add(purchasedList);
+                                    },
+                                  ),
+                                )
+                              ],
+                            );
+                          },
+                          separatorBuilder: (context, index) {
+                            return Container();
+                          },
+                          itemCount: snapshot.data!.length),
+                    ),
                   ],
                 );
-              },
-              separatorBuilder: (context, index) {
-                return Container();
-              },
-              itemCount: snapshot.data!.length);
-        }
-        return Container();
-      },
+              }
+
+              return Container();
+            },
+          ),
+        ],
+      ),
     );
   }
 
@@ -691,8 +731,10 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
           products.add(directBilling);
         }
         purchasedList = products;
-        streamController.add(products);
+        streamController.add(purchasedList);
       } else {
+        purchasedList = [];
+        streamController.add([]);
         Utility.showToast(response.message);
       }
     } else {

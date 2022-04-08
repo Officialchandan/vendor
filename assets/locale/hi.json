@@ -390,5 +390,7 @@
   "adj_balance_key":"समायोजित संतुलन",
   "customer_coin_balance_key":"ग्राहक सिक्के शेष",
   "hooray_you_saved":"हुर्रे, आपने बचाया",
-  "product_return_successfully":"उत्पाद वापसी सफलतापूर्वक"
+  "product_return_successfully":"उत्पाद वापसी सफलतापूर्वक",
+  "rejected_key":"अस्वीकृत",
+  "accepted_key":"स्वीकृत"
 }
