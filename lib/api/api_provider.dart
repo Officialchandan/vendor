@@ -1634,25 +1634,21 @@ class ApiProvider {
   }
 
   Future<UpiTansferResponse> upiPaymentHistory(input) async {
-    int inputs = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
-    log("-------->${inputs}");
-    Map<String, dynamic> input = HashMap<String, dynamic>();
-    input["vendor_id"] = inputs;
-    //try {
-    Response res = await dio.post(Endpoint.UPI_PAYMENT_HISTORY, data: input);
+    try {
+      Response res = await dio.post(Endpoint.UPI_PAYMENT_HISTORY, data: input);
 
-    return UpiTansferResponse.fromJson(res.toString());
-    // } catch (error) {
-    //   String message = "";
-    //   if (error is DioError) {
-    //     ServerError e = ServerError.withError(error: error);
-    //     message = e.getErrorMessage();
-    //   } else {
-    //     message = "Please try again later!";
-    //   }
-    //   print("Exception occurred: $message stackTrace: $error");
-    //   return UpiTansferResponse(success: false, message: "", data: []);
-    // }
+      return UpiTansferResponse.fromJson(res.toString());
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return UpiTansferResponse(success: false, message: "", data: []);
+    }
   }
 
   Future<IntiatePaymnetResponse> initiatePayment(Map<String, dynamic> input) async {
