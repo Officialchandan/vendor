@@ -207,14 +207,12 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                                           ? Image(
                                                               height: 55,
                                                               width: 55,
-                                                              fit: BoxFit.contain,
+                                                              fit: BoxFit.cover,
                                                               image: NetworkImage(
                                                                   "${searchList[index].productImages[0].productImage}"),
                                                             )
                                                           : Image(
-                                                              image: AssetImage(
-                                                                "assets/images/placeholder.webp",
-                                                              ),
+                                                              image: NetworkImage("${searchList[index].categoryImage}"),
                                                               height: 55,
                                                               width: 55,
                                                               fit: BoxFit.cover,
@@ -223,9 +221,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                                   : ClipRRect(
                                                       borderRadius: BorderRadius.circular(10),
                                                       child: Image(
-                                                        image: AssetImage(
-                                                          "assets/images/placeholder.webp",
-                                                        ),
+                                                        image: NetworkImage("${searchList[index].categoryImage}"),
                                                         height: 55,
                                                         width: 55,
                                                         fit: BoxFit.cover,

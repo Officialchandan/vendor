@@ -32,8 +32,7 @@ class _DirectBillingState extends State<DirectBilling> {
   TextEditingController nameController = TextEditingController();
   TextEditingController amountController = TextEditingController();
   TextEditingController otpController = TextEditingController();
-  DirectBillingCustomerNumberResponseBloc
-      directBillingCustomerNumberResponseBloc =
+  DirectBillingCustomerNumberResponseBloc directBillingCustomerNumberResponseBloc =
       DirectBillingCustomerNumberResponseBloc();
   var value = true;
   var checkbox = false;
@@ -62,8 +61,7 @@ class _DirectBillingState extends State<DirectBilling> {
         )),
         Text(
           "  $coins",
-          style: TextStyle(
-              fontSize: 20, fontWeight: FontWeight.w700, color: ColorPrimary),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: ColorPrimary),
         ),
       ],
     );
@@ -71,8 +69,7 @@ class _DirectBillingState extends State<DirectBilling> {
 
   @override
   void initState() {
-    directBillingCustomerNumberResponseBloc
-        .add(GetDirectBillingCategoryEvent());
+    directBillingCustomerNumberResponseBloc.add(GetDirectBillingCategoryEvent());
     super.initState();
   }
 
@@ -80,16 +77,13 @@ class _DirectBillingState extends State<DirectBilling> {
   Widget build(BuildContext context) {
     return BlocProvider<DirectBillingCustomerNumberResponseBloc>(
       create: (context) => directBillingCustomerNumberResponseBloc,
-      child: BlocConsumer<DirectBillingCustomerNumberResponseBloc,
-          DirectBillingCustomerNumberResponseState>(
+      child: BlocConsumer<DirectBillingCustomerNumberResponseBloc, DirectBillingCustomerNumberResponseState>(
         listener: (context, state) {},
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
-              title:
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text("direct_billing_key".tr(),
-                    style: TextStyle(fontWeight: FontWeight.w600)),
+              title: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Text("direct_billing_key".tr(), style: TextStyle(fontWeight: FontWeight.w600)),
                 SizedBox(width: 3),
                 Image.asset(
                   "assets/images/point.png",
@@ -112,8 +106,7 @@ class _DirectBillingState extends State<DirectBilling> {
                 padding: EdgeInsets.only(left: 15, right: 15, top: 10),
                 child: Column(
                   children: [
-                    BlocConsumer<DirectBillingCustomerNumberResponseBloc,
-                        DirectBillingCustomerNumberResponseState>(
+                    BlocConsumer<DirectBillingCustomerNumberResponseBloc, DirectBillingCustomerNumberResponseState>(
                       listener: (context, state) {
                         if (state is DirectBillingCustomerNumberResponseState) {
                           log("number chl gya");
@@ -124,8 +117,7 @@ class _DirectBillingState extends State<DirectBilling> {
                           //     textColor: Colors.white,
                           //     msg: state.message);
                         }
-                        if (state
-                            is GetDirectBillingCustomerNumberResponseFailureState) {
+                        if (state is GetDirectBillingCustomerNumberResponseFailureState) {
                           message = state.message;
                           status = state.succes;
                           status1 = state.status;
@@ -136,37 +128,25 @@ class _DirectBillingState extends State<DirectBilling> {
                           status = state.succes;
                           datas = state.data;
 
-                          _displayDialog(
-                              context,
-                              1,
-                              "please_enter_password_key".tr(),
-                              "enter_otp_key".tr());
+                          _displayDialog(context, 1, "please_enter_password_key".tr(), "enter_otp_key".tr());
                         }
 
                         if (state is GetDirectBillingLoadingstate) {}
 
                         if (state is GetDirectBillingFailureState) {
                           message = state.message;
-                          Fluttertoast.showToast(
-                              msg: state.message,
-                              backgroundColor: ColorPrimary);
+                          Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
                         }
                         if (state is GetDirectBillingOtpState) {
                           Navigator.pop(context);
-                          Fluttertoast.showToast(
-                              msg: state.message,
-                              backgroundColor: ColorPrimary);
+                          Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
                           int.parse(datas!.qrCodeStatus) == 0
-                              ? _displayDialogs(
-                                  context, datas!.earningCoins, 0, "")
-                              : _displayDialogs(
-                                  context, datas!.earningCoins, 1, datas);
+                              ? _displayDialogs(context, datas!.earningCoins, 0, "")
+                              : _displayDialogs(context, datas!.earningCoins, 1, datas);
                         }
                         if (state is GetDirectBillingOtpLoadingstate) {}
                         if (state is GetDirectBillingOtpFailureState) {
-                          Fluttertoast.showToast(
-                              msg: state.message,
-                              backgroundColor: ColorPrimary);
+                          Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
                         }
                         if (state is GetDirectBillingPartialUserState) {
                           succes = state.succes;
@@ -181,8 +161,7 @@ class _DirectBillingState extends State<DirectBilling> {
                         }
                       },
                       builder: (context, state) {
-                        if (state
-                            is GetDirectBillingCustomerNumberResponseState) {
+                        if (state is GetDirectBillingCustomerNumberResponseState) {
                           status1 = state.status;
                           coins = state.data.toString();
                         }
@@ -196,41 +175,30 @@ class _DirectBillingState extends State<DirectBilling> {
                           TextFormField(
                               controller: mobileController,
                               keyboardType: TextInputType.number,
-                              validator: (numb) =>
-                                  Validator.validateMobile(numb!, context),
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
+                              validator: (numb) => Validator.validateMobile(numb!, context),
+                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                               maxLength: 10,
                               decoration: InputDecoration(
-                                hintText:
-                                    'enter_customer_phone_number_key'.tr(),
+                                hintText: 'enter_customer_phone_number_key'.tr(),
                                 labelText: 'mobile_number_key'.tr(),
                                 counterText: "",
                                 contentPadding: EdgeInsets.all(0),
                                 fillColor: Colors.transparent,
-                                enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: ColorTextPrimary, width: 1.5)),
-                                focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: ColorPrimary, width: 1.5)),
-                                border: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: ColorPrimary, width: 1.5)),
+                                enabledBorder:
+                                    UnderlineInputBorder(borderSide: BorderSide(color: ColorTextPrimary, width: 1.5)),
+                                focusedBorder:
+                                    UnderlineInputBorder(borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
+                                border: UnderlineInputBorder(borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
                               ),
                               onChanged: (length) {
                                 if (mobileController.text.length == 10) {
-                                  directBillingCustomerNumberResponseBloc.add(
-                                      GetDirectBillingCustomerNumberResponseEvent(
-                                          mobile: mobileController.text));
+                                  directBillingCustomerNumberResponseBloc
+                                      .add(GetDirectBillingCustomerNumberResponseEvent(mobile: mobileController.text));
                                 }
                                 if (mobileController.text.length == 9) {
-                                  directBillingCustomerNumberResponseBloc.add(
-                                      GetDirectBillingCustomerNumberResponseEvent(
-                                          mobile: mobileController.text));
+                                  directBillingCustomerNumberResponseBloc
+                                      .add(GetDirectBillingCustomerNumberResponseEvent(mobile: mobileController.text));
                                 }
                               }),
                           status1 == 0
@@ -239,24 +207,17 @@ class _DirectBillingState extends State<DirectBilling> {
                                   child: TextFormField(
                                       controller: nameController,
                                       decoration: InputDecoration(
-                                        hintText:
-                                            'enter_customer_name_key'.tr(),
+                                        hintText: 'enter_customer_name_key'.tr(),
                                         labelText: 'full_name_key'.tr(),
                                         counterText: "",
                                         contentPadding: EdgeInsets.all(0),
                                         fillColor: Colors.transparent,
                                         enabledBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: ColorTextPrimary,
-                                                width: 1.5)),
+                                            borderSide: BorderSide(color: ColorTextPrimary, width: 1.5)),
                                         focusedBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: ColorPrimary,
-                                                width: 1.5)),
+                                            borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
                                         border: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: ColorPrimary,
-                                                width: 1.5)),
+                                            borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
                                       ),
                                       onChanged: (length) {
                                         // if (name.text.length == 10) {
@@ -278,9 +239,7 @@ class _DirectBillingState extends State<DirectBilling> {
                           controller: amountController,
                           keyboardType: TextInputType.number,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly
-                          ],
+                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                           maxLength: 10,
                           decoration: InputDecoration(
                             hintText: 'amount_spent_here_key'.tr(),
@@ -288,15 +247,11 @@ class _DirectBillingState extends State<DirectBilling> {
                             counterText: "",
                             contentPadding: EdgeInsets.all(0),
                             fillColor: Colors.transparent,
-                            enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: ColorTextPrimary, width: 1.5)),
-                            focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: ColorPrimary, width: 1.5)),
-                            border: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: ColorPrimary, width: 1.5)),
+                            enabledBorder:
+                                UnderlineInputBorder(borderSide: BorderSide(color: ColorTextPrimary, width: 1.5)),
+                            focusedBorder:
+                                UnderlineInputBorder(borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
+                            border: UnderlineInputBorder(borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
                           ),
                           onChanged: (length) {
                             log("$status1  ===>");
@@ -334,10 +289,8 @@ class _DirectBillingState extends State<DirectBilling> {
                                   if (categoryList.length == 1) {
                                     checkbox = true;
                                     categoryList[index].isChecked = true;
-                                    if (!categoryIdList
-                                        .contains(categoryList[index].id)) {
-                                      categoryIdList
-                                          .add(categoryList[index].id);
+                                    if (!categoryIdList.contains(categoryList[index].id)) {
+                                      categoryIdList.add(categoryList[index].id);
                                     }
                                   }
                                 }
@@ -368,8 +321,7 @@ class _DirectBillingState extends State<DirectBilling> {
                       child: Row(
                         children: [
                           Checkbox(
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
+                            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             value: this.redeem,
                             checkColor: Colors.white,
 
@@ -385,44 +337,34 @@ class _DirectBillingState extends State<DirectBilling> {
                                 if (amountController.text.length > 0) {
                                   if (double.parse(coins) >= 3) {
                                     calculation(amountController.text);
-                                    calculateEarnCoins(
-                                        double.parse(amountController.text));
+                                    calculateEarnCoins(double.parse(amountController.text));
 
                                     setState(() {
                                       redeem = redeems;
                                     });
                                   } else {
                                     Fluttertoast.showToast(
-                                        msg: "You_dont_have_enough_coins".tr(),
-                                        backgroundColor: ColorPrimary);
+                                        msg: "You_dont_have_enough_coins".tr(), backgroundColor: ColorPrimary);
                                   }
                                 } else {
                                   Fluttertoast.showToast(
-                                      msg: "please_enter_amount_key".tr(),
-                                      backgroundColor: ColorPrimary);
+                                      msg: "please_enter_amount_key".tr(), backgroundColor: ColorPrimary);
                                 }
                               } else {
                                 Fluttertoast.showToast(
-                                    msg: "please_enter_10_digits_number_key"
-                                        .tr(),
-                                    backgroundColor: ColorPrimary);
+                                    msg: "please_enter_10_digits_number_key".tr(), backgroundColor: ColorPrimary);
                               }
                               if (redeem == true) {
                                 redeemDialog(context);
                               }
-                              calculation(amountController.text.isEmpty
-                                  ? "0"
-                                  : amountController.text);
-                              calculateEarnCoins(double.parse(
-                                  amountController.text.isEmpty
-                                      ? "0"
-                                      : amountController.text));
+                              calculation(amountController.text.isEmpty ? "0" : amountController.text);
+                              calculateEarnCoins(
+                                  double.parse(amountController.text.isEmpty ? "0" : amountController.text));
                             },
                           ),
                           Text(
                             "  " + "redeemed_coins_key".tr(),
-                            style: TextStyle(
-                                fontSize: 17, color: ColorTextPrimary),
+                            style: TextStyle(fontSize: 17, color: ColorTextPrimary),
                           ),
                         ],
                       ),
@@ -434,16 +376,14 @@ class _DirectBillingState extends State<DirectBilling> {
                       padding: EdgeInsets.all(10),
                       width: MediaQuery.of(context).size.width,
                       height: 110,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey,
-                              offset: Offset(0.0, 1.0), //(x,y)
-                              blurRadius: 6.0,
-                            ),
-                          ]),
+                      decoration:
+                          BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10), boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey,
+                          offset: Offset(0.0, 1.0), //(x,y)
+                          blurRadius: 6.0,
+                        ),
+                      ]),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -497,16 +437,14 @@ class _DirectBillingState extends State<DirectBilling> {
                       padding: EdgeInsets.all(10),
                       width: MediaQuery.of(context).size.width,
                       height: 50,
-                      decoration: BoxDecoration(
-                          color: ColorPrimary,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey,
-                              offset: Offset(0.0, 1.0), //(x,y)
-                              blurRadius: 6.0,
-                            ),
-                          ]),
+                      decoration:
+                          BoxDecoration(color: ColorPrimary, borderRadius: BorderRadius.circular(10), boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey,
+                          offset: Offset(0.0, 1.0), //(x,y)
+                          blurRadius: 6.0,
+                        ),
+                      ]),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -525,6 +463,9 @@ class _DirectBillingState extends State<DirectBilling> {
                         ],
                       ),
                     ),
+                    SizedBox(
+                      height: 20,
+                    ),
                   ],
                 ),
               ),
@@ -540,19 +481,14 @@ class _DirectBillingState extends State<DirectBilling> {
                           if (nameController.text.length > 1) {
                             userRegister(context);
                           } else {
-                            Fluttertoast.showToast(
-                                msg: "please_enter_name_key".tr(),
-                                backgroundColor: ColorPrimary);
+                            Fluttertoast.showToast(msg: "please_enter_name_key".tr(), backgroundColor: ColorPrimary);
                           }
                         } else {
-                          Fluttertoast.showToast(
-                              msg: "please_enter_amount_key".tr(),
-                              backgroundColor: ColorPrimary);
+                          Fluttertoast.showToast(msg: "please_enter_amount_key".tr(), backgroundColor: ColorPrimary);
                         }
                       } else {
                         Fluttertoast.showToast(
-                            msg: "please_enter_10_digits_number_key".tr(),
-                            backgroundColor: ColorPrimary);
+                            msg: "please_enter_10_digits_number_key".tr(), backgroundColor: ColorPrimary);
                       }
                     } else {
                       if (mobileController.text.length == 10) {
@@ -560,19 +496,14 @@ class _DirectBillingState extends State<DirectBilling> {
                           if (checkbox == true) {
                             directBilling(context);
                           } else {
-                            Fluttertoast.showToast(
-                                msg: "Please select category".tr(),
-                                backgroundColor: ColorPrimary);
+                            Fluttertoast.showToast(msg: "Please select category".tr(), backgroundColor: ColorPrimary);
                           }
                         } else {
-                          Fluttertoast.showToast(
-                              msg: "please_enter_amount_key".tr(),
-                              backgroundColor: ColorPrimary);
+                          Fluttertoast.showToast(msg: "please_enter_amount_key".tr(), backgroundColor: ColorPrimary);
                         }
                       } else {
                         Fluttertoast.showToast(
-                            msg: "please_enter_10_digits_number_key".tr(),
-                            backgroundColor: ColorPrimary);
+                            msg: "please_enter_10_digits_number_key".tr(), backgroundColor: ColorPrimary);
                       }
                     }
                   },
@@ -582,10 +513,7 @@ class _DirectBillingState extends State<DirectBilling> {
                     width: MediaQuery.of(context).size.width,
                     child: Center(
                       child: Text("submit_button_key".tr(),
-                          style: TextStyle(
-                              fontSize: 17,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600)),
+                          style: TextStyle(fontSize: 17, color: Colors.white, fontWeight: FontWeight.w600)),
                     ),
                   ),
                 ),
@@ -629,42 +557,36 @@ class _DirectBillingState extends State<DirectBilling> {
     input["first_name"] = nameController.text;
 
     log("=====? $input");
-    directBillingCustomerNumberResponseBloc
-        .add(GetDirectBillingPartialUserRegisterEvent(input: input));
+    directBillingCustomerNumberResponseBloc.add(GetDirectBillingPartialUserRegisterEvent(input: input));
   }
 
   Future<void> directBilling(BuildContext context) async {
     Map<String, dynamic> input = HashMap<String, dynamic>();
     input["mobile"] = mobileController.text;
     input["bill_amount"] = amountController.text;
-    input["vendor_id"] =
-        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     input["total_pay"] = amount;
     input["coin_deducted"] = coinss;
     input["category_id"] = categoryIdList.join(',');
 
     log("=====? $input");
-    directBillingCustomerNumberResponseBloc
-        .add(GetDirectBillingEvent(input: input));
+    directBillingCustomerNumberResponseBloc.add(GetDirectBillingEvent(input: input));
   }
 
   Future<void> verifyOtp(BuildContext context) async {
     Map<String, dynamic> input = HashMap<String, dynamic>();
-    input["vendor_id"] =
-        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     input["bill_id"] = datas!.billId;
     input["otp"] = otpController.text;
     input["total_pay"] = datas!.totalPay;
     input["coin_deducted"] = datas!.coinDeducted;
     input["earning_coins"] = datas!.earningCoins;
     input["myprofit_revenue"] = datas!.myprofitRevenue;
-    SharedPref.setStringPreference(
-        SharedPref.VendorCoin, datas!.vendorAvailableCoins);
+    SharedPref.setStringPreference(SharedPref.VendorCoin, datas!.vendorAvailableCoins);
     input["vendor_available_coins"] = datas!.vendorAvailableCoins;
 
     log("=====? $input");
-    directBillingCustomerNumberResponseBloc
-        .add(GetDirectBillingOtpEvent(input: input));
+    directBillingCustomerNumberResponseBloc.add(GetDirectBillingOtpEvent(input: input));
   }
 
   _displayDialog(BuildContext context, index, text, hinttext) async {
@@ -673,11 +595,9 @@ class _DirectBillingState extends State<DirectBilling> {
         context: context,
         builder: (context) {
           return ConstrainedBox(
-            constraints:
-                BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
+            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
             child: AlertDialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
               title: Text(
                 " $text ",
                 textAlign: TextAlign.center,
@@ -701,8 +621,7 @@ class _DirectBillingState extends State<DirectBilling> {
                   hintStyle: GoogleFonts.openSans(
                     fontWeight: FontWeight.w600,
                   ),
-                  contentPadding:
-                      const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 0.0),
+                  contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 0.0),
                 ),
               ),
               actions: <Widget>[
@@ -713,8 +632,7 @@ class _DirectBillingState extends State<DirectBilling> {
                     padding: const EdgeInsets.all(8.0),
                     textColor: Colors.white,
                     color: ColorPrimary,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                     onPressed: () {
                       if (status == 0) {
                         log("index->$index");
@@ -730,9 +648,7 @@ class _DirectBillingState extends State<DirectBilling> {
                     child: new Text(
                       "submit_button_key".tr(),
                       style: GoogleFonts.openSans(
-                          fontSize: 17,
-                          fontWeight: FontWeight.w600,
-                          decoration: TextDecoration.none),
+                          fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
                     ),
                   ),
                 ),
@@ -751,45 +667,41 @@ class _DirectBillingState extends State<DirectBilling> {
         barrierDismissible: false,
         builder: (context) {
           return ConstrainedBox(
-            constraints:
-                BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
+            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
             child: AlertDialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              title: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      "assets/images/otp-wallet.png",
-                      fit: BoxFit.cover,
-                      height: 70,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              title: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                Image.asset(
+                  "assets/images/otp-wallet.png",
+                  fit: BoxFit.cover,
+                  height: 70,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Image.asset(
+                    "assets/images/point.png",
+                    scale: 3,
+                  ),
+                  Text(
+                    " ${double.parse(hinttext).toStringAsFixed(2)} ",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.openSans(
+                      fontSize: 17.0,
+                      color: ColorPrimary,
+                      fontWeight: FontWeight.w600,
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      Image.asset(
-                        "assets/images/point.png",
-                        scale: 3,
-                      ),
-                      Text(
-                        " ${double.parse(hinttext).toStringAsFixed(2)} ",
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.openSans(
-                          fontSize: 17.0,
-                          color: ColorPrimary,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ]),
-                    Text("Coins generated succesfully\n in customer Wallet",
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.openSans(
-                          fontSize: 17.0,
-                          color: ColorTextPrimary,
-                          fontWeight: FontWeight.w600,
-                        )),
-                  ]),
+                  ),
+                ]),
+                Text("Coins generated succesfully\n in customer Wallet",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.openSans(
+                      fontSize: 17.0,
+                      color: ColorTextPrimary,
+                      fontWeight: FontWeight.w600,
+                    )),
+              ]),
               actions: <Widget>[
                 Center(
                   child: MaterialButton(
@@ -798,32 +710,24 @@ class _DirectBillingState extends State<DirectBilling> {
                     padding: const EdgeInsets.all(8.0),
                     textColor: Colors.white,
                     color: ColorPrimary,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                     onPressed: () {
                       status == 1
-                          ? Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Scanner(data: data!)))
+                          ? Navigator.push(context, MaterialPageRoute(builder: (context) => Scanner(data: data!)))
                           : Navigator.pushAndRemoveUntil(
                               context,
-                              PageTransition(
-                                  child: BottomNavigationHome(),
-                                  type: PageTransitionType.fade),
+                              PageTransition(child: BottomNavigationHome(), type: PageTransitionType.fade),
                               ModalRoute.withName("/"));
                     },
                     child: new Text(
                       "done_key".tr(),
                       style: GoogleFonts.openSans(
-                          fontSize: 17,
-                          fontWeight: FontWeight.w600,
-                          decoration: TextDecoration.none),
+                          fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
                     ),
                   ),
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 30,
                 )
               ],
             ),
@@ -834,10 +738,8 @@ class _DirectBillingState extends State<DirectBilling> {
   void calculateEarnCoins(double amount) async {
     if (amount.toString().isNotEmpty) {
       double commission = double.parse(categoryList.first.commission);
-      String freeCoins =
-          await SharedPref.getStringPreference(SharedPref.VendorCoin);
-      amount =
-          double.parse(freeCoins) != 0 ? amount : amount - (amount * 18) / 100;
+      String freeCoins = await SharedPref.getStringPreference(SharedPref.VendorCoin);
+      amount = double.parse(freeCoins) != 0 ? amount : amount - (amount * 18) / 100;
       amount = (amount * commission) / 100;
       amount = amount - 0.50;
       amount = amount / 2;
@@ -855,9 +757,8 @@ class _DirectBillingState extends State<DirectBilling> {
       child: Container(
         height: 55,
         width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey, width: .5),
-            borderRadius: BorderRadius.circular(8)),
+        decoration:
+            BoxDecoration(border: Border.all(color: Colors.grey, width: .5), borderRadius: BorderRadius.circular(8)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -897,10 +798,7 @@ class _DirectBillingState extends State<DirectBilling> {
             ),
             Text(
               list.categoryName,
-              style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black),
             )
           ],
         ),
@@ -916,8 +814,7 @@ class _DirectBillingState extends State<DirectBilling> {
           return AlertDialog(
             contentPadding: const EdgeInsets.all(0),
             titlePadding: const EdgeInsets.all(0),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             title: Image.asset(
               "assets/images/3x/hooray-banner.png",
               fit: BoxFit.cover,
@@ -930,17 +827,11 @@ class _DirectBillingState extends State<DirectBilling> {
                   children: [
                     Text(
                       "hooray_you_saved".tr(),
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black),
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
                     ),
                     Text(
                       " \u20B9${(double.parse(coinss) / 3).toStringAsFixed(0)}",
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: ColorPrimary),
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: ColorPrimary),
                     ),
                   ],
                 ),
@@ -954,23 +845,17 @@ class _DirectBillingState extends State<DirectBilling> {
                   padding: const EdgeInsets.all(8.0),
                   textColor: Colors.white,
                   color: ColorPrimary,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   onPressed: () {
                     Navigator.pop(context);
                   },
                   child: new Text(
                     "done_key".tr(),
                     style: GoogleFonts.openSans(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w600,
-                        decoration: TextDecoration.none),
+                        fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
                   ),
                 ),
               ),
-              SizedBox(
-                height: 10,
-              )
             ],
           );
         });
