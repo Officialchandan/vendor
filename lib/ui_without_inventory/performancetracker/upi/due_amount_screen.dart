@@ -21,7 +21,6 @@ import 'package:vendor/ui_without_inventory/performancetracker/upi/bloc/due_amou
 import 'package:vendor/ui_without_inventory/performancetracker/upi/free_coins/free_coin_history.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/upi/master_ledger/master_ledger_detail.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/upi/redeem_coins/redeem_coin_history.dart';
-import 'package:vendor/ui_without_inventory/performancetracker/upi/upi_transfer/upi_transfer_history.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
 
