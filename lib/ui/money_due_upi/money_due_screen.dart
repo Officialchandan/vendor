@@ -318,7 +318,9 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                                           CrossAxisAlignment
                                                               .start,
                                                       children: [
-                                                        Text("Daily Ledger",
+                                                        Text(
+                                                            "daily_ledger_key"
+                                                                .tr(),
                                                             style: TextStyle(
                                                                 color: Colors
                                                                     .black,
@@ -1310,7 +1312,9 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                                           CrossAxisAlignment
                                                               .start,
                                                       children: [
-                                                        Text("Daily Ledger",
+                                                        Text(
+                                                            "daily_ledger_key"
+                                                                .tr(),
                                                             style: TextStyle(
                                                                 color: Colors
                                                                     .black,

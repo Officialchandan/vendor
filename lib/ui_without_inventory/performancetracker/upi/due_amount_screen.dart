@@ -400,7 +400,7 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Text("Daily Ledger".tr(),
+                                              Text("daily_ledger_key".tr(),
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontSize: 16.3,
