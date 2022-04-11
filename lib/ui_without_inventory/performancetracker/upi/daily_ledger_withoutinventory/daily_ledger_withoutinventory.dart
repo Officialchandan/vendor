@@ -8,12 +8,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vendor/model/get_master_ledger_history.dart';
-import 'package:vendor/ui/money_due_upi/daily_ledger/daily_ledger_bloc/daily_ledger_bloc.dart';
-import 'package:vendor/ui/money_due_upi/daily_ledger/daily_ledger_bloc/daily_ledger_event.dart';
-import 'package:vendor/ui/money_due_upi/daily_ledger/daily_ledger_bloc/daily_ledger_state.dart';
-import 'package:vendor/ui/money_due_upi/daily_ledger/daily_ledger_detail/daily_ledger_detail.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/model/normal_ladger_response.dart';
-import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_bloc/normal_ledger_state.dart';
+import 'package:vendor/ui_without_inventory/performancetracker/upi/daily_ledger_withoutinventory/daily_ledger_bloc/daily_ledger_withoutinventory_bloc.dart';
+import 'package:vendor/ui_without_inventory/performancetracker/upi/daily_ledger_withoutinventory/daily_ledger_bloc/daily_ledger_withoutinventory_event.dart';
+import 'package:vendor/ui_without_inventory/performancetracker/upi/daily_ledger_withoutinventory/daily_ledger_bloc/daily_ledger_withoutinventory_state.dart';
+import 'package:vendor/ui_without_inventory/performancetracker/upi/master_ledger/bloc/master_ledger_history_state.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
 
@@ -121,6 +120,13 @@ class _DailyLedgerState extends State<DailyLedger> with TickerProviderStateMixin
               searchList = orderList;
             }
 
+            if (state is GetNormalLedgerHistoryFailureState) {
+              return Center(child: Image.asset("assets/images/no_data.gif"));
+            }
+
+            if (state is GetDailyLedgerHistoryFailureState) {
+              return Center(child: Image.asset("assets/images/no_data.gif"));
+            }
             if (orderList.isEmpty) {
               log("===>$_commonLedgerHistory");
               return Center(child: CircularProgressIndicator());
@@ -150,13 +156,6 @@ class _DailyLedgerState extends State<DailyLedger> with TickerProviderStateMixin
             //   log("===>$_commonLedgerHistory");
             //   return Center(child: CircularProgressIndicator());
             // }
-            if (state is GetNormalLedgerHistoryFailureState) {
-              return Center(child: Image.asset("assets/images/no_data.gif"));
-            }
-
-            if (state is GetDailyLedgerHistoryFailureState) {
-              return Center(child: Image.asset("assets/images/no_data.gif"));
-            }
 
             return Container(
               child: Column(
@@ -260,12 +259,13 @@ class _DailyLedgerState extends State<DailyLedger> with TickerProviderStateMixin
                           return InkWell(
                             splashColor: Colors.transparent,
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => DailyLedgerDetails(
-                                            order: searchList[index],
-                                          )));
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => NormalLedgerDetails(
+                              //           // commonLedgerHistory: _commonLedgerHistory!,
+                              //           order: searchList[index],
+                              //         )));
                             },
                             child: Container(
                               margin: EdgeInsets.symmetric(vertical: 5),

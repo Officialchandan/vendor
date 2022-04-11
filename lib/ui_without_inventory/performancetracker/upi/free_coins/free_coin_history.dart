@@ -26,8 +26,7 @@ class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
   String startDate = "";
   String endDate = "";
   double earning = 0;
-  RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
+  RefreshController _refreshController = RefreshController(initialRefresh: false);
   TextEditingController _searchController = TextEditingController();
   FreeCoinHistoryBloc freeCoinHistoryBloc = FreeCoinHistoryBloc();
   List<OrderData> searchList = [];
@@ -41,10 +40,8 @@ class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
   Future<void> filterApiCall(BuildContext context) async {
     Map<String, dynamic> input = HashMap<String, dynamic>();
     input["from_date"] = startDate.isEmpty ? "" : startDate.toString();
-    input["to_date"] =
-        endDate.isEmpty ? startDate.toString() : endDate.toString();
-    input["vendor_id"] =
-        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    input["to_date"] = endDate.isEmpty ? startDate.toString() : endDate.toString();
+    input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     log("=====? $input");
     freeCoinHistoryBloc.add(GetFreeCoinsHistoryEvent(input: input));
   }
@@ -76,8 +73,7 @@ class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
                 showModalBottomSheet(
                     context: context,
                     builder: (context) {
-                      return CalendarBottomSheet(
-                          onSelect: (startDate, endDate) {
+                      return CalendarBottomSheet(onSelect: (startDate, endDate) {
                         this.startDate = startDate;
                         this.endDate = endDate;
                         print("startDate->$startDate");
@@ -124,10 +120,8 @@ class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
                   // fillColor: Colors.black,
                   hintText: "search_here_key".tr(),
 
-                  hintStyle: GoogleFonts.openSans(
-                      fontWeight: FontWeight.w600, color: Colors.black),
-                  contentPadding:
-                      const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                  hintStyle: GoogleFonts.openSans(fontWeight: FontWeight.w600, color: Colors.black),
+                  contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.white),
                   ),
@@ -141,8 +135,7 @@ class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
                 },
               ),
             ),
-            BlocBuilder<FreeCoinHistoryBloc, FreeCoinHistoryState>(
-                builder: (context, state) {
+            BlocBuilder<FreeCoinHistoryBloc, FreeCoinHistoryState>(builder: (context, state) {
               if (state is GetFreeCoinHistoryInitialState) {
                 filterApiCall(context);
               }
@@ -160,9 +153,7 @@ class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
                 } else {
                   List<OrderData> list = [];
                   freecoinsdata!.forEach((element) {
-                    if (element.mobile
-                        .toLowerCase()
-                        .contains(state.searchword.toLowerCase())) {
+                    if (element.mobile.toLowerCase().contains(state.searchword.toLowerCase())) {
                       list.add(element);
                       log("how much -->${state.searchword}");
                     }
@@ -206,7 +197,7 @@ class _ListWidgetState extends State<ListWidget> {
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.builder(
-          padding: EdgeInsets.only(left: 15, right: 15),
+          padding: EdgeInsets.only(left: 15, right: 15, bottom: 15),
           itemCount: widget.searchList.length,
           itemBuilder: (context, index) {
             return Stack(children: [
@@ -218,34 +209,27 @@ class _ListWidgetState extends State<ListWidget> {
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white,
                     border: Border.all(color: Colors.white38),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 1.0,
-                          spreadRadius: 1)
-                    ]),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 12.0),
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "+91 ${widget.searchList[index].mobile}",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                "${widget.searchList[index].dateTime}",
-                              ),
-                            ]),
-                      ),
-                      Container(
-                        width: 90,
-                      ),
-                    ]),
+                    boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 1.0, spreadRadius: 1)]),
+                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 12.0),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "+91 ${widget.searchList[index].mobile}",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            "${widget.searchList[index].dateTime}",
+                          ),
+                        ]),
+                  ),
+                  Container(
+                    width: 90,
+                  ),
+                ]),
               ),
               Positioned(
                 right: 0,
@@ -257,18 +241,14 @@ class _ListWidgetState extends State<ListWidget> {
                   height: 70,
                   decoration: BoxDecoration(
                       color: Colors.grey.shade200,
-                      borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(10),
-                          topRight: Radius.circular(10))),
+                      borderRadius: BorderRadius.only(bottomRight: Radius.circular(10), topRight: Radius.circular(10))),
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
                           "earn_key".tr(),
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontStyle: FontStyle.italic),
+                          style: TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
                         ),
                         Row(children: [
                           Image.asset(
@@ -278,17 +258,11 @@ class _ListWidgetState extends State<ListWidget> {
                           widget.searchList[index].orderType == 0
                               ? Text(
                                   " ${widget.searchList[index].totalearningcoins} ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                      color: ColorPrimary),
+                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: ColorPrimary),
                                 )
                               : Text(
                                   " ${widget.searchList[index].billingDetails[0].earningCoins} ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                      color: ColorPrimary),
+                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: ColorPrimary),
                                 ),
                         ]),
                       ]),
