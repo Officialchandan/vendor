@@ -255,7 +255,7 @@ class _DailyLedgerState extends State<DailyLedger>
                         filled: true,
 
                         // fillColor: Colors.black,
-                        hintText: "Search Here...",
+                        hintText: "search_here_key".tr(),
 
                         hintStyle: GoogleFonts.openSans(
                             fontWeight: FontWeight.w600, color: Colors.black),
@@ -365,7 +365,7 @@ class _DailyLedgerState extends State<DailyLedger>
                                                               color:
                                                                   PendingTextBgColor),
                                                           child: Text(
-                                                            "Pending",
+                                                            "pending_key".tr(),
                                                             style: TextStyle(
                                                                 color:
                                                                     PendingTextColor,
@@ -389,7 +389,7 @@ class _DailyLedgerState extends State<DailyLedger>
                                                               color:
                                                                   ApproveTextBgColor),
                                                           child: Text(
-                                                            "Paid",
+                                                            "paid_key".tr(),
                                                             style: TextStyle(
                                                                 color:
                                                                     ApproveTextColor,
@@ -422,7 +422,7 @@ class _DailyLedgerState extends State<DailyLedger>
                                                 decoration: BoxDecoration(
                                                   color: Color(0xff6657f4),
                                                 ),
-                                                child: Text("Return",
+                                                child: Text("return_key".tr(),
                                                     style: TextStyle(
                                                         color: Colors.white,
                                                         fontSize: 10,

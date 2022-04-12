@@ -83,7 +83,9 @@ class _CustomerScreenState extends State<CustomerScreen> {
                   List<Customer> searchList = [];
 
                   customerList.forEach((element) {
-                    if (element.customerName.toLowerCase().contains(text.trim().toLowerCase())) {
+                    if (element.customerName
+                        .toLowerCase()
+                        .contains(text.trim().toLowerCase())) {
                       searchList.add(element);
                     }
                   });
@@ -102,10 +104,13 @@ class _CustomerScreenState extends State<CustomerScreen> {
                     ),
                   ),
                   contentPadding: const EdgeInsets.all(10),
-                  prefixIconConstraints: BoxConstraints(maxHeight: 50, maxWidth: 50),
+                  prefixIconConstraints:
+                      BoxConstraints(maxHeight: 50, maxWidth: 50),
                   fillColor: Colors.grey.shade200,
                   filled: true,
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: BorderSide.none),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      borderSide: BorderSide.none),
                   hintText: "search_customer_key".tr(),
                   hintStyle: TextStyle(fontWeight: FontWeight.bold)),
             ),
@@ -225,7 +230,8 @@ class _CustomerScreenState extends State<CustomerScreen> {
                         height: 15,
                       );
                     },
-                    keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                    keyboardDismissBehavior:
+                        ScrollViewKeyboardDismissBehavior.onDrag,
                     itemBuilder: (context, index) {
                       Customer customer = snapshot.data![index];
 
@@ -233,7 +239,8 @@ class _CustomerScreenState extends State<CustomerScreen> {
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
-                            border: Border.all(color: Colors.grey.shade200, width: 1)),
+                            border: Border.all(
+                                color: Colors.grey.shade200, width: 1)),
                         child: Column(
                           children: [
                             Row(
@@ -242,11 +249,15 @@ class _CustomerScreenState extends State<CustomerScreen> {
                                 Expanded(
                                     child: Text(
                                   customer.customerName,
-                                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
                                 )),
                                 Text(
                                   Utility.getFormatDate1(customer.date),
-                                  style: TextStyle(color: Colors.black, fontSize: 14),
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 11),
                                 ),
                               ],
                             ),
@@ -259,7 +270,8 @@ class _CustomerScreenState extends State<CustomerScreen> {
                                 Expanded(
                                     child: Text(
                                   "+91 ${customer.mobile}",
-                                  style: TextStyle(color: Colors.black, fontSize: 14),
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 14),
                                 )),
                                 // Text(
                                 //   "amount_spend_key".tr() +
@@ -293,11 +305,13 @@ class _CustomerScreenState extends State<CustomerScreen> {
     if (await Network.isConnected()) {
       Map<String, dynamic> input = HashMap<String, dynamic>();
 
-      input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      input["vendor_id"] =
+          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
       input["from_date"] = startDate;
       input["to_date"] = endDate;
 
-      GetMyCustomerResponse response = await apiProvider.getChatPapdiCustomer(input);
+      GetMyCustomerResponse response =
+          await apiProvider.getChatPapdiCustomer(input);
 
       if (response.success) {
         customerList = response.data!;

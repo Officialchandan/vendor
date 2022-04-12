@@ -389,5 +389,6 @@
   "product_return_successfully":"Product Return successfully",
   "rejected_key":"Rejected",
   "accepted_key":"Accepted",
-  "daily_ledger_key":"Daily Ledger"
+  "daily_ledger_key":"Daily Ledger",
+  "daily_ledger_details_key":"Daily Ledger Details"
 }

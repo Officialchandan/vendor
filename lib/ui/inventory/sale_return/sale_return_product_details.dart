@@ -46,6 +46,9 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
 
     if ((double.parse(adjustedBalance!) / 3 >=
         double.parse(widget.saleReturnData.amountPaid))) {
+      this.returnAmount = (double.parse(adjustedBalance!) / 3 -
+              double.parse(widget.saleReturnData.amountPaid))
+          .toStringAsFixed(2);
     } else {
       this.returnAmount = (double.parse(widget.saleReturnData.amountPaid) -
               double.parse(adjustedBalance!) / 3)

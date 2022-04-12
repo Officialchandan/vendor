@@ -85,7 +85,8 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
 
   void salesreturnCalculations() {
     for (var products in details!.orderDetails) {
-      CommonSaleReturnProductDetails normalBillingProducts = CommonSaleReturnProductDetails(
+      CommonSaleReturnProductDetails normalBillingProducts =
+          CommonSaleReturnProductDetails(
         orderId: products.orderId,
         mobile: products.mobile,
         productId: products.productId,
@@ -136,7 +137,8 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
           netBalance = netBalance - double.parse(details!.customerCoinBalance);
         }
       } else {
-        netBalance = double.parse(details!.returnAmountCustomer) - netBalance / 3;
+        netBalance =
+            double.parse(details!.returnAmountCustomer) - netBalance / 3;
       }
     } else {
       if (double.parse(details!.customerCoinBalance) != 0) {
@@ -146,14 +148,18 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
           netBalance = earnCoins - double.parse(details!.customerCoinBalance);
         }
       } else {
-        netBalance = double.parse(details!.returnAmountCustomer) - earnCoins / 3;
+        netBalance =
+            double.parse(details!.returnAmountCustomer) - earnCoins / 3;
       }
     }
 
-    if (double.parse(details!.amountPaidToVendor) > double.parse(details!.amountPaidToMyProfit)) {
-      amtreturn = double.parse(details!.amountPaidToVendor) - double.parse(details!.amountPaidToMyProfit);
+    if (double.parse(details!.amountPaidToVendor) >
+        double.parse(details!.amountPaidToMyProfit)) {
+      amtreturn = double.parse(details!.amountPaidToVendor) -
+          double.parse(details!.amountPaidToMyProfit);
     } else {
-      amtreturn = double.parse(details!.amountPaidToMyProfit) - double.parse(details!.amountPaidToVendor);
+      amtreturn = double.parse(details!.amountPaidToMyProfit) -
+          double.parse(details!.amountPaidToVendor);
     }
   }
 
@@ -178,7 +184,8 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
           width: MediaQuery.of(context).size.width,
           child: SingleChildScrollView(
             child: widget.order.isReturn == 1
-                ? BlocBuilder<NormalLedgerDetailBloc, NormalLedgerDetailStates>(builder: ((context, state) {
+                ? BlocBuilder<NormalLedgerDetailBloc, NormalLedgerDetailStates>(
+                    builder: ((context, state) {
                     if (state is NormalLedgerDetailInitialState) {
                       getNormalLedgerData();
                     }
@@ -215,13 +222,17 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 20),
+          padding:
+              const EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 20),
           child: Container(
             height: 70,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(8),
-              boxShadow: [BoxShadow(color: Colors.black12, spreadRadius: 4, blurRadius: 10)],
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black12, spreadRadius: 4, blurRadius: 10)
+              ],
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -233,11 +244,17 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                     children: [
                       Text(
                         "${widget.order.firstName}",
-                        style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black87),
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87),
                       ),
                       Text(
                         "${DateFormat("yyyy MM dd ").format(widget.order.dateTime)}(${DateFormat.jm().format(widget.order.dateTime)})",
-                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey),
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey),
                       ),
                     ],
                   ),
@@ -249,23 +266,35 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                     children: [
                       Text(
                         "+91 ${widget.order.mobile}",
-                        style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.grey),
+                        style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey),
                       ),
                       Container(
                         decoration: BoxDecoration(
-                          color: widget.order.status == 1 ? PendingTextBgColor : GreenBoxBgColor,
+                          color: widget.order.status == 1
+                              ? PendingTextBgColor
+                              : GreenBoxBgColor,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 8, right: 8, top: 2, bottom: 2),
+                          padding: const EdgeInsets.only(
+                              left: 8, right: 8, top: 2, bottom: 2),
                           child: widget.order.status == 1
                               ? Text(
                                   "pending_key".tr(),
-                                  style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: RejectedTextColor),
+                                  style: TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold,
+                                      color: RejectedTextColor),
                                 )
                               : Text(
                                   "paid_key".tr(),
-                                  style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: GreenBoxTextColor),
+                                  style: TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold,
+                                      color: GreenBoxTextColor),
                                 ),
                         ),
                       ),
@@ -277,12 +306,16 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 15, right: 15, top: 0, bottom: 20),
+          padding:
+              const EdgeInsets.only(left: 15, right: 15, top: 0, bottom: 20),
           child: Container(
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(8),
-              boxShadow: [BoxShadow(color: Colors.black12, spreadRadius: 4, blurRadius: 10)],
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black12, spreadRadius: 4, blurRadius: 10)
+              ],
             ),
             child: Column(
               children: [
@@ -292,7 +325,10 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                     padding: const EdgeInsets.only(left: 14, top: 10),
                     child: Text(
                       "all_items_key".tr(),
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87),
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87),
                     ),
                   ),
                 ),
@@ -327,11 +363,13 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(8),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
                                         children: [
                                           Container(
                                             child: ClipRRect(
-                                              borderRadius: BorderRadius.circular(8),
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
                                               child: Container(
                                                 color: Colors.white,
                                                 child: Image.network(
@@ -351,21 +389,27 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                                               child: Column(
                                                 children: [
                                                   Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
                                                     children: [
                                                       Text(
                                                         "${widget.order.orderDetails[index].productName}",
                                                         style: TextStyle(
                                                             fontSize: 15,
-                                                            fontWeight: FontWeight.bold,
-                                                            color: Colors.black87),
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color:
+                                                                Colors.black87),
                                                       ),
                                                       Text(
                                                         "\u20B9 ${widget.order.orderDetails[index].total}",
                                                         style: TextStyle(
                                                             fontSize: 13,
-                                                            fontWeight: FontWeight.bold,
-                                                            color: ColorPrimary),
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color:
+                                                                ColorPrimary),
                                                       ),
                                                     ],
                                                   ),
@@ -373,21 +417,26 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                                                     height: 4,
                                                   ),
                                                   Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
                                                     children: [
                                                       Text(
                                                         "${widget.order.orderDetails[index].qty} x \u20B9 ${widget.order.orderDetails[index].price}",
                                                         style: TextStyle(
                                                             fontSize: 12,
-                                                            fontWeight: FontWeight.bold,
+                                                            fontWeight:
+                                                                FontWeight.bold,
                                                             color: Colors.grey),
                                                       ),
                                                       Text(
                                                         "${"commission_key".tr()} \u20B9${widget.order.myprofitRevenue}",
                                                         style: TextStyle(
                                                             fontSize: 11,
-                                                            fontWeight: FontWeight.bold,
-                                                            color: Colors.black87),
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color:
+                                                                Colors.black87),
                                                       ),
                                                     ],
                                                   ),
@@ -400,14 +449,17 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                                     ),
                                   ),
                                 ),
-                                double.parse(widget.order.orderDetails[index].redeemCoins) > 0
+                                double.parse(widget.order.orderDetails[index]
+                                            .redeemCoins) >
+                                        0
                                     ? Positioned(
                                         top: 4,
                                         right: 25,
                                         child: Container(
                                           decoration: BoxDecoration(
                                             color: RejectedTextBgColor,
-                                            borderRadius: BorderRadius.circular(8),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
                                             boxShadow: [
                                               BoxShadow(
                                                 color: RejectedTextBgColor,
@@ -415,11 +467,17 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                                             ],
                                           ),
                                           child: Padding(
-                                            padding: const EdgeInsets.only(left: 5, right: 5, top: 1, bottom: 1),
+                                            padding: const EdgeInsets.only(
+                                                left: 5,
+                                                right: 5,
+                                                top: 1,
+                                                bottom: 1),
                                             child: Text(
-                                              "Redeemed",
+                                              "redeemed_key".tr(),
                                               style: TextStyle(
-                                                  color: RejectedTextColor, fontWeight: FontWeight.bold, fontSize: 10),
+                                                  color: RejectedTextColor,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 10),
                                             ),
                                           ),
                                         ),
@@ -434,17 +492,24 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                   height: 5,
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 14, right: 14, bottom: 10),
+                  padding:
+                      const EdgeInsets.only(left: 14, right: 14, bottom: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Amount Paid By Customer",
-                        style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.black87),
+                        "amt_paid_by_customer_key".tr(),
+                        style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87),
                       ),
                       Text(
                         "\u20B9 ${widget.order.orderTotal}",
-                        style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: ColorPrimary),
+                        style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold,
+                            color: ColorPrimary),
                       ),
                     ],
                   ),
@@ -454,15 +519,20 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 15, right: 15, top: 0, bottom: 20),
+          padding:
+              const EdgeInsets.only(left: 15, right: 15, top: 0, bottom: 20),
           child: Container(
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(8),
-              boxShadow: [BoxShadow(color: Colors.black12, spreadRadius: 4, blurRadius: 10)],
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black12, spreadRadius: 4, blurRadius: 10)
+              ],
             ),
             child: Padding(
-              padding: const EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 14),
+              padding: const EdgeInsets.only(
+                  left: 14, right: 14, top: 10, bottom: 14),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -471,7 +541,10 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                     children: [
                       Text(
                         "commission_amt_key".tr(),
-                        style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black87),
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87),
                       ),
                     ],
                   ),
@@ -483,11 +556,17 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                     children: [
                       Text(
                         "total_commission_key".tr(),
-                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87),
                       ),
                       Text(
                         "\u20B9${widget.order.myprofitRevenue}",
-                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87),
                       ),
                     ],
                   ),
@@ -499,11 +578,17 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                     children: [
                       Text(
                         "redeemed_amount_key".tr(),
-                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87),
                       ),
                       Text(
                         "\u20B9 $reddem",
-                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red),
                       )
                       /* widget.order.orderType == 1
                                     ? widget.order.orderDetails[0].redeemCoins == "0"
@@ -537,7 +622,8 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 15, right: 15, top: 0, bottom: 20),
+          padding:
+              const EdgeInsets.only(left: 15, right: 15, top: 0, bottom: 20),
           child: double.parse(widget.order.myprofitRevenue) > reddem
               ? Container(
                   height: 50,
@@ -552,7 +638,12 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                       ],
                     ),
                     borderRadius: BorderRadius.circular(8),
-                    boxShadow: [BoxShadow(color: Colors.black12, spreadRadius: 4, blurRadius: 10)],
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.black12,
+                          spreadRadius: 4,
+                          blurRadius: 10)
+                    ],
                   ),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 14, right: 14),
@@ -561,11 +652,17 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                       children: [
                         Text(
                           "amt_paid_to_my_profit_key".tr(),
-                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
+                          style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
                         ),
                         Text(
                           "\u20B9 $finalamount",
-                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
+                          style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
                         ),
                       ],
                     ),
@@ -584,7 +681,12 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                       ],
                     ),
                     borderRadius: BorderRadius.circular(8),
-                    boxShadow: [BoxShadow(color: Colors.black12, spreadRadius: 4, blurRadius: 10)],
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.black12,
+                          spreadRadius: 4,
+                          blurRadius: 10)
+                    ],
                   ),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 14, right: 14),
@@ -593,11 +695,17 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                       children: [
                         Text(
                           "amt_paid_to_vendor_key".tr(),
-                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
+                          style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
                         ),
                         Text(
                           "\u20B9 $finalamount",
-                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
+                          style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
                         ),
                       ],
                     ),
@@ -606,15 +714,22 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
         ),
         widget.order.isReturn == 1
             ? Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 20),
+                padding: const EdgeInsets.only(
+                    left: 20, right: 20, top: 0, bottom: 20),
                 child: Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(8),
-                    boxShadow: [BoxShadow(color: Colors.black12, spreadRadius: 4, blurRadius: 10)],
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.black12,
+                          spreadRadius: 4,
+                          blurRadius: 10)
+                    ],
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 14, right: 14, top: 14, bottom: 14),
+                    padding: const EdgeInsets.only(
+                        left: 14, right: 14, top: 14, bottom: 14),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -623,12 +738,18 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           children: [
                             Text(
                               "sales_return_history_key".tr(),
-                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black87),
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black87),
                             ),
                             Text(
                               "${DateFormat("dd MMM yyyy").format(DateTime.parse(details!.dateTime))}  " +
                                   "${DateFormat.jm().format(DateTime.parse(details!.dateTime)).toLowerCase()}",
-                              style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.grey),
+                              style: TextStyle(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey),
                             ),
                           ],
                         ),
@@ -640,7 +761,10 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           children: [
                             Text(
                               "earn_coins_key".tr(),
-                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black87),
                             ),
                             Row(
                               children: [
@@ -651,7 +775,10 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                                 ),
                                 Text(
                                   "$earnCoins (\u20B9 ${(earnCoins / 3).toStringAsFixed(2)})",
-                                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red),
                                 ),
                               ],
                             ),
@@ -665,7 +792,10 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           children: [
                             Text(
                               "redeem_coins_key".tr(),
-                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black87),
                             ),
                             Row(
                               children: [
@@ -676,7 +806,10 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                                 ),
                                 Text(
                                   "${(redeemCoins).toStringAsFixed(2)} (\u20B9 ${(redeemCoins / 3).toStringAsFixed(2)}",
-                                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.green),
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.green),
                                 ),
                               ],
                             ),
@@ -690,7 +823,10 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           children: [
                             Text(
                               "customer_coin_balance_key".tr(),
-                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black87),
                             ),
                             Row(
                               children: [
@@ -701,7 +837,10 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                                 ),
                                 Text(
                                   "${details!.customerCoinBalance} (\u20B9 ${(double.parse(details!.customerCoinBalance) / 3).toStringAsFixed(2)})",
-                                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black87),
                                 ),
                               ],
                             ),
@@ -715,7 +854,10 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           children: [
                             Text(
                               "net_balance_key".tr(),
-                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black87),
                             ),
                             Row(
                               children: [
@@ -726,7 +868,10 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                                 ),
                                 Text(
                                   "${(netBalance).toStringAsFixed(2)}  (\u20B9${(netBalance / 3).toStringAsFixed(2)})",
-                                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red),
                                 ),
                               ],
                             ),
@@ -740,7 +885,10 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           children: [
                             Text(
                               "amt_return_to_customer_key".tr(),
-                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black87),
                             ),
                             Row(
                               children: [
@@ -752,13 +900,17 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                                 netBalance == 0
                                     ? Text(
                                         "\u20B9 $amtPaid",
-                                        style:
-                                            TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black87),
                                       )
                                     : Text(
                                         "\u20B9 ${(amtPaid - netBalance).toStringAsFixed(2)}",
-                                        style:
-                                            TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black87),
                                       ),
                               ],
                             ),
@@ -772,7 +924,10 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           children: [
                             Text(
                               "${"sum_key".tr()} (\u20B9 $amtPaid  - \u20B9 $netBalance = \u20B9 ${(amtPaid - netBalance).toStringAsFixed(2)})",
-                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey),
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey),
                             ),
                           ],
                         ),
@@ -784,15 +939,22 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
             : Container(),
         widget.order.isReturn == 1
             ? Padding(
-                padding: const EdgeInsets.only(left: 15, right: 15, top: 0, bottom: 20),
+                padding: const EdgeInsets.only(
+                    left: 15, right: 15, top: 0, bottom: 20),
                 child: Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(8),
-                    boxShadow: [BoxShadow(color: Colors.black12, spreadRadius: 4, blurRadius: 10)],
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.black12,
+                          spreadRadius: 4,
+                          blurRadius: 10)
+                    ],
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 14),
+                    padding: const EdgeInsets.only(
+                        left: 14, right: 14, top: 10, bottom: 14),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -801,7 +963,10 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           children: [
                             Text(
                               "sales_return_history_key".tr(),
-                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black87),
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black87),
                             ),
                           ],
                         ),
@@ -813,11 +978,17 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           children: [
                             Text(
                               "amt_return_to_vendor_key".tr(),
-                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black87),
                             ),
                             Text(
                               "\u20B9${details!.amountPaidToVendor}",
-                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black87),
                             ),
                           ],
                         ),
@@ -829,11 +1000,17 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           children: [
                             Text(
                               "amt_return_to_my_profit_key".tr(),
-                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black87),
                             ),
                             Text(
                               "\u20B9 ${details!.amountPaidToMyProfit}",
-                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.red),
                             )
                             /* widget.order.orderType == 1
                                     ? widget.order.orderDetails[0].redeemCoins == "0"
@@ -869,8 +1046,10 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
             : Container(),
         widget.order.isReturn == 1
             ? Padding(
-                padding: const EdgeInsets.only(left: 15, right: 15, top: 0, bottom: 20),
-                child: double.parse(details!.amountPaidToMyProfit) < double.parse(details!.amountPaidToVendor)
+                padding: const EdgeInsets.only(
+                    left: 15, right: 15, top: 0, bottom: 20),
+                child: double.parse(details!.amountPaidToMyProfit) <
+                        double.parse(details!.amountPaidToVendor)
                     ? Container(
                         height: 50,
                         decoration: BoxDecoration(
@@ -884,7 +1063,12 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                             ],
                           ),
                           borderRadius: BorderRadius.circular(8),
-                          boxShadow: [BoxShadow(color: Colors.black12, spreadRadius: 4, blurRadius: 10)],
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black12,
+                                spreadRadius: 4,
+                                blurRadius: 10)
+                          ],
                         ),
                         child: Padding(
                           padding: const EdgeInsets.only(left: 14, right: 14),
@@ -893,11 +1077,17 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                             children: [
                               Text(
                                 "amt_paid_to_my_profit_key".tr(),
-                                style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
                               ),
                               Text(
                                 "\u20B9 $finalamount",
-                                style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
                               ),
                             ],
                           ),
@@ -916,7 +1106,12 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                             ],
                           ),
                           borderRadius: BorderRadius.circular(8),
-                          boxShadow: [BoxShadow(color: Colors.black12, spreadRadius: 4, blurRadius: 10)],
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black12,
+                                spreadRadius: 4,
+                                blurRadius: 10)
+                          ],
                         ),
                         child: Padding(
                           padding: const EdgeInsets.only(left: 14, right: 14),
@@ -925,11 +1120,17 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                             children: [
                               Text(
                                 "amt_paid_to_vendor_key".tr(),
-                                style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
                               ),
                               Text(
                                 "\u20B9 $finalamount",
-                                style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
                               ),
                             ],
                           ),
@@ -947,7 +1148,9 @@ class DirectBillingListItem extends StatelessWidget {
 
   final BillingDetail detail;
 
-  const DirectBillingListItem({Key? key, required this.detail, required this.commission}) : super(key: key);
+  const DirectBillingListItem(
+      {Key? key, required this.detail, required this.commission})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -998,11 +1201,17 @@ class DirectBillingListItem extends StatelessWidget {
                               children: [
                                 Text(
                                   "${detail.categoryName}",
-                                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black87),
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black87),
                                 ),
                                 Text(
                                   "\u20B9 ${detail.amountPaid}",
-                                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: ColorPrimary),
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.bold,
+                                      color: ColorPrimary),
                                 ),
                               ],
                             ),
@@ -1014,7 +1223,10 @@ class DirectBillingListItem extends StatelessWidget {
                               children: [
                                 Text(
                                   "${"commission_key".tr()} \u20B9${commission}",
-                                  style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.black87),
+                                  style: TextStyle(
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black87),
                                 ),
                               ],
                             ),
@@ -1035,13 +1247,22 @@ class DirectBillingListItem extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: RejectedTextBgColor,
                       borderRadius: BorderRadius.circular(8),
-                      boxShadow: [BoxShadow(color: Colors.black12, spreadRadius: 4, blurRadius: 10)],
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.black12,
+                            spreadRadius: 4,
+                            blurRadius: 10)
+                      ],
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 5, right: 5, top: 1, bottom: 1),
+                      padding: const EdgeInsets.only(
+                          left: 5, right: 5, top: 1, bottom: 1),
                       child: Text(
                         "redeemed_key".tr(),
-                        style: TextStyle(color: RejectedTextColor, fontWeight: FontWeight.bold, fontSize: 9),
+                        style: TextStyle(
+                            color: RejectedTextColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 9),
                       ),
                     ),
                   ),
