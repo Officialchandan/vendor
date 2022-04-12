@@ -1,5 +1,4 @@
 import 'dart:collection';
-import 'dart:developer';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -18,12 +17,10 @@ import 'package:vendor/utility/utility.dart';
 
 class SaleReturnProductDetails extends StatefulWidget {
   final SaleReturnData saleReturnData;
-  SaleReturnProductDetails({Key? key, required this.saleReturnData})
-      : super(key: key);
+  SaleReturnProductDetails({Key? key, required this.saleReturnData}) : super(key: key);
 
   @override
-  State<SaleReturnProductDetails> createState() =>
-      _SaleReturnProductDetailsState();
+  State<SaleReturnProductDetails> createState() => _SaleReturnProductDetailsState();
 }
 
 class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
@@ -40,16 +37,21 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
     this.amountPaid = widget.saleReturnData.amountPaid;
     this.earingCoins = widget.saleReturnData.earnCoins;
     this.redeemCoins = widget.saleReturnData.redeemCoins;
-    this.adjustedBalance = (double.parse(widget.saleReturnData.walletBalance) -
-            double.parse(widget.saleReturnData.earnCoins))
-        .toStringAsFixed(2);
-
-    if ((double.parse(adjustedBalance!) / 3 >=
-        double.parse(widget.saleReturnData.amountPaid))) {
+    if (double.parse(widget.saleReturnData.walletBalance) >= double.parse(widget.saleReturnData.earnCoins)) {
+      this.adjustedBalance =
+          (double.parse(widget.saleReturnData.walletBalance) - double.parse(widget.saleReturnData.earnCoins))
+              .toStringAsFixed(2);
     } else {
-      this.returnAmount = (double.parse(widget.saleReturnData.amountPaid) -
-              double.parse(adjustedBalance!) / 3)
-          .toStringAsFixed(2);
+      this.adjustedBalance =
+          (double.parse(widget.saleReturnData.earnCoins) - (double.parse(widget.saleReturnData.walletBalance)))
+              .toStringAsFixed(2);
+    }
+
+    if ((double.parse(adjustedBalance!) / 3 >= double.parse(widget.saleReturnData.amountPaid))) {
+      returnAmount = amountPaid;
+    } else {
+      this.returnAmount =
+          (double.parse(widget.saleReturnData.amountPaid) - double.parse(adjustedBalance!) / 3).toStringAsFixed(2);
     }
 
     super.initState();
@@ -92,8 +94,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                           maxLines: 1,
                           maxFontSize: 16,
                           minFontSize: 12,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.white),
+                          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
                         ),
                         Flexible(
                           child: Row(
@@ -105,10 +106,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                               ),
                               Text(
                                 " $coinBalance",
-                                style: TextStyle(
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white),
+                                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
                               ),
                             ],
                           ),
@@ -123,12 +121,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                            blurRadius: 10,
-                            spreadRadius: 5,
-                            color: Colors.black12)
-                      ]),
+                      boxShadow: [BoxShadow(blurRadius: 10, spreadRadius: 5, color: Colors.black12)]),
                   child: Padding(
                     padding: const EdgeInsets.all(14),
                     child: Column(
@@ -136,10 +129,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                       children: [
                         Text(
                           "return_calculation_key".tr(),
-                          style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black87),
+                          style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black87),
                         ),
                         SizedBox(
                           height: 10,
@@ -149,15 +139,11 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                           children: [
                             Text(
                               "amt_paid_key".tr(),
-                              style: TextStyle(
-                                  fontSize: 13, color: Colors.black87),
+                              style: TextStyle(fontSize: 13, color: Colors.black87),
                             ),
                             Text(
                               "\u20B9$amountPaid",
-                              style: TextStyle(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black87),
+                              style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.black87),
                             ),
                           ],
                         ),
@@ -169,8 +155,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                           children: [
                             Text(
                               "earn_coins_key".tr(),
-                              style: TextStyle(
-                                  fontSize: 13, color: Colors.black87),
+                              style: TextStyle(fontSize: 13, color: Colors.black87),
                             ),
                             Row(
                               children: [
@@ -180,13 +165,9 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                                   height: 14,
                                 ),
                                 Text(
-                                  (double.parse(earingCoins!))
-                                          .toStringAsFixed(2) +
+                                  (double.parse(earingCoins!)).toStringAsFixed(2) +
                                       " (\u20B9${(double.parse(earingCoins!) / 3).toStringAsFixed(2)})",
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black87),
+                                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.black87),
                                 ),
                               ],
                             ),
@@ -200,8 +181,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                           children: [
                             Text(
                               "redeem_coins_key".tr(),
-                              style: TextStyle(
-                                  fontSize: 13, color: Colors.black87),
+                              style: TextStyle(fontSize: 13, color: Colors.black87),
                             ),
                             Row(
                               children: [
@@ -211,13 +191,9 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                                   height: 14,
                                 ),
                                 Text(
-                                  (double.parse(redeemCoins!))
-                                          .toStringAsFixed(2) +
+                                  (double.parse(redeemCoins!)).toStringAsFixed(2) +
                                       " (\u20B9${(double.parse(redeemCoins!) / 3).toStringAsFixed(2)})",
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black87),
+                                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.black87),
                                 ),
                               ],
                             ),
@@ -231,8 +207,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                           children: [
                             Text(
                               "customer_coin_balance_key".tr(),
-                              style: TextStyle(
-                                  fontSize: 13, color: Colors.black87),
+                              style: TextStyle(fontSize: 13, color: Colors.black87),
                             ),
                             Row(
                               children: [
@@ -243,10 +218,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                                 ),
                                 Text(
                                   " $coinBalance (\u20B9${(double.parse(coinBalance!) / 3).toStringAsFixed(2)})",
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.red),
+                                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.red),
                                 ),
                               ],
                             ),
@@ -260,8 +232,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                           children: [
                             Text(
                               "adj_balance_key".tr(),
-                              style: TextStyle(
-                                  fontSize: 13, color: Colors.black87),
+                              style: TextStyle(fontSize: 13, color: Colors.black87),
                             ),
                             Row(
                               children: [
@@ -272,10 +243,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                                 ),
                                 Text(
                                   " $adjustedBalance (\u20B9${(double.parse(adjustedBalance!) / 3).toStringAsFixed(2)})",
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black87),
+                                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.black87),
                                 ),
                               ],
                             ),
@@ -286,10 +254,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                         ),
                         Text(
                           "amt_return_to_customer_key".tr(),
-                          style: TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black87),
+                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.black87),
                         ),
                       ],
                     ),
@@ -313,10 +278,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                   child: Center(
                     child: Text(
                       "\u20b9${(double.parse(returnAmount!)).toStringAsFixed(2)}",
-                      style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
+                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
                     ),
                   ),
                 ),
@@ -336,13 +298,8 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
             color: ColorPrimary,
             child: Center(
               child: Text(
-                widget.saleReturnData.productId.isEmpty
-                    ? "cancel_key".tr()
-                    : "done_key".tr(),
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
+                widget.saleReturnData.productId.isEmpty ? "cancel_key".tr() : "done_key".tr(),
+                style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -358,8 +315,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
           return ConstrainedBox(
             constraints: BoxConstraints(maxWidth: 400),
             child: AlertDialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
               title: RichText(
                 text: TextSpan(
                   text: "otp_verification_key".tr() + "\n",
@@ -370,8 +326,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                   ),
                   children: [
                     TextSpan(
-                      text: "please_verify_your_otp_on_key".tr() +
-                          "${widget.saleReturnData.mobile}",
+                      text: "please_verify_your_otp_on_key".tr() + "${widget.saleReturnData.mobile}",
                       style: GoogleFonts.openSans(
                         fontSize: 14.0,
                         color: ColorTextPrimary,
@@ -396,8 +351,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                   hintStyle: GoogleFonts.openSans(
                     fontWeight: FontWeight.w600,
                   ),
-                  contentPadding:
-                      const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                  contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.white),
                   ),
@@ -415,13 +369,10 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                     padding: const EdgeInsets.all(8.0),
                     textColor: Colors.white,
                     color: ColorPrimary,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                     onPressed: () {
                       if (_textFieldController.text.isEmpty) {
-                        Fluttertoast.showToast(
-                            msg: "please_enter_password_key".tr(),
-                            backgroundColor: ColorPrimary);
+                        Fluttertoast.showToast(msg: "please_enter_password_key".tr(), backgroundColor: ColorPrimary);
                       } else {
                         // input["otp"] = _textFieldController.text.trim();
                         // saleReturnBloc.add(VerifyOtpEvent(input: input));
@@ -433,9 +384,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                     child: new Text(
                       "verify_key".tr(),
                       style: GoogleFonts.openSans(
-                          fontSize: 17,
-                          fontWeight: FontWeight.w600,
-                          decoration: TextDecoration.none),
+                          fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
                     ),
                   ),
                 ),
@@ -488,8 +437,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
           return AlertDialog(
             contentPadding: const EdgeInsets.all(0),
             titlePadding: const EdgeInsets.all(0),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             title: Center(
               child: Padding(
                 padding: const EdgeInsets.only(top: 20, bottom: 10),
@@ -508,10 +456,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
               child: Center(
                 child: Text(
                   "product_return_successfully".tr(),
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
                 ),
               ),
             ),
@@ -523,19 +468,15 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                   padding: const EdgeInsets.all(8.0),
                   textColor: Colors.white,
                   color: ColorPrimary,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   onPressed: () {
                     Navigator.of(context).pop(); //? For alert box
-                    Navigator.of(context)
-                        .pop(returnData.orderId); //? For screen
+                    Navigator.of(context).pop(returnData.orderId); //? For screen
                   },
                   child: new Text(
                     "done_key".tr(),
                     style: GoogleFonts.openSans(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w600,
-                        decoration: TextDecoration.none),
+                        fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
                   ),
                 ),
               ),

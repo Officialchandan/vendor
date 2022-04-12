@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -53,19 +52,13 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(
-                      left: 20, right: 20, top: 20, bottom: 20),
+                  padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
                   child: Container(
                     height: 70,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(8),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.black12,
-                            spreadRadius: 4,
-                            blurRadius: 10)
-                      ],
+                      boxShadow: [BoxShadow(color: Colors.black12, spreadRadius: 4, blurRadius: 10)],
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -77,18 +70,12 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                             children: [
                               Text(
                                 "${details!.firstName}",
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black87),
+                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black87),
                               ),
                               Text(
                                 "${DateFormat("dd MMM yyyy").format(DateTime.parse(details!.dateTime))}" +
                                     " ${DateFormat.jm().format(DateTime.parse(details!.dateTime)).toLowerCase()}",
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.grey),
+                                style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey),
                               ),
                             ],
                           ),
@@ -100,10 +87,7 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                             children: [
                               Text(
                                 "${details!.mobile}",
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.grey),
+                                style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.grey),
                               ),
                             ],
                           ),
@@ -113,18 +97,12 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(
-                      left: 20, right: 20, top: 0, bottom: 20),
+                  padding: const EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 20),
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(8),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.black12,
-                            spreadRadius: 4,
-                            blurRadius: 10)
-                      ],
+                      boxShadow: [BoxShadow(color: Colors.black12, spreadRadius: 4, blurRadius: 10)],
                     ),
                     child: Column(
                       children: [
@@ -134,10 +112,7 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                             padding: const EdgeInsets.only(left: 14, top: 10),
                             child: Text(
                               "all_items_key".tr(),
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black87),
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87),
                             ),
                           ),
                         ),
@@ -149,8 +124,7 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                           child: StreamBuilder<List<CommonDetails>>(
                               stream: detailsController.stream,
                               builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
+                                if (snapshot.connectionState == ConnectionState.waiting) {
                                   return Center(
                                     child: CircularProgressIndicator(),
                                   );
@@ -167,52 +141,32 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                                             child: Container(
                                               decoration: BoxDecoration(
                                                 color: Colors.grey.shade200,
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
+                                                borderRadius: BorderRadius.circular(8),
                                               ),
                                               child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8),
+                                                padding: const EdgeInsets.all(8),
                                                 child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
+                                                  mainAxisAlignment: MainAxisAlignment.start,
                                                   children: [
                                                     Container(
                                                       child: ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
+                                                        borderRadius: BorderRadius.circular(8),
                                                         child: Container(
-                                                          child: product[index]
-                                                                  .image
-                                                                  .isEmpty
-                                                              ? Image.asset(
-                                                                  "assets/images/placeholder.webp",
-                                                                  width: 45,
-                                                                  height: 45,
-                                                                  fit: BoxFit
-                                                                      .cover)
+                                                          child: product[index].image.isEmpty
+                                                              ? Image.asset("assets/images/placeholder.webp",
+                                                                  width: 45, height: 45, fit: BoxFit.cover)
                                                               : CachedNetworkImage(
-                                                                  imageUrl: product[
-                                                                          index]
-                                                                      .image,
+                                                                  imageUrl: product[index].image,
                                                                   progressIndicatorBuilder:
-                                                                      (context,
-                                                                              url,
-                                                                              downloadProgress) =>
-                                                                          Center(
-                                                                            child:
-                                                                                CircularProgressIndicator(value: downloadProgress.progress),
+                                                                      (context, url, downloadProgress) => Center(
+                                                                            child: CircularProgressIndicator(
+                                                                                value: downloadProgress.progress),
                                                                           ),
-                                                                  errorWidget: (context,
-                                                                          url,
-                                                                          error) =>
-                                                                      Image.asset(
-                                                                          "assets/images/placeholder.webp"),
+                                                                  errorWidget: (context, url, error) =>
+                                                                      Image.asset("assets/images/placeholder.webp"),
                                                                   width: 45,
                                                                   height: 45,
-                                                                  fit: BoxFit
-                                                                      .cover),
+                                                                  fit: BoxFit.cover),
                                                         ),
                                                       ),
                                                     ),
@@ -224,31 +178,21 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                                                         child: Column(
                                                           children: [
                                                             Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
+                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                               children: [
                                                                 Text(
                                                                   "${product[index].categoryName.isEmpty ? product[index].productName : product[index].categoryName}",
                                                                   style: TextStyle(
-                                                                      fontSize:
-                                                                          15,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      color: Colors
-                                                                          .black87),
+                                                                      fontSize: 15,
+                                                                      fontWeight: FontWeight.bold,
+                                                                      color: Colors.black87),
                                                                 ),
                                                                 Text(
                                                                   "\u20B9 ${product[index].total}",
                                                                   style: TextStyle(
-                                                                      fontSize:
-                                                                          13,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      color:
-                                                                          ColorPrimary),
+                                                                      fontSize: 13,
+                                                                      fontWeight: FontWeight.bold,
+                                                                      color: ColorPrimary),
                                                                 ),
                                                               ],
                                                             ),
@@ -256,20 +200,14 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                                                               height: 4,
                                                             ),
                                                             Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .start,
+                                                              mainAxisAlignment: MainAxisAlignment.start,
                                                               children: [
                                                                 Text(
                                                                   "${product[index].qty} x \u20B9 ${product[index].price} ",
                                                                   style: TextStyle(
-                                                                      fontSize:
-                                                                          13,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      color: Colors
-                                                                          .grey),
+                                                                      fontSize: 13,
+                                                                      fontWeight: FontWeight.bold,
+                                                                      color: Colors.grey),
                                                                 ),
                                                               ],
                                                             ),
@@ -294,30 +232,23 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                           height: 5,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(
-                              left: 14, right: 14, top: 14, bottom: 14),
+                          padding: const EdgeInsets.only(left: 14, right: 14, top: 14, bottom: 14),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     "total_amount_key".tr(),
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black87),
+                                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
                                   ),
                                   Row(
                                     children: [
                                       Text(
                                         "\u20B9 ${totalAmt.toStringAsFixed(2)}",
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black87),
+                                        style:
+                                            TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
                                       ),
                                     ],
                                   ),
@@ -327,15 +258,11 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                                 height: 8,
                               ),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     "redeem_coins_key".tr(),
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black87),
+                                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
                                   ),
                                   Row(
                                     children: [
@@ -346,10 +273,7 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                                       ),
                                       Text(
                                         " ${totalRedeemCoins.toStringAsFixed(2)} (\u20B9 ${(totalRedeemCoins / 3).toStringAsFixed(2)})",
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.red),
+                                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
                                       ),
                                     ],
                                   ),
@@ -359,15 +283,11 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                                 height: 8,
                               ),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     "earn_coins_key".tr(),
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black87),
+                                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
                                   ),
                                   Row(
                                     children: [
@@ -378,10 +298,8 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                                       ),
                                       Text(
                                         " ${totalEarnCoin.toStringAsFixed(2)}",
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black87),
+                                        style:
+                                            TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
                                       ),
                                     ],
                                   ),
@@ -391,22 +309,15 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                                 height: 8,
                               ),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     "pay_amt_key".tr(),
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black87),
+                                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
                                   ),
                                   Text(
                                     "\u20B9 ${totalPayAmt.toStringAsFixed(2)}",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: ColorPrimary),
+                                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: ColorPrimary),
                                   ),
                                 ],
                               ),
@@ -418,8 +329,7 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(
-                      left: 20, right: 20, top: 0, bottom: 20),
+                  padding: const EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 20),
                   child: Container(
                     height: 50,
                     decoration: BoxDecoration(
@@ -433,12 +343,7 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                         ],
                       ),
                       borderRadius: BorderRadius.circular(8),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.black12,
-                            spreadRadius: 4,
-                            blurRadius: 10)
-                      ],
+                      boxShadow: [BoxShadow(color: Colors.black12, spreadRadius: 4, blurRadius: 10)],
                     ),
                     child: Padding(
                       padding: const EdgeInsets.only(left: 14, right: 14),
@@ -447,10 +352,7 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                         children: [
                           Text(
                             "redeemed_coins_key".tr(),
-                            style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
+                            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
                           ),
                           Row(
                             children: [
@@ -461,10 +363,7 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                               ),
                               Text(
                                 " ${totalRedeemCoins.toStringAsFixed(2)} (\u20B9 ${(totalRedeemCoins / 3).toStringAsFixed(2)})",
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white),
+                                style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
                               ),
                             ],
                           ),
@@ -518,13 +417,19 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
 
     for (var count in commonDetails) {
       totalAmt += double.parse(count.total.isEmpty ? "0" : count.total);
-      totalRedeemCoins +=
-          double.parse(count.redeemCoins.isEmpty ? "0" : count.redeemCoins);
-      totalEarnCoin +=
-          double.parse(count.earningCoins.isEmpty ? "0" : count.earningCoins);
+      totalRedeemCoins += double.parse(count.redeemCoins.isEmpty ? "0" : count.redeemCoins);
+      totalEarnCoin += double.parse(count.earningCoins.isEmpty ? "0" : count.earningCoins);
     }
-
-    totalPayAmt = totalAmt - totalRedeemCoins / 3;
+    print("totottototo ---${totalAmt.toStringAsFixed(2)}");
+    if (totalAmt >= totalRedeemCoins) {
+      totalPayAmt = totalAmt - totalRedeemCoins / 3;
+    } else {
+      if (totalAmt == 0.00) {
+        totalAmt = totalAmt;
+      } else {
+        totalPayAmt = (totalRedeemCoins / 3) - totalAmt;
+      }
+    }
     detailsController.add(commonDetails);
   }
 }

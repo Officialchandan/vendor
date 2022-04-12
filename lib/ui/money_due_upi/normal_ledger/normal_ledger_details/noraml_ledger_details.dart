@@ -73,6 +73,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
       widget.order.orderDetails.forEach((element) {
         reddem += double.parse(element.redeemCoins);
         log("$reddem");
+        reddem = reddem / 3;
         if (double.parse(widget.order.myprofitRevenue) > reddem) {
           log("${double.parse(widget.order.myprofitRevenue)}");
           finalamount = double.parse(widget.order.myprofitRevenue) - reddem;
@@ -110,17 +111,17 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
     productDetails.forEach((element) {
       amtPaid += double.parse(element.amountPaid);
     });
-
+    log("------->amtpaid$amtPaid");
     // Redeem Coin
     productDetails.forEach((element) {
       redeemCoins += double.parse(element.redeemCoins);
     });
-
+    log("------->amtpaid$redeemCoins");
     // Earn Coins
     productDetails.forEach((element) {
       earnCoins += double.parse(element.earningCoins);
     });
-
+    log("------->amtpaid$earnCoins");
     // Net Balance
     if (redeemCoins >= earnCoins) {
       netBalance = 0;
@@ -486,7 +487,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                         style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
                       ),
                       Text(
-                        "\u20B9${widget.order.myprofitRevenue}",
+                        "\u20B9 ${widget.order.myprofitRevenue}",
                         style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
                       ),
                     ],
@@ -502,7 +503,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                         style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
                       ),
                       Text(
-                        "\u20B9 $reddem",
+                        "\u20B9 ${reddem.toStringAsFixed(2)}",
                         style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
                       )
                       /* widget.order.orderType == 1
@@ -564,7 +565,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
                         ),
                         Text(
-                          "\u20B9 $finalamount",
+                          "\u20B9 ${finalamount.toStringAsFixed(2)}",
                           style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
                         ),
                       ],
@@ -596,7 +597,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
                         ),
                         Text(
-                          "\u20B9 $finalamount",
+                          "\u20B9 ${finalamount.toStringAsFixed(2)}",
                           style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
                         ),
                       ],
@@ -896,7 +897,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                                 style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
                               ),
                               Text(
-                                "\u20B9 $finalamount",
+                                "\u20B9 ${finalamount.toStringAsFixed(2)}",
                                 style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
                               ),
                             ],
@@ -928,7 +929,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                                 style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
                               ),
                               Text(
-                                "\u20B9 $finalamount",
+                                "\u20B9 ${finalamount.toStringAsFixed(2)}",
                                 style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
                               ),
                             ],
