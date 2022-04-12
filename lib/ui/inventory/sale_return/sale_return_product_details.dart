@@ -1,5 +1,4 @@
 import 'dart:collection';
-import 'dart:developer';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -18,12 +17,10 @@ import 'package:vendor/utility/utility.dart';
 
 class SaleReturnProductDetails extends StatefulWidget {
   final SaleReturnData saleReturnData;
-  SaleReturnProductDetails({Key? key, required this.saleReturnData})
-      : super(key: key);
+  SaleReturnProductDetails({Key? key, required this.saleReturnData}) : super(key: key);
 
   @override
-  State<SaleReturnProductDetails> createState() =>
-      _SaleReturnProductDetailsState();
+  State<SaleReturnProductDetails> createState() => _SaleReturnProductDetailsState();
 }
 
 class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
@@ -184,8 +181,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                           children: [
                             Text(
                               "redeem_coins_key".tr(),
-                              style: TextStyle(
-                                  fontSize: 13, color: Colors.black87),
+                              style: TextStyle(fontSize: 13, color: Colors.black87),
                             ),
                             Row(
                               children: [
@@ -472,19 +468,15 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                   padding: const EdgeInsets.all(8.0),
                   textColor: Colors.white,
                   color: ColorPrimary,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   onPressed: () {
                     Navigator.of(context).pop(); //? For alert box
-                    Navigator.of(context)
-                        .pop(returnData.orderId); //? For screen
+                    Navigator.of(context).pop(returnData.orderId); //? For screen
                   },
                   child: new Text(
                     "done_key".tr(),
                     style: GoogleFonts.openSans(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w600,
-                        decoration: TextDecoration.none),
+                        fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
                   ),
                 ),
               ),

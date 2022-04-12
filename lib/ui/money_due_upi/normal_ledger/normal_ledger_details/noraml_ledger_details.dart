@@ -488,10 +488,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                       ),
                       Text(
                         "\u20B9${widget.order.myprofitRevenue}",
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black87),
+                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
                       ),
                     ],
                   ),
