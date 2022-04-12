@@ -36,7 +36,7 @@ class _UpiTransferHistoryWithoutInventoryState
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            "UPI Transfer",
+            "upi_transfer_key".tr(),
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           ),
           actions: [

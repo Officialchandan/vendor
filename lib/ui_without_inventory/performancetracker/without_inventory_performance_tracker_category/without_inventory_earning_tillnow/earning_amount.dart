@@ -83,7 +83,7 @@ class _EarningAmountState extends State<EarningAmount> {
                     ),
                     Tab(
                       child: Text(
-                        "monthly_key",
+                        "monthly_key".tr(),
                         style: TextStyle(
                             fontSize: 17, fontWeight: FontWeight.w600),
                       ),

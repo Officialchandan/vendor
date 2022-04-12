@@ -111,7 +111,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
     productDetails.forEach((element) {
       amtPaid += double.parse(element.amountPaid);
     });
-    log("------->amtpaid$amtPaid");
+
     // Redeem Coin
     productDetails.forEach((element) {
       redeemCoins += double.parse(element.redeemCoins);
@@ -487,8 +487,11 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                         style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
                       ),
                       Text(
-                        "\u20B9 ${widget.order.myprofitRevenue}",
-                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                        "\u20B9${widget.order.myprofitRevenue}",
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87),
                       ),
                     ],
                   ),
@@ -897,7 +900,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                                 style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
                               ),
                               Text(
-                                "\u20B9 ${finalamount.toStringAsFixed(2)}",
+                                "\u20B9 $finalamount",
                                 style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
                               ),
                             ],

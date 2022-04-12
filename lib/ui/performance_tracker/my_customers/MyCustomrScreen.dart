@@ -186,7 +186,7 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                                   Text(
                                     Utility.getFormatDate1(customer.date),
                                     style: TextStyle(
-                                        color: Colors.black, fontSize: 14),
+                                        color: Colors.black, fontSize: 11),
                                   ),
                                 ],
                               ),
@@ -203,13 +203,13 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                                     style: TextStyle(
                                         color: Colors.black, fontSize: 14),
                                   )),
-                                  Text(
-                                    "qty_key".tr() + " : ${customer.qty}",
-                                    style: TextStyle(
-                                        color: ColorPrimary,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14),
-                                  ),
+                                  // Text(
+                                  //   "qty_key".tr() + " : ${customer.qty}",
+                                  //   style: TextStyle(
+                                  //       color: ColorPrimary,
+                                  //       fontWeight: FontWeight.bold,
+                                  //       fontSize: 14),
+                                  // ),
                                 ],
                               )
                             ],

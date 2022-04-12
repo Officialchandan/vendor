@@ -392,5 +392,7 @@
   "hooray_you_saved":"हुर्रे, आपने बचाया",
   "product_return_successfully":"उत्पाद वापसी सफलतापूर्वक",
   "rejected_key":"अस्वीकृत",
-  "accepted_key":"स्वीकृत"
+  "accepted_key":"स्वीकृत",
+  "daily_ledger_key":"दैनिक खाता बही",
+  "daily_ledger_details_key":"दैनिक लेजर विवरण"
 }
