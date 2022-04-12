@@ -82,8 +82,7 @@ class EditProductScreenState extends State<EditProductScreen> {
             variantName: widget.product.productOption[i].optionName);
 
         VariantOption variantOption = VariantOption(
-            name: widget.product.productOption[i].optionName,
-            value: widget.product.productOption[i].value);
+            name: widget.product.productOption[i].optionName, value: widget.product.productOption[i].value);
         variantType.add(variant);
         variantOptions.add(variantOption);
         if (i == widget.product.productOption.length - 1) {
@@ -110,9 +109,7 @@ class EditProductScreenState extends State<EditProductScreen> {
             listener: (context, state) {
               if (state is SelectImageState) {
                 addProductBloc.add(UploadImageEvent(
-                    productId: widget.product.productId,
-                    variantId: widget.product.id,
-                    images: state.image));
+                    productId: widget.product.productId, variantId: widget.product.id, images: state.image));
               }
               if (state is UploadImageSuccessState) {
                 state.image.forEach((element) {
@@ -159,23 +156,19 @@ class EditProductScreenState extends State<EditProductScreen> {
                       Container(
                         width: 80,
                         height: 80,
-                        decoration: BoxDecoration(
-                            color: Colors.grey.shade100,
-                            borderRadius: BorderRadius.circular(5)),
+                        decoration: BoxDecoration(color: Colors.grey.shade100, borderRadius: BorderRadius.circular(5)),
                         child: IconButton(
                           onPressed: () {
                             showCupertinoModalPopup(
                                 context: context,
                                 builder: (context) => SelectImageBottomSheet(
                                       openGallery: () {
-                                        addProductBloc.add(SelectImageEvent(
-                                            context: context,
-                                            source: ImageSource.gallery));
+                                        addProductBloc
+                                            .add(SelectImageEvent(context: context, source: ImageSource.gallery));
                                       },
                                       openCamera: () {
-                                        addProductBloc.add(SelectImageEvent(
-                                            context: context,
-                                            source: ImageSource.camera));
+                                        addProductBloc
+                                            .add(SelectImageEvent(context: context, source: ImageSource.camera));
                                       },
                                     ));
                           },
@@ -194,14 +187,12 @@ class EditProductScreenState extends State<EditProductScreen> {
                         builder: (context, snap) {
                           if (snap.hasData && snap.data!.isNotEmpty) {
                             return Row(
-                              children:
-                                  List.generate(snap.data!.length, (index) {
+                              children: List.generate(snap.data!.length, (index) {
                                 return Stack(children: [
                                   Container(
                                     width: 80,
                                     height: 80,
-                                    margin: EdgeInsets.symmetric(
-                                        vertical: 10, horizontal: 10),
+                                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(5),
                                         image: DecorationImage(
@@ -218,17 +209,14 @@ class EditProductScreenState extends State<EditProductScreen> {
                                       child: Container(
                                           width: 25,
                                           padding: EdgeInsets.all(3),
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: ColorPrimary),
+                                          decoration: BoxDecoration(shape: BoxShape.circle, color: ColorPrimary),
                                           child: Icon(
                                             Icons.delete,
                                             color: Colors.white,
                                             size: 15,
                                           )),
                                       onTap: () {
-                                        editProductBloc.add(DeleteImageEvent(
-                                            image: snap.data![index]));
+                                        editProductBloc.add(DeleteImageEvent(image: snap.data![index]));
                                       },
                                     ),
                                   )
@@ -272,11 +260,7 @@ class EditProductScreenState extends State<EditProductScreen> {
                       labelText: "category_key".tr(),
                       hintText: "select_category_key".tr(),
                       suffixIcon: Icon(Icons.keyboard_arrow_right_sharp),
-                      suffixIconConstraints: BoxConstraints(
-                          minWidth: 20,
-                          maxWidth: 21,
-                          minHeight: 20,
-                          maxHeight: 21)),
+                      suffixIconConstraints: BoxConstraints(minWidth: 20, maxWidth: 21, minHeight: 20, maxHeight: 21)),
                 ),
                 const SizedBox(
                   height: 15,
@@ -286,8 +270,7 @@ class EditProductScreenState extends State<EditProductScreen> {
                     Expanded(
                       child: TextFormField(
                         initialValue: variantModel.purchasePrice,
-                        decoration: InputDecoration(
-                            labelText: "purchase_price_key".tr()),
+                        decoration: InputDecoration(labelText: "purchase_price_key".tr()),
                         onChanged: (text) {
                           variantModel.purchasePrice = text;
                         },
@@ -313,8 +296,7 @@ class EditProductScreenState extends State<EditProductScreen> {
                     Expanded(
                       child: TextFormField(
                         initialValue: variantModel.sellingPrice,
-                        decoration: InputDecoration(
-                            labelText: "selling_price_key".tr()),
+                        decoration: InputDecoration(labelText: "selling_price_key".tr()),
                         onChanged: (text) {
                           variantModel.sellingPrice = text;
                         },
@@ -331,8 +313,7 @@ class EditProductScreenState extends State<EditProductScreen> {
                     Expanded(
                       child: TextFormField(
                         initialValue: variantModel.stock.toString(),
-                        decoration:
-                            InputDecoration(labelText: "stock_key".tr()),
+                        decoration: InputDecoration(labelText: "stock_key".tr()),
                         onChanged: (text) {
                           variantModel.stock = text;
                         },
@@ -348,8 +329,7 @@ class EditProductScreenState extends State<EditProductScreen> {
                         controller: edtUnit,
                         onTap: () {
                           if (categoryId.isEmpty) {
-                            Utility.showToast(
-                                "please_select_category_first_key".tr());
+                            Utility.showToast("please_select_category_first_key".tr());
                             return;
                           }
 
@@ -367,11 +347,8 @@ class EditProductScreenState extends State<EditProductScreen> {
                         decoration: InputDecoration(
                             labelText: "unit_key".tr(),
                             suffixIcon: Icon(Icons.keyboard_arrow_right_sharp),
-                            suffixIconConstraints: BoxConstraints(
-                                minWidth: 20,
-                                maxWidth: 21,
-                                minHeight: 20,
-                                maxHeight: 21)),
+                            suffixIconConstraints:
+                                BoxConstraints(minWidth: 20, maxWidth: 21, minHeight: 20, maxHeight: 21)),
                       ),
                       flex: 2,
                     ),
@@ -397,32 +374,24 @@ class EditProductScreenState extends State<EditProductScreen> {
                                 print("on variant type select -> $variants");
 
                                 if (variants.isEmpty) {
-                                  Utility.showToast(
-                                      "please_select_at_least_one_option_key"
-                                          .tr());
+                                  Utility.showToast("please_select_at_least_one_option_key".tr());
                                 } else {
                                   variantType = variants;
                                   List<VariantOption> options = [];
                                   String variantName = "";
                                   for (int i = 0; i < variantType.length; i++) {
-                                    options.add(VariantOption(
-                                        name: variantType[i].variantName,
-                                        value: ""));
+                                    options.add(VariantOption(name: variantType[i].variantName, value: ""));
 
                                     if (i == variantType.length - 1)
-                                      variantName = variantName +
-                                          variantType[i].variantName;
+                                      variantName = variantName + variantType[i].variantName;
                                     else
-                                      variantName = variantName +
-                                          variantType[i].variantName +
-                                          " / ";
+                                      variantName = variantName + variantType[i].variantName + " / ";
                                   }
                                   ProductVariantModel model = variantModel;
                                   model.option = options;
                                   edtOptions.text = variantName;
                                   print(model.toString());
-                                  addProductBloc.add(
-                                      SelectVariantOptionEvent(variant: model));
+                                  addProductBloc.add(SelectVariantOptionEvent(variant: model));
                                 }
                               },
                             );
@@ -432,11 +401,7 @@ class EditProductScreenState extends State<EditProductScreen> {
                       labelText: "options_key".tr(),
                       hintText: "select_options_key".tr(),
                       suffixIcon: Icon(Icons.keyboard_arrow_right),
-                      suffixIconConstraints: BoxConstraints(
-                          minWidth: 20,
-                          maxWidth: 21,
-                          minHeight: 20,
-                          maxHeight: 21)),
+                      suffixIconConstraints: BoxConstraints(minWidth: 20, maxWidth: 21, minHeight: 20, maxHeight: 21)),
                 ),
                 const SizedBox(
                   height: 15,
@@ -447,8 +412,7 @@ class EditProductScreenState extends State<EditProductScreen> {
                       variantModel = state.variant;
                     }
                     return Column(
-                      children:
-                          List.generate(variantModel.option.length, (index) {
+                      children: List.generate(variantModel.option.length, (index) {
                         return VariantOptionWidget(variantModel.option[index]);
                       }),
                     );
@@ -458,6 +422,7 @@ class EditProductScreenState extends State<EditProductScreen> {
             ),
           ),
           bottomNavigationBar: Container(
+            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
             child: MaterialButton(
               onPressed: () {
                 update(context);
@@ -495,8 +460,7 @@ class EditProductScreenState extends State<EditProductScreen> {
       Utility.showToast("please_enter_mrp_key".tr());
       return;
     }
-    if (double.parse(variantModel.sellingPrice.trim()) >
-        double.parse(variantModel.mrp.trim())) {
+    if (double.parse(variantModel.sellingPrice.trim()) > double.parse(variantModel.mrp.trim())) {
       Utility.showToast("selling_price_cannot_be_more_than_mrp_key".tr());
       return;
     }
@@ -511,16 +475,14 @@ class EditProductScreenState extends State<EditProductScreen> {
     if (variantModel.option.isNotEmpty) {
       for (int i = 0; i < variantModel.option.length; i++) {
         if (variantModel.option[i].value.isEmpty) {
-          Utility.showToast(
-              "please_enter_key ${variantModel.option[i].name}".tr());
+          Utility.showToast("please_enter_key ${variantModel.option[i].name}".tr());
           return;
         }
       }
     }
 
     Map<String, dynamic> input = HashMap<String, dynamic>();
-    input["vendor_id"] =
-        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     input["id"] = widget.product.id;
     input["product_id"] = widget.product.productId;
     input["category_id"] = categoryId;

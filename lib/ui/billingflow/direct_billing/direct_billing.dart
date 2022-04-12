@@ -791,7 +791,7 @@ class _DirectBillingState extends State<DirectBilling> {
               width: 20,
               height: 20,
               color: ColorPrimary,
-              fit: BoxFit.cover,
+              fit: BoxFit.contain,
             ),
             SizedBox(
               width: 20,

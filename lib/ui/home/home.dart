@@ -135,16 +135,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   Icons.notifications,
                 ),
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => NotificationScreen(
-                                notificationData: notificationData!,
-                              ))).then((value) {
-                    setState(() {
-                      count -= value as int;
-                    });
-                  });
+                  message == ""
+                      ? Fluttertoast.showToast(msg: "no_notification_key".tr(), backgroundColor: ColorPrimary)
+                      : Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => NotificationScreen(
+                                    notificationData: notificationData!,
+                                  ))).then((value) {
+                          setState(() {
+                            count -= value as int;
+                          });
+                        });
                 },
               ),
               notificationData != null
@@ -312,6 +314,7 @@ class _HomeScreenState extends State<HomeScreen> {
     input["vendor_id"] = userId;
     if (await Network.isConnected()) {
       NotificationResponse response = await apiProvider.getNotifications(input);
+      message = response.message;
       if (response.success && response.message != "") {
         log("--->${response.data}");
         notificationData = response.data;

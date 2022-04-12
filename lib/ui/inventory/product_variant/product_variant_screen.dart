@@ -112,8 +112,7 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
                         // Navigator.pop(context, variants);
                       },
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          side: BorderSide(color: ColorPrimary, width: 1)),
+                          borderRadius: BorderRadius.circular(10), side: BorderSide(color: ColorPrimary, width: 1)),
                       height: 50,
                       minWidth: MediaQuery.of(context).size.width,
                       child: Row(
@@ -148,13 +147,9 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
                 if (productVariant.isNotEmpty) {
                   for (int j = 0; j < productVariant.length; j++) {
                     if (productVariant[j].option.isNotEmpty) {
-                      for (int i = 0;
-                          i < productVariant[j].option.length;
-                          i++) {
+                      for (int i = 0; i < productVariant[j].option.length; i++) {
                         if (productVariant[j].option[i].value.isEmpty) {
-                          Utility.showToast(
-                              "please_enter_key ${productVariant[j].option[i].name}"
-                                  .tr());
+                          Utility.showToast("please_enter_key ${productVariant[j].option[i].name}".tr());
                           return;
                         }
                       }
@@ -169,8 +164,7 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
                     }
                     if (double.parse(productVariant[j].sellingPrice.trim()) >
                         double.parse(productVariant[j].mrp.trim())) {
-                      Utility.showToast(
-                          "selling_price_cannot_be_more_than_mrp_key".tr());
+                      Utility.showToast("selling_price_cannot_be_more_than_mrp_key".tr());
                       return;
                     }
 
@@ -219,8 +213,8 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
       productVariant.add(productVariantModel);
     }*/
     else {
-      ProductVariantModel productVariantModel = ProductVariantModel(
-          mrp: "0", purchasePrice: "", sellingPrice: "", stock: "");
+      ProductVariantModel productVariantModel =
+          ProductVariantModel(mrp: "0", purchasePrice: "", sellingPrice: "", stock: "");
       productVariantModel.option = [];
       widget.variantType.forEach((variantType) {
         VariantOption variant = VariantOption();
@@ -267,97 +261,95 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
     return Stack(
       children: [
         Container(
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              borderRadius: BorderRadius.circular(8)),
+          decoration: BoxDecoration(border: Border.all(color: Colors.grey), borderRadius: BorderRadius.circular(8)),
           margin: EdgeInsets.symmetric(vertical: 10),
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "add_products_image_key".tr(),
+                "add_product_key".tr(),
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
-              Container(
-                height: 100,
-                child: Row(
-                  children: [
-                    Container(
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                          color: Colors.grey.shade100,
-                          borderRadius: BorderRadius.circular(5)),
-                      child: IconButton(
-                        onPressed: () {
-                          selectImage(context, widget.variant.productImages);
-                        },
-                        icon: Icon(
-                          Icons.linked_camera,
-                          size: 40,
-                        ),
-                      ),
-                    ),
-                    Container(
-                        width: MediaQuery.of(context).size.width - 140,
-                        child: StreamBuilder<List<File>>(
-                          stream: imgController.stream,
-                          initialData: imageList,
-                          builder: (context, snap) {
-                            if (snap.hasData && snap.data!.isNotEmpty) {
-                              return ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: snap.data!.length,
-                                itemBuilder: (context, index) {
-                                  return Stack(children: [
-                                    Container(
-                                      width: 80,
-                                      height: 80,
-                                      margin: EdgeInsets.symmetric(
-                                          vertical: 10, horizontal: 10),
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                          image: DecorationImage(
-                                            image: FileImage(
-                                              snap.data![index],
-                                            ),
-                                            fit: BoxFit.cover,
-                                          )),
-                                    ),
-                                    Positioned(
-                                      right: 0,
-                                      top: 0,
-                                      child: InkWell(
-                                        child: Container(
-                                            width: 25,
-                                            padding: EdgeInsets.all(3),
-                                            decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: ColorPrimary),
-                                            child: Icon(
-                                              Icons.delete,
-                                              color: Colors.white,
-                                              size: 15,
-                                            )),
-                                        onTap: () {
-                                          imageList.removeAt(index);
-                                          imgController.add(imageList);
-                                        },
-                                      ),
-                                    )
-                                  ]);
-                                },
-                              );
-                            }
-
-                            return Container();
-                          },
-                        )),
-                  ],
-                ),
-              ),
+              // Container(
+              //   height: 100,
+              //   child: Row(
+              //     children: [
+              //       Container(
+              //         width: 80,
+              //         height: 80,
+              //         decoration: BoxDecoration(
+              //             color: Colors.grey.shade100,
+              //             borderRadius: BorderRadius.circular(5)),
+              //         child: IconButton(
+              //           onPressed: () {
+              //             selectImage(context, widget.variant.productImages);
+              //           },
+              //           icon: Icon(
+              //             Icons.linked_camera,
+              //             size: 40,
+              //           ),
+              //         ),
+              //       ),
+              //       Container(
+              //           width: MediaQuery.of(context).size.width - 140,
+              //           child: StreamBuilder<List<File>>(
+              //             stream: imgController.stream,
+              //             initialData: imageList,
+              //             builder: (context, snap) {
+              //               if (snap.hasData && snap.data!.isNotEmpty) {
+              //                 return ListView.builder(
+              //                   scrollDirection: Axis.horizontal,
+              //                   itemCount: snap.data!.length,
+              //                   itemBuilder: (context, index) {
+              //                     return Stack(children: [
+              //                       Container(
+              //                         width: 80,
+              //                         height: 80,
+              //                         margin: EdgeInsets.symmetric(
+              //                             vertical: 10, horizontal: 10),
+              //                         decoration: BoxDecoration(
+              //                             borderRadius:
+              //                                 BorderRadius.circular(5),
+              //                             image: DecorationImage(
+              //                               image: FileImage(
+              //                                 snap.data![index],
+              //                               ),
+              //                               fit: BoxFit.cover,
+              //                             )),
+              //                       ),
+              //                       Positioned(
+              //                         right: 0,
+              //                         top: 0,
+              //                         child: InkWell(
+              //                           child: Container(
+              //                               width: 25,
+              //                               padding: EdgeInsets.all(3),
+              //                               decoration: BoxDecoration(
+              //                                   shape: BoxShape.circle,
+              //                                   color: ColorPrimary),
+              //                               child: Icon(
+              //                                 Icons.delete,
+              //                                 color: Colors.white,
+              //                                 size: 15,
+              //                               )),
+              //                           onTap: () {
+              //                             imageList.removeAt(index);
+              //                             imgController.add(imageList);
+              //                           },
+              //                         ),
+              //                       )
+              //                     ]);
+              //                   },
+              //                 );
+              //               }
+              //
+              //               return Container();
+              //             },
+              //           )),
+              //     ],
+              //   ),
+              // ),
               SizedBox(
                 height: 15,
               ),
@@ -392,8 +384,7 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
                       keyboardType: priceKeyboardType,
                       maxLength: PRICE_TEXT_LENGTH,
                       inputFormatters: priceInputFormatter,
-                      decoration: InputDecoration(
-                          labelText: "mrp_key".tr(), counter: Container()),
+                      decoration: InputDecoration(labelText: "mrp_key".tr() + "*", counter: Container()),
                       onChanged: (text) {
                         variantModel.mrp = text.trim();
                       },
@@ -409,9 +400,7 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
                       keyboardType: priceKeyboardType,
                       maxLength: PRICE_TEXT_LENGTH,
                       inputFormatters: priceInputFormatter,
-                      decoration: InputDecoration(
-                          labelText: "selling_price_key".tr(),
-                          counter: Container()),
+                      decoration: InputDecoration(labelText: "selling_price_key".tr() + "*", counter: Container()),
                       onChanged: (text) {
                         variantModel.sellingPrice = text.trim();
                       },
@@ -428,8 +417,7 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
                 maxLength: PRICE_TEXT_LENGTH,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 initialValue: variantModel.stock.toString(),
-                decoration: InputDecoration(
-                    labelText: "stock_key".tr(), counter: Container()),
+                decoration: InputDecoration(labelText: "stock_key".tr() + "*", counter: Container()),
                 onChanged: (text) {
                   variantModel.stock = text.trim();
                 },
@@ -453,8 +441,7 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
             style: ButtonStyle(
                 minimumSize: MaterialStateProperty.all(Size(60, 22)),
                 backgroundColor: MaterialStateProperty.all(Colors.red),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18.0),
                 ))),
           ),
@@ -476,8 +463,7 @@ class _ProductVariantWidgetState extends State<ProductVariantWidget> {
             ));
   }
 
-  pickImage(BuildContext context, ImageSource source,
-      List<File> productImages) async {
+  pickImage(BuildContext context, ImageSource source, List<File> productImages) async {
     try {
       List<XFile> imgList = [];
       if (source == ImageSource.gallery) {
@@ -561,8 +547,7 @@ class _VariantOptionWidgetState extends State<VariantOptionWidget> {
                     hintText: "select_key".tr() + " ${widget.option.name}",
                     labelText: "${widget.option.name}",
                     suffixIcon: Icon(Icons.keyboard_arrow_right),
-                    suffixIconConstraints:
-                        BoxConstraints(maxHeight: 20, maxWidth: 20)
+                    suffixIconConstraints: BoxConstraints(maxHeight: 20, maxWidth: 20)
                     /*suffix: Container(
                       width: 20,
                       height: 20,
@@ -575,8 +560,7 @@ class _VariantOptionWidgetState extends State<VariantOptionWidget> {
                 maxLength: 30,
                 decoration: InputDecoration(
                     counter: SizedBox.shrink(),
-                    hintText:
-                        "please_enter_key".tr() + " ${widget.option.name}".tr(),
+                    hintText: "please_enter_key".tr() + " ${widget.option.name}".tr(),
                     labelText: "${widget.option.name}".tr()),
                 onChanged: (text) {
                   widget.option.value = text;

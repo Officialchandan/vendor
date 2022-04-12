@@ -102,17 +102,16 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                 child: Stack(children: [
                   BlocConsumer<SearchAllBloc, SearchAllState>(
                     listener: (context, state) {
+                      log("state ====>$state");
                       if (state is SearchAllIntialState) {
                         searchAllBloc.add(GetProductsEvent());
                       }
                       if (state is GetSearchState) {
                         log("chal pdi api");
                       }
-                      if (state is GetSearchFailureState) {
-                        Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
-                      }
                     },
                     builder: (context, state) {
+                      log("state ====>$state");
                       if (state is GetSearchState) {
                         products = state.data!;
                         searchList = products;
@@ -125,7 +124,11 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                           ),
                         );
                       }
-
+                      if (state is GetSearchFailureState) {
+                        return Center(
+                          child: Image.asset("assets/images/no_data.gif"),
+                        );
+                      }
                       if (state is CategoriesSearchState) {
                         if (state.searchword.isEmpty) {
                           searchList = products;

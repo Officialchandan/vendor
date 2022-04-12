@@ -30,8 +30,7 @@ class GetSearchByCategoriesFailureState extends SearchByCategoriesState {
 class GetSearchByCategoriesCheckBoxState extends SearchByCategoriesState {
   final bool check;
   final int index;
-  GetSearchByCategoriesCheckBoxState(
-      {required this.check, required this.index});
+  GetSearchByCategoriesCheckBoxState({required this.check, required this.index});
 
   @override
   List<Object?> get props => [check, index];
@@ -62,7 +61,8 @@ class SearchByCategoriesInitialState extends SearchByCategoriesState {
 class SearchByCategoriesLoadingState extends SearchByCategoriesState {
   @override
   // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
+  // TODO: implement props
+  List<Object?> get props => [];
 }
 
 class SearchByCategoriesSearchState extends SearchByCategoriesState {

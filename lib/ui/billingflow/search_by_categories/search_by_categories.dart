@@ -111,11 +111,12 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                         searchByCategoriesBloc.add(GetProductsSearchByCategoriesEvent(input: widget.catid));
                       }
                       if (state is GetSearchByCategoriesState) {}
-                      if (state is GetSearchByCategoriesFailureState) {
-                        Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
-                      }
+                      // if (state is GetSearchByCategoriesFailureState) {
+                      //   Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
+                      // }
                     },
                     builder: (context, state) {
+                      log("state---->$state");
                       if (state is GetSearchByCategoriesState) {
                         products = state.data!;
                         searchList = products;
@@ -129,6 +130,11 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                               backgroundColor: ColorPrimary,
                             ),
                           ),
+                        );
+                      }
+                      if (state is GetSearchByCategoriesFailureState) {
+                        return Center(
+                          child: Image.asset("assets/images/no_data.gif"),
                         );
                       }
 
