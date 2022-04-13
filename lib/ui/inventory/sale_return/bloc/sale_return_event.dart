@@ -7,12 +7,12 @@ class SaleReturnEvent extends Equatable {
 }
 
 class GetPurchasedProductEvent extends SaleReturnEvent {
-  final String mobile;
+  final Map input;
 
-  GetPurchasedProductEvent({required this.mobile});
+  GetPurchasedProductEvent({required this.input});
 
   @override
-  List<Object?> get props => [mobile];
+  List<Object?> get props => [input];
 }
 
 class SaleReturnApiEvent extends SaleReturnEvent {

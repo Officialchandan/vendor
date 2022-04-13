@@ -625,6 +625,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                         edit: false,
                                         add: false),
                                     type: PageTransitionType.bottomToTop));
+
                             if (result != null) {
                               List<ProductVariantModel> variants = result as List<ProductVariantModel>;
 

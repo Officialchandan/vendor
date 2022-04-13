@@ -100,7 +100,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                         streamController.add([]);
                       }
                     },
-                    autofocus: true,
+                    // autofocus: true,
                     keyboardType: TextInputType.phone,
                     decoration: InputDecoration(counterText: "", labelText: "mobile_number_key".tr()),
                   ),
@@ -118,10 +118,10 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
               shape: RoundedRectangleBorder(),
               onPressed: () async {
                 if (await Network.isConnected()) {
-                  edtMobile.text.length == 10
-                      ? submit()
-                      : Fluttertoast.showToast(
-                          msg: "please_enter_valid_mobile_number_key".tr(), backgroundColor: ColorPrimary);
+                  // edtMobile.text.length == 10
+                  //     ? submit()
+                  //     : Fluttertoast.showToast(
+                  //         msg: "please_enter_valid_mobile_number_key".tr(), backgroundColor: ColorPrimary);
                 } else {
                   Utility.showToast(Constant.INTERNET_ALERT_MSG);
 
@@ -229,7 +229,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
       input["order_id"] = orderId;
       input["qty"] = qty;
       input["reason"] = edtReason.text.trim();
-
+      log("------->$input");
       saleReturnBloc.add(SaleReturnApiEvent(input: input));
     }
   }
@@ -597,7 +597,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
     if (await Network.isConnected()) {
       Map<String, dynamic> input = HashMap();
       input["mobile"] = mobile;
-
+      input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
       GetPurchasedProductResponse response = await apiProvider.getPurchasedProduct(input);
       if (response.success) {
         List<SaleReturnProducts> products = [];

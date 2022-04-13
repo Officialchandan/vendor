@@ -265,6 +265,7 @@ class ApiProvider {
   }
 
   Future<GetPurchasedProductResponse> getPurchasedProduct(Map input) async {
+    log("=----->$input");
     try {
       Response res = await dio.post(
         Endpoint.GET_PURCHASED_PRODUCTS,

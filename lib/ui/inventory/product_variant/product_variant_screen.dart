@@ -58,7 +58,7 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "add_variant_key".tr(),
+        title: widget.edit != true ? "add_variant_key".tr() : "edit_variant_key".tr(),
       ),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
@@ -137,57 +137,68 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
                     width: 0,
                     height: 0,
                   ),
-            MaterialButton(
-              onPressed: () {
-                print(productVariant);
-                productVariant.forEach((element) {
-                  print(element.toString());
-                });
+            Container(
+              padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: MaterialButton(
+                onPressed: () {
+                  print(productVariant);
+                  productVariant.forEach((element) {
+                    print(element.toString());
+                  });
 
-                if (productVariant.isNotEmpty) {
-                  for (int j = 0; j < productVariant.length; j++) {
-                    if (productVariant[j].option.isNotEmpty) {
-                      for (int i = 0; i < productVariant[j].option.length; i++) {
-                        if (productVariant[j].option[i].value.isEmpty) {
-                          Utility.showToast("please_enter_key ${productVariant[j].option[i].name}".tr());
-                          return;
+                  if (productVariant.isNotEmpty) {
+                    for (int j = 0; j < productVariant.length; j++) {
+                      if (productVariant[j].option.isNotEmpty) {
+                        for (int i = 0; i < productVariant[j].option.length; i++) {
+                          if (productVariant[j].option[i].value.isEmpty) {
+                            Utility.showToast("please_enter_key".tr() + " ${productVariant[j].option[i].name}".tr());
+                            return;
+                          }
                         }
                       }
-                    }
-                    if (productVariant[j].mrp.isEmpty) {
-                      Utility.showToast("please_enter_mrp_key".tr());
-                      return;
-                    }
-                    if (productVariant[j].sellingPrice.isEmpty) {
-                      Utility.showToast("enter_selling_price_key".tr());
-                      return;
-                    }
-                    if (double.parse(productVariant[j].sellingPrice.trim()) >
-                        double.parse(productVariant[j].mrp.trim())) {
-                      Utility.showToast("selling_price_cannot_be_more_than_mrp_key".tr());
-                      return;
-                    }
+                      if (productVariant[j].mrp.isEmpty) {
+                        Utility.showToast("please_enter_mrp_key".tr());
+                        return;
+                      }
+                      if (productVariant[j].mrp == "0") {
+                        Utility.showToast("please_enter_valid_mrp_key".tr());
+                        return;
+                      }
+                      if (productVariant[j].sellingPrice.isEmpty) {
+                        Utility.showToast("please_enter_selling_price_key".tr());
+                        return;
+                      }
+                      if (productVariant[j].sellingPrice == "0") {
+                        Utility.showToast("please_enter_valid_selling_price_key".tr());
+                        return;
+                      }
+                      if (double.parse(productVariant[j].sellingPrice.trim()) >
+                          double.parse(productVariant[j].mrp.trim())) {
+                        Utility.showToast("selling_price_cannot_be_more_than_mrp_key".tr());
+                        return;
+                      }
 
-                    if (productVariant[j].stock.isEmpty) {
-                      Utility.showToast("please_enter_stock_key".tr());
-                      return;
-                    }
-                    if (int.parse(productVariant[j].stock) <= 0) {
-                      Utility.showToast("stock_can_not_be_zero_key".tr());
-                      return;
+                      if (productVariant[j].stock.isEmpty) {
+                        Utility.showToast("please_enter_stock_key".tr());
+                        return;
+                      }
+                      if (int.parse(productVariant[j].stock) <= 0) {
+                        Utility.showToast("stock_can_not_be_zero_key".tr());
+                        return;
+                      }
                     }
                   }
-                }
 
-                Navigator.pop(context, productVariant);
-              },
-              height: 50,
-              minWidth: MediaQuery.of(context).size.width,
-              shape: RoundedRectangleBorder(),
-              color: ColorPrimary,
-              child: Text(
-                "done_key".tr(),
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  Navigator.pop(context, productVariant);
+                },
+                height: 50,
+                minWidth: MediaQuery.of(context).size.width,
+                shape: RoundedRectangleBorder(),
+                color: ColorPrimary,
+                child: Text(
+                  "done_key".tr(),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
               ),
             ),
           ],
@@ -214,7 +225,7 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
     }*/
     else {
       ProductVariantModel productVariantModel =
-          ProductVariantModel(mrp: "0", purchasePrice: "", sellingPrice: "", stock: "");
+          ProductVariantModel(mrp: "", purchasePrice: "", sellingPrice: "", stock: "");
       productVariantModel.option = [];
       widget.variantType.forEach((variantType) {
         VariantOption variant = VariantOption();

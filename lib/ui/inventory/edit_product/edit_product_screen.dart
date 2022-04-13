@@ -5,7 +5,6 @@ import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:vendor/model/product_model.dart';
 import 'package:vendor/model/product_variant.dart';
 import 'package:vendor/model/product_variant_response.dart';
@@ -22,7 +21,6 @@ import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/utility.dart';
 import 'package:vendor/widget/UnitBottomSheet.dart';
 import 'package:vendor/widget/category_bottom_sheet.dart';
-import 'package:vendor/widget/select_image_bottom_sheet.dart';
 import 'package:vendor/widget/variant_type_bottom_sheet.dart';
 
 class EditProductScreen extends StatefulWidget {
@@ -149,88 +147,88 @@ class EditProductScreenState extends State<EditProductScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 80,
-                        height: 80,
-                        decoration: BoxDecoration(color: Colors.grey.shade100, borderRadius: BorderRadius.circular(5)),
-                        child: IconButton(
-                          onPressed: () {
-                            showCupertinoModalPopup(
-                                context: context,
-                                builder: (context) => SelectImageBottomSheet(
-                                      openGallery: () {
-                                        addProductBloc
-                                            .add(SelectImageEvent(context: context, source: ImageSource.gallery));
-                                      },
-                                      openCamera: () {
-                                        addProductBloc
-                                            .add(SelectImageEvent(context: context, source: ImageSource.camera));
-                                      },
-                                    ));
-                          },
-                          icon: Icon(
-                            Icons.linked_camera,
-                            size: 40,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      StreamBuilder<List<ProductImage>>(
-                        stream: imgController.stream,
-                        initialData: [],
-                        builder: (context, snap) {
-                          if (snap.hasData && snap.data!.isNotEmpty) {
-                            return Row(
-                              children: List.generate(snap.data!.length, (index) {
-                                return Stack(children: [
-                                  Container(
-                                    width: 80,
-                                    height: 80,
-                                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        image: DecorationImage(
-                                          image: NetworkImage(
-                                            snap.data![index].productImage,
-                                          ),
-                                          fit: BoxFit.cover,
-                                        )),
-                                  ),
-                                  Positioned(
-                                    right: 0,
-                                    top: 0,
-                                    child: InkWell(
-                                      child: Container(
-                                          width: 25,
-                                          padding: EdgeInsets.all(3),
-                                          decoration: BoxDecoration(shape: BoxShape.circle, color: ColorPrimary),
-                                          child: Icon(
-                                            Icons.delete,
-                                            color: Colors.white,
-                                            size: 15,
-                                          )),
-                                      onTap: () {
-                                        editProductBloc.add(DeleteImageEvent(image: snap.data![index]));
-                                      },
-                                    ),
-                                  )
-                                ]);
-                              }),
-                            );
-                          }
-
-                          return Container();
-                        },
-                      ),
-                    ],
-                  ),
-                ),
+                // SingleChildScrollView(
+                //   scrollDirection: Axis.horizontal,
+                //   child: Row(
+                //     children: [
+                //       Container(
+                //         width: 80,
+                //         height: 80,
+                //         decoration: BoxDecoration(color: Colors.grey.shade100, borderRadius: BorderRadius.circular(5)),
+                //         child: IconButton(
+                //           onPressed: () {
+                //             showCupertinoModalPopup(
+                //                 context: context,
+                //                 builder: (context) => SelectImageBottomSheet(
+                //                       openGallery: () {
+                //                         addProductBloc
+                //                             .add(SelectImageEvent(context: context, source: ImageSource.gallery));
+                //                       },
+                //                       openCamera: () {
+                //                         addProductBloc
+                //                             .add(SelectImageEvent(context: context, source: ImageSource.camera));
+                //                       },
+                //                     ));
+                //           },
+                //           icon: Icon(
+                //             Icons.linked_camera,
+                //             size: 40,
+                //           ),
+                //         ),
+                //       ),
+                //       SizedBox(
+                //         width: 10,
+                //       ),
+                //       StreamBuilder<List<ProductImage>>(
+                //         stream: imgController.stream,
+                //         initialData: [],
+                //         builder: (context, snap) {
+                //           if (snap.hasData && snap.data!.isNotEmpty) {
+                //             return Row(
+                //               children: List.generate(snap.data!.length, (index) {
+                //                 return Stack(children: [
+                //                   Container(
+                //                     width: 80,
+                //                     height: 80,
+                //                     margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                //                     decoration: BoxDecoration(
+                //                         borderRadius: BorderRadius.circular(5),
+                //                         image: DecorationImage(
+                //                           image: NetworkImage(
+                //                             snap.data![index].productImage,
+                //                           ),
+                //                           fit: BoxFit.cover,
+                //                         )),
+                //                   ),
+                //                   Positioned(
+                //                     right: 0,
+                //                     top: 0,
+                //                     child: InkWell(
+                //                       child: Container(
+                //                           width: 25,
+                //                           padding: EdgeInsets.all(3),
+                //                           decoration: BoxDecoration(shape: BoxShape.circle, color: ColorPrimary),
+                //                           child: Icon(
+                //                             Icons.delete,
+                //                             color: Colors.white,
+                //                             size: 15,
+                //                           )),
+                //                       onTap: () {
+                //                         editProductBloc.add(DeleteImageEvent(image: snap.data![index]));
+                //                       },
+                //                     ),
+                //                   )
+                //                 ]);
+                //               }),
+                //             );
+                //           }
+                //
+                //           return Container();
+                //         },
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 const SizedBox(
                   height: 15,
                 ),
