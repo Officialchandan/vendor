@@ -390,6 +390,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                     ? submit()
                     : Fluttertoast.showToast(
                         msg: "please_enter_valid_mobile_number_key".tr(), backgroundColor: ColorPrimary);
+
               } else {
                 Utility.showToast(Constant.INTERNET_ALERT_MSG);
 
@@ -466,14 +467,9 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
   }
 
   void submit() async {
-    if (edtMobile.text.isEmpty) {
-      Utility.showToast("please_enter_customer_mobile_number_key".tr());
-    } else if (purchasedList.isEmpty) {
+ if (purchasedList.isEmpty) {
       Utility.showToast("There is no available product on this number!");
     }
-    /* else if (edtReason.text.trim().isEmpty) {
-      Utility.showToast("Please enter reason ");
-    }*/
     else if (returnProductList.isEmpty) {
       Utility.showToast("Please select product to be return!");
     } else {
