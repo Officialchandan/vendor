@@ -49,23 +49,23 @@ class _DirectBillingState extends State<DirectBilling> {
   String amount = "0.0";
   var billing;
   DirectBillingData? datas;
-
-  Widget show(var coins) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Container(
-            child: Image.asset(
-          "assets/images/point.png",
-          scale: 2,
-        )),
-        Text(
-          "  $coins",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: ColorPrimary),
-        ),
-      ],
-    );
-  }
+  //
+  // Widget show(var coins) {
+  //   return Row(
+  //     mainAxisAlignment: MainAxisAlignment.end,
+  //     children: [
+  //       Container(
+  //           child: Image.asset(
+  //         "assets/images/point.png",
+  //         scale: 2,
+  //       )),
+  //       Text(
+  //         "  $coins",
+  //         style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: ColorPrimary),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   @override
   void initState() {
@@ -106,6 +106,25 @@ class _DirectBillingState extends State<DirectBilling> {
                 padding: EdgeInsets.only(left: 15, right: 15, top: 10),
                 child: Column(
                   children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Container(
+                            child: Image.asset(
+                          "assets/images/point.png",
+                          scale: 2,
+                        )),
+                        mobileController.text.length == 10
+                            ? Text(
+                                "  $coins",
+                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: ColorPrimary),
+                              )
+                            : Text(
+                                "  0.0",
+                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: ColorPrimary),
+                              ),
+                      ],
+                    ),
                     BlocConsumer<DirectBillingCustomerNumberResponseBloc, DirectBillingCustomerNumberResponseState>(
                       listener: (context, state) {
                         if (state is DirectBillingCustomerNumberResponseState) {
@@ -166,7 +185,7 @@ class _DirectBillingState extends State<DirectBilling> {
                           coins = state.data.toString();
                         }
 
-                        return show(coins);
+                        return Container();
                       },
                     ),
                     Container(
@@ -197,7 +216,6 @@ class _DirectBillingState extends State<DirectBilling> {
                                       .add(GetDirectBillingCustomerNumberResponseEvent(mobile: mobileController.text));
                                 }
                                 if (mobileController.text.length == 9) {
-                                  show(0);
                                   directBillingCustomerNumberResponseBloc
                                       .add(GetDirectBillingCustomerNumberResponseEvent(mobile: mobileController.text));
                                 }
@@ -472,52 +490,48 @@ class _DirectBillingState extends State<DirectBilling> {
                 ),
               ),
             ),
-            bottomNavigationBar: Container(
-              height: 50,
-              child: Center(
-                child: InkWell(
-                  onTap: () {
-                    if (status1 == 0) {
-                      if (mobileController.text.length == 10) {
-                        if (amountController.text.length >= 0) {
-                          if (nameController.text.length > 1) {
-                            userRegister(context);
-                          } else {
-                            Fluttertoast.showToast(msg: "please_enter_name_key".tr(), backgroundColor: ColorPrimary);
-                          }
-                        } else {
-                          Fluttertoast.showToast(msg: "please_enter_amount_key".tr(), backgroundColor: ColorPrimary);
-                        }
+            bottomNavigationBar: InkWell(
+              onTap: () {
+                if (status1 == 0) {
+                  if (mobileController.text.length == 10) {
+                    if (amountController.text.length >= 0) {
+                      if (nameController.text.length > 1) {
+                        userRegister(context);
                       } else {
-                        Fluttertoast.showToast(
-                            msg: "please_enter_10_digits_number_key".tr(), backgroundColor: ColorPrimary);
+                        Fluttertoast.showToast(msg: "please_enter_name_key".tr(), backgroundColor: ColorPrimary);
                       }
                     } else {
-                      if (mobileController.text.length == 10) {
-                        if (amountController.text.length >= 0) {
-                          if (checkbox == true) {
-                            directBilling(context);
-                          } else {
-                            Fluttertoast.showToast(msg: "Please select category".tr(), backgroundColor: ColorPrimary);
-                          }
-                        } else {
-                          Fluttertoast.showToast(msg: "please_enter_amount_key".tr(), backgroundColor: ColorPrimary);
-                        }
-                      } else {
-                        Fluttertoast.showToast(
-                            msg: "please_enter_10_digits_number_key".tr(), backgroundColor: ColorPrimary);
-                      }
+                      Fluttertoast.showToast(msg: "please_enter_amount_key".tr(), backgroundColor: ColorPrimary);
                     }
-                  },
-                  child: Container(
-                    height: 50,
-                    decoration: BoxDecoration(color: ColorPrimary),
-                    width: MediaQuery.of(context).size.width,
-                    child: Center(
-                      child: Text("submit_button_key".tr(),
-                          style: TextStyle(fontSize: 17, color: Colors.white, fontWeight: FontWeight.w600)),
-                    ),
-                  ),
+                  } else {
+                    Fluttertoast.showToast(
+                        msg: "please_enter_10_digits_number_key".tr(), backgroundColor: ColorPrimary);
+                  }
+                } else {
+                  if (mobileController.text.length == 10) {
+                    if (amountController.text.length >= 0) {
+                      if (checkbox == true) {
+                        directBilling(context);
+                      } else {
+                        Fluttertoast.showToast(msg: "Please select category".tr(), backgroundColor: ColorPrimary);
+                      }
+                    } else {
+                      Fluttertoast.showToast(msg: "please_enter_amount_key".tr(), backgroundColor: ColorPrimary);
+                    }
+                  } else {
+                    Fluttertoast.showToast(
+                        msg: "please_enter_10_digits_number_key".tr(), backgroundColor: ColorPrimary);
+                  }
+                }
+              },
+              child: Container(
+                height: 50,
+                padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                decoration: BoxDecoration(color: ColorPrimary),
+                width: MediaQuery.of(context).size.width,
+                child: Center(
+                  child: Text("submit_button_key".tr(),
+                      style: TextStyle(fontSize: 17, color: Colors.white, fontWeight: FontWeight.w600)),
                 ),
               ),
             ),

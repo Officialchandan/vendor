@@ -40,11 +40,12 @@ class ServerError implements Exception {
         _errorMessage = "Receive timeout in connection";
         break;
       case DioErrorType.response:
-        _errorMessage = "Your session has been expired! Please login again";
         if (error.response!.statusCode == 401) {
           print("come here-->");
-
+          _errorMessage = "Your session has been expired! Please login again";
           logout();
+        } else {
+          _errorMessage = "Internal server Error";
         }
 
         break;
