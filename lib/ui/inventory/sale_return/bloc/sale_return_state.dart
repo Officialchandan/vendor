@@ -13,12 +13,21 @@ class SaleReturnInitialState extends SaleReturnState {}
 class SaleReturnLoadingState extends SaleReturnState {}
 
 class GetProductSuccessState extends SaleReturnState {
-  final List<PurchaseProductModel> purchaseList;
+  final List<SaleReturnProducts> purchaseList;
 
   GetProductSuccessState({required this.purchaseList});
 
   @override
   List<Object?> get props => [purchaseList];
+}
+
+class GetProductFailureState extends SaleReturnState {
+  final String message;
+
+  GetProductFailureState({required this.message});
+
+  @override
+  List<Object?> get props => [message];
 }
 
 class ProductReturnSuccessState extends SaleReturnState {
@@ -49,4 +58,34 @@ class SelectProductState extends SaleReturnState {
 
   @override
   List<Object?> get props => [returnProductList];
+}
+
+class SaleReturnCheckBoxState extends SaleReturnState {
+  final bool isChecked;
+  final int index;
+
+  SaleReturnCheckBoxState({required this.isChecked, required this.index});
+
+  @override
+  List<Object?> get props => [isChecked, index];
+}
+
+class SaleReturnQtyIncrementState extends SaleReturnState {
+  final int count;
+  final int index;
+
+  SaleReturnQtyIncrementState({required this.count, required this.index});
+
+  @override
+  List<Object?> get props => [count, index];
+}
+
+class SaleReturnQtyDecrementState extends SaleReturnState {
+  final int count;
+  final int index;
+
+  SaleReturnQtyDecrementState({required this.count, required this.index});
+
+  @override
+  List<Object?> get props => [count, index];
 }
