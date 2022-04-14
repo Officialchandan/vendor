@@ -147,7 +147,7 @@
   "the_mobile_format_is_invalid_key": "मोबाइल प्रारूप अमान्य है",
   "please_enter_valid_mobile_number_key": "कृपया वैध मोबाइल नंबर दर्ज करें",
   "please_enter_valid_number_first_key": "कृपया पहले मान्य नंबर दर्ज करें",
-  "product_cant_be_negative_key": "उत्पाद नकारात्मक नहीं हो सकता",
+  "product_cant_be_negative_key": "मात्रा 1 से कम नहीं हो सकती",
   "please_atleast_one_product_key": "कृपया कम से कम एक उत्पाद",
   "the_product_field_is_requied_key": "उत्पाद फ़ील्ड आवश्यक है",
   "no_notification_key" : "कोई सूचना नहीं ",

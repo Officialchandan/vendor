@@ -329,8 +329,9 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                                                                               .count--))
                                                                                   : Fluttertoast.showToast(
                                                                                       msg:
-                                                                                          "product_cant_be_in_negative_key"
-                                                                                              .tr());
+                                                                                          "product_cant_be_negative_key"
+                                                                                              .tr(),
+                                                                                      backgroundColor: ColorPrimary);
                                                                             } else {
                                                                               Fluttertoast.showToast(
                                                                                   msg:

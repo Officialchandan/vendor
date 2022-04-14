@@ -72,6 +72,7 @@ class _BillingProductsState extends State<BillingProducts> {
   String freecoins = "0.0";
   Future<double> earningPrice(double price, double comission, int qty) async {
     freecoins = await SharedPref.getStringPreference(SharedPref.VendorCoin);
+    log("frecoins---->$freecoins");
     x = price;
     log("1=$x");
     x = (x * comission) / 100;

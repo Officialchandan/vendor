@@ -174,6 +174,8 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                             }
                             if (state is GetFreeCoinState) {
                               freecoin = state.data;
+                              SharedPref.setStringPreference(SharedPref.VendorCoin, freecoin!.availableCoins);
+                              log("VendorCoin------>${freecoin!.availableCoins}");
                               if (freecoin!.availableCoins == "0") {
                                 condition = 0;
                               }

@@ -88,6 +88,7 @@ class DirectBillingCustomerNumberResponseBloc
         log("$result");
         if (result.success) {
           SharedPref.setStringPreference(SharedPref.VendorCoin, result.data!.vendorAvailableCoins);
+          log("VendorCoin------->${result.data!.vendorAvailableCoins}");
           yield GetDirectBillingState(message: result.message, data: result.data!, succes: result.success);
         } else {
           Fluttertoast.showToast(msg: result.message, backgroundColor: ColorPrimary);

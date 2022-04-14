@@ -197,6 +197,7 @@ class _DirectBillingState extends State<DirectBilling> {
                                       .add(GetDirectBillingCustomerNumberResponseEvent(mobile: mobileController.text));
                                 }
                                 if (mobileController.text.length == 9) {
+                                  show(0);
                                   directBillingCustomerNumberResponseBloc
                                       .add(GetDirectBillingCustomerNumberResponseEvent(mobile: mobileController.text));
                                 }
@@ -206,6 +207,7 @@ class _DirectBillingState extends State<DirectBilling> {
                                   padding: const EdgeInsets.only(top: 8.0),
                                   child: TextFormField(
                                       controller: nameController,
+                                      inputFormatters: [FilteringTextInputFormatter.allow(Validator.name)],
                                       decoration: InputDecoration(
                                         hintText: 'enter_customer_name_key'.tr(),
                                         labelText: 'full_name_key'.tr(),
@@ -583,6 +585,7 @@ class _DirectBillingState extends State<DirectBilling> {
     input["earning_coins"] = datas!.earningCoins;
     input["myprofit_revenue"] = datas!.myprofitRevenue;
     SharedPref.setStringPreference(SharedPref.VendorCoin, datas!.vendorAvailableCoins);
+    log("VendorCoin------->${datas!.vendorAvailableCoins}");
     input["vendor_available_coins"] = datas!.vendorAvailableCoins;
 
     log("=====? $input");
@@ -739,6 +742,7 @@ class _DirectBillingState extends State<DirectBilling> {
     if (amount.toString().isNotEmpty) {
       double commission = double.parse(categoryList.first.commission);
       String freeCoins = await SharedPref.getStringPreference(SharedPref.VendorCoin);
+      log("VendorCoin------->$freeCoins");
       amount = double.parse(freeCoins) != 0 ? amount : amount - (amount * 18) / 100;
       amount = (amount * commission) / 100;
       amount = amount - 0.50;
@@ -830,7 +834,7 @@ class _DirectBillingState extends State<DirectBilling> {
                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
                     ),
                     Text(
-                      " \u20B9${(double.parse(coinss) / 3).toStringAsFixed(0)}",
+                      " \u20B9${(double.parse(coinss) / 3).toStringAsFixed(2)}",
                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: ColorPrimary),
                     ),
                   ],

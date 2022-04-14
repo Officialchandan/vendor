@@ -189,6 +189,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                         status1 == 0
                             ? TextFormField(
                                 controller: nameController,
+                                inputFormatters: [FilteringTextInputFormatter.allow(Validator.name)],
                                 decoration: InputDecoration(
                                   hintText: 'enter_customer_name_key'.tr(),
                                   labelText: 'full_name_key'.tr(),

@@ -322,6 +322,11 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                                               if (searchList[index].count > 1) {
                                                                                 searchAllBloc.add(GetIncrementEvent(
                                                                                     count: searchList[index].count--));
+                                                                              } else {
+                                                                                Fluttertoast.showToast(
+                                                                                    msg: "product_cant_be_negative_key"
+                                                                                        .tr(),
+                                                                                    backgroundColor: ColorPrimary);
                                                                               }
                                                                             } else {
                                                                               Fluttertoast.showToast(

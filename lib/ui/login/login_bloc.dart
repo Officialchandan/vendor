@@ -39,19 +39,15 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       EasyLoading.dismiss();
       log("$result");
       if (result.success) {
-        baseOptions.headers.addAll({
-          "languagecode":
-              "${await SharedPref.getStringPreference(SharedPref.SELECTEDLANG)}"
-        });
+        baseOptions.headers
+            .addAll({"languagecode": "${await SharedPref.getStringPreference(SharedPref.SELECTEDLANG)}"});
         yield GetLoginState(result);
       } else {
         yield GetLoginFailureState(message: result.message);
       }
     } else {
       EasyLoading.dismiss();
-      Fluttertoast.showToast(
-          msg: "please_check_your_internet_connection_key".tr(),
-          backgroundColor: ColorPrimary);
+      Fluttertoast.showToast(msg: "please_check_your_internet_connection_key".tr(), backgroundColor: ColorPrimary);
     }
   }
 
@@ -64,21 +60,17 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         SharedPref.setStringPreference(SharedPref.TOKEN, result.token!);
 
         SharedPref.setIntegerPreference(SharedPref.VENDORID, result.vendorId!);
-        SharedPref.setIntegerPreference(
-            SharedPref.USERSTATUS, result.vendorStatus!);
+        SharedPref.setIntegerPreference(SharedPref.USERSTATUS, result.vendorStatus!);
         SharedPref.setStringPreference(SharedPref.USERNAME, result.vendorName!);
-        SharedPref.setStringPreference(
-            SharedPref.USERNUMBER, result.vendorMobile!);
+        SharedPref.setStringPreference(SharedPref.USERNUMBER, result.vendorMobile!);
         SharedPref.setStringPreference(SharedPref.OWNERNAME, result.ownerName!);
-        SharedPref.setStringPreference(
-            SharedPref.VendorCoin, result.vendorCoins!);
+        SharedPref.setStringPreference(SharedPref.VendorCoin, result.vendorCoins!);
+        log("VendorCoin------->${result.vendorCoins!}");
         if (result.commission!.isNotEmpty) {
-          SharedPref.setStringPreference(
-              SharedPref.COMMISSION, result.commission!);
+          SharedPref.setStringPreference(SharedPref.COMMISSION, result.commission!);
         }
 
-        baseOptions.headers
-            .addAll({"Authorization": "bearer ${result.token!}"});
+        baseOptions.headers.addAll({"Authorization": "bearer ${result.token!}"});
         yield GetLoginOtpState(result.message);
       } else {
         yield GetLoginFailureState(message: result.message);
@@ -87,9 +79,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       //   yield GetLoginFailureState(message: "internal_server_error_key".tr());
       // }
     } else {
-      Fluttertoast.showToast(
-          msg: "please_check_your_internet_connection_key".tr(),
-          backgroundColor: ColorPrimary);
+      Fluttertoast.showToast(msg: "please_check_your_internet_connection_key".tr(), backgroundColor: ColorPrimary);
     }
   }
 }
