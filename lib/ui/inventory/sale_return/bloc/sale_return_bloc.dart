@@ -5,6 +5,7 @@ import 'package:vendor/model/get_purchased_product_response.dart';
 import 'package:vendor/model/sale_return_resonse.dart';
 import 'package:vendor/ui/inventory/sale_return/bloc/sale_return_event.dart';
 import 'package:vendor/ui/inventory/sale_return/bloc/sale_return_state.dart';
+import 'package:vendor/ui/money_due_upi/sales_return/sales_return_bloc/sales_return_states.dart';
 import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/utility.dart';
@@ -30,16 +31,80 @@ class SaleReturnBloc extends Bloc<SaleReturnEvent, SaleReturnState> {
       yield SaleReturnLoadingState();
       yield SelectProductState(returnProductList: event.returnProductList);
     }
+
+    if (event is SaleReturnCheckBoxEvent) {
+      yield SaleReturnLoadingState();
+      yield SaleReturnCheckBoxState(
+          isChecked: event.isChecked, index: event.index);
+    }
+
+    if (event is SaleReturnQtyIncrementEvent) {
+      yield SaleReturnLoadingState();
+      yield SaleReturnQtyIncrementState(count: event.count, index: event.index);
+    }
+
+    if (event is SaleReturnQtyDecrementEvent) {
+      yield SaleReturnLoadingState();
+      yield SaleReturnQtyDecrementState(count: event.count, index: event.index);
+    }
+
+    if (event is SaleReturnClearDataEvent) {
+      yield SaleReturnLoadingState();
+      yield GetProductFailureState(message: event.message);
+    }
   }
 
   Stream<SaleReturnState> getPurchasedProduct(Map input) async* {
     if (await Network.isConnected()) {
-      GetPurchasedProductResponse response = await apiProvider.getPurchasedProduct(input);
+      GetPurchasedProductResponse response =
+          await apiProvider.getPurchasedProduct(input);
 
       if (response.success) {
-        yield GetProductSuccessState(purchaseList: response.data!);
+        List<SaleReturnProducts> products = [];
+        for (var i in response.data!) {
+          SaleReturnProducts categoryWise = SaleReturnProducts(
+            orderId: i.orderId,
+            categoryName: "",
+            dateTime: i.dateTime,
+            productId: i.productId,
+            productName: i.productName,
+            productImages: i.productImages.isEmpty ? "" : i.productImages.first,
+            vendorId: i.vendorId,
+            customerId: i.customerId,
+            earningCoins: i.earningCoins,
+            redeemCoins: i.redeemCoins,
+            qty: i.qty,
+            price: i.price,
+            total: i.total,
+            mobile: "",
+          );
+          products.add(categoryWise);
+        }
+
+        for (var i in response.directBilling!) {
+          SaleReturnProducts directBilling = SaleReturnProducts(
+            orderId: i.orderId.toString(),
+            categoryName: i.categoryName,
+            dateTime: i.dateTime,
+            productId: "",
+            productName: i.categoryName,
+            productImages: "",
+            vendorId: i.vendorId.toString(),
+            customerId: "",
+            earningCoins: "",
+            redeemCoins: i.redeemedCoins,
+            qty: 0,
+            price: "0",
+            total: i.totalPay,
+            mobile: i.mobile,
+          );
+          products.add(directBilling);
+        }
+
+        yield GetProductSuccessState(purchaseList: products);
       } else {
         Utility.showToast(response.message);
+        yield GetProductFailureState(message: response.message);
       }
     } else {
       Utility.showToast(Constant.INTERNET_ALERT_MSG);
@@ -51,7 +116,8 @@ class SaleReturnBloc extends Bloc<SaleReturnEvent, SaleReturnState> {
       SaleReturnResponse response = await apiProvider.saleReturnApi(input);
 
       if (response.success) {
-        yield ProductReturnSuccessState(message: response.message, input: input, data: response.data!);
+        yield ProductReturnSuccessState(
+            message: response.message, input: input, data: response.data!);
       } else {
         Utility.showToast(response.message);
       }
