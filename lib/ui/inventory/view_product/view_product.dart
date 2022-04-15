@@ -256,10 +256,10 @@ class _ViewProductScreenState extends State<ViewProductScreen> {
         // products.sort((a, b) => int.parse(b.sellingPrice).compareTo(int.parse(a.sellingPrice)));
         streamController.add(products);
       } else {
-        Utility.showToast(response.message);
+        Utility.showToast(msg: response.message);
       }
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
 
       // EasyLoading.showError(Constant.INTERNET_ALERT_MSG);
     }
@@ -276,10 +276,10 @@ class _ViewProductScreenState extends State<ViewProductScreen> {
         streamController.add(products);
         // scrollController.
       } else {
-        Utility.showToast(response.message);
+        Utility.showToast(msg: response.message);
       }
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
     }
   }
 }

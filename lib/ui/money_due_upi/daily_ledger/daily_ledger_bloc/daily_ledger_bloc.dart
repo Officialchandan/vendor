@@ -132,7 +132,7 @@ class DailyLedgerHistoryBloc extends Bloc<DailyLedgerHistoryEvent, DailyLedgerHi
         yield GetDailyLedgerHistoryFailureState(succes: response.success, message: response.message);
       }
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
     }
   }
 }

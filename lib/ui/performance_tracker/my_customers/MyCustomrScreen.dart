@@ -7,7 +7,6 @@ import 'package:page_transition/page_transition.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/model/get_my_customer_response.dart';
 import 'package:vendor/ui/performance_tracker/my_customers/customer_detail_screen.dart';
-import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/sharedpref.dart';
@@ -87,15 +86,11 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                   List<Customer> searchList = [];
 
                   customerList.forEach((element) {
-                    if (element.customerName
-                        .toLowerCase()
-                        .contains(text.trim().toLowerCase())) {
+                    if (element.customerName.toLowerCase().contains(text.trim().toLowerCase())) {
                       searchList.add(element);
                     }
 
-                    if (element.mobile
-                        .toLowerCase()
-                        .contains(text.trim().toLowerCase())) {
+                    if (element.mobile.toLowerCase().contains(text.trim().toLowerCase())) {
                       searchList.add(element);
                     }
                   });
@@ -114,13 +109,10 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                     ),
                   ),
                   contentPadding: const EdgeInsets.all(10),
-                  prefixIconConstraints:
-                      BoxConstraints(maxHeight: 50, maxWidth: 50),
+                  prefixIconConstraints: BoxConstraints(maxHeight: 50, maxWidth: 50),
                   fillColor: Colors.grey.shade200,
                   filled: true,
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5),
-                      borderSide: BorderSide.none),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: BorderSide.none),
                   hintText: "search_customer_key".tr(),
                   hintStyle: TextStyle(fontWeight: FontWeight.bold)),
             ),
@@ -149,8 +141,7 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                         height: 15,
                       );
                     },
-                    keyboardDismissBehavior:
-                        ScrollViewKeyboardDismissBehavior.onDrag,
+                    keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                     itemBuilder: (context, index) {
                       Customer customer = snapshot.data![index];
 
@@ -159,34 +150,26 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                           Navigator.push(
                               context,
                               PageTransition(
-                                  child:
-                                      CustomerDetailScreen(customer: customer),
-                                  type: PageTransitionType.fade));
+                                  child: CustomerDetailScreen(customer: customer), type: PageTransitionType.fade));
                         },
                         child: Container(
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
-                              border: Border.all(
-                                  color: Colors.grey.shade200, width: 1)),
+                              border: Border.all(color: Colors.grey.shade200, width: 1)),
                           child: Column(
                             children: [
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Expanded(
                                       child: Text(
                                     customer.customerName,
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16),
+                                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
                                   )),
                                   Text(
                                     Utility.getFormatDate1(customer.date),
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 11),
+                                    style: TextStyle(color: Colors.black, fontSize: 11),
                                   ),
                                 ],
                               ),
@@ -194,14 +177,12 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                                 height: 10,
                               ),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Expanded(
                                       child: Text(
                                     "+91 ${customer.mobile}",
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 14),
+                                    style: TextStyle(color: Colors.black, fontSize: 14),
                                   )),
                                   // Text(
                                   //   "qty_key".tr() + " : ${customer.qty}",
@@ -235,8 +216,7 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
     if (await Network.isConnected()) {
       Map<String, dynamic> input = HashMap<String, dynamic>();
 
-      input["vendor_id"] =
-          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
       input["from_date"] = startDate;
       input["to_date"] = endDate;
 
@@ -250,7 +230,7 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
         streamController.addError("${response.message}");
       }
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
     }
   }
 }

@@ -28,8 +28,7 @@ class _SelectCategoryWidgetState extends State<SelectCategoryWidget> {
           margin: EdgeInsets.all(10),
           child: ListTile(
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-                side: BorderSide(color: Colors.grey.shade300, width: 1)),
+                borderRadius: BorderRadius.circular(10), side: BorderSide(color: Colors.grey.shade300, width: 1)),
             onTap: () {
               widget.onSelect(null);
             },
@@ -91,8 +90,7 @@ class _SelectCategoryWidgetState extends State<SelectCategoryWidget> {
                     child: ListTile(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
-                          side: BorderSide(
-                              color: Colors.grey.shade300, width: 1)),
+                          side: BorderSide(color: Colors.grey.shade300, width: 1)),
                       onTap: () {
                         widget.onSelect(snap.data![index].id.toString());
                         // Navigator.push(
@@ -132,11 +130,11 @@ class _SelectCategoryWidgetState extends State<SelectCategoryWidget> {
         categories = response.data!;
         return categories;
       } else {
-        Utility.showToast(response.message);
+        Utility.showToast(msg: response.message);
         return [];
       }
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
       return [];
       // EasyLoading.showError(Constant.INTERNET_ALERT_MSG);
     }

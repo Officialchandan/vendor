@@ -49,11 +49,11 @@ class _ViewCategoryScreenState extends State<ViewCategoryScreen> {
         categories = response.data!;
         return categories;
       } else {
-        Utility.showToast(response.message);
+        Utility.showToast(msg: response.message);
         return [];
       }
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
       return [];
       // EasyLoading.showError(Constant.INTERNET_ALERT_MSG);
     }

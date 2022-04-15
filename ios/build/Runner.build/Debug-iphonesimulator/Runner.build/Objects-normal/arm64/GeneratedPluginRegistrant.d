@@ -27,9 +27,9 @@ dependencies: \
   /Users/mac/Documents/vaibhav/myprofit_vendor/build/ios/Debug-iphonesimulator/connectivity/connectivity.framework/Headers/FLTConnectivityPlugin.h \
   /Users/mac/Documents/vaibhav/myprofit_vendor/build/ios/Debug-iphonesimulator/connectivity/connectivity.framework/Modules/module.modulemap \
   /Users/mac/Documents/vaibhav/myprofit_vendor/build/ios/Debug-iphonesimulator/connectivity/connectivity.framework/Headers/connectivity-umbrella.h \
-  /Users/mac/Documents/vaibhav/myprofit_vendor/build/ios/Debug-iphonesimulator/fluttertoast/fluttertoast.framework/Headers/FluttertoastPlugin.h \
-  /Users/mac/Documents/vaibhav/myprofit_vendor/build/ios/Debug-iphonesimulator/fluttertoast/fluttertoast.framework/Modules/module.modulemap \
-  /Users/mac/Documents/vaibhav/myprofit_vendor/build/ios/Debug-iphonesimulator/fluttertoast/fluttertoast.framework/Headers/fluttertoast-umbrella.h \
+  /Users/mac/Documents/vaibhav/myprofit_vendor/build/ios/Debug-iphonesimulator/Utility/Utility.framework/Headers/UtilityPlugin.h \
+  /Users/mac/Documents/vaibhav/myprofit_vendor/build/ios/Debug-iphonesimulator/Utility/Utility.framework/Modules/module.modulemap \
+  /Users/mac/Documents/vaibhav/myprofit_vendor/build/ios/Debug-iphonesimulator/Utility/Utility.framework/Headers/Utility-umbrella.h \
   /Users/mac/Documents/vaibhav/myprofit_vendor/build/ios/Debug-iphonesimulator/image_picker/image_picker.framework/Headers/FLTImagePickerPlugin.h \
   /Users/mac/Documents/vaibhav/myprofit_vendor/build/ios/Debug-iphonesimulator/image_picker/image_picker.framework/Modules/module.modulemap \
   /Users/mac/Documents/vaibhav/myprofit_vendor/build/ios/Debug-iphonesimulator/image_picker/image_picker.framework/Headers/FLTPHPickerSaveImageToPathOperation.h \

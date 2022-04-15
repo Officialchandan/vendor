@@ -5,7 +5,6 @@ import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/model/chat_papdi_module/billing_chatpapdi.dart';
@@ -17,6 +16,7 @@ import 'package:vendor/ui_without_inventory/home/bottom_navigation_bar.dart';
 import 'package:vendor/ui_without_inventory/home/home.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
+import 'package:vendor/utility/utility.dart';
 import 'package:vendor/utility/validator.dart';
 
 class ChatPapdiBilling extends StatefulWidget {
@@ -118,10 +118,10 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
 
                         if (state is GetChatPapdiBillingFailureState) {
                           message = state.message;
-                          Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
+                          Utility.showToast(msg: state.message);
                         }
                         if (state is GetChatPapdiBillingOtpState) {
-                          Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
+                          Utility.showToast(msg: state.message);
 
                           // var result = await
                           datas!.qrCodeStatus == 0
@@ -136,7 +136,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                         }
                         if (state is GetChatPapdiBillingOtpLoadingstate) {}
                         if (state is GetChatPapdiBillingOtpFailureState) {
-                          Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
+                          Utility.showToast(msg: state.message);
                         }
                         if (state is GetChatPapdiPartialUserState) {
                           succes = state.succes;
@@ -280,16 +280,13 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                                       redeem = redeems;
                                     });
                                   } else {
-                                    Fluttertoast.showToast(
-                                        msg: "You_dont_have_enough_coins".tr(), backgroundColor: ColorPrimary);
+                                    Utility.showToast(msg: "You_dont_have_enough_coins".tr());
                                   }
                                 } else {
-                                  Fluttertoast.showToast(
-                                      msg: "please_enter_number_first_key".tr(), backgroundColor: ColorPrimary);
+                                  Utility.showToast(msg: "please_enter_number_first_key".tr());
                                 }
                               } else {
-                                Fluttertoast.showToast(
-                                    msg: "please_enter_10_digits_number_key".tr(), backgroundColor: ColorPrimary);
+                                Utility.showToast(msg: "please_enter_10_digits_number_key".tr());
                               }
                               if (redeem == true) {
                                 redeemDialog(context);
@@ -423,25 +420,23 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
 
                             if (succes == true) {}
                           } else {
-                            Fluttertoast.showToast(msg: "please_enter_name_key".tr(), backgroundColor: ColorPrimary);
+                            Utility.showToast(msg: "please_enter_name_key".tr());
                           }
                         } else {
-                          Fluttertoast.showToast(msg: "please_enter_amount_key".tr(), backgroundColor: ColorPrimary);
+                          Utility.showToast(msg: "please_enter_amount_key".tr());
                         }
                       } else {
-                        Fluttertoast.showToast(
-                            msg: "please_enter_10_digits_number_key".tr(), backgroundColor: ColorPrimary);
+                        Utility.showToast(msg: "please_enter_10_digits_number_key".tr());
                       }
                     } else {
                       if (mobileController.text.length == 10) {
                         if (amountController.text.length >= 0) {
                           directBilling(context);
                         } else {
-                          Fluttertoast.showToast(msg: "please_enter_amount_key", backgroundColor: ColorPrimary);
+                          Utility.showToast(msg: "please_enter_amount_key");
                         }
                       } else {
-                        Fluttertoast.showToast(
-                            msg: "please_enter_10_digits_number_key".tr(), backgroundColor: ColorPrimary);
+                        Utility.showToast(msg: "please_enter_10_digits_number_key".tr());
                       }
                     }
                   },

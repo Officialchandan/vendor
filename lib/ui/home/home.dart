@@ -5,7 +5,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:share/share.dart';
 import 'package:vendor/main.dart';
@@ -136,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 onPressed: () {
                   message == ""
-                      ? Fluttertoast.showToast(msg: "no_notification_key".tr(), backgroundColor: ColorPrimary)
+                      ? Utility.showToast(msg: "no_notification_key".tr())
                       : Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -217,8 +216,7 @@ class _HomeScreenState extends State<HomeScreen> {
               if (await Network.isConnected()) {
                 routeManager(index);
               } else {
-                Fluttertoast.showToast(
-                    msg: "please_check_your_internet_connection_key".tr(), backgroundColor: ColorPrimary);
+                Utility.showToast(msg: "please_check_your_internet_connection_key".tr());
               }
             },
             child: Container(
@@ -328,11 +326,11 @@ class _HomeScreenState extends State<HomeScreen> {
           count = totalNotification - isReadCount;
         });
       } else {
-        response.message == "" ? Container() : Utility.showToast(response.message);
+        response.message == "" ? Container() : Utility.showToast(msg: response.message);
         message = response.message;
       }
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
     }
   }
 }

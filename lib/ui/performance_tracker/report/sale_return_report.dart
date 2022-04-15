@@ -11,11 +11,11 @@ import 'package:page_transition/page_transition.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart' as xls;
+import 'package:vendor/api/Endpoint.dart';
+import 'package:vendor/api/server_error.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/model/get_categories_response.dart';
 import 'package:vendor/model/product_model.dart';
-import 'package:vendor/api/Endpoint.dart';
-import 'package:vendor/api/server_error.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
 import 'package:vendor/ui/performance_tracker/report/product_list_screen.dart';
 import 'package:vendor/ui/performance_tracker/report_data_grid/sales_return_report_data_grid.dart';
@@ -39,8 +39,7 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
   String endDate = "";
   CategoryModel? categoryModel;
   Option? days;
-  DateRangePickerController dateRangePickerController =
-      DateRangePickerController();
+  DateRangePickerController dateRangePickerController = DateRangePickerController();
 
   TextEditingController edtCategory = TextEditingController();
   TextEditingController edtDays = TextEditingController();
@@ -105,8 +104,7 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
                     headerStyle: DateRangePickerHeaderStyle(
                       textStyle: TextStyle(color: ColorPrimary),
                     ),
-                    yearCellStyle: DateRangePickerYearCellStyle(
-                        textStyle: TextStyle(color: Colors.black)),
+                    yearCellStyle: DateRangePickerYearCellStyle(textStyle: TextStyle(color: Colors.black)),
                     // showActionButtons: true,
                     showNavigationArrow: false,
                     selectionMode: DateRangePickerSelectionMode.range,
@@ -126,8 +124,7 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
                           Icons.keyboard_arrow_right_sharp,
                           color: ColorPrimary,
                         ),
-                        suffixIconConstraints:
-                            BoxConstraints(maxWidth: 20, maxHeight: 20)),
+                        suffixIconConstraints: BoxConstraints(maxWidth: 20, maxHeight: 20)),
                   ),
             SizedBox(
               height: 10,
@@ -144,8 +141,7 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
                     Icons.keyboard_arrow_right_sharp,
                     color: ColorPrimary,
                   ),
-                  suffixIconConstraints:
-                      BoxConstraints(maxWidth: 20, maxHeight: 20)),
+                  suffixIconConstraints: BoxConstraints(maxWidth: 20, maxHeight: 20)),
             ),
             SizedBox(
               height: 10,
@@ -162,8 +158,7 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
                     Icons.keyboard_arrow_right_sharp,
                     color: ColorPrimary,
                   ),
-                  suffixIconConstraints:
-                      BoxConstraints(maxWidth: 20, maxHeight: 20)),
+                  suffixIconConstraints: BoxConstraints(maxWidth: 20, maxHeight: 20)),
             ),
           ],
         ),
@@ -188,8 +183,7 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
 
     if (args.value is PickerDateRange) {
       startDate = Utility.getFormatDate(args.value.startDate);
-      endDate =
-          Utility.getFormatDate(args.value.endDate ?? args.value.startDate);
+      endDate = Utility.getFormatDate(args.value.endDate ?? args.value.startDate);
     }
   }
 
@@ -208,8 +202,7 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
         isScrollControlled: true,
         backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topRight: Radius.circular(25), topLeft: Radius.circular(25))),
+            borderRadius: BorderRadius.only(topRight: Radius.circular(25), topLeft: Radius.circular(25))),
         builder: (context) {
           return CustomBottomSheet(
             onOptionSelect: (Option option) {
@@ -229,8 +222,7 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
         isScrollControlled: true,
         backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topRight: Radius.circular(25), topLeft: Radius.circular(25))),
+            borderRadius: BorderRadius.only(topRight: Radius.circular(25), topLeft: Radius.circular(25))),
         builder: (context) {
           return CategoryBottomSheet(
             onSelect: (CategoryModel option) {
@@ -268,8 +260,7 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
   void getReport(BuildContext context) async {
     if (await Network.isConnected()) {
       Map input = HashMap<String, dynamic>();
-      input["vendor_id"] =
-          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
       input["vendor_id"] = "1";
       String url = "";
 
@@ -280,7 +271,7 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
       } else {
         url = Endpoint.GET_SALE_RETURN_REPORT_BY_DAY;
         if (days == null) {
-          Utility.showToast("please_select_days_key".tr());
+          Utility.showToast(msg: "please_select_days_key".tr());
           return;
         } else {
           input["days"] = days!.optionId;
@@ -309,8 +300,7 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
         EasyLoading.dismiss();
 
         if (result["success"]) {
-          List<Map<String, dynamic>> report =
-              List<Map<String, dynamic>>.from(result["data"]!.map((x) => x));
+          List<Map<String, dynamic>> report = List<Map<String, dynamic>>.from(result["data"]!.map((x) => x));
           reportList = report;
           Navigator.push(
               context,
@@ -321,7 +311,7 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
           // exportReport(context);
         } else {
           EasyLoading.dismiss();
-          Utility.showToast(response.data["message"]);
+          Utility.showToast(msg: response.data["message"]);
         }
       } catch (exception) {
         print("exception-->$exception");
@@ -331,7 +321,7 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
         EasyLoading.dismiss();
       }
     } else {
-      Utility.showToast("please_check_your_internet_connection_key".tr());
+      Utility.showToast(msg: "please_check_your_internet_connection_key".tr());
     }
   }
 
@@ -339,8 +329,7 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
     print("exportReport");
     final xls.Workbook workbook = xls.Workbook(0);
     //Adding a Sheet with name to workbook.
-    final xls.Worksheet sheet1 =
-        workbook.worksheets.addWithName('Sale Return Report');
+    final xls.Worksheet sheet1 = workbook.worksheets.addWithName('Sale Return Report');
     sheet1.showGridlines = true;
 
     int columnIndex = 1;
@@ -354,29 +343,22 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
 
     sheet1.getRangeByIndex(1, 1, 1, reportList.first.keys.length).merge();
     if (groupValue == 1) {
-      sheet1.getRangeByIndex(rowIndex, columnIndex).value =
-          "Sale Return Report ($startDate to $endDate)";
+      sheet1.getRangeByIndex(rowIndex, columnIndex).value = "Sale Return Report ($startDate to $endDate)";
     } else {
-      sheet1.getRangeByIndex(rowIndex, columnIndex).value =
-          "Sale Return Report (${days!.optionName})";
+      sheet1.getRangeByIndex(rowIndex, columnIndex).value = "Sale Return Report (${days!.optionName})";
     }
 
     sheet1.getRangeByIndex(rowIndex, columnIndex).rowHeight = 30;
-    sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign =
-        xls.HAlignType.center;
-    sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign =
-        xls.VAlignType.center;
+    sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign = xls.HAlignType.center;
+    sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign = xls.VAlignType.center;
     rowIndex = rowIndex + 1;
 
     reportList.first.keys.forEach((element) {
-      sheet1.getRangeByIndex(rowIndex, columnIndex).value =
-          element.toString().replaceAll("_", " ").toUpperCase();
+      sheet1.getRangeByIndex(rowIndex, columnIndex).value = element.toString().replaceAll("_", " ").toUpperCase();
       sheet1.getRangeByIndex(rowIndex, columnIndex).columnWidth = 25;
       sheet1.getRangeByIndex(rowIndex, columnIndex).rowHeight = 20;
-      sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign =
-          xls.HAlignType.center;
-      sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign =
-          xls.VAlignType.center;
+      sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign = xls.HAlignType.center;
+      sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign = xls.VAlignType.center;
       columnIndex = columnIndex + 1;
     });
 
@@ -387,46 +369,34 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
         sheet1.getRangeByIndex(rowIndex, columnIndex).value = value;
         sheet1.getRangeByIndex(rowIndex, columnIndex).columnWidth = 25;
         sheet1.getRangeByIndex(rowIndex, columnIndex).rowHeight = 20;
-        sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign =
-            xls.HAlignType.center;
-        sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign =
-            xls.VAlignType.center;
+        sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign = xls.HAlignType.center;
+        sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign = xls.VAlignType.center;
         columnIndex = columnIndex + 1;
 
         if (key == "total") {
           print("value - >$value");
           print("total - >$total");
-          total = double.parse(
-                  value == null || value == "" ? "0" : value.toString()) +
-              total;
+          total = double.parse(value == null || value == "" ? "0" : value.toString()) + total;
         }
         if (key == "mrp") {
           print("mrp - >$value");
           print("totalMrp - >$totalMrp");
-          totalMrp = double.parse(
-                  value == null || value == "" ? "0" : value.toString()) +
-              totalMrp;
+          totalMrp = double.parse(value == null || value == "" ? "0" : value.toString()) + totalMrp;
         }
         if (key == "purchase_price") {
           print("purchase_price - >$value");
           print("totalPurchasePrice - >$totalPurchasePrice");
-          totalPurchasePrice = double.parse(
-                  value == null || value == "" ? "0" : value.toString()) +
-              totalPurchasePrice;
+          totalPurchasePrice = double.parse(value == null || value == "" ? "0" : value.toString()) + totalPurchasePrice;
         }
         if (key == "qty") {
           print("qty - >$value");
           print("qty - >$qty");
-          qty = double.parse(
-                  value == null || value == "" ? "0" : value.toString()) +
-              qty;
+          qty = double.parse(value == null || value == "" ? "0" : value.toString()) + qty;
         }
         if (key == "return_coins") {
           print("qty - >$value");
           print("returnCoins - >$returnCoins");
-          returnCoins = double.parse(
-                  value == null || value == "" ? "0" : value.toString()) +
-              returnCoins;
+          returnCoins = double.parse(value == null || value == "" ? "0" : value.toString()) + returnCoins;
         }
       });
     });
@@ -455,8 +425,7 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
         sheet1.getRangeByIndex(rowIndex, columnIndex).value = total;
       }
       if (key == "purchase_price") {
-        sheet1.getRangeByIndex(rowIndex, columnIndex).value =
-            totalPurchasePrice;
+        sheet1.getRangeByIndex(rowIndex, columnIndex).value = totalPurchasePrice;
       }
       if (key == "mrp") {
         sheet1.getRangeByIndex(rowIndex, columnIndex).value = totalMrp;
@@ -491,15 +460,12 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
       savedDir.create();
     }
 
-    String fileName = "sale_return_report_" +
-        DateTime.now().millisecondsSinceEpoch.toString() +
-        ".xlsx";
+    String fileName = "sale_return_report_" + DateTime.now().millisecondsSinceEpoch.toString() + ".xlsx";
 
-    final File file =
-        File(Platform.isWindows ? '$path\\$fileName' : '$path/$fileName');
+    final File file = File(Platform.isWindows ? '$path\\$fileName' : '$path/$fileName');
     await file.writeAsBytes(bytes, flush: true).whenComplete(() {
       print("completed");
-      Utility.showToast("Report saved at below location \n${file.path}");
+      Utility.showToast(msg: "Report saved at below location \n${file.path}");
     });
     print("savedDir${file.path}");
 

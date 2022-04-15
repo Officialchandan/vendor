@@ -27,8 +27,7 @@ class _UnitBottomSheetState extends State<UnitBottomSheet> {
         children: [
           Text(
             "Select Category".tr(),
-            style: TextStyle(
-                color: ColorPrimary, fontSize: 18, fontWeight: FontWeight.bold),
+            style: TextStyle(color: ColorPrimary, fontSize: 18, fontWeight: FontWeight.bold),
           ),
           Container(
             height: MediaQuery.of(context).size.height * 0.40,
@@ -67,8 +66,7 @@ class _UnitBottomSheetState extends State<UnitBottomSheet> {
 
   Future<List<UnitModel>> getUnit(String categoryId) async {
     if (await Network.isConnected()) {
-      GetUnitResponse response =
-          await apiProvider.getUnitsByCategory(categoryId);
+      GetUnitResponse response = await apiProvider.getUnitsByCategory(categoryId);
 
       if (response.success) {
         units = response.data!;
@@ -77,7 +75,7 @@ class _UnitBottomSheetState extends State<UnitBottomSheet> {
         return [];
       }
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
       return [];
     }
   }

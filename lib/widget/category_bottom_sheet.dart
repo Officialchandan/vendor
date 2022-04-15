@@ -31,10 +31,7 @@ class _CategoryBottomSheetState extends State<CategoryBottomSheet> {
               alignment: Alignment.centerLeft,
               child: Text(
                 "select_category_key".tr(),
-                style: TextStyle(
-                    color: ColorPrimary,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
+                style: TextStyle(color: ColorPrimary, fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -106,7 +103,7 @@ class _CategoryBottomSheetState extends State<CategoryBottomSheet> {
         return [];
       }
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
       return [];
     }
   }

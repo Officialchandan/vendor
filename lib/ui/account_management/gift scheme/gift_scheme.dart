@@ -2,15 +2,14 @@ import 'dart:developer';
 
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vendor/model/gift_scheme_response.dart';
 import 'package:vendor/ui/account_management/gift%20scheme/git_scheme_bloc.dart';
 import 'package:vendor/ui/account_management/gift%20scheme/git_scheme_event.dart';
 import 'package:vendor/ui/account_management/gift%20scheme/git_scheme_state.dart';
 import 'package:vendor/utility/color.dart';
+import 'package:vendor/utility/utility.dart';
 
 class GiftScheme extends StatefulWidget {
   GiftScheme({Key? key}) : super(key: key);
@@ -72,8 +71,9 @@ class _GiftSchemeState extends State<GiftScheme> {
             }
 
             if (state is GetGiftSchemeFailureState) {
-              Fluttertoast.showToast(
-                  msg: state.message, backgroundColor: ColorPrimary);
+              Utility.showToast(
+                msg: state.message,
+              );
             }
             if (state is GetGiftSchemestate) {
               return ListView.builder(
@@ -82,14 +82,11 @@ class _GiftSchemeState extends State<GiftScheme> {
                     return Card(
                       elevation: 5,
                       margin: EdgeInsets.all(20),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                       child: Container(
                         padding: EdgeInsets.all(10),
                         // height: 150,
-                        decoration: BoxDecoration(
-                            color: Buttonactive,
-                            borderRadius: BorderRadius.circular(10)),
+                        decoration: BoxDecoration(color: Buttonactive, borderRadius: BorderRadius.circular(10)),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,23 +96,18 @@ class _GiftSchemeState extends State<GiftScheme> {
                               children: [
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(5),
-                                  child: Image.network(
-                                      "${data![index].giftImage}",
-                                      width: 55,
-                                      height: 55,
-                                      fit: BoxFit.cover),
+                                  child: Image.network("${data![index].giftImage}",
+                                      width: 55, height: 55, fit: BoxFit.cover),
                                 ),
                                 Column(
                                   children: [
                                     Text(
                                       "gift_received_key".tr() + "?",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                      style: TextStyle(fontWeight: FontWeight.bold),
                                     ),
                                     data![index].status == 1
                                         ? Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.start,
                                             children: [
                                               Container(
                                                 child: Row(children: [
@@ -124,21 +116,15 @@ class _GiftSchemeState extends State<GiftScheme> {
                                                     child: Radio<int>(
                                                       activeColor: ColorPrimary,
                                                       value: 1,
-                                                      visualDensity:
-                                                          VisualDensity
-                                                              .comfortable,
+                                                      visualDensity: VisualDensity.comfortable,
                                                       splashRadius: 15,
-                                                      groupValue:
-                                                          data![index].gift,
+                                                      groupValue: data![index].gift,
                                                       onChanged: (value) {},
                                                     ),
                                                   ),
                                                   Text(
                                                     "yes_key".tr(),
-                                                    style: TextStyle(
-                                                        fontSize: 10,
-                                                        fontWeight:
-                                                            FontWeight.bold),
+                                                    style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
                                                   )
                                                 ]),
                                               ),
@@ -149,25 +135,20 @@ class _GiftSchemeState extends State<GiftScheme> {
                                                     child: Radio<int>(
                                                       value: 0,
                                                       activeColor: ColorPrimary,
-                                                      groupValue:
-                                                          data![index].gift,
+                                                      groupValue: data![index].gift,
                                                       onChanged: (value) {},
                                                     ),
                                                   ),
                                                   Text(
                                                     "no_key".tr(),
-                                                    style: TextStyle(
-                                                        fontSize: 10,
-                                                        fontWeight:
-                                                            FontWeight.bold),
+                                                    style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
                                                   )
                                                 ]),
                                               ),
                                             ],
                                           )
                                         : Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.start,
                                             children: [
                                               Container(
                                                 child: Row(children: [
@@ -176,31 +157,22 @@ class _GiftSchemeState extends State<GiftScheme> {
                                                     child: Radio<int>(
                                                       activeColor: ColorPrimary,
                                                       value: 1,
-                                                      visualDensity:
-                                                          VisualDensity
-                                                              .comfortable,
+                                                      visualDensity: VisualDensity.comfortable,
                                                       splashRadius: 15,
-                                                      groupValue:
-                                                          data![index].gift,
+                                                      groupValue: data![index].gift,
                                                       onChanged: (value) {
-                                                        gift_id =
-                                                            data![index].id;
+                                                        gift_id = data![index].id;
                                                         log("===>$data![index].gift");
                                                         //setState(() {
-                                                        data![index].gift =
-                                                            value!;
+                                                        data![index].gift = value!;
                                                         // });
-                                                        _displayDialog(
-                                                            context, index);
+                                                        _displayDialog(context, index);
                                                       },
                                                     ),
                                                   ),
                                                   Text(
                                                     "YES",
-                                                    style: TextStyle(
-                                                        fontSize: 10,
-                                                        fontWeight:
-                                                            FontWeight.bold),
+                                                    style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
                                                   )
                                                 ]),
                                               ),
@@ -211,23 +183,18 @@ class _GiftSchemeState extends State<GiftScheme> {
                                                     child: Radio<int>(
                                                       value: 0,
                                                       activeColor: ColorPrimary,
-                                                      groupValue:
-                                                          data![index].gift,
+                                                      groupValue: data![index].gift,
                                                       onChanged: (value) {
                                                         log("===>");
                                                         //    setState(() {
-                                                        data![index].gift =
-                                                            value!;
+                                                        data![index].gift = value!;
                                                         //   });
                                                       },
                                                     ),
                                                   ),
                                                   Text(
                                                     "NO",
-                                                    style: TextStyle(
-                                                        fontSize: 10,
-                                                        fontWeight:
-                                                            FontWeight.bold),
+                                                    style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
                                                   )
                                                 ]),
                                               ),
@@ -242,26 +209,21 @@ class _GiftSchemeState extends State<GiftScheme> {
                             ),
                             Text(
                               "${data![index].giftName}",
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.bold),
+                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                             ),
                             SizedBox(
                               height: 5,
                             ),
                             Text(
                               "qty_key".tr() + ":" + " ${data![index].qty}",
-                              style: TextStyle(
-                                  color: ColorTextPrimary,
-                                  fontWeight: FontWeight.w600),
+                              style: TextStyle(color: ColorTextPrimary, fontWeight: FontWeight.w600),
                             ),
                             SizedBox(
                               height: 5,
                             ),
                             Text(
                               "${data![index].description}",
-                              style: TextStyle(
-                                  color: ColorTextPrimary,
-                                  fontWeight: FontWeight.w600),
+                              style: TextStyle(color: ColorTextPrimary, fontWeight: FontWeight.w600),
                             ),
                             SizedBox(
                               height: 5,
@@ -297,8 +259,7 @@ class _GiftSchemeState extends State<GiftScheme> {
           return ConstrainedBox(
             constraints: BoxConstraints(maxWidth: 400),
             child: AlertDialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
               content: Text("you_wont_key"),
               actions: <Widget>[
                 Center(
@@ -308,21 +269,17 @@ class _GiftSchemeState extends State<GiftScheme> {
                     padding: const EdgeInsets.all(8.0),
                     textColor: Colors.white,
                     color: ColorPrimary,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                     onPressed: () {
                       data![index].gift = 1;
-                      giftSchemeBloc
-                          .add(GetGiftDeliverdEvent(giftid: gift_id!));
+                      giftSchemeBloc.add(GetGiftDeliverdEvent(giftid: gift_id!));
                       data![index].gift = 1;
                       Navigator.pop(context);
                     },
                     child: new Text(
                       "done_key".tr(),
                       style: GoogleFonts.openSans(
-                          fontSize: 17,
-                          fontWeight: FontWeight.w600,
-                          decoration: TextDecoration.none),
+                          fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
                     ),
                   ),
                 ),

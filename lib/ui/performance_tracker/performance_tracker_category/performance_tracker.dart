@@ -1,6 +1,5 @@
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
 import 'package:vendor/ui/performance_tracker/performance_tracker_category/earning_tillnow/earning_amount.dart';
@@ -8,15 +7,14 @@ import 'package:vendor/ui/performance_tracker/performance_tracker_category/sale_
 import 'package:vendor/ui/performance_tracker/performance_tracker_category/walk_in/walkin.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
+import 'package:vendor/utility/utility.dart';
 
 class PerformanceTrackerByCategory extends StatefulWidget {
   @override
-  _PerformanceTrackerByCategoryState createState() =>
-      _PerformanceTrackerByCategoryState();
+  _PerformanceTrackerByCategoryState createState() => _PerformanceTrackerByCategoryState();
 }
 
-class _PerformanceTrackerByCategoryState
-    extends State<PerformanceTrackerByCategory> {
+class _PerformanceTrackerByCategoryState extends State<PerformanceTrackerByCategory> {
   final options = [
     {
       "title": "sale_amount_key".tr(),
@@ -62,31 +60,17 @@ class _PerformanceTrackerByCategoryState
                       if (await Network.isConnected()) {
                         if (options[index]["id"] == 2) {
                           Navigator.push(
-                              context,
-                              PageTransition(
-                                  child: EarningAmount(),
-                                  type: PageTransitionType.fade));
+                              context, PageTransition(child: EarningAmount(), type: PageTransitionType.fade));
                         }
                         if (options[index]["id"] == 3) {
-                          Navigator.push(
-                              context,
-                              PageTransition(
-                                  child: WalkInAmount(),
-                                  type: PageTransitionType.fade));
+                          Navigator.push(context, PageTransition(child: WalkInAmount(), type: PageTransitionType.fade));
                         }
 
                         if (options[index]["id"] == 1) {
-                          Navigator.push(
-                              context,
-                              PageTransition(
-                                  child: SaleAmount(),
-                                  type: PageTransitionType.fade));
+                          Navigator.push(context, PageTransition(child: SaleAmount(), type: PageTransitionType.fade));
                         }
                       } else {
-                        Fluttertoast.showToast(
-                            msg: "please_check_your_internet_connection_key"
-                                .tr(),
-                            backgroundColor: ColorPrimary);
+                        Utility.showToast(msg: "please_check_your_internet_connection_key".tr());
                       }
                     },
                     leading: Image(
@@ -107,9 +91,7 @@ class _PerformanceTrackerByCategoryState
                       width: 5,
                       decoration: BoxDecoration(
                           color: ColorPrimary,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(5),
-                              bottomLeft: Radius.circular(5))),
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
                     ))
               ],
             ),

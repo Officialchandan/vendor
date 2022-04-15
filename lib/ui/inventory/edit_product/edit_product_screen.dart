@@ -327,7 +327,7 @@ class EditProductScreenState extends State<EditProductScreen> {
                         controller: edtUnit,
                         onTap: () {
                           if (categoryId.isEmpty) {
-                            Utility.showToast("please_select_category_first_key".tr());
+                            Utility.showToast(msg: "please_select_category_first_key".tr());
                             return;
                           }
 
@@ -360,7 +360,7 @@ class EditProductScreenState extends State<EditProductScreen> {
                   controller: edtOptions,
                   onTap: () {
                     if (edtCategory.text.isEmpty)
-                      Utility.showToast("please_select_category_key".tr());
+                      Utility.showToast(msg: "please_select_category_key".tr());
                     else
                       showModalBottomSheet(
                           context: context,
@@ -372,7 +372,7 @@ class EditProductScreenState extends State<EditProductScreen> {
                                 print("on variant type select -> $variants");
 
                                 if (variants.isEmpty) {
-                                  Utility.showToast("please_select_at_least_one_option_key".tr());
+                                  Utility.showToast(msg: "please_select_at_least_one_option_key".tr());
                                 } else {
                                   variantType = variants;
                                   List<VariantOption> options = [];
@@ -438,11 +438,11 @@ class EditProductScreenState extends State<EditProductScreen> {
 
   void update(BuildContext context) async {
     if (edtProductName.text.trim().isEmpty) {
-      Utility.showToast("please_enter_product_name_key".tr());
+      Utility.showToast(msg: "please_enter_product_name_key".tr());
       return;
     }
     if (edtCategory.text.isEmpty || categoryId.isEmpty) {
-      Utility.showToast("please_select_product_category_key".tr());
+      Utility.showToast(msg: "please_select_product_category_key".tr());
       return;
     }
 
@@ -451,29 +451,29 @@ class EditProductScreenState extends State<EditProductScreen> {
     //   return;
     // }
     if (variantModel.sellingPrice.isEmpty) {
-      Utility.showToast("please_enter_selling_price_key".tr());
+      Utility.showToast(msg: "please_enter_selling_price_key".tr());
       return;
     }
     if (variantModel.mrp.isEmpty) {
-      Utility.showToast("please_enter_mrp_key".tr());
+      Utility.showToast(msg: "please_enter_mrp_key".tr());
       return;
     }
     if (double.parse(variantModel.sellingPrice.trim()) > double.parse(variantModel.mrp.trim())) {
-      Utility.showToast("selling_price_cannot_be_more_than_mrp_key".tr());
+      Utility.showToast(msg: "selling_price_cannot_be_more_than_mrp_key".tr());
       return;
     }
     if (edtUnit.text.isEmpty) {
-      Utility.showToast("please_select_unit_key".tr());
+      Utility.showToast(msg: "please_select_unit_key".tr());
       return;
     }
     if (variantModel.stock.isEmpty) {
-      Utility.showToast("stock_can_not_be_empty_key".tr());
+      Utility.showToast(msg: "stock_can_not_be_empty_key".tr());
       return;
     }
     if (variantModel.option.isNotEmpty) {
       for (int i = 0; i < variantModel.option.length; i++) {
         if (variantModel.option[i].value.isEmpty) {
-          Utility.showToast("please_enter_key ${variantModel.option[i].name}".tr());
+          Utility.showToast(msg: "please_enter_key ${variantModel.option[i].name}".tr());
           return;
         }
       }

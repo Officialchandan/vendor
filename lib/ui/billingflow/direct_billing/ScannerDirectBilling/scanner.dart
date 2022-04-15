@@ -5,7 +5,6 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:vendor/model/direct_billing.dart';
@@ -14,7 +13,7 @@ import 'package:vendor/ui/billingflow/direct_billing/ScannerDirectBilling/scanne
 import 'package:vendor/ui/billingflow/direct_billing/ScannerDirectBilling/scanner_state.dart';
 import 'package:vendor/ui/home/bottom_navigation_home.dart';
 import 'package:vendor/ui_without_inventory/chatpapdi_billing/chatpapdi_billing.dart';
-import 'package:vendor/utility/color.dart';
+import 'package:vendor/utility/utility.dart';
 import 'package:vendor/widget/coin_genrate_pop.dart';
 
 class Scanner extends StatefulWidget {
@@ -75,7 +74,7 @@ class _ScannerState extends State<Scanner> {
           // TODO: implement listener
           if (state is GetScannerState) {
             // Navigator.of(context).pop(result!.code);
-            Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
+            Utility.showToast(msg: state.message);
           }
           if (state is GetScannerStateLoadingstate) {}
           if (state is IntitalScannerstate) {}
@@ -104,7 +103,7 @@ class _ScannerState extends State<Scanner> {
                                   log("message=>${result!.code}");
                                   log("data==>${widget.data}");
                                   scanner(context);
-                                  // Fluttertoast.showToast(
+                                  // Utility.showToast(
                                   //     msg: "${}");
                                 },
                                 child: const Text('Done', style: TextStyle(fontSize: 20)),

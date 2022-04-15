@@ -6,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/model/direct_billing.dart';
@@ -18,6 +17,7 @@ import 'package:vendor/ui/billingflow/direct_billing/direct_state.dart';
 import 'package:vendor/ui/home/bottom_navigation_home.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
+import 'package:vendor/utility/utility.dart';
 import 'package:vendor/utility/validator.dart';
 
 class DirectBilling extends StatefulWidget {
@@ -129,9 +129,9 @@ class _DirectBillingState extends State<DirectBilling> {
                       listener: (context, state) {
                         if (state is DirectBillingCustomerNumberResponseState) {
                           log("number chl gya");
-
+                          nameController.clear();
                           //coins = state.data;
-                          // Fluttertoast.showToast(
+                          // Utility.showToast(
                           //     backgroundColor: ColorPrimary,
                           //     textColor: Colors.white,
                           //     msg: state.message);
@@ -154,18 +154,20 @@ class _DirectBillingState extends State<DirectBilling> {
 
                         if (state is GetDirectBillingFailureState) {
                           message = state.message;
-                          Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
+                          Utility.showToast(
+                            msg: state.message,
+                          );
                         }
                         if (state is GetDirectBillingOtpState) {
                           Navigator.pop(context);
-                          Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
+                          Utility.showToast(msg: state.message);
                           int.parse(datas!.qrCodeStatus) == 0
                               ? _displayDialogs(context, datas!.earningCoins, 0, "")
                               : _displayDialogs(context, datas!.earningCoins, 1, datas);
                         }
                         if (state is GetDirectBillingOtpLoadingstate) {}
                         if (state is GetDirectBillingOtpFailureState) {
-                          Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
+                          Utility.showToast(msg: state.message);
                         }
                         if (state is GetDirectBillingPartialUserState) {
                           succes = state.succes;
@@ -216,6 +218,7 @@ class _DirectBillingState extends State<DirectBilling> {
                                       .add(GetDirectBillingCustomerNumberResponseEvent(mobile: mobileController.text));
                                 }
                                 if (mobileController.text.length == 9) {
+                                  nameController.clear();
                                   directBillingCustomerNumberResponseBloc
                                       .add(GetDirectBillingCustomerNumberResponseEvent(mobile: mobileController.text));
                                 }
@@ -363,16 +366,15 @@ class _DirectBillingState extends State<DirectBilling> {
                                       redeem = redeems;
                                     });
                                   } else {
-                                    Fluttertoast.showToast(
-                                        msg: "You_dont_have_enough_coins".tr(), backgroundColor: ColorPrimary);
+                                    Utility.showToast(msg: "You_dont_have_enough_coins_key".tr());
                                   }
                                 } else {
-                                  Fluttertoast.showToast(
-                                      msg: "please_enter_amount_key".tr(), backgroundColor: ColorPrimary);
+                                  Utility.showToast(
+                                    msg: "please_enter_amount_key".tr(),
+                                  );
                                 }
                               } else {
-                                Fluttertoast.showToast(
-                                    msg: "please_enter_10_digits_number_key".tr(), backgroundColor: ColorPrimary);
+                                Utility.showToast(msg: "please_enter_10_digits_number_key".tr());
                               }
                               if (redeem == true) {
                                 redeemDialog(context);
@@ -490,49 +492,51 @@ class _DirectBillingState extends State<DirectBilling> {
                 ),
               ),
             ),
-            bottomNavigationBar: InkWell(
-              onTap: () {
-                if (status1 == 0) {
-                  if (mobileController.text.length == 10) {
-                    if (amountController.text.length >= 0) {
-                      if (nameController.text.length > 1) {
-                        userRegister(context);
+            bottomNavigationBar: Container(
+              height: 50,
+              margin: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+              decoration: BoxDecoration(color: ColorPrimary),
+              width: MediaQuery.of(context).size.width,
+              child: MaterialButton(
+                onPressed: () async {
+                  if (status1 == 0) {
+                    if (mobileController.text.length == 10) {
+                      if (amountController.text.length >= 0) {
+                        if (nameController.text.length > 1) {
+                          if (checkbox == true) {
+                            userRegister(context);
+                          } else {
+                            Utility.showToast(msg: "Please select category".tr());
+                          }
+                        } else {
+                          Utility.showToast(msg: "please_enter_name_key".tr());
+                        }
                       } else {
-                        Fluttertoast.showToast(msg: "please_enter_name_key".tr(), backgroundColor: ColorPrimary);
+                        Utility.showToast(msg: "please_enter_amount_key".tr());
                       }
                     } else {
-                      Fluttertoast.showToast(msg: "please_enter_amount_key".tr(), backgroundColor: ColorPrimary);
+                      Utility.showToast(msg: "please_enter_10_digits_number_key".tr());
                     }
                   } else {
-                    Fluttertoast.showToast(
-                        msg: "please_enter_10_digits_number_key".tr(), backgroundColor: ColorPrimary);
-                  }
-                } else {
-                  if (mobileController.text.length == 10) {
-                    if (amountController.text.length >= 0) {
-                      if (checkbox == true) {
-                        directBilling(context);
+                    if (mobileController.text.length == 10) {
+                      if (amountController.text.length >= 0) {
+                        if (checkbox == true) {
+                          directBilling(context);
+                        } else {
+                          Utility.showToast(msg: "Please select category".tr());
+                        }
                       } else {
-                        Fluttertoast.showToast(msg: "Please select category".tr(), backgroundColor: ColorPrimary);
+                        Utility.showToast(msg: "please_enter_amount_key".tr());
                       }
                     } else {
-                      Fluttertoast.showToast(msg: "please_enter_amount_key".tr(), backgroundColor: ColorPrimary);
+                      Utility.showToast(
+                        msg: "please_enter_10_digits_number_key".tr(),
+                      );
                     }
-                  } else {
-                    Fluttertoast.showToast(
-                        msg: "please_enter_10_digits_number_key".tr(), backgroundColor: ColorPrimary);
                   }
-                }
-              },
-              child: Container(
-                height: 50,
-                padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                decoration: BoxDecoration(color: ColorPrimary),
-                width: MediaQuery.of(context).size.width,
-                child: Center(
-                  child: Text("submit_button_key".tr(),
-                      style: TextStyle(fontSize: 17, color: Colors.white, fontWeight: FontWeight.w600)),
-                ),
+                },
+                child: Text("submit_button_key".tr(),
+                    style: TextStyle(fontSize: 17, color: Colors.white, fontWeight: FontWeight.w600)),
               ),
             ),
           );
@@ -757,8 +761,9 @@ class _DirectBillingState extends State<DirectBilling> {
       double commission = double.parse(categoryList.first.commission);
       String freeCoins = await SharedPref.getStringPreference(SharedPref.VendorCoin);
       log("VendorCoin------->$freeCoins");
-      amount = double.parse(freeCoins) != 0 ? amount : amount - (amount * 18) / 100;
       amount = (amount * commission) / 100;
+      amount = double.parse(freeCoins) != 0 ? amount : amount - (amount * 18) / 100;
+
       amount = amount - 0.50;
       amount = amount / 2;
       amount = amount * 3;

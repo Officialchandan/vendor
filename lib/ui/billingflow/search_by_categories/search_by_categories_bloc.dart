@@ -2,29 +2,25 @@ import 'dart:developer';
 
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:vendor/model/product_by_category_response.dart';
 import 'package:vendor/ui/billingflow/search_by_categories/search_by_categories_event.dart';
 import 'package:vendor/ui/billingflow/search_by_categories/search_by_categories_state.dart';
-import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
+import 'package:vendor/utility/utility.dart';
 
 import '../../../main.dart';
 
-class SearchByCategoriesBloc
-    extends Bloc<SearchByCategoriesEvents, SearchByCategoriesState> {
+class SearchByCategoriesBloc extends Bloc<SearchByCategoriesEvents, SearchByCategoriesState> {
   SearchByCategoriesBloc() : super(SearchByCategoriesIntialState());
 
   ProductByCategoryResponse? result;
   @override
-  Stream<SearchByCategoriesState> mapEventToState(
-      SearchByCategoriesEvents event) async* {
+  Stream<SearchByCategoriesState> mapEventToState(SearchByCategoriesEvents event) async* {
     if (event is GetProductsSearchByCategoriesEvent) {
       yield* getSearchAllResponse(event.input);
     }
     if (event is GetCheckBoxSearchByCategoriesEvent) {
-      yield GetSearchByCategoriesCheckBoxState(
-          check: event.check, index: event.index);
+      yield GetSearchByCategoriesCheckBoxState(check: event.check, index: event.index);
     }
     if (event is GetIncrementSearchByCategoriesEvent) {
       yield GetSearchByCategoriesIcrementState(count: event.count);
@@ -47,19 +43,17 @@ class SearchByCategoriesBloc
 
         log("$result");
         if (result!.success) {
-          yield GetSearchByCategoriesState(
-              message: result!.message, data: result!.data);
+          yield GetSearchByCategoriesState(message: result!.message, data: result!.data);
         } else {
           yield GetSearchByCategoriesFailureState(message: result!.message);
         }
       } catch (error) {
-        yield GetSearchByCategoriesFailureState(
-            message: "internal_server_error_key".tr());
+        yield GetSearchByCategoriesFailureState(message: "internal_server_error_key".tr());
       }
     } else {
-      Fluttertoast.showToast(
-          msg: "please_check_your_internet_connection_key".tr(),
-          backgroundColor: ColorPrimary);
+      Utility.showToast(
+        msg: "please_check_your_internet_connection_key".tr(),
+      );
     }
   }
 }

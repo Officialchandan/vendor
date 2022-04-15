@@ -132,7 +132,7 @@ class NormalLedgerHistoryBloc extends Bloc<NormalLedgerHistoryEvent, NormalLedge
         yield GetNormalLedgerHistoryFailureState(succes: response.success, message: response.message);
       }
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
     }
   }
 }

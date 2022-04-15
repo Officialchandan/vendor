@@ -4,7 +4,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:rxdart/rxdart.dart';
@@ -14,6 +13,7 @@ import 'package:vendor/ui/billingflow/search_all/search_all_event.dart';
 import 'package:vendor/ui/billingflow/search_all/search_all_state.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
+import 'package:vendor/utility/utility.dart';
 
 import 'search_all_bloc.dart';
 
@@ -323,17 +323,17 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                                                 searchAllBloc.add(GetIncrementEvent(
                                                                                     count: searchList[index].count--));
                                                                               } else {
-                                                                                Fluttertoast.showToast(
-                                                                                    msg: "product_cant_be_negative_key"
-                                                                                        .tr(),
-                                                                                    backgroundColor: ColorPrimary);
+                                                                                Utility.showToast(
+                                                                                  msg: "product_cant_be_negative_key"
+                                                                                      .tr(),
+                                                                                );
                                                                               }
                                                                             } else {
-                                                                              Fluttertoast.showToast(
-                                                                                  msg:
-                                                                                      "please_check_your_internet_connection_key"
-                                                                                          .tr(),
-                                                                                  backgroundColor: ColorPrimary);
+                                                                              Utility.showToast(
+                                                                                msg:
+                                                                                    "please_check_your_internet_connection_key"
+                                                                                        .tr(),
+                                                                              );
                                                                             }
                                                                           },
                                                                           iconSize: 20,
@@ -377,11 +377,11 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                                               searchAllBloc.add(GetCheckBoxEvent(
                                                                                   check: true, index: index));
                                                                             } else {
-                                                                              Fluttertoast.showToast(
-                                                                                  msg:
-                                                                                      "please_check_your_internet_connection_key"
-                                                                                          .tr(),
-                                                                                  backgroundColor: ColorPrimary);
+                                                                              Utility.showToast(
+                                                                                msg:
+                                                                                    "please_check_your_internet_connection_key"
+                                                                                        .tr(),
+                                                                              );
                                                                             }
                                                                           },
                                                                           iconSize: 20,
@@ -489,9 +489,9 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                             searchAllBloc.add(GetCheckBoxEvent(check: newvalue!, index: index));
                                             selectedProductList = searchList[index];
                                           } else {
-                                            Fluttertoast.showToast(
-                                                msg: "please_check_your_internet_connection_key".tr(),
-                                                backgroundColor: ColorPrimary);
+                                            Utility.showToast(
+                                              msg: "please_check_your_internet_connection_key".tr(),
+                                            );
                                           }
                                         },
                                       );
@@ -518,8 +518,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                   if (await Network.isConnected()) {
                                     // Navigator.pop(context);
                                     if (product.length == 0) {
-                                      Fluttertoast.showToast(
-                                          msg: "please_atleast_one_product_key".tr(), backgroundColor: ColorPrimary);
+                                      Utility.showToast(msg: "please_atleast_one_product_key".tr());
                                     } else {
                                       Navigator.push(
                                           context,
@@ -532,9 +531,9 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                               type: PageTransitionType.fade));
                                     }
                                   } else {
-                                    Fluttertoast.showToast(
-                                        msg: "please_check_your_internet_connection_key",
-                                        backgroundColor: Colors.amber);
+                                    Utility.showToast(
+                                      msg: "please_check_your_internet_connection_key",
+                                    );
                                   }
                                 },
                                 child: Container(

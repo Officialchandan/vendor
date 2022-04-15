@@ -7,7 +7,6 @@ import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/model/billing_product_response.dart';
@@ -21,6 +20,7 @@ import 'package:vendor/ui/home/bottom_navigation_home.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/sharedpref.dart';
+import 'package:vendor/utility/utility.dart';
 
 class BillingProducts extends StatefulWidget {
   final List<ProductModel> billingItemList;
@@ -315,9 +315,9 @@ class _BillingProductsState extends State<BillingProducts> {
                                                         _displayDialog(context, index, 0, "edit_amount_key".tr(),
                                                             "enter_amount_key".tr());
                                                       } else {
-                                                        Fluttertoast.showToast(
-                                                            msg: "please_check_your_internet_connection_key".tr(),
-                                                            backgroundColor: ColorPrimary);
+                                                        Utility.showToast(
+                                                          msg: "please_check_your_internet_connection_key".tr(),
+                                                        );
                                                       }
                                                     },
                                                     child: Container(
@@ -354,15 +354,14 @@ class _BillingProductsState extends State<BillingProducts> {
                                                                     check: newvalue!, index: index));
                                                                 selectedProductList = productList[index];
                                                               } else {
-                                                                Fluttertoast.showToast(
-                                                                    msg: "please_check_your_internet_connection_key"
-                                                                        .tr(),
-                                                                    backgroundColor: ColorPrimary);
+                                                                Utility.showToast(
+                                                                  msg: "please_check_your_internet_connection_key".tr(),
+                                                                );
                                                               }
                                                             } else {
-                                                              Fluttertoast.showToast(
-                                                                  msg: "You_dont_have_enough_coins".tr(),
-                                                                  backgroundColor: ColorPrimary);
+                                                              Utility.showToast(
+                                                                msg: "You_dont_have_enough_coins".tr(),
+                                                              );
                                                             }
                                                           },
                                                         ),
@@ -466,8 +465,9 @@ class _BillingProductsState extends State<BillingProducts> {
 
                             billingProductsBloc.add(DeleteBillingProductsEvent(index: index));
                           } else {
-                            Fluttertoast.showToast(
-                                msg: "please_check_your_internet_connection_key".tr(), backgroundColor: ColorPrimary);
+                            Utility.showToast(
+                              msg: "please_check_your_internet_connection_key".tr(),
+                            );
                           }
                         },
                         child: BlocBuilder<BillingProductsBloc, BillingProductsState>(
@@ -601,7 +601,9 @@ class _BillingProductsState extends State<BillingProducts> {
                       }
                       if (state is PayBillingProductsStateFailureState) {
                         message = state.message;
-                        Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
+                        Utility.showToast(
+                          msg: state.message,
+                        );
                       }
                       if (state is PayBillingProductsStateLoadingstate) {
                         log("number chl gya");
@@ -610,7 +612,9 @@ class _BillingProductsState extends State<BillingProducts> {
                       if (state is VerifyOtpState) {
                         Navigator.pop(context);
                         passing = state.data;
-                        Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
+                        Utility.showToast(
+                          msg: state.message,
+                        );
                         otpVerifyList!.qrCodeStatus == 0
                             ? _displayDialogs(context, passing!.earningCoins, 0, "")
                             : _displayDialogs(context, passing!.earningCoins, 1, passing);
@@ -627,7 +631,9 @@ class _BillingProductsState extends State<BillingProducts> {
                       }
                       if (state is VerifyOtpStateFailureState) {
                         message = state.message;
-                        Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
+                        Utility.showToast(
+                          msg: state.message,
+                        );
                       }
                     },
                     builder: (context, state) {
@@ -637,12 +643,14 @@ class _BillingProductsState extends State<BillingProducts> {
                             if (await Network.isConnected()) {
                               billingProducts(context).then((value) => _textFieldController.clear());
                             } else {
-                              Fluttertoast.showToast(
-                                  msg: "please_check_your_internet_connection_key".tr(), backgroundColor: ColorPrimary);
+                              Utility.showToast(
+                                msg: "please_check_your_internet_connection_key".tr(),
+                              );
                             }
                           } else {
-                            Fluttertoast.showToast(
-                                msg: "please_atleast_one_product_key".tr(), backgroundColor: ColorPrimary);
+                            Utility.showToast(
+                              msg: "please_atleast_one_product_key".tr(),
+                            );
                           }
                         },
                         child: Container(
@@ -788,7 +796,9 @@ class _BillingProductsState extends State<BillingProducts> {
                           Navigator.pop(context);
                           _textFieldController.clear();
                         } else {
-                          Fluttertoast.showToast(msg: "please_enter_amount_key".tr(), backgroundColor: ColorPrimary);
+                          Utility.showToast(
+                            msg: "please_enter_amount_key".tr(),
+                          );
                         }
                       } else {
                         verifyOtp(context);

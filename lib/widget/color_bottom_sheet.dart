@@ -109,7 +109,7 @@ class _SelectColorBottomSheetState extends State<SelectColorBottomSheet> {
         controller.add(colorList);
       }
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
       controller.add(colorList);
     }
   }

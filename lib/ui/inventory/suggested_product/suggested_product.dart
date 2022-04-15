@@ -51,7 +51,7 @@ class _SuggestedProductScreenState extends State<SuggestedProductScreen> with Ti
             }
           }
           if (state is AddProductSuccessState) {
-            Utility.showToast(state.message);
+            Utility.showToast(msg: state.message);
             Navigator.of(context).pop();
           }
         },

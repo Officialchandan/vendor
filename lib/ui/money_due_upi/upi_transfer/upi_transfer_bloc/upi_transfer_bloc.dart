@@ -36,7 +36,7 @@ class UpiTansferHistoryBloc extends Bloc<UpiTansferHistoryEvent, UpiTansferHisto
         yield GetUpiTansferHistoryFailureState(succes: response.success, message: response.message);
       }
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
     }
   }
 }

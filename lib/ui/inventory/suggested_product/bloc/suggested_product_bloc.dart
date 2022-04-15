@@ -52,10 +52,10 @@ class SuggestedProductBloc extends Bloc<SuggestedProductEvent, SuggestedProductS
         yield GetBrandsState(brands: response.data!);
       } else {
         EasyLoading.dismiss();
-        Utility.showToast(response.message);
+        Utility.showToast(msg: response.message);
       }
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
     }
   }
 
@@ -69,10 +69,10 @@ class SuggestedProductBloc extends Bloc<SuggestedProductEvent, SuggestedProductS
         yield GetCategoryState(categories: response.data!);
       } else {
         EasyLoading.dismiss();
-        Utility.showToast(response.message);
+        Utility.showToast(msg: response.message);
       }
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
     }
   }
 
@@ -88,7 +88,7 @@ class SuggestedProductBloc extends Bloc<SuggestedProductEvent, SuggestedProductS
         // Utility.showToast(response.message);
       }
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
     }
   }
 
@@ -100,10 +100,10 @@ class SuggestedProductBloc extends Bloc<SuggestedProductEvent, SuggestedProductS
         yield AddProductSuccessState(message: response.message);
       } else {
         EasyLoading.dismiss();
-        Utility.showToast(response.message);
+        Utility.showToast(msg: response.message);
       }
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
     }
   }
 }

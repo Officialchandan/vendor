@@ -39,8 +39,7 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
   String endDate = "";
   CategoryModel? categoryModel;
   Option? days;
-  DateRangePickerController dateRangePickerController =
-      DateRangePickerController();
+  DateRangePickerController dateRangePickerController = DateRangePickerController();
 
   TextEditingController edtCategory = TextEditingController();
   TextEditingController edtDays = TextEditingController();
@@ -105,8 +104,7 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
                     headerStyle: DateRangePickerHeaderStyle(
                       textStyle: TextStyle(color: ColorPrimary),
                     ),
-                    yearCellStyle: DateRangePickerYearCellStyle(
-                        textStyle: TextStyle(color: Colors.black)),
+                    yearCellStyle: DateRangePickerYearCellStyle(textStyle: TextStyle(color: Colors.black)),
                     // showActionButtons: true,
                     showNavigationArrow: false,
                     selectionMode: DateRangePickerSelectionMode.range,
@@ -126,8 +124,7 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
                           Icons.keyboard_arrow_right_sharp,
                           color: ColorPrimary,
                         ),
-                        suffixIconConstraints:
-                            BoxConstraints(maxWidth: 20, maxHeight: 20)),
+                        suffixIconConstraints: BoxConstraints(maxWidth: 20, maxHeight: 20)),
                   ),
             SizedBox(
               height: 10,
@@ -144,8 +141,7 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
                     Icons.keyboard_arrow_right_sharp,
                     color: ColorPrimary,
                   ),
-                  suffixIconConstraints:
-                      BoxConstraints(maxWidth: 20, maxHeight: 20)),
+                  suffixIconConstraints: BoxConstraints(maxWidth: 20, maxHeight: 20)),
             ),
             SizedBox(
               height: 10,
@@ -162,8 +158,7 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
                     Icons.keyboard_arrow_right_sharp,
                     color: ColorPrimary,
                   ),
-                  suffixIconConstraints:
-                      BoxConstraints(maxWidth: 20, maxHeight: 20)),
+                  suffixIconConstraints: BoxConstraints(maxWidth: 20, maxHeight: 20)),
             ),
           ],
         ),
@@ -187,8 +182,7 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
     print(args.value);
     if (args.value is PickerDateRange) {
       startDate = Utility.getFormatDate(args.value.startDate);
-      endDate =
-          Utility.getFormatDate(args.value.endDate ?? args.value.startDate);
+      endDate = Utility.getFormatDate(args.value.endDate ?? args.value.startDate);
     }
   }
 
@@ -207,8 +201,7 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
         isScrollControlled: true,
         backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topRight: Radius.circular(25), topLeft: Radius.circular(25))),
+            borderRadius: BorderRadius.only(topRight: Radius.circular(25), topLeft: Radius.circular(25))),
         builder: (context) {
           return CustomBottomSheet(
             onOptionSelect: (Option option) {
@@ -228,8 +221,7 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
         isScrollControlled: true,
         backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topRight: Radius.circular(25), topLeft: Radius.circular(25))),
+            borderRadius: BorderRadius.only(topRight: Radius.circular(25), topLeft: Radius.circular(25))),
         builder: (context) {
           return CategoryBottomSheet(
             onSelect: (CategoryModel option) {
@@ -267,8 +259,7 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
   void getReport(BuildContext context) async {
     if (await Network.isConnected()) {
       Map input = HashMap<String, dynamic>();
-      input["vendor_id"] =
-          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
       // input["vendor_id"] = "1";
       String url = "";
 
@@ -279,7 +270,7 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
       } else {
         url = Endpoint.GET_PRODUCT_REDEEM_REPORT_BY_DAY;
         if (days == null) {
-          Utility.showToast("please_select_days_key".tr());
+          Utility.showToast(msg: "please_select_days_key".tr());
           return;
         } else {
           input["days"] = days!.optionId;
@@ -308,8 +299,7 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
         EasyLoading.dismiss();
         print("result-->$result");
         if (result["success"]) {
-          List<Map<String, dynamic>> report =
-              List<Map<String, dynamic>>.from(result["data"]!.map((x) => x));
+          List<Map<String, dynamic>> report = List<Map<String, dynamic>>.from(result["data"]!.map((x) => x));
           reportList = report;
           Navigator.push(
               context,
@@ -320,7 +310,7 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
           // exportReport(context);
         } else {
           EasyLoading.dismiss();
-          Utility.showToast(response.data["message"]);
+          Utility.showToast(msg: response.data["message"]);
         }
       } catch (exception) {
         if (exception is DioError) {
@@ -329,15 +319,14 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
         EasyLoading.dismiss();
       }
     } else {
-      Utility.showToast("please_check_your_internet_connection_key".tr());
+      Utility.showToast(msg: "please_check_your_internet_connection_key".tr());
     }
   }
 
   void exportReport(BuildContext context) async {
     final xls.Workbook workbook = xls.Workbook(0);
     //Adding a Sheet with name to workbook.
-    final xls.Worksheet sheet1 =
-        workbook.worksheets.addWithName('Product Redeem Report');
+    final xls.Worksheet sheet1 = workbook.worksheets.addWithName('Product Redeem Report');
     sheet1.showGridlines = true;
 
     int columnIndex = 1;
@@ -351,28 +340,22 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
 
     sheet1.getRangeByIndex(1, 1, 1, reportList.first.keys.length).merge();
     if (groupValue == 1) {
-      sheet1.getRangeByIndex(rowIndex, columnIndex).value =
-          "Product Redeem Report ($startDate to $endDate)";
+      sheet1.getRangeByIndex(rowIndex, columnIndex).value = "Product Redeem Report ($startDate to $endDate)";
     } else {
-      sheet1.getRangeByIndex(rowIndex, columnIndex).value =
-          "Product Redeem Report (${days!.optionName})";
+      sheet1.getRangeByIndex(rowIndex, columnIndex).value = "Product Redeem Report (${days!.optionName})";
     }
 
     sheet1.getRangeByIndex(rowIndex, columnIndex).rowHeight = 30;
-    sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign =
-        xls.HAlignType.center;
-    sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign =
-        xls.VAlignType.center;
+    sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign = xls.HAlignType.center;
+    sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign = xls.VAlignType.center;
     rowIndex = rowIndex + 1;
 
     reportList.first.keys.forEach((element) {
       sheet1.getRangeByIndex(rowIndex, columnIndex).value = element.toString();
       sheet1.getRangeByIndex(rowIndex, columnIndex).columnWidth = 25;
       sheet1.getRangeByIndex(rowIndex, columnIndex).rowHeight = 20;
-      sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign =
-          xls.HAlignType.center;
-      sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign =
-          xls.VAlignType.center;
+      sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign = xls.HAlignType.center;
+      sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign = xls.VAlignType.center;
       columnIndex = columnIndex + 1;
     });
 
@@ -383,10 +366,8 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
         sheet1.getRangeByIndex(rowIndex, columnIndex).value = value;
         sheet1.getRangeByIndex(rowIndex, columnIndex).columnWidth = 25;
         sheet1.getRangeByIndex(rowIndex, columnIndex).rowHeight = 20;
-        sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign =
-            xls.HAlignType.center;
-        sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign =
-            xls.VAlignType.center;
+        sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.hAlign = xls.HAlignType.center;
+        sheet1.getRangeByIndex(rowIndex, columnIndex).cellStyle.vAlign = xls.VAlignType.center;
         columnIndex = columnIndex + 1;
 
         if (key == "total") {
@@ -397,31 +378,23 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
         if (key == "mrp") {
           print("mrp - >$value");
           print("totalMrp - >$totalMrp");
-          totalMrp = double.parse(
-                  value == null || value == "" ? "0" : value.toString()) +
-              totalMrp;
+          totalMrp = double.parse(value == null || value == "" ? "0" : value.toString()) + totalMrp;
         }
         if (key == "purchase_price") {
           print("purchase_price - >$value");
           print("totalPurchasePrice - >$totalPurchasePrice");
-          totalPurchasePrice = double.parse(
-                  value == null || value == "" ? "0" : value.toString()) +
-              totalPurchasePrice;
+          totalPurchasePrice = double.parse(value == null || value == "" ? "0" : value.toString()) + totalPurchasePrice;
         }
         if (key == "qty") {
           print("purchase_price - >$value");
           print("totalPurchasePrice - >$totalPurchasePrice");
-          qty = double.parse(
-                  value == null || value == "" ? "0" : value.toString()) +
-              qty;
+          qty = double.parse(value == null || value == "" ? "0" : value.toString()) + qty;
         }
 
         if (key == "redeem_coins") {
           print("purchase_price - >$value");
           print("redeemCoins - >$redeemCoins");
-          redeemCoins = double.parse(
-                  value == null || value == "" ? "0" : value.toString()) +
-              redeemCoins;
+          redeemCoins = double.parse(value == null || value == "" ? "0" : value.toString()) + redeemCoins;
         }
       });
     });
@@ -449,8 +422,7 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
         sheet1.getRangeByIndex(rowIndex, columnIndex).value = total;
       }
       if (key == "purchase_price") {
-        sheet1.getRangeByIndex(rowIndex, columnIndex).value =
-            totalPurchasePrice;
+        sheet1.getRangeByIndex(rowIndex, columnIndex).value = totalPurchasePrice;
       }
       if (key == "mrp") {
         sheet1.getRangeByIndex(rowIndex, columnIndex).value = totalMrp;
@@ -489,11 +461,10 @@ class _ProductRedeemReportState extends State<ProductRedeemReport> {
       fileName += "${days!.optionName}" + ".xlsx";
     }
 
-    final File file =
-        File(Platform.isWindows ? '$path\\$fileName' : '$path/$fileName');
+    final File file = File(Platform.isWindows ? '$path\\$fileName' : '$path/$fileName');
     await file.writeAsBytes(bytes, flush: true).whenComplete(() {
       print("completed");
-      Utility.showToast("Report saved at below location \n${file.path}");
+      Utility.showToast(msg: "Report saved at below location \n${file.path}");
     });
     print("savedDir${file.path}");
 

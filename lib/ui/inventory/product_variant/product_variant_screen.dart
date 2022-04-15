@@ -151,39 +151,40 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
                       if (productVariant[j].option.isNotEmpty) {
                         for (int i = 0; i < productVariant[j].option.length; i++) {
                           if (productVariant[j].option[i].value.isEmpty) {
-                            Utility.showToast("please_enter_key".tr() + " ${productVariant[j].option[i].name}".tr());
+                            Utility.showToast(
+                                msg: "please_enter_key".tr() + " ${productVariant[j].option[i].name}".tr());
                             return;
                           }
                         }
                       }
                       if (productVariant[j].mrp.isEmpty) {
-                        Utility.showToast("please_enter_mrp_key".tr());
+                        Utility.showToast(msg: "please_enter_mrp_key".tr());
                         return;
                       }
                       if (productVariant[j].mrp == "0") {
-                        Utility.showToast("please_enter_valid_mrp_key".tr());
+                        Utility.showToast(msg: "please_enter_valid_mrp_key".tr());
                         return;
                       }
                       if (productVariant[j].sellingPrice.isEmpty) {
-                        Utility.showToast("please_enter_selling_price_key".tr());
+                        Utility.showToast(msg: "please_enter_selling_price_key".tr());
                         return;
                       }
                       if (productVariant[j].sellingPrice == "0") {
-                        Utility.showToast("please_enter_valid_selling_price_key".tr());
+                        Utility.showToast(msg: "please_enter_valid_selling_price_key".tr());
                         return;
                       }
                       if (double.parse(productVariant[j].sellingPrice.trim()) >
                           double.parse(productVariant[j].mrp.trim())) {
-                        Utility.showToast("selling_price_cannot_be_more_than_mrp_key".tr());
+                        Utility.showToast(msg: "selling_price_cannot_be_more_than_mrp_key".tr());
                         return;
                       }
 
                       if (productVariant[j].stock.isEmpty) {
-                        Utility.showToast("please_enter_stock_key".tr());
+                        Utility.showToast(msg: "please_enter_stock_key".tr());
                         return;
                       }
                       if (int.parse(productVariant[j].stock) <= 0) {
-                        Utility.showToast("stock_can_not_be_zero_key".tr());
+                        Utility.showToast(msg: "stock_can_not_be_zero_key".tr());
                         return;
                       }
                     }

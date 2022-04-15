@@ -1,9 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vendor/utility/color.dart';
+import 'package:vendor/utility/utility.dart';
 
 class TabContainer extends StatefulWidget {
   final int page;
@@ -14,8 +14,7 @@ class TabContainer extends StatefulWidget {
   _TabContainerState createState() => _TabContainerState(page);
 }
 
-class _TabContainerState extends State<TabContainer>
-    with TickerProviderStateMixin {
+class _TabContainerState extends State<TabContainer> with TickerProviderStateMixin {
   late List<Widget> listScreens;
 
   late TabController _tabController;
@@ -54,7 +53,7 @@ class _TabContainerState extends State<TabContainer>
     DateTime now = DateTime.now();
     if (now.difference(currentBackPressTime) > Duration(seconds: 2)) {
       currentBackPressTime = now;
-      Fluttertoast.showToast(msg: "exit_warning_key".tr());
+      Utility.showToast(msg: "exit_warning_key".tr());
       return Future.value(false);
     }
     return Future.value(true);
@@ -79,7 +78,7 @@ class _TabContainerState extends State<TabContainer>
         } else {
           // Navigator.pop(context);
           //   _tabController.index == 3 ?
-          //   Fluttertoast.showToast(msg: "HI")
+          //   Utility.showToast(msg: "HI")
           //   :
           Navigator.canPop(context);
           _tabController.animateTo(0);
@@ -110,22 +109,17 @@ class _TabContainerState extends State<TabContainer>
                 );
               },
             ),
-            title: Text(titleList[_tabController.index],
-                style: GoogleFonts.openSans(fontWeight: FontWeight.w600)),
+            title: Text(titleList[_tabController.index], style: GoogleFonts.openSans(fontWeight: FontWeight.w600)),
           ),
           //drawer: MyDrawer(),
-          body: TabBarView(
-              controller: _tabController,
-              physics: NeverScrollableScrollPhysics(),
-              children: listScreens),
+          body: TabBarView(controller: _tabController, physics: NeverScrollableScrollPhysics(), children: listScreens),
           bottomNavigationBar: TabBar(
             controller: _tabController,
             //indicatorWeight: 10,
             // indicatorColor: ColorPrimary,
             //automaticIndicatorColorAdjustment: true,
             indicator: UnderlineTabIndicator(
-                borderSide: BorderSide(
-                    width: 3, color: ColorPrimary, style: BorderStyle.solid),
+                borderSide: BorderSide(width: 3, color: ColorPrimary, style: BorderStyle.solid),
                 insets: EdgeInsets.fromLTRB(30, 0, 30, 70)),
             labelColor: ColorPrimary,
             unselectedLabelColor: Colors.grey.shade500,

@@ -39,8 +39,7 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
     }
     if (event is UpdateSingleProductVariantEvent) {
       yield ImageLoadingState();
-      yield UpdateSingleProductVariantState(
-          productVariant: event.productVariant, index: event.index);
+      yield UpdateSingleProductVariantState(productVariant: event.productVariant, index: event.index);
     }
     if (event is DeleteProductVariantEvent) {
       yield ImageLoadingState();
@@ -104,10 +103,10 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
         yield AddProductSuccessState(responseData: response.data!);
       } else {
         EasyLoading.dismiss();
-        Utility.showToast(response.message);
+        Utility.showToast(msg: response.message);
       }
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
     }
   }
 
@@ -126,8 +125,7 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
         print("image size->");
         int size = await image.length();
         print(size);
-        files.add(MultipartFile.fromFileSync(image.path,
-            filename: path.basename(image.path)));
+        files.add(MultipartFile.fromFileSync(image.path, filename: path.basename(image.path)));
       }
 
       input["product_image[]"] = files;
@@ -140,8 +138,7 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
       //   formData.files.add(MapEntry("product_image", await MultipartFile.fromFile(image.path, filename: path.basename(image.path))));
       // }
 
-      UploadImageResponse response =
-          await apiProvider.addProductImage(formData);
+      UploadImageResponse response = await apiProvider.addProductImage(formData);
       if (response.success) {
         yield UploadImageSuccessState(image: response.data!);
       } else {
@@ -149,7 +146,7 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
       }
     } else {
       EasyLoading.dismiss();
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
     }
   }
 }

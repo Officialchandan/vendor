@@ -5,7 +5,6 @@ import 'package:vendor/model/get_purchased_product_response.dart';
 import 'package:vendor/model/sale_return_resonse.dart';
 import 'package:vendor/ui/inventory/sale_return/bloc/sale_return_event.dart';
 import 'package:vendor/ui/inventory/sale_return/bloc/sale_return_state.dart';
-import 'package:vendor/ui/money_due_upi/sales_return/sales_return_bloc/sales_return_states.dart';
 import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/utility.dart';
@@ -34,8 +33,7 @@ class SaleReturnBloc extends Bloc<SaleReturnEvent, SaleReturnState> {
 
     if (event is SaleReturnCheckBoxEvent) {
       yield SaleReturnLoadingState();
-      yield SaleReturnCheckBoxState(
-          isChecked: event.isChecked, index: event.index);
+      yield SaleReturnCheckBoxState(isChecked: event.isChecked, index: event.index);
     }
 
     if (event is SaleReturnQtyIncrementEvent) {
@@ -56,8 +54,7 @@ class SaleReturnBloc extends Bloc<SaleReturnEvent, SaleReturnState> {
 
   Stream<SaleReturnState> getPurchasedProduct(Map input) async* {
     if (await Network.isConnected()) {
-      GetPurchasedProductResponse response =
-          await apiProvider.getPurchasedProduct(input);
+      GetPurchasedProductResponse response = await apiProvider.getPurchasedProduct(input);
 
       if (response.success) {
         List<SaleReturnProducts> products = [];
@@ -103,11 +100,11 @@ class SaleReturnBloc extends Bloc<SaleReturnEvent, SaleReturnState> {
 
         yield GetProductSuccessState(purchaseList: products);
       } else {
-        Utility.showToast(response.message);
+        Utility.showToast(msg: response.message);
         yield GetProductFailureState(message: response.message);
       }
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
     }
   }
 
@@ -116,13 +113,12 @@ class SaleReturnBloc extends Bloc<SaleReturnEvent, SaleReturnState> {
       SaleReturnResponse response = await apiProvider.saleReturnApi(input);
 
       if (response.success) {
-        yield ProductReturnSuccessState(
-            message: response.message, input: input, data: response.data!);
+        yield ProductReturnSuccessState(message: response.message, input: input, data: response.data!);
       } else {
-        Utility.showToast(response.message);
+        Utility.showToast(msg: response.message);
       }
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
     }
   }
 
@@ -133,10 +129,10 @@ class SaleReturnBloc extends Bloc<SaleReturnEvent, SaleReturnState> {
       if (response.success) {
         yield VerifyOtpSuccessState(message: response.message);
       } else {
-        Utility.showToast(response.message);
+        Utility.showToast(msg: response.message);
       }
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
     }
   }
 }

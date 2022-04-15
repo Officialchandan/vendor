@@ -1,11 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:vendor/main.dart';
-import 'package:vendor/model/billing_product_response.dart';
 import 'package:vendor/model/qr_code.dart';
 import 'package:vendor/ui_without_inventory/chatpapdi_billing/ScannerChatPapdi/scanner_chatpapdi_event.dart';
 import 'package:vendor/ui_without_inventory/chatpapdi_billing/ScannerChatPapdi/scanner_chatpapdi_state.dart';
-
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/utility.dart';
 
@@ -25,13 +23,12 @@ Stream<ScannerState> scannerApi(input) async* {
     QrcodeResponse response = await apiProvider.getQRcode(input);
     EasyLoading.dismiss();
     if (response.success) {
-      yield GetScannerState(
-          message: response.message, succes: response.success);
+      yield GetScannerState(message: response.message, succes: response.success);
     } else {
       EasyLoading.dismiss();
-      Utility.showToast(response.message);
+      Utility.showToast(msg: response.message);
     }
   } else {
-    Utility.showToast("please_check_your_internet_connection_key".trim());
+    Utility.showToast(msg: "please_check_your_internet_connection_key".trim());
   }
 }

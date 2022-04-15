@@ -3,15 +3,14 @@ import 'dart:developer';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/model/login_otp.dart';
 import 'package:vendor/model/login_response.dart';
 import 'package:vendor/ui/login/login_event.dart';
 import 'package:vendor/ui/login/login_state.dart';
-import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/sharedpref.dart';
+import 'package:vendor/utility/utility.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc() : super(LoginInitialState());
@@ -47,7 +46,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       }
     } else {
       EasyLoading.dismiss();
-      Fluttertoast.showToast(msg: "please_check_your_internet_connection_key".tr(), backgroundColor: ColorPrimary);
+      Utility.showToast(msg: "please_check_your_internet_connection_key".tr());
     }
   }
 
@@ -79,7 +78,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       //   yield GetLoginFailureState(message: "internal_server_error_key".tr());
       // }
     } else {
-      Fluttertoast.showToast(msg: "please_check_your_internet_connection_key".tr(), backgroundColor: ColorPrimary);
+      Utility.showToast(msg: "please_check_your_internet_connection_key".tr());
     }
   }
 }

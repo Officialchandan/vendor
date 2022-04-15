@@ -1,5 +1,5 @@
-framework module fluttertoast {
-  umbrella header "fluttertoast-umbrella.h"
+framework module Utility {
+  umbrella header "Utility-umbrella.h"
 
   export *
   module * { export * }

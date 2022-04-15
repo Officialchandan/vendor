@@ -50,8 +50,10 @@ class _SelectCategoriesScreenState extends State<SelectCategoriesScreen> {
           title: AutoSizeText(
             // "${AppTranslations.of(context)!.text(StringConst.all_categories)}",
             "select_category_key".tr(),
-            style: Theme.of(context).textTheme.headline6!.merge(
-                TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+            style: Theme.of(context)
+                .textTheme
+                .headline6!
+                .merge(TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
             maxFontSize: 25,
             minFontSize: 15,
           ),
@@ -84,9 +86,7 @@ class _SelectCategoriesScreenState extends State<SelectCategoriesScreen> {
                 itemBuilder: (context, index) {
                   return Container(
                     margin: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.grey.shade100),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.grey.shade100),
                     child: ListTile(
                       tileColor: Colors.grey.shade100,
                       shape: RoundedRectangleBorder(
@@ -126,12 +126,12 @@ class _SelectCategoriesScreenState extends State<SelectCategoriesScreen> {
                   width: double.infinity,
                   onPressed: () {
                     if (groupId != -1) {
-                      CategoryModel categoryModel = categoryList.singleWhere(
-                          (element) => element.id == groupId.toString());
+                      CategoryModel categoryModel =
+                          categoryList.singleWhere((element) => element.id == groupId.toString());
 
                       // Navigator.pushNamed(context, Routs.VENDOR_LIST_SCREEN, arguments: categoryModel);
                     } else {
-                      Utility.showToast("please_select_category_key".tr());
+                      Utility.showToast(msg: "please_select_category_key".tr());
                     }
                   },
                 ),
@@ -152,13 +152,13 @@ class _SelectCategoriesScreenState extends State<SelectCategoriesScreen> {
       if (response.success) {
         categoryList = response.data!;
       } else {
-        Utility.showToast(response.message);
+        Utility.showToast(msg: response.message);
       }
 
       categoryController.add(categoryList);
     } else {
       categoryController.add(categoryList);
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
       // EasyLoading.showError(Constant.INTERNET_ALERT_MSG);
     }
   }

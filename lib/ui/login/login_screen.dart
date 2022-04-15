@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vendor/ui/login/login_bloc.dart';
 import 'package:vendor/ui/login/login_event.dart';
@@ -13,6 +12,7 @@ import 'package:vendor/ui/login/login_state.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/routs.dart';
 import 'package:vendor/utility/sharedpref.dart';
+import 'package:vendor/utility/utility.dart';
 import 'package:vendor/utility/validator.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -126,7 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                     onPressed: () {
                       if (_textFieldController.text.isEmpty) {
-                        Fluttertoast.showToast(msg: "please_enter_password_key".tr(), backgroundColor: ColorPrimary);
+                        Utility.showToast(msg: "please_enter_password_key".tr());
                       } else {
                         loginBloc.add(GetLoginOtpEvent(mobile: mobileController.text, otp: _textFieldController.text));
                       }
@@ -153,12 +153,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   loginApiOtpCall(mobile) async {
     if (mobileController.text.isEmpty) {
-      Fluttertoast.showToast(
-          backgroundColor: ColorPrimary, textColor: Colors.white, msg: "please_enter_username_key".tr());
+      Utility.showToast(msg: "please_enter_username_key".tr());
       _tap = true;
     } else if (mobileController.text.length != 10) {
-      Fluttertoast.showToast(
-          backgroundColor: ColorPrimary, textColor: Colors.white, msg: "please_enter_valid_mobile_key".tr());
+      Utility.showToast(msg: "please_enter_valid_mobile_key".tr());
       _tap = true;
     } else {
       EasyLoading.show();
@@ -170,11 +168,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   loginApiCall(mobile, otp) async {
     if (_textFieldController.text.isEmpty) {
-      Fluttertoast.showToast(
-          backgroundColor: ColorPrimary, textColor: Colors.white, msg: "please_enter_password_key".tr());
+      Utility.showToast(msg: "please_enter_password_key".tr());
     } else if (_textFieldController.text.length != 6) {
-      Fluttertoast.showToast(
-          backgroundColor: ColorPrimary, textColor: Colors.white, msg: "please_enter_6_digit_valid_otp_key".tr());
+      Utility.showToast(msg: "please_enter_6_digit_valid_otp_key".tr());
     } else {
       loginBloc.add(GetLoginOtpEvent(mobile: mobileController.text, otp: _textFieldController.text));
     }
@@ -245,7 +241,7 @@ class _LoginScreenState extends State<LoginScreen> {
           }
 
           if (state is GetLoginFailureState) {
-            Fluttertoast.showToast(backgroundColor: ColorPrimary, textColor: Colors.white, msg: state.message);
+            Utility.showToast(msg: state.message);
           }
         },
         builder: (context, state) {

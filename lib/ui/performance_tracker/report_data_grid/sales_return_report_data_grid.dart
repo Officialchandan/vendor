@@ -1,14 +1,15 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
+
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:syncfusion_flutter_datagrid_export/export.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
+import 'package:syncfusion_flutter_datagrid_export/export.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart' as xlsio;
 import 'package:vendor/utility/color.dart';
@@ -19,8 +20,7 @@ class SalesReturnReportDataGrid extends StatefulWidget {
   SalesReturnReportDataGrid({Key? key, this.reportData}) : super(key: key);
 
   @override
-  _SalesReturnReportDataGridState createState() =>
-      _SalesReturnReportDataGridState();
+  _SalesReturnReportDataGridState createState() => _SalesReturnReportDataGridState();
 }
 
 class _SalesReturnReportDataGridState extends State<SalesReturnReportDataGrid> {
@@ -189,10 +189,7 @@ class _SalesReturnReportDataGridState extends State<SalesReturnReportDataGrid> {
                         },
                         child: Text(
                           "Cancel",
-                          style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
+                          style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Colors.black),
                         ),
                       ),
                       InkWell(
@@ -207,10 +204,7 @@ class _SalesReturnReportDataGridState extends State<SalesReturnReportDataGrid> {
                         },
                         child: Text(
                           "Export",
-                          style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold,
-                              color: ColorPrimary),
+                          style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: ColorPrimary),
                         ),
                       ),
                     ],
@@ -230,18 +224,14 @@ class _SalesReturnReportDataGridState extends State<SalesReturnReportDataGrid> {
       Directory? directory;
       directory = await getExternalStorageDirectory();
       String fileName = "/Sales Return Report ";
-      String path = directory!.path +
-          fileName +
-          DateFormat("dd MMM yyyy").format(DateTime.now()) +
-          ".xlsx";
+      String path = directory!.path + fileName + DateFormat("dd MMM yyyy").format(DateTime.now()) + ".xlsx";
 
-      final xlsio.Workbook workbook =
-          dataGridKey.currentState!.exportToExcelWorkbook();
+      final xlsio.Workbook workbook = dataGridKey.currentState!.exportToExcelWorkbook();
       final List<int> bytes = workbook.saveAsStream();
 
       File(path).writeAsBytes(bytes);
       workbook.dispose();
-      Utility.showToast("File Saved " + path);
+      Utility.showToast(msg: "File Saved " + path);
       OpenFile.open(path);
     }
     if (permission.isPermanentlyDenied) {
@@ -255,17 +245,13 @@ class _SalesReturnReportDataGridState extends State<SalesReturnReportDataGrid> {
       Directory? directory;
       directory = await getExternalStorageDirectory();
       String fileName = "/Sales Return Report ";
-      String path = directory!.path +
-          fileName +
-          DateFormat("dd MMM yyyy").format(DateTime.now()) +
-          ".pdf";
+      String path = directory!.path + fileName + DateFormat("dd MMM yyyy").format(DateTime.now()) + ".pdf";
       log(path);
-      final PdfDocument document = dataGridKey.currentState!
-          .exportToPdfDocument(fitAllColumnsInOnePage: true);
+      final PdfDocument document = dataGridKey.currentState!.exportToPdfDocument(fitAllColumnsInOnePage: true);
       final List<int> bytes = document.save();
       File(path).writeAsBytes(bytes);
       document.dispose();
-      Utility.showToast("File Saved " + path);
+      Utility.showToast(msg: "File Saved " + path);
       OpenFile.open(path);
     }
     if (permission.isPermanentlyDenied) {
@@ -278,14 +264,11 @@ class ReportDataSource extends DataGridSource {
   ReportDataSource({required List<Map<String, dynamic>> reportData}) {
     _reportData = reportData
         .map<DataGridRow>((e) => DataGridRow(cells: [
-              DataGridCell<String>(
-                  columnName: 'Category Name', value: e['category_name']),
-              DataGridCell<String>(
-                  columnName: 'Product Name', value: e['product_name']),
+              DataGridCell<String>(columnName: 'Category Name', value: e['category_name']),
+              DataGridCell<String>(columnName: 'Product Name', value: e['product_name']),
               DataGridCell<int>(columnName: 'Quantity', value: e['qty']),
               DataGridCell<String>(columnName: 'Mobile', value: e['mobile']),
-              DataGridCell<String>(
-                  columnName: 'Return Coins', value: e['return_coins']),
+              DataGridCell<String>(columnName: 'Return Coins', value: e['return_coins']),
               DataGridCell<String>(columnName: 'Reason', value: e['reason']),
               DataGridCell<String>(columnName: 'Date', value: e['date']),
               DataGridCell<String>(columnName: 'Time', value: e['time']),
@@ -313,8 +296,7 @@ class ReportDataSource extends DataGridSource {
 
 class RadioListBuilder extends StatefulWidget {
   final Function(String format) onFormatSelect;
-  const RadioListBuilder({required this.onFormatSelect, Key? key})
-      : super(key: key);
+  const RadioListBuilder({required this.onFormatSelect, Key? key}) : super(key: key);
 
   @override
   RadioListBuilderState createState() {
@@ -346,8 +328,7 @@ class RadioListBuilderState extends State<RadioListBuilder> {
           },
           title: Text(
             types[index],
-            style: const TextStyle(
-                color: Colors.black, fontSize: 17, fontWeight: FontWeight.bold),
+            style: const TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.bold),
           ),
         );
       },

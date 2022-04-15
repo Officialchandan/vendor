@@ -4,22 +4,20 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:share/share.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/routs.dart';
+import 'package:vendor/utility/utility.dart';
 
 class HomeScreenWithoutInventory extends StatefulWidget {
   HomeScreenWithoutInventory({Key? key}) : super(key: key);
 
   @override
-  _HomeScreenWithoutInventoryState createState() =>
-      _HomeScreenWithoutInventoryState();
+  _HomeScreenWithoutInventoryState createState() => _HomeScreenWithoutInventoryState();
 }
 
-class _HomeScreenWithoutInventoryState
-    extends State<HomeScreenWithoutInventory> {
+class _HomeScreenWithoutInventoryState extends State<HomeScreenWithoutInventory> {
   List<String> name = [
     "billing_key".tr(),
     "performance_tracker_key".tr(),
@@ -44,8 +42,7 @@ class _HomeScreenWithoutInventoryState
   ];
 
   _onShareWithEmptyOrigin(BuildContext context) async {
-    await Share.share(
-        "https://play.google.com/store/apps/details?id=com.tencent.ig");
+    await Share.share("https://play.google.com/store/apps/details?id=com.tencent.ig");
   }
 
   @override
@@ -72,9 +69,7 @@ class _HomeScreenWithoutInventoryState
                 _onShareWithEmptyOrigin(context);
               },
               child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(5))),
                 child: Row(
                   children: [
                     SizedBox(
@@ -90,10 +85,7 @@ class _HomeScreenWithoutInventoryState
                     ),
                     Text(
                       "${"share_store_key".tr()} ",
-                      style: TextStyle(
-                          color: ColorPrimary,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 12),
+                      style: TextStyle(color: ColorPrimary, fontWeight: FontWeight.w600, fontSize: 12),
                     ),
                     SizedBox(
                       width: 5,
@@ -134,9 +126,9 @@ class _HomeScreenWithoutInventoryState
               if (await Network.isConnected()) {
                 routeManager(index);
               } else {
-                Fluttertoast.showToast(
-                    msg: "please_check_your_internet_connection_key".tr(),
-                    backgroundColor: ColorPrimary);
+                Utility.showToast(
+                  msg: "please_check_your_internet_connection_key".tr(),
+                );
               }
             },
             child: Container(
@@ -203,27 +195,15 @@ class _HomeScreenWithoutInventoryState
   routeManager(index) {
     log("$index");
     index == 0
-        ? Navigator.pushNamed(
-            context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY,
-            arguments: index)
+        ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY, arguments: index)
         : index == 1
-            ? Navigator.pushNamed(
-                context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY,
-                arguments: 1)
+            ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY, arguments: 1)
             : index == 2
-                ? Navigator.pushNamed(
-                    context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY,
-                    arguments: 3)
+                ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY, arguments: 3)
                 : index == 3
-                    ? Navigator.pushNamed(
-                        context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY,
-                        arguments: 2)
+                    ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY, arguments: 2)
                     : index == 4
-                        ? Navigator.pushNamed(context,
-                            Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY,
-                            arguments: 3)
-                        : Navigator.pushNamed(context,
-                            Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY,
-                            arguments: 3);
+                        ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY, arguments: 3)
+                        : Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY, arguments: 3);
   }
 }

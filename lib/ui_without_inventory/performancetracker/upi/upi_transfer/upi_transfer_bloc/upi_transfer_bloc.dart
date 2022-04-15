@@ -5,18 +5,15 @@ import 'package:vendor/main.dart';
 import 'package:vendor/model/upi_transfer_history.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/upi/upi_transfer/upi_transfer_bloc/upi_transfer_event.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/upi/upi_transfer/upi_transfer_bloc/upi_transfer_state.dart';
-
 import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/utility.dart';
 
-class UpiTansferHistoryBloc
-    extends Bloc<UpiTansferHistoryEvent, UpiTansferHistoryState> {
+class UpiTansferHistoryBloc extends Bloc<UpiTansferHistoryEvent, UpiTansferHistoryState> {
   UpiTansferHistoryBloc() : super(GetUpiTansferHistoryInitialState());
 
   @override
-  Stream<UpiTansferHistoryState> mapEventToState(
-      UpiTansferHistoryEvent event) async* {
+  Stream<UpiTansferHistoryState> mapEventToState(UpiTansferHistoryEvent event) async* {
     if (event is GetUpiTansferHistoryEvent) {
       yield* getUpiTansferHistoryApi(event.input);
     }
@@ -36,11 +33,10 @@ class UpiTansferHistoryBloc
         // log(orderList);
         yield GetUpiTansferHistoryState(data: orderList);
       } else {
-        yield GetUpiTansferHistoryFailureState(
-            succes: response.success, message: response.message);
+        yield GetUpiTansferHistoryFailureState(succes: response.success, message: response.message);
       }
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
     }
   }
 }

@@ -1,10 +1,10 @@
 import 'dart:collection';
+import 'dart:developer';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/model/common_response.dart';
@@ -41,17 +41,22 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
       this.adjustedBalance =
           (double.parse(widget.saleReturnData.walletBalance) - double.parse(widget.saleReturnData.earnCoins))
               .toStringAsFixed(2);
+      adjustedBalance = "0";
+      log("------>adjustedBalance$adjustedBalance");
     } else {
       this.adjustedBalance =
           (double.parse(widget.saleReturnData.earnCoins) - (double.parse(widget.saleReturnData.walletBalance)))
               .toStringAsFixed(2);
+      log("------>adjustedBalance1$adjustedBalance");
     }
 
     if ((double.parse(adjustedBalance!) / 3 >= double.parse(widget.saleReturnData.amountPaid))) {
       returnAmount = amountPaid;
+      log("------>returnAmount$returnAmount");
     } else {
       this.returnAmount =
           (double.parse(widget.saleReturnData.amountPaid) - double.parse(adjustedBalance!) / 3).toStringAsFixed(2);
+      log("------>returnAmount1$returnAmount");
     }
 
     super.initState();
@@ -372,7 +377,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                     onPressed: () {
                       if (_textFieldController.text.isEmpty) {
-                        Fluttertoast.showToast(msg: "please_enter_password_key".tr(), backgroundColor: ColorPrimary);
+                        Utility.showToast(msg: "please_enter_password_key".tr());
                       } else {
                         // input["otp"] = _textFieldController.text.trim();
                         // saleReturnBloc.add(VerifyOtpEvent(input: input));
@@ -417,15 +422,15 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
           successDialog(context, saleReturnData);
 
           // Navigator.of(context).pop(saleReturnData.orderId); //? For screen
-          Utility.showToast(response.message);
+          Utility.showToast(msg: response.message);
         } else {
-          Utility.showToast(response.message);
+          Utility.showToast(msg: response.message);
         }
       } else {
-        Utility.showToast(Constant.INTERNET_ALERT_MSG);
+        Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
       }
     } else {
-      Utility.showToast("please_enter_6_digit_valid_otp_key".tr());
+      Utility.showToast(msg: "please_enter_6_digit_valid_otp_key".tr());
     }
   }
 

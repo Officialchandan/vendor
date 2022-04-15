@@ -28,17 +28,15 @@ class MoneyDueBloc extends Bloc<MoneyDueEvent, MoneyDueState> {
   Stream<MoneyDueState> getDueAmountApi() async* {
     if (await Network.isConnected()) {
       GetDueAmountResponse response = await apiProvider.getDueAmount();
-      yield GetDueAmountState(
-          dueAmount: response.totalDue, categoryDue: response.data);
+      yield GetDueAmountState(dueAmount: response.totalDue, categoryDue: response.data);
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
     }
   }
 
   Stream<MoneyDueState> getFreeCoinApi() async* {
     if (await Network.isConnected()) {
-      GetVendorFreeCoinResponse response =
-          await apiProvider.getVendorFreeCoins();
+      GetVendorFreeCoinResponse response = await apiProvider.getVendorFreeCoins();
       if (response.success) {
         yield GetFreeCoinState(data: response.data);
       } else {
@@ -48,14 +46,13 @@ class MoneyDueBloc extends Bloc<MoneyDueEvent, MoneyDueState> {
         );
       }
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
     }
   }
 
   Stream<MoneyDueState> getInitatePaymentApi(input) async* {
     if (await Network.isConnected()) {
-      IntiatePaymnetResponse response =
-          await apiProvider.initiatePayment(input);
+      IntiatePaymnetResponse response = await apiProvider.initiatePayment(input);
       if (response.success) {
         yield GetPaymentTransictionState(
             callbackUrl: response.callbackUrl,
@@ -70,7 +67,7 @@ class MoneyDueBloc extends Bloc<MoneyDueEvent, MoneyDueState> {
         );
       }
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
     }
   }
 }

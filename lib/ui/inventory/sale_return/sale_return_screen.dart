@@ -1,6 +1,4 @@
-import 'dart:async';
 import 'dart:collection';
-import 'dart:developer';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -8,10 +6,8 @@ import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:vendor/main.dart';
 import 'package:vendor/model/get_purchased_product_response.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
 import 'package:vendor/ui/inventory/sale_return/bloc/sale_return_bloc.dart';
@@ -66,7 +62,8 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                     }
                     if (text.length == 9) {
                       purchasedList = [];
-                      saleReturnBloc.add(SaleReturnClearDataEvent(message: "Enter mobile number to get purchased product"));
+                      saleReturnBloc
+                          .add(SaleReturnClearDataEvent(message: "Enter mobile number to get purchased product"));
                     }
                   },
                   // autofocus: true,
@@ -96,7 +93,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                     //     MaterialPageRoute(builder: (context) => SaleReturnScreen()),
                     //     (route) => false);
                     Navigator.pop(context);
-                    Utility.showToast(state.message);
+                    Utility.showToast(msg: state.message);
                     Navigator.pop(context);
                   }
                 },
@@ -155,6 +152,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                         Container(
                           height: MediaQuery.of(context).size.height * 0.70,
                           child: ListView.separated(
+                              shrinkWrap: true,
                               padding: const EdgeInsets.only(bottom: 10),
                               itemBuilder: (context, index) {
                                 return Stack(
@@ -309,7 +307,8 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                                                                                     count: 1, index: index));
                                                                           } else {
                                                                             Utility.showToast(
-                                                                                "Can't return more than ${purchasedList[index].qty} products");
+                                                                                msg:
+                                                                                    "Can't return more than ${purchasedList[index].qty} products");
                                                                           }
                                                                         },
                                                                         iconSize: 20,
@@ -355,9 +354,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                                         activeColor: ColorPrimary,
                                         value: purchasedList[index].checked,
                                         onChanged: (value) {
-
-                                          saleReturnBloc
-                                              .add(SaleReturnCheckBoxEvent(isChecked: value!, index: index));
+                                          saleReturnBloc.add(SaleReturnCheckBoxEvent(isChecked: value!, index: index));
                                         },
                                       ),
                                     )
@@ -388,11 +385,9 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
               if (await Network.isConnected()) {
                 edtMobile.text.length == 10
                     ? submit()
-                    : Fluttertoast.showToast(
-                        msg: "please_enter_valid_mobile_number_key".tr(), backgroundColor: ColorPrimary);
-
+                    : Utility.showToast(msg: "please_enter_valid_mobile_number_key".tr());
               } else {
-                Utility.showToast(Constant.INTERNET_ALERT_MSG);
+                Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
 
                 // EasyLoading.showError(Constant.INTERNET_ALERT_MSG);
               }
@@ -422,6 +417,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                     height: 300,
                     margin: EdgeInsets.only(bottom: 50),
                     child: ListView(
+                      shrinkWrap: true,
                       children: [
                         SelectCategoryWidget(
                           onSelect: (String? categoryId) {
@@ -467,11 +463,10 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
   }
 
   void submit() async {
- if (purchasedList.isEmpty) {
-      Utility.showToast("There is no available product on this number!");
-    }
-    else if (returnProductList.isEmpty) {
-      Utility.showToast("Please select product to be return!");
+    if (purchasedList.isEmpty) {
+      Utility.showToast(msg: "There is no available product on this number!");
+    } else if (returnProductList.isEmpty) {
+      Utility.showToast(msg: "Please select product to be return!");
     } else {
       String productId = "";
       String orderId = "";
@@ -561,7 +556,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                     onPressed: () {
                       if (_textFieldController.text.isEmpty) {
-                        Fluttertoast.showToast(msg: "please_enter_password_key".tr(), backgroundColor: ColorPrimary);
+                        Utility.showToast(msg: "please_enter_password_key".tr());
                       } else {
                         input["otp"] = _textFieldController.text.trim();
                         saleReturnBloc.add(VerifyOtpEvent(input: input));

@@ -47,9 +47,7 @@ class _SelectSubCategoryState extends State<SelectSubCategory> {
           actions: [
             TextButton(
                 onPressed: () {
-                  List<SubCategoryModel> subCategory = subCategoryList
-                      .where((element) => element.check)
-                      .toList();
+                  List<SubCategoryModel> subCategory = subCategoryList.where((element) => element.check).toList();
                   Navigator.pop(context, subCategory);
                 },
                 child: Text(
@@ -94,8 +92,7 @@ class _SelectSubCategoryState extends State<SelectSubCategory> {
           child: MaterialButton(
             onPressed: () {},
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-                side: BorderSide(color: ColorPrimary, width: 1)),
+                borderRadius: BorderRadius.circular(10), side: BorderSide(color: ColorPrimary, width: 1)),
             height: 45,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -121,8 +118,7 @@ class _SelectSubCategoryState extends State<SelectSubCategory> {
 
   void getSubCategory(String categoryId) async {
     if (await Network.isConnected()) {
-      GetSubCategoryResponse response =
-          await apiProvider.getSubCategory(categoryId);
+      GetSubCategoryResponse response = await apiProvider.getSubCategory(categoryId);
 
       if (response.success) {
         subCategoryList = response.data!;
@@ -132,7 +128,7 @@ class _SelectSubCategoryState extends State<SelectSubCategory> {
       }
     } else {
       controller.add([]);
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
     }
   }
 }
@@ -155,10 +151,7 @@ class _AddCategoryBottomSheetState extends State<AddCategoryBottomSheet> {
   Widget build(BuildContext context) {
     return Padding(
       // padding: EdgeInsets.all(15),
-      padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom,
-          right: 15,
-          left: 15),
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom, right: 15, left: 15),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -202,7 +195,7 @@ class _AddCategoryBottomSheetState extends State<AddCategoryBottomSheet> {
             title: "add_key".tr(),
             onPressed: () {
               if (editText.text.trim().isEmpty)
-                Utility.showToast("please_enter_category_name_key".tr());
+                Utility.showToast(msg: "please_enter_category_name_key".tr());
               else
                 addSubCategory(widget.categoryId);
             },
@@ -219,8 +212,7 @@ class _AddCategoryBottomSheetState extends State<AddCategoryBottomSheet> {
     if (await Network.isConnected()) {
       Map input = HashMap<String, dynamic>();
       input["category_id"] = categoryId;
-      input["vendor_id"] =
-          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
       input["sub_cat_name"] = editText.text.trim();
       input["description"] = editDescription.text.trim();
 
@@ -239,10 +231,10 @@ class _AddCategoryBottomSheetState extends State<AddCategoryBottomSheet> {
         widget.onAdd(response.data!);
         Navigator.pop(context);
       } else {
-        Utility.showToast(response.message);
+        Utility.showToast(msg: response.message);
       }
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
     }
   }
 }

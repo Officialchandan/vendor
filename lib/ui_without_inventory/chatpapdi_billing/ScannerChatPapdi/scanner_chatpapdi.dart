@@ -5,7 +5,6 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:vendor/model/chat_papdi_module/billing_chatpapdi.dart';
@@ -13,7 +12,7 @@ import 'package:vendor/ui_without_inventory/chatpapdi_billing/ScannerChatPapdi/s
 import 'package:vendor/ui_without_inventory/chatpapdi_billing/ScannerChatPapdi/scanner_chatpapdi_event.dart';
 import 'package:vendor/ui_without_inventory/chatpapdi_billing/ScannerChatPapdi/scanner_chatpapdi_state.dart';
 import 'package:vendor/ui_without_inventory/home/bottom_navigation_bar.dart';
-import 'package:vendor/utility/color.dart';
+import 'package:vendor/utility/utility.dart';
 
 class Scanner extends StatefulWidget {
   final ChatPapdiData data;
@@ -70,7 +69,7 @@ class _ScannerState extends State<Scanner> {
         listener: (context, state) {
           // TODO: implement listener
           if (state is GetScannerState) {
-            Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
+            Utility.showToast(msg: state.message);
             // Navigator.of(context).pop(result!.code);
           }
           if (state is GetScannerStateLoadingstate) {}
@@ -98,7 +97,7 @@ class _ScannerState extends State<Scanner> {
                                 log("message=>${result!.code}");
                                 log("data==>${widget.data}");
                                 scanner(context);
-                                Fluttertoast.showToast(msg: "Scanned code succesfully");
+                                Utility.showToast(msg: "Scanned code succesfully");
                               },
                               child: const Text('Done', style: TextStyle(fontSize: 20)),
                             ),
@@ -154,7 +153,7 @@ class _ScannerState extends State<Scanner> {
                               margin: const EdgeInsets.all(8),
                               child: ElevatedButton(
                                 onPressed: () async {
-                                  Fluttertoast.showToast(msg: "Skiped QR code ");
+                                  Utility.showToast(msg: "Skiped QR code ");
 
                                   Navigator.pop(context);
                                   Navigator.pushAndRemoveUntil(

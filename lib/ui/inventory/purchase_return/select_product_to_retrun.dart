@@ -4,15 +4,12 @@ import 'dart:collection';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/model/common_response.dart';
 import 'package:vendor/model/product_by_category_response.dart';
 import 'package:vendor/model/product_model.dart';
-
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/network.dart';
@@ -62,24 +59,13 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
             fillColor: Color.fromRGBO(242, 242, 242, 1),
             hintText: "search_products_key".tr(),
             contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide.none),
-            enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide.none),
-            disabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide.none),
-            focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide.none),
-            errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide.none),
-            focusedErrorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide.none),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+            enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+            disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+            focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+            errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+            focusedErrorBorder:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
           ),
           onChanged: (text) {
             if (text.isNotEmpty) {
@@ -124,11 +110,9 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
                   if (product.productOption.isNotEmpty) {
                     for (int i = 0; i < product.productOption.length; i++) {
                       if (product.productOption.length - 1 == i)
-                        variantName +=
-                            product.productOption[i].value.toString();
+                        variantName += product.productOption[i].value.toString();
                       else
-                        variantName +=
-                            product.productOption[i].value.toString() + ", ";
+                        variantName += product.productOption[i].value.toString() + ", ";
                     }
                   }
                   // product.qtyController!.text = product.returnQty.toString();
@@ -144,12 +128,10 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: ListTile(
-                              contentPadding: EdgeInsets.only(
-                                  left: 50, right: 5, top: 20, bottom: 20),
+                              contentPadding: EdgeInsets.only(left: 50, right: 5, top: 20, bottom: 20),
                               title: Container(
                                   child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
@@ -160,104 +142,77 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
                                   RichText(
                                       text: TextSpan(children: [
                                     TextSpan(
-                                        text: "₹ ${product.sellingPrice}\t",
-                                        style: TextStyle(color: ColorPrimary)),
+                                        text: "₹ ${product.sellingPrice}\t", style: TextStyle(color: ColorPrimary)),
                                     TextSpan(
                                         text: "₹ ${product.mrp}",
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            decoration:
-                                                TextDecoration.lineThrough))
+                                        style: TextStyle(color: Colors.black, decoration: TextDecoration.lineThrough))
                                   ])),
                                   const SizedBox(
                                     height: 10,
                                   ),
-                                  Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                              // color: Colors.amber,
-                                              borderRadius:
-                                                  BorderRadius.circular(25),
-                                              border: Border.all(
-                                                  color: Colors.black)),
-                                          height: 25,
-                                          // width: 90,
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Container(
-                                                height: 25,
-                                                width: 30,
-                                                child: IconButton(
-                                                    padding: EdgeInsets.all(0),
-                                                    onPressed: () {
-                                                      if (product.returnQty >
-                                                          1) {
-                                                        product.returnQty =
-                                                            product.returnQty -
-                                                                1;
-                                                        product.qtyController
-                                                                .text =
-                                                            product.returnQty
-                                                                .toString();
-                                                        streamController
-                                                            .add(products);
-                                                      }
-                                                    },
-                                                    iconSize: 20,
-                                                    splashRadius: 10,
-                                                    icon: Icon(
-                                                      Icons.remove,
-                                                    )),
-                                              ),
-                                              Container(
-                                                width: 25,
-                                                height: 25,
-                                                color: ColorPrimary,
-                                                child: Center(
-                                                  child: Text(
-                                                    product.returnQty
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                ),
-                                              ),
-                                              Container(
-                                                height: 25,
-                                                width: 30,
-                                                child: IconButton(
-                                                    padding: EdgeInsets.all(0),
-                                                    onPressed: () {
-                                                      if (product.returnQty <
-                                                          product.stock) {
-                                                        product.returnQty =
-                                                            product.returnQty +
-                                                                1;
-                                                        product.qtyController
-                                                                .text =
-                                                            product.returnQty
-                                                                .toString();
-                                                        streamController
-                                                            .add(products);
-                                                      }
-                                                    },
-                                                    iconSize: 20,
-                                                    splashRadius: 10,
-                                                    icon: Icon(
-                                                      Icons.add,
-                                                    )),
-                                              )
-                                            ],
+                                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          // color: Colors.amber,
+                                          borderRadius: BorderRadius.circular(25),
+                                          border: Border.all(color: Colors.black)),
+                                      height: 25,
+                                      // width: 90,
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Container(
+                                            height: 25,
+                                            width: 30,
+                                            child: IconButton(
+                                                padding: EdgeInsets.all(0),
+                                                onPressed: () {
+                                                  if (product.returnQty > 1) {
+                                                    product.returnQty = product.returnQty - 1;
+                                                    product.qtyController.text = product.returnQty.toString();
+                                                    streamController.add(products);
+                                                  }
+                                                },
+                                                iconSize: 20,
+                                                splashRadius: 10,
+                                                icon: Icon(
+                                                  Icons.remove,
+                                                )),
                                           ),
-                                        ),
-                                      ]),
+                                          Container(
+                                            width: 25,
+                                            height: 25,
+                                            color: ColorPrimary,
+                                            child: Center(
+                                              child: Text(
+                                                product.returnQty.toString(),
+                                                style: TextStyle(
+                                                    color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            height: 25,
+                                            width: 30,
+                                            child: IconButton(
+                                                padding: EdgeInsets.all(0),
+                                                onPressed: () {
+                                                  if (product.returnQty < product.stock) {
+                                                    product.returnQty = product.returnQty + 1;
+                                                    product.qtyController.text = product.returnQty.toString();
+                                                    streamController.add(products);
+                                                  }
+                                                },
+                                                iconSize: 20,
+                                                splashRadius: 10,
+                                                icon: Icon(
+                                                  Icons.add,
+                                                )),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ]),
                                 ],
                               )),
                               trailing: Checkbox(
@@ -281,11 +236,7 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
                                         height: 60,
                                         width: 60,
                                         fit: BoxFit.contain,
-                                        image: NetworkImage(snapshot
-                                            .data![index]
-                                            .productImages
-                                            .first
-                                            .productImage),
+                                        image: NetworkImage(snapshot.data![index].productImages.first.productImage),
                                       )
                                     : Image(
                                         image: AssetImage(
@@ -307,18 +258,14 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
                             bottom: 28,
                             child: InkWell(
                               onTap: () {
-                                editQty(product.stock.toString(),
-                                    product.returnQty.toString(), (value) {
+                                editQty(product.stock.toString(), product.returnQty.toString(), (value) {
                                   product.returnQty = int.parse(value);
                                   streamController.add(products);
                                 });
                               },
                               child: Text(
                                 "Edit Qty",
-                                style: TextStyle(
-                                    color: ColorPrimary,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold),
+                                style: TextStyle(color: ColorPrimary, fontSize: 12, fontWeight: FontWeight.bold),
                               ),
                             ))
                       ],
@@ -334,8 +281,7 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
         child: MaterialButton(
           elevation: 0,
           onPressed: () {
-            List<ProductModel> returnProductList =
-                products.where((element) => element.check).toList();
+            List<ProductModel> returnProductList = products.where((element) => element.check).toList();
 
             purchaseReturn(returnProductList);
           },
@@ -354,8 +300,7 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
     if (await Network.isConnected()) {
       Map input = HashMap<String, dynamic>();
 
-      input["vendor_id"] =
-          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       String id = "";
       String stock = "";
@@ -376,13 +321,13 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
       CommonResponse response = await apiProvider.purchaseReturnApi(input);
       EasyLoading.dismiss();
       if (response.success) {
-        Utility.showToast(response.message);
+        Utility.showToast(msg: response.message);
         Navigator.of(context).pop();
       } else {
-        Utility.showToast(response.message);
+        Utility.showToast(msg: response.message);
       }
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
 
       // EasyLoading.showError(Constant.INTERNET_ALERT_MSG);
     }
@@ -394,8 +339,7 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
       if (widget.categoryId == null) {
         response = await apiProvider.getAllVendorProducts();
       } else {
-        response = await apiProvider
-            .getProductByCategories(widget.categoryId.toString());
+        response = await apiProvider.getProductByCategories(widget.categoryId.toString());
       }
 
       if (response.success) {
@@ -404,10 +348,10 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
         // products.sort((a, b) => int.parse(b.sellingPrice).compareTo(int.parse(a.sellingPrice)));
         streamController.add(products);
       } else {
-        Utility.showToast(response.message);
+        Utility.showToast(msg: response.message);
       }
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
 
       // EasyLoading.showError(Constant.INTERNET_ALERT_MSG);
     }
@@ -420,8 +364,7 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             title: RichText(
               text: TextSpan(
                 text: "Edit Quantity",
@@ -444,8 +387,7 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
                 hintStyle: GoogleFonts.openSans(
                   fontWeight: FontWeight.w600,
                 ),
-                contentPadding:
-                    const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
               ),
               onSaved: (value) {
                 editQtyController.text = value!;
@@ -459,17 +401,13 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
                   padding: const EdgeInsets.all(8.0),
                   textColor: Colors.white,
                   color: ColorPrimary,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   onPressed: () {
-                    if (int.parse(editQtyController.text) <=
-                        int.parse(stocks)) {
+                    if (int.parse(editQtyController.text) <= int.parse(stocks)) {
                       onQtySelect(editQtyController.text);
                       Navigator.pop(context);
                     } else {
-                      Fluttertoast.showToast(
-                        backgroundColor: ColorPrimary,
-                        textColor: Colors.white,
+                      Utility.showToast(
                         msg: "Enter valid quantity of products",
                       );
                     }
@@ -477,9 +415,7 @@ class _SelectProductToReturnState extends State<SelectProductToReturn> {
                   child: new Text(
                     "done_key".tr(),
                     style: GoogleFonts.openSans(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w600,
-                        decoration: TextDecoration.none),
+                        fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
                   ),
                 ),
               ),

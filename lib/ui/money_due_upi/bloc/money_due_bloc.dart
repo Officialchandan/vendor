@@ -33,7 +33,7 @@ class MoneyDueBloc extends Bloc<MoneyDueEvent, MoneyDueState> {
       GetDueAmountResponse response = await apiProvider.getDueAmount();
       yield GetDueAmountState(dueAmount: response.totalDue, categoryDue: response.data);
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
     }
   }
 
@@ -49,7 +49,7 @@ class MoneyDueBloc extends Bloc<MoneyDueEvent, MoneyDueState> {
         );
       }
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
     }
   }
 
@@ -70,7 +70,7 @@ class MoneyDueBloc extends Bloc<MoneyDueEvent, MoneyDueState> {
         );
       }
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
     }
   }
 }

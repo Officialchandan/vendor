@@ -20,11 +20,9 @@ class RedeemCoinBloc extends Bloc<RedeemCoinEvents, RedeemCoinStates> {
     }
   }
 
-  Stream<RedeemCoinStates> getRedeemCoinData(
-      GetRedeemCoinDataEvent event) async* {
+  Stream<RedeemCoinStates> getRedeemCoinData(GetRedeemCoinDataEvent event) async* {
     if (await Network.isConnected()) {
-      UpiRedeemCoinResponse response =
-          await apiProvider.upiRedeemCoin(event.input);
+      UpiRedeemCoinResponse response = await apiProvider.upiRedeemCoin(event.input);
 
       if (response.success) {
         List<CoinDetail> orderList = [];
@@ -60,14 +58,13 @@ class RedeemCoinBloc extends Bloc<RedeemCoinEvents, RedeemCoinStates> {
           detail.billingType = 1;
           orderList.add(detail);
         });
-        orderList
-            .sort(((a, b) => a.dateTime.compareTo(b.dateTime))); // Recent First
+        orderList.sort(((a, b) => a.dateTime.compareTo(b.dateTime))); // Recent First
         yield GetRedeemCoinState(data: orderList);
       } else {
         yield RedeemCoinFailureState(message: response.message);
       }
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
     }
   }
 }

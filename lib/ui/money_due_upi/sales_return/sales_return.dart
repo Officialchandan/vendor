@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:vendor/ui/inventory/sale_return/bloc/sale_return_bloc.dart';
 import 'package:vendor/ui/money_due_upi/sales_return/response/upi_sales_return_response.dart';
 import 'package:vendor/ui/money_due_upi/sales_return/sales_return_bloc/sales_return_bloc.dart';
 import 'package:vendor/ui/money_due_upi/sales_return/sales_return_bloc/sales_return_events.dart';
@@ -25,8 +24,7 @@ class SalesReturnHistory extends StatefulWidget {
 }
 
 class _SalesReturnHistoryState extends State<SalesReturnHistory> {
-  RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
+  RefreshController _refreshController = RefreshController(initialRefresh: false);
   SalesReturnBloc saleReturnBloc = SalesReturnBloc();
   List<BillingDetails> billingDetails = [];
   List<BillingDetails> searchList = [];
@@ -55,8 +53,7 @@ class _SalesReturnHistoryState extends State<SalesReturnHistory> {
                 showModalBottomSheet(
                     context: context,
                     builder: (context) {
-                      return CalendarBottomSheet(
-                          onSelect: (startDate, endDate) {
+                      return CalendarBottomSheet(onSelect: (startDate, endDate) {
                         this.startDate = startDate;
                         this.endDate = endDate;
 
@@ -95,10 +92,8 @@ class _SalesReturnHistoryState extends State<SalesReturnHistory> {
 
                     // fillColor: Colors.black,
                     hintText: "search_here_key".tr(),
-                    hintStyle: GoogleFonts.openSans(
-                        fontWeight: FontWeight.w600, color: Colors.black),
-                    contentPadding: const EdgeInsets.only(
-                        left: 14.0, bottom: 8.0, top: 8.0),
+                    hintStyle: GoogleFonts.openSans(fontWeight: FontWeight.w600, color: Colors.black),
+                    contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.white),
                     ),
@@ -108,8 +103,7 @@ class _SalesReturnHistoryState extends State<SalesReturnHistory> {
                     ),
                   ),
                   onChanged: (value) {
-                    saleReturnBloc
-                        .add(GetSalesReturnDataSearchEvent(keyWord: value));
+                    saleReturnBloc.add(GetSalesReturnDataSearchEvent(keyWord: value));
                   },
                 ),
               ),
@@ -135,9 +129,7 @@ class _SalesReturnHistoryState extends State<SalesReturnHistory> {
                       } else {
                         List<BillingDetails> list = [];
                         billingDetails.forEach((element) {
-                          if (element.vendorName
-                              .toLowerCase()
-                              .contains(state.keyWord.toLowerCase())) {
+                          if (element.vendorName.toLowerCase().contains(state.keyWord.toLowerCase())) {
                             list.add(element);
                           }
                         });
@@ -149,13 +141,11 @@ class _SalesReturnHistoryState extends State<SalesReturnHistory> {
                         } else {
                           searchList = list;
                           return ListView.builder(
-                              padding:
-                                  EdgeInsets.only(left: 15, right: 15, top: 15),
+                              padding: EdgeInsets.only(left: 15, right: 15, top: 15),
                               itemCount: searchList.length,
                               itemBuilder: (context, index) {
                                 return Container(
-                                  child: BillingDetailsWidget(
-                                      details: billingDetails[index]),
+                                  child: BillingDetailsWidget(details: billingDetails[index]),
                                 );
                               });
                         }
@@ -167,8 +157,7 @@ class _SalesReturnHistoryState extends State<SalesReturnHistory> {
                         itemCount: billingDetails.length,
                         itemBuilder: (context, index) {
                           return Container(
-                            child: BillingDetailsWidget(
-                                details: billingDetails[index]),
+                            child: BillingDetailsWidget(details: billingDetails[index]),
                           );
                         });
                   }),
@@ -213,9 +202,7 @@ class _BillingDetailsWidgetState extends State<BillingDetailsWidget> {
             : billingDetails!.amountPaidToMyProfit.isEmpty
                 ? "0"
                 : billingDetails!.amountPaidToMyProfit) >
-        double.parse(billingDetails!.amountPaidToVendor.isEmpty
-            ? "0"
-            : billingDetails!.amountPaidToVendor)) {
+        double.parse(billingDetails!.amountPaidToVendor.isEmpty ? "0" : billingDetails!.amountPaidToVendor)) {
       colorStatus = "1";
       // red
       payAmt = (double.parse(billingDetails!.amountPaidToMyProfit.isEmpty
@@ -223,25 +210,15 @@ class _BillingDetailsWidgetState extends State<BillingDetailsWidget> {
                   : billingDetails!.amountPaidToMyProfit.isEmpty
                       ? "0"
                       : billingDetails!.amountPaidToMyProfit) -
-              double.parse(billingDetails!.amountPaidToVendor.isEmpty
-                  ? "0"
-                  : billingDetails!.amountPaidToVendor))
+              double.parse(billingDetails!.amountPaidToVendor.isEmpty ? "0" : billingDetails!.amountPaidToVendor))
           .toStringAsFixed(2);
     }
-    if (double.parse(billingDetails!.amountPaidToMyProfit.isEmpty
-            ? "0"
-            : billingDetails!.amountPaidToMyProfit) <
-        double.parse(billingDetails!.amountPaidToVendor.isEmpty
-            ? "0"
-            : billingDetails!.amountPaidToVendor)) {
+    if (double.parse(billingDetails!.amountPaidToMyProfit.isEmpty ? "0" : billingDetails!.amountPaidToMyProfit) <
+        double.parse(billingDetails!.amountPaidToVendor.isEmpty ? "0" : billingDetails!.amountPaidToVendor)) {
       colorStatus = "0";
       // green
-      payAmt = (double.parse(billingDetails!.amountPaidToVendor.isEmpty
-                  ? "0"
-                  : billingDetails!.amountPaidToVendor) -
-              double.parse(billingDetails!.amountPaidToMyProfit.isEmpty
-                  ? "0"
-                  : billingDetails!.amountPaidToMyProfit))
+      payAmt = (double.parse(billingDetails!.amountPaidToVendor.isEmpty ? "0" : billingDetails!.amountPaidToVendor) -
+              double.parse(billingDetails!.amountPaidToMyProfit.isEmpty ? "0" : billingDetails!.amountPaidToMyProfit))
           .toStringAsFixed(2);
     }
     super.initState();
@@ -264,9 +241,7 @@ class _BillingDetailsWidgetState extends State<BillingDetailsWidget> {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: Colors.white,
-              boxShadow: [
-                BoxShadow(color: Colors.black12, blurRadius: 4, spreadRadius: 1)
-              ]),
+              boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4, spreadRadius: 1)]),
           child: Column(
             children: [
               billingDetails!.billingType == 1
@@ -285,10 +260,7 @@ class _BillingDetailsWidgetState extends State<BillingDetailsWidget> {
                           child: Center(
                             child: Text(
                               "direct_billing_key".tr(),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.bold),
+                              style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
                             ),
                           ),
                         ),
@@ -311,11 +283,9 @@ class _BillingDetailsWidgetState extends State<BillingDetailsWidget> {
                       borderRadius: BorderRadius.circular(5),
                       child: CachedNetworkImage(
                           imageUrl: billingDetails!.vendorImage,
-                          progressIndicatorBuilder:
-                              (context, url, downloadProgress) => Center(
-                                    child: CircularProgressIndicator(
-                                        value: downloadProgress.progress),
-                                  ),
+                          progressIndicatorBuilder: (context, url, downloadProgress) => Center(
+                                child: CircularProgressIndicator(value: downloadProgress.progress),
+                              ),
                           errorWidget: (context, url, error) => Image.asset(
                                 "assets/images/placeholder.webp",
                                 fit: BoxFit.cover,
@@ -338,14 +308,11 @@ class _BillingDetailsWidgetState extends State<BillingDetailsWidget> {
                           children: [
                             Row(
                                 mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     "${billingDetails!.vendorName}",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15),
+                                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -355,39 +322,28 @@ class _BillingDetailsWidgetState extends State<BillingDetailsWidget> {
                             ),
                             Padding(
                               padding: const EdgeInsets.only(top: 8.0),
-                              child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "${billingDetails!.mobile}",
+                              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                                Text(
+                                  "${billingDetails!.mobile}",
+                                  style: TextStyle(color: Colors.black, fontSize: 13, fontWeight: FontWeight.bold),
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: colorStatus == "0" ? ApproveTextBgColor : RejectedTextBgColor,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 2, bottom: 2),
+                                    child: Text(
+                                      "  ${"pay_key".tr()}: \u20B9 $payAmt  ",
                                       style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 13,
+                                          color: colorStatus == "0" ? ApproveTextColor : RejectedTextColor,
+                                          fontSize: 10,
                                           fontWeight: FontWeight.bold),
                                     ),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        color: colorStatus == "0"
-                                            ? ApproveTextBgColor
-                                            : RejectedTextBgColor,
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 2, bottom: 2),
-                                        child: Text(
-                                          "  ${"pay_key".tr()}: \u20B9 $payAmt  ",
-                                          style: TextStyle(
-                                              color: colorStatus == "0"
-                                                  ? ApproveTextColor
-                                                  : RejectedTextColor,
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    )
-                                  ]),
+                                  ),
+                                )
+                              ]),
                             ),
                           ],
                         ),

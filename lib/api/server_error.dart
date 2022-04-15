@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:easy_localization/src/public_ext.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:vendor/ui/login/login_screen.dart';
 import 'package:vendor/utility/sharedpref.dart';
@@ -42,7 +42,7 @@ class ServerError implements Exception {
       case DioErrorType.response:
         if (error.response!.statusCode == 401) {
           print("come here-->");
-          _errorMessage = "Your session has been expired! Please login again";
+          _errorMessage = "";
           logout();
         } else {
           _errorMessage = "Internal server Error";
@@ -63,18 +63,23 @@ class ServerError implements Exception {
     showDialog(
         barrierDismissible: false,
         context: navigationService.navigatorKey.currentContext!,
-        builder: (context) => AlertDialog(
-              content: Text("Your session has been expired! Please login again"),
-              contentPadding: EdgeInsets.all(15),
-              actions: [
-                TextButton(
-                    onPressed: () async {
-                      SharedPref.clearSharedPreference(context);
-                      Navigator.pushAndRemoveUntil(
-                          context, MaterialPageRoute(builder: (context) => LoginScreen()), (route) => false);
-                    },
-                    child: Text("Ok"))
-              ],
+        builder: (context) => WillPopScope(
+              onWillPop: () async {
+                return false;
+              },
+              child: AlertDialog(
+                content: Text("Your session has been expired! Please login again"),
+                contentPadding: EdgeInsets.all(15),
+                actions: [
+                  TextButton(
+                      onPressed: () async {
+                        SharedPref.clearSharedPreference(context);
+                        Navigator.pushAndRemoveUntil(
+                            context, MaterialPageRoute(builder: (context) => LoginScreen()), (route) => false);
+                      },
+                      child: Text("Ok"))
+                ],
+              ),
             ));
 
     // EasyLoading.showError("Your session has been expired! Please login again",);

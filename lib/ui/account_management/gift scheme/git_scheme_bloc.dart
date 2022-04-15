@@ -2,14 +2,12 @@ import 'dart:developer';
 
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:vendor/model/gift_deliverd.dart';
-
 import 'package:vendor/model/gift_scheme_response.dart';
 import 'package:vendor/ui/account_management/gift%20scheme/git_scheme_event.dart';
 import 'package:vendor/ui/account_management/gift%20scheme/git_scheme_state.dart';
-import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
+import 'package:vendor/utility/utility.dart';
 
 import '../../../main.dart';
 
@@ -36,24 +34,19 @@ class GiftSchemeBloc extends Bloc<GiftSchemeEvent, GiftSchemeState> {
         GiftSchemeResponse result = await apiProvider.getVendorGiftScheme();
         log("=====>$result");
         if (result.success) {
-          yield GetGiftSchemestate(
-              succes: result.success,
-              message: result.message,
-              data: result.data);
+          yield GetGiftSchemestate(succes: result.success, message: result.message, data: result.data);
         } else if (result.success == false) {
-          yield GetGiftSchemeFailureState(
-              message: result.message, succes: result.success);
+          yield GetGiftSchemeFailureState(message: result.message, succes: result.success);
         } else {
           yield GetGiftSchemeLoadingstate();
         }
       } catch (error) {
-        yield GetGiftSchemeFailureState(
-            message: "internal_server_error_key".tr(), succes: false);
+        yield GetGiftSchemeFailureState(message: "internal_server_error_key".tr(), succes: false);
       }
     } else {
-      Fluttertoast.showToast(
-          msg: "please_check_your_internet_connection_key".tr(),
-          backgroundColor: ColorPrimary);
+      Utility.showToast(
+        msg: "please_check_your_internet_connection_key".tr(),
+      );
     }
   }
 
@@ -61,8 +54,7 @@ class GiftSchemeBloc extends Bloc<GiftSchemeEvent, GiftSchemeState> {
     if (await Network.isConnected()) {
       yield GetGiftDeliverdLoadingstate();
       try {
-        GiftDeliverdResponse result =
-            await apiProvider.getVendorGiftStatus(giftid);
+        GiftDeliverdResponse result = await apiProvider.getVendorGiftStatus(giftid);
         log("=====>$result");
         if (result.success) {
           yield GetGiftDeliverdstate(
@@ -73,13 +65,12 @@ class GiftSchemeBloc extends Bloc<GiftSchemeEvent, GiftSchemeState> {
           yield GetGiftDeliverdLoadingstate();
         }
       } catch (error) {
-        yield GetGiftDeliverdFailureState(
-            message: "internal_server_error_key".tr(), succes: false);
+        yield GetGiftDeliverdFailureState(message: "internal_server_error_key".tr(), succes: false);
       }
     } else {
-      Fluttertoast.showToast(
-          msg: "please_check_your_internet_connection_key".tr(),
-          backgroundColor: ColorPrimary);
+      Utility.showToast(
+        msg: "please_check_your_internet_connection_key".tr(),
+      );
     }
   }
 }

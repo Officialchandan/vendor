@@ -1,5 +1,5 @@
- extern const unsigned char fluttertoastVersionString[];
- extern const double fluttertoastVersionNumber;
+ extern const unsigned char UtilityVersionString[];
+ extern const double UtilityVersionNumber;
 
- const unsigned char fluttertoastVersionString[] __attribute__ ((used)) = "@(#)PROGRAM:fluttertoast  PROJECT:Pods-1" "\n";
- const double fluttertoastVersionNumber __attribute__ ((used)) = (double)1.;
+ const unsigned char UtilityVersionString[] __attribute__ ((used)) = "@(#)PROGRAM:Utility  PROJECT:Pods-1" "\n";
+ const double UtilityVersionNumber __attribute__ ((used)) = (double)1.;

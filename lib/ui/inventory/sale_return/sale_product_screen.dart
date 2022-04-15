@@ -183,7 +183,7 @@ class _SaleProductScreenState extends State<SaleProductScreen> {
                                                         streamController.add(products);
                                                       } else {
                                                         Utility.showToast(
-                                                            "Can't return more than ${product.qty} products");
+                                                            msg: "Can't return more than ${product.qty} products");
                                                       }
                                                     },
                                                     iconSize: 20,

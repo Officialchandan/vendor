@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/model/customer_number_response.dart';
 import 'package:vendor/model/direct_billing.dart';
@@ -12,9 +11,9 @@ import 'package:vendor/model/get_categories_response.dart';
 import 'package:vendor/model/partial_user_register.dart';
 import 'package:vendor/ui/billingflow/direct_billing/direct_event.dart';
 import 'package:vendor/ui/billingflow/direct_billing/direct_state.dart';
-import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/sharedpref.dart';
+import 'package:vendor/utility/utility.dart';
 
 class DirectBillingCustomerNumberResponseBloc
     extends Bloc<DirectBillingCustomerNumberResponseEvent, DirectBillingCustomerNumberResponseState> {
@@ -67,7 +66,7 @@ class DirectBillingCustomerNumberResponseBloc
               succes: result.success,
               status: result.cust_reg_status);
         } else {
-          Fluttertoast.showToast(msg: result.message, backgroundColor: ColorPrimary);
+          Utility.showToast(msg: result.message);
           yield GetDirectBillingCustomerNumberResponseFailureState(
               message: result.message, succes: result.success, status: result.cust_reg_status);
         }
@@ -76,7 +75,7 @@ class DirectBillingCustomerNumberResponseBloc
             message: "internal_server_error_key".tr(), succes: false);
       }
     } else {
-      Fluttertoast.showToast(msg: "please_check_your_internet_connection_key".tr(), backgroundColor: ColorPrimary);
+      Utility.showToast(msg: "please_check_your_internet_connection_key".tr());
     }
   }
 
@@ -91,14 +90,18 @@ class DirectBillingCustomerNumberResponseBloc
           log("VendorCoin------->${result.data!.vendorAvailableCoins}");
           yield GetDirectBillingState(message: result.message, data: result.data!, succes: result.success);
         } else {
-          Fluttertoast.showToast(msg: result.message, backgroundColor: ColorPrimary);
+          Utility.showToast(
+            msg: result.message,
+          );
           yield GetDirectBillingFailureState(message: result.message, succes: result.success);
         }
       } catch (error) {
         yield GetDirectBillingFailureState(message: "internal_server_error_key".tr(), succes: false);
       }
     } else {
-      Fluttertoast.showToast(msg: "please_check_your_internet_connection_key".tr(), backgroundColor: ColorPrimary);
+      Utility.showToast(
+        msg: "please_check_your_internet_connection_key".tr(),
+      );
     }
   }
 
@@ -111,14 +114,18 @@ class DirectBillingCustomerNumberResponseBloc
         if (result.success) {
           yield GetDirectBillingOtpState(message: result.message, data: result.message, succes: result.success);
         } else {
-          Fluttertoast.showToast(msg: result.message, backgroundColor: ColorPrimary);
+          Utility.showToast(
+            msg: result.message,
+          );
           yield GetDirectBillingOtpFailureState(message: result.message, succes: result.success);
         }
       } catch (error) {
         yield GetDirectBillingOtpFailureState(message: "internal_server_error_key".tr(), succes: false);
       }
     } else {
-      Fluttertoast.showToast(msg: "please_check_your_internet_connection_key".tr(), backgroundColor: ColorPrimary);
+      Utility.showToast(
+        msg: "please_check_your_internet_connection_key".tr(),
+      );
     }
   }
 
@@ -130,14 +137,14 @@ class DirectBillingCustomerNumberResponseBloc
         if (result.success) {
           yield GetDirectBillingPartialUserState(message: result.message, data: result.message, succes: result.success);
         } else {
-          Fluttertoast.showToast(msg: result.message, backgroundColor: ColorPrimary);
+          Utility.showToast(msg: result.message);
           yield GetDirectBillingPartialUserFailureState(message: result.message, succes: result.success);
         }
       } catch (error) {
         yield GetDirectBillingPartialUserFailureState(message: "internal_server_error_key".tr(), succes: false);
       }
     } else {
-      Fluttertoast.showToast(msg: "please_check_your_internet_connection_key".tr(), backgroundColor: ColorPrimary);
+      Utility.showToast(msg: "please_check_your_internet_connection_key".tr());
     }
   }
 
@@ -156,7 +163,7 @@ class DirectBillingCustomerNumberResponseBloc
         yield GetDirectBillingCategoryByVendorIdFailureState(message: "internal_server_error_key".tr());
       }
     } else {
-      Fluttertoast.showToast(msg: "please_check_your_internet_connection_key".tr(), backgroundColor: ColorPrimary);
+      Utility.showToast(msg: "please_check_your_internet_connection_key".tr());
     }
   }
 }

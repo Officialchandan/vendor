@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/model/chat_papdi_module/billing_chatpapdi.dart';
 import 'package:vendor/model/chat_papdi_module/billing_chatpapdi_otp.dart';
@@ -11,9 +10,9 @@ import 'package:vendor/model/customer_number_response.dart';
 import 'package:vendor/model/partial_user_register.dart';
 import 'package:vendor/ui_without_inventory/chatpapdi_billing/chatpapdi_event.dart';
 import 'package:vendor/ui_without_inventory/chatpapdi_billing/chatpapdi_state.dart';
-import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/sharedpref.dart';
+import 'package:vendor/utility/utility.dart';
 
 class ChatPapdiBillingCustomerNumberResponseBloc
     extends Bloc<ChatPapdiBillingCustomerNumberResponseEvent, ChatPapdiBillingCustomerNumberResponseState> {
@@ -61,7 +60,7 @@ class ChatPapdiBillingCustomerNumberResponseBloc
               succes: result.success,
               status: result.cust_reg_status);
         } else {
-          Fluttertoast.showToast(msg: result.message, backgroundColor: ColorPrimary);
+          Utility.showToast(msg: result.message);
           yield GetChatPapdiBillingCustomerNumberResponseFailureState(
               message: result.message, succes: result.success, status: result.cust_reg_status);
         }
@@ -70,7 +69,7 @@ class ChatPapdiBillingCustomerNumberResponseBloc
             message: "internal_server_error_key".tr(), succes: false);
       }
     } else {
-      Fluttertoast.showToast(msg: "please_check_your_internet_connection_key".tr(), backgroundColor: ColorPrimary);
+      Utility.showToast(msg: "please_check_your_internet_connection_key".tr());
     }
   }
 
@@ -84,14 +83,14 @@ class ChatPapdiBillingCustomerNumberResponseBloc
           SharedPref.setStringPreference(SharedPref.VendorCoin, result.data!.vendorAvailableCoins);
           yield GetChatPapdiBillingState(message: result.message, data: result.data!, succes: result.success);
         } else {
-          Fluttertoast.showToast(msg: result.message, backgroundColor: ColorPrimary);
+          Utility.showToast(msg: result.message);
           yield GetChatPapdiBillingFailureState(message: result.message, succes: result.success);
         }
       } catch (error) {
         yield GetChatPapdiBillingFailureState(message: "internal_server_error_key".tr(), succes: false);
       }
     } else {
-      Fluttertoast.showToast(msg: "please_check_your_internet_connection_key".tr(), backgroundColor: ColorPrimary);
+      Utility.showToast(msg: "please_check_your_internet_connection_key".tr());
     }
   }
 
@@ -104,14 +103,14 @@ class ChatPapdiBillingCustomerNumberResponseBloc
         if (result.success) {
           yield GetChatPapdiBillingOtpState(message: result.message, data: result.message, succes: result.success);
         } else {
-          Fluttertoast.showToast(msg: result.message, backgroundColor: ColorPrimary);
+          Utility.showToast(msg: result.message);
           yield GetChatPapdiBillingOtpFailureState(message: result.message, succes: result.success);
         }
       } catch (error) {
         yield GetChatPapdiBillingOtpFailureState(message: "internal_server_error_key".tr(), succes: false);
       }
     } else {
-      Fluttertoast.showToast(msg: "please_check_your_internet_connection_key".tr(), backgroundColor: ColorPrimary);
+      Utility.showToast(msg: "please_check_your_internet_connection_key".tr());
     }
   }
 
@@ -123,14 +122,14 @@ class ChatPapdiBillingCustomerNumberResponseBloc
         if (result.success) {
           yield GetChatPapdiPartialUserState(message: result.message, data: result.message, succes: result.success);
         } else {
-          Fluttertoast.showToast(msg: result.message, backgroundColor: ColorPrimary);
+          Utility.showToast(msg: result.message);
           yield GetChatPapdiPartialUserFailureState(message: result.message, succes: result.success);
         }
       } catch (error) {
         yield GetChatPapdiPartialUserFailureState(message: "internal_server_error_key".tr(), succes: false);
       }
     } else {
-      Fluttertoast.showToast(msg: "please_check_your_internet_connection_key".tr(), backgroundColor: ColorPrimary);
+      Utility.showToast(msg: "please_check_your_internet_connection_key".tr());
     }
   }
 }

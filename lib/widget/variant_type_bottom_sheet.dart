@@ -14,10 +14,7 @@ class VariantTypeBottomSheet extends StatefulWidget {
   final List<VariantType> selectedVariants;
   final Function(List<VariantType>) onSelect;
 
-  VariantTypeBottomSheet(
-      {required this.categoryId,
-      required this.onSelect,
-      required this.selectedVariants});
+  VariantTypeBottomSheet({required this.categoryId, required this.onSelect, required this.selectedVariants});
 
   @override
   _VariantTypeBottomSheetState createState() => _VariantTypeBottomSheetState();
@@ -49,10 +46,7 @@ class _VariantTypeBottomSheetState extends State<VariantTypeBottomSheet> {
             contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
             title: Text(
               "select_variant_options_key".tr(),
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold),
+              style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),
             ),
           ),
           Container(
@@ -105,25 +99,17 @@ class _VariantTypeBottomSheetState extends State<VariantTypeBottomSheet> {
                   },
                   child: Text(
                     "cancel_key".tr(),
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold),
+                    style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
                   )),
               TextButton(
                   onPressed: () {
-                    List<VariantType> variants = variantList
-                        .where((element) => element.checked)
-                        .toList();
+                    List<VariantType> variants = variantList.where((element) => element.checked).toList();
                     Navigator.pop(context);
                     widget.onSelect(variants);
                   },
                   child: Text(
                     "done_key".tr(),
-                    style: TextStyle(
-                        color: ColorPrimary,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold),
+                    style: TextStyle(color: ColorPrimary, fontSize: 16, fontWeight: FontWeight.bold),
                   )),
             ],
           )
@@ -134,15 +120,13 @@ class _VariantTypeBottomSheetState extends State<VariantTypeBottomSheet> {
 
   void getVariant() async {
     if (await Network.isConnected()) {
-      ProductVariantResponse response =
-          await apiProvider.getProductVariantType(widget.categoryId);
+      ProductVariantResponse response = await apiProvider.getProductVariantType(widget.categoryId);
 
       if (response.success) {
         variantList = response.data!;
 
         for (VariantType v in widget.selectedVariants) {
-          variantList.singleWhere((element) => element.id == v.id).checked =
-              true;
+          variantList.singleWhere((element) => element.id == v.id).checked = true;
         }
 
         controller.add(variantList);
@@ -150,7 +134,7 @@ class _VariantTypeBottomSheetState extends State<VariantTypeBottomSheet> {
         controller.add(variantList);
       }
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
       controller.add(variantList);
     }
   }

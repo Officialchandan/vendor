@@ -34,18 +34,13 @@ class Utility {
     return true;
   }
 
-  static showToast(String msg) {
+  static showToast({required String msg}) {
     Fluttertoast.showToast(
-        msg: msg,
-        textColor: Colors.white,
-        backgroundColor: ColorPrimary,
-        gravity: ToastGravity.BOTTOM);
+        msg: msg, textColor: Colors.white, backgroundColor: ColorPrimary, gravity: ToastGravity.BOTTOM);
   }
 
   static Future<String> findLocalPath() async {
-    final directory = Platform.isAndroid
-        ? await getTemporaryDirectory()
-        : await getApplicationDocumentsDirectory();
+    final directory = Platform.isAndroid ? await getTemporaryDirectory() : await getApplicationDocumentsDirectory();
     return directory.path;
   }
 
@@ -56,18 +51,13 @@ class Utility {
   }
 
   static String getFormatDate1(DateTime dateTime) {
-    String date =
-        DateFormat('dd-MMM-yyyy - ').add_jm().format(dateTime).toString();
+    String date = DateFormat('dd-MMM-yyyy - ').add_jm().format(dateTime).toString();
     debugPrint("date--> $date");
     return date;
   }
 
   static showSingleAlert(BuildContext context, String msg,
-      {String? title,
-      Function? onCancel,
-      Function? onOk,
-      String? cancelText,
-      String? okText}) {
+      {String? title, Function? onCancel, Function? onOk, String? cancelText, String? okText}) {
     showCupertinoDialog(
         context: context,
         builder: (context) {

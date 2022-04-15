@@ -31,14 +31,14 @@ class EditProductBloc extends Bloc<EditProductEvent, EditProductState> {
       AddProductResponse response = await apiProvider.updateProduct(input);
       EasyLoading.dismiss();
       if (response.success) {
-        Utility.showToast(response.message);
+        Utility.showToast(msg: response.message);
         yield UpdateProductState();
       } else {
         EasyLoading.dismiss();
-        Utility.showToast(response.message);
+        Utility.showToast(msg: response.message);
       }
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
     }
   }
 
@@ -52,10 +52,10 @@ class EditProductBloc extends Bloc<EditProductEvent, EditProductState> {
         yield DeleteProductImageState(image: image);
       } else {
         EasyLoading.dismiss();
-        Utility.showToast(response.message);
+        Utility.showToast(msg: response.message);
       }
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
     }
   }
 }

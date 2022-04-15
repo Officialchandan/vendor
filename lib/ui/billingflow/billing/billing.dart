@@ -6,7 +6,6 @@ import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:vendor/model/get_categories_response.dart';
@@ -21,6 +20,7 @@ import 'package:vendor/ui/inventory/add_product/add_product_screen.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/sharedpref.dart';
+import 'package:vendor/utility/utility.dart';
 import 'package:vendor/utility/validator.dart';
 
 class BillingScreen extends StatefulWidget {
@@ -198,7 +198,7 @@ class _BillingScreenState extends State<BillingScreen> {
 
                                 log("======>$check");
                                 log("======>$coins");
-                                // Fluttertoast.showToast(
+                                // Utility.showToast(
                                 //     backgroundColor: ColorPrimary,
                                 //     textColor: Colors.white,
                                 //     msg: state.message);
@@ -359,8 +359,7 @@ class _BillingScreenState extends State<BillingScreen> {
                                           FocusScope.of(context).unfocus();
                                         });
                                       } else {
-                                        Fluttertoast.showToast(
-                                            msg: "please_enter_name_key".tr(), backgroundColor: ColorPrimary);
+                                        Utility.showToast(msg: "please_enter_name_key".tr());
                                       }
                                     }
                                   } else {
@@ -375,17 +374,16 @@ class _BillingScreenState extends State<BillingScreen> {
                                               ),
                                               type: PageTransitionType.fade));
                                     } else {
-                                      Fluttertoast.showToast(msg: "$message", backgroundColor: ColorPrimary);
+                                      Utility.showToast(msg: "$message");
                                     }
                                   }
                                 } else {
-                                  Fluttertoast.showToast(
-                                      msg: "please_enter_vailid_number_first_key".tr(), backgroundColor: ColorPrimary);
+                                  Utility.showToast(msg: "please_enter_vailid_number_first_key".tr());
                                 }
                               } else {
-                                Fluttertoast.showToast(
-                                    msg: "please_check_your_internet_connection_key".tr(),
-                                    backgroundColor: ColorPrimary);
+                                Utility.showToast(
+                                  msg: "please_check_your_internet_connection_key".tr(),
+                                );
                               }
                             },
                             child: Container(
@@ -418,13 +416,15 @@ class _BillingScreenState extends State<BillingScreen> {
                             listener: (context, state) {
                               if (state is GetCategoryByVendorIdState) {
                                 log("category chl gya");
-                                // Fluttertoast.showToast(
+                                // Utility.showToast(
                                 //     backgroundColor: ColorPrimary,
                                 //     textColor: Colors.white,
                                 //     msg: state.message);
                               }
                               if (state is GetCategoryByVendorIdFailureState) {
-                                Fluttertoast.showToast(msg: state.message, backgroundColor: ColorPrimary);
+                                Utility.showToast(
+                                  msg: state.message,
+                                );
                               }
                               if (state is GetCategoryByVendorIdLoadingstate) {
                                 log("hello");
@@ -473,8 +473,9 @@ class _BillingScreenState extends State<BillingScreen> {
                               PageTransition(child: AddProductScreen(status: 0), type: PageTransitionType.fade))
                           .then((value) => FocusScope.of(context).unfocus());
                     } else {
-                      Fluttertoast.showToast(
-                          msg: "please_check_your_internet_connection_key".tr(), backgroundColor: ColorPrimary);
+                      Utility.showToast(
+                        msg: "please_check_your_internet_connection_key".tr(),
+                      );
                     }
                   },
                   child: Container(
@@ -533,7 +534,9 @@ class _BillingScreenState extends State<BillingScreen> {
                           // mobileController.clear();
                         });
                       } else {
-                        Fluttertoast.showToast(msg: "please_enter_name_key".tr(), backgroundColor: ColorPrimary);
+                        Utility.showToast(
+                          msg: "please_enter_name_key".tr(),
+                        );
                       }
                     }
                   } else {
@@ -549,16 +552,18 @@ class _BillingScreenState extends State<BillingScreen> {
                               ),
                               type: PageTransitionType.fade));
                     } else {
-                      Fluttertoast.showToast(msg: "$message", backgroundColor: ColorPrimary);
+                      Utility.showToast(
+                        msg: "$message",
+                      );
                     }
                   }
                 } else {
-                  Fluttertoast.showToast(
-                      msg: "please_enter_vailid_number_first_key".tr(), backgroundColor: ColorPrimary);
+                  Utility.showToast(msg: "please_enter_vailid_number_first_key".tr());
                 }
               } else {
-                Fluttertoast.showToast(
-                    msg: "please_check_your_internet_connection_key".tr(), backgroundColor: ColorPrimary);
+                Utility.showToast(
+                  msg: "please_check_your_internet_connection_key".tr(),
+                );
               }
             },
             child: Container(

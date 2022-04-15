@@ -64,7 +64,7 @@ class RedeemCoinBloc extends Bloc<RedeemCoinEvents, RedeemCoinStates> {
         yield RedeemCoinFailureState(message: response.message);
       }
     } else {
-      Utility.showToast(Constant.INTERNET_ALERT_MSG);
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
     }
   }
 }
