@@ -11,26 +11,31 @@ import 'package:vendor/utility/utility.dart';
 import '../../../main.dart';
 
 class SearchByCategoriesBloc extends Bloc<SearchByCategoriesEvents, SearchByCategoriesState> {
-  SearchByCategoriesBloc() : super(SearchByCategoriesIntialState());
+  SearchByCategoriesBloc() : super(SearchByCategoriesInitialState());
 
   ProductByCategoryResponse? result;
   @override
   Stream<SearchByCategoriesState> mapEventToState(SearchByCategoriesEvents event) async* {
-    if (event is GetProductsSearchByCategoriesEvent) {
+    if (event is ProductsSearchByCategoriesEvent) {
+      yield SearchByCategoriesLoadingState();
       yield* getSearchAllResponse(event.input);
     }
-    if (event is GetCheckBoxSearchByCategoriesEvent) {
-      yield GetSearchByCategoriesCheckBoxState(check: event.check, index: event.index);
-    }
-    if (event is GetIncrementSearchByCategoriesEvent) {
-      yield GetSearchByCategoriesIcrementState(count: event.count);
-    }
-    if (event is GetDecrementSearchByCategoriesEvent) {
-      yield GetSearchByCategoriesDecrementState(count: event.count);
-    }
-    if (event is GetAddSearchByCategoriesEvent) {}
 
+    if (event is CheckBoxSearchByCategoriesEvent) {
+      yield SearchByCategoriesLoadingState();
+      yield SearchByCategoriesCheckBoxState(check: event.check, index: event.index);
+    }
+
+    if (event is SearchByCategoriesIncrementEvent) {
+      yield SearchByCategoriesLoadingState();
+      yield SearchByCategoriesIncrementState(count: event.count, index: event.index);
+    }
+    if (event is SearchByCategoriesDecrementEvent) {
+      yield SearchByCategoriesLoadingState();
+      yield SearchByCategoriesDecrementState(count: event.count, index: event.index);
+    }
     if (event is FindSearchByCategoriesEvent) {
+      yield SearchByCategoriesLoadingState();
       yield SearchByCategoriesSearchState(searchword: event.searchkeyword);
     }
   }
@@ -45,10 +50,10 @@ class SearchByCategoriesBloc extends Bloc<SearchByCategoriesEvents, SearchByCate
         if (result!.success) {
           yield GetSearchByCategoriesState(message: result!.message, data: result!.data);
         } else {
-          yield GetSearchByCategoriesFailureState(message: result!.message);
+          yield SearchByCategoriesFailureState(message: result!.message);
         }
       } catch (error) {
-        yield GetSearchByCategoriesFailureState(message: "internal_server_error_key".tr());
+        yield SearchByCategoriesFailureState(message: "internal_server_error_key".tr());
       }
     } else {
       Utility.showToast(

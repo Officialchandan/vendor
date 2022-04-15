@@ -2,12 +2,12 @@ import 'package:equatable/equatable.dart';
 
 abstract class SearchByCategoriesState extends Equatable {}
 
-class SearchByCategoriesIntialState extends SearchByCategoriesState {
+class SearchByCategoriesInitialState extends SearchByCategoriesState {
   @override
   List<Object?> get props => [];
 }
 
-class GetSearchByCategoriesLoadingState extends SearchByCategoriesState {
+class SearchByCategoriesLoadingState extends SearchByCategoriesState {
   @override
   List<Object?> get props => [];
 }
@@ -15,67 +15,62 @@ class GetSearchByCategoriesLoadingState extends SearchByCategoriesState {
 class GetSearchByCategoriesState extends SearchByCategoriesState {
   final String message;
   final data;
+
   GetSearchByCategoriesState({required this.message, required this.data});
+
   @override
   List<Object?> get props => [message];
 }
 
-class GetSearchByCategoriesFailureState extends SearchByCategoriesState {
+class SearchByCategoriesFailureState extends SearchByCategoriesState {
   final String message;
-  GetSearchByCategoriesFailureState({required this.message});
+
+  SearchByCategoriesFailureState({required this.message});
+
   @override
   List<Object?> get props => [message];
 }
 
-class GetSearchByCategoriesCheckBoxState extends SearchByCategoriesState {
+class SearchByCategoriesCheckBoxState extends SearchByCategoriesState {
   final bool check;
   final int index;
-  GetSearchByCategoriesCheckBoxState({required this.check, required this.index});
+
+  SearchByCategoriesCheckBoxState({required this.check, required this.index});
 
   @override
   List<Object?> get props => [check, index];
 }
 
-class GetSearchByCategoriesIcrementState extends SearchByCategoriesState {
+class SearchByCategoriesIncrementState extends SearchByCategoriesState {
   final int count;
-  GetSearchByCategoriesIcrementState({required this.count});
+  final int index;
+
+  SearchByCategoriesIncrementState({required this.count, required this.index});
 
   @override
-  List<Object?> get props => [count];
+  List<Object?> get props => [count, index];
 }
 
-class GetSearchByCategoriesDecrementState extends SearchByCategoriesState {
+class SearchByCategoriesDecrementState extends SearchByCategoriesState {
   final int count;
-  GetSearchByCategoriesDecrementState({required this.count});
+  final int index;
+
+  SearchByCategoriesDecrementState({required this.count, required this.index});
 
   @override
-  List<Object?> get props => [count];
-}
-
-class SearchByCategoriesInitialState extends SearchByCategoriesState {
-  @override
-  // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
-}
-
-class SearchByCategoriesLoadingState extends SearchByCategoriesState {
-  @override
-  // TODO: implement props
-  // TODO: implement props
-  List<Object?> get props => [];
+  List<Object?> get props => [count, index];
 }
 
 class SearchByCategoriesSearchState extends SearchByCategoriesState {
   final String searchword;
+
   SearchByCategoriesSearchState({required this.searchword});
 
   @override
-  // TODO: implement props
   List<Object?> get props => [searchword];
 }
 
 class SearchByCategoriesClosedState extends SearchByCategoriesState {
   @override
-  // TODO: implement props
   List<Object?> get props => throw UnimplementedError();
 }

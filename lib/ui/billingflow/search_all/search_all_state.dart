@@ -36,20 +36,22 @@ class GetCheckBoxState extends SearchAllState {
   List<Object?> get props => [check, index];
 }
 
-class GetIcrementState extends SearchAllState {
+class GetIncrementState extends SearchAllState {
   final int count;
-  GetIcrementState({required this.count});
+  final int index;
+  GetIncrementState({required this.count, required this.index});
 
   @override
-  List<Object?> get props => [count];
+  List<Object?> get props => [count,index];
 }
 
 class GetDecrementState extends SearchAllState {
   final int count;
-  GetDecrementState({required this.count});
+  final int index;
+  GetDecrementState({required this.count, required this.index});
 
   @override
-  List<Object?> get props => [count];
+  List<Object?> get props => [count, index];
 }
 
 class CategoriesInitialState extends SearchAllState {

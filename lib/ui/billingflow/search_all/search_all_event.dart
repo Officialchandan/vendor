@@ -21,16 +21,18 @@ class GetCheckBoxEvent extends SearchAllEvent {
 
 class GetIncrementEvent extends SearchAllEvent {
   final count;
-  GetIncrementEvent({required this.count});
+  final int index;
+  GetIncrementEvent({required this.count, required this.index});
   @override
-  List<Object?> get props => [count];
+  List<Object?> get props => [count, index];
 }
 
 class GetDecrementEvent extends SearchAllEvent {
   final count;
-  GetDecrementEvent({required this.count});
+  final int index;
+  GetDecrementEvent({required this.count, required this.index});
   @override
-  List<Object?> get props => [count];
+  List<Object?> get props => [count, index];
 }
 
 class GetAddEvent extends SearchAllEvent {
