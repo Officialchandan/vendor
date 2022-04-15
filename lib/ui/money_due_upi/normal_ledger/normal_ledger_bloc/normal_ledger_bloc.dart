@@ -37,9 +37,11 @@ class NormalLedgerHistoryBloc extends Bloc<NormalLedgerHistoryEvent, NormalLedge
         });
         await Future.forEach(response.directBilling, (OrderData order) async {
           order.orderType = 1;
+
           orderList.add(order);
         });
         orderList.sort((a, b) => b.dateTime.compareTo(a.dateTime));
+
         yield GetNormalLedgerState(orderList: orderList);
 
         /*

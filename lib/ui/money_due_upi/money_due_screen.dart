@@ -740,7 +740,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                                   child: Column(
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
-                                                      Text("normal_ledger_key".tr(),
+                                                      Text("master_ledger_key".tr(),
                                                           style: TextStyle(
                                                               color: Colors.black,
                                                               fontSize: 16.3,
@@ -863,7 +863,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                                   child: Column(
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
-                                                      Text("normal_ledger_key".tr(),
+                                                      Text("master_ledger_key".tr(),
                                                           style: TextStyle(
                                                               color: Colors.black,
                                                               fontSize: 16.3,

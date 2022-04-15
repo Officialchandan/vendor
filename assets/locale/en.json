@@ -357,6 +357,7 @@
   "remaining_key":"Remaining",
   "out_of_key":"Out of",
   "master_ledger_key":"Master Ledger",
+  "master_ledger_detail_key": "Master Ledger Detail",
   "paid_key":"Paid",
   "return_key":"Return",
   "select_week_key":"Select Week",

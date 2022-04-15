@@ -35,8 +35,10 @@ class Utility {
   }
 
   static showToast({required String msg}) {
-    Fluttertoast.showToast(
-        msg: msg, textColor: Colors.white, backgroundColor: ColorPrimary, gravity: ToastGravity.BOTTOM);
+    msg.isEmpty
+        ? ""
+        : Fluttertoast.showToast(
+            msg: msg, textColor: Colors.white, backgroundColor: ColorPrimary, gravity: ToastGravity.BOTTOM);
   }
 
   static Future<String> findLocalPath() async {

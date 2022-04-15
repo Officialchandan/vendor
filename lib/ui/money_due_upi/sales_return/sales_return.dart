@@ -134,8 +134,7 @@ class _SalesReturnHistoryState extends State<SalesReturnHistory> {
                           }
                         });
                         if (list.isEmpty) {
-                          return Container(
-                            height: MediaQuery.of(context).size.height,
+                          return Center(
                             child: Image.asset("assets/images/no_data.gif"),
                           );
                         } else {

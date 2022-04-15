@@ -218,14 +218,21 @@ class _BillingProductsState extends State<BillingProducts> {
                                             fit: BoxFit.contain,
                                             image: NetworkImage("${productList[index].productImages[0].productImage}"),
                                           )
-                                        : Image(
-                                            image: AssetImage(
-                                              "assets/images/placeholder.webp",
-                                            ),
-                                            height: 55,
-                                            width: 55,
-                                            fit: BoxFit.cover,
-                                          ),
+                                        : productList[index].categoryImage.isNotEmpty
+                                            ? Image(
+                                                height: 55,
+                                                width: 55,
+                                                fit: BoxFit.contain,
+                                                image: NetworkImage("${productList[index].categoryImage}"),
+                                              )
+                                            : Image(
+                                                image: AssetImage(
+                                                  "assets/images/placeholder.webp",
+                                                ),
+                                                height: 55,
+                                                width: 55,
+                                                fit: BoxFit.cover,
+                                              ),
                                   ),
                                 ),
                                 SizedBox(
@@ -346,8 +353,6 @@ class _BillingProductsState extends State<BillingProducts> {
                                                           value: productList[index].billingcheck,
                                                           activeColor: ColorPrimary,
                                                           onChanged: (newvalue) async {
-                                                            log("true===>");
-
                                                             if (double.parse(widget.coin.toString()) >= 3) {
                                                               if (await Network.isConnected()) {
                                                                 billingProductsBloc.add(CheckedBillingProductsEvent(
@@ -360,7 +365,7 @@ class _BillingProductsState extends State<BillingProducts> {
                                                               }
                                                             } else {
                                                               Utility.showToast(
-                                                                msg: "You_dont_have_enough_coins".tr(),
+                                                                msg: "You_dont_have_enough_coins_key".tr(),
                                                               );
                                                             }
                                                           },
@@ -572,7 +577,7 @@ class _BillingProductsState extends State<BillingProducts> {
                                       width: 16,
                                       height: 16,
                                     )),
-                                    Text(" ${earnCoins.toStringAsFixed(2)}",
+                                    Text(" ${(earnCoins - 0.75).toStringAsFixed(2)}",
                                         style:
                                             TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: ColorPrimary)),
                                   ],
@@ -955,6 +960,8 @@ class _BillingProductsState extends State<BillingProducts> {
       log("=====>product.earningCoins${double.parse(product.earningCoins)}");
       log("=====>product.count2${product.count}");
       earnCoins += double.parse(product.earningCoins) * product.count;
+      log("---earnCoins==>$earnCoins");
+
       log("---earnCoins$earnCoins");
       log("---totalpay --> $totalPay");
       log("---redeemCoins --> $redeemCoins");
@@ -1050,7 +1057,9 @@ class _BillingProductsState extends State<BillingProducts> {
       log("=====>product.earningCoins${double.parse(product.earningCoins)}");
       log("=====>product.count2${product.count}");
       earnCoins += double.parse(product.earningCoins);
-      log("---earnCoins$earnCoins");
+
+      earnCoins = earnCoins - 0.75;
+      log("---earnCoins==>$earnCoins");
       log("---totalpay --> $totalPay");
       log("---redeemCoins --> $redeemCoins");
     });

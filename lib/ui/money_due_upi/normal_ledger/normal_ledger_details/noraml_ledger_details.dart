@@ -61,7 +61,10 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
 
   void calculation() {
     if (widget.order.orderType == 1) {
+      log("reddem--->${widget.order.billingDetails.first.redeemCoins}");
       reddem = double.parse(widget.order.billingDetails.first.redeemCoins);
+      log("reddem--->$reddem");
+      reddem = reddem / 3;
       if (double.parse(widget.order.myprofitRevenue) > reddem) {
         log("${double.parse(widget.order.myprofitRevenue)}");
         finalamount = double.parse(widget.order.myprofitRevenue) - reddem;
@@ -72,7 +75,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
       // getNormalLedgerData();
       widget.order.orderDetails.forEach((element) {
         reddem += double.parse(element.redeemCoins);
-        log("$reddem");
+        log("reddem0--->$reddem");
         reddem = reddem / 3;
         if (double.parse(widget.order.myprofitRevenue) > reddem) {
           log("${double.parse(widget.order.myprofitRevenue)}");
@@ -171,7 +174,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
             icon: Icon(Icons.arrow_back_ios),
           ),
           title: Text(
-            "normal_ledger_details_key".tr(),
+            "master_ledger_detail_key".tr(),
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
@@ -502,10 +505,20 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                         "redeemed_amount_key".tr(),
                         style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
                       ),
-                      Text(
-                        "\u20B9 ${reddem.toStringAsFixed(2)}",
-                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
-                      )
+                      Row(children: [
+                        Text(
+                          "\u20B9 ${reddem.toStringAsFixed(2)} (",
+                          style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
+                        ),
+                        Image.asset(
+                          "assets/images/point.png",
+                          scale: 4,
+                        ),
+                        Text(
+                          "${(reddem * 3).toStringAsFixed(2)})",
+                          style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
+                        ),
+                      ])
                       /* widget.order.orderType == 1
                                     ? widget.order.orderDetails[0].redeemCoins == "0"
                                         ? Text(
