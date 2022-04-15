@@ -154,7 +154,7 @@
   "the_mobile_format_is_invalid_key": "The mobile format is invalid",
   "please_enter_valid_mobile_number_key": "please enter valid mobile number",
   "please_enter_valid_number_first_key": "Please Enter valid Number first",
-  "product_cant_be_negative_key": "Qty cant be less then 1",
+  "product_cant_be_negative_key": "Qty can't be less then 1",
   "please_atleast_one_product_key": "Please select atleast one product",
   "the_product_field_is_requied_key": "The product field is requied ",
   "please_enter_product_name_key": "Please enter product name",
@@ -393,5 +393,7 @@
   "rejected_key":"Rejected",
   "accepted_key":"Accepted",
   "daily_ledger_key":"Daily Ledger",
-  "daily_ledger_details_key":"Daily Ledger Details"
+  "daily_ledger_details_key":"Daily Ledger Details",
+  "you_cant_return_more_then_quantity_key":"You can't return more than quantity"
+
 }

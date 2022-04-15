@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:collection';
+import 'dart:developer';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -62,8 +64,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                     }
                     if (text.length == 9) {
                       purchasedList = [];
-                      saleReturnBloc
-                          .add(SaleReturnClearDataEvent(message: "Enter mobile number to get purchased product"));
+                      saleReturnBloc.add(SaleReturnClearDataEvent(message: "Enter mobile number to get purchased product"));
                     }
                   },
                   // autofocus: true,
@@ -101,6 +102,16 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                   if (state is GetProductSuccessState) {
                     purchasedList = state.purchaseList;
                   }
+
+                  if (state is SaleReturnLoadingState) {
+                    return Container(
+                      height: MediaQuery.of(context).size.height * 0.60,
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  }
+
                   if (state is SaleReturnQtyIncrementState) {
                     purchasedList[state.index].returnQty += state.count;
                   }
@@ -233,13 +244,13 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                                                                       color: ColorPrimary,
                                                                       fontSize: 14,
                                                                       fontWeight: FontWeight.bold)),
-                                                              TextSpan(
-                                                                  text: purchasedList[index].price == "0"
-                                                                      ? ""
-                                                                      : "₹ ${purchasedList[index].total}",
-                                                                  style: TextStyle(
-                                                                      color: Colors.black87,
-                                                                      decoration: TextDecoration.lineThrough))
+                                                              // TextSpan(
+                                                              //     text: purchasedList[index].price == "0"
+                                                              //         ? ""
+                                                              //         : "₹ ${purchasedList[index].total}",
+                                                              //     style: TextStyle(
+                                                              //         color: Colors.black87,
+                                                              //         decoration: TextDecoration.lineThrough))
                                                             ])),
                                                           ],
                                                         ),
@@ -274,6 +285,10 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                                                                               saleReturnBloc.add(
                                                                                   SaleReturnQtyDecrementEvent(
                                                                                       count: 1, index: index));
+                                                                            } else {
+                                                                              Utility.showToast(
+                                                                                  "product_cant_be_negative_key"
+                                                                                      .tr());
                                                                             }
                                                                           },
                                                                           iconSize: 20,
@@ -307,8 +322,8 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                                                                                     count: 1, index: index));
                                                                           } else {
                                                                             Utility.showToast(
-                                                                                msg:
-                                                                                    "Can't return more than ${purchasedList[index].qty} products");
+                                                                                msg:"you_cant_return_more_then_quantity_key"
+                                                                                    .tr());
                                                                           }
                                                                         },
                                                                         iconSize: 20,
@@ -354,7 +369,9 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                                         activeColor: ColorPrimary,
                                         value: purchasedList[index].checked,
                                         onChanged: (value) {
-                                          saleReturnBloc.add(SaleReturnCheckBoxEvent(isChecked: value!, index: index));
+
+                                          saleReturnBloc
+                                              .add(SaleReturnCheckBoxEvent(isChecked: value!, index: index));
                                         },
                                       ),
                                     )
@@ -374,92 +391,35 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
             ],
           ),
         ),
-        bottomNavigationBar: Container(
+        bottomNavigationBar: Padding(
           padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-          height: 50,
-          width: MediaQuery.of(context).size.height - 56,
-          color: ColorPrimary,
-          child: MaterialButton(
-            shape: RoundedRectangleBorder(),
-            onPressed: () async {
-              if (await Network.isConnected()) {
-                edtMobile.text.length == 10
-                    ? submit()
-                    : Utility.showToast(msg: "please_enter_valid_mobile_number_key".tr());
-              } else {
-                Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
+          child: Container(
+            height: 50,
+            width: MediaQuery.of(context).size.width,
+            color: ColorPrimary,
+            child: MaterialButton(
+              shape: RoundedRectangleBorder(),
+              onPressed: () async {
+                if (await Network.isConnected()) {
+                  edtMobile.text.length == 10
+                      ? submit()
+                      : Fluttertoast.showToast(
+                          msg: "please_enter_valid_mobile_number_key".tr(), backgroundColor: ColorPrimary);
+                } else {
+                  Utility.showToast(Constant.INTERNET_ALERT_MSG);
 
-                // EasyLoading.showError(Constant.INTERNET_ALERT_MSG);
-              }
-            },
-            child: Text(
-              "done_key".tr(),
-              style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                  // EasyLoading.showError(Constant.INTERNET_ALERT_MSG);
+                }
+              },
+              child: Text(
+                "done_key".tr(),
+                style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+              ),
             ),
           ),
         ),
       ),
     );
-  }
-
-  void selectProduct(BuildContext context) async {
-    showModalBottomSheet(
-        context: context,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15))),
-        builder: (context) {
-          return IntrinsicHeight(
-              child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Column(
-              children: [
-                Container(
-                    height: 300,
-                    margin: EdgeInsets.only(bottom: 50),
-                    child: ListView(
-                      shrinkWrap: true,
-                      children: [
-                        SelectCategoryWidget(
-                          onSelect: (String? categoryId) {
-                            Navigator.push(
-                                context,
-                                PageTransition(
-                                    child: ViewProductScreen(
-                                      categoryId: categoryId,
-                                    ),
-                                    type: PageTransitionType.fade));
-                          },
-                        ),
-                      ],
-                    )),
-                Container(
-                  color: Colors.white,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text(
-                            "cancel_key".tr(),
-                            style: TextStyle(),
-                          )),
-                      TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text(
-                            "done_key".tr(),
-                            style: TextStyle(),
-                          )),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ));
-        });
   }
 
   void submit() async {
