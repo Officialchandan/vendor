@@ -889,6 +889,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
       addProductBloc.add(AddProductVariantEvent(productVariant: variants, listStatus: 1));
     }
   }
+
+
   void addProduct(BuildContext context) async {
     variantImage.clear();
     if (edtProductName.text.trim().isEmpty) {
