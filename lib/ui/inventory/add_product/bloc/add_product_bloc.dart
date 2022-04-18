@@ -31,7 +31,7 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
     }
     if (event is AddProductVariantEvent) {
       yield ImageLoadingState();
-      yield AddProductVariantState(productVariant: event.productVariant);
+      yield AddProductVariantState(productVariant: event.productVariant, listStatus: event.listStatus);
     }
     if (event is UpdateProductVariantEvent) {
       yield ImageLoadingState();

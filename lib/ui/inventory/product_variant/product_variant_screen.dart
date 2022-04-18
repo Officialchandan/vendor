@@ -186,6 +186,7 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
                     }
                   }
                   Navigator.pop(context, productVariant);
+                  FocusScope.of(context).unfocus();
                 },
                 height: 50,
                 minWidth: MediaQuery.of(context).size.width,
