@@ -361,6 +361,7 @@
   "remaining_key":"बचा हुआ",
   "out_of_key":"से बाहर",
   "master_ledger_key":"मास्टर लेजर",
+  "master_ledger_detail_key": "मास्टर लेजर विवरण",
   "paid_key":"भुगतान किया गया",
   "return_key":"वापसी",
   "select_week_key":"सप्ताह चुनें",

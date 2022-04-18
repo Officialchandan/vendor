@@ -764,10 +764,10 @@ class _DirectBillingState extends State<DirectBilling> {
       amount = (amount * commission) / 100;
       amount = double.parse(freeCoins) != 0 ? amount : amount - (amount * 18) / 100;
 
-      amount = amount - 0.50;
       amount = amount / 2;
       amount = amount * 3;
       amount = amount < 0 ? 0 : amount;
+      amount = amount - 0.75;
       earningCoins = amount.toStringAsFixed(2);
     } else {
       earningCoins = "0.0";

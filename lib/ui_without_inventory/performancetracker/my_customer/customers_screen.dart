@@ -51,13 +51,16 @@ class _CustomerScreenState extends State<CustomerScreen> {
               showModalBottomSheet(
                   context: context,
                   builder: (context) {
-                    return CalendarBottomSheet(onSelect: (startDate, endDate) {
-                      this.startDate = startDate;
-                      this.endDate = endDate;
-                      print("startDate->$startDate");
-                      print("endDate->$endDate");
-                      getCustomer();
-                    });
+                    return CalendarBottomSheet(
+                        endDate: endDate,
+                        startDate: startDate,
+                        onSelect: (startDate, endDate) {
+                          this.startDate = startDate;
+                          this.endDate = endDate;
+                          print("startDate->$startDate");
+                          print("endDate->$endDate");
+                          getCustomer();
+                        });
                   });
             },
             splashColor: Colors.transparent,

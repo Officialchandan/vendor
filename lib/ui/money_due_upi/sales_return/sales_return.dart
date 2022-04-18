@@ -53,12 +53,15 @@ class _SalesReturnHistoryState extends State<SalesReturnHistory> {
                 showModalBottomSheet(
                     context: context,
                     builder: (context) {
-                      return CalendarBottomSheet(onSelect: (startDate, endDate) {
-                        this.startDate = startDate;
-                        this.endDate = endDate;
+                      return CalendarBottomSheet(
+                          endDate: endDate,
+                          startDate: startDate,
+                          onSelect: (startDate, endDate) {
+                            this.startDate = startDate;
+                            this.endDate = endDate;
 
-                        getSalesReturnData(startDate, endDate);
-                      });
+                            getSalesReturnData(startDate, endDate);
+                          });
                     });
               },
               child: Row(children: [
@@ -134,8 +137,7 @@ class _SalesReturnHistoryState extends State<SalesReturnHistory> {
                           }
                         });
                         if (list.isEmpty) {
-                          return Container(
-                            height: MediaQuery.of(context).size.height,
+                          return Center(
                             child: Image.asset("assets/images/no_data.gif"),
                           );
                         } else {

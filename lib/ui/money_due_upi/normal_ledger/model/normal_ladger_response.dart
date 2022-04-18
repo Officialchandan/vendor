@@ -268,7 +268,7 @@ class BillingDetail {
         total: json["total"] == null ? "0" : json["total"].toString(),
         categoryName: json["category_name"] == null ? "" : json["category_name"].toString(),
         categoryImage: json["category_image"] == null ? "" : json["category_image"].toString(),
-        redeemCoins: json["redeeme_coins"] == null ? "0" : json["redeeme_coins"].toString(),
+        redeemCoins: json["redeem_coins"] == null ? "0" : json["redeem_coins"].toString(),
         earningCoins: json["earning_coins"] == null ? "0" : json["earning_coins"].toString(),
         amountPaid: json["amount_paid"] == null ? "0" : json["amount_paid"].toString(),
       );

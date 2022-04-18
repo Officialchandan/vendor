@@ -293,6 +293,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
         ),
         bottomNavigationBar: InkWell(
           onTap: () {
+            _textFieldController.clear();
             displayDialog(
               context,
             );
@@ -419,6 +420,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
 
         if (response.success) {
           Navigator.of(context).pop(); //? For alert box
+
           successDialog(context, saleReturnData);
 
           // Navigator.of(context).pop(saleReturnData.orderId); //? For screen

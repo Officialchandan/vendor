@@ -53,12 +53,15 @@ class _ReddemCoinHistoryState extends State<ReddemCoinHistory> {
                 showModalBottomSheet(
                     context: context,
                     builder: (context) {
-                      return CalendarBottomSheet(onSelect: (startDate, endDate) {
-                        this.startDate = startDate;
-                        this.endDate = endDate;
-                        getRedeemCoin(startDate, endDate);
-                        // getCustomer();
-                      });
+                      return CalendarBottomSheet(
+                          endDate: endDate,
+                          startDate: startDate,
+                          onSelect: (startDate, endDate) {
+                            this.startDate = startDate;
+                            this.endDate = endDate;
+                            getRedeemCoin(startDate, endDate);
+                            // getCustomer();
+                          });
                     });
               },
               child: Row(children: [
