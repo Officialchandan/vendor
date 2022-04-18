@@ -34,11 +34,11 @@ class ShowOnlineShopState extends AddProductState {
 
 class AddProductVariantState extends AddProductState {
   final List<ProductVariantModel> productVariant;
-
-  AddProductVariantState({required this.productVariant});
+  final int listStatus;
+  AddProductVariantState({required this.listStatus, required this.productVariant});
 
   @override
-  List<Object?> get props => [productVariant];
+  List<Object?> get props => [productVariant, listStatus];
 }
 
 class UpdateProductVariantState extends AddProductState {

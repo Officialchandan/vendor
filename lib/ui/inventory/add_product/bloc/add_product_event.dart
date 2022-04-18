@@ -31,11 +31,12 @@ class ShowOnlineShopEvent extends AddProductEvent {
 
 class AddProductVariantEvent extends AddProductEvent {
   final List<ProductVariantModel> productVariant;
+  final int listStatus;
 
-  AddProductVariantEvent({required this.productVariant});
+  AddProductVariantEvent({required this.listStatus, required this.productVariant});
 
   @override
-  List<Object?> get props => [productVariant];
+  List<Object?> get props => [productVariant, listStatus];
 }
 
 class UpdateProductVariantEvent extends AddProductEvent {
