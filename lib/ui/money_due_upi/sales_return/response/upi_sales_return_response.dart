@@ -83,7 +83,7 @@ class BillingDetails {
         returnCoinsCustomer: json["return_coins_customer"] == null ? "0" : json["return_coins_customer"].toString(),
         returnAmountCustomer: json["return_amount_customer"] == null ? "0" : json["return_amount_customer"].toString(),
         dateTime: json["date_time"] == null ? "" : json["date_time"].toString(),
-        customerCoinBalance: json["customer_coin_balance"] == null ? "0" : json["customer_coin_balance"].toString(),
+    customerCoinBalance: json["customer_coin_balance"] == null ? "0" : json["customer_coin_balance"].toString(),
         amountPaidToMyProfit:
             json["amount_paid_to_myProfit"] == null ? "0" : json["amount_paid_to_myProfit"].toString(),
         amountPaidToVendor: json["amount_paid_to_vendor"] == null ? "" : json["amount_paid_to_vendor"].toString(),
