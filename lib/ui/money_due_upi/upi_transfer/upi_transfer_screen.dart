@@ -30,10 +30,8 @@ class _UpiTransferHistoryState extends State<UpiTransferHistory> {
   Future<void> filterApiCall(BuildContext context) async {
     Map<String, dynamic> input = HashMap<String, dynamic>();
     input["from_date"] = startDate.isEmpty ? "" : startDate.toString();
-    input["to_date"] =
-        endDate.isEmpty ? startDate.toString() : endDate.toString();
-    input["vendor_id"] =
-        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    input["to_date"] = endDate.isEmpty ? startDate.toString() : endDate.toString();
+    input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     log("=====? $input");
     upiTansferHistoryBloc.add(GetUpiTansferHistoryEvent(input: input));
   }
@@ -61,14 +59,16 @@ class _UpiTransferHistoryState extends State<UpiTransferHistory> {
                     context: context,
                     builder: (context) {
                       return CalendarBottomSheet(
+                          endDate: endDate,
+                          startDate: startDate,
                           onSelect: (startDate, endDate) {
-                        this.startDate = startDate;
-                        this.endDate = endDate;
-                        print("startDate->$startDate");
-                        print("endDate->$endDate");
-                        filterApiCall(context);
-                        // getCustomer();
-                      });
+                            this.startDate = startDate;
+                            this.endDate = endDate;
+                            print("startDate->$startDate");
+                            print("endDate->$endDate");
+                            filterApiCall(context);
+                            // getCustomer();
+                          });
                     });
                 print("startDate--->$startDate");
                 print("endDate--->$endDate");
@@ -83,9 +83,7 @@ class _UpiTransferHistoryState extends State<UpiTransferHistory> {
             ),
           ],
         ),
-        body: Container(child:
-                BlocBuilder<UpiTansferHistoryBloc, UpiTansferHistoryState>(
-                    builder: (context, state) {
+        body: Container(child: BlocBuilder<UpiTansferHistoryBloc, UpiTansferHistoryState>(builder: (context, state) {
           if (state is GetUpiTansferHistoryInitialState) {
             filterApiCall(context);
           }
@@ -117,117 +115,77 @@ class _UpiTransferHistoryState extends State<UpiTransferHistory> {
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.white,
                         border: Border.all(color: Colors.white38),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 1.0,
-                              spreadRadius: 1)
-                        ]),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(left: 12.0),
-                            child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "${DateFormat("dd MMM yyyy").format(DateTime.parse(upiList[index].txnDate))}" +
-                                        " - ${DateFormat.jm().format(DateTime.parse(upiList[index].txnDate))}",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.w600),
-                                  ),
-                                  Container(
-                                    height: 20,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        color: Colors.orange.shade50),
-                                    child: upiList[index].status == 0
+                        boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 1.0, spreadRadius: 1)]),
+                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 12.0),
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "${DateFormat("dd MMM yyyy").format(DateTime.parse(upiList[index].txnDate))}" +
+                                    " - ${DateFormat.jm().format(DateTime.parse(upiList[index].txnDate))}",
+                                style: TextStyle(fontWeight: FontWeight.w600),
+                              ),
+                              Container(
+                                height: 20,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20), color: Colors.orange.shade50),
+                                child: upiList[index].status == 0
+                                    ? Container(
+                                        padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(20), color: RejectedTextBgColor),
+                                        child: Text(
+                                          "rejected_key".tr(),
+                                          style: TextStyle(
+                                              color: RejectedTextColor, fontSize: 10, fontWeight: FontWeight.w400),
+                                        ),
+                                      )
+                                    : upiList[index].status == 1
                                         ? Container(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 2, horizontal: 6),
+                                            padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
                                             decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                                color: RejectedTextBgColor),
+                                                borderRadius: BorderRadius.circular(20), color: ApproveTextBgColor),
                                             child: Text(
-                                              "rejected_key".tr(),
+                                              "accepted_key".tr(),
                                               style: TextStyle(
-                                                  color: RejectedTextColor,
-                                                  fontSize: 10,
-                                                  fontWeight: FontWeight.w400),
+                                                  color: ApproveTextColor, fontSize: 10, fontWeight: FontWeight.w400),
                                             ),
                                           )
-                                        : upiList[index].status == 1
+                                        : upiList[index].status == 2
                                             ? Container(
-                                                padding: EdgeInsets.symmetric(
-                                                    vertical: 2, horizontal: 8),
+                                                padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
                                                 decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20),
-                                                    color: ApproveTextBgColor),
+                                                    borderRadius: BorderRadius.circular(20), color: PendingTextBgColor),
                                                 child: Text(
-                                                  "accepted_key".tr(),
+                                                  "pending_key".tr(),
                                                   style: TextStyle(
-                                                      color: ApproveTextColor,
+                                                      color: PendingTextColor,
                                                       fontSize: 10,
-                                                      fontWeight:
-                                                          FontWeight.w400),
+                                                      fontWeight: FontWeight.w400),
                                                 ),
                                               )
-                                            : upiList[index].status == 2
-                                                ? Container(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            vertical: 2,
-                                                            horizontal: 6),
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(20),
-                                                        color:
-                                                            PendingTextBgColor),
-                                                    child: Text(
-                                                      "pending_key".tr(),
-                                                      style: TextStyle(
-                                                          color:
-                                                              PendingTextColor,
-                                                          fontSize: 10,
-                                                          fontWeight:
-                                                              FontWeight.w400),
-                                                    ),
-                                                  )
-                                                : Container(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            vertical: 2,
-                                                            horizontal: 6),
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(20),
-                                                        color:
-                                                            PendingTextBgColor),
-                                                    child: Text(
-                                                      "pending_key".tr(),
-                                                      style: TextStyle(
-                                                          color:
-                                                              PendingTextColor,
-                                                          fontSize: 10,
-                                                          fontWeight:
-                                                              FontWeight.w400),
-                                                    ),
-                                                  ),
-                                  ),
-                                ]),
-                          ),
-                          Container(
-                            width: 90,
-                          ),
-                        ]),
+                                            : Container(
+                                                padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
+                                                decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(20), color: PendingTextBgColor),
+                                                child: Text(
+                                                  "pending_key".tr(),
+                                                  style: TextStyle(
+                                                      color: PendingTextColor,
+                                                      fontSize: 10,
+                                                      fontWeight: FontWeight.w400),
+                                                ),
+                                              ),
+                              ),
+                            ]),
+                      ),
+                      Container(
+                        width: 90,
+                      ),
+                    ]),
                   ),
                   Positioned(
                     right: 0,
@@ -238,16 +196,12 @@ class _UpiTransferHistoryState extends State<UpiTransferHistory> {
                       height: 70,
                       decoration: BoxDecoration(
                           color: Colors.red.shade50,
-                          borderRadius: BorderRadius.only(
-                              bottomRight: Radius.circular(10),
-                              topRight: Radius.circular(10))),
+                          borderRadius:
+                              BorderRadius.only(bottomRight: Radius.circular(10), topRight: Radius.circular(10))),
                       child: Center(
                         child: Text(
                           " \u20B9" + "${upiList[index].txnAmount}  ",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                              color: ColorPrimary),
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: ColorPrimary),
                         ),
                       ),
                     ),

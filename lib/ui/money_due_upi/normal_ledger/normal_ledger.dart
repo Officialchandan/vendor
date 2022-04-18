@@ -78,14 +78,17 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                   showModalBottomSheet(
                       context: context,
                       builder: (context) {
-                        return CalendarBottomSheet(onSelect: (startDate, endDate) {
-                          this.startDate = startDate;
-                          this.endDate = endDate;
-                          print("startDate->$startDate");
-                          print("endDate->$endDate");
-                          normalLedgerApiCall(context);
-                          // getCustomer();
-                        });
+                        return CalendarBottomSheet(
+                            endDate: endDate,
+                            startDate: startDate,
+                            onSelect: (startDate, endDate) {
+                              this.startDate = startDate;
+                              this.endDate = endDate;
+                              print("startDate->$startDate");
+                              print("endDate->$endDate");
+                              normalLedgerApiCall(context);
+                              // getCustomer();
+                            });
                       });
                   print("startDate---1>$startDate");
                   print("endDate---1>$endDate");
