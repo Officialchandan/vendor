@@ -5,34 +5,43 @@ class SearchByCategoriesEvents extends Equatable {
   List<Object?> get props => [];
 }
 
-class GetProductsSearchByCategoriesEvent extends SearchByCategoriesEvents {
+class ProductsSearchByCategoriesEvent extends SearchByCategoriesEvents {
   final String input;
-  GetProductsSearchByCategoriesEvent({required this.input});
+
+  ProductsSearchByCategoriesEvent({required this.input});
+
   @override
   List<Object?> get props => [input];
 }
 
-class GetCheckBoxSearchByCategoriesEvent extends SearchByCategoriesEvents {
+class CheckBoxSearchByCategoriesEvent extends SearchByCategoriesEvents {
   final bool check;
   final int index;
-  GetCheckBoxSearchByCategoriesEvent(
-      {required this.check, required this.index});
+
+  CheckBoxSearchByCategoriesEvent({required this.check, required this.index});
+
   @override
   List<Object?> get props => [check, index];
 }
 
-class GetIncrementSearchByCategoriesEvent extends SearchByCategoriesEvents {
-  final count;
-  GetIncrementSearchByCategoriesEvent({required this.count});
+class SearchByCategoriesIncrementEvent extends SearchByCategoriesEvents {
+  final int count;
+  final int index;
+
+  SearchByCategoriesIncrementEvent({required this.count, required this.index});
+
   @override
-  List<Object?> get props => [count];
+  List<Object?> get props => [count, index];
 }
 
-class GetDecrementSearchByCategoriesEvent extends SearchByCategoriesEvents {
-  final count;
-  GetDecrementSearchByCategoriesEvent({required this.count});
+class SearchByCategoriesDecrementEvent extends SearchByCategoriesEvents {
+  final int  count;
+  final int index;
+
+  SearchByCategoriesDecrementEvent({required this.count, required this.index});
+
   @override
-  List<Object?> get props => [count];
+  List<Object?> get props => [count, index];
 }
 
 class GetAddSearchByCategoriesEvent extends SearchByCategoriesEvents {
@@ -46,6 +55,7 @@ class GetSelectSizeSearchByCategoriesEvent extends SearchByCategoriesEvents {
 
 class GetSelectColorSearchByCategoriesEvent extends SearchByCategoriesEvents {
   final color;
+
   GetSelectColorSearchByCategoriesEvent({required this.color});
 }
 

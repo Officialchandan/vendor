@@ -17,16 +17,20 @@ class SearchAllBloc extends Bloc<SearchAllEvent, SearchAllState> {
   @override
   Stream<SearchAllState> mapEventToState(SearchAllEvent event) async* {
     if (event is GetProductsEvent) {
+      yield GetSearchLoadingState();
       yield* getSearchAllResponse();
     }
     if (event is GetCheckBoxEvent) {
+      yield GetSearchLoadingState();
       yield GetCheckBoxState(check: event.check, index: event.index);
     }
     if (event is GetIncrementEvent) {
-      yield GetIcrementState(count: event.count);
+      yield GetSearchLoadingState();
+      yield GetIncrementState(count: event.count, index: event.index);
     }
     if (event is GetDecrementEvent) {
-      yield GetDecrementState(count: event.count);
+      yield GetSearchLoadingState();
+      yield GetDecrementState(count: event.count, index: event.index);
     }
     if (event is GetAddEvent) {
       yield* getSearchAllResponse();
@@ -38,6 +42,7 @@ class SearchAllBloc extends Bloc<SearchAllEvent, SearchAllState> {
       yield* getSearchAllResponse();
     }
     if (event is FindCategoriesEvent) {
+      yield GetSearchLoadingState();
       yield CategoriesSearchState(searchword: event.searchkeyword);
     }
   }

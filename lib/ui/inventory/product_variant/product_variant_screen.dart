@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:easy_localization/src/public_ext.dart';
@@ -141,11 +142,6 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
               padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
               child: MaterialButton(
                 onPressed: () {
-                  print(productVariant);
-                  productVariant.forEach((element) {
-                    print(element.toString());
-                  });
-
                   if (productVariant.isNotEmpty) {
                     for (int j = 0; j < productVariant.length; j++) {
                       if (productVariant[j].option.isNotEmpty) {
@@ -189,7 +185,6 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
                       }
                     }
                   }
-
                   Navigator.pop(context, productVariant);
                 },
                 height: 50,

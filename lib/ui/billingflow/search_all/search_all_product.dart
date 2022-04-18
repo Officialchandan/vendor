@@ -20,6 +20,7 @@ import 'search_all_bloc.dart';
 class SearchAllProduct extends StatefulWidget {
   String mobile;
   String coin;
+
   SearchAllProduct({required this.mobile, required this.coin});
 
   @override
@@ -28,6 +29,7 @@ class SearchAllProduct extends StatefulWidget {
 
 class _SearchAllProductState extends State<SearchAllProduct> {
   _SearchAllProductState(mobile, coin);
+
   int count = 1;
   SearchAllBloc searchAllBloc = SearchAllBloc();
   List<ProductModel> products = [];
@@ -102,16 +104,11 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                 child: Stack(children: [
                   BlocConsumer<SearchAllBloc, SearchAllState>(
                     listener: (context, state) {
-                      log("state ====>$state");
                       if (state is SearchAllIntialState) {
                         searchAllBloc.add(GetProductsEvent());
                       }
-                      if (state is GetSearchState) {
-                        log("chal pdi api");
-                      }
                     },
                     builder: (context, state) {
-                      log("state ====>$state");
                       if (state is GetSearchState) {
                         products = state.data!;
                         searchList = products;
@@ -119,9 +116,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                       }
                       if (state is GetSearchLoadingState) {
                         return Center(
-                          child: CircularProgressIndicator(
-                            backgroundColor: ColorPrimary,
-                          ),
+                          child: CircularProgressIndicator(),
                         );
                       }
                       if (state is GetSearchFailureState) {
@@ -140,15 +135,6 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                               log("how much -->${state.searchword}");
                             }
                           });
-                          // for (int i = 0; i < product  ``s.length; i++) {
-                          //   if (products[i]
-                          //       .productName
-                          //       .toLowerCase()
-                          //       .contains(state.searchword.toLowerCase())) {
-                          //     list.add(products[i]);
-                          //     log("how much -->${state.searchword}");
-                          //   }
-                          // }
 
                           if (list.isEmpty) {
                             return Container(
@@ -221,7 +207,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                               image: NetworkImage("${searchList[index].categoryImage}"),
                                                               height: 55,
                                                               width: 55,
-                                                              fit: BoxFit.cover,
+                                                              fit: BoxFit.contain,
                                                             ),
                                                     )
                                                   : ClipRRect(
@@ -230,7 +216,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                         image: NetworkImage("${searchList[index].categoryImage}"),
                                                         height: 55,
                                                         width: 55,
-                                                        fit: BoxFit.cover,
+                                                        fit: BoxFit.contain,
                                                       ),
                                                     ),
                                             ),
@@ -310,7 +296,8 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                                 BlocBuilder<SearchAllBloc, SearchAllState>(
                                                                   builder: (context, state) {
                                                                     if (state is GetDecrementState) {
-                                                                      searchList[index].count = state.count;
+                                                                      log("Count == > ${state.count}");
+                                                                      searchList[state.index].count = state.count;
                                                                     }
                                                                     return Container(
                                                                       height: 20,
@@ -321,6 +308,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                                             if (await Network.isConnected()) {
                                                                               if (searchList[index].count > 1) {
                                                                                 searchAllBloc.add(GetIncrementEvent(
+                                                                                    index: index,
                                                                                     count: searchList[index].count--));
                                                                               } else {
                                                                                 Utility.showToast(
@@ -362,7 +350,8 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                                 BlocBuilder<SearchAllBloc, SearchAllState>(
                                                                   builder: (context, state) {
                                                                     if (state is GetDecrementState) {
-                                                                      searchList[index].count = state.count;
+                                                                      log("true===>$count");
+                                                                      searchList[state.index].count = state.count;
                                                                     }
                                                                     return Container(
                                                                       height: 20,
@@ -370,9 +359,9 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                                       child: IconButton(
                                                                           padding: EdgeInsets.all(0),
                                                                           onPressed: () async {
-                                                                            log("true===>$count");
                                                                             if (await Network.isConnected()) {
                                                                               searchAllBloc.add(GetIncrementEvent(
+                                                                                  index: index,
                                                                                   count: searchList[index].count++));
                                                                               searchAllBloc.add(GetCheckBoxEvent(
                                                                                   check: true, index: index));
@@ -483,10 +472,10 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                         // checkColor: Colors.indigo,
                                         value: searchList[index].check,
                                         activeColor: ColorPrimary,
-                                        onChanged: (newvalue) async {
+                                        onChanged: (value) async {
                                           if (await Network.isConnected()) {
                                             log("true===>");
-                                            searchAllBloc.add(GetCheckBoxEvent(check: newvalue!, index: index));
+                                            searchAllBloc.add(GetCheckBoxEvent(check: value!, index: index));
                                             selectedProductList = searchList[index];
                                           } else {
                                             Utility.showToast(
