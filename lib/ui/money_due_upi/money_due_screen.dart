@@ -79,7 +79,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
   }
 
   payment() {
-    var response = AllInOneSdk.startTransaction(mid, orderId, "1", token, callbackurl, false, true);
+    var response = AllInOneSdk.startTransaction(mid, orderId, dueAmount, token, callbackurl, false, true);
     // log("response ${response.}");
     response.then((value) {
       print(value);
@@ -136,7 +136,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
   Future<void> paymentTransiction(BuildContext context) async {
     Map<String, dynamic> input = HashMap<String, dynamic>();
     input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
-    input["amount"] = 1;
+    input["amount"] = dueAmount;
 
     log("=====? $input");
 
