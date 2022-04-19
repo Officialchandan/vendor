@@ -38,6 +38,7 @@ class _DailyLedgerState extends State<DailyLedger> with TickerProviderStateMixin
 
   DailyLedgerHistoryBloc _dailyLedgerHistoryBloc = DailyLedgerHistoryBloc();
   TextEditingController _searchController = TextEditingController();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -123,12 +124,16 @@ class _DailyLedgerState extends State<DailyLedger> with TickerProviderStateMixin
                 searchList = orderList;
               }
               if (state is GetDailyLedgerHistoryFailureState) {
-                return Center(child: Image.asset("assets/images/no_data.gif"));
+                return Container(
+                    height:  MediaQuery.of(context).size.height* 0.70,
+                    child: Center(child: Image.asset("assets/images/no_data.gif")));
               }
 
               if (orderList.isEmpty) {
                 log("===>$_commonLedgerHistory");
-                return Center(child: CircularProgressIndicator());
+                return Container(
+                    height: MediaQuery.of(context).size.height * 0.70,
+                    child: Center(child: CircularProgressIndicator()));
               }
               if (state is GetDailyLedgerUserSearchState) {
                 if (state.searchword.isEmpty) {

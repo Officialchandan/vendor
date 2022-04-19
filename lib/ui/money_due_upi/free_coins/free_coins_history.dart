@@ -32,6 +32,7 @@ class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
   FreeCoinHistoryBloc freeCoinHistoryBloc = FreeCoinHistoryBloc();
   List<OrderData> searchList = [];
   List<OrderData>? freecoinsdata;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -142,12 +143,16 @@ class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
               searchList = freecoinsdata!;
             }
             if (freecoinsdata == null) {
-              return Center(child: CircularProgressIndicator());
+              return Container(
+                  height: MediaQuery.of(context).size.height * 0.70, child: Center(child: CircularProgressIndicator()));
             }
 
             if (state is GetFreeCoinHistoryFailureState) {
-              return Center(
-                child: Image.asset("assets/images/no_data.gif"),
+              return Container(
+                height: MediaQuery.of(context).size.height * 0.70,
+                child: Center(
+                  child: Image.asset("assets/images/no_data.gif"),
+                ),
               );
             }
             if (state is GetFreeCoinUserSearchState) {
@@ -181,6 +186,7 @@ class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
 
 class ListWidget extends StatefulWidget {
   List<OrderData> searchList = [];
+
   ListWidget(this.searchList);
 
   @override

@@ -88,7 +88,7 @@ class _FreeCoinDetailState extends State<FreeCoinDetail> {
                               color: ColorTextPrimary),
                         ),
                         Text(
-                          "${freecoindetails!.dateTime}",
+                          "${DateFormat("dd MMM yyyy").format(freecoindetails!.dateTime) +" "+ DateFormat.jm().format(freecoindetails!.dateTime)}",
                           style: TextStyle(fontSize: 13),
                         ),
                       ],

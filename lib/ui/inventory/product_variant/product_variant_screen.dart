@@ -67,6 +67,9 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
           stream: controller.stream,
           initialData: [],
           builder: (context, snapshot) {
+            if(productVariant.isEmpty){
+              return Center(child: Text("Click button to add new variant"),);
+            }
             if (snapshot.hasData) {
               return ListView.builder(
                   controller: _scrollController,
