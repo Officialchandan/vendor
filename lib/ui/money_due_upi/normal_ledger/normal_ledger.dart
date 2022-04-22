@@ -179,14 +179,14 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
               }
               if (state is GetNormalLedgerHistoryFailureState) {
                 return Container(
-                  height:  MediaQuery.of(context).size.height* 0.70,
+                  height:  MediaQuery.of(context).size.height* 0.80,
                   child: Image.asset("assets/images/no_data.gif"),
                 );
               }
               if (orderList.isEmpty) {
                 log("===>$_commonLedgerHistory");
                 return Container(
-                    height:  MediaQuery.of(context).size.height* 0.70,
+                    height:  MediaQuery.of(context).size.height* 0.80,
                     child: Center(child: CircularProgressIndicator()));
               }
               if (state is GetNormalLedgerUserSearchState) {

@@ -60,7 +60,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                     if (text.length == 9) {
                       purchasedList = [];
                       saleReturnBloc
-                          .add(SaleReturnClearDataEvent(message: "Enter mobile number to get purchased product"));
+                          .add(SaleReturnClearDataEvent(message: "enter_mobile_to_get_purchase_product".tr()));
                     }
                   },
                   // autofocus: true,
@@ -108,6 +108,15 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                     );
                   }
 
+                  if (state is GetProductFailureState) {
+                    return Container(
+                      height: MediaQuery.of(context).size.height * 0.60,
+                      child: Center(
+                        child: Text(state.message),
+                      ),
+                    );
+                  }
+
                   if (state is SaleReturnQtyIncrementState) {
                     purchasedList[state.index].returnQty += state.count;
                   }
@@ -131,7 +140,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                     }
                   }
 
-                  if (state is GetProductFailureState) {
+                  if (state is SaleReturnClearDataState) {
                     return Center(
                       child: Text(state.message),
                     );
@@ -139,7 +148,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
 
                   if (purchasedList.isEmpty) {
                     return Center(
-                      child: Text("Enter mobile number to get purchased product"),
+                      child: Text("enter_mobile_to_get_purchase_product".tr()),
                     );
                   }
 
@@ -160,7 +169,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                           height: MediaQuery.of(context).size.height * 0.70,
                           child: ListView.separated(
                               shrinkWrap: true,
-                              padding: const EdgeInsets.only(bottom: 10),
+                              padding: const EdgeInsets.only(bottom: 50),
                               itemBuilder: (context, index) {
                                 return Stack(
                                   children: [

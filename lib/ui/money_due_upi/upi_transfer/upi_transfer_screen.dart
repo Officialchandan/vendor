@@ -88,12 +88,10 @@ class _UpiTransferHistoryState extends State<UpiTransferHistory> {
             filterApiCall(context);
           }
           if (state is GetUpiTansferHistoryState) {
-            log("--->ye estate hai bhiya");
             upiList = state.data!;
             searchList = upiList;
-            log("--->ye estate hai bhiya${upiList}");
           }
-          if (upiList == null) {
+          if (state is GetUpiTansferHistoryLoadingState) {
             return Center(child: CircularProgressIndicator());
           }
           if (state is GetUpiTansferHistoryFailureState) {

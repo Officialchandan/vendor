@@ -37,6 +37,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
   double netBalance = 0;
   double amtreturn = 0;
   NormalLedgerDetailBloc normalLedgerDetailBloc = NormalLedgerDetailBloc();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -193,13 +194,19 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                       salesreturnCalculations();
                     }
                     if (state is NormalLedgerDetailLoadingState) {
-                      return Center(
-                        child: CircularProgressIndicator(),
+                      return Container(
+                        height: MediaQuery.of(context).size.height,
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
                       );
                     }
                     if (state is NormalLedgerDetailFailureState) {
-                      return Center(
-                        child: Image.asset("assets/images/no_data.gif"),
+                      return Container(
+                        height: MediaQuery.of(context).size.height,
+                        child: Center(
+                          child: Image.asset("assets/images/no_data.gif"),
+                        ),
                       );
                     }
                     if (billingDetails.isEmpty) {

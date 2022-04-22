@@ -86,8 +86,12 @@ class _ViewProductScreenState extends State<ViewProductScreen> {
           stream: streamController.stream,
           initialData: [],
           builder: (context, snapshot) {
+            if(snapshot.connectionState == ConnectionState.waiting){
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
             if (snapshot.hasData) {
-              print("data-->${snapshot.data}");
               if (snapshot.data!.isEmpty) {
                 return Center(
                   child: Image(

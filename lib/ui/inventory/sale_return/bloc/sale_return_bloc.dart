@@ -48,7 +48,7 @@ class SaleReturnBloc extends Bloc<SaleReturnEvent, SaleReturnState> {
 
     if (event is SaleReturnClearDataEvent) {
       yield SaleReturnLoadingState();
-      yield GetProductFailureState(message: event.message);
+      yield SaleReturnClearDataState(message: event.message);
     }
   }
 
@@ -115,7 +115,7 @@ class SaleReturnBloc extends Bloc<SaleReturnEvent, SaleReturnState> {
       if (response.success) {
         yield ProductReturnSuccessState(message: response.message, input: input, data: response.data!);
       } else {
-        Utility.showToast(msg: response.message);
+        yield GetProductFailureState(message: response.message);
       }
     } else {
       Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
