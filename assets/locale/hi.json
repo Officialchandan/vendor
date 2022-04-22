@@ -399,5 +399,7 @@
   "accepted_key":"स्वीकृत",
   "daily_ledger_key":"दैनिक खाता बही",
   "daily_ledger_details_key":"दैनिक लेजर विवरण",
-  "you_cant_return_more_then_quantity_key":"आप मात्रा से अधिक नहीं लौटा सकते"
+  "you_cant_return_more_then_quantity_key":"आप मात्रा से अधिक नहीं लौटा सकते",
+  "enter_mobile_to_get_purchase_product": "खरीदे गए उत्पाद को प्राप्त करने के लिए मोबाइल नंबर दर्ज करें",
+  "click_btn_to_add_new_variant": "नया संस्करण जोड़ने के लिए बटन पर क्लिक करें"
 }

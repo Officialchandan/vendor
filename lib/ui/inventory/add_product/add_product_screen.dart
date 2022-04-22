@@ -614,8 +614,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 ),
                 BlocBuilder<AddProductBloc, AddProductState>(
                   builder: (context, state) {
-
-
                     if (productVariant.isEmpty) {
                       return ListTile(
                         shape: RoundedRectangleBorder(
@@ -843,6 +841,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
       ),
     );
   }
+
   void editSingleVariant(ProductVariantModel variant) async {
     var result = await Navigator.push(
         context,
@@ -857,6 +856,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
       //     productVariant: variants.first, index: index));
     }
   }
+
   void editProductVariants() async {
     var result = await Navigator.push(
         context,
@@ -880,7 +880,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
         context,
         PageTransition(
           child: ProductVariantScreen(
-              variantType: variantType, categoryId: categoryId, productVariant: productVariant, edit: false, add: false),
+              variantType: variantType,
+              categoryId: categoryId,
+              productVariant: productVariant,
+              edit: false,
+              add: false),
           type: PageTransitionType.bottomToTop,
         ));
 
@@ -889,7 +893,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
       addProductBloc.add(AddProductVariantEvent(productVariant: variants, listStatus: 1));
     }
   }
-
 
   void addProduct(BuildContext context) async {
     variantImage.clear();

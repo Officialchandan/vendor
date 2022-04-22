@@ -35,8 +35,7 @@ class ProductReturnSuccessState extends SaleReturnState {
   final Map input;
   final SaleReturnData data;
 
-  ProductReturnSuccessState(
-      {this.message, required this.input, required this.data});
+  ProductReturnSuccessState({this.message, required this.input, required this.data});
 
   @override
   List<Object?> get props => [message, input];
@@ -88,4 +87,13 @@ class SaleReturnQtyDecrementState extends SaleReturnState {
 
   @override
   List<Object?> get props => [count, index];
+}
+
+class SaleReturnClearDataState extends SaleReturnState {
+  final String message;
+
+  SaleReturnClearDataState({required this.message});
+
+  @override
+  List<Object?> get props => [message];
 }

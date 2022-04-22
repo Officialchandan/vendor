@@ -395,6 +395,7 @@
   "accepted_key":"Accepted",
   "daily_ledger_key":"Daily Ledger",
   "daily_ledger_details_key":"Daily Ledger Details",
-  "you_cant_return_more_then_quantity_key":"You can't return more than quantity"
-
+  "you_cant_return_more_then_quantity_key":"You can't return more than quantity",
+  "enter_mobile_to_get_purchase_product": "Enter mobile number to get purchased product",
+  "click_btn_to_add_new_variant": "Click button to add new variant"
 }

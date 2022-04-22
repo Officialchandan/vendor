@@ -68,7 +68,7 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
           initialData: [],
           builder: (context, snapshot) {
             if(productVariant.isEmpty){
-              return Center(child: Text("Click button to add new variant"),);
+              return Center(child: Text("click_btn_to_add_new_variant".tr()),);
             }
             if (snapshot.hasData) {
               return ListView.builder(
