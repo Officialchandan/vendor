@@ -198,7 +198,7 @@ class _ListWidgetState extends State<ListWidget> {
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.builder(
-          padding: EdgeInsets.only(left: 15, right: 15),
+          padding: EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 5),
           itemCount: widget.searchList.length,
           itemBuilder: (context, index) {
             return GestureDetector(
@@ -216,10 +216,16 @@ class _ListWidgetState extends State<ListWidget> {
                   padding: EdgeInsets.all(0),
                   height: 70,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white,
-                      border: Border.all(color: Colors.white38),
-                      boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 1.0, spreadRadius: 1)]),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        offset: Offset(0.0, 1.0), //(x,y)
+                        blurRadius: 6.0,
+                      ),
+                    ],
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                     Padding(
                       padding: EdgeInsets.only(left: 12.0),
@@ -229,10 +235,12 @@ class _ListWidgetState extends State<ListWidget> {
                           children: [
                             Text(
                               "+91 ${widget.searchList[index].mobile}",
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                             ),
                             Text(
-                              "${widget.searchList[index].dateTime}",
+                              "${DateFormat("dd MMM yyyy").format(DateTime.parse(widget.searchList[index].dateTime.toString()))}" +
+                                  " ${DateFormat.jm().format(DateTime.parse(widget.searchList[index].dateTime.toString())).toLowerCase()}",
+                              style: TextStyle(fontSize: 13, color: ColorTextPrimary),
                             ),
                           ]),
                     ),

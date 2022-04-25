@@ -39,7 +39,10 @@ class _SelectCategoryWidgetState extends State<SelectCategoryWidget> {
               color: ColorPrimary,
               fit: BoxFit.contain,
             ),
-            title: Text("view_all_product_key".tr()),
+            title: Text(
+              "view_all_product_key".tr(),
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+            ),
           ),
         ),
         // TextFormField(
@@ -64,7 +67,10 @@ class _SelectCategoryWidgetState extends State<SelectCategoryWidget> {
         SizedBox(
           height: 10,
         ),
-        Text("search_by_category_key".tr()),
+        Padding(
+          padding: const EdgeInsets.only(left: 10.0),
+          child: Text("search_by_category_key".tr(), style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
+        ),
         SizedBox(
           height: 10,
         ),
@@ -109,7 +115,8 @@ class _SelectCategoryWidgetState extends State<SelectCategoryWidget> {
                         color: ColorPrimary,
                         fit: BoxFit.contain,
                       ),
-                      title: Text(snap.data![index].categoryName!),
+                      title: Text(snap.data![index].categoryName!,
+                          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
                     ),
                   );
                 }),

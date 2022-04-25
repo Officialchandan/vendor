@@ -9,8 +9,8 @@ import 'package:vendor/ui/inventory/add_product/add_product_screen.dart';
 import 'package:vendor/ui/inventory/purchase_order_entry/purchase_entry.dart';
 import 'package:vendor/ui/inventory/purchase_return/purchase_return_screen.dart';
 import 'package:vendor/ui/inventory/sale_return/sale_return_screen.dart';
-import 'package:vendor/ui/inventory/suggested_product/suggested_product.dart';
 import 'package:vendor/ui/inventory/view_product/select_category.dart';
+import 'package:vendor/utility/color.dart';
 
 class InventoryScreen extends StatefulWidget {
   @override
@@ -70,9 +70,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
           IconButton(
               onPressed: () {
                 Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (_) => HomeScreen()),
-                    (route) => false);
+                    context, MaterialPageRoute(builder: (_) => HomeScreen()), (route) => false);
               },
               icon: Icon(Icons.home))
         ],
@@ -86,45 +84,37 @@ class _InventoryScreenState extends State<InventoryScreen> {
                 Container(
                   // margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade50,
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        offset: Offset(0.0, 1.0), //(x,y)
+                        blurRadius: 6.0,
+                      ),
+                    ],
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: ListTile(
                     onTap: () {
                       if (options[index]["id"] == 2) {
                         Navigator.push(
-                            context,
-                            PageTransition(
-                                child: ViewCategoryScreen(),
-                                type: PageTransitionType.fade));
+                            context, PageTransition(child: ViewCategoryScreen(), type: PageTransitionType.fade));
                       }
                       if (options[index]["id"] == 3) {
                         Navigator.push(
-                            context,
-                            PageTransition(
-                                child: SaleReturnScreen(),
-                                type: PageTransitionType.fade));
+                            context, PageTransition(child: SaleReturnScreen(), type: PageTransitionType.fade));
                       }
                       if (options[index]["id"] == 4) {
                         Navigator.push(
-                            context,
-                            PageTransition(
-                                child: PurchaseReturnScreen(),
-                                type: PageTransitionType.fade));
+                            context, PageTransition(child: PurchaseReturnScreen(), type: PageTransitionType.fade));
                       }
                       if (options[index]["id"] == 5) {
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                                child: PurchaseEntry(),
-                                type: PageTransitionType.fade));
+                        Navigator.push(context, PageTransition(child: PurchaseEntry(), type: PageTransitionType.fade));
                       }
                       if (options[index]["id"] == 1) {
                         Navigator.push(
                           context,
-                          PageTransition(
-                              child: AddProductScreen(),
-                              type: PageTransitionType.fade),
+                          PageTransition(child: AddProductScreen(), type: PageTransitionType.fade),
                         );
                         // showSheet(context);
                       }
@@ -135,7 +125,10 @@ class _InventoryScreenState extends State<InventoryScreen> {
                       width: 30,
                       fit: BoxFit.contain,
                     ),
-                    title: Text("${options[index]["title"]}"),
+                    title: Text(
+                      "${options[index]["title"]}",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
                     subtitle: Text("${options[index]["subTitle"]}"),
                   ),
                 ),
@@ -146,10 +139,8 @@ class _InventoryScreenState extends State<InventoryScreen> {
                     child: Container(
                       width: 5,
                       decoration: BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(5),
-                              bottomLeft: Radius.circular(5))),
+                          color: ColorPrimary,
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
                     ))
               ],
             ),
@@ -179,9 +170,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                     Navigator.pop(context);
                     Navigator.push(
                       context,
-                      PageTransition(
-                          child: AddProductScreen(),
-                          type: PageTransitionType.fade),
+                      PageTransition(child: AddProductScreen(), type: PageTransitionType.fade),
                     );
                   },
                 ),

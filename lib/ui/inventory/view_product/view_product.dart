@@ -55,6 +55,7 @@ class _ViewProductScreenState extends State<ViewProductScreen> {
               filled: true,
               fillColor: Color.fromRGBO(242, 242, 242, 1),
               hintText: "search_products_key".tr(),
+              hintStyle: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
               contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
               enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
@@ -86,7 +87,7 @@ class _ViewProductScreenState extends State<ViewProductScreen> {
           stream: streamController.stream,
           initialData: [],
           builder: (context, snapshot) {
-            if(snapshot.connectionState == ConnectionState.waiting){
+            if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
                 child: CircularProgressIndicator(),
               );
@@ -126,18 +127,25 @@ class _ViewProductScreenState extends State<ViewProductScreen> {
                         getProducts();
                       },
                       child: Container(
-                        margin: const EdgeInsets.only(bottom: 5, top: 5, right: 10),
+                        margin: const EdgeInsets.only(bottom: 5, top: 10, right: 10),
                         child: Stack(
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(left: 40),
-                              child: Card(
-                                elevation: 1,
-                                shape: RoundedRectangleBorder(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey,
+                                      offset: Offset(0.0, 1.0), //(x,y)
+                                      blurRadius: 6.0,
+                                    ),
+                                  ],
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: ListTile(
-                                  contentPadding: EdgeInsets.only(left: 50, right: 5, top: 20, bottom: 20),
+                                  contentPadding: EdgeInsets.only(left: 50, right: 5, top: 10, bottom: 10),
                                   title: Container(
                                       child: Column(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -146,7 +154,7 @@ class _ViewProductScreenState extends State<ViewProductScreen> {
                                     children: [
                                       Text(
                                         product.productName + (variantName.isNotEmpty ? "($variantName)" : ""),
-                                        style: TextStyle(fontWeight: FontWeight.bold),
+                                        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
                                       ),
                                       const SizedBox(
                                         height: 10,
@@ -157,7 +165,7 @@ class _ViewProductScreenState extends State<ViewProductScreen> {
                                               TextSpan(
                                                 text: "₹ ${product.sellingPrice}\t",
                                                 style: TextStyle(
-                                                    fontSize: 16, color: ColorPrimary, fontWeight: FontWeight.bold),
+                                                    fontSize: 18, color: ColorPrimary, fontWeight: FontWeight.bold),
                                               ),
                                             ]))
                                           : RichText(
@@ -165,12 +173,14 @@ class _ViewProductScreenState extends State<ViewProductScreen> {
                                               TextSpan(
                                                 text: "₹ ${product.sellingPrice}\t",
                                                 style: TextStyle(
-                                                    fontSize: 16, color: ColorPrimary, fontWeight: FontWeight.bold),
+                                                    fontSize: 18, color: ColorPrimary, fontWeight: FontWeight.bold),
                                               ),
                                               TextSpan(
                                                   text: " ₹ ${product.mrp}",
                                                   style: TextStyle(
-                                                      color: Colors.black, decoration: TextDecoration.lineThrough))
+                                                      fontSize: 13,
+                                                      color: Colors.black,
+                                                      decoration: TextDecoration.lineThrough))
                                             ]))
                                     ],
                                   )),

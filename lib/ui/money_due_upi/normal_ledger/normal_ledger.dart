@@ -102,35 +102,6 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                 ]),
               ),
             ],
-            // bottom: PreferredSize(
-            //   child: Container(
-            //     color: ColorPrimary,0
-            //     child: TabBar(
-            //       indicatorWeight: 3,
-            //       isScrollable: true,
-            //       controller: _tabController,
-            //       indicatorColor: ColorPrimary,
-            //       unselectedLabelColor: Colors.white,
-            //       labelColor: Colors.white,
-            //       labelStyle: const TextStyle(
-            //         fontSize: 18,
-            //         letterSpacing: 0.67,
-            //         fontWeight: FontWeight.w500,
-            //       ),
-            //       onTap: (a) {
-            //         log("$a");
-            //       },
-            //       tabs: List.generate(months.length, (index) {
-            //         return Tab(
-            //           text: months[index].toString(),
-            //         );
-            //         log("${months.length}");
-            //         log("${_tabController?.length}");
-            //       }),
-            //     ),
-            //   ),
-            //   preferredSize: const Size.fromHeight(50),
-            // ),
           ),
           body: Column(children: [
             Padding(
@@ -179,14 +150,14 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
               }
               if (state is GetNormalLedgerHistoryFailureState) {
                 return Container(
-                  height:  MediaQuery.of(context).size.height* 0.80,
+                  height: MediaQuery.of(context).size.height * 0.80,
                   child: Image.asset("assets/images/no_data.gif"),
                 );
               }
               if (orderList.isEmpty) {
                 log("===>$_commonLedgerHistory");
                 return Container(
-                    height:  MediaQuery.of(context).size.height* 0.80,
+                    height: MediaQuery.of(context).size.height * 0.80,
                     child: Center(child: CircularProgressIndicator()));
               }
               if (state is GetNormalLedgerUserSearchState) {
@@ -232,10 +203,9 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                             color: Colors.white,
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.grey.withOpacity(0.2),
-                                spreadRadius: 2,
-                                blurRadius: 10,
-                                offset: Offset(0, 0), // changes position of shadow
+                                color: Colors.grey,
+                                offset: Offset(0.0, 1.0), //(x,y)
+                                blurRadius: 6.0,
                               ),
                             ],
                             borderRadius: BorderRadius.circular(10),
@@ -245,14 +215,8 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                             child: Stack(
                               children: [
                                 Container(
-                                  margin: EdgeInsets.only(top: 20),
+                                  margin: EdgeInsets.only(top: 15),
                                   padding: EdgeInsets.only(bottom: 12, top: 3),
-                                  // height: 70,
-                                  // decoration: BoxDecoration(
-                                  //     borderRadius: BorderRadius.circular(10),
-                                  //     color: Colors.white,
-                                  //     border: Border.all(color: Colors.white38),
-                                  //     boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 1.0, spreadRadius: 1)]),
                                   child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                                     Column(
                                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -260,13 +224,11 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                                         children: [
                                           Text(
                                             "    +91 ${searchList[index].mobile}",
-                                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                                           ),
                                           Text(
-                                            "    ${DateFormat("yyyy MM dd ").format(searchList[index].dateTime)}(${DateFormat.jm().format(searchList[index].dateTime)})",
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            ),
+                                            "     ${DateFormat("dd MMM yyyy").format(searchList[index].dateTime)}(${DateFormat.jm().format(searchList[index].dateTime)})",
+                                            style: TextStyle(fontSize: 13, color: ColorTextPrimary),
                                           ),
                                         ]),
                                     Row(
@@ -343,7 +305,7 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                                       " \u20B9 ${searchList[index].myprofitRevenue} ",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 14,
+                                          fontSize: 16,
                                           color:
                                               searchList[index].status == 1 ? RejectedBoxTextColor : GreenBoxTextColor),
                                     ),
@@ -354,14 +316,6 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                           ),
                         ),
                       );
-                      // Positioned(
-                      //     top: 10,
-                      //     left: 0,
-                      //
-                      //
-                      // ),
-
-                      // ]);
                     }),
               );
             }),

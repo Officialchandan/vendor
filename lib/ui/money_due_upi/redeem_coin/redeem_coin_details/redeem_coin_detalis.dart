@@ -421,7 +421,7 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
       totalEarnCoin += double.parse(count.earningCoins.isEmpty ? "0" : count.earningCoins);
     }
     print("totottototo ---${totalAmt.toStringAsFixed(2)}");
-    if (totalAmt >= totalRedeemCoins) {
+    if (totalAmt >= totalRedeemCoins / 3) {
       totalPayAmt = totalAmt - totalRedeemCoins / 3;
     } else {
       if (totalAmt == 0.00) {

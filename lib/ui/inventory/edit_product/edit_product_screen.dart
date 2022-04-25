@@ -428,7 +428,10 @@ class EditProductScreenState extends State<EditProductScreen> {
               height: 50,
               shape: RoundedRectangleBorder(),
               color: ColorPrimary,
-              child: Text("update_button_key".tr()),
+              child: Text(
+                "update_button_key".tr(),
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+              ),
             ),
           ),
         ),

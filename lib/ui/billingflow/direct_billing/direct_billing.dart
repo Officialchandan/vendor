@@ -411,9 +411,7 @@ class _DirectBillingState extends State<DirectBilling> {
                         children: [
                           Text(
                             "calculation_key".tr(),
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
                           ),
                           SizedBox(
                             height: 10,
@@ -421,14 +419,20 @@ class _DirectBillingState extends State<DirectBilling> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("earn_coins_key".tr()),
+                              Text("earn_coins_key".tr(),
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  )),
                               Row(children: [
                                 Container(
                                     child: Image.asset(
                                   "assets/images/point.png",
                                   scale: 3,
                                 )),
-                                Text(" $earningCoins")
+                                Text(" $earningCoins",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                    ))
                               ]),
                             ],
                           ),
@@ -438,14 +442,20 @@ class _DirectBillingState extends State<DirectBilling> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("total_coin_deducted_key".tr()),
+                              Text("total_coin_deducted_key".tr(),
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  )),
                               Row(children: [
                                 Container(
                                     child: Image.asset(
                                   "assets/images/point.png",
                                   scale: 3,
                                 )),
-                                Text(" $coinss")
+                                Text(" $coinss",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                    ))
                               ]),
                             ],
                           ),
@@ -474,12 +484,16 @@ class _DirectBillingState extends State<DirectBilling> {
                             "total_payable_amount_key".tr(),
                             style: TextStyle(
                               color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
                             ),
                           ),
                           Text(
                             "\u20B9 $amount",
                             style: TextStyle(
                               color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
                             ),
                           ),
                         ],
@@ -616,7 +630,7 @@ class _DirectBillingState extends State<DirectBilling> {
         context: context,
         builder: (context) {
           return ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
+            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.50),
             child: AlertDialog(
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
               title: Text(
@@ -811,8 +825,8 @@ class _DirectBillingState extends State<DirectBilling> {
             ),
             Image.network(
               list.image,
-              width: 20,
-              height: 20,
+              width: 25,
+              height: 25,
               color: ColorPrimary,
               fit: BoxFit.contain,
             ),
@@ -821,7 +835,7 @@ class _DirectBillingState extends State<DirectBilling> {
             ),
             Text(
               list.categoryName,
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black),
+              style: TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.w600),
             )
           ],
         ),
