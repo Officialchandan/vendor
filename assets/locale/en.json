@@ -397,5 +397,8 @@
   "daily_ledger_details_key":"Daily Ledger Details",
   "you_cant_return_more_then_quantity_key":"You can't return more than quantity",
   "enter_mobile_to_get_purchase_product": "Enter mobile number to get purchased product",
-  "click_btn_to_add_new_variant": "Click button to add new variant"
+  "click_btn_to_add_new_variant": "Click button to add new variant",
+  "proceed_key":"Proceed",
+  "total_order_value_key": "Total Order Value",
+  "net_payable_key":"Net Payable"
 }

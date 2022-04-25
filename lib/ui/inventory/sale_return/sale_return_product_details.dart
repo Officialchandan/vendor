@@ -14,6 +14,7 @@ import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/utility.dart';
+import 'package:vendor/widget/sales_return_details_bottom_sheet.dart';
 
 class SaleReturnProductDetails extends StatefulWidget {
   final SaleReturnData saleReturnData;
@@ -66,8 +67,22 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: CustomAppBar(
-          title: "sale_return_key".tr(),
+        appBar: AppBar(
+          title: Text("sale_return_key".tr()),
+          actions: [
+            IconButton(
+              onPressed: () {
+                showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return SalesReturnDetailsSheet(
+                        customerId: widget.saleReturnData.customerId.toString(),
+                      );
+                    });
+              },
+              icon: Icon(Icons.info),
+            ),
+          ],
         ),
         body: SingleChildScrollView(
           child: Center(
@@ -304,7 +319,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
             color: ColorPrimary,
             child: Center(
               child: Text(
-                widget.saleReturnData.productId.isEmpty ? "cancel_key".tr() : "done_key".tr(),
+              "proceed_key".tr(),
                 style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
