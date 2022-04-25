@@ -101,7 +101,7 @@ class _UpiTransferHistoryState extends State<UpiTransferHistory> {
           }
 
           return ListView.builder(
-              padding: EdgeInsets.only(left: 15, right: 15, top: 15),
+              padding: EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 5),
               itemCount: upiList.length,
               itemBuilder: (context, index) {
                 return Stack(children: [
@@ -110,10 +110,16 @@ class _UpiTransferHistoryState extends State<UpiTransferHistory> {
                     padding: EdgeInsets.all(0),
                     height: 70,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white,
-                        border: Border.all(color: Colors.white38),
-                        boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 1.0, spreadRadius: 1)]),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey,
+                          offset: Offset(0.0, 1.0), //(x,y)
+                          blurRadius: 6.0,
+                        ),
+                      ],
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                     child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                       Padding(
                         padding: EdgeInsets.only(left: 12.0),
@@ -124,7 +130,7 @@ class _UpiTransferHistoryState extends State<UpiTransferHistory> {
                               Text(
                                 "${DateFormat("dd MMM yyyy").format(DateTime.parse(upiList[index].txnDate))}" +
                                     " - ${DateFormat.jm().format(DateTime.parse(upiList[index].txnDate))}",
-                                style: TextStyle(fontWeight: FontWeight.w600),
+                                style: TextStyle(fontSize: 13, color: ColorTextPrimary),
                               ),
                               Container(
                                 height: 20,
@@ -193,13 +199,13 @@ class _UpiTransferHistoryState extends State<UpiTransferHistory> {
                       width: 70,
                       height: 70,
                       decoration: BoxDecoration(
-                          color: Colors.red.shade50,
+                          color: ColorTextFeild,
                           borderRadius:
                               BorderRadius.only(bottomRight: Radius.circular(10), topRight: Radius.circular(10))),
                       child: Center(
                         child: Text(
                           " \u20B9" + "${upiList[index].txnAmount}  ",
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: ColorPrimary),
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: ColorPrimary),
                         ),
                       ),
                     ),

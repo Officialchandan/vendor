@@ -37,16 +37,16 @@ class _HomeScreenState extends State<HomeScreen> {
     "coins_key".tr(),
     "inventory_key".tr(),
     "money_due_upi_key".tr(),
-    "video_tutorials_key".tr(),
     "performance_tracker_key".tr(),
+    "video_tutorials_key".tr(),
     "account_management_key".tr(),
   ];
   List<String> description = [
     "generate_redeem_key".tr(),
     "inventory_description_key".tr(),
     "money_due_upi_description_key".tr(),
-    "video_tutorials_description_key".tr(),
     "staff_management_description_key".tr(),
+    "video_tutorials_description_key".tr(),
     "online_shop_description_key".tr(),
   ];
 
@@ -54,8 +54,8 @@ class _HomeScreenState extends State<HomeScreen> {
     "assets/images/point.png",
     "assets/images/home2.png",
     "assets/images/tr-ic3.png",
-    "assets/images/home6.png",
     "assets/images/home4.png",
+    "assets/images/home6.png",
     "assets/images/home3.png",
   ];
   onShareWithEmptyOrigin(BuildContext context) async {
@@ -237,14 +237,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               height: 1.2,
                               fontWeight: FontWeight.bold,
                             ),
-                            maxFontSize: 15,
-                            minFontSize: 12,
+                            maxFontSize: 18,
+                            minFontSize: 16,
                           ),
                           AutoSizeText(
                             description[index],
                             style: TextStyle(color: Colors.white, fontSize: 12),
-                            maxFontSize: 12,
-                            minFontSize: 10,
+                            maxFontSize: 13,
+                            minFontSize: 11,
                           ),
                         ],
                       )),
@@ -297,9 +297,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ))
             : index == 2
                 ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: index)
-                : index == 3
+                : index == 4
                     ? Navigator.push(context, MaterialPageRoute(builder: (context) => VideoTutorial()))
-                    : index == 4
+                    : index == 3
                         ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: 3)
                         : index == 5
                             ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: 4)

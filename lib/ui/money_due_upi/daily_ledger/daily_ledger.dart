@@ -125,7 +125,7 @@ class _DailyLedgerState extends State<DailyLedger> with TickerProviderStateMixin
               }
               if (state is GetDailyLedgerHistoryFailureState) {
                 return Container(
-                    height:  MediaQuery.of(context).size.height* 0.70,
+                    height: MediaQuery.of(context).size.height * 0.70,
                     child: Center(child: Image.asset("assets/images/no_data.gif")));
               }
 
@@ -183,10 +183,9 @@ class _DailyLedgerState extends State<DailyLedger> with TickerProviderStateMixin
                             color: Colors.white,
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.grey.withOpacity(0.2),
-                                spreadRadius: 2,
-                                blurRadius: 10,
-                                offset: Offset(0, 0), // changes position of shadow
+                                color: Colors.grey,
+                                offset: Offset(0.0, 1.0), //(x,y)
+                                blurRadius: 6.0,
                               ),
                             ],
                             borderRadius: BorderRadius.circular(10),
@@ -196,7 +195,7 @@ class _DailyLedgerState extends State<DailyLedger> with TickerProviderStateMixin
                             child: Stack(
                               children: [
                                 Container(
-                                  margin: EdgeInsets.only(top: 20),
+                                  margin: EdgeInsets.only(top: 15),
                                   padding: EdgeInsets.only(bottom: 12, top: 3),
                                   // height: 70,
                                   // decoration: BoxDecoration(
@@ -211,13 +210,11 @@ class _DailyLedgerState extends State<DailyLedger> with TickerProviderStateMixin
                                         children: [
                                           Text(
                                             "    +91 ${searchList[index].mobile}",
-                                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                                           ),
                                           Text(
-                                            "    ${DateFormat("yyyy MM dd ").format(searchList[index].dateTime)}(${DateFormat.jm().format(searchList[index].dateTime)})",
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            ),
+                                            "    ${DateFormat("dd MMM yyyy").format(searchList[index].dateTime)}(${DateFormat.jm().format(searchList[index].dateTime)})",
+                                            style: TextStyle(fontSize: 13, color: ColorTextPrimary),
                                           ),
                                         ]),
                                     Row(

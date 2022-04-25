@@ -13,6 +13,7 @@ import 'package:vendor/api/server_error.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/model/common_response.dart';
 import 'package:vendor/model/get_due_amount_response.dart';
+import 'package:vendor/ui/home/home.dart';
 import 'package:vendor/ui/money_due_upi/bloc/money_due_bloc.dart';
 import 'package:vendor/ui/money_due_upi/bloc/money_due_event.dart';
 import 'package:vendor/ui/money_due_upi/bloc/money_due_state.dart';
@@ -119,7 +120,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
       map["ORDER_ID"] = orderId;
 
       CommonResponse res = await apiProvider.checkPaymentStatus(map);
-      res.success == true ? _displayDialogs(context, 1) : _displayDialogs(context, 0);
+      res.success == true ? _displayDialogs(context, dueAmount) : _displayDialogs(context, dueAmount);
       log("Response--->$res");
     } catch (error) {
       String message = "";
@@ -182,7 +183,10 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                   statusBarColor: condition == 0 ? ApproveTextColor : ColorPrimary,
                 ),
                 backgroundColor: condition == 0 ? ApproveTextColor : ColorPrimary,
-                title: Text("money_due_upi_key".tr()),
+                title: Text(
+                  "money_due_upi_key".tr(),
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
                 automaticallyImplyLeading: widget.isShow!,
                 elevation: 0,
                 leading: widget.isShow! == true
@@ -193,6 +197,20 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                         icon: Icon(Icons.arrow_back_ios),
                       )
                     : Container(),
+                actions: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushAndRemoveUntil(context,
+                          PageTransition(child: HomeScreen(), type: PageTransitionType.fade), ModalRoute.withName("/"));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.only(right: 10),
+                      height: 30,
+                      width: 30,
+                      child: Image.asset("assets/images/home.png"),
+                    ),
+                  )
+                ],
               ),
               body: SingleChildScrollView(
                 child: Container(
@@ -219,8 +237,8 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                               "company_due_amount_key".tr(),
                               style: TextStyle(
                                 color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 18,
                               ),
                             ),
                           ],
@@ -248,6 +266,9 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                       "types_of_money_due_key".tr(),
                                       style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
                                     ),
+                                  ),
+                                  SizedBox(
+                                    height: 20,
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(20.0),
@@ -318,7 +339,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                                       topRight: Radius.circular(5),
                                                     ),
                                                   ),
-                                                  child: Image.asset("assets/images/money-due2.png", width: 27),
+                                                  child: Image.asset("assets/images/money-due6.png", width: 27),
                                                 ),
                                               ),
                                               Positioned(
@@ -416,7 +437,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                                         topRight: Radius.circular(5),
                                                       ),
                                                     ),
-                                                    child: Image.asset("assets/images/money-due3.png", width: 27),
+                                                    child: Image.asset("assets/images/money-due2.png", width: 27),
                                                   ),
                                                 ),
                                                 Positioned(
@@ -527,7 +548,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                                       topRight: Radius.circular(5),
                                                     ),
                                                   ),
-                                                  child: Image.asset("assets/images/money-due4.png", width: 27),
+                                                  child: Image.asset("assets/images/money-due3.png", width: 27),
                                                 ),
                                               ),
                                               Positioned(
@@ -631,29 +652,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                                         topRight: Radius.circular(5),
                                                       ),
                                                     ),
-                                                    child: Image.asset("assets/images/money-due3.png", width: 27),
-                                                  ),
-                                                ),
-                                                Positioned(
-                                                  top: -27,
-                                                  child: Container(
-                                                    padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      boxShadow: [
-                                                        BoxShadow(
-                                                          color: Colors.grey.withOpacity(0.1),
-                                                          spreadRadius: 1,
-                                                          blurRadius: 7,
-                                                          offset: Offset(0, -6), // changes position of shadow
-                                                        ),
-                                                      ],
-                                                      borderRadius: BorderRadius.only(
-                                                        topLeft: Radius.circular(10),
-                                                        topRight: Radius.circular(5),
-                                                      ),
-                                                    ),
-                                                    child: Image.asset("assets/images/money-due3.png", width: 27),
+                                                    child: Image.asset("assets/images/money-due4.png", width: 27),
                                                   ),
                                                 ),
                                                 Positioned(
@@ -822,6 +821,9 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                       style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
                                     ),
                                   ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
                                   Padding(
                                     padding: const EdgeInsets.all(20.0),
                                     child: Row(
@@ -997,7 +999,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                                       topRight: Radius.circular(5),
                                                     ),
                                                   ),
-                                                  child: Image.asset("assets/images/money-due2.png", width: 27),
+                                                  child: Image.asset("assets/images/money-due6.png", width: 27),
                                                 ),
                                               ),
                                               Positioned(
@@ -1103,7 +1105,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                                         topRight: Radius.circular(5),
                                                       ),
                                                     ),
-                                                    child: Image.asset("assets/images/money-due3.png", width: 27),
+                                                    child: Image.asset("assets/images/money-due2.png", width: 27),
                                                   ),
                                                 ),
                                                 Positioned(
@@ -1206,7 +1208,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                                       topRight: Radius.circular(5),
                                                     ),
                                                   ),
-                                                  child: Image.asset("assets/images/money-due4.png", width: 27),
+                                                  child: Image.asset("assets/images/money-due3.png", width: 27),
                                                 ),
                                               ),
                                               Positioned(
@@ -1318,7 +1320,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                                         topRight: Radius.circular(5),
                                                       ),
                                                     ),
-                                                    child: Image.asset("assets/images/money-due3.png", width: 27),
+                                                    child: Image.asset("assets/images/money-due4.png", width: 27),
                                                   ),
                                                 ),
                                                 Positioned(
@@ -1340,7 +1342,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                                         topRight: Radius.circular(5),
                                                       ),
                                                     ),
-                                                    child: Image.asset("assets/images/money-due3.png", width: 27),
+                                                    child: Image.asset("assets/images/money-due4.png", width: 27),
                                                   ),
                                                 ),
                                                 Positioned(
@@ -1551,7 +1553,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                                       topRight: Radius.circular(5),
                                                     ),
                                                   ),
-                                                  child: Image.asset("assets/images/money-due4.png", width: 27),
+                                                  child: Image.asset("assets/images/point.png", width: 27),
                                                 ),
                                               ),
                                               Positioned(

@@ -155,7 +155,7 @@ class _SalesReturnHistoryState extends State<SalesReturnHistory> {
                     }
 
                     return ListView.builder(
-                        padding: EdgeInsets.only(left: 15, right: 15, top: 15),
+                        padding: EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 5),
                         itemCount: billingDetails.length,
                         itemBuilder: (context, index) {
                           return Container(
@@ -241,10 +241,18 @@ class _BillingDetailsWidgetState extends State<BillingDetailsWidget> {
           margin: EdgeInsets.only(bottom: 20),
           height: billingDetails!.billingType == 1 ? 102 : 82,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.white,
-              boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4, spreadRadius: 1)]),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey,
+                offset: Offset(0.0, 1.0), //(x,y)
+                blurRadius: 6.0,
+              ),
+            ],
+            borderRadius: BorderRadius.circular(10),
+          ),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               billingDetails!.billingType == 1
                   ? Row(
@@ -278,7 +286,7 @@ class _BillingDetailsWidgetState extends State<BillingDetailsWidget> {
                     )
                   : SizedBox(),
               Padding(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
                 child: Row(
                   children: [
                     ClipRRect(
@@ -312,12 +320,31 @@ class _BillingDetailsWidgetState extends State<BillingDetailsWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    "${billingDetails!.vendorName}",
-                                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
+                                  Container(
+                                    width: MediaQuery.of(context).size.width * 0.45,
+                                    child: Text(
+                                      "${billingDetails!.vendorName}",
+                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
                                   ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: colorStatus == "0" ? ApproveTextBgColor : RejectedTextBgColor,
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(top: 2, bottom: 2),
+                                      child: Text(
+                                        "  ${"pay_key".tr()}: \u20B9 $payAmt  ",
+                                        style: TextStyle(
+                                            color: colorStatus == "0" ? ApproveTextColor : RejectedTextColor,
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  )
                                 ]),
                             SizedBox(
                               height: 5,
@@ -329,22 +356,11 @@ class _BillingDetailsWidgetState extends State<BillingDetailsWidget> {
                                   "${billingDetails!.mobile}",
                                   style: TextStyle(color: Colors.black, fontSize: 13, fontWeight: FontWeight.bold),
                                 ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: colorStatus == "0" ? ApproveTextBgColor : RejectedTextBgColor,
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(top: 2, bottom: 2),
-                                    child: Text(
-                                      "  ${"pay_key".tr()}: \u20B9 $payAmt  ",
-                                      style: TextStyle(
-                                          color: colorStatus == "0" ? ApproveTextColor : RejectedTextColor,
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                )
+                                Text(
+                                  "${DateFormat("dd MMM yyyy").format(DateTime.parse(billingDetails!.dateTime))}" +
+                                      " - ${DateFormat.jm().format(DateTime.parse(billingDetails!.dateTime))}",
+                                  style: TextStyle(color: ColorTextPrimary, fontSize: 13),
+                                ),
                               ]),
                             ),
                           ],

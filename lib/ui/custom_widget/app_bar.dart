@@ -19,7 +19,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
     return AppBar(
       title: Text(
         "${widget.title}",
-        style: TextStyle(fontWeight: FontWeight.bold),
+        style: TextStyle(fontWeight: FontWeight.w600),
       ),
       leading: IconButton(
         onPressed: () {

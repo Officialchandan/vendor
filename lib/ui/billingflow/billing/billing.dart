@@ -593,8 +593,8 @@ class _BillingScreenState extends State<BillingScreen> {
                     return Image(
                         image: imageProvider,
                         color: ColorPrimary,
-                        height: 20,
-                        width: 20,
+                        height: 25,
+                        width: 25,
                         //colorBlendMode: BlendMode.clear,
                         fit: BoxFit.contain);
                   },
@@ -609,7 +609,7 @@ class _BillingScreenState extends State<BillingScreen> {
                   transform: Matrix4.translationValues(0, -2, 0),
                   child: Text(
                     "${category[index].categoryName}",
-                    style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w600),
+                    style: TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.w600),
                   ),
                 ),
                 // trailing: ButtonTheme(

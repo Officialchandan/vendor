@@ -1,6 +1,7 @@
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:vendor/ui/home/home.dart';
 import 'package:vendor/ui/performance_tracker/performance_tracker_category/performance_tracker.dart';
 import 'package:vendor/ui/performance_tracker/report/select_report_types.dart';
 import 'package:vendor/utility/color.dart';
@@ -25,7 +26,7 @@ class _TrackerReportDashboardState extends State<TrackerReportDashboard> {
     },
     {
       "title": "reports_key".tr(),
-      "subTitle": "click_here_to_add_product_key".tr(),
+      "subTitle": "click_here_to_view_reports_key".tr(),
       "image": "assets/images/tr-ic2.png",
       "id": 2
     },
@@ -46,9 +47,26 @@ class _TrackerReportDashboardState extends State<TrackerReportDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("trackers_reports_key".tr()),
+        title: Text(
+          "trackers_reports_key".tr(),
+          style: TextStyle(fontWeight: FontWeight.w600),
+        ),
         centerTitle: true,
         automaticallyImplyLeading: false,
+        actions: [
+          GestureDetector(
+            onTap: () {
+              Navigator.pushAndRemoveUntil(context, PageTransition(child: HomeScreen(), type: PageTransitionType.fade),
+                  ModalRoute.withName("/"));
+            },
+            child: Container(
+              padding: EdgeInsets.only(right: 10),
+              height: 30,
+              width: 30,
+              child: Image.asset("assets/images/home.png"),
+            ),
+          )
+        ],
       ),
       body: ListView.builder(
         itemBuilder: (context, index) {
@@ -59,7 +77,14 @@ class _TrackerReportDashboardState extends State<TrackerReportDashboard> {
                 Container(
                   // margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade50,
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        offset: Offset(0.0, 1.0), //(x,y)
+                        blurRadius: 6.0,
+                      ),
+                    ],
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: ListTile(
@@ -95,7 +120,10 @@ class _TrackerReportDashboardState extends State<TrackerReportDashboard> {
                       width: 30,
                       fit: BoxFit.contain,
                     ),
-                    title: Text("${options[index]["title"]}"),
+                    title: Text(
+                      "${options[index]["title"]}",
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
                     subtitle: Text("${options[index]["subTitle"]}"),
                   ),
                 ),

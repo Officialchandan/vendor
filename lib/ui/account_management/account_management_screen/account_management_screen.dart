@@ -7,6 +7,7 @@ import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:vendor/api/Endpoint.dart';
 import 'package:vendor/api/api_provider.dart';
 import 'package:vendor/api/server_error.dart';
@@ -23,6 +24,7 @@ import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/utility.dart';
 
 import '../../../main.dart';
+import '../../../widget/language_bottom_sheet.dart';
 
 // ignore: camel_case_types
 class AccountManagementScreen extends StatefulWidget {
@@ -35,7 +37,7 @@ class AccountManagementScreen extends StatefulWidget {
 class _AccountManagementScreenState extends State<AccountManagementScreen> {
   List<String> textList = [
     // "discount_codes_key".tr(),
-    "settings_key".tr(),
+    "change_language_key".tr(),
     "about_us_key".tr(),
     "contact_us_key".tr(),
     "privacy_policy_key".tr(),
@@ -53,7 +55,7 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
   ];
 
   List<String> imageList = [
-    "assets/images/account-ic2.png",
+    "assets/images/setting-ic1.png",
     "assets/images/setting-ic2.png",
     "assets/images/account-ic13.png",
     "assets/images/account-ic11.png",
@@ -75,6 +77,20 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
     getVendorProfileDetail();
   }
 
+  void languageUpdateSheet(BuildContext context) {
+    showMaterialModalBottomSheet(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+          topRight: Radius.circular(15),
+          topLeft: Radius.circular(15),
+        )),
+        context: context,
+        // barrierColor: Colors.transparent,
+        builder: (context) {
+          return LanguageBottomSheet();
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -84,7 +100,10 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
           automaticallyImplyLeading: false,
           elevation: 0,
           // toolbarHeight: 120,
-          title: Text('account_key'.tr()),
+          title: Text(
+            'account_key'.tr(),
+            style: TextStyle(fontWeight: FontWeight.w600),
+          ),
           centerTitle: true,
           bottom: PreferredSize(
             preferredSize: Size.fromHeight(80),
@@ -120,7 +139,7 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
                           Text(snapshot.data!.shopName.toString(),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w600)),
+                              style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w400)),
                         ],
                       ),
                       trailing: Container(
@@ -179,11 +198,11 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Image.asset(imageList[index], width: 24),
+                        Image.asset(imageList[index], width: 30),
                         SizedBox(width: 17),
                         Expanded(
                           child: Text(textList[index],
-                              style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600)),
+                              style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w800)),
                         ),
                         Icon(Icons.arrow_forward_ios, color: Colors.black, size: 15),
                       ],
@@ -201,28 +220,28 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
             }),
           ),
         ),
-        bottomNavigationBar: Container(
-          height: 50,
-          width: MediaQuery.of(context).size.width,
-          color: ColorPrimary,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 4),
-                child: Text(
-                  "Powered By ",
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),
-                ),
-              ),
-              Text(
-                " Tech Points Concepts Pvt Ltd",
-                style: TextStyle(
-                    fontSize: 15, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold, color: Colors.white),
-              ),
-            ],
-          ),
-        ),
+        // bottomNavigationBar: Container(
+        //   height: 50,
+        //   width: MediaQuery.of(context).size.width,
+        //   color: ColorPrimary,
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.center,
+        //     children: [
+        //       Padding(
+        //         padding: const EdgeInsets.only(top: 4),
+        //         child: Text(
+        //           "Powered By ",
+        //           style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),
+        //         ),
+        //       ),
+        //       Text(
+        //         " Tech Points Concepts Pvt Ltd",
+        //         style: TextStyle(
+        //             fontSize: 15, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold, color: Colors.white),
+        //       ),
+        //     ],
+        //   ),
+        // ),
       ),
     );
   }
@@ -265,10 +284,7 @@ Future<void> onClick(BuildContext context, int currentIndex, var data) async {
     //   );
     // break;
     case 0:
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => Settings()),
-      );
+      languageUpdateSheet(context);
       break;
     case 1:
       Navigator.push(

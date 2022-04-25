@@ -77,6 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   text: "${"otp_verification_key".tr()}\n",
                   style: GoogleFonts.openSans(
                     fontSize: 25.0,
+                    height: 2.0,
                     color: Colors.black,
                     fontWeight: FontWeight.w600,
                   ),
@@ -85,8 +86,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       text: "${"please_verify_your_otp_on_key".tr()} $mobile",
                       style: GoogleFonts.openSans(
                         fontSize: 14.0,
+                        height: 1.5,
                         color: ColorTextPrimary,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w400,
                       ),
                     )
                   ],
@@ -118,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
               actions: <Widget>[
                 Center(
                   child: MaterialButton(
-                    minWidth: MediaQuery.of(context).size.width * 0.60,
+                    minWidth: MediaQuery.of(context).size.width * 0.65,
                     height: 50,
                     padding: const EdgeInsets.all(8.0),
                     textColor: Colors.white,
@@ -332,7 +334,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 // crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   MaterialButton(
-                                    minWidth: deviceWidth * 0.65,
+                                    minWidth: deviceWidth,
                                     height: 50,
                                     padding: const EdgeInsets.all(8.0),
                                     textColor: Colors.white,

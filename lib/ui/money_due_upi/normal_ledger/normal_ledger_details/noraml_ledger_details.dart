@@ -696,7 +696,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                                   height: 14,
                                 ),
                                 Text(
-                                  "${(redeemCoins).toStringAsFixed(2)} (\u20B9 ${(redeemCoins / 3).toStringAsFixed(2)}",
+                                  "${(redeemCoins).toStringAsFixed(2)} (\u20B9 ${(redeemCoins / 3).toStringAsFixed(2)})",
                                   style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.green),
                                 ),
                               ],
@@ -792,7 +792,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
-                              "${"sum_key".tr()} (\u20B9 $amtPaid  - \u20B9 $netBalance = \u20B9 ${(amtPaid - netBalance).toStringAsFixed(2)})",
+                              "${"sum_key".tr()} (\u20B9 ${amtPaid.toStringAsFixed(2)}  - \u20B9 ${(netBalance / 3).toStringAsFixed(2)} = \u20B9 ${(amtPaid - netBalance).toStringAsFixed(2)})",
                               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey),
                             ),
                           ],
@@ -837,7 +837,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
                             ),
                             Text(
-                              "\u20B9${details!.amountPaidToVendor}",
+                              "\u20B9${(double.parse(details!.amountPaidToVendor) / 3).toStringAsFixed(2)}",
                               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
                             ),
                           ],
@@ -891,7 +891,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
         widget.order.isReturn == 1
             ? Padding(
                 padding: const EdgeInsets.only(left: 15, right: 15, top: 0, bottom: 20),
-                child: double.parse(details!.amountPaidToMyProfit) < double.parse(details!.amountPaidToVendor)
+                child: double.parse(details!.amountPaidToMyProfit) <= double.parse(details!.amountPaidToVendor)
                     ? Container(
                         height: 50,
                         decoration: BoxDecoration(
@@ -917,7 +917,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                                 style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
                               ),
                               Text(
-                                "\u20B9 $finalamount",
+                                "\u20B9 ${finalamount.toStringAsFixed(2)}",
                                 style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
                               ),
                             ],

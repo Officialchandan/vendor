@@ -50,7 +50,14 @@ class _PerformanceTrackerByCategoryState extends State<PerformanceTrackerByCateg
                 Container(
                   // margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade50,
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        offset: Offset(0.0, 1.0), //(x,y)
+                        blurRadius: 6.0,
+                      ),
+                    ],
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: ListTile(

@@ -156,7 +156,7 @@ class _ReddemCoinHistoryState extends State<ReddemCoinHistory> {
                         }
                       }
                       return ListView.builder(
-                        padding: EdgeInsets.only(left: 15, right: 15),
+                        padding: EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 5),
                         itemCount: redeemData.length,
                         itemBuilder: (context, index) {
                           return Container(
@@ -203,10 +203,16 @@ class _DirectBillingListState extends State<DirectBillingList> {
         padding: EdgeInsets.all(0),
         height: 100,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.white,
-            border: Border.all(color: Colors.white38),
-            boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 1.0, spreadRadius: 1)]),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey,
+              offset: Offset(0.0, 1.0), //(x,y)
+              blurRadius: 6.0,
+            ),
+          ],
+          borderRadius: BorderRadius.circular(10),
+        ),
         child: InkWell(
           splashColor: Colors.transparent,
           onTap: () {
@@ -235,9 +241,21 @@ class _DirectBillingListState extends State<DirectBillingList> {
                   children: [
                     Text(
                       "${widget.detail.productName}",
-                      style: TextStyle(fontWeight: FontWeight.w600),
+                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
                     ),
-                    Text("${"mobile_key".tr()}: ${widget.detail.mobile}"),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.62,
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Text("${widget.detail.mobile}"),
+                            Text(
+                              "${DateFormat("dd MMM yyyy").format(DateTime.parse(widget.detail.dateTime))}",
+                              style: TextStyle(fontSize: 13, color: ColorTextPrimary),
+                            ),
+                          ]),
+                    ),
                     Container(
                       height: 20,
                       decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: Colors.grey.shade200),
