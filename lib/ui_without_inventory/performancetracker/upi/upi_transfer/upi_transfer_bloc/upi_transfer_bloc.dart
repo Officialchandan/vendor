@@ -15,6 +15,7 @@ class UpiTansferHistoryBloc extends Bloc<UpiTansferHistoryEvent, UpiTansferHisto
   @override
   Stream<UpiTansferHistoryState> mapEventToState(UpiTansferHistoryEvent event) async* {
     if (event is GetUpiTansferHistoryEvent) {
+      yield GetUpiTansferHistoryLoadingState();
       yield* getUpiTansferHistoryApi(event.input);
     }
     if (event is FindUserEvent) {

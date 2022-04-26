@@ -146,8 +146,10 @@ class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
                 freecoinsdata = state.data;
                 searchList = freecoinsdata!;
               }
-              if (freecoinsdata == null) {
-                return Center(child: CircularProgressIndicator());
+              if (state is GetFreeCoinHistoryLoadingState) {
+                return Container(
+                    height:  MediaQuery.of(context).size.height * 0.70,
+                    child: Center(child: CircularProgressIndicator()));
               }
 
               if (state is GetFreeCoinUserSearchState) {

@@ -15,6 +15,7 @@ class NormalLedgerHistoryBloc extends Bloc<NormalLedgerHistoryEvent, NormalLedge
   @override
   Stream<NormalLedgerHistoryState> mapEventToState(NormalLedgerHistoryEvent event) async* {
     if (event is GetNormalLedgerHistoryEvent) {
+      yield GetNormalLedgerHistoryLoadingState();
       yield* getNormalLedgerHistoryApi(event.input);
     }
     if (event is GetFindUserEvent) {

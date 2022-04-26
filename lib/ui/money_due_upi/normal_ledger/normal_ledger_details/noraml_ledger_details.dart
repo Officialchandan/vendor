@@ -450,7 +450,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Amount Paid By Customer",
+                        "amt_paid_by_customer_key".tr(),
                         style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.black87),
                       ),
                       Text(
@@ -671,7 +671,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                                   height: 14,
                                 ),
                                 Text(
-                                  "$earnCoins (\u20B9 ${(earnCoins / 3).toStringAsFixed(2)})",
+                                  "${earnCoins.toStringAsFixed(2)} (\u20B9 ${(earnCoins / 3).toStringAsFixed(2)})",
                                   style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
                                 ),
                               ],
