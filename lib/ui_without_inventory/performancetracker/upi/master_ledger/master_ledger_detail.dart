@@ -103,35 +103,6 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                 ]),
               ),
             ],
-            // bottom: PreferredSize(
-            //   child: Container(
-            //     color: ColorPrimary,
-            //     child: TabBar(
-            //       indicatorWeight: 3,
-            //       isScrollable: true,
-            //       controller: _tabController,
-            //       indicatorColor: ColorPrimary,
-            //       unselectedLabelColor: Colors.white,
-            //       labelColor: Colors.white,
-            //       labelStyle: const TextStyle(
-            //         fontSize: 18,
-            //         letterSpacing: 0.67,
-            //         fontWeight: FontWeight.w500,
-            //       ),
-            //       onTap: (a) {
-            //         log("$a");
-            //       },
-            //       tabs: List.generate(months.length, (index) {
-            //         return Tab(
-            //           text: months[index].toString(),
-            //         );
-            //         log("${months.length}");
-            //         log("${_tabController?.length}");
-            //       }),
-            //     ),
-            //   ),
-            //   preferredSize: const Size.fromHeight(50),
-            // ),
           ),
           body: SmartRefresher(
             controller: _refreshController,
@@ -178,17 +149,15 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                 if (state is GetNormalLedgerHistoryInitialState) {
                   normalLedgerApiCall(context);
                 }
-                /* if (state is GetNormalLedgerHistoryState) {
-                  _commonLedgerHistory = state.data!;
-                }*/
                 if (state is GetNormalLedgerState) {
                   orderList = state.orderList;
                   searchList = orderList;
                 }
 
-                if (orderList.isEmpty) {
-                  log("===>$_commonLedgerHistory");
-                  return Center(child: CircularProgressIndicator());
+                if (state is GetNormalLedgerHistoryLoadingState) {
+                  return Container(
+                      height: MediaQuery.of(context).size.height * 0.70,
+                      child: Center(child: CircularProgressIndicator()));
                 }
 
                 // if (_commonLedgerHistory == null) {

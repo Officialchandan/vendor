@@ -75,7 +75,7 @@ class _UpiTransferHistoryWithoutInventoryState extends State<UpiTransferHistoryW
             upiList = state.data!;
             searchList = upiList;
           }
-          if (upiList == null) {
+          if (state is GetUpiTansferHistoryLoadingState) {
             return Center(child: CircularProgressIndicator());
           }
           if (state is GetUpiTansferHistoryFailureState) {
