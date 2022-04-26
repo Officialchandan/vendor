@@ -92,7 +92,6 @@ class _DailyLedgerState extends State<DailyLedger>
               "daily_ledger_key".tr(),
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
-
             // bottom: PreferredSize(
             //   child: Container(
             //     color: ColorPrimary,
@@ -129,23 +128,16 @@ class _DailyLedgerState extends State<DailyLedger>
             if (state is GetDailyLedgerHistoryInitialState) {
               normalLedgerApiCall(context);
             }
-            /* if (state is GetNormalLedgerHistoryState) {
-              _commonLedgerHistory = state.data!;
-            }*/
+
             if (state is GetDailyLedgerState) {
               orderList = state.orderList;
               searchList = orderList;
             }
 
-            if (state is GetNormalLedgerHistoryFailureState) {
-              return Center(child: Image.asset("assets/images/no_data.gif"));
-            }
-
             if (state is GetDailyLedgerHistoryFailureState) {
               return Center(child: Image.asset("assets/images/no_data.gif"));
             }
-            if (orderList.isEmpty) {
-              log("===>$_commonLedgerHistory");
+            if (state is GetDailyLedgerHistoryLoadingState) {
               return Center(child: CircularProgressIndicator());
             }
             if (state is GetDailyLedgerUserSearchState) {
@@ -171,10 +163,6 @@ class _DailyLedgerState extends State<DailyLedger>
                 }
               }
             }
-            // if (_commonLedgerHistory == null) {
-            //   log("===>$_commonLedgerHistory");
-            //   return Center(child: CircularProgressIndicator());
-            // }
 
             return Container(
               child: Column(
