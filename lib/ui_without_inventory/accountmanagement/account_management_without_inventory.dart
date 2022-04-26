@@ -167,6 +167,7 @@ class _AccountManagementWithoutInventoryScreenState extends State<AccountManagem
             ),
           ),
           child: ListView(
+            primary: false,
             children: List.generate(textList.length, (index) {
               print("assets/images/account-ic1.png");
               return GestureDetector(
@@ -178,7 +179,7 @@ class _AccountManagementWithoutInventoryScreenState extends State<AccountManagem
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Image.asset("${imageList[index]}", width: 24),
+                        Image.asset("${imageList[index]}", width: 30),
                         SizedBox(width: 17),
                         Expanded(
                           child: Text(textList[index],
