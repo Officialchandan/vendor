@@ -997,7 +997,6 @@ class DirectBillingListItem extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: Container(
-                          color: Colors.amber,
                           child: Image.asset(
                             "assets/images/account-ic6.png",
                             height: 45,
@@ -1022,7 +1021,7 @@ class DirectBillingListItem extends StatelessWidget {
                                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black87),
                                 ),
                                 Text(
-                                  "\u20B9 ${detail.amountPaid}",
+                                  "\u20B9 ${detail.total}",
                                   style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: ColorPrimary),
                                 ),
                               ],

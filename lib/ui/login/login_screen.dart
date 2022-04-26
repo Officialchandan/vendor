@@ -342,23 +342,23 @@ class _LoginScreenState extends State<LoginScreen> {
                                     SizedBox(
                                       height: 25,
                                     ),
-                                    Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                                      children: <Widget>[
-                                        PhoneFieldHint(controller: mobileController),
-                                        //  Spacer(),
-
-                                        ElevatedButton(
-                                          onPressed: () {
-                                            Navigator.of(context)
-                                                .push(MaterialPageRoute(builder: (_) => CodeAutoFillTestPage()));
-                                          },
-                                          child: Text("Test CodeAutoFill mixin"),
-                                        )
-                                      ],
-                                    ),
+                                    // Column(
+                                    //   mainAxisSize: MainAxisSize.max,
+                                    //   mainAxisAlignment: MainAxisAlignment.center,
+                                    //   crossAxisAlignment: CrossAxisAlignment.stretch,
+                                    //   children: <Widget>[
+                                    //     PhoneFieldHint(controller: mobileController),
+                                    //     //  Spacer(),
+                                    //
+                                    //     ElevatedButton(
+                                    //       onPressed: () {
+                                    //         Navigator.of(context)
+                                    //             .push(MaterialPageRoute(builder: (_) => CodeAutoFillTestPage()));
+                                    //       },
+                                    //       child: Text("Test CodeAutoFill mixin"),
+                                    //     )
+                                    //   ],
+                                    // ),
                                   ]),
                             ),
                           ]),

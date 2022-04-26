@@ -253,7 +253,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                           BoxShadow(
                             color: Colors.grey.shade300,
                             offset: Offset(0.0, 0.0), //(x,y)
-                            blurRadius:7.0,
+                            blurRadius: 7.0,
                           )
                         ],
                       ),
@@ -316,7 +316,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                         BoxShadow(
                           color: Colors.grey.shade300,
                           offset: Offset(0.0, 0.0), //(x,y)
-                          blurRadius:7.0,
+                          blurRadius: 7.0,
                         ),
                       ]),
                       child: Column(
@@ -382,7 +382,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                         BoxShadow(
                           color: Colors.grey.shade300,
                           offset: Offset(0.0, 0.0), //(x,y)
-                          blurRadius:7.0,
+                          blurRadius: 7.0,
                         ),
                       ]),
                       child: Row(
@@ -650,7 +650,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Image.asset(
                     "assets/images/point.png",
-                   height: 40,
+                    height: 40,
                     width: 40,
                   ),
                   Text(

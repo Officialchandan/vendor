@@ -13,6 +13,7 @@ import 'package:vendor/api/server_error.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/model/common_response.dart';
 import 'package:vendor/model/get_due_amount_response.dart';
+import 'package:vendor/ui/home/bottom_navigation_home.dart';
 import 'package:vendor/ui/home/home.dart';
 import 'package:vendor/ui/money_due_upi/bloc/money_due_bloc.dart';
 import 'package:vendor/ui/money_due_upi/bloc/money_due_event.dart';
@@ -1669,7 +1670,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                       Navigator.pop(context, true);
                       Navigator.pushAndRemoveUntil(
                           context,
-                          PageTransition(child: MoneyDueScreen(false), type: PageTransitionType.fade),
+                          PageTransition(child: BottomNavigationHome(index: 2), type: PageTransitionType.fade),
                           ModalRoute.withName("/"));
                     },
                     child: new Text(

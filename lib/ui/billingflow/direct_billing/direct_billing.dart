@@ -337,7 +337,7 @@ class _DirectBillingState extends State<DirectBilling> {
                           BoxShadow(
                             color: Colors.grey.shade300,
                             offset: Offset(0.0, 0.0), //(x,y)
-                            blurRadius:7.0,
+                            blurRadius: 7.0,
                           )
                         ],
                       ),
@@ -403,7 +403,7 @@ class _DirectBillingState extends State<DirectBilling> {
                         BoxShadow(
                           color: Colors.grey.shade300,
                           offset: Offset(0.0, 0.0), //(x,y)
-                          blurRadius:7.0,
+                          blurRadius: 7.0,
                         ),
                       ]),
                       child: Column(
@@ -474,7 +474,7 @@ class _DirectBillingState extends State<DirectBilling> {
                         BoxShadow(
                           color: Colors.grey.shade300,
                           offset: Offset(0.0, 0.0), //(x,y)
-                          blurRadius:7.0,
+                          blurRadius: 7.0,
                         ),
                       ]),
                       child: Row(
@@ -795,8 +795,8 @@ class _DirectBillingState extends State<DirectBilling> {
       child: Container(
         height: 55,
         width: MediaQuery.of(context).size.width,
-        decoration:
-            BoxDecoration(border: Border.all(color: Colors.grey.shade300, width: .5), borderRadius: BorderRadius.circular(8)),
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey.shade300, width: .5), borderRadius: BorderRadius.circular(8)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
