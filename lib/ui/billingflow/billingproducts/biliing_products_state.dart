@@ -1,15 +1,15 @@
 import 'package:equatable/equatable.dart';
+import 'package:vendor/model/product_model.dart';
 
 abstract class BillingProductsState extends Equatable {}
 
 class CheckerBillingProductstate extends BillingProductsState {
-  final bool check;
-  final int index;
-
-  CheckerBillingProductstate({required this.check, required this.index});
+ List<ProductModel> productList;
+ bool isChecked;
+  CheckerBillingProductstate({required this.productList , required this.isChecked});
 
   @override
-  List<Object?> get props => [check, index];
+  List<Object?> get props => [productList, isChecked];
 }
 
 class BillingProductLoadingState extends BillingProductsState {

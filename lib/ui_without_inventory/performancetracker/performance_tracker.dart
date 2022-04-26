@@ -84,12 +84,13 @@ class _PerformanceTrackerWithoutInventoryState extends State<PerformanceTrackerW
                       }
                     },
                     leading: Image(
-                      image: AssetImage("${options[index]["image"]}"),
+                      image: AssetImage("${options[index]["image"]}",),
                       height: 30,
                       width: 30,
                       fit: BoxFit.contain,
                     ),
-                    title: Text("${options[index]["title"]}"),
+                    title: Text("${options[index]["title"]}",
+                      style: TextStyle(fontWeight: FontWeight.w600),),
                     subtitle: Text("${options[index]["subTitle"]}"),
                   ),
                 ),

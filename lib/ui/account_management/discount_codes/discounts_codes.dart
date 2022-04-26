@@ -40,9 +40,9 @@ class _DiscountCodesState extends State<DiscountCodes> {
                         color: Colors.white,
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey,
-                            offset: Offset(0.0, 1.0), //(x,y)
-                            blurRadius: 6.0,
+                            color: Colors.grey.shade300,
+                            offset: Offset(0.0, 0.0), //(x,y)
+                            blurRadius:7.0,
                           ),
                         ],
                         borderRadius: BorderRadius.circular(10),
@@ -128,9 +128,9 @@ class _DiscountCodesState extends State<DiscountCodes> {
                                 color: ColorPrimary,
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.grey,
-                                    offset: Offset(0.0, 1.0), //(x,y)
-                                    blurRadius: 6.0,
+                                    color: Colors.grey.shade300,
+                                    offset: Offset(0.0, 0.0), //(x,y)
+                                    blurRadius:7.0,
                                   ),
                                 ],
                                 borderRadius: BorderRadius.only(

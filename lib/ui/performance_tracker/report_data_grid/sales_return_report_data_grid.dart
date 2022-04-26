@@ -45,7 +45,8 @@ class _SalesReturnReportDataGridState extends State<SalesReturnReportDataGrid> {
                 Navigator.of(context).pop();
               },
               icon: Icon(Icons.arrow_back_ios)),
-          title: Text("sale_return_reports_key".tr()),
+          title: Text("sale_return_reports_key".tr(),
+            style: TextStyle(fontWeight: FontWeight.bold),),
           actions: [
             IconButton(
                 onPressed: () {

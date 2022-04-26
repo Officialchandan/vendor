@@ -46,7 +46,8 @@ class _RedeemCoinReportDataGridState extends State<RedeemCoinReportDataGrid> {
                 Navigator.of(context).pop();
               },
               icon: Icon(Icons.arrow_back_ios)),
-          title: Text("coin_redeemed_reports_key".tr()),
+          title: Text("coin_redeemed_reports_key".tr(),
+            style: TextStyle(fontWeight: FontWeight.bold),),
           actions: [
             IconButton(
                 onPressed: () {

@@ -63,9 +63,9 @@ class _FreeCoinDetailState extends State<FreeCoinDetail> {
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey,
-                      offset: Offset(0.0, 1.0), //(x,y)
-                      blurRadius: 6.0,
+                      color: Colors.grey.shade300,
+                      offset: Offset(0.0, 0.0), //(x,y)
+                      blurRadius:7.0,
                     ),
                   ],
                   borderRadius: BorderRadius.circular(10),
@@ -104,9 +104,9 @@ class _FreeCoinDetailState extends State<FreeCoinDetail> {
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey,
-                      offset: Offset(0.0, 1.0), //(x,y)
-                      blurRadius: 6.0,
+                      color: Colors.grey.shade300,
+                      offset: Offset(0.0, 0.0), //(x,y)
+                      blurRadius:7.0,
                     ),
                   ],
                   borderRadius: BorderRadius.circular(10),
@@ -319,9 +319,9 @@ class _FreeCoinDetailState extends State<FreeCoinDetail> {
                   color: ColorPrimary,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey,
-                      offset: Offset(0.0, 1.0), //(x,y)
-                      blurRadius: 6.0,
+                      color: Colors.grey.shade300,
+                      offset: Offset(0.0, 0.0), //(x,y)
+                      blurRadius:7.0,
                     ),
                   ],
                   borderRadius: BorderRadius.circular(10),

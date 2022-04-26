@@ -23,7 +23,7 @@ class BillingProductsBloc extends Bloc<BillingProductsEvent, BillingProductsStat
       yield DeleteBillingProductState(index: event.index);
     }
     if (event is CheckedBillingProductsEvent) {
-      yield CheckerBillingProductstate(check: event.check, index: event.index);
+      yield CheckerBillingProductstate(productList: event.productList, isChecked: event.isChecked);
     }
 
     if (event is TotalPayAmountBillingProductsEvent) {

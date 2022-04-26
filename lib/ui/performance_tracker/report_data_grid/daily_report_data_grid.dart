@@ -17,6 +17,7 @@ import 'package:vendor/utility/utility.dart';
 
 class DailyReportDataGrid extends StatefulWidget {
   List<Map<String, dynamic>>? reportData;
+
   DailyReportDataGrid({Key? key, this.reportData}) : super(key: key);
 
   @override
@@ -45,7 +46,10 @@ class _DailyReportDataGridState extends State<DailyReportDataGrid> {
                 Navigator.of(context).pop();
               },
               icon: Icon(Icons.arrow_back_ios)),
-          title: Text("sales_report_key".tr()),
+          title: Text(
+            "sales_report_key".tr(),
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
           actions: [
             IconButton(
                 onPressed: () {
@@ -336,6 +340,7 @@ class ReportDataSource extends DataGridSource {
 
 class RadioListBuilder extends StatefulWidget {
   final Function(String format) onFormatSelect;
+
   const RadioListBuilder({required this.onFormatSelect, Key? key}) : super(key: key);
 
   @override
@@ -347,6 +352,7 @@ class RadioListBuilder extends StatefulWidget {
 class RadioListBuilderState extends State<RadioListBuilder> {
   Object? value;
   List<String> types = ["Excel", "PDF"];
+
   @override
   Widget build(BuildContext context) {
     return ListView.separated(

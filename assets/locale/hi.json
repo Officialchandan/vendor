@@ -402,5 +402,10 @@
   "daily_ledger_details_key":"दैनिक लेजर विवरण",
   "you_cant_return_more_then_quantity_key":"आप मात्रा से अधिक नहीं लौटा सकते",
   "enter_mobile_to_get_purchase_product": "खरीदे गए उत्पाद को प्राप्त करने के लिए मोबाइल नंबर दर्ज करें",
-  "click_btn_to_add_new_variant": "नया संस्करण जोड़ने के लिए बटन पर क्लिक करें"
+  "click_btn_to_add_new_variant": "नया संस्करण जोड़ने के लिए बटन पर क्लिक करें",
+  "proceed_key":"आगे बढे",
+  "total_order_value_key": "कुल आदेश मूल्य",
+  "net_payable_key": "शुद्ध देय राशि",
+  "coin_generated_successfully_key": "सिक्के सफलतापूर्वक उत्पन्न हुए",
+  "in_customer_wallet_key": "ग्राहक वॉलेट में"
 }

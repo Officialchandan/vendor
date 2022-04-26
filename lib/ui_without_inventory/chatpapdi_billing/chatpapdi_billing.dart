@@ -248,14 +248,14 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                       height: 50,
                       decoration: BoxDecoration(
                         color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey,
-                            offset: Offset(0.0, 1.0), //(x,y)
-                            blurRadius: 6.0,
-                          ),
+                            color: Colors.grey.shade300,
+                            offset: Offset(0.0, 0.0), //(x,y)
+                            blurRadius:7.0,
+                          )
                         ],
-                        borderRadius: BorderRadius.circular(10),
                       ),
                       child: Row(
                         children: [
@@ -311,17 +311,14 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                       padding: EdgeInsets.all(10),
                       width: MediaQuery.of(context).size.width,
                       height: 120,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey,
-                            offset: Offset(0.0, 1.0), //(x,y)
-                            blurRadius: 6.0,
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(10),
-                      ),
+                      decoration:
+                          BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10), boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.shade300,
+                          offset: Offset(0.0, 0.0), //(x,y)
+                          blurRadius:7.0,
+                        ),
+                      ]),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -383,9 +380,9 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                       decoration:
                           BoxDecoration(color: ColorPrimary, borderRadius: BorderRadius.circular(10), boxShadow: [
                         BoxShadow(
-                          color: Colors.grey,
-                          offset: Offset(0.0, 1.0), //(x,y)
-                          blurRadius: 6.0,
+                          color: Colors.grey.shade300,
+                          offset: Offset(0.0, 0.0), //(x,y)
+                          blurRadius:7.0,
                         ),
                       ]),
                       child: Row(
@@ -653,19 +650,20 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Image.asset(
                     "assets/images/point.png",
-                    scale: 3,
+                   height: 40,
+                    width: 40,
                   ),
                   Text(
                     " ${double.parse(hinttext).toStringAsFixed(2)} ",
                     textAlign: TextAlign.center,
                     style: GoogleFonts.openSans(
-                      fontSize: 17.0,
+                      fontSize: 40.0,
                       color: ColorPrimary,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                 ]),
-                Text("Coins generated succesfully\n in customer Wallet",
+                Text("${"coin_generated_successfully_key".tr()}\n ${"in_customer_wallet_key".tr()}",
                     textAlign: TextAlign.center,
                     style: GoogleFonts.openSans(
                       fontSize: 17.0,

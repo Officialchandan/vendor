@@ -46,7 +46,8 @@ class _ProductRedeemReportDataGridState extends State<ProductRedeemReportDataGri
                 Navigator.of(context).pop();
               },
               icon: Icon(Icons.arrow_back_ios)),
-          title: Text("product_redeem_reports_key".tr()),
+          title: Text("product_redeem_reports_key".tr(),
+            style: TextStyle(fontWeight: FontWeight.bold),),
           actions: [
             IconButton(
                 onPressed: () {

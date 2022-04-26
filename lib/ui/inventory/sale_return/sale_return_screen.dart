@@ -174,15 +174,14 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                                 return Stack(
                                   children: [
                                     Container(
-                                      height: 90,
                                       margin: EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 10),
                                       decoration: BoxDecoration(
                                         color: Colors.white,
                                         boxShadow: [
                                           BoxShadow(
-                                            color: Colors.grey,
-                                            offset: Offset(0.0, 1.0), //(x,y)
-                                            blurRadius: 6.0,
+                                            color: Colors.grey.shade400,
+                                            offset: Offset(0.0, 0.0), //(x,y)
+                                            blurRadius:7.0,
                                           ),
                                         ],
                                         borderRadius: BorderRadius.circular(10),
@@ -217,83 +216,138 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                                             Flexible(
                                               child: Container(
                                                 width: MediaQuery.of(context).size.width * 0.70,
-                                                child: Column(
+                                                child: Row(
                                                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                                                   children: [
-                                                    Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                      children: [
-                                                        AutoSizeText(
-                                                          purchasedList[index].productName,
-                                                          maxLines: 2,
-                                                          overflow: TextOverflow.ellipsis,
-                                                          style: TextStyle(
-                                                              color: Colors.black, fontWeight: FontWeight.w600),
-                                                          maxFontSize: 15,
-                                                          minFontSize: 12,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    Column(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                                                       children: [
                                                         Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                           children: [
-                                                            RichText(
-                                                                text: TextSpan(children: [
-                                                              TextSpan(
-                                                                  text:
-                                                                      "₹ ${purchasedList[index].price == "0" ? purchasedList[index].total : purchasedList[index].price}\t" +
-                                                                          " ",
-                                                                  style: TextStyle(
-                                                                      color: ColorPrimary,
-                                                                      fontSize: 14,
-                                                                      fontWeight: FontWeight.bold)),
-                                                              // TextSpan(
-                                                              //     text: purchasedList[index].price == "0"
-                                                              //         ? ""
-                                                              //         : "₹ ${purchasedList[index].total}",
-                                                              //     style: TextStyle(
-                                                              //         color: Colors.black87,
-                                                              //         decoration: TextDecoration.lineThrough))
-                                                            ])),
+                                                            Container(
+                                                              width: MediaQuery.of(context).size.width * 0.45,
+                                                              child: Text(
+                                                                purchasedList[index].productName,
+                                                                maxLines: 2,
+                                                                overflow: TextOverflow.ellipsis,
+                                                                style: TextStyle(
+                                                                    color: Colors.black,
+                                                                    fontWeight: FontWeight.bold,
+                                                                    fontSize: 16),
+                                                              ),
+                                                            ),
                                                           ],
                                                         ),
-                                                        purchasedList[index].categoryName.isNotEmpty
-                                                            ? Container(
-                                                                decoration: BoxDecoration(
-                                                                    color: DirectBillTextBgColor,
-                                                                    borderRadius: BorderRadius.circular(20)),
-                                                                child: Padding(
-                                                                  padding: const EdgeInsets.all(2),
-                                                                  child: Text(
-                                                                    "  ${"direct_billing_key".tr()}  ",
+                                                        SizedBox(
+                                                          height: 5,
+                                                        ),
+                                                        Container(
+                                                          width: MediaQuery.of(context).size.width * 0.45,
+                                                          child: RichText(
+                                                            text: TextSpan(
+                                                              children: [
+                                                                TextSpan(
+                                                                    text:
+                                                                        "₹ ${purchasedList[index].price == "0" ? purchasedList[index].total : purchasedList[index].price}\t" +
+                                                                            " ",
                                                                     style: TextStyle(
-                                                                        fontSize: 11, color: DirectBillingTextColor),
+                                                                        color: ColorPrimary,
+                                                                        fontSize: 18,
+                                                                        fontWeight: FontWeight.bold)),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          height: 5,
+                                                        ),
+                                                        Container(
+                                                          width: MediaQuery.of(context).size.width * 0.45,
+                                                          child: Text(
+                                                            DateFormat("dd MMM").format(
+                                                                    DateTime.parse(purchasedList[index].dateTime)) +
+                                                                " " +
+                                                                DateFormat.jm()
+                                                                    .format(
+                                                                        DateTime.parse(purchasedList[index].dateTime))
+                                                                    .toLowerCase(),
+                                                            style: TextStyle(
+                                                                fontSize: 13,
+                                                                fontWeight: FontWeight.bold,
+                                                                color: Colors.black87),
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
+                                                    Column(
+                                                      children: [
+                                                        purchasedList[index].checked != true
+                                                            ? InkWell(
+                                                                onTap: () async {
+                                                                  if (await Network.isConnected()) {
+                                                                    saleReturnBloc.add(SaleReturnCheckBoxEvent(
+                                                                        isChecked: true, index: index));
+                                                                  } else {
+                                                                    Utility.showToast(
+                                                                      msg: "please_check_your_internet_connection_key"
+                                                                          .tr(),
+                                                                    );
+                                                                  }
+                                                                },
+                                                                child: Container(
+                                                                  height: 25,
+                                                                  width: 71,
+                                                                  decoration: BoxDecoration(
+                                                                      color: Buttonactive,
+                                                                      borderRadius: BorderRadius.circular(25),
+                                                                      border: Border.all(color: ColorPrimary)),
+                                                                  child: Center(
+                                                                    child: Row(
+                                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                                      children: [
+                                                                        Text(
+                                                                          "add_key".tr(),
+                                                                          style: TextStyle(
+                                                                              fontSize: 12,
+                                                                              fontWeight: FontWeight.bold,
+                                                                              color: ColorPrimary),
+                                                                        ),
+                                                                        SizedBox(
+                                                                          width: 3,
+                                                                        ),
+                                                                        Icon(
+                                                                          Icons.add,
+                                                                          size: 18,
+                                                                          color: ColorPrimary,
+                                                                        ),
+                                                                      ],
+                                                                    ),
                                                                   ),
                                                                 ),
                                                               )
                                                             : Container(
+                                                                height: 25,
                                                                 decoration: BoxDecoration(
                                                                     borderRadius: BorderRadius.circular(25),
-                                                                    border: Border.all(color: Colors.black)),
+                                                                    border: Border.all(color: ColorPrimary)),
                                                                 child: Row(
                                                                   mainAxisSize: MainAxisSize.min,
                                                                   children: [
                                                                     Container(
-                                                                      height: 20,
-                                                                      width: 20,
+                                                                      width: 23,
                                                                       child: IconButton(
                                                                           padding: EdgeInsets.all(0),
                                                                           onPressed: () {
-                                                                            if (purchasedList[index].returnQty > 1) {
+                                                                            saleReturnBloc.add(
+                                                                              SaleReturnQtyDecrementEvent(
+                                                                                  count: 1, index: index),
+                                                                            );
+
+                                                                            if (purchasedList[index].returnQty <= 1) {
                                                                               saleReturnBloc.add(
-                                                                                  SaleReturnQtyDecrementEvent(
-                                                                                      count: 1, index: index));
-                                                                            } else {
-                                                                              Utility.showToast(
-                                                                                  msg: "product_cant_be_negative_key"
-                                                                                      .tr());
+                                                                                  SaleReturnCheckBoxEvent(
+                                                                                      isChecked: false, index: index));
                                                                             }
                                                                           },
                                                                           iconSize: 20,
@@ -303,8 +357,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                                                                           )),
                                                                     ),
                                                                     Container(
-                                                                      width: 20,
-                                                                      height: 20,
+                                                                      width: 23,
                                                                       color: ColorPrimary,
                                                                       child: Center(
                                                                         child: Text(
@@ -315,8 +368,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                                                                       ),
                                                                     ),
                                                                     Container(
-                                                                      height: 20,
-                                                                      width: 20,
+                                                                      width: 23,
                                                                       child: IconButton(
                                                                         padding: EdgeInsets.all(0),
                                                                         onPressed: () {
@@ -342,22 +394,26 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                                                                   ],
                                                                 ),
                                                               ),
-                                                      ],
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        Text(
-                                                          DateFormat("dd MMM").format(
-                                                                  DateTime.parse(purchasedList[index].dateTime)) +
-                                                              " " +
-                                                              DateFormat.jm()
-                                                                  .format(DateTime.parse(purchasedList[index].dateTime))
-                                                                  .toLowerCase(),
-                                                          style: TextStyle(
-                                                              fontSize: 12,
-                                                              fontWeight: FontWeight.bold,
-                                                              color: Colors.black87),
-                                                        )
+                                                        SizedBox(
+                                                          height: 20,
+                                                        ),
+                                                        purchasedList[index].categoryName.isNotEmpty
+                                                            ? Container(
+                                                                decoration: BoxDecoration(
+                                                                    color: DirectBillTextBgColor,
+                                                                    borderRadius: BorderRadius.circular(20)),
+                                                                child: Padding(
+                                                                  padding: const EdgeInsets.all(2),
+                                                                  child: Text(
+                                                                    "  ${"direct_billing_key".tr()}  ",
+                                                                    style: TextStyle(
+                                                                        fontSize: 11, color: DirectBillingTextColor),
+                                                                  ),
+                                                                ),
+                                                              )
+                                                            : SizedBox(
+                                                          height: 18,
+                                                        ),
                                                       ],
                                                     )
                                                   ],
@@ -368,17 +424,6 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                                         ),
                                       ),
                                     ),
-                                    Positioned(
-                                      right: 9,
-                                      top: 4,
-                                      child: Checkbox(
-                                        activeColor: ColorPrimary,
-                                        value: purchasedList[index].checked,
-                                        onChanged: (value) {
-                                          saleReturnBloc.add(SaleReturnCheckBoxEvent(isChecked: value!, index: index));
-                                        },
-                                      ),
-                                    )
                                   ],
                                 );
                               },
@@ -426,9 +471,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
   }
 
   void submit() async {
-    if (purchasedList.isEmpty) {
-      Utility.showToast(msg: "There is no available product on this number!");
-    } else if (returnProductList.isEmpty) {
+    if (returnProductList.isEmpty) {
       Utility.showToast(msg: "Please select product to be return!");
     } else {
       String productId = "";

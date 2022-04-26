@@ -158,20 +158,6 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
             "sales_return_details_key".tr(),
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          actions: [
-            IconButton(
-              onPressed: () {
-                showModalBottomSheet(
-                    context: context,
-                    builder: (context) {
-                      return SalesReturnDetailsSheet(
-                        customerId: details!.customerId,
-                      );
-                    });
-              },
-              icon: Icon(Icons.info),
-            ),
-          ],
         ),
         body: Container(
           width: MediaQuery.of(context).size.width,
@@ -295,13 +281,13 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                                                         ),
                                                     errorWidget: (context, url, error) => Image.asset(
                                                           "assets/images/placeholder.webp",
-                                                          fit: BoxFit.cover,
+                                                          fit: BoxFit.contain,
                                                           width: 55,
                                                           height: 55,
                                                         ),
                                                     width: 55,
                                                     height: 55,
-                                                    fit: BoxFit.cover),
+                                                    fit: BoxFit.contain),
                                               ),
                                             ),
                                             SizedBox(
