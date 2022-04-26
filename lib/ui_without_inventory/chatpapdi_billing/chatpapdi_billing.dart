@@ -280,7 +280,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                                       redeem = redeems;
                                     });
                                   } else {
-                                    Utility.showToast(msg: "You_dont_have_enough_coins".tr());
+                                    Utility.showToast(msg: "You_dont_have_enough_coins_key".tr());
                                   }
                                 } else {
                                   Utility.showToast(msg: "please_enter_number_first_key".tr());
@@ -650,19 +650,20 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Image.asset(
                     "assets/images/point.png",
-                    scale: 3,
+                   height: 40,
+                    width: 40,
                   ),
                   Text(
                     " ${double.parse(hinttext).toStringAsFixed(2)} ",
                     textAlign: TextAlign.center,
                     style: GoogleFonts.openSans(
-                      fontSize: 17.0,
+                      fontSize: 40.0,
                       color: ColorPrimary,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                 ]),
-                Text("Coins generated succesfully\n in customer Wallet",
+                Text("${"coin_generated_successfully_key".tr()}\n ${"in_customer_wallet_key".tr()}",
                     textAlign: TextAlign.center,
                     style: GoogleFonts.openSans(
                       fontSize: 17.0,

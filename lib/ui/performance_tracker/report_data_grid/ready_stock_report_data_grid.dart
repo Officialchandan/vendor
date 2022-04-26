@@ -45,7 +45,8 @@ class _ReadyStockReportDataGridState extends State<ReadyStockReportDataGrid> {
                 Navigator.of(context).pop();
               },
               icon: Icon(Icons.arrow_back_ios)),
-          title: Text("ready_stock_report_key".tr()),
+          title: Text("ready_stock_report_key".tr(),
+            style: TextStyle(fontWeight: FontWeight.bold),),
           actions: [
             IconButton(
                 onPressed: () {

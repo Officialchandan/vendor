@@ -730,7 +730,7 @@ class _DirectBillingState extends State<DirectBilling> {
                     ),
                   ),
                 ]),
-                Text("Coins generated succesfully\n in customer Wallet",
+                Text("${"coin_generated_successfully_key".tr()}\n ${"in_customer_wallet_key".tr()}",
                     textAlign: TextAlign.center,
                     style: GoogleFonts.openSans(
                       fontSize: 17.0,

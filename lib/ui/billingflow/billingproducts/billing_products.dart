@@ -886,7 +886,7 @@ class _BillingProductsState extends State<BillingProducts> {
                     ),
                   ),
                 ]),
-                Text("Coins generated succesfully\n in customer Wallet",
+                Text("${"coin_generated_successfully_key".tr()}\n ${"in_customer_wallet_key".tr()}",
                     textAlign: TextAlign.center,
                     style: GoogleFonts.openSans(
                       fontSize: 17.0,
@@ -935,7 +935,6 @@ class _BillingProductsState extends State<BillingProducts> {
     input["customer_id"] = "${otpVerifyList!.customerId}";
     input["otp"] = "${_textFieldController.text}";
     input["total_pay"] = "${otpVerifyList!.totalPay}";
-
     input["total_redeem"] = otpVerifyList!.redeemCoins;
     input["total_earning"] = otpVerifyList!.earningCoins;
     input["myprofit_revenue"] = "${otpVerifyList!.myprofitrevenue}";

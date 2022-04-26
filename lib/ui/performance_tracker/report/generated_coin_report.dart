@@ -180,7 +180,7 @@ class _GeneratedCoinReportState extends State<GeneratedCoinReport> {
         color: ColorPrimary,
         child: Text(
           "export_key".tr(),
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
         ),
       ),
     );

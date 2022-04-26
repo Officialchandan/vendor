@@ -17,6 +17,7 @@ import 'package:vendor/utility/utility.dart';
 
 class GeneratedCoinReportDataGrid extends StatefulWidget {
   List<Map<String, dynamic>>? reportData;
+
   GeneratedCoinReportDataGrid({Key? key, this.reportData}) : super(key: key);
 
   @override
@@ -45,7 +46,10 @@ class _GeneratedCoinReportDataGridState extends State<GeneratedCoinReportDataGri
                 Navigator.of(context).pop();
               },
               icon: Icon(Icons.arrow_back_ios)),
-          title: Text("generate_coin_report_key".tr()),
+          title: Text(
+            "generate_coin_report_key".tr(),
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
           actions: [
             IconButton(
                 onPressed: () {
@@ -296,6 +300,7 @@ class ReportDataSource extends DataGridSource {
 
 class RadioListBuilder extends StatefulWidget {
   final Function(String format) onFormatSelect;
+
   const RadioListBuilder({required this.onFormatSelect, Key? key}) : super(key: key);
 
   @override
@@ -307,6 +312,7 @@ class RadioListBuilder extends StatefulWidget {
 class RadioListBuilderState extends State<RadioListBuilder> {
   Object? value;
   List<String> types = ["Excel", "PDF"];
+
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
@@ -334,7 +340,7 @@ class RadioListBuilderState extends State<RadioListBuilder> {
       },
       itemCount: 2,
       separatorBuilder: (BuildContext context, int index) {
-        return  Divider(
+        return Divider(
           height: 8,
           color: Colors.grey.shade300,
           thickness: 0.6,

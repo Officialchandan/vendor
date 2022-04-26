@@ -85,10 +85,11 @@ class _AccountManagementWithoutInventoryScreenState extends State<AccountManagem
           automaticallyImplyLeading: false,
           elevation: 0,
           // toolbarHeight: 120,
-          title: Text('account_key'.tr()),
+          title: Text('account_key'.tr(),
+            style: TextStyle(fontWeight: FontWeight.w600),),
           centerTitle: true,
           bottom: PreferredSize(
-            preferredSize: Size.fromHeight(70),
+            preferredSize: Size.fromHeight(80),
             child: Container(
               padding: EdgeInsets.fromLTRB(15, 0, 15, 20),
               color: ColorPrimary,
@@ -99,7 +100,7 @@ class _AccountManagementWithoutInventoryScreenState extends State<AccountManagem
                     return ListTile(
                       contentPadding: const EdgeInsets.all(0),
                       leading: ClipRRect(
-                        borderRadius: BorderRadius.circular(80),
+                        borderRadius: BorderRadius.circular(70),
                         child: CachedNetworkImage(
                           imageUrl: snapshot.data!.vendorImage!.isNotEmpty
                               ? snapshot.data!.vendorImage!.first.image.toString()
