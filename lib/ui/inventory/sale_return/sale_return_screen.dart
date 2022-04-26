@@ -180,8 +180,8 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                                         boxShadow: [
                                           BoxShadow(
                                             color: Colors.grey.shade400,
-                                            offset: Offset(0.0, 1.0), //(x,y)
-                                            blurRadius: 6.0,
+                                            offset: Offset(0.0, 0.0), //(x,y)
+                                            blurRadius:7.0,
                                           ),
                                         ],
                                         borderRadius: BorderRadius.circular(10),

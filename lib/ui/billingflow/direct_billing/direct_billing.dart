@@ -335,9 +335,9 @@ class _DirectBillingState extends State<DirectBilling> {
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey,
-                            offset: Offset(0.0, 1.0), //(x,y)
-                            blurRadius: 6.0,
+                            color: Colors.grey.shade300,
+                            offset: Offset(0.0, 0.0), //(x,y)
+                            blurRadius:7.0,
                           )
                         ],
                       ),
@@ -401,9 +401,9 @@ class _DirectBillingState extends State<DirectBilling> {
                       decoration:
                           BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10), boxShadow: [
                         BoxShadow(
-                          color: Colors.grey,
-                          offset: Offset(0.0, 1.0), //(x,y)
-                          blurRadius: 6.0,
+                          color: Colors.grey.shade300,
+                          offset: Offset(0.0, 0.0), //(x,y)
+                          blurRadius:7.0,
                         ),
                       ]),
                       child: Column(
@@ -472,9 +472,9 @@ class _DirectBillingState extends State<DirectBilling> {
                       decoration:
                           BoxDecoration(color: ColorPrimary, borderRadius: BorderRadius.circular(10), boxShadow: [
                         BoxShadow(
-                          color: Colors.grey,
-                          offset: Offset(0.0, 1.0), //(x,y)
-                          blurRadius: 6.0,
+                          color: Colors.grey.shade300,
+                          offset: Offset(0.0, 0.0), //(x,y)
+                          blurRadius:7.0,
                         ),
                       ]),
                       child: Row(
@@ -652,7 +652,7 @@ class _DirectBillingState extends State<DirectBilling> {
                   // filled: true,
                   counterText: "",
                   // fillColor: Colors.black,
-                  hintText: "$hinttext`",
+                  hintText: "$hinttext",
                   hintStyle: GoogleFonts.openSans(
                     fontWeight: FontWeight.w600,
                   ),
@@ -717,13 +717,14 @@ class _DirectBillingState extends State<DirectBilling> {
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Image.asset(
                     "assets/images/point.png",
-                    scale: 3,
+                    height: 40,
+                    width: 40,
                   ),
                   Text(
                     " ${double.parse(hinttext).toStringAsFixed(2)} ",
                     textAlign: TextAlign.center,
                     style: GoogleFonts.openSans(
-                      fontSize: 17.0,
+                      fontSize: 40.0,
                       color: ColorPrimary,
                       fontWeight: FontWeight.w600,
                     ),
@@ -795,7 +796,7 @@ class _DirectBillingState extends State<DirectBilling> {
         height: 55,
         width: MediaQuery.of(context).size.width,
         decoration:
-            BoxDecoration(border: Border.all(color: Colors.grey, width: .5), borderRadius: BorderRadius.circular(8)),
+            BoxDecoration(border: Border.all(color: Colors.grey.shade300, width: .5), borderRadius: BorderRadius.circular(8)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [

@@ -64,7 +64,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("inventory_key".tr()),
+        title: Text("inventory_key".tr(), style: TextStyle(fontWeight: FontWeight.bold),),
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
@@ -87,9 +87,9 @@ class _InventoryScreenState extends State<InventoryScreen> {
                     color: Colors.white,
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey,
-                        offset: Offset(0.0, 1.0), //(x,y)
-                        blurRadius: 6.0,
+                        color: Colors.grey.shade300,
+                        offset: Offset(0.0, 0.0), //(x,y)
+                        blurRadius:7.0,
                       ),
                     ],
                     borderRadius: BorderRadius.circular(10),

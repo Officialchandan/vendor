@@ -577,9 +577,9 @@ class _BillingScreenState extends State<BillingScreen> {
 
                 // boxShadow: [
                 //   BoxShadow(
-                //     color: Colors.grey,
-                //     offset: Offset(0.0, 1.0), //(x,y)
-                //     //blurRadius: 6.0,
+                //     color: Colors.grey.shade300,
+                //     offset: Offset(0.0, 0.0), //(x,y)
+                //     //blurRadius:7.0,
                 //   ),
                 // ],
                 borderRadius: BorderRadius.circular(10),

@@ -178,9 +178,9 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                               color: Colors.white,
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.grey.shade400,
-                                  offset: Offset(0.0, 1.0), //(x,y)
-                                  blurRadius: 6.0,
+                                  color: Colors.grey.shade300,
+                                  offset: Offset(0.0, 0.0), //(x,y)
+                                  blurRadius:7.0,
                                 ),
                               ],
                               borderRadius: BorderRadius.circular(10),
@@ -390,7 +390,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                           text:
                                                               '\u20B9${double.parse(searchList[index].mrp) * searchList[index].count}',
                                                           style: new TextStyle(
-                                                            color: Colors.grey,
+                                                            color: Colors.grey.shade300,
                                                             fontSize: 13,
                                                             decoration: TextDecoration.lineThrough,
                                                           ),
@@ -468,7 +468,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                   child: Center(
                     child: Text(
                       "done_key".tr(),
-                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                      style: TextStyle(color: Colors.white,fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                   ),
                   height: height * 0.07,

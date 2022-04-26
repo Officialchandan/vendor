@@ -251,9 +251,9 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey,
-                            offset: Offset(0.0, 1.0), //(x,y)
-                            blurRadius: 6.0,
+                            color: Colors.grey.shade300,
+                            offset: Offset(0.0, 0.0), //(x,y)
+                            blurRadius:7.0,
                           )
                         ],
                       ),
@@ -314,9 +314,9 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                       decoration:
                           BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10), boxShadow: [
                         BoxShadow(
-                          color: Colors.grey,
-                          offset: Offset(0.0, 1.0), //(x,y)
-                          blurRadius: 6.0,
+                          color: Colors.grey.shade300,
+                          offset: Offset(0.0, 0.0), //(x,y)
+                          blurRadius:7.0,
                         ),
                       ]),
                       child: Column(
@@ -380,9 +380,9 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                       decoration:
                           BoxDecoration(color: ColorPrimary, borderRadius: BorderRadius.circular(10), boxShadow: [
                         BoxShadow(
-                          color: Colors.grey,
-                          offset: Offset(0.0, 1.0), //(x,y)
-                          blurRadius: 6.0,
+                          color: Colors.grey.shade300,
+                          offset: Offset(0.0, 0.0), //(x,y)
+                          blurRadius:7.0,
                         ),
                       ]),
                       child: Row(

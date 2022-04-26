@@ -334,9 +334,9 @@ class RadioListBuilderState extends State<RadioListBuilder> {
       },
       itemCount: 2,
       separatorBuilder: (BuildContext context, int index) {
-        return const Divider(
+        return  Divider(
           height: 8,
-          color: Colors.grey,
+          color: Colors.grey.shade300,
           thickness: 0.6,
         );
       },

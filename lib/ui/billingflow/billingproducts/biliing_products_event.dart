@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:vendor/model/product_model.dart';
 
 class BillingProductsEvent extends Equatable {
   @override
@@ -27,13 +28,12 @@ class DeleteBillingProductsEvent extends BillingProductsEvent {
 }
 
 class CheckedBillingProductsEvent extends BillingProductsEvent {
-  final bool check;
-  final int index;
-
-  CheckedBillingProductsEvent({required this.check, required this.index});
+ List<ProductModel> productList;
+bool isChecked;
+  CheckedBillingProductsEvent({required this.productList, required this.isChecked});
 
   @override
-  List<Object?> get props => [check, index];
+  List<Object?> get props => [productList, isChecked];
 }
 
 class TotalPayAmountBillingProductsEvent extends BillingProductsEvent {

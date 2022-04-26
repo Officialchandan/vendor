@@ -208,7 +208,7 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                           color: Colors.white,
                           boxShadow: [
                             BoxShadow(
-                                offset: Offset(0.0, 1.0), //(x,y)
+                                offset: Offset(0.0, 0.0), //(x,y)
                                 color: Colors.white)
                           ]),
                       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
