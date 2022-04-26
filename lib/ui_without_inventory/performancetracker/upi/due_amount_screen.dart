@@ -695,7 +695,7 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                                               Text("free_coins_key".tr(),
                                                   style: TextStyle(
                                                       color: Colors.black,
-                                                      fontSize: 12.3,
+                                                      fontSize: 16.3,
                                                       fontWeight: FontWeight.w600)),
                                               SizedBox(
                                                 height: 5,

@@ -115,7 +115,8 @@ dependencies:
   store_redirect:
 #payment integration
   paytm_allinonesdk:
-
+#auto fetch number
+  sms_autofill:
   
     
 dev_dependencies:

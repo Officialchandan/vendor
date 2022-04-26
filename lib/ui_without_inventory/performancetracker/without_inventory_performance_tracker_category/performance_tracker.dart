@@ -5,7 +5,6 @@ import 'package:vendor/ui/custom_widget/app_bar.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/without_inventory_performance_tracker_category/without_inventory_earning_tillnow/earning_amount.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/without_inventory_performance_tracker_category/without_inventory_sale_amount/sale_amount.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/without_inventory_performance_tracker_category/without_inventory_walk_in/walkin.dart';
-
 import 'package:vendor/utility/color.dart';
 
 class WithoutInventoryPerformanceTrackerByCategory extends StatefulWidget {
@@ -14,8 +13,7 @@ class WithoutInventoryPerformanceTrackerByCategory extends StatefulWidget {
       _WithoutInventoryPerformanceTrackerByCategoryState();
 }
 
-class _WithoutInventoryPerformanceTrackerByCategoryState
-    extends State<WithoutInventoryPerformanceTrackerByCategory> {
+class _WithoutInventoryPerformanceTrackerByCategoryState extends State<WithoutInventoryPerformanceTrackerByCategory> {
   final options = [
     {
       "title": "sale_amount_key".tr(),
@@ -51,32 +49,27 @@ class _WithoutInventoryPerformanceTrackerByCategoryState
                 Container(
                   // margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade50,
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        offset: Offset(0.0, 1.0), //(x,y)
+                        blurRadius: 6.0,
+                      ),
+                    ],
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: ListTile(
                     onTap: () {
                       if (options[index]["id"] == 2) {
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                                child: EarningAmount(),
-                                type: PageTransitionType.fade));
+                        Navigator.push(context, PageTransition(child: EarningAmount(), type: PageTransitionType.fade));
                       }
                       if (options[index]["id"] == 3) {
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                                child: WalkInAmount(),
-                                type: PageTransitionType.fade));
+                        Navigator.push(context, PageTransition(child: WalkInAmount(), type: PageTransitionType.fade));
                       }
 
                       if (options[index]["id"] == 1) {
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                                child: SaleAmount(),
-                                type: PageTransitionType.fade));
+                        Navigator.push(context, PageTransition(child: SaleAmount(), type: PageTransitionType.fade));
                       }
                     },
                     leading: Image(
@@ -97,9 +90,7 @@ class _WithoutInventoryPerformanceTrackerByCategoryState
                       width: 5,
                       decoration: BoxDecoration(
                           color: ColorPrimary,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(5),
-                              bottomLeft: Radius.circular(5))),
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
                     ))
               ],
             ),

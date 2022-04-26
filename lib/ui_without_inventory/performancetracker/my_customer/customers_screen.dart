@@ -75,42 +75,45 @@ class _CustomerScreenState extends State<CustomerScreen> {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
-            TextFormField(
-              controller: txtSearch,
-              keyboardType: TextInputType.number,
-              onChanged: (text) {
-                if (text.isNotEmpty) {
-                  List<Customer> searchList = [];
+            Container(
+              margin: EdgeInsets.only(left: 10, right: 10),
+              child: TextFormField(
+                controller: txtSearch,
+                keyboardType: TextInputType.number,
+                onChanged: (text) {
+                  if (text.isNotEmpty) {
+                    List<Customer> searchList = [];
 
-                  customerList.forEach((element) {
-                    if (element.customerName.toLowerCase().contains(text.trim().toLowerCase())) {
-                      searchList.add(element);
-                    }
-                  });
+                    customerList.forEach((element) {
+                      if (element.customerName.toLowerCase().contains(text.trim().toLowerCase())) {
+                        searchList.add(element);
+                      }
+                    });
 
-                  streamController.add(searchList);
-                } else {
-                  streamController.add(customerList);
-                }
-              },
-              decoration: InputDecoration(
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Icon(
-                      Icons.search,
-                      color: Colors.black,
+                    streamController.add(searchList);
+                  } else {
+                    streamController.add(customerList);
+                  }
+                },
+                decoration: InputDecoration(
+                    prefixIcon: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Icon(
+                        Icons.search,
+                        color: Colors.black,
+                      ),
                     ),
-                  ),
-                  contentPadding: const EdgeInsets.all(10),
-                  prefixIconConstraints: BoxConstraints(maxHeight: 50, maxWidth: 50),
-                  fillColor: Colors.grey.shade200,
-                  filled: true,
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: BorderSide.none),
-                  hintText: "search_customer_key".tr(),
-                  hintStyle: TextStyle(fontWeight: FontWeight.bold)),
+                    contentPadding: const EdgeInsets.all(10),
+                    prefixIconConstraints: BoxConstraints(maxHeight: 50, maxWidth: 50),
+                    fillColor: Colors.grey.shade200,
+                    filled: true,
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: BorderSide.none),
+                    hintText: "search_customer_key".tr(),
+                    hintStyle: TextStyle(fontWeight: FontWeight.bold)),
+              ),
             ),
             const SizedBox(
               height: 20,
@@ -223,6 +226,7 @@ class _CustomerScreenState extends State<CustomerScreen> {
 
                 if (snapshot.hasData) {
                   return ListView.separated(
+                    padding: EdgeInsets.symmetric(vertical: 10),
                     separatorBuilder: (context, index) {
                       return SizedBox(
                         height: 15,
@@ -233,10 +237,19 @@ class _CustomerScreenState extends State<CustomerScreen> {
                       Customer customer = snapshot.data![index];
 
                       return Container(
-                        padding: const EdgeInsets.all(10),
+                        margin: EdgeInsets.only(left: 10, right: 10),
+                        padding: EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            border: Border.all(color: Colors.grey.shade200, width: 1)),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey,
+                              offset: Offset(0.0, 1.0), //(x,y)
+                              blurRadius: 6.0,
+                            ),
+                          ],
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                         child: Column(
                           children: [
                             Row(

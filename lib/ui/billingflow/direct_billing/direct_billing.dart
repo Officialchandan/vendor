@@ -332,14 +332,14 @@ class _DirectBillingState extends State<DirectBilling> {
                       height: 50,
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey,
                             offset: Offset(0.0, 1.0), //(x,y)
                             blurRadius: 6.0,
-                          )
+                          ),
                         ],
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       child: Row(
                         children: [
@@ -398,14 +398,17 @@ class _DirectBillingState extends State<DirectBilling> {
                       padding: EdgeInsets.all(10),
                       width: MediaQuery.of(context).size.width,
                       height: 110,
-                      decoration:
-                          BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10), boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey,
-                          offset: Offset(0.0, 1.0), //(x,y)
-                          blurRadius: 6.0,
-                        ),
-                      ]),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey,
+                            offset: Offset(0.0, 1.0), //(x,y)
+                            blurRadius: 6.0,
+                          ),
+                        ],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -781,7 +784,7 @@ class _DirectBillingState extends State<DirectBilling> {
       amount = amount / 2;
       amount = amount * 3;
       amount = amount < 0 ? 0 : amount;
-      amount = amount - 0.75;
+
       earningCoins = amount.toStringAsFixed(2);
     } else {
       earningCoins = "0.0";

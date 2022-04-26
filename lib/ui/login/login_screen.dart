@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 import 'package:vendor/ui/login/login_bloc.dart';
 import 'package:vendor/ui/login/login_event.dart';
 import 'package:vendor/ui/login/login_state.dart';
@@ -28,7 +29,8 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController mobileController = TextEditingController();
   bool _passwordVisible = true;
   LoginBloc loginBloc = LoginBloc();
-
+  String _code = "";
+  String signature = "{{ app signature }}";
   // void _toggle() {
   //   setState(() {
   //     _passwordVisible = !_passwordVisible;
@@ -185,6 +187,12 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
+  void dispose() {
+    SmsAutoFill().unregisterListener();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
@@ -250,124 +258,114 @@ class _LoginScreenState extends State<LoginScreen> {
         },
         builder: (context, state) {
           return Scaffold(
-            body: RefreshIndicator(
-              onRefresh: () {
-                return _onrefresh();
-              },
-              child: Container(
-                child: Stack(
-                  children: [
-                    Container(
-                        // height: deviceHeight,Ftex
-                        //width: 400,
-                        child: Image.asset(
-                      "assets/images/bg.png",
-                      height: deviceHeight - 50,
-                      width: double.infinity,
-                      fit: BoxFit.fill,
-                    )),
-                    Positioned(
-                      left: 20,
-                      right: 20,
-                      top: deviceHeight * 0.17,
-                      child: Container(
-                        width: 500,
-                        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                          // Center(
-                          //   child: RichText(
-                          //     text: TextSpan(
-                          //         text: 'Don\'t have an Account?',
-                          //         style: TextStyle(
-                          //             color: ColorTextPrimary,
-                          //             fontWeight: FontWeight.w600,
-                          //             fontSize: 18),
-                          //         children: <TextSpan>[
-                          //           TextSpan(
-                          //               text: ' Sign up',
-                          //               style: TextStyle(
-                          //                   fontWeight: FontWeight.w600,
-                          //                   color: ColorPrimary,
-                          //                   fontSize: 18),
-                          //               recognizer: TapGestureRecognizer()
-                          //                 ..onTap = () {
-                          //                   Navigator.push(
-                          //                       context,
-                          //                       MaterialPageRoute(
-                          //                           builder: (context) =>
-                          //                               SignUp()));
-                          //                 })
-                          //         ]),
-                          //   ),
-                          // ),
-                          // SizedBox(
-                          //   height: 35,
-                          // ),
-                          Text(
-                            "login_key".tr(),
-                            style: GoogleFonts.openSans(
-                                fontSize: 28,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600,
-                                decoration: TextDecoration.none),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Text(
-                            "add_your_details_to_login_key".tr(),
-                            style: GoogleFonts.openSans(
-                                fontSize: 17,
-                                color: ColorTextPrimary,
-                                fontWeight: FontWeight.w600,
-                                decoration: TextDecoration.none),
-                          ),
-                          SizedBox(
-                            height: 40,
-                          ),
-                          mobileNumber,
-                          SizedBox(
-                            height: 80,
-                          ),
-                          Center(
-                            child: Column(
-                                // mainAxisAlignment: MainAxisAlignment.center,
-                                // crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  MaterialButton(
-                                    minWidth: deviceWidth,
-                                    height: 50,
-                                    padding: const EdgeInsets.all(8.0),
-                                    textColor: Colors.white,
-                                    color: ColorPrimary,
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                    onPressed: () {
-                                      _textFieldController.clear();
+            body: SingleChildScrollView(
+              child: RefreshIndicator(
+                onRefresh: () {
+                  return _onrefresh();
+                },
+                child: Container(
+                  child: Stack(
+                    children: [
+                      Container(
+                          // height: deviceHeight,Ftex
+                          //width: 400,
+                          child: Image.asset(
+                        "assets/images/bg.png",
+                        height: deviceHeight - 50,
+                        width: double.infinity,
+                        fit: BoxFit.fill,
+                      )),
+                      Positioned(
+                        left: 20,
+                        right: 20,
+                        top: deviceHeight * 0.17,
+                        child: Container(
+                          width: 500,
+                          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                            Text(
+                              "login_key".tr(),
+                              style: GoogleFonts.openSans(
+                                  fontSize: 28,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600,
+                                  decoration: TextDecoration.none),
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Text(
+                              "add_your_details_to_login_key".tr(),
+                              style: GoogleFonts.openSans(
+                                  fontSize: 17,
+                                  color: ColorTextPrimary,
+                                  fontWeight: FontWeight.w600,
+                                  decoration: TextDecoration.none),
+                            ),
+                            SizedBox(
+                              height: 40,
+                            ),
+                            mobileNumber,
+                            SizedBox(
+                              height: 80,
+                            ),
+                            Center(
+                              child: Column(
+                                  // mainAxisAlignment: MainAxisAlignment.center,
+                                  // crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    MaterialButton(
+                                      minWidth: deviceWidth,
+                                      height: 50,
+                                      padding: const EdgeInsets.all(8.0),
+                                      textColor: Colors.white,
+                                      color: ColorPrimary,
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                      onPressed: () {
+                                        _textFieldController.clear();
 
-                                      print("kuch to ${mobileController.text}");
-                                      // loginApiCall(
-                                      //     nameController.text, passwordController.text);
-                                      if (_tap == true) {
-                                        _tap = false;
-                                        loginApiOtpCall(mobileController.text);
-                                      }
-                                      // _displayDialog(
-                                      //     context, mobileController.text);
-                                    },
-                                    child: new Text(
-                                      "login_key".tr(),
-                                      style: GoogleFonts.openSans(
-                                          fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
+                                        print("kuch to ${mobileController.text}");
+                                        // loginApiCall(
+                                        //     nameController.text, passwordController.text);
+                                        if (_tap == true) {
+                                          _tap = false;
+                                          loginApiOtpCall(mobileController.text);
+                                        }
+                                        // _displayDialog(
+                                        //     context, mobileController.text);
+                                      },
+                                      child: new Text(
+                                        "login_key".tr(),
+                                        style: GoogleFonts.openSans(
+                                            fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: 25,
-                                  ),
-                                ]),
-                          ),
-                        ]),
+                                    SizedBox(
+                                      height: 25,
+                                    ),
+                                    Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                                      children: <Widget>[
+                                        PhoneFieldHint(controller: mobileController),
+                                        //  Spacer(),
+
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.of(context)
+                                                .push(MaterialPageRoute(builder: (_) => CodeAutoFillTestPage()));
+                                          },
+                                          child: Text("Test CodeAutoFill mixin"),
+                                        )
+                                      ],
+                                    ),
+                                  ]),
+                            ),
+                          ]),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -395,6 +393,76 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class CodeAutoFillTestPage extends StatefulWidget {
+  @override
+  _CodeAutoFillTestPageState createState() => _CodeAutoFillTestPageState();
+}
+
+class _CodeAutoFillTestPageState extends State<CodeAutoFillTestPage> with CodeAutoFill {
+  String? appSignature;
+  String? otpCode;
+
+  @override
+  void codeUpdated() {
+    setState(() {
+      otpCode = code!;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    listenForCode();
+
+    SmsAutoFill().getAppSignature.then((signature) {
+      setState(() {
+        appSignature = signature;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    cancel();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final textStyle = TextStyle(fontSize: 18);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Listening for code"),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.fromLTRB(32, 32, 32, 0),
+            child: Text(
+              "This is the current app signature: $appSignature",
+            ),
+          ),
+          const Spacer(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32),
+            child: Builder(
+              builder: (_) {
+                if (otpCode == null) {
+                  return Text("Listening for code...", style: textStyle);
+                }
+                return Text("Code Received: $otpCode", style: textStyle);
+              },
+            ),
+          ),
+          const Spacer(),
+        ],
       ),
     );
   }
