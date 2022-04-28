@@ -117,10 +117,8 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                     color: Colors.black,
                   ),
                   filled: true,
-
                   // fillColor: Colors.black,
                   hintText: "search_here_key".tr(),
-
                   hintStyle: GoogleFonts.openSans(fontWeight: FontWeight.w600, color: Colors.black),
                   contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
                   focusedBorder: OutlineInputBorder(
@@ -224,11 +222,11 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                                         children: [
                                           Text(
                                             "    +91 ${searchList[index].mobile}",
-                                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                                           ),
                                           Text(
-                                            "     ${DateFormat("dd MMM yyyy").format(searchList[index].dateTime)}(${DateFormat.jm().format(searchList[index].dateTime)})",
-                                            style: TextStyle(fontSize: 13, color: ColorTextPrimary),
+                                            "     ${DateFormat("dd MMM yyyy").format(searchList[index].dateTime)}-${DateFormat.jm().format(searchList[index].dateTime)}",
+                                            style: TextStyle(fontSize: 12, color: ColorTextPrimary),
                                           ),
                                         ]),
                                     Row(

@@ -27,7 +27,6 @@ const GreenBoxBgColor = Color(0xffc6e5ba);
 const GreenBoxTextColor = Color(0xff41a81b);
 
 // Gradient Colors
-
 const RedLightColor = Color(0xffec4b4b);
 const RedDarkColor = Color(0xffbe1919);
 
@@ -36,3 +35,10 @@ const GreenDarkColor = Color(0xff41a81b);
 
 const PurpleLightColor = Color(0xff8e82ff);
 const PurpleDarkColor = Color(0xff6657f4);
+
+const TextBlackLight = Color(0xff303030);
+const TextBlack = Color(0xff000000);
+const TextGrey = Color(0xff555555);
+const textFieldBorderColor = Color(0xffbdbdbd);
+
+

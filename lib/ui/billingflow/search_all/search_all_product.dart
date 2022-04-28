@@ -243,7 +243,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                           maxLines: 2,
                                                           overflow: TextOverflow.ellipsis,
                                                           style: TextStyle(
-                                                              color: Colors.black, fontWeight: FontWeight.w600, fontSize: 16),
+                                                              color: TextBlackLight, fontWeight: FontWeight.bold, fontSize: 15),
 
                                                         )
                                                       : Text(
@@ -251,7 +251,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                           maxLines: 2,
                                                           overflow: TextOverflow.ellipsis,
                                                           style: TextStyle(
-                                                              color: Colors.black, fontWeight: FontWeight.w600, fontSize: 16),
+                                                              color: TextBlackLight, fontWeight: FontWeight.bold, fontSize: 15),
 
                                                         ),
                                                 ),
@@ -390,7 +390,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                           text:
                                                               '\u20B9${double.parse(searchList[index].mrp) * searchList[index].count}',
                                                           style: new TextStyle(
-                                                            color: Colors.grey.shade300,
+                                                            color: TextGrey,
                                                             fontSize: 13,
                                                             decoration: TextDecoration.lineThrough,
                                                           ),
@@ -404,7 +404,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                       Text(
                                                         "earn_key".tr() + ": ",
                                                         style: TextStyle(
-                                                            fontSize: 13, fontWeight: FontWeight.w700, color: Colors.grey),
+                                                            fontSize: 13, fontWeight: FontWeight.bold, color: TextGrey),
                                                       ),
                                                       Container(
                                                           child: Image.asset(
@@ -415,7 +415,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                       Text(
                                                         " ${(double.parse(searchList[index].earningCoins) * searchList[index].count).toStringAsFixed(2)}",
                                                         style: TextStyle(
-                                                            fontSize: 13, fontWeight: FontWeight.w700, color: ColorPrimary),
+                                                            fontSize: 13, fontWeight: FontWeight.bold, color: ColorPrimary),
                                                       ),
                                                     ],
                                                   ),

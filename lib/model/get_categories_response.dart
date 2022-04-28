@@ -48,6 +48,7 @@ class CategoryModel {
   String? image;
   String commission;
   bool? isChecked = false;
+  bool? onTileTap = false;
 
   factory CategoryModel.fromJson(String str) =>
       CategoryModel.fromMap(json.decode(str));

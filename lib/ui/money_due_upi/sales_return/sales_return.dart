@@ -239,7 +239,7 @@ class _BillingDetailsWidgetState extends State<BillingDetailsWidget> {
       },
       child: Container(
           margin: EdgeInsets.only(bottom: 20),
-          height: billingDetails!.billingType == 1 ? 102 : 82,
+          // height: billingDetails!.billingType == 1 ? 102 : 82,
           decoration: BoxDecoration(
             color: Colors.white,
             boxShadow: [
@@ -286,7 +286,7 @@ class _BillingDetailsWidgetState extends State<BillingDetailsWidget> {
                     )
                   : SizedBox(),
               Padding(
-                padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+                padding: const EdgeInsets.all(8),
                 child: Row(
                   children: [
                     ClipRRect(
@@ -311,7 +311,7 @@ class _BillingDetailsWidgetState extends State<BillingDetailsWidget> {
                     ),
                     Flexible(
                       child: Container(
-                        height: 60,
+                        // height: 60,
                         width: MediaQuery.of(context).size.width * 0.70,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -324,8 +324,8 @@ class _BillingDetailsWidgetState extends State<BillingDetailsWidget> {
                                     width: MediaQuery.of(context).size.width * 0.45,
                                     child: Text(
                                       "${billingDetails!.vendorName}",
-                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                                      maxLines: 1,
+                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                                      maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
@@ -349,20 +349,17 @@ class _BillingDetailsWidgetState extends State<BillingDetailsWidget> {
                             SizedBox(
                               height: 5,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8.0),
-                              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                Text(
-                                  "${billingDetails!.mobile}",
-                                  style: TextStyle(color: Colors.black, fontSize: 13, fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  "${DateFormat("dd MMM yyyy").format(DateTime.parse(billingDetails!.dateTime))}" +
-                                      " - ${DateFormat.jm().format(DateTime.parse(billingDetails!.dateTime))}",
-                                  style: TextStyle(color: ColorTextPrimary, fontSize: 13),
-                                ),
-                              ]),
-                            ),
+                            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                              Text(
+                                "${billingDetails!.mobile}",
+                                style: TextStyle(color: Colors.black, fontSize: 13, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                "${DateFormat("dd MMM yyyy").format(DateTime.parse(billingDetails!.dateTime))}" +
+                                    "-${DateFormat.jm().format(DateTime.parse(billingDetails!.dateTime))}",
+                                style: TextStyle(color: ColorTextPrimary, fontSize: 13),
+                              ),
+                            ]),
                           ],
                         ),
                       ),

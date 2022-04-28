@@ -247,14 +247,14 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                                   maxLines: 2,
                                                   overflow: TextOverflow.ellipsis,
                                                   style: TextStyle(
-                                                      color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
+                                                      color: TextBlackLight, fontWeight: FontWeight.bold, fontSize: 15),
                                                 )
                                               : Text(
                                                   "${searchList[index].productName} ($variantName)",
                                                   maxLines: 2,
                                                   overflow: TextOverflow.ellipsis,
                                                   style: TextStyle(
-                                                      color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
+                                                      color: TextBlackLight, fontWeight: FontWeight.bold, fontSize: 15),
                                                 ),
                                         ),
                                         searchList[index].check != true
@@ -396,7 +396,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                                           '\u20B9${double.parse(searchList[index].mrp) * searchList[index].count}',
                                                       style: new TextStyle(
                                                         fontSize: 13,
-                                                        color: Colors.grey,
+                                                        color: TextGrey,
                                                         decoration: TextDecoration.lineThrough,
                                                       ),
                                                     ),
@@ -411,7 +411,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                               Text(
                                                 "earn_key".tr() + ": ",
                                                 style: TextStyle(
-                                                    fontSize: 13, fontWeight: FontWeight.w700, color: Colors.grey),
+                                                    fontSize: 13, fontWeight: FontWeight.bold, color: ColorTextPrimary),
                                               ),
                                               Container(
                                                   child: Image.asset(
@@ -422,7 +422,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                               Text(
                                                 " ${(double.parse(searchList[index].earningCoins) * searchList[index].count).toStringAsFixed(2)}",
                                                 style: TextStyle(
-                                                    fontSize: 13, fontWeight: FontWeight.w700, color: ColorPrimary),
+                                                    fontSize: 13, fontWeight: FontWeight.bold, color: ColorPrimary),
                                               ),
                                             ],
                                           ),

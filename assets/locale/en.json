@@ -403,5 +403,6 @@
   "total_order_value_key": "Total Order Value",
   "net_payable_key":"Net Payable",
   "coin_generated_successfully_key": "Coins generated successfully",
-  "in_customer_wallet_key": "in customer Wallet"
+  "in_customer_wallet_key": "in customer Wallet",
+  "earned_coins_key": "Earned Coins"
 }

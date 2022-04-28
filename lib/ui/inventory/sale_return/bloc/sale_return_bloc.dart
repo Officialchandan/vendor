@@ -90,7 +90,7 @@ class SaleReturnBloc extends Bloc<SaleReturnEvent, SaleReturnState> {
             customerId: "",
             earningCoins: "",
             redeemCoins: i.redeemedCoins,
-            qty: 0,
+            qty: 1,
             price: "0",
             total: i.totalPay,
             mobile: i.mobile,

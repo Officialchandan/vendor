@@ -535,78 +535,66 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
     directBillingCustomerNumberResponseBloc.add(GetChatPapdiBillingOtpEvent(input: input));
   }
 
-  _displayDialog(BuildContext context, index, text, hinttext) async {
+  _displayDialog(BuildContext context, index, text, hintText) async {
     return showDialog(
         barrierDismissible: false,
         context: context,
         builder: (context) {
           return ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: 400),
+            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.40),
             child: AlertDialog(
+              contentPadding: const EdgeInsets.only(left: 20, right: 20,bottom: 20),
+              titlePadding:  const EdgeInsets.only(left: 20, right: 20,top: 20, bottom: 20),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-              title: RichText(
-                text: TextSpan(
-                  text: "$text",
-                  style: GoogleFonts.openSans(
-                    fontSize: 18.0,
-                    color: ColorPrimary,
-                    fontWeight: FontWeight.w600,
-                  ),
+              title: Text(
+                "$text",
+                textAlign: TextAlign.left,
+                style: GoogleFonts.openSans(
+                  fontSize: 18.0,
+                  color: TextBlackLight,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               content: TextFormField(
                 controller: otpController,
                 cursorColor: ColorPrimary,
-                keyboardType: TextInputType.number,
                 maxLength: 6,
+                keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                decoration: InputDecoration(
-                  // filled: true,
-                  counterText: "",
-
-                  // fillColor: Colors.black,
-                  hintText: "$hinttext",
-
-                  hintStyle: GoogleFonts.openSans(
+                style: GoogleFonts.openSans(
                     fontWeight: FontWeight.w600,
+                    color: TextGrey,
+                    fontSize: 17,
+                    letterSpacing: 1
+                ),
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.all(0),
+                  counterText: "",
+                  hintText: "$hintText",
+                  hintStyle: GoogleFonts.openSans(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 17,
+                      color: TextGrey
                   ),
-                  contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
                 ),
               ),
               actions: <Widget>[
                 Center(
                   child: MaterialButton(
                     minWidth: MediaQuery.of(context).size.width * 0.40,
-                    height: 50,
+                    height: 45,
                     padding: const EdgeInsets.all(8.0),
                     textColor: Colors.white,
                     color: ColorPrimary,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                    onPressed: () async {
-                      if (status1 == 0) {
+                    onPressed: () {
+                      if (status == 0) {
                         log("index->$index");
-                        Map<String, dynamic> input = HashMap<String, dynamic>();
-                        input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
-                        input["bill_id"] = datas!.billId;
 
-                        input["otp"] = otpController.text;
-                        input["total_pay"] = datas!.totalPay;
-                        input["coin_deducted"] = datas!.coinDeducted;
-                        input["earning_coins"] = datas!.earningCoins;
-                        input["myprofit_revenue"] = datas!.myProfitRevenue;
-                        SharedPref.setStringPreference(SharedPref.VendorCoin, datas!.vendorAvailableCoins);
-                        input["vendor_available_coins"] = datas!.vendorAvailableCoins;
-                        log("=====? $input");
-
-                        directBillingCustomerNumberResponseBloc.add(GetChatPapdiBillingOtpEvent(input: input));
-
-                        // otpController.clear();
-                        // mobileController.clear();
-                        // nameController.clear();
-                        // amountController.clear();
-                        // redeem = false;
-                        // FocusScope.of(context).unfocus();
-                        // Navigator.pop(context);
+                        // directBillingCustomerNumberResponseBloc.add((
+                        //     price: y, index: index, earningCoin: earningCoin));
+                        otpController.clear();
+                        Navigator.pop(context);
                       } else {
                         verifyOtp(context);
                       }
@@ -618,10 +606,8 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                     ),
                   ),
                 ),
-                Container(
-                  height: 20,
-                  width: MediaQuery.of(context).size.width * 0.95,
-                  color: Colors.transparent,
+                SizedBox(
+                  height: 10,
                 )
               ],
             ),
