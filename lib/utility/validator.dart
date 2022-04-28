@@ -25,7 +25,7 @@ class Validator {
     String patttern = r'(^[0-9]*$)';
     RegExp regExp = new RegExp(patttern);
     if (value.length == 0) {
-      return "please_enter_mobile_number_key".tr();
+      // return "please_enter_mobile_number_key".tr();
     } else if (value.length != 10) {
       return "mobile_number_must_10_digits_key".tr();
     } else if (!regExp.hasMatch(value)) {

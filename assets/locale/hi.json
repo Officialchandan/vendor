@@ -407,5 +407,6 @@
   "total_order_value_key": "कुल आदेश मूल्य",
   "net_payable_key": "शुद्ध देय राशि",
   "coin_generated_successfully_key": "सिक्के सफलतापूर्वक उत्पन्न हुए",
-  "in_customer_wallet_key": "ग्राहक वॉलेट में"
+  "in_customer_wallet_key": "ग्राहक वॉलेट में",
+  "earned_coins_key": "अर्जित सिक्के"
 }

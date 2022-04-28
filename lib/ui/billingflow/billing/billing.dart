@@ -52,7 +52,6 @@ class _BillingScreenState extends State<BillingScreen> {
   }
 
   refresh() {
-    log("refresh hua");
     customerNumberResponseBloc.add(GetVendorCategoryEvent());
     _refreshController.refreshCompleted();
 
@@ -94,10 +93,10 @@ class _BillingScreenState extends State<BillingScreen> {
               appBar: AppBar(
                 title: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Text("billing_key".tr(), style: TextStyle(fontWeight: FontWeight.w600)),
-                  SizedBox(width: 2),
+                  SizedBox(width: 5),
                   Image.asset(
                     "assets/images/point.png",
-                    scale: 2.5,
+                    width: 25,
                   ),
                   SizedBox(
                     width: 35,
@@ -160,8 +159,8 @@ class _BillingScreenState extends State<BillingScreen> {
                   child: Stack(children: [
                     Container(
                       padding: EdgeInsets.only(
-                        left: 15,
-                        right: 15,
+                        left: 14,
+                        right: 14,
                         top: 10,
                       ),
                       child: Column(
@@ -174,15 +173,15 @@ class _BillingScreenState extends State<BillingScreen> {
                               Container(
                                   child: Image.asset(
                                 "assets/images/point.png",
-                                scale: 2,
+                                width: 24,
                               )),
                               mobileController.text.length == 10
                                   ? Text(
-                                      "  $customerCoins",
+                                      " $customerCoins",
                                       style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: ColorPrimary),
                                     )
                                   : Text(
-                                      "  0.0",
+                                      " 0.0",
                                       style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: ColorPrimary),
                                     ),
                             ],
@@ -284,13 +283,18 @@ class _BillingScreenState extends State<BillingScreen> {
                                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                       maxLength: 10,
                                       decoration: InputDecoration(
+                                        errorStyle: TextStyle(fontSize: 12),
+                                        labelStyle: TextStyle(fontSize: 16, color: TextBlackLight),
+                                        hintStyle: TextStyle(
+                                          fontSize: 16, color: TextBlackLight
+                                        ),
                                         hintText: 'enter_customer_phone_number_key'.tr(),
                                         labelText: 'mobile_number_key'.tr(),
                                         counterText: "",
                                         contentPadding: EdgeInsets.all(0),
                                         fillColor: Colors.transparent,
                                         enabledBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(color: ColorTextPrimary, width: 1.5)),
+                                            borderSide: BorderSide(color: textFieldBorderColor, width: 1.5)),
                                         focusedBorder: UnderlineInputBorder(
                                             borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
                                         border: UnderlineInputBorder(
@@ -314,13 +318,22 @@ class _BillingScreenState extends State<BillingScreen> {
                                               controller: nameController,
                                               inputFormatters: [FilteringTextInputFormatter.allow(Validator.name)],
                                               decoration: InputDecoration(
+                                                errorStyle: TextStyle(
+                                                  fontSize: 12
+                                                ),
+                                                hintStyle: TextStyle(
+                                                  fontSize: 16, color:  TextBlackLight
+                                                ),
+                                                labelStyle: TextStyle(
+                                                    fontSize: 16, color:  TextBlackLight
+                                                ),
                                                 hintText: 'enter_customer_name_key'.tr(),
                                                 labelText: 'full_name_key'.tr(),
                                                 counterText: "",
                                                 contentPadding: EdgeInsets.all(0),
                                                 fillColor: Colors.transparent,
                                                 enabledBorder: UnderlineInputBorder(
-                                                    borderSide: BorderSide(color: ColorTextPrimary, width: 1.5)),
+                                                    borderSide: BorderSide(color: textFieldBorderColor, width: 1.5)),
                                                 focusedBorder: UnderlineInputBorder(
                                                     borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
                                                 border: UnderlineInputBorder(
@@ -388,26 +401,26 @@ class _BillingScreenState extends State<BillingScreen> {
                             },
                             child: Container(
                               width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height * 0.070,
+                              height: MediaQuery.of(context).size.height * 0.065,
                               padding: EdgeInsets.only(left: 10),
                               color: Colors.grey[300],
                               child: Row(
                                 children: [
-                                  Icon(Icons.search),
+                                  Icon(Icons.search, color: TextBlackLight),
                                   Text(
                                     "search_all_products_key".tr(),
-                                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                                    style: TextStyle(fontSize: 16, color: TextBlackLight, fontWeight: FontWeight.bold),
                                   )
                                 ],
                               ),
                             ),
                           ),
                           SizedBox(
-                            height: 10,
+                            height: 14,
                           ),
                           Text(
                             "search_by_category_key".tr(),
-                            style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                            style: TextStyle(fontSize: 16, color: TextBlackLight, fontWeight: FontWeight.bold),
                           ),
                           SizedBox(
                             height: 10,
@@ -415,7 +428,6 @@ class _BillingScreenState extends State<BillingScreen> {
                           BlocConsumer<CustomerNumberResponseBloc, CustomerNumberResponseState>(
                             listener: (context, state) {
                               if (state is GetCategoryByVendorIdState) {
-                                log("category chl gya");
                                 // Utility.showToast(
                                 //     backgroundColor: ColorPrimary,
                                 //     textColor: Colors.white,
@@ -427,7 +439,6 @@ class _BillingScreenState extends State<BillingScreen> {
                                 );
                               }
                               if (state is GetCategoryByVendorIdLoadingstate) {
-                                log("hello");
                                 CircularProgressIndicator(
                                   backgroundColor: ColorPrimary,
                                 );
@@ -441,7 +452,6 @@ class _BillingScreenState extends State<BillingScreen> {
                                 category = state.data!;
                               }
                               if (state is GetCategoryByVendorIdLoadingstate) {
-                                log("hello2");
                                 return Container(
                                   height: 40,
                                   child: CircularProgressIndicator(
@@ -502,7 +512,6 @@ class _BillingScreenState extends State<BillingScreen> {
 
   Widget categoryListWidget(List<CategoryModel> category) {
     return ListView.builder(
-
         // padding: EdgeInsets.only(bottom: 80),
         itemCount: category.length,
         itemBuilder: (context, index) {
@@ -570,23 +579,19 @@ class _BillingScreenState extends State<BillingScreen> {
               // padding: EdgeInsets.all(10),
               //height: MediaQuery.of(context).size.height * 0.07,
 
-              margin: EdgeInsets.only(top: 10, bottom: 10, left: 5, right: 5),
+              margin: EdgeInsets.only(top: 10, bottom: 10),
               decoration: BoxDecoration(
                 color: Colors.white,
-                border: Border.all(color: Colors.grey.shade300, width: 1),
-
-                // boxShadow: [
-                //   BoxShadow(
-                //     color: Colors.grey.shade300,
-                //     offset: Offset(0.0, 0.0), //(x,y)
-                //     //blurRadius:7.0,
-                //   ),
-                // ],
-                borderRadius: BorderRadius.circular(10),
-              ),
+                border: Border.all(color: Colors.grey.shade300, width: .5), borderRadius: BorderRadius.circular(8),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.shade300,
+                    offset: Offset(0.0, 0.0), //(x,y)
+                    blurRadius: 7.0,
+                  ),
+                ],),
               child: ListTile(
                 minLeadingWidth: 20,
-
                 leading: CachedNetworkImage(
                   imageUrl: "${category[index].image}",
                   imageBuilder: (context, imageProvider) {
@@ -609,7 +614,7 @@ class _BillingScreenState extends State<BillingScreen> {
                   transform: Matrix4.translationValues(0, -2, 0),
                   child: Text(
                     "${category[index].categoryName}",
-                    style: TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.w600),
+                    style: TextStyle(fontSize: 16, color: TextBlackLight, fontWeight: FontWeight.bold),
                   ),
                 ),
                 // trailing: ButtonTheme(

@@ -46,8 +46,20 @@ class DirectBillingCustomerNumberResponseBloc
     }
 
     if (event is GetDirectBillingCategoryEvent) {
-      yield GetDirectBillingPartialUserLoadingstate();
       yield* getVendorCategoryByIdResponse();
+    }
+
+    if(event is GetDirectBillingCheckBoxEvent){
+      yield DirectBillingLoadingState();
+      yield DirectBillingCheckBoxState(
+        index: event.index, isChecked: event.isChecked
+      );
+    }
+    if(event is GetDirectBillingRedeemCheckBoxEvent){
+      yield DirectBillingLoadingState();
+      yield DirectBillingRedeemCheckBoxState(
+            isChecked: event.isChecked
+      );
     }
   }
 
@@ -81,7 +93,7 @@ class DirectBillingCustomerNumberResponseBloc
 
   Stream<DirectBillingCustomerNumberResponseState> getDirectBilling(input) async* {
     if (await Network.isConnected()) {
-      yield GetDirectBillingLoadingstate();
+      // yield GetDirectBillingLoadingstate();
       try {
         DirectBillingResponse result = await apiProvider.getDirectBilling(input);
         log("$result");
@@ -107,7 +119,7 @@ class DirectBillingCustomerNumberResponseBloc
 
   Stream<DirectBillingCustomerNumberResponseState> getDirectBillingOtp(input) async* {
     if (await Network.isConnected()) {
-      yield GetDirectBillingOtpLoadingstate();
+      // yield GetDirectBillingOtpLoadingstate();
       try {
         DirectBillingOtpResponse result = await apiProvider.getDirectBillingOtp(input);
         log("$result");

@@ -141,3 +141,23 @@ class GetDirectBillingCategoryByVendorIdFailureState
   @override
   List<Object?> get props => [message];
 }
+class DirectBillingCheckBoxState extends DirectBillingCustomerNumberResponseState{
+  final int index;
+  final bool isChecked;
+  DirectBillingCheckBoxState({required this.index, required this.isChecked});
+  @override
+  List<Object?> get props => [index, isChecked];
+}
+class DirectBillingRedeemCheckBoxState extends DirectBillingCustomerNumberResponseState{
+  final bool isChecked;
+  DirectBillingRedeemCheckBoxState({required this.isChecked});
+  @override
+  List<Object?> get props => [isChecked];
+}
+
+class DirectBillingLoadingState extends DirectBillingCustomerNumberResponseState{
+  DirectBillingLoadingState();
+  @override
+  List<Object?> get props => [];
+
+}

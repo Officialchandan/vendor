@@ -51,6 +51,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                 child: TextFormField(
                   controller: edtMobile,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+
                   maxLength: 10,
                   onChanged: (text) {
                     if (text.trim().length == 10) {
@@ -65,7 +66,16 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                   },
                   // autofocus: true,
                   keyboardType: TextInputType.phone,
-                  decoration: InputDecoration(counterText: "", labelText: "mobile_number_key".tr()),
+                  decoration: InputDecoration(counterText: "",  hintText: 'enter_customer_phone_number_key'.tr(),
+                    hintStyle: TextStyle(color: TextBlackLight, fontSize: 16),
+                    labelText: 'mobile_number_key'.tr(),
+                    labelStyle: TextStyle(color: TextBlackLight, fontSize: 16),
+                    enabledBorder:
+                    UnderlineInputBorder(borderSide: BorderSide(color: textFieldBorderColor, width: 1.5)),
+                    focusedBorder:
+                    UnderlineInputBorder(borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
+                    border: UnderlineInputBorder(borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
+                  ),
                 ),
               ),
               BlocConsumer<SaleReturnBloc, SaleReturnState>(
@@ -171,260 +181,256 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                               shrinkWrap: true,
                               padding: const EdgeInsets.only(bottom: 50),
                               itemBuilder: (context, index) {
-                                return Stack(
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 10),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.shade400,
-                                            offset: Offset(0.0, 0.0), //(x,y)
-                                            blurRadius:7.0,
-                                          ),
-                                        ],
-                                        borderRadius: BorderRadius.circular(10),
+                                return Container(
+                                  margin: EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 10),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.shade400,
+                                        offset: Offset(0.0, 0.0), //(x,y)
+                                        blurRadius:7.0,
                                       ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(10),
-                                        child: Row(
-                                          children: [
-                                            Container(
-                                              child: ClipRRect(
-                                                borderRadius: BorderRadius.circular(10),
-                                                child: purchasedList[index].productImages.isNotEmpty
-                                                    ? Image(
-                                                        height: 65,
-                                                        width: 65,
-                                                        fit: BoxFit.contain,
-                                                        image: NetworkImage(purchasedList[index].productImages),
-                                                      )
-                                                    : Image(
-                                                        image: AssetImage(
-                                                          "assets/images/placeholder.webp",
-                                                        ),
-                                                        height: 60,
-                                                        width: 60,
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: 10,
-                                            ),
-                                            Flexible(
-                                              child: Container(
-                                                width: MediaQuery.of(context).size.width * 0.70,
-                                                child: Row(
+                                    ],
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(10),
+                                            child: purchasedList[index].productImages.isNotEmpty
+                                                ? Image(
+                                                    height: 65,
+                                                    width: 65,
+                                                    fit: BoxFit.contain,
+                                                    image: NetworkImage(purchasedList[index].productImages),
+                                                  )
+                                                : Image(
+                                                    image: AssetImage(
+                                                      "assets/images/placeholder.webp",
+                                                    ),
+                                                    height: 60,
+                                                    width: 60,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Flexible(
+                                          child: Container(
+                                            width: MediaQuery.of(context).size.width * 0.70,
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                              children: [
+                                                Column(
                                                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                                                   children: [
-                                                    Column(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                    Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                       children: [
-                                                        Row(
-                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                          children: [
-                                                            Container(
-                                                              width: MediaQuery.of(context).size.width * 0.45,
-                                                              child: Text(
-                                                                purchasedList[index].productName,
-                                                                maxLines: 2,
-                                                                overflow: TextOverflow.ellipsis,
-                                                                style: TextStyle(
-                                                                    color: Colors.black,
-                                                                    fontWeight: FontWeight.bold,
-                                                                    fontSize: 16),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        SizedBox(
-                                                          height: 5,
-                                                        ),
-                                                        Container(
-                                                          width: MediaQuery.of(context).size.width * 0.45,
-                                                          child: RichText(
-                                                            text: TextSpan(
-                                                              children: [
-                                                                TextSpan(
-                                                                    text:
-                                                                        "₹ ${purchasedList[index].price == "0" ? purchasedList[index].total : purchasedList[index].price}\t" +
-                                                                            " ",
-                                                                    style: TextStyle(
-                                                                        color: ColorPrimary,
-                                                                        fontSize: 18,
-                                                                        fontWeight: FontWeight.bold)),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                          height: 5,
-                                                        ),
                                                         Container(
                                                           width: MediaQuery.of(context).size.width * 0.45,
                                                           child: Text(
-                                                            DateFormat("dd MMM").format(
-                                                                    DateTime.parse(purchasedList[index].dateTime)) +
-                                                                " " +
-                                                                DateFormat.jm()
-                                                                    .format(
-                                                                        DateTime.parse(purchasedList[index].dateTime))
-                                                                    .toLowerCase(),
+                                                            purchasedList[index].productName,
+                                                            maxLines: 2,
+                                                            overflow: TextOverflow.ellipsis,
                                                             style: TextStyle(
-                                                                fontSize: 13,
+                                                                color: TextBlackLight,
                                                                 fontWeight: FontWeight.bold,
-                                                                color: Colors.black87),
+                                                                fontSize: 15),
                                                           ),
-                                                        )
+                                                        ),
                                                       ],
                                                     ),
-                                                    Column(
-                                                      children: [
-                                                        purchasedList[index].checked != true
-                                                            ? InkWell(
-                                                                onTap: () async {
-                                                                  if (await Network.isConnected()) {
-                                                                    saleReturnBloc.add(SaleReturnCheckBoxEvent(
-                                                                        isChecked: true, index: index));
-                                                                  } else {
-                                                                    Utility.showToast(
-                                                                      msg: "please_check_your_internet_connection_key"
-                                                                          .tr(),
-                                                                    );
-                                                                  }
-                                                                },
-                                                                child: Container(
-                                                                  height: 25,
-                                                                  width: 71,
-                                                                  decoration: BoxDecoration(
-                                                                      color: Buttonactive,
-                                                                      borderRadius: BorderRadius.circular(25),
-                                                                      border: Border.all(color: ColorPrimary)),
-                                                                  child: Center(
-                                                                    child: Row(
-                                                                      mainAxisAlignment: MainAxisAlignment.center,
-                                                                      children: [
-                                                                        Text(
-                                                                          "add_key".tr(),
-                                                                          style: TextStyle(
-                                                                              fontSize: 12,
-                                                                              fontWeight: FontWeight.bold,
-                                                                              color: ColorPrimary),
-                                                                        ),
-                                                                        SizedBox(
-                                                                          width: 3,
-                                                                        ),
-                                                                        Icon(
-                                                                          Icons.add,
-                                                                          size: 18,
-                                                                          color: ColorPrimary,
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              )
-                                                            : Container(
-                                                                height: 25,
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius: BorderRadius.circular(25),
-                                                                    border: Border.all(color: ColorPrimary)),
+                                                    SizedBox(
+                                                      height: 5,
+                                                    ),
+                                                    Container(
+                                                      width: MediaQuery.of(context).size.width * 0.45,
+                                                      child: RichText(
+                                                        text: TextSpan(
+                                                          children: [
+                                                            TextSpan(
+                                                                text:
+                                                                    "₹ ${purchasedList[index].price == "0" ? purchasedList[index].total : purchasedList[index].price}\t" +
+                                                                        " ",
+                                                                style: TextStyle(
+                                                                    color: ColorPrimary,
+                                                                    fontSize: 18,
+                                                                    fontWeight: FontWeight.bold)),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 5,
+                                                    ),
+                                                    Container(
+                                                      width: MediaQuery.of(context).size.width * 0.45,
+                                                      child: Text(
+                                                        DateFormat("dd MMM").format(
+                                                                DateTime.parse(purchasedList[index].dateTime)) +
+                                                            " " +
+                                                            DateFormat.jm()
+                                                                .format(
+                                                                    DateTime.parse(purchasedList[index].dateTime))
+                                                                .toLowerCase(),
+                                                        style: TextStyle(
+                                                            fontSize: 13,
+                                                            fontWeight: FontWeight.bold,
+                                                            color: TextBlackLight),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                                Column(
+                                                  children: [
+                                                    purchasedList[index].checked != true
+                                                        ? InkWell(
+                                                            onTap: () async {
+                                                              if (await Network.isConnected()) {
+                                                                saleReturnBloc.add(SaleReturnCheckBoxEvent(
+                                                                    isChecked: true, index: index));
+                                                              } else {
+                                                                Utility.showToast(
+                                                                  msg: "please_check_your_internet_connection_key"
+                                                                      .tr(),
+                                                                );
+                                                              }
+                                                            },
+                                                            child: Container(
+                                                              height: 25,
+                                                              width: 71,
+                                                              decoration: BoxDecoration(
+                                                                  color: Buttonactive,
+                                                                  borderRadius: BorderRadius.circular(25),
+                                                                  border: Border.all(color: ColorPrimary)),
+                                                              child: Center(
                                                                 child: Row(
-                                                                  mainAxisSize: MainAxisSize.min,
+                                                                  mainAxisAlignment: MainAxisAlignment.center,
                                                                   children: [
-                                                                    Container(
-                                                                      width: 23,
-                                                                      child: IconButton(
-                                                                          padding: EdgeInsets.all(0),
-                                                                          onPressed: () {
-                                                                            saleReturnBloc.add(
-                                                                              SaleReturnQtyDecrementEvent(
-                                                                                  count: 1, index: index),
-                                                                            );
-
-                                                                            if (purchasedList[index].returnQty <= 1) {
-                                                                              saleReturnBloc.add(
-                                                                                  SaleReturnCheckBoxEvent(
-                                                                                      isChecked: false, index: index));
-                                                                            }
-                                                                          },
-                                                                          iconSize: 20,
-                                                                          splashRadius: 10,
-                                                                          icon: Icon(
-                                                                            Icons.remove,
-                                                                          )),
+                                                                    Text(
+                                                                      "add_key".tr(),
+                                                                      style: TextStyle(
+                                                                          fontSize: 12,
+                                                                          fontWeight: FontWeight.bold,
+                                                                          color: ColorPrimary),
                                                                     ),
-                                                                    Container(
-                                                                      width: 23,
+                                                                    SizedBox(
+                                                                      width: 3,
+                                                                    ),
+                                                                    Icon(
+                                                                      Icons.add,
+                                                                      size: 18,
                                                                       color: ColorPrimary,
-                                                                      child: Center(
-                                                                        child: Text(
-                                                                          "${purchasedList[index].returnQty.toString()}",
-                                                                          style: TextStyle(
-                                                                              color: Colors.white, fontSize: 14),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                    Container(
-                                                                      width: 23,
-                                                                      child: IconButton(
-                                                                        padding: EdgeInsets.all(0),
-                                                                        onPressed: () {
-                                                                          if (purchasedList[index].returnQty <
-                                                                              purchasedList[index].qty) {
-                                                                            saleReturnBloc.add(
-                                                                                SaleReturnQtyIncrementEvent(
-                                                                                    count: 1, index: index));
-                                                                          } else {
-                                                                            Utility.showToast(
-                                                                                msg:
-                                                                                    "you_cant_return_more_then_quantity_key"
-                                                                                        .tr());
-                                                                          }
-                                                                        },
-                                                                        iconSize: 20,
-                                                                        splashRadius: 10,
-                                                                        icon: Icon(
-                                                                          Icons.add,
-                                                                        ),
-                                                                      ),
                                                                     ),
                                                                   ],
                                                                 ),
                                                               ),
-                                                        SizedBox(
-                                                          height: 20,
-                                                        ),
-                                                        purchasedList[index].categoryName.isNotEmpty
-                                                            ? Container(
-                                                                decoration: BoxDecoration(
-                                                                    color: DirectBillTextBgColor,
-                                                                    borderRadius: BorderRadius.circular(20)),
-                                                                child: Padding(
-                                                                  padding: const EdgeInsets.all(2),
-                                                                  child: Text(
-                                                                    "  ${"direct_billing_key".tr()}  ",
-                                                                    style: TextStyle(
-                                                                        fontSize: 11, color: DirectBillingTextColor),
+                                                            ),
+                                                          )
+                                                        : Container(
+                                                            height: 25,
+                                                            decoration: BoxDecoration(
+                                                                borderRadius: BorderRadius.circular(25),
+                                                                border: Border.all(color: ColorPrimary)),
+                                                            child: Row(
+                                                              mainAxisSize: MainAxisSize.min,
+                                                              children: [
+                                                                Container(
+                                                                  width: 23,
+                                                                  child: IconButton(
+                                                                      padding: EdgeInsets.all(0),
+                                                                      onPressed: () {
+                                                                        saleReturnBloc.add(
+                                                                          SaleReturnQtyDecrementEvent(
+                                                                              count: 1, index: index),
+                                                                        );
+
+                                                                        if (purchasedList[index].returnQty <= 1) {
+                                                                          saleReturnBloc.add(
+                                                                              SaleReturnCheckBoxEvent(
+                                                                                  isChecked: false, index: index));
+                                                                        }
+                                                                      },
+                                                                      iconSize: 20,
+                                                                      splashRadius: 10,
+                                                                      icon: Icon(
+                                                                        Icons.remove,
+                                                                      )),
+                                                                ),
+                                                                Container(
+                                                                  width: 23,
+                                                                  color: ColorPrimary,
+                                                                  child: Center(
+                                                                    child: Text(
+                                                                      "${purchasedList[index].returnQty.toString()}",
+                                                                      style: TextStyle(
+                                                                          color: Colors.white, fontSize: 14),
+                                                                    ),
                                                                   ),
                                                                 ),
-                                                              )
-                                                            : SizedBox(
-                                                          height: 18,
-                                                        ),
-                                                      ],
-                                                    )
+                                                                Container(
+                                                                  width: 23,
+                                                                  child: IconButton(
+                                                                    padding: EdgeInsets.all(0),
+                                                                    onPressed: () {
+                                                                      if (purchasedList[index].returnQty <
+                                                                          purchasedList[index].qty) {
+                                                                        saleReturnBloc.add(
+                                                                            SaleReturnQtyIncrementEvent(
+                                                                                count: 1, index: index));
+                                                                      } else {
+                                                                        Utility.showToast(
+                                                                            msg:
+                                                                                "you_cant_return_more_then_quantity_key"
+                                                                                    .tr());
+                                                                      }
+                                                                    },
+                                                                    iconSize: 20,
+                                                                    splashRadius: 10,
+                                                                    icon: Icon(
+                                                                      Icons.add,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                    SizedBox(
+                                                      height: 20,
+                                                    ),
+                                                    purchasedList[index].categoryName.isNotEmpty
+                                                        ? Container(
+                                                            decoration: BoxDecoration(
+                                                                color: DirectBillTextBgColor,
+                                                                borderRadius: BorderRadius.circular(20)),
+                                                            child: Padding(
+                                                              padding: const EdgeInsets.all(2),
+                                                              child: Text(
+                                                                "  ${"direct_billing_key".tr()}  ",
+                                                                style: TextStyle(
+                                                                    fontSize: 11, color: DirectBillingTextColor),
+                                                              ),
+                                                            ),
+                                                          )
+                                                        : SizedBox(
+                                                      height: 18,
+                                                    ),
                                                   ],
-                                                ),
-                                              ),
+                                                )
+                                              ],
                                             ),
-                                          ],
+                                          ),
                                         ),
-                                      ),
+                                      ],
                                     ),
-                                  ],
+                                  ),
                                 );
                               },
                               separatorBuilder: (context, index) {

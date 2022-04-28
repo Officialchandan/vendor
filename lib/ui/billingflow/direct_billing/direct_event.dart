@@ -47,3 +47,19 @@ class GetDirectBillingCategoryEvent
     extends DirectBillingCustomerNumberResponseEvent {
   GetDirectBillingCategoryEvent();
 }
+
+class GetDirectBillingCheckBoxEvent
+    extends DirectBillingCustomerNumberResponseEvent {
+  final int index;
+  final bool isChecked;
+  GetDirectBillingCheckBoxEvent({required this.index, required this.isChecked});
+  @override
+  List<Object> get props => [isChecked, index];
+}
+class GetDirectBillingRedeemCheckBoxEvent
+    extends DirectBillingCustomerNumberResponseEvent {
+  final bool isChecked;
+  GetDirectBillingRedeemCheckBoxEvent({required this.isChecked});
+  @override
+  List<Object> get props => [isChecked];
+}
