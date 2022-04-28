@@ -757,11 +757,6 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
                             ),
                             Row(
                               children: [
-                                Image.asset(
-                                  "assets/images/point.png",
-                                  width: 14,
-                                  height: 14,
-                                ),
                                 netBalance == 0
                                     ? Text(
                                         "\u20B9 $amtPaid",
@@ -769,7 +764,7 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
                                             TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
                                       )
                                     : Text(
-                                        "\u20B9 ${(amtPaid - netBalance).toStringAsFixed(2)}",
+                                        "\u20B9 ${(amtPaid - (netBalance / 3)).toStringAsFixed(2)}",
                                         style:
                                             TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
                                       ),
@@ -784,7 +779,7 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
-                              "${"sum_key".tr()} (\u20B9 $amtPaid  - \u20B9 $netBalance = \u20B9 ${(amtPaid - netBalance).toStringAsFixed(2)})",
+                              "${"sum_key".tr()} (\u20B9 ${(amtPaid).toStringAsFixed(2)}  - \u20B9 ${(netBalance / 3).toStringAsFixed(2)} = \u20B9 ${(amtPaid - netBalance / 3).toStringAsFixed(2)})",
                               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey),
                             ),
                           ],
@@ -829,7 +824,7 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
                               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
                             ),
                             Text(
-                              "\u20B9${details!.amountPaidToVendor}",
+                              "\u20B9${details!.amountPaidToMyProfit}",
                               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
                             ),
                           ],
@@ -845,7 +840,7 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
                               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
                             ),
                             Text(
-                              "\u20B9 ${details!.amountPaidToMyProfit}",
+                              "\u20B9 ${details!.amountPaidToVendor}",
                               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
                             )
                             /* widget.order.orderType == 1
@@ -909,7 +904,7 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
                                 style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
                               ),
                               Text(
-                                "\u20B9 $finalamount",
+                                "\u20B9 ${finalamount.toStringAsFixed(2)}",
                                 style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
                               ),
                             ],
@@ -989,7 +984,6 @@ class DirectBillingListItem extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: Container(
-                          color: Colors.amber,
                           child: Image.asset(
                             "assets/images/account-ic6.png",
                             height: 45,

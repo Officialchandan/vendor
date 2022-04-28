@@ -765,11 +765,6 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                             ),
                             Row(
                               children: [
-                                Image.asset(
-                                  "assets/images/point.png",
-                                  width: 14,
-                                  height: 14,
-                                ),
                                 netBalance == 0
                                     ? Text(
                                         "\u20B9 $amtPaid",
@@ -777,7 +772,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                                             TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
                                       )
                                     : Text(
-                                        "\u20B9 ${(amtPaid - netBalance).toStringAsFixed(2)}",
+                                        "\u20B9 ${(amtPaid - (netBalance / 3)).toStringAsFixed(2)}",
                                         style:
                                             TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
                                       ),
@@ -792,7 +787,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
-                              "${"sum_key".tr()} (\u20B9 ${amtPaid.toStringAsFixed(2)}  - \u20B9 ${(netBalance / 3).toStringAsFixed(2)} = \u20B9 ${(amtPaid - netBalance).toStringAsFixed(2)})",
+                              "${"sum_key".tr()} (\u20B9 ${(amtPaid).toStringAsFixed(2)}  - \u20B9 ${(netBalance / 3).toStringAsFixed(2)} = \u20B9 ${(amtPaid - netBalance / 3).toStringAsFixed(2)})",
                               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey),
                             ),
                           ],
@@ -837,7 +832,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
                             ),
                             Text(
-                              "\u20B9${(double.parse(details!.amountPaidToVendor) / 3).toStringAsFixed(2)}",
+                              "\u20B9 ${details!.amountPaidToMyProfit}",
                               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
                             ),
                           ],
@@ -853,7 +848,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
                             ),
                             Text(
-                              "\u20B9 ${details!.amountPaidToMyProfit}",
+                              "\u20B9 ${details!.amountPaidToVendor}",
                               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
                             )
                             /* widget.order.orderType == 1
@@ -1021,7 +1016,7 @@ class DirectBillingListItem extends StatelessWidget {
                                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black87),
                                 ),
                                 Text(
-                                  "\u20B9 ${detail.total}",
+                                  "\u20B9 ${detail.amountPaid}",
                                   style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: ColorPrimary),
                                 ),
                               ],
