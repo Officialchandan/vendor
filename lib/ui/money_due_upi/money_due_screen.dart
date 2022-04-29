@@ -620,7 +620,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                                   child: Column(
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
-                                                      Text("redeem_coins_key".tr(),
+                                                      Text("redeem_coins_history_key".tr(),
                                                           style: TextStyle(
                                                               color: Colors.black,
                                                               fontSize: 16.3,
@@ -628,9 +628,6 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                                       SizedBox(
                                                         height: 5,
                                                       ),
-                                                      SizedBox(
-                                                        height: 10,
-                                                      )
                                                     ],
                                                   ),
                                                 ),
@@ -975,9 +972,6 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                                     SizedBox(
                                                       height: 5,
                                                     ),
-                                                    SizedBox(
-                                                      height: 10,
-                                                    )
                                                   ],
                                                 ),
                                               ),
@@ -1288,7 +1282,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                                   child: Column(
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
-                                                      Text("redeem_coins_key".tr(),
+                                                      Text("redeem_coins_history_key".tr(),
                                                           style: TextStyle(
                                                               color: Colors.black,
                                                               fontSize: 16.3,
@@ -1296,9 +1290,6 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                                       SizedBox(
                                                         height: 5,
                                                       ),
-                                                      SizedBox(
-                                                        height: 10,
-                                                      )
                                                     ],
                                                   ),
                                                 ),
@@ -1418,7 +1409,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                                       Text("free_coins_key".tr(),
                                                           style: TextStyle(
                                                               color: Colors.black,
-                                                              fontSize: 14.3,
+                                                              fontSize: 15,
                                                               fontWeight: FontWeight.w600)),
                                                       SizedBox(
                                                         height: 5,
@@ -1615,7 +1606,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                 shape: RoundedRectangleBorder(),
                 child: Text(
                   "upi_transfer_key".tr(),
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ));
         }));
@@ -1676,7 +1667,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                     child: new Text(
                       "done_key".tr(),
                       style: GoogleFonts.openSans(
-                          fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
+                          fontSize: 18, fontWeight: FontWeight.bold, decoration: TextDecoration.none),
                     ),
                   ),
                 ),

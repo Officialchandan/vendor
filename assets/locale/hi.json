@@ -398,8 +398,9 @@
   "product_return_successfully":"उत्पाद वापसी सफलतापूर्वक",
   "rejected_key":"अस्वीकृत",
   "accepted_key":"स्वीकृत",
-  "daily_ledger_key":"दैनिक खाता बही",
-  "daily_ledger_details_key":"दैनिक लेजर विवरण",
+  "redeem_coins_history_key": "सिक्कों का इतिहास भुनाएं",
+  "daily_ledger_key":"निपटान खाता बही",
+  "daily_ledger_details_key":"निपटान लेजर विवरण",
   "you_cant_return_more_then_quantity_key":"आप मात्रा से अधिक नहीं लौटा सकते",
   "enter_mobile_to_get_purchase_product": "खरीदे गए उत्पाद को प्राप्त करने के लिए मोबाइल नंबर दर्ज करें",
   "click_btn_to_add_new_variant": "नया संस्करण जोड़ने के लिए बटन पर क्लिक करें",
@@ -408,5 +409,16 @@
   "net_payable_key": "शुद्ध देय राशि",
   "coin_generated_successfully_key": "सिक्के सफलतापूर्वक उत्पन्न हुए",
   "in_customer_wallet_key": "ग्राहक वॉलेट में",
-  "earned_coins_key": "अर्जित सिक्के"
+  "earned_coins_key": "अर्जित सिक्के",
+
+  "insufficient_coin_balance_warning_key": "चेतावनी! अपर्याप्त सिक्का संतुलन",
+  "return_summary_key": "वापसी सारांश",
+  "customer_amt_paid_key": "ग्राहक राशि का भुगतान",
+  "customer_redemption_key": "राहक मोचन",
+  "coin_earned_by_customer_key": "ग्राहक द्वारा अर्जित सिक्का",
+  "current_coin_balance_key": "वर्तमान सिक्का शेष",
+  "collection_amt_in_cash_key": "संग्रह राशि (नकद)",
+  "net_return_amt_key": "शुद्ध वापसी राशि",
+  "collection_amt_key": "संग्रह राशि",
+  "amount_paid_key": "राशि का भुगतान"
 }
