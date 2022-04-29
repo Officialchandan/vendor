@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:store_redirect/store_redirect.dart';
 import 'package:vendor/main.dart';
@@ -10,6 +11,7 @@ import 'package:vendor/model/validate_app_version.dart';
 import 'package:vendor/ui/home/home.dart';
 import 'package:vendor/ui/login/login_screen.dart';
 import 'package:vendor/ui_without_inventory/home/home.dart';
+import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/routs.dart';
 import 'package:vendor/utility/sharedpref.dart';
@@ -151,26 +153,44 @@ class _SplashScreenState extends State<SplashScreen> {
           refresh();
         },
         child: Scaffold(
-          body: SafeArea(
-            child: Stack(children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Image.asset('assets/images/splash-top.png', width: deviceWidth * 0.35),
-                  ),
-                  Image.asset('assets/images/splash-bottom.png', width: double.infinity),
-                ],
+          backgroundColor: ColorBagroundPrimary,
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(0),
+            child: AppBar(
+              elevation: 0,
+              systemOverlayStyle: SystemUiOverlayStyle(
+                statusBarColor: ColorBagroundPrimary,
               ),
-              Positioned(
-                  child: Center(
-                child: Image.asset(
-                  'assets/images/logo.png',
-                  height: deviceHeight * 0.40,
-                ),
-              )),
-            ]),
+              backgroundColor: ColorBagroundPrimary,
+            ),
+          ),
+          body: SafeArea(
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              child: Image.asset(
+                "assets/images/newlogo.png",
+                scale: 3.5,
+              ),
+            ),
+            // child: Stack(children: [
+            //   Column(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       Align(
+            //         alignment: Alignment.topLeft,
+            //         child: Image.asset('assets/images/splash-top.png', width: deviceWidth * 0.35),
+            //       ),
+            //       Image.asset('assets/images/splash-bottom.png', width: double.infinity),
+            //     ],
+            //   ),
+            //   Positioned(
+            //       child: Center(
+            //     child: Image.asset(
+            //       'assets/images/logo.png',
+            //       height: deviceHeight * 0.40,
+            //     ),
+            //   )),
+            // ]),
           ),
         ));
   }
