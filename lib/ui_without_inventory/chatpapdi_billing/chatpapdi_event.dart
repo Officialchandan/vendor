@@ -39,3 +39,11 @@ class GetChatPapdiPartialUserRegisterEvent
   @override
   List<Object> get props => [input];
 }
+
+class ChatPapdiCheckBoxEvent
+    extends ChatPapdiBillingCustomerNumberResponseEvent {
+  final bool isChecked;
+  ChatPapdiCheckBoxEvent({required this.isChecked});
+  @override
+  List<Object> get props => [isChecked];
+}

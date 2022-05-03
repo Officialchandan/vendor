@@ -43,6 +43,10 @@ class ChatPapdiBillingCustomerNumberResponseBloc
     if (event is GetChatPapdiPartialUserRegisterEvent) {
       yield* getChatPapdiPartialUserRegister(event.input);
     }
+    if(event is ChatPapdiCheckBoxEvent){
+      yield GetChatPapdiPartialUserLoadingstate();
+      yield ChatPapdiCheckboxState(isChecked: event.isChecked);
+    }
   }
 
   Stream<ChatPapdiBillingCustomerNumberResponseState> getChatPapdiBillingCustomerNumberResponse(mobile) async* {

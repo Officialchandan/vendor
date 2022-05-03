@@ -113,7 +113,7 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
             },
             child: Column(children: [
               Padding(
-                padding: const EdgeInsets.only(left: 15.0, right: 15, top: 15),
+                padding: const EdgeInsets.all(14),
                 child: TextFormField(
                   cursorColor: ColorPrimary,
                   controller: _searchController,
@@ -160,10 +160,6 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                       child: Center(child: CircularProgressIndicator()));
                 }
 
-                // if (_commonLedgerHistory == null) {
-                //   log("===>$_commonLedgerHistory");
-                //   return Center(child: CircularProgressIndicator());
-                // }
                 if (state is GetFreeCoinHistoryFailureState) {
                   return Center(
                     child: Image.asset("assets/images/no_data.gif"),
@@ -186,9 +182,8 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                         log("how much -->${state.searchword}");
                       }
                     });
-                    if (list == null) {
-                      return Container(
-                        height: MediaQuery.of(context).size.height,
+                    if (list.isEmpty) {
+                      return Center(
                         child: Image.asset("assets/images/no_data.gif"),
                       );
                     } else {
@@ -221,118 +216,107 @@ class _ListWidgetState extends State<ListWidget> {
     return Expanded(
       child: ListView.builder(
           itemCount: widget.searchList.length,
-          padding: EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 5),
           itemBuilder: (context, index) {
-            return Container(
-              margin: EdgeInsets.symmetric(vertical: 5),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
-                    spreadRadius: 2,
-                    blurRadius: 10,
-                    offset: Offset(0, 0), // changes position of shadow
-                  ),
-                ],
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: ClipRRect(
+            return
+             ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Stack(
                   children: [
                     Container(
-                      margin: EdgeInsets.only(top: 20),
-                      padding: EdgeInsets.only(bottom: 12, top: 3),
-                      // height: 70,
-                      // decoration: BoxDecoration(
-                      //     borderRadius: BorderRadius.circular(10),
-                      //     color: Colors.white,
-                      //     border: Border.all(color: Colors.white38),
-                      //     boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 1.0, spreadRadius: 1)]),
+                      margin: const EdgeInsets.symmetric(horizontal: 14,
+                          vertical: 10),
+                      height: 80,
+                      padding: const EdgeInsets.all(14),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.shade300,
+                            offset: Offset(0.0, 0.0), //(x,y)
+                            blurRadius: 7.0,
+                          ),
+                        ],
+                      ),
                       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                         Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "    +91 ${widget.searchList[index].mobile}",
-                                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                                "+91 ${widget.searchList[index].mobile}",
+                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
                               ),
                               Text(
-                                "    ${DateFormat("yyyy MM dd ").format(widget.searchList[index].dateTime)}(${DateFormat.jm().format(widget.searchList[index].dateTime)})",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                ),
+                                "${DateFormat("yyyy MM dd ").format(widget.searchList[index].dateTime)}(${DateFormat.jm().format(widget.searchList[index].dateTime)})",
+                                style: TextStyle(fontSize: 13, color: TextGrey, fontWeight: FontWeight.bold),
                               ),
-                            ]),
-                        Row(
-                          children: [
-                            Center(
-                              child: widget.searchList[index].status == 1
-                                  ? Container(
-                                      padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(20), color: PendingTextBgColor),
-                                      child: Text(
-                                        "pending_key".tr(),
-                                        style: TextStyle(
-                                            color: PendingTextColor, fontSize: 10, fontWeight: FontWeight.w400),
-                                      ),
-                                    )
-                                  : Container(
-                                      padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(20), color: ApproveTextBgColor),
-                                      child: Text(
-                                        "paid_key".tr(),
-                                        style: TextStyle(
-                                            color: ApproveTextColor, fontSize: 10, fontWeight: FontWeight.w400),
-                                      ),
-                                    ),
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Container(
-                              width: 90,
-                            )
-                          ],
+                            ]
                         ),
-                      ]),
-                    ),
-                    Positioned(
-                      right: 0,
-                      top: 0,
-                      child: Container(
-                        alignment: Alignment.center,
-                        width: 90,
-                        height: 76,
-                        decoration: BoxDecoration(
-                            color: widget.searchList[index].status == 1 ? RejectedTextBgColor : GreenBoxBgColor,
-                            borderRadius:
-                                BorderRadius.only(bottomRight: Radius.circular(10), topRight: Radius.circular(10))),
-                        child: Text(
+                        Text(
                           " \u20B9 ${widget.searchList[index].myprofitRevenue} ",
-                          style: TextStyle(
+                          style: GoogleFonts.openSans(
                               fontWeight: FontWeight.bold,
-                              fontSize: 14,
+                              fontSize: 20,
                               color: widget.searchList[index].status == 1 ? RejectedBoxTextColor : GreenBoxTextColor),
                         ),
-                      ),
-                    )
+                        // Row(
+                        //   children: [
+                        //     Center(
+                        //       child: widget.searchList[index].status == 1
+                        //           ? Container(
+                        //               padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
+                        //               decoration: BoxDecoration(
+                        //                   borderRadius: BorderRadius.circular(20), color: PendingTextBgColor),
+                        //               child: Text(
+                        //                 "pending_key".tr(),
+                        //                 style: TextStyle(
+                        //                     color: PendingTextColor, fontSize: 10, fontWeight: FontWeight.w400),
+                        //               ),
+                        //             )
+                        //           : Container(
+                        //               padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+                        //               decoration: BoxDecoration(
+                        //                   borderRadius: BorderRadius.circular(20), color: ApproveTextBgColor),
+                        //               child: Text(
+                        //                 "paid_key".tr(),
+                        //                 style: TextStyle(
+                        //                     color: ApproveTextColor, fontSize: 10, fontWeight: FontWeight.w400),
+                        //               ),
+                        //             ),
+                        //     ),
+                        //     SizedBox(
+                        //       width: 5,
+                        //     ),
+                        //     Container(
+                        //       width: 90,
+                        //     )
+                        //   ],
+                        // ),
+                      ]),
+                    ),
+                    // Positioned(
+                    //   right: 0,
+                    //   top: 0,
+                    //   child: Container(
+                    //     alignment: Alignment.center,
+                    //     width: 90,
+                    //     height: 76,
+                    //     decoration: BoxDecoration(
+                    //         color: widget.searchList[index].status == 1 ? RejectedTextBgColor : GreenBoxBgColor,
+                    //         borderRadius:
+                    //             BorderRadius.only(bottomRight: Radius.circular(10), topRight: Radius.circular(10))),
+                    //     child: Text(
+                    //       " \u20B9 ${widget.searchList[index].myprofitRevenue} ",
+                    //       style: TextStyle(
+                    //           fontWeight: FontWeight.bold,
+                    //           fontSize: 14,
+                    //           color: widget.searchList[index].status == 1 ? RejectedBoxTextColor : GreenBoxTextColor),
+                    //     ),
+                    //   ),
+                    // )
                   ],
-                ),
-              ),
-            );
-            // Positioned(
-            //     top: 10,
-            //     left: 0,
-            //
-            //
-            // ),
-
-            // ]);
+                ),);
           }),
     );
   }

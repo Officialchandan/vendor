@@ -126,4 +126,12 @@ class GetChatPapdiPartialUserFailureState
       {required this.message, required this.succes});
   @override
   List<Object?> get props => [message, succes];
+
+}
+
+class ChatPapdiCheckboxState extends ChatPapdiBillingCustomerNumberResponseState{
+  final bool isChecked;
+  ChatPapdiCheckboxState({required this.isChecked});
+  @override
+  List<Object?> get props => [isChecked];
 }

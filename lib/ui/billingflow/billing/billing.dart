@@ -6,6 +6,7 @@ import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:vendor/model/get_categories_response.dart';
@@ -399,21 +400,47 @@ class _BillingScreenState extends State<BillingScreen> {
                                 );
                               }
                             },
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height * 0.065,
-                              padding: EdgeInsets.only(left: 10),
-                              color: Colors.grey[300],
-                              child: Row(
-                                children: [
-                                  Icon(Icons.search, color: TextBlackLight),
-                                  Text(
-                                    "search_all_products_key".tr(),
-                                    style: TextStyle(fontSize: 16, color: TextBlackLight, fontWeight: FontWeight.bold),
-                                  )
-                                ],
+                            child: TextFormField(
+                              cursorColor: ColorPrimary,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(
+                                  Icons.search,
+                                  color: Colors.black,
+                                ),
+                                filled: true,
+                                enabled: false,
+                                // fillColor: Colors.black,
+                                hintText: "search_all_products_key".tr(),
+                                hintStyle: GoogleFonts.openSans(fontWeight: FontWeight.w600, color: Colors.black),
+                                contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
                               ),
+                              onChanged: (text) {
+                              },
                             ),
+                            // Container(
+                            //   width: MediaQuery.of(context).size.width,
+                            //   height: MediaQuery.of(context).size.height * 0.065,
+                            //   padding: EdgeInsets.only(left: 10),
+                            //   color: Colors.grey[300],
+                            //   child: Row(
+                            //     children: [
+                            //       Icon(Icons.search, color: TextBlackLight),
+                            //       Text(
+                            //         "search_all_products_key".tr(),
+                            //         style: TextStyle(fontSize: 16, color: TextBlackLight, fontWeight: FontWeight.bold),
+                            //       )
+                            //     ],
+                            //   ),
+                            // ),
                           ),
                           SizedBox(
                             height: 14,

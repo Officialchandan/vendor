@@ -18,6 +18,7 @@ import 'package:vendor/ui/money_due_upi/daily_ledger/daily_ledger.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/upi/bloc/due_amount_bloc.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/upi/bloc/due_amount_event.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/upi/bloc/due_amount_state.dart';
+import 'package:vendor/ui_without_inventory/performancetracker/upi/daily_ledger_withoutinventory/daily_ledger_withoutinventory.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/upi/free_coins/free_coin_history.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/upi/master_ledger/master_ledger_detail.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/upi/redeem_coins/redeem_coin_history.dart';
@@ -125,7 +126,7 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
             systemOverlayStyle: SystemUiOverlayStyle(
               statusBarColor: condition == 0 ? ApproveTextColor : ColorPrimary,
             ),
-            title: Text("money_due_upi_key".tr()),
+            title: Text("money_due_upi_key".tr(),style: TextStyle(fontWeight: FontWeight.bold),),
             elevation: 0,
             backgroundColor: condition == 0 ? ApproveTextColor : ColorPrimary,
           ),
@@ -216,7 +217,7 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                           padding: const EdgeInsets.all(15.0),
                           child: Text(
                             "types_of_money_due_key".tr(),
-                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
+                            style: GoogleFonts.openSans(color: TextBlackLight, fontWeight: FontWeight.w700, fontSize: 17),
                           ),
                         ),
                         Padding(
@@ -261,9 +262,8 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                                             SizedBox(
                                               height: 5,
                                             ),
-                                            Text("normal_ledger_key".tr(),
-                                                style: TextStyle(
-                                                    color: Colors.black, fontSize: 16.3, fontWeight: FontWeight.w600)),
+                                            Text("master_ledger_key".tr(),
+                                               style: GoogleFonts.openSans(color: TextBlackLight, fontWeight: FontWeight.w700, fontSize: 15),),
                                             SizedBox(
                                               height: 10,
                                             )
@@ -329,7 +329,7 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                               GestureDetector(
                                 onTap: () {
                                   Navigator.push(
-                                      context, PageTransition(child: DailyLedger(), type: PageTransitionType.fade));
+                                      context, PageTransition(child: DailyLedgerWithoutInventory(), type: PageTransitionType.fade));
                                 },
                                 child: Stack(
                                   clipBehavior: Clip.none,
@@ -357,9 +357,8 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text("Daily Ledger".tr(),
-                                              style: TextStyle(
-                                                  color: Colors.black, fontSize: 16.3, fontWeight: FontWeight.w600)),
+                                          Text("daily_ledger_key".tr(),
+                                            style: GoogleFonts.openSans(color: TextBlackLight, fontWeight: FontWeight.w700, fontSize: 15),),
                                           SizedBox(
                                             height: 10,
                                           )
@@ -463,8 +462,7 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text("upi_transfer_key".tr(),
-                                              style: TextStyle(
-                                                  color: Colors.black, fontSize: 16.3, fontWeight: FontWeight.w600)),
+                                            style: GoogleFonts.openSans(color: TextBlackLight, fontWeight: FontWeight.w700, fontSize: 15),),
                                           SizedBox(
                                             height: 5,
                                           ),
@@ -564,8 +562,7 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Text("redeem_coins_key".tr(),
-                                                style: TextStyle(
-                                                    color: Colors.black, fontSize: 16.3, fontWeight: FontWeight.w600)),
+                                              style: GoogleFonts.openSans(color: TextBlackLight, fontWeight: FontWeight.w700, fontSize: 15),),
                                             SizedBox(
                                               height: 5,
                                             ),
@@ -693,10 +690,7 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text("free_coins_key".tr(),
-                                                  style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize: 16.3,
-                                                      fontWeight: FontWeight.w600)),
+                                                style: GoogleFonts.openSans(color: TextBlackLight, fontWeight: FontWeight.w700, fontSize: 15),),
                                               SizedBox(
                                                 height: 5,
                                               ),

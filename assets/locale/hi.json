@@ -400,6 +400,7 @@
   "accepted_key":"स्वीकृत",
   "redeem_coins_history_key": "सिक्कों का इतिहास भुनाएं",
   "daily_ledger_key":"निपटान खाता बही",
+  "return_ledger_key": "रिटर्न लेजर",
   "daily_ledger_details_key":"निपटान लेजर विवरण",
   "you_cant_return_more_then_quantity_key":"आप मात्रा से अधिक नहीं लौटा सकते",
   "enter_mobile_to_get_purchase_product": "खरीदे गए उत्पाद को प्राप्त करने के लिए मोबाइल नंबर दर्ज करें",

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/model/normal_ladger_response.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_bloc/normal_ledger_bloc.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_bloc/normal_ledger_event.dart';
@@ -37,7 +38,7 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
   List<OrderData> searchList = [];
 
   List<OrderData> orderList = [];
-
+  RefreshController _refreshController = RefreshController(initialRefresh: false);
   NormalLedgerHistoryBloc _normalLedgerHistoryBloc = NormalLedgerHistoryBloc();
   TextEditingController _searchController = TextEditingController();
   @override
@@ -57,6 +58,7 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
     input["from_date"] = startDate.isEmpty ? "" : startDate.toString();
     input["to_date"] = endDate.isEmpty ? startDate.toString() : endDate.toString();
     _normalLedgerHistoryBloc.add(GetNormalLedgerHistoryEvent(input: input));
+    _refreshController.refreshCompleted();
   }
 
   @override
@@ -103,200 +105,205 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
               ),
             ],
           ),
-          body: Column(children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 15.0, right: 15, top: 15),
-              child: TextFormField(
-                cursorColor: ColorPrimary,
-                controller: _searchController,
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                decoration: InputDecoration(
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: Colors.black,
-                  ),
-                  filled: true,
-                  // fillColor: Colors.black,
-                  hintText: "search_here_key".tr(),
-                  hintStyle: GoogleFonts.openSans(fontWeight: FontWeight.w600, color: Colors.black),
-                  contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                    borderRadius: BorderRadius.circular(5),
+          body: SmartRefresher(
+              controller: _refreshController,
+              enablePullDown: true,
+              enablePullUp: false,
+              onRefresh: () {
+                normalLedgerApiCall(context);},
+            child: Column(
+                  children: [
+                Padding(
+                  padding: const EdgeInsets.all(14),
+                  child: TextFormField(
+                    cursorColor: ColorPrimary,
+                    controller: _searchController,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: Colors.black,
+                      ),
+                      filled: true,
+                      // fillColor: Colors.black,
+                      hintText: "search_here_key".tr(),
+                      hintStyle: GoogleFonts.openSans(fontWeight: FontWeight.w600, color: Colors.black),
+                      contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                    onChanged: (text) {
+                      _normalLedgerHistoryBloc.add(GetFindUserEvent(searchkeyword: text));
+                    },
                   ),
                 ),
-                onChanged: (text) {
-                  _normalLedgerHistoryBloc.add(GetFindUserEvent(searchkeyword: text));
-                },
-              ),
-            ),
-            BlocBuilder<NormalLedgerHistoryBloc, NormalLedgerHistoryState>(builder: (context, state) {
-              log("state===>$state");
-              if (state is GetNormalLedgerHistoryInitialState) {
-                normalLedgerApiCall(context);
-              }
-              /* if (state is GetNormalLedgerHistoryState) {
-                _commonLedgerHistory = state.data!;
-              }*/
-              if (state is GetNormalLedgerState) {
-                orderList = state.orderList;
-                searchList = orderList;
-              }
-              if (state is GetNormalLedgerHistoryFailureState) {
-                return Container(
-                  height: MediaQuery.of(context).size.height * 0.80,
-                  child: Image.asset("assets/images/no_data.gif"),
-                );
-              }
-              if (orderList.isEmpty) {
-                log("===>$_commonLedgerHistory");
-                return Container(
-                    height: MediaQuery.of(context).size.height * 0.80,
-                    child: Center(child: CircularProgressIndicator()));
-              }
-              if (state is GetNormalLedgerUserSearchState) {
-                if (state.searchword.isEmpty) {
-                  searchList = orderList;
-                } else {
-                  List<OrderData> list = [];
-                  orderList.forEach((element) {
-                    if (element.mobile.toLowerCase().contains(state.searchword.toLowerCase())) {
-                      list.add(element);
-                      log("how much -->${state.searchword}");
+                Expanded(
+                  child: BlocBuilder<NormalLedgerHistoryBloc, NormalLedgerHistoryState>(builder: (context, state) {
+                    log("state===>$state");
+                    if (state is GetNormalLedgerHistoryInitialState) {
+                      normalLedgerApiCall(context);
                     }
-                  });
-                  if (list == null || list.isEmpty) {
-                    return Center(
-                      child: Image.asset("assets/images/no_data.gif"),
-                    );
-                  } else {
-                    searchList = list;
-                  }
-                }
-              }
-
-              return Expanded(
-                child: ListView.builder(
-                    itemCount: searchList.length,
-                    padding: EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 5),
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        splashColor: Colors.transparent,
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => NormalLedgerDetails(
-                                        // commonLedgerHistory: _commonLedgerHistory!,
-                                        order: searchList[index],
-                                      )));
-                        },
-                        child: Stack(children: [
-                          Container(
-                            margin: EdgeInsets.only(top: 5, bottom: 5, left: 8, right: 2),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.shade300,
-                                  offset: Offset(0.0, 0.0), //(x,y)
-                                  blurRadius: 7.0,
-                                ),
-                              ],
-                            ),
-                            child: Container(
-                              margin: EdgeInsets.only(
-                                top: 10,
-                              ),
-                              padding: EdgeInsets.only(bottom: 11, top: 3, left: 7, right: 10),
-                              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "    +91 ${searchList[index].mobile}",
-                                        style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    /* if (state is GetNormalLedgerHistoryState) {
+                      _commonLedgerHistory = state.data!;
+                    }*/
+                    if (state is GetNormalLedgerState) {
+                      orderList = state.orderList;
+                      searchList = orderList;
+                    }
+                    if (state is GetNormalLedgerHistoryFailureState) {
+                      return Container(
+                        height: MediaQuery.of(context).size.height * 0.80,
+                        child: Image.asset("assets/images/no_data.gif"),
+                      );
+                    }
+                    if (orderList.isEmpty) {
+                      log("===>$_commonLedgerHistory");
+                      return Container(
+                          height: MediaQuery.of(context).size.height * 0.80,
+                          child: Center(child: CircularProgressIndicator()));
+                    }
+                    if (state is GetNormalLedgerUserSearchState) {
+                      if (state.searchword.isEmpty) {
+                        searchList = orderList;
+                      } else {
+                        List<OrderData> list = [];
+                        orderList.forEach((element) {
+                          if (element.mobile.toLowerCase().contains(state.searchword.toLowerCase())) {
+                            list.add(element);
+                            log("how much -->${state.searchword}");
+                          }
+                        });
+                        if (list == null || list.isEmpty) {
+                          return Center(
+                            child: Image.asset("assets/images/no_data.gif"),
+                          );
+                        } else {
+                          searchList = list;
+                        }
+                      }
+                    }
+                    return ListView.builder(
+                        itemCount: searchList.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 14,
+                            vertical: 10),
+                            child: InkWell(
+                              splashColor: Colors.transparent,
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => NormalLedgerDetails(
+                                              // commonLedgerHistory: _commonLedgerHistory!,
+                                              order: searchList[index],
+                                            )));
+                              },
+                              child: Stack(children: [
+                                Container(
+                                  height: 80,
+                                  padding: EdgeInsets.all(14),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.shade300,
+                                        offset: Offset(0.0, 0.0), //(x,y)
+                                        blurRadius: 7.0,
                                       ),
-                                      Text(
-                                        "     ${DateFormat("dd MMM yyyy").format(searchList[index].dateTime)}-${DateFormat.jm().format(searchList[index].dateTime)}",
-                                        style: TextStyle(fontSize: 12, color: ColorTextPrimary),
-                                      ),
-                                    ]),
+                                    ],
+                                  ),
+                                  child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                                    Column(
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "     +91 ${searchList[index].mobile}",
+                                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
+                                          ),
+                                          Text(
+                                            "      ${DateFormat("dd MMM yyyy").format(searchList[index].dateTime)}-${DateFormat.jm().format(searchList[index].dateTime)}",
+                                            style: TextStyle(fontSize: 13, color: TextGrey, fontWeight: FontWeight.bold),
+                                          ),
+                                        ]),
 
-                                // Center(
-                                //   child: searchList[index].status == 1
-                                //       ? Container(
-                                //           padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
-                                //           decoration: BoxDecoration(
-                                //               borderRadius: BorderRadius.circular(20),
-                                //               color: PendingTextBgColor),
-                                //           child: Text(
-                                //             "pending_key".tr(),
-                                //             style: TextStyle(
-                                //                 color: PendingTextColor,
-                                //                 fontSize: 10,
-                                //                 fontWeight: FontWeight.w400),
-                                //           ),
-                                //         )
-                                //       : Container(
-                                //           padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
-                                //           decoration: BoxDecoration(
-                                //               borderRadius: BorderRadius.circular(20),
-                                //               color: ApproveTextBgColor),
-                                //           child: Text(
-                                //             "paid_key".tr(),
-                                //             style: TextStyle(
-                                //                 color: ApproveTextColor,
-                                //                 fontSize: 10,
-                                //                 fontWeight: FontWeight.w400),
-                                //           ),
-                                //         ),
-                                // ),
-                                Text(
-                                  " \u20B9 ${searchList[index].myprofitRevenue} ",
-                                  style: GoogleFonts.openSans(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 16,
-                                      color: searchList[index].status == 1 ? RejectedBoxTextColor : GreenBoxTextColor),
+                                    // Center(
+                                    //   child: searchList[index].status == 1
+                                    //       ? Container(
+                                    //           padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
+                                    //           decoration: BoxDecoration(
+                                    //               borderRadius: BorderRadius.circular(20),
+                                    //               color: PendingTextBgColor),
+                                    //           child: Text(
+                                    //             "pending_key".tr(),
+                                    //             style: TextStyle(
+                                    //                 color: PendingTextColor,
+                                    //                 fontSize: 10,
+                                    //                 fontWeight: FontWeight.w400),
+                                    //           ),
+                                    //         )
+                                    //       : Container(
+                                    //           padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+                                    //           decoration: BoxDecoration(
+                                    //               borderRadius: BorderRadius.circular(20),
+                                    //               color: ApproveTextBgColor),
+                                    //           child: Text(
+                                    //             "paid_key".tr(),
+                                    //             style: TextStyle(
+                                    //                 color: ApproveTextColor,
+                                    //                 fontSize: 10,
+                                    //                 fontWeight: FontWeight.w400),
+                                    //           ),
+                                    //         ),
+                                    // ),
+                                    Text(
+                                      " \u20B9 ${searchList[index].myprofitRevenue} ",
+                                      style: GoogleFonts.openSans(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20,
+                                          color: searchList[index].status == 1 ? RejectedBoxTextColor : GreenBoxTextColor),
+                                    ),
+                                  ]),
                                 ),
+                                searchList[index].isReturn == 1
+                                    ? Positioned(
+                                        left: 0,
+                                        bottom: 0,
+                                        child: Container(
+                                          height: 80,
+                                          width: 28,
+                                          decoration: BoxDecoration(
+                                              color: ColorPrimary,
+                                              borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(7), bottomLeft: Radius.circular(7))),
+                                          child: RotatedBox(
+                                            quarterTurns: 3,
+                                            child: Center(
+                                              child: Text("return_key".tr(),
+                                                  style: TextStyle(
+                                                      color: Colors.white, fontSize: 14, fontWeight: FontWeight.w400)),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    : Container(),
                               ]),
                             ),
-                          ),
-                          searchList[index].isReturn == 1
-                              ? Positioned(
-                                  top: -10,
-                                  left: 0,
-                                  child: Container(
-                                    height: 60,
-                                    width: 25,
-                                    decoration: BoxDecoration(
-                                        color: ColorPrimary,
-                                        borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(7), bottomLeft: Radius.circular(7))),
-                                    margin: EdgeInsets.only(top: 15),
-                                    child: RotatedBox(
-                                      quarterTurns: 3,
-                                      child: Center(
-                                        child: Text("return_key".tr(),
-                                            style: TextStyle(
-                                                color: Colors.white, fontSize: 15, fontWeight: FontWeight.w400)),
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              : Container(),
-                        ]),
-                      );
-                    }),
-              );
-            }),
-          ]),
+                          );
+                        });
+                  }),
+                ),
+              ]),
+          ),
+
         ),
       ),
     );
