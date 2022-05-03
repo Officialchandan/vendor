@@ -286,194 +286,335 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                         },
                       ),
                     ),
-                    SizedBox(
-                      height: 210,
-                    ),
-                    Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: InkWell(
-                        onTap: (){
-                          if(redeem == false){
-                            directBillingCustomerNumberResponseBloc.add(ChatPapdiCheckBoxEvent(isChecked: true));
-                          }
-
-                          if(redeem == true){
-                            directBillingCustomerNumberResponseBloc.add(ChatPapdiCheckBoxEvent(isChecked: false));
-                          }
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "redeem_coins_key".tr(),
-                              style: TextStyle(fontSize: 15, color: ColorTextPrimary, fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(
-                              height: 20,
-                              width: 20,
-                              child: Checkbox(
-                                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                value: this.redeem,
-                                checkColor: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(2)
-                                ),
-                                side: BorderSide(width: 1.5),
-                                activeColor: ColorPrimary,
-                                onChanged: (value) {
-                                  directBillingCustomerNumberResponseBloc.add(ChatPapdiCheckBoxEvent(isChecked: value!));
-                                },
-                              ),
-                            ),
-
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 14,
-                    ),
-                    Container(
-                      padding: EdgeInsets.symmetric(vertical: 10,horizontal: 14),
-                      width: MediaQuery.of(context).size.width,
-                      decoration:
-                          BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10), boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.shade300,
-                          offset: Offset(0.0, 0.0), //(x,y)
-                          blurRadius: 7.0,
-                        ),
-                      ]),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "total_order_value_key".tr(),
-                                style: TextStyle(color: TextBlackLight, fontSize: 15, fontWeight: FontWeight.bold),
-                              ),
-                              Row(
-                                children: [
-                                  Text("\u20B9",
-                                      style:
-                                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black)),
-                                  Text("${amountController.text.isEmpty ? 0.0 : amountController.text}",
-                                      style:
-                                      TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text("redeemed_coins_key".tr(),
-                                style: TextStyle(color: TextBlackLight, fontSize: 15, fontWeight: FontWeight.bold),),
-                              Row(children: [
-                                Container(
-                                    child: Image.asset(
-                                  "assets/images/point.png",
-                                  scale: 3,
-                                )),
-                                Text(" $coinss", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black))
-                              ]),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text("earned_coins_key".tr(),
-                                style: TextStyle(color: TextBlackLight, fontSize: 15, fontWeight: FontWeight.bold),),
-                              Row(
-                                children: [
-                                  Container(
-                                      child: Image.asset(
-                                    "assets/images/point.png",
-                                    scale: 3,
-                                  )),
-                                  Text(" $earningCoins",style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                            Text(
-                              "net_payable_key".tr(),
-                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: ColorPrimary),
-                            ),
-                            Row(
-                              children: [
-                                Text("\u20B9",
-                                    style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold, color: ColorPrimary)),
-                                Text("$amount",
-                                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: ColorPrimary)),
-                              ],
-                            ),
-                          ],
-                          ),
-                        ],
-                      ),
-                    ),
+                    // SizedBox(
+                    //   height: 210,
+                    // ),
+                    // Container(
+                    //     padding: const EdgeInsets.symmetric(horizontal: 10),
+                    //   child: InkWell(
+                    //     onTap: (){
+                    //       if(redeem == false){
+                    //         directBillingCustomerNumberResponseBloc.add(ChatPapdiCheckBoxEvent(isChecked: true));
+                    //       }
+                    //
+                    //       if(redeem == true){
+                    //         directBillingCustomerNumberResponseBloc.add(ChatPapdiCheckBoxEvent(isChecked: false));
+                    //       }
+                    //     },
+                    //     child: Row(
+                    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //       children: [
+                    //         Text(
+                    //           "redeem_coins_key".tr(),
+                    //           style: TextStyle(fontSize: 15, color: ColorTextPrimary, fontWeight: FontWeight.bold),
+                    //         ),
+                    //         SizedBox(
+                    //           height: 20,
+                    //           width: 20,
+                    //           child: Checkbox(
+                    //             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    //             value: this.redeem,
+                    //             checkColor: Colors.white,
+                    //             shape: RoundedRectangleBorder(
+                    //                 borderRadius: BorderRadius.circular(2)
+                    //             ),
+                    //             side: BorderSide(width: 1.5),
+                    //             activeColor: ColorPrimary,
+                    //             onChanged: (value) {
+                    //               directBillingCustomerNumberResponseBloc.add(ChatPapdiCheckBoxEvent(isChecked: value!));
+                    //             },
+                    //           ),
+                    //         ),
+                    //
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
+                    // SizedBox(
+                    //   height: 14,
+                    // ),
+                    // Container(
+                    //   padding: EdgeInsets.symmetric(vertical: 10,horizontal: 14),
+                    //   width: MediaQuery.of(context).size.width,
+                    //   decoration:
+                    //       BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10), boxShadow: [
+                    //     BoxShadow(
+                    //       color: Colors.grey.shade300,
+                    //       offset: Offset(0.0, 0.0), //(x,y)
+                    //       blurRadius: 7.0,
+                    //     ),
+                    //   ]),
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       Row(
+                    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //         children: [
+                    //           Text(
+                    //             "total_order_value_key".tr(),
+                    //             style: TextStyle(color: TextBlackLight, fontSize: 15, fontWeight: FontWeight.bold),
+                    //           ),
+                    //           Row(
+                    //             children: [
+                    //               Text("\u20B9",
+                    //                   style:
+                    //                   TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black)),
+                    //               Text("${amountController.text.isEmpty ? 0.0 : amountController.text}",
+                    //                   style:
+                    //                   TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
+                    //             ],
+                    //           ),
+                    //         ],
+                    //       ),
+                    //       SizedBox(
+                    //         height: 10,
+                    //       ),
+                    //       Row(
+                    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //         children: [
+                    //           Text("redeemed_coins_key".tr(),
+                    //             style: TextStyle(color: TextBlackLight, fontSize: 15, fontWeight: FontWeight.bold),),
+                    //           Row(children: [
+                    //             Container(
+                    //                 child: Image.asset(
+                    //               "assets/images/point.png",
+                    //               scale: 3,
+                    //             )),
+                    //             Text(" $coinss", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black))
+                    //           ]),
+                    //         ],
+                    //       ),
+                    //       SizedBox(
+                    //         height: 10,
+                    //       ),
+                    //       Row(
+                    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //         children: [
+                    //           Text("earned_coins_key".tr(),
+                    //             style: TextStyle(color: TextBlackLight, fontSize: 15, fontWeight: FontWeight.bold),),
+                    //           Row(
+                    //             children: [
+                    //               Container(
+                    //                   child: Image.asset(
+                    //                 "assets/images/point.png",
+                    //                 scale: 3,
+                    //               )),
+                    //               Text(" $earningCoins",style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
+                    //             ],
+                    //           ),
+                    //         ],
+                    //       ),
+                    //       SizedBox(
+                    //         height: 10,
+                    //       ),
+                    //       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                    //         Text(
+                    //           "net_payable_key".tr(),
+                    //           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: ColorPrimary),
+                    //         ),
+                    //         Row(
+                    //           children: [
+                    //             Text("\u20B9",
+                    //                 style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold, color: ColorPrimary)),
+                    //             Text("$amount",
+                    //                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: ColorPrimary)),
+                    //           ],
+                    //         ),
+                    //       ],
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
             ),
             bottomNavigationBar: Container(
-              height: 60,
-              child: Center(
-                child: InkWell(
-                  onTap: () {
-                    if (status1 == 0) {
-                      if (mobileController.text.length == 10) {
-                        if (amountController.text.length >= 0) {
-                          if (nameController.text.length > 1) {
-                            userRegister(context);
+              height: 241,
 
-                            if (succes == true) {}
-                          } else {
-                            Utility.showToast(msg: "please_enter_name_key".tr());
-                          }
-                        } else {
-                          Utility.showToast(msg: "please_enter_amount_key".tr());
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
+                    child: InkWell(
+                      onTap: (){
+                        if(redeem == false){
+                          directBillingCustomerNumberResponseBloc.add(ChatPapdiCheckBoxEvent(isChecked: true));
                         }
-                      } else {
-                        Utility.showToast(msg: "please_enter_10_digits_number_key".tr());
-                      }
-                    } else {
-                      if (mobileController.text.length == 10) {
-                        if (amountController.text.length >= 0) {
-                          directBilling(context);
-                        } else {
-                          Utility.showToast(msg: "please_enter_amount_key");
+
+                        if(redeem == true){
+                          directBillingCustomerNumberResponseBloc.add(ChatPapdiCheckBoxEvent(isChecked: false));
                         }
-                      } else {
-                        Utility.showToast(msg: "please_enter_10_digits_number_key".tr());
-                      }
-                    }
-                  },
-                  child: Container(
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: ColorPrimary,
-                    ),
-                    width: MediaQuery.of(context).size.width,
-                    child: Center(
-                      child: Text("submit_button_key".tr(),
-                          style: TextStyle(fontSize: 17, color: Colors.white, fontWeight: FontWeight.w600)),
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "redeem_coins_key".tr(),
+                            style: TextStyle(fontSize: 15, color: ColorTextPrimary, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: Checkbox(
+                              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              value: this.redeem,
+                              checkColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(2)
+                              ),
+                              side: BorderSide(width: 1.5),
+                              activeColor: ColorPrimary,
+                              onChanged: (value) {
+                                directBillingCustomerNumberResponseBloc.add(ChatPapdiCheckBoxEvent(isChecked: value!));
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 10,horizontal: 14),
+                    padding: EdgeInsets.symmetric(vertical: 10,horizontal: 14),
+                    width: MediaQuery.of(context).size.width,
+                    decoration:
+                    BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10), boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.shade300,
+                        offset: Offset(0.0, 0.0), //(x,y)
+                        blurRadius: 7.0,
+                      ),
+                    ]),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "total_order_value_key".tr(),
+                              style: TextStyle(color: TextBlackLight, fontSize: 15, fontWeight: FontWeight.bold),
+                            ),
+                            Row(
+                              children: [
+                                Text("\u20B9",
+                                    style:
+                                    TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black)),
+                                Text("${amountController.text.isEmpty ? 0.0 : amountController.text}",
+                                    style:
+                                    TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("redeemed_coins_key".tr(),
+                              style: TextStyle(color: TextBlackLight, fontSize: 15, fontWeight: FontWeight.bold),),
+                            Row(children: [
+                              Container(
+                                  child: Image.asset(
+                                    "assets/images/point.png",
+                                    scale: 3,
+                                  )),
+                              Text(" $coinss", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black))
+                            ]),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("earned_coins_key".tr(),
+                              style: TextStyle(color: TextBlackLight, fontSize: 15, fontWeight: FontWeight.bold),),
+                            Row(
+                              children: [
+                                Container(
+                                    child: Image.asset(
+                                      "assets/images/point.png",
+                                      scale: 3,
+                                    )),
+                                Text(" $earningCoins",style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                          Text(
+                            "net_payable_key".tr(),
+                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: ColorPrimary),
+                          ),
+                          Row(
+                            children: [
+                              Text("\u20B9",
+                                  style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold, color: ColorPrimary)),
+                              Text("$amount",
+                                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: ColorPrimary)),
+                            ],
+                          ),
+                        ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Center(
+                    child: InkWell(
+                      onTap: () {
+                        if (status1 == 0) {
+                          if (mobileController.text.length == 10) {
+                            if (amountController.text.length >= 0) {
+                              if (nameController.text.length > 1) {
+                                userRegister(context);
+
+                                if (succes == true) {}
+                              } else {
+                                Utility.showToast(msg: "please_enter_name_key".tr());
+                              }
+                            } else {
+                              Utility.showToast(msg: "please_enter_amount_key".tr());
+                            }
+                          } else {
+                            Utility.showToast(msg: "please_enter_10_digits_number_key".tr());
+                          }
+                        } else {
+                          if (mobileController.text.length == 10) {
+                            if (amountController.text.length >= 0) {
+                              directBilling(context);
+                            } else {
+                              Utility.showToast(msg: "please_enter_amount_key");
+                            }
+                          } else {
+                            Utility.showToast(msg: "please_enter_10_digits_number_key".tr());
+                          }
+                        }
+                      },
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: ColorPrimary,
+                        ),
+                        width: MediaQuery.of(context).size.width,
+                        child: Center(
+                          child: Text("submit_button_key".tr(),
+                              style: TextStyle(fontSize: 17, color: Colors.white, fontWeight: FontWeight.w600)),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           );
