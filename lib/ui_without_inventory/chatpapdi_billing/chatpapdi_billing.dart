@@ -73,7 +73,17 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
-              title: Text("billing_key".tr(), style: TextStyle(fontWeight: FontWeight.w600)),
+              title: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Text("billing_key".tr(), style: TextStyle(fontWeight: FontWeight.w600)),
+                SizedBox(width: 5),
+                Image.asset(
+                  "assets/images/point.png",
+                  width: 25,
+                ),
+                SizedBox(
+                  width: 35,
+                )
+              ]),
               leading: IconButton(
                 icon: Icon(Icons.arrow_back_ios),
                 onPressed: () {
@@ -106,15 +116,12 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                           message = state.message;
                           status = state.succes;
                         }
-
                         if (state is GetChatPapdiBillingState) {
                           message = state.message;
                           status = state.succes;
                           datas = state.data;
                           _displayDialog(context, 1, "please_enter_password_key".tr(), "enter_otp_key".tr());
                         }
-
-                        if (state is GetChatPapdiBillingLoadingstate) {}
 
                         if (state is GetChatPapdiBillingFailureState) {
                           message = state.message;
@@ -142,9 +149,35 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                           succes = state.succes;
                           directBilling(context);
                         }
-
                         if (state is GetChatPapdiPartialUserFailureState) {
                           succes = state.succes;
+                        }
+                        if (state is ChatPapdiCheckboxState) {
+                          redeem = false;
+                          if (mobileController.text.length == 10) {
+                            if (amountController.text.length > 0) {
+                              if (double.parse(coins) >= 3) {
+                                calculation(amountController.text);
+                                calculateEarnCoins(double.parse(amountController.text));
+                                setState(() {
+                                  redeem = state.isChecked;
+                                });
+                              } else {
+                                Utility.showToast(msg: "You_dont_have_enough_coins".tr());
+                              }
+                            } else {
+                              Utility.showToast(msg: "please_enter_number_first_key".tr());
+                            }
+                          } else {
+                            Utility.showToast(msg: "please_enter_10_digits_number_key".tr());
+                          }
+                          if (redeem == true) {
+                            redeemDialog(context);
+                          }
+                          calculation(amountController.text.isEmpty ? "0" : amountController.text);
+
+                          calculateEarnCoins(
+                              double.parse(amountController.text.isEmpty ? "0" : amountController.text));
                         }
                       },
                       builder: (context, state) {
@@ -158,16 +191,20 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                             keyboardType: TextInputType.number,
                             validator: (numb) => Validator.validateMobile(numb!, context),
                             autovalidateMode: AutovalidateMode.onUserInteraction,
+                            style: TextStyle(color: TextBlackLight, fontSize: 16),
                             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                             maxLength: 10,
                             decoration: InputDecoration(
+                              errorStyle: TextStyle(fontSize: 12),
                               hintText: 'enter_customer_phone_number_key'.tr(),
+                              hintStyle: TextStyle(color: TextBlackLight, fontSize: 16),
                               labelText: 'mobile_number_key'.tr(),
+                              labelStyle: TextStyle(color: TextBlackLight, fontSize: 16),
                               counterText: "",
                               contentPadding: EdgeInsets.all(0),
                               fillColor: Colors.transparent,
                               enabledBorder:
-                                  UnderlineInputBorder(borderSide: BorderSide(color: ColorTextPrimary, width: 1.5)),
+                                  UnderlineInputBorder(borderSide: BorderSide(color: textFieldBorderColor, width: 1.5)),
                               focusedBorder:
                                   UnderlineInputBorder(borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
                               border: UnderlineInputBorder(borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
@@ -189,15 +226,19 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                         status1 == 0
                             ? TextFormField(
                                 controller: nameController,
+                              style: TextStyle(color: TextBlackLight, fontSize: 16),
                                 inputFormatters: [FilteringTextInputFormatter.allow(Validator.name)],
                                 decoration: InputDecoration(
+                                  hintStyle: TextStyle(color: TextBlackLight, fontSize: 16),
+                                  labelStyle: TextStyle(color: TextBlackLight, fontSize: 16),
+                                  errorStyle: TextStyle(fontSize: 12),
                                   hintText: 'enter_customer_name_key'.tr(),
                                   labelText: 'full_name_key'.tr(),
                                   counterText: "",
                                   contentPadding: EdgeInsets.all(0),
                                   fillColor: Colors.transparent,
                                   enabledBorder:
-                                      UnderlineInputBorder(borderSide: BorderSide(color: ColorTextPrimary, width: 1.5)),
+                                      UnderlineInputBorder(borderSide: BorderSide(color: textFieldBorderColor, width: 1.5)),
                                   focusedBorder:
                                       UnderlineInputBorder(borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
                                   border: UnderlineInputBorder(borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
@@ -207,23 +248,27 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                       ]),
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
                     Container(
                       child: TextFormField(
                         controller: amountController,
                         keyboardType: TextInputType.number,
+                        style: TextStyle(color: TextBlackLight, fontSize: 16),
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                         maxLength: 10,
                         decoration: InputDecoration(
+                          hintStyle: TextStyle(color: TextBlackLight, fontSize: 16),
+                          labelStyle: TextStyle(color: TextBlackLight, fontSize: 16),
+                          errorStyle: TextStyle(fontSize: 12),
                           hintText: 'amount_spent_here_key'.tr(),
                           labelText: 'amount_key'.tr(),
                           counterText: "",
                           contentPadding: EdgeInsets.all(0),
                           fillColor: Colors.transparent,
                           enabledBorder:
-                              UnderlineInputBorder(borderSide: BorderSide(color: ColorTextPrimary, width: 1.5)),
+                              UnderlineInputBorder(borderSide: BorderSide(color: textFieldBorderColor, width: 1.5)),
                           focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
                           border: UnderlineInputBorder(borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
                         ),
@@ -241,217 +286,335 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                         },
                       ),
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.shade300,
-                            offset: Offset(0.0, 0.0), //(x,y)
-                            blurRadius: 7.0,
-                          )
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          Checkbox(
-                            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                            value: this.redeem,
-                            checkColor: Colors.white,
-                            // value: widget
-                            //     .billingItemList[index]
-                            //     .billingcheck,
-                            activeColor: ColorPrimary,
-                            onChanged: (redeems) {
-                              log("true===>");
-                              redeem = false;
-
-                              if (mobileController.text.length == 10) {
-                                if (amountController.text.length > 0) {
-                                  if (double.parse(coins) >= 3) {
-                                    calculation(amountController.text);
-                                    calculateEarnCoins(double.parse(amountController.text));
-                                    setState(() {
-                                      redeem = redeems;
-                                    });
-                                  } else {
-                                    Utility.showToast(msg: "You_dont_have_enough_coins".tr());
-                                  }
-                                } else {
-                                  Utility.showToast(msg: "please_enter_number_first_key".tr());
-                                }
-                              } else {
-                                Utility.showToast(msg: "please_enter_10_digits_number_key".tr());
-                              }
-                              if (redeem == true) {
-                                redeemDialog(context);
-                              }
-                              calculation(amountController.text.isEmpty ? "0" : amountController.text);
-
-                              calculateEarnCoins(
-                                  double.parse(amountController.text.isEmpty ? "0" : amountController.text));
-                            },
-                          ),
-                          Text(
-                            "  " + "redeemed_coins_key".tr(),
-                            style: TextStyle(fontSize: 17, color: ColorTextPrimary),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      width: MediaQuery.of(context).size.width,
-                      height: 120,
-                      decoration:
-                          BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10), boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.shade300,
-                          offset: Offset(0.0, 0.0), //(x,y)
-                          blurRadius: 7.0,
-                        ),
-                      ]),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "calculation_key".tr(),
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text("earn_coins_key".tr()),
-                              Row(
-                                children: [
-                                  Container(
-                                      child: Image.asset(
-                                    "assets/images/point.png",
-                                    scale: 3,
-                                  )),
-                                  Text(" $earningCoins"),
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text("total_coin_deducted_key".tr()),
-                              Row(children: [
-                                Container(
-                                    child: Image.asset(
-                                  "assets/images/point.png",
-                                  scale: 3,
-                                )),
-                                Text(" $coinss")
-                              ]),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      width: MediaQuery.of(context).size.width,
-                      height: 50,
-                      decoration:
-                          BoxDecoration(color: ColorPrimary, borderRadius: BorderRadius.circular(10), boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.shade300,
-                          offset: Offset(0.0, 0.0), //(x,y)
-                          blurRadius: 7.0,
-                        ),
-                      ]),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "total_payable_amount_key".tr(),
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                          Text(
-                            "\u20B9 $amount",
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    // SizedBox(
+                    //   height: 210,
+                    // ),
+                    // Container(
+                    //     padding: const EdgeInsets.symmetric(horizontal: 10),
+                    //   child: InkWell(
+                    //     onTap: (){
+                    //       if(redeem == false){
+                    //         directBillingCustomerNumberResponseBloc.add(ChatPapdiCheckBoxEvent(isChecked: true));
+                    //       }
+                    //
+                    //       if(redeem == true){
+                    //         directBillingCustomerNumberResponseBloc.add(ChatPapdiCheckBoxEvent(isChecked: false));
+                    //       }
+                    //     },
+                    //     child: Row(
+                    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //       children: [
+                    //         Text(
+                    //           "redeem_coins_key".tr(),
+                    //           style: TextStyle(fontSize: 15, color: ColorTextPrimary, fontWeight: FontWeight.bold),
+                    //         ),
+                    //         SizedBox(
+                    //           height: 20,
+                    //           width: 20,
+                    //           child: Checkbox(
+                    //             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    //             value: this.redeem,
+                    //             checkColor: Colors.white,
+                    //             shape: RoundedRectangleBorder(
+                    //                 borderRadius: BorderRadius.circular(2)
+                    //             ),
+                    //             side: BorderSide(width: 1.5),
+                    //             activeColor: ColorPrimary,
+                    //             onChanged: (value) {
+                    //               directBillingCustomerNumberResponseBloc.add(ChatPapdiCheckBoxEvent(isChecked: value!));
+                    //             },
+                    //           ),
+                    //         ),
+                    //
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
+                    // SizedBox(
+                    //   height: 14,
+                    // ),
+                    // Container(
+                    //   padding: EdgeInsets.symmetric(vertical: 10,horizontal: 14),
+                    //   width: MediaQuery.of(context).size.width,
+                    //   decoration:
+                    //       BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10), boxShadow: [
+                    //     BoxShadow(
+                    //       color: Colors.grey.shade300,
+                    //       offset: Offset(0.0, 0.0), //(x,y)
+                    //       blurRadius: 7.0,
+                    //     ),
+                    //   ]),
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       Row(
+                    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //         children: [
+                    //           Text(
+                    //             "total_order_value_key".tr(),
+                    //             style: TextStyle(color: TextBlackLight, fontSize: 15, fontWeight: FontWeight.bold),
+                    //           ),
+                    //           Row(
+                    //             children: [
+                    //               Text("\u20B9",
+                    //                   style:
+                    //                   TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black)),
+                    //               Text("${amountController.text.isEmpty ? 0.0 : amountController.text}",
+                    //                   style:
+                    //                   TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
+                    //             ],
+                    //           ),
+                    //         ],
+                    //       ),
+                    //       SizedBox(
+                    //         height: 10,
+                    //       ),
+                    //       Row(
+                    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //         children: [
+                    //           Text("redeemed_coins_key".tr(),
+                    //             style: TextStyle(color: TextBlackLight, fontSize: 15, fontWeight: FontWeight.bold),),
+                    //           Row(children: [
+                    //             Container(
+                    //                 child: Image.asset(
+                    //               "assets/images/point.png",
+                    //               scale: 3,
+                    //             )),
+                    //             Text(" $coinss", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black))
+                    //           ]),
+                    //         ],
+                    //       ),
+                    //       SizedBox(
+                    //         height: 10,
+                    //       ),
+                    //       Row(
+                    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //         children: [
+                    //           Text("earned_coins_key".tr(),
+                    //             style: TextStyle(color: TextBlackLight, fontSize: 15, fontWeight: FontWeight.bold),),
+                    //           Row(
+                    //             children: [
+                    //               Container(
+                    //                   child: Image.asset(
+                    //                 "assets/images/point.png",
+                    //                 scale: 3,
+                    //               )),
+                    //               Text(" $earningCoins",style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
+                    //             ],
+                    //           ),
+                    //         ],
+                    //       ),
+                    //       SizedBox(
+                    //         height: 10,
+                    //       ),
+                    //       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                    //         Text(
+                    //           "net_payable_key".tr(),
+                    //           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: ColorPrimary),
+                    //         ),
+                    //         Row(
+                    //           children: [
+                    //             Text("\u20B9",
+                    //                 style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold, color: ColorPrimary)),
+                    //             Text("$amount",
+                    //                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: ColorPrimary)),
+                    //           ],
+                    //         ),
+                    //       ],
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
             ),
             bottomNavigationBar: Container(
-              height: 60,
-              child: Center(
-                child: InkWell(
-                  onTap: () {
-                    if (status1 == 0) {
-                      if (mobileController.text.length == 10) {
-                        if (amountController.text.length >= 0) {
-                          if (nameController.text.length > 1) {
-                            userRegister(context);
+              height: 241,
 
-                            if (succes == true) {}
-                          } else {
-                            Utility.showToast(msg: "please_enter_name_key".tr());
-                          }
-                        } else {
-                          Utility.showToast(msg: "please_enter_amount_key".tr());
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
+                    child: InkWell(
+                      onTap: (){
+                        if(redeem == false){
+                          directBillingCustomerNumberResponseBloc.add(ChatPapdiCheckBoxEvent(isChecked: true));
                         }
-                      } else {
-                        Utility.showToast(msg: "please_enter_10_digits_number_key".tr());
-                      }
-                    } else {
-                      if (mobileController.text.length == 10) {
-                        if (amountController.text.length >= 0) {
-                          directBilling(context);
-                        } else {
-                          Utility.showToast(msg: "please_enter_amount_key");
+
+                        if(redeem == true){
+                          directBillingCustomerNumberResponseBloc.add(ChatPapdiCheckBoxEvent(isChecked: false));
                         }
-                      } else {
-                        Utility.showToast(msg: "please_enter_10_digits_number_key".tr());
-                      }
-                    }
-                  },
-                  child: Container(
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: ColorPrimary,
-                    ),
-                    width: MediaQuery.of(context).size.width,
-                    child: Center(
-                      child: Text("submit_button_key".tr(),
-                          style: TextStyle(fontSize: 17, color: Colors.white, fontWeight: FontWeight.w600)),
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "redeem_coins_key".tr(),
+                            style: TextStyle(fontSize: 15, color: ColorTextPrimary, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: Checkbox(
+                              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              value: this.redeem,
+                              checkColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(2)
+                              ),
+                              side: BorderSide(width: 1.5),
+                              activeColor: ColorPrimary,
+                              onChanged: (value) {
+                                directBillingCustomerNumberResponseBloc.add(ChatPapdiCheckBoxEvent(isChecked: value!));
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 10,horizontal: 14),
+                    padding: EdgeInsets.symmetric(vertical: 10,horizontal: 14),
+                    width: MediaQuery.of(context).size.width,
+                    decoration:
+                    BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10), boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.shade300,
+                        offset: Offset(0.0, 0.0), //(x,y)
+                        blurRadius: 7.0,
+                      ),
+                    ]),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "total_order_value_key".tr(),
+                              style: TextStyle(color: TextBlackLight, fontSize: 15, fontWeight: FontWeight.bold),
+                            ),
+                            Row(
+                              children: [
+                                Text("\u20B9",
+                                    style:
+                                    TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black)),
+                                Text("${amountController.text.isEmpty ? 0.0 : amountController.text}",
+                                    style:
+                                    TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("redeemed_coins_key".tr(),
+                              style: TextStyle(color: TextBlackLight, fontSize: 15, fontWeight: FontWeight.bold),),
+                            Row(children: [
+                              Container(
+                                  child: Image.asset(
+                                    "assets/images/point.png",
+                                    scale: 3,
+                                  )),
+                              Text(" $coinss", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black))
+                            ]),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("earned_coins_key".tr(),
+                              style: TextStyle(color: TextBlackLight, fontSize: 15, fontWeight: FontWeight.bold),),
+                            Row(
+                              children: [
+                                Container(
+                                    child: Image.asset(
+                                      "assets/images/point.png",
+                                      scale: 3,
+                                    )),
+                                Text(" $earningCoins",style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                          Text(
+                            "net_payable_key".tr(),
+                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: ColorPrimary),
+                          ),
+                          Row(
+                            children: [
+                              Text("\u20B9",
+                                  style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold, color: ColorPrimary)),
+                              Text("$amount",
+                                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: ColorPrimary)),
+                            ],
+                          ),
+                        ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Center(
+                    child: InkWell(
+                      onTap: () {
+                        if (status1 == 0) {
+                          if (mobileController.text.length == 10) {
+                            if (amountController.text.length >= 0) {
+                              if (nameController.text.length > 1) {
+                                userRegister(context);
+
+                                if (succes == true) {}
+                              } else {
+                                Utility.showToast(msg: "please_enter_name_key".tr());
+                              }
+                            } else {
+                              Utility.showToast(msg: "please_enter_amount_key".tr());
+                            }
+                          } else {
+                            Utility.showToast(msg: "please_enter_10_digits_number_key".tr());
+                          }
+                        } else {
+                          if (mobileController.text.length == 10) {
+                            if (amountController.text.length >= 0) {
+                              directBilling(context);
+                            } else {
+                              Utility.showToast(msg: "please_enter_amount_key");
+                            }
+                          } else {
+                            Utility.showToast(msg: "please_enter_10_digits_number_key".tr());
+                          }
+                        }
+                      },
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: ColorPrimary,
+                        ),
+                        width: MediaQuery.of(context).size.width,
+                        child: Center(
+                          child: Text("submit_button_key".tr(),
+                              style: TextStyle(fontSize: 17, color: Colors.white, fontWeight: FontWeight.w600)),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           );
@@ -493,7 +656,6 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
       amount = amount / 2;
       amount = amount * 3;
       amount = amount < 0 ? 0 : amount;
-      amount = amount - 0.75;
       earningCoins = amount.toStringAsFixed(2);
     } else {
       earningCoins = "0.0";

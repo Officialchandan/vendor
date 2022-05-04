@@ -16,7 +16,7 @@ const RejectedTextBgColor = Color(0xfff8b2b2);
 const RejectedTextColor = Color(0xffec3b3b);
 
 const PendingTextBgColor = Color(0xfffcdfc7);
-const PendingTextColor = Color(0xfff69444);
+const PendingTextColor = Color(0xffffc107);
 
 const DirectBillTextBgColor = Color(0xffcadafa);
 const DirectBillingTextColor = Color(0xff5086ed);
@@ -39,5 +39,6 @@ const PurpleDarkColor = Color(0xff6657f4);
 
 const TextBlackLight = Color(0xff303030);
 const TextBlack = Color(0xff000000);
+
 const TextGrey = Color(0xff555555);
 const textFieldBorderColor = Color(0xffbdbdbd);

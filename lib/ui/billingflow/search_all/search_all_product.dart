@@ -20,8 +20,10 @@ import 'search_all_bloc.dart';
 class SearchAllProduct extends StatefulWidget {
   String mobile;
   String coin;
+  String firstName;
+  String lastName;
 
-  SearchAllProduct({required this.mobile, required this.coin});
+  SearchAllProduct({required this.mobile, required this.coin, required this.firstName, required this.lastName});
 
   @override
   _SearchAllProductState createState() => _SearchAllProductState(this.mobile, this.coin);
@@ -452,6 +454,8 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                               child: BillingProducts(
                                 billingItemList: product,
                                 mobile: widget.mobile,
+                                firstName: widget.firstName,
+                                lastName: widget.lastName,
                                 coin: double.parse(widget.coin),
                               ),
                               type: PageTransitionType.fade));

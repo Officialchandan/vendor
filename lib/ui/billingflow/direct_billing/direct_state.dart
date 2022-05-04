@@ -14,11 +14,13 @@ class GetDirectBillingCustomerNumberResponseState
   final data;
   final status;
   final succes;
+  final firstName;
+  final lastName;
   GetDirectBillingCustomerNumberResponseState(
-      {this.message, this.status, this.data, this.succes});
+      {this.message, this.status, this.data, this.succes, this.firstName, this.lastName});
 
   @override
-  List<Object> get props => [message, data, succes];
+  List<Object> get props => [message, data, succes, firstName, lastName];
 }
 
 class GetDirectBillingCustomerNumberResponseLoadingstate

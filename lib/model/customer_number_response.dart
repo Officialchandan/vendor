@@ -45,10 +45,15 @@ class CustomerNumberResponseData {
   CustomerNumberResponseData({
     required this.id,
     required this.walletBalance,
+  required this.firstName,
+  required this.lastName,
   });
 
   int id;
   String walletBalance;
+  String firstName;
+  String lastName;
+
 
   factory CustomerNumberResponseData.fromJson(String str) =>
       CustomerNumberResponseData.fromMap(json.decode(str));
@@ -60,10 +65,15 @@ class CustomerNumberResponseData {
         id: json["id"] == null ? 0 : json["id"],
         walletBalance:
             json["wallet_balance"] == null ? "" : json["wallet_balance"],
+        firstName: json["first_name"] == null? "" : json["first_name"].toString(),
+        lastName: json["last_name"] == null? "" : json["last_name"].toString(),
+
       );
 
   Map<String, dynamic> toMap() => {
         "id": id,
         "wallet_balance": walletBalance,
+        "first_name": firstName,
+        "last_name": lastName,
       };
 }

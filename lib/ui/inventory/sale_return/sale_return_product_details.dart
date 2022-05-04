@@ -1,6 +1,5 @@
 import 'dart:collection';
 import 'dart:developer';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +8,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/model/common_response.dart';
 import 'package:vendor/model/sale_return_resonse.dart';
-import 'package:vendor/ui/custom_widget/app_bar.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/network.dart';
@@ -18,6 +16,7 @@ import 'package:vendor/widget/sales_return_details_bottom_sheet.dart';
 
 class SaleReturnProductDetails extends StatefulWidget {
   final SaleReturnData saleReturnData;
+
   SaleReturnProductDetails({Key? key, required this.saleReturnData}) : super(key: key);
 
   @override
@@ -28,38 +27,48 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
   TextEditingController _textFieldController = TextEditingController();
   String? coinBalance = "0";
   String? amountPaid = "0";
-  String? earingCoins = "0";
-  String? adjustedBalance = "0";
+  String? earningCoins = "0";
   String? returnAmount = "0";
   String? redeemCoins = "0";
+  String? coinBalanceRs = "0";
+  String? earningCoinsRs = "0";
+  String? returnAmountRs = "0";
+  String? redeemCoinsRs = "0";
+  String? collectionAmt = "0";
+
   @override
   void initState() {
-    this.coinBalance = widget.saleReturnData.walletBalance;
     this.amountPaid = widget.saleReturnData.amountPaid;
-    this.earingCoins = widget.saleReturnData.earnCoins;
-    this.redeemCoins = widget.saleReturnData.redeemCoins;
-    if (double.parse(widget.saleReturnData.walletBalance) >= double.parse(widget.saleReturnData.earnCoins)) {
-      this.adjustedBalance =
-          (double.parse(widget.saleReturnData.walletBalance) - double.parse(widget.saleReturnData.earnCoins))
-              .toStringAsFixed(2);
-      adjustedBalance = "0";
-      log("------>adjustedBalance$adjustedBalance");
-    } else {
-      this.adjustedBalance =
-          (double.parse(widget.saleReturnData.earnCoins) - (double.parse(widget.saleReturnData.walletBalance)))
-              .toStringAsFixed(2);
-      log("------>adjustedBalance1$adjustedBalance");
+    this.coinBalance = (double.parse(widget.saleReturnData.walletBalance)).toStringAsFixed(2);
+    this.earningCoins = (double.parse(widget.saleReturnData.earnCoins)).toStringAsFixed(2);
+    this.redeemCoins = (double.parse(widget.saleReturnData.redeemCoins)).toStringAsFixed(2);
+    //Calculation in Rupees
+    this.earningCoinsRs = (double.parse(widget.saleReturnData.earnCoins) / 3).toStringAsFixed(2);
+    this.coinBalanceRs = (double.parse(widget.saleReturnData.walletBalance) / 3).toStringAsFixed(2);
+    this.redeemCoinsRs = (double.parse(widget.saleReturnData.redeemCoins) / 3).toStringAsFixed(2);
+    // Calculation for collection amt & return amt
+    if (double.parse(coinBalanceRs!) != 0) {
+      if (double.parse(coinBalanceRs!) >= double.parse(earningCoinsRs!)) {
+        collectionAmt = (double.parse(coinBalanceRs!) - double.parse(earningCoinsRs!)).toStringAsFixed(2);
+      } else {
+        collectionAmt = "0";
+      }
     }
 
-    if ((double.parse(adjustedBalance!) / 3 >= double.parse(widget.saleReturnData.amountPaid))) {
+    if (double.parse(redeemCoinsRs!) != 0) {
+      if (double.parse(redeemCoinsRs!) >= double.parse(collectionAmt!)) {
+        collectionAmt = (double.parse(redeemCoinsRs!) - double.parse(collectionAmt!)).toStringAsFixed(2);
+      } else {
+        collectionAmt = (double.parse(collectionAmt!) - double.parse(redeemCoinsRs!)).toStringAsFixed(2);
+      }
+    }
+
+    if (double.parse(collectionAmt!) == 0) {
+      returnAmount = (double.parse(amountPaid!) - double.parse(collectionAmt!)).toStringAsFixed(0);
+    } else {
       returnAmount = amountPaid;
-      log("------>returnAmount$returnAmount");
-    } else {
-      this.returnAmount =
-          (double.parse(widget.saleReturnData.amountPaid) - double.parse(adjustedBalance!) / 3).toStringAsFixed(2);
-      log("------>returnAmount1$returnAmount");
+      collectionAmt = "0";
     }
-
     super.initState();
   }
 
@@ -68,7 +77,10 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("sale_return_key".tr()),
+          title: Text(
+            "sales_return_key".tr(),
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
           actions: [
             IconButton(
               onPressed: () {
@@ -85,222 +97,242 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
           ],
         ),
         body: SingleChildScrollView(
-          child: Center(
+          child: Container(
+            padding: const EdgeInsets.all(14),
             child: Column(
               children: [
-                SizedBox(
-                  height: 30,
-                ),
-                Container(
-                    height: MediaQuery.of(context).size.height * 0.15,
-                    width: MediaQuery.of(context).size.width * 0.88,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      gradient: LinearGradient(
-                        begin: Alignment.topRight,
-                        end: Alignment.bottomLeft,
-                        // stops: [0.1, 0.5, 0.7, 0.9],
-                        colors: [
-                          RedDarkColor,
-                          RedLightColor,
-                        ],
-                      ),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        AutoSizeText(
-                          "customer_coin_balance_key".tr(),
-                          maxLines: 1,
-                          maxFontSize: 16,
-                          minFontSize: 12,
-                          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-                        ),
-                        Flexible(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                "assets/images/point.png",
-                                scale: 2.5,
+                double.parse(coinBalance!) < double.parse(earningCoins!)
+                    ? Column(
+                        children: [
+                          Container(
+                            height: 40,
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              gradient: LinearGradient(
+                                begin: Alignment.topRight,
+                                end: Alignment.bottomLeft,
+                                // stops: [0.1, 0.5, 0.7, 0.9],
+                                colors: [
+                                  RedLightColor,
+                                  RedDarkColor,
+                                ],
                               ),
-                              Text(
-                                " $coinBalance",
-                                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
+                            ),
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.warning, color: Colors.white, size: 18),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    "insufficient_coin_balance_warning_key".tr(),
+                                    maxLines: 1,
+                                    style: GoogleFonts.openSans(
+                                        fontWeight: FontWeight.w600, fontSize: 14, color: Colors.white),
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                        ],
+                      )
+                    : Container(),
+                Row(
+                  children: [
+                    Text(
+                      "return_summary_key".tr(),
+                      style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 20, color: TextBlackLight),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 14,
+                ),
+                // Amount Paid
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "customer_amt_paid_key".tr(),
+                      style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 14, color: TextGrey),
+                    ),
+                    Text(
+                      "\u20B9$amountPaid",
+                      style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 15, color: TextBlackLight),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                // Redeem Coins
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "customer_redemption_key".tr(),
+                      style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 14, color: TextGrey),
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          "(",
+                          style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 15, color: TextBlackLight),
+                        ),
+                        Image.asset(
+                          "assets/images/point.png",
+                          width: 14,
+                        ),
+                        SizedBox(
+                          width: 1,
+                        ),
+                        Text(
+                          "$redeemCoins) \u20B9$redeemCoinsRs",
+                          style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 15, color: TextBlackLight),
                         ),
                       ],
-                    )),
+                    ),
+                  ],
+                ),
                 SizedBox(
-                  height: 30,
+                  height: 20,
+                ),
+                // Earn Coins
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "coin_earned_by_customer_key".tr(),
+                      style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 14, color: TextGrey),
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "(",
+                          style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 15, color: TextBlackLight),
+                        ),
+                        Image.asset(
+                          "assets/images/point.png",
+                          width: 14,
+                        ),
+                        SizedBox(
+                          width: 1,
+                        ),
+                        Text(
+                          "$earningCoins) \u20B9$earningCoinsRs",
+                          style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 15, color: TextBlackLight),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                //Coin Balance
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "current_coin_balance_key".tr(),
+                      style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 14, color: TextGrey),
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          "(",
+                          style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 15, color: TextBlackLight),
+                        ),
+                        Image.asset(
+                          "assets/images/point.png",
+                          width: 14,
+                        ),
+                        SizedBox(
+                          width: 1,
+                        ),
+                        Text(
+                          "$coinBalance) \u20B9$coinBalanceRs",
+                          style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 15, color: TextBlackLight),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                double.parse(coinBalance!) < double.parse(earningCoins!)
+                    ? Column(
+                        children: [
+                          Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.warning, color: Colors.red, size: 18),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  "insufficient_coin_balance_warning_key".tr(),
+                                  maxLines: 1,
+                                  style: GoogleFonts.openSans(
+                                      fontWeight: FontWeight.w600, fontSize: 14, color: Colors.red),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                        ],
+                      )
+                    : Container(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "collection_amt_in_cash_key".tr(),
+                      style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 14, color: TextGrey),
+                    ),
+                    Text(
+                      "\u20B9$collectionAmt",
+                      style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 15, color: TextBlackLight),
+                    ),
+                  ],
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width * 0.88,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [BoxShadow(blurRadius: 10, spreadRadius: 5, color: Colors.black12)]),
-                  child: Padding(
-                    padding: const EdgeInsets.all(14),
-                    child: Column(
+                  margin: const EdgeInsets.only(top: 14),
+                  height: 1,
+                  color: TextBlackLight,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "return_calculation_key".tr(),
-                          style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black87),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "amt_paid_key".tr(),
-                              style: TextStyle(fontSize: 13, color: Colors.black87),
-                            ),
-                            Text(
-                              "\u20B9$amountPaid",
-                              style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.black87),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "earn_coins_key".tr(),
-                              style: TextStyle(fontSize: 13, color: Colors.black87),
-                            ),
-                            Row(
-                              children: [
-                                Image.asset(
-                                  "assets/images/point.png",
-                                  width: 14,
-                                  height: 14,
-                                ),
-                                Text(
-                                  (double.parse(earingCoins!)).toStringAsFixed(2) +
-                                      " (\u20B9${(double.parse(earingCoins!) / 3).toStringAsFixed(2)})",
-                                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.black87),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "redeem_coins_key".tr(),
-                              style: TextStyle(fontSize: 13, color: Colors.black87),
-                            ),
-                            Row(
-                              children: [
-                                Image.asset(
-                                  "assets/images/point.png",
-                                  width: 14,
-                                  height: 14,
-                                ),
-                                Text(
-                                  (double.parse(redeemCoins!)).toStringAsFixed(2) +
-                                      " (\u20B9${(double.parse(redeemCoins!) / 3).toStringAsFixed(2)})",
-                                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.black87),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "customer_coin_balance_key".tr(),
-                              style: TextStyle(fontSize: 13, color: Colors.black87),
-                            ),
-                            Row(
-                              children: [
-                                Image.asset(
-                                  "assets/images/point.png",
-                                  width: 14,
-                                  height: 14,
-                                ),
-                                Text(
-                                  " $coinBalance (\u20B9${(double.parse(coinBalance!) / 3).toStringAsFixed(2)})",
-                                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.red),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "adj_balance_key".tr(),
-                              style: TextStyle(fontSize: 13, color: Colors.black87),
-                            ),
-                            Row(
-                              children: [
-                                Image.asset(
-                                  "assets/images/point.png",
-                                  width: 14,
-                                  height: 14,
-                                ),
-                                Text(
-                                  " $adjustedBalance (\u20B9${(double.parse(adjustedBalance!) / 3).toStringAsFixed(2)})",
-                                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.black87),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
+                          "net_return_amt_key".tr(),
+                          style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextBlackLight),
                         ),
                         Text(
-                          "amt_return_to_customer_key".tr(),
-                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.black87),
+                          "(${"amount_paid_key".tr()} - ${"collection_amt_key".tr()})",
+                          style: GoogleFonts.openSans(fontWeight: FontWeight.w500, fontSize: 12, color: TextGrey),
                         ),
                       ],
                     ),
-                  ),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                Container(
-                  height: 130,
-                  width: 130,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    gradient: LinearGradient(
-                      begin: Alignment.topRight,
-                      end: Alignment.bottomLeft,
-                      stops: [-1, 0.4],
-                      colors: [PurpleLightColor, PurpleDarkColor],
+                    Text(
+                      "\u20B9$returnAmount",
+                      style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 28, color: ColorPrimary),
                     ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "\u20b9${(double.parse(returnAmount!)).toStringAsFixed(2)}",
-                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
-                    ),
-                  ),
+                  ],
                 ),
               ],
             ),
@@ -319,7 +351,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
             color: ColorPrimary,
             child: Center(
               child: Text(
-              "proceed_key".tr(),
+                "proceed_key".tr(),
                 style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
@@ -510,3 +542,252 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
         });
   }
 }
+// Previous Changes till 28 April
+// void initState() {
+//   this.coinBalance = widget.saleReturnData.walletBalance;
+//   this.amountPaid = widget.saleReturnData.amountPaid;
+//   this.earingCoins = widget.saleReturnData.earnCoins;
+//   this.redeemCoins = widget.saleReturnData.redeemCoins;
+//   if (double.parse(widget.saleReturnData.walletBalance) >= double.parse(widget.saleReturnData.earnCoins)) {
+//     this.adjustedBalance =
+//         (double.parse(widget.saleReturnData.walletBalance) - double.parse(widget.saleReturnData.earnCoins))
+//             .toStringAsFixed(2);
+//     adjustedBalance = "0";
+//   } else {
+//     this.adjustedBalance =
+//         (double.parse(widget.saleReturnData.earnCoins) - (double.parse(widget.saleReturnData.walletBalance)))
+//             .toStringAsFixed(2);
+//   }
+//
+//   if ((double.parse(adjustedBalance!) / 3 >= double.parse(widget.saleReturnData.amountPaid))) {
+//     returnAmount = amountPaid;
+//   } else {
+//     this.returnAmount =
+//         (double.parse(widget.saleReturnData.amountPaid) - double.parse(adjustedBalance!) / 3).toStringAsFixed(2);
+//   }
+//
+//   super.initState();
+// }
+
+// SingleChildScrollView(
+// child: Center(
+// child: Column(
+// children: [
+// SizedBox(
+// height: 30,
+// ),
+// Container(
+// height: MediaQuery.of(context).size.height * 0.15,
+// width: MediaQuery.of(context).size.width * 0.88,
+// decoration: BoxDecoration(
+// borderRadius: BorderRadius.circular(10),
+// gradient: LinearGradient(
+// begin: Alignment.topRight,
+// end: Alignment.bottomLeft,
+// // stops: [0.1, 0.5, 0.7, 0.9],
+// colors: [
+// RedDarkColor,
+// RedLightColor,
+// ],
+// ),
+// ),
+// child: Column(
+// mainAxisAlignment: MainAxisAlignment.center,
+// children: [
+// AutoSizeText(
+// "customer_coin_balance_key".tr(),
+// maxLines: 1,
+// maxFontSize: 16,
+// minFontSize: 12,
+// style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+// ),
+// Flexible(
+// child: Row(
+// mainAxisAlignment: MainAxisAlignment.center,
+// children: [
+// Image.asset(
+// "assets/images/point.png",
+// scale: 2.5,
+// ),
+// Text(
+// " $coinBalance",
+// style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
+// ),
+// ],
+// ),
+// ),
+// ],
+// )),
+// SizedBox(
+// height: 30,
+// ),
+// Container(
+// width: MediaQuery.of(context).size.width * 0.88,
+// decoration: BoxDecoration(
+// color: Colors.white,
+// borderRadius: BorderRadius.circular(10),
+// boxShadow: [BoxShadow(blurRadius: 10, spreadRadius: 5, color: Colors.black12)]),
+// child: Padding(
+// padding: const EdgeInsets.all(14),
+// child: Column(
+// crossAxisAlignment: CrossAxisAlignment.start,
+// children: [
+// Text(
+// "return_calculation_key".tr(),
+// style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black87),
+// ),
+// SizedBox(
+// height: 10,
+// ),
+// Row(
+// mainAxisAlignment: MainAxisAlignment.spaceBetween,
+// children: [
+// Text(
+// "amt_paid_key".tr(),
+// style: TextStyle(fontSize: 13, color: Colors.black87),
+// ),
+// Text(
+// "\u20B9$amountPaid",
+// style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.black87),
+// ),
+// ],
+// ),
+// SizedBox(
+// height: 10,
+// ),
+// Row(
+// mainAxisAlignment: MainAxisAlignment.spaceBetween,
+// children: [
+// Text(
+// "earn_coins_key".tr(),
+// style: TextStyle(fontSize: 13, color: Colors.black87),
+// ),
+// Row(
+// children: [
+// Image.asset(
+// "assets/images/point.png",
+// width: 14,
+// height: 14,
+// ),
+// Text(
+// (double.parse(earingCoins!)).toStringAsFixed(2) +
+// " (\u20B9${(double.parse(earingCoins!) / 3).toStringAsFixed(2)})",
+// style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.black87),
+// ),
+// ],
+// ),
+// ],
+// ),
+// SizedBox(
+// height: 10,
+// ),
+// Row(
+// mainAxisAlignment: MainAxisAlignment.spaceBetween,
+// children: [
+// Text(
+// "redeem_coins_key".tr(),
+// style: TextStyle(fontSize: 13, color: Colors.black87),
+// ),
+// Row(
+// children: [
+// Image.asset(
+// "assets/images/point.png",
+// width: 14,
+// height: 14,
+// ),
+// Text(
+// (double.parse(redeemCoins!)).toStringAsFixed(2) +
+// " (\u20B9${(double.parse(redeemCoins!) / 3).toStringAsFixed(2)})",
+// style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.black87),
+// ),
+// ],
+// ),
+// ],
+// ),
+// SizedBox(
+// height: 10,
+// ),
+// Row(
+// mainAxisAlignment: MainAxisAlignment.spaceBetween,
+// children: [
+// Text(
+// "customer_coin_balance_key".tr(),
+// style: TextStyle(fontSize: 13, color: Colors.black87),
+// ),
+// Row(
+// children: [
+// Image.asset(
+// "assets/images/point.png",
+// width: 14,
+// height: 14,
+// ),
+// Text(
+// " $coinBalance (\u20B9${(double.parse(coinBalance!) / 3).toStringAsFixed(2)})",
+// style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.red),
+// ),
+// ],
+// ),
+// ],
+// ),
+// SizedBox(
+// height: 10,
+// ),
+// Row(
+// mainAxisAlignment: MainAxisAlignment.spaceBetween,
+// children: [
+// Text(
+// "adj_balance_key".tr(),
+// style: TextStyle(fontSize: 13, color: Colors.black87),
+// ),
+// Row(
+// children: [
+// Image.asset(
+// "assets/images/point.png",
+// width: 14,
+// height: 14,
+// ),
+// Text(
+// " $adjustedBalance (\u20B9${(double.parse(adjustedBalance!) / 3).toStringAsFixed(2)})",
+// style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.black87),
+// ),
+// ],
+// ),
+// ],
+// ),
+// SizedBox(
+// height: 10,
+// ),
+// Text(
+// "amt_return_to_customer_key".tr(),
+// style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.black87),
+// ),
+// ],
+// ),
+// ),
+// ),
+// SizedBox(
+// height: 30,
+// ),
+// Container(
+// height: 130,
+// width: 130,
+// decoration: BoxDecoration(
+// borderRadius: BorderRadius.circular(100),
+// gradient: LinearGradient(
+// begin: Alignment.topRight,
+// end: Alignment.bottomLeft,
+// stops: [-1, 0.4],
+// colors: [PurpleLightColor, PurpleDarkColor],
+// ),
+// ),
+// child: Center(
+// child: Text(
+// "\u20b9${(double.parse(returnAmount!)).toStringAsFixed(2)}",
+// style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
+// ),
+// ),
+// ),
+// ],
+// ),
+// ),
+// ),

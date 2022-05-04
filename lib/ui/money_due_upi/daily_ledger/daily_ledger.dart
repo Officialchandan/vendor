@@ -80,7 +80,7 @@ class _DailyLedgerState extends State<DailyLedger> with TickerProviderStateMixin
           ),
           body: Column(children: [
             Padding(
-              padding: const EdgeInsets.only(left: 15.0, right: 15, top: 15),
+              padding: const EdgeInsets.all(14),
               child: TextFormField(
                 cursorColor: ColorPrimary,
                 controller: _searchController,
@@ -165,7 +165,6 @@ class _DailyLedgerState extends State<DailyLedger> with TickerProviderStateMixin
               return Expanded(
                 child: ListView.builder(
                     itemCount: searchList.length,
-                    padding: EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 5),
                     itemBuilder: (context, index) {
                       return InkWell(
                         splashColor: Colors.transparent,
@@ -177,130 +176,161 @@ class _DailyLedgerState extends State<DailyLedger> with TickerProviderStateMixin
                                         order: searchList[index],
                                       )));
                         },
-                        child: Container(
-                          margin: EdgeInsets.symmetric(vertical: 5),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.shade300,
-                                offset: Offset(0.0, 0.0), //(x,y)
-                                blurRadius:7.0,
-                              ),
-                            ],
+                        child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Stack(
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.only(top: 15),
-                                  padding: EdgeInsets.only(bottom: 12, top: 3),
-                                  // height: 70,
-                                  // decoration: BoxDecoration(
-                                  //     borderRadius: BorderRadius.circular(10),
-                                  //     color: Colors.white,
-                                  //     border: Border.all(color: Colors.white38),
-                                  //     boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 1.0, spreadRadius: 1)]),
-                                  child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                    Column(
-                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "    +91 ${searchList[index].mobile}",
-                                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                                          ),
-                                          Text(
-                                            "    ${DateFormat("dd MMM yyyy").format(searchList[index].dateTime)}(${DateFormat.jm().format(searchList[index].dateTime)})",
-                                            style: TextStyle(fontSize: 13, color: ColorTextPrimary),
-                                          ),
-                                        ]),
-                                    Row(
-                                      children: [
-                                        Center(
-                                          child: searchList[index].status == 1
-                                              ? Container(
-                                                  padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
-                                                  decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(20),
-                                                      color: PendingTextBgColor),
-                                                  child: Text(
-                                                    "pending_key".tr(),
-                                                    style: TextStyle(
-                                                        color: PendingTextColor,
-                                                        fontSize: 10,
-                                                        fontWeight: FontWeight.w400),
-                                                  ),
-                                                )
-                                              : Container(
-                                                  padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
-                                                  decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(20),
-                                                      color: ApproveTextBgColor),
-                                                  child: Text(
-                                                    "paid_key".tr(),
-                                                    style: TextStyle(
-                                                        color: ApproveTextColor,
-                                                        fontSize: 10,
-                                                        fontWeight: FontWeight.w400),
-                                                  ),
-                                                ),
-                                        ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Container(
-                                          width: 90,
-                                        )
-                                      ],
-                                    ),
-                                  ]),
-                                ),
-                                searchList[index].isReturn == 1
-                                    ? Positioned(
-                                        top: -28,
-                                        left: -25,
-                                        child: Transform.rotate(
-                                          angle: -0.6,
-                                          child: Container(
-                                            padding: EdgeInsets.fromLTRB(18, 32, 30, 2),
-                                            decoration: BoxDecoration(
-                                              color: Color(0xff6657f4),
-                                            ),
-                                            child: Text("return_key".tr(),
-                                                style: TextStyle(
-                                                    color: Colors.white, fontSize: 10, fontWeight: FontWeight.w400)),
-                                          ),
-                                        ),
-                                      )
-                                    : Container(),
-                                Positioned(
-                                  right: 0,
-                                  top: 0,
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    width: 90,
-                                    height: 76,
+                            child: Container(
+                              margin: EdgeInsets.symmetric(vertical: 10,horizontal: 14),
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.all(14),
+                                    height: 80,
                                     decoration: BoxDecoration(
-                                        color: searchList[index].status == 1 ? RejectedTextBgColor : GreenBoxBgColor,
-                                        borderRadius: BorderRadius.only(
-                                            bottomRight: Radius.circular(10), topRight: Radius.circular(10))),
-                                    child: Text(
-                                      " \u20B9 ${searchList[index].myprofitRevenue} ",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14,
-                                          color:
-                                              searchList[index].status == 1 ? RejectedBoxTextColor : GreenBoxTextColor),
-                                    ),
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.white,
+                                        border: Border.all(color: Colors.white38),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.shade300,
+                                            offset: Offset(0.0, 0.0), //(x,y)
+                                            blurRadius:7.0,
+                                          ),]),
+                                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 20),
+                                        child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "+91 ${searchList[index].mobile}",
+                                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
+                                              ),
+                                              Text(
+                                                "${DateFormat("dd MMM yyyy").format(searchList[index].dateTime)}(${DateFormat.jm().format(searchList[index].dateTime)})",
+                                                style: TextStyle(fontSize: 13, color: TextGrey, fontWeight: FontWeight.bold),
+                                              ),
+
+                                            ]),
+                                      ),
+                                      Text(
+                                        " \u20B9 ${searchList[index].myprofitRevenue} ",
+                                          style: GoogleFonts.openSans(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20,
+                                              color:
+                                              searchList[index].status == 1
+                                                  ? RejectedBoxTextColor
+                                                  : GreenBoxTextColor),
+                                      ),
+                                      // Row(
+                                      //   children: [
+                                      //     Center(
+                                      //       child: searchList[index].status == 1
+                                      //           ? Container(
+                                      //               padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
+                                      //               decoration: BoxDecoration(
+                                      //                   borderRadius: BorderRadius.circular(20),
+                                      //                   color: PendingTextBgColor),
+                                      //               child: Text(
+                                      //                 "pending_key".tr(),
+                                      //                 style: TextStyle(
+                                      //                     color: PendingTextColor,
+                                      //                     fontSize: 10,
+                                      //                     fontWeight: FontWeight.w400),
+                                      //               ),
+                                      //             )
+                                      //           : Container(
+                                      //               padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+                                      //               decoration: BoxDecoration(
+                                      //                   borderRadius: BorderRadius.circular(20),
+                                      //                   color: ApproveTextBgColor),
+                                      //               child: Text(
+                                      //                 "paid_key".tr(),
+                                      //                 style: TextStyle(
+                                      //                     color: ApproveTextColor,
+                                      //                     fontSize: 10,
+                                      //                     fontWeight: FontWeight.w400),
+                                      //               ),
+                                      //             ),
+                                      //     ),
+                                      //     SizedBox(
+                                      //       width: 5,
+                                      //     ),
+                                      //     Container(
+                                      //       width: 90,
+                                      //     )
+                                      //   ],
+                                      // ),
+                                    ]),
                                   ),
-                                )
-                              ],
+                                  // searchList[index].isReturn == 1
+                                  //     ? Positioned(
+                                  //         top: -28,
+                                  //         left: -25,
+                                  //         child: Transform.rotate(
+                                  //           angle: -0.6,
+                                  //           child: Container(
+                                  //             padding: EdgeInsets.fromLTRB(18, 32, 30, 2),
+                                  //             decoration: BoxDecoration(
+                                  //               color: Color(0xff6657f4),
+                                  //             ),
+                                  //             child: Text("return_key".tr(),
+                                  //                 style: TextStyle(
+                                  //                     color: Colors.white, fontSize: 10, fontWeight: FontWeight.w400)),
+                                  //           ),
+                                  //         ),
+                                  //       )
+                                  //     : Container(),
+                                  // Positioned(
+                                  //   right: 0,
+                                  //   top: 0,
+                                  //   child: Container(
+                                  //     alignment: Alignment.center,
+                                  //     width: 90,
+                                  //     height: 76,
+                                  //     decoration: BoxDecoration(
+                                  //         color: searchList[index].status == 1 ? RejectedTextBgColor : GreenBoxBgColor,
+                                  //         borderRadius: BorderRadius.only(
+                                  //             bottomRight: Radius.circular(10), topRight: Radius.circular(10))),
+                                  //     child: Text(
+                                  //       " \u20B9 ${searchList[index].myprofitRevenue} ",
+                                  //       style: TextStyle(
+                                  //           fontWeight: FontWeight.bold,
+                                  //           fontSize: 14,
+                                  //           color:
+                                  //               searchList[index].status == 1 ? RejectedBoxTextColor : GreenBoxTextColor),
+                                  //     ),
+                                  //   ),
+                                  // )
+                                  searchList[index].isReturn == 1?
+                                  Positioned(
+                                      left: 0,
+                                      bottom: 0,
+                                      child: Container(
+                                        height: 80,
+                                        width: 28,
+
+                                  decoration: BoxDecoration( color: ColorPrimary,
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
+                                  child: Center(
+                                    child: RotatedBox(
+                                       quarterTurns: 3,
+                                      child: Text(
+                                        "return_key".tr(),
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            color:
+                                            Colors.white),
+                                      ),
+                                    ),
+                                  ),)): Container(),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
+
                       );
                       // Positioned(
                       //     top: 10,

@@ -21,8 +21,10 @@ class SearchByCategory extends StatefulWidget {
   String catid;
   var mobile;
   var coin;
+  final String firstName;
+  final String lastName;
 
-  SearchByCategory({required this.catid, required this.mobile, required this.coin});
+  SearchByCategory({required this.catid, required this.mobile, required this.coin, required this.firstName, required this.lastName});
 
   @override
   _SearchByCategoryState createState() => _SearchByCategoryState(this.catid, this.mobile, this.coin);
@@ -462,6 +464,8 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                           child: BillingProducts(
                             billingItemList: product,
                             mobile: widget.mobile,
+                            firstName: widget.firstName,
+                            lastName: widget.lastName,
                             coin: double.parse(widget.coin),
                           ),
                           type: PageTransitionType.fade));
