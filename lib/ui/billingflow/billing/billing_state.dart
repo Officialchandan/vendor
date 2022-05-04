@@ -12,11 +12,13 @@ class GetCustomerNumberResponseState extends CustomerNumberResponseState {
   final status;
   final data;
   final succes;
+  final firstName;
+  final lastName;
   GetCustomerNumberResponseState(
-      {this.message, this.status, this.data, this.succes});
+      {this.message, this.status, this.data, this.succes,this.firstName, this.lastName});
 
   @override
-  List<Object> get props => [message, data, succes];
+  List<Object> get props => [message, data, succes, firstName, lastName];
 }
 
 class GetCustomerNumberResponseLoadingstate

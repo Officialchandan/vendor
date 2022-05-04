@@ -195,7 +195,7 @@ class _UpiTransferHistoryState extends State<UpiTransferHistory> {
                                   ? RejectedBoxTextColor
                                   : upiList[index].status == 1
                                   ? GreenBoxTextColor
-                                  : PendingTextColor),
+                                  : GreenBoxTextColor),
                         ),
                       ]),
                     ),
@@ -210,23 +210,23 @@ class _UpiTransferHistoryState extends State<UpiTransferHistory> {
                             child: upiList[index].status == 0
                                 ? Center(
                                     child: Text(
-                                      "rejected_key".tr(),
-                                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: Colors.white),
+                                      "failed_key".tr(),
+                                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Colors.white),
                                     ),
                                   )
                                 : upiList[index].status == 1
                                     ? Center(
                                         child: Text(
-                                          "accepted_key".tr(),
+                                          "success_key".tr(),
                                             style: TextStyle(
-                                                color: Colors.white, fontSize: 14, fontWeight: FontWeight.w400)),
+                                                color: Colors.white, fontSize: 14, fontWeight: FontWeight.w600)),
                                       )
                                     : upiList[index].status == 2
                                         ? Center(
                                             child: Text(
                                               "pending_key".tr(),
                                                 style: TextStyle(
-                                                    color: Colors.white, fontSize: 14, fontWeight: FontWeight.w400)),
+                                                    color: Colors.white, fontSize: 14, fontWeight: FontWeight.w600)),
                                           )
                                         : Center(
                                             child: Text(

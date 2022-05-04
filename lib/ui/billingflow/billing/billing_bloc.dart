@@ -47,6 +47,8 @@ class CustomerNumberResponseBloc extends Bloc<CustomerNumberResponseEvent, Custo
               message: result.message,
               data: result.data!.walletBalance,
               status: result.cust_reg_status,
+              firstName: result.data!.firstName,
+              lastName: result.data!.lastName,
               succes: result.success);
         } else {
           Utility.showToast(

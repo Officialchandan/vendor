@@ -24,8 +24,10 @@ import 'package:vendor/utility/utility.dart';
 
 class BillingProducts extends StatefulWidget {
   final List<ProductModel> billingItemList;
+  final String firstName;
+  final String lastName;
 
-  BillingProducts({required this.billingItemList, required this.mobile, required this.coin});
+  BillingProducts({required this.billingItemList, required this.mobile, required this.coin, required this.firstName, required this.lastName});
 
   final List<ProductModel> searchList = [];
   final coin;
@@ -120,11 +122,13 @@ class _BillingProductsState extends State<BillingProducts> {
             // } else {
             //   widget.coin += double.parse(productList[state.index].redeemCoins);
             // }
+          if(state.isChecked){
+            redeemDialog(context, redeemCoins.toString());
+          }
           }
           if (state is EditBillingProductState) {
             productList[state.index].sellingPrice = ((state.price) / productList[state.index].count).toStringAsFixed(2);
             productList[state.index].earningCoins = state.earningCoin.toStringAsFixed(2);
-            print("productList[state.index].sellingPrice-->${productList[state.index].sellingPrice}");
             productList[state.index].earningCoins = state.earningCoin.toStringAsFixed(2);
             calculateAmounts(productList);
           }
@@ -608,7 +612,7 @@ class _BillingProductsState extends State<BillingProducts> {
                                           width: 16,
                                           height: 16,
                                         )),
-                                    Text(" ${(earnCoins - 0.75).toStringAsFixed(2)}",
+                                    Text(" ${(earnCoins).toStringAsFixed(2)}",
                                         style:
                                         TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
                                   ],
@@ -778,6 +782,62 @@ class _BillingProductsState extends State<BillingProducts> {
     input["product"] = billingProductList;
     log("input=====> $input");
     billingProductsBloc.add(PayBillingProductsEvent(input: input));
+  }
+
+  redeemDialog(BuildContext context, String redeemCoins) async {
+    return showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            contentPadding: const EdgeInsets.all(0),
+            titlePadding: const EdgeInsets.all(0),
+            actionsPadding: const EdgeInsets.all(10),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            title: Image.asset(
+              "assets/images/3x/hooray-banner.png",
+              fit: BoxFit.cover,
+            ),
+            content: Container(
+              height: 50,
+              child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "${"hooray_you_saved".tr()} ${widget.firstName} ${"saved_key".tr()}",
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+                    ),
+                    Text(
+                      " \u20B9${(double.parse(redeemCoins) / 3).toStringAsFixed(2)}",
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: ColorPrimary),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            actions: <Widget>[
+              Center(
+                child: MaterialButton(
+                  minWidth: MediaQuery.of(context).size.width * 0.40,
+                  height: 45,
+                  padding: const EdgeInsets.all(8.0),
+                  textColor: Colors.white,
+                  color: ColorPrimary,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: new Text(
+                    "done_key".tr(),
+                    style: GoogleFonts.openSans(
+                        fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
+                  ),
+                ),
+              ),
+            ],
+          );
+        });
   }
 
   _displayDialog(BuildContext context, index, status, text, hintText) async {
@@ -979,7 +1039,6 @@ class _BillingProductsState extends State<BillingProducts> {
     double availableCoins = widget.coin;
     double customerCoins = widget.coin;
     double redeemedCoin = 0;
-
     productList.forEach((product) {
       //redeemedCoin += double.parse(product.redeemCoins);
       product.redeemCoins = (double.parse(product.sellingPrice) * 3).toString();
@@ -1073,12 +1132,10 @@ class _BillingProductsState extends State<BillingProducts> {
             log("product.coinpaid== ==> $availableCoins");
             log("product.amounttopay== ==> $coinToRupee");
             partialcoin = double.parse(product.redeemCoins) * double.parse(product.count.toString());
-            log("yha mai aya hu totalPay====>${product.redeemCoins}");
             redeemedCoin += availableCoins;
             redeemCoins += availableCoins;
             availableCoins = 0;
             product.redeemCoins = partialcoin.toString();
-            log("yha mai aya hu totalPay====>");
             totalPay = coinToRupee;
           } else {
             double remainingCoin =
@@ -1100,7 +1157,6 @@ class _BillingProductsState extends State<BillingProducts> {
         product.redeemCoins = product.coinpaid.toString();
         product.amounttopay = double.parse(product.sellingPrice) * product.count;
         totalPay += double.parse(product.sellingPrice) * product.count;
-        log("yha mai aya hu $totalPay");
       }
 
       log("=====>product.earningCoins${double.parse(product.earningCoins)}");

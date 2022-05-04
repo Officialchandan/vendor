@@ -52,6 +52,8 @@ class _DirectBillingState extends State<DirectBilling> {
   List categoryIdList = [];
   String coinss = "0.0", earn = "0.0";
   String amount = "0.0";
+  String firstname = "You";
+  String lastName = "";
   var billing;
   DirectBillingData? datas;
   bool onTileTap = false;
@@ -242,6 +244,7 @@ class _DirectBillingState extends State<DirectBilling> {
                           coins = state.data.toString();
                           status1 = state.status;
                           nameController.clear();
+                          firstname = state.firstName;
                         }
                         if (state is GetDirectBillingCustomerNumberResponseFailureState) {
                           coins = "0.0";
@@ -898,7 +901,7 @@ class _DirectBillingState extends State<DirectBilling> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "hooray_you_saved".tr(),
+                "${"hooray_you_saved".tr()} $firstname ${"saved_key".tr()}",
                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
                     ),
                     Text(

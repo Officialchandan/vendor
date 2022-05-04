@@ -40,6 +40,8 @@ class _BillingScreenState extends State<BillingScreen> {
   var check;
   var coins;
   String customerCoins = "0.0";
+  String firstName = "You";
+  String lastName = "";
   var message;
   var userStatus;
   var status;
@@ -190,18 +192,12 @@ class _BillingScreenState extends State<BillingScreen> {
                           BlocConsumer<CustomerNumberResponseBloc, CustomerNumberResponseState>(
                             listener: (context, state) {
                               if (state is GetCustomerNumberResponseState) {
-                                log("number chl gya");
-
                                 check = state.succes;
                                 coins = state.data;
                                 customerCoins = state.data;
+                                firstName = state.firstName;
+                                lastName = state.lastName;
 
-                                log("======>$check");
-                                log("======>$coins");
-                                // Utility.showToast(
-                                //     backgroundColor: ColorPrimary,
-                                //     textColor: Colors.white,
-                                //     msg: state.message);
                               }
                               if (state is GetCustomerNumberResponseFailureState) {
                                 check = state.succes;
@@ -365,6 +361,8 @@ class _BillingScreenState extends State<BillingScreen> {
                                                     child: SearchAllProduct(
                                                       mobile: mobileController.text,
                                                       coin: coins = 0.toString(),
+                                                      lastName: lastName,
+                                                      firstName: firstName,
                                                     ),
                                                     type: PageTransitionType.fade))
                                             .then((value) {
@@ -383,6 +381,8 @@ class _BillingScreenState extends State<BillingScreen> {
                                           context,
                                           PageTransition(
                                               child: SearchAllProduct(
+                                                lastName: lastName,
+                                                firstName: firstName,
                                                 mobile: mobileController.text,
                                                 coin: coins,
                                               ),
@@ -560,6 +560,8 @@ class _BillingScreenState extends State<BillingScreen> {
                                 context,
                                 PageTransition(
                                     child: SearchByCategory(
+                                      firstName: firstName,
+                                      lastName: lastName,
                                       catid: category[index].id.toString(),
                                       mobile: mobileController.text,
                                       coin: coins,
@@ -582,6 +584,8 @@ class _BillingScreenState extends State<BillingScreen> {
                           context,
                           PageTransition(
                               child: SearchByCategory(
+                                lastName: lastName,
+                                firstName: firstName,
                                 catid: category[index].id.toString(),
                                 mobile: mobileController.text,
                                 coin: coins,

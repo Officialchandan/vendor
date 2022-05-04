@@ -261,18 +261,18 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                               ]),
                           child: condition == 0
                               ? Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(15.0),
-                                    child: Text(
-                                      "types_of_money_due_key".tr(),
-                                        style: GoogleFonts.openSans(
-                                            color: TextBlackLight,
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.w700)
-                                    ),
-                                  ),
+                                  // Padding(
+                                  //   padding: const EdgeInsets.all(15.0),
+                                  //   child: Text(
+                                  //     "types_of_money_due_key".tr(),
+                                  //       style: GoogleFonts.openSans(
+                                  //           color: TextBlackLight,
+                                  //           fontSize: 17,
+                                  //           fontWeight: FontWeight.w700)
+                                  //   ),
+                                  // ),
                                   SizedBox(
-                                    height: 20,
+                                    height: 30,
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(20.0),
@@ -815,18 +815,18 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                   ),
                                 ])
                               : Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(15.0),
-                                    child: Text(
-                                      "types_of_money_due_key".tr(),
-                                        style: GoogleFonts.openSans(
-                                            color: TextBlackLight,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w700)
-                                    ),
-                                  ),
+                                  // Padding(
+                                  //   padding: const EdgeInsets.all(15.0),
+                                  //   child: Text(
+                                  //     "types_of_money_due_key".tr(),
+                                  //       style: GoogleFonts.openSans(
+                                  //           color: TextBlackLight,
+                                  //           fontSize: 16,
+                                  //           fontWeight: FontWeight.w700)
+                                  //   ),
+                                  // ),
                                   SizedBox(
-                                    height: 20,
+                                    height: 30,
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(20.0),
