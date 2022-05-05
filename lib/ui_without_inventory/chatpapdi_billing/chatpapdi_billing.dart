@@ -180,8 +180,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                           }
                           calculation(amountController.text.isEmpty ? "0" : amountController.text);
 
-                          calculateEarnCoins(
-                              double.parse(amountController.text.isEmpty ? "0" : amountController.text));
+                          calculateEarnCoins(double.parse(amountController.text.isEmpty ? "0" : amountController.text));
                         }
                       },
                       builder: (context, state) {
@@ -230,7 +229,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                         status1 == 0
                             ? TextFormField(
                                 controller: nameController,
-                              style: TextStyle(color: TextBlackLight, fontSize: 16),
+                                style: TextStyle(color: TextBlackLight, fontSize: 16),
                                 inputFormatters: [FilteringTextInputFormatter.allow(Validator.name)],
                                 decoration: InputDecoration(
                                   hintStyle: TextStyle(color: TextBlackLight, fontSize: 16),
@@ -241,8 +240,8 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                                   counterText: "",
                                   contentPadding: EdgeInsets.all(0),
                                   fillColor: Colors.transparent,
-                                  enabledBorder:
-                                      UnderlineInputBorder(borderSide: BorderSide(color: textFieldBorderColor, width: 1.5)),
+                                  enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(color: textFieldBorderColor, width: 1.5)),
                                   focusedBorder:
                                       UnderlineInputBorder(borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
                                   border: UnderlineInputBorder(borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
@@ -434,19 +433,18 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
               ),
             ),
             bottomNavigationBar: Container(
-              height: 241,
-
+              height: MediaQuery.of(context).size.height * 0.32,
               child: Column(
                 children: [
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 25),
                     child: InkWell(
-                      onTap: (){
-                        if(redeem == false){
+                      onTap: () {
+                        if (redeem == false) {
                           directBillingCustomerNumberResponseBloc.add(ChatPapdiCheckBoxEvent(isChecked: true));
                         }
 
-                        if(redeem == true){
+                        if (redeem == true) {
                           directBillingCustomerNumberResponseBloc.add(ChatPapdiCheckBoxEvent(isChecked: false));
                         }
                       },
@@ -464,9 +462,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               value: this.redeem,
                               checkColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(2)
-                              ),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
                               side: BorderSide(width: 1.5),
                               activeColor: ColorPrimary,
                               onChanged: (value) {
@@ -482,11 +478,10 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                     height: 4,
                   ),
                   Container(
-                    margin: EdgeInsets.symmetric(vertical: 10,horizontal: 14),
-                    padding: EdgeInsets.symmetric(vertical: 10,horizontal: 14),
+                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 14),
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 14),
                     width: MediaQuery.of(context).size.width,
-                    decoration:
-                    BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10), boxShadow: [
+                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10), boxShadow: [
                       BoxShadow(
                         color: Colors.grey.shade300,
                         offset: Offset(0.0, 0.0), //(x,y)
@@ -506,11 +501,9 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                             Row(
                               children: [
                                 Text("\u20B9",
-                                    style:
-                                    TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black)),
+                                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black)),
                                 Text("${amountController.text.isEmpty ? 0.0 : amountController.text}",
-                                    style:
-                                    TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
+                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
                               ],
                             ),
                           ],
@@ -521,15 +514,18 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("redeemed_coins_key".tr(),
-                              style: TextStyle(color: TextBlackLight, fontSize: 15, fontWeight: FontWeight.bold),),
+                            Text(
+                              "redeemed_coins_key".tr(),
+                              style: TextStyle(color: TextBlackLight, fontSize: 15, fontWeight: FontWeight.bold),
+                            ),
                             Row(children: [
                               Container(
                                   child: Image.asset(
-                                    "assets/images/point.png",
-                                    scale: 3,
-                                  )),
-                              Text(" $coinss", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black))
+                                "assets/images/point.png",
+                                scale: 3,
+                              )),
+                              Text(" $coinss",
+                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black))
                             ]),
                           ],
                         ),
@@ -539,16 +535,19 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("earned_coins_key".tr(),
-                              style: TextStyle(color: TextBlackLight, fontSize: 15, fontWeight: FontWeight.bold),),
+                            Text(
+                              "earned_coins_key".tr(),
+                              style: TextStyle(color: TextBlackLight, fontSize: 15, fontWeight: FontWeight.bold),
+                            ),
                             Row(
                               children: [
                                 Container(
                                     child: Image.asset(
-                                      "assets/images/point.png",
-                                      scale: 3,
-                                    )),
-                                Text(" $earningCoins",style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
+                                  "assets/images/point.png",
+                                  scale: 3,
+                                )),
+                                Text(" $earningCoins",
+                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
                               ],
                             ),
                           ],
@@ -556,20 +555,22 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                         SizedBox(
                           height: 10,
                         ),
-                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                          Text(
-                            "net_payable_key".tr(),
-                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: ColorPrimary),
-                          ),
-                          Row(
-                            children: [
-                              Text("\u20B9",
-                                  style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold, color: ColorPrimary)),
-                              Text("$amount",
-                                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: ColorPrimary)),
-                            ],
-                          ),
-                        ],
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "net_payable_key".tr(),
+                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: ColorPrimary),
+                            ),
+                            Row(
+                              children: [
+                                Text("\u20B9",
+                                    style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold, color: ColorPrimary)),
+                                Text("$amount",
+                                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: ColorPrimary)),
+                              ],
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -709,47 +710,70 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
           return ConstrainedBox(
             constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.40),
             child: AlertDialog(
-              contentPadding: const EdgeInsets.only(left: 20, right: 20,bottom: 20),
-              titlePadding:  const EdgeInsets.only(left: 20, right: 20,top: 20, bottom: 20),
+              titlePadding: const EdgeInsets.only(left: 18, right: 18, top: 10, bottom: 10),
+              contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 18),
+              actionsPadding: const EdgeInsets.only(left: 12, right: 12, top: 0, bottom: 18),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-              title: Text(
-                "$text",
-                textAlign: TextAlign.left,
-                style: GoogleFonts.openSans(
-                  fontSize: 18.0,
-                  color: TextBlackLight,
-                  fontWeight: FontWeight.bold,
+              title: RichText(
+                text: TextSpan(
+                  text: "${"otp_verification_key".tr()}\n",
+                  style: GoogleFonts.openSans(
+                    fontSize: 25.0,
+                    height: 2.0,
+                    color: TextBlackLight,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: "${"please_verify_your_otp_on_key".tr()}\n",
+                      style: GoogleFonts.openSans(
+                        fontSize: 14.0,
+                        height: 1.5,
+                        color: ColorTextPrimary,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    TextSpan(
+                      text: "+91 ${mobileController.text}",
+                      style: GoogleFonts.openSans(
+                        fontSize: 14.0,
+                        height: 1.5,
+                        color: ColorTextPrimary,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    )
+                  ],
                 ),
               ),
               content: TextFormField(
                 controller: otpController,
-                cursorColor: ColorPrimary,
                 maxLength: 6,
+                cursorColor: ColorPrimary,
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                style: GoogleFonts.openSans(
-                    fontWeight: FontWeight.w600,
-                    color: TextGrey,
-                    fontSize: 17,
-                    letterSpacing: 1
-                ),
                 decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.all(0),
+                  filled: true,
                   counterText: "",
-                  hintText: "$hintText",
+                  // fillColor: Colors.black,
+                  hintText: "enter_otp_key".tr(),
                   hintStyle: GoogleFonts.openSans(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 17,
-                      color: TextGrey
+                    fontWeight: FontWeight.w600,
+                  ),
+                  contentPadding: const EdgeInsets.only(left: 14.0, right: 14, top: 8, bottom: 8),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                    borderRadius: BorderRadius.circular(10),
                   ),
                 ),
               ),
               actions: <Widget>[
                 Center(
                   child: MaterialButton(
-                    minWidth: MediaQuery.of(context).size.width * 0.40,
-                    height: 45,
-                    padding: const EdgeInsets.all(8.0),
+                    minWidth: MediaQuery.of(context).size.width,
+                    height: 50,
                     textColor: Colors.white,
                     color: ColorPrimary,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),

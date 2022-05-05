@@ -14,7 +14,7 @@ class GetDueAmountResponse {
 
   bool success;
   String message;
-  String totalDue;
+  List<TotalDue> totalDue;
   List<CategoryDueAmount> data;
 
   factory GetDueAmountResponse.fromJson(String str) => GetDueAmountResponse.fromMap(json.decode(str));
@@ -24,14 +24,41 @@ class GetDueAmountResponse {
   factory GetDueAmountResponse.fromMap(Map<String, dynamic> json) => GetDueAmountResponse(
         success: json["success"] == null ? false : json["success"],
         message: json["message"] == null ? "" : json["message"],
-        totalDue: json["total_due"] == null ? "0" : json["total_due"].toString(),
-        data: json["data"] == null ? [] : List<CategoryDueAmount>.from(json["data"].map((x) => CategoryDueAmount.fromMap(x))),
+        totalDue:
+            json["total_due"] == null ? [] : List<TotalDue>.from(json["total_due"].map((x) => TotalDue.fromMap(x))),
+        data: json["data"] == null
+            ? []
+            : List<CategoryDueAmount>.from(json["data"].map((x) => CategoryDueAmount.fromMap(x))),
       );
 
   Map<String, dynamic> toMap() => {
         "success": success,
         "message": message,
         "total_due": totalDue,
+      };
+}
+
+class TotalDue {
+  TotalDue({
+    required this.paymentId,
+    required this.myprofitRevenue,
+  });
+
+  String paymentId;
+  String myprofitRevenue;
+
+  factory TotalDue.fromJson(String str) => TotalDue.fromMap(json.decode(str));
+
+  String toJson() => json.encode(toMap());
+
+  factory TotalDue.fromMap(Map<String, dynamic> json) => TotalDue(
+        paymentId: json["payment_id"] == null ? "0" : json["payment_id"].toString(),
+        myprofitRevenue: json["myprofit_revenue"] == null ? "0" : json["myprofit_revenue"].toString(),
+      );
+
+  Map<String, dynamic> toMap() => {
+        "payment_id": paymentId == null ? null : paymentId,
+        "myprofit_revenue": myprofitRevenue == null ? null : myprofitRevenue.toString(),
       };
 }
 

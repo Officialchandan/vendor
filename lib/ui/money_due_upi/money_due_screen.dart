@@ -63,6 +63,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
 
   List<CategoryDueAmount> categoryDue = [];
   String dueAmount = "0.0";
+  String paymentid = "";
   GetVendorFreeCoinData? freecoin;
   String result = "";
   String mid = "", orderId = "", token = "", callbackurl = "";
@@ -139,7 +140,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
     Map<String, dynamic> input = HashMap<String, dynamic>();
     input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     input["amount"] = dueAmount;
-
+    input["payment_id"] = paymentid.toString();
     log("=====? $input");
 
     moneyDueBloc.add(GetInitiateTransiction(input));
@@ -173,7 +174,8 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
           if (state is GetDueAmountState) {
             moneyDueBloc.add(GetFreeCoins());
             log("due ammount ---> ${state.dueAmount}");
-            dueAmount = state.dueAmount;
+            dueAmount = state.dueAmount.first.myprofitRevenue.toString();
+            paymentid = state.dueAmount.first.paymentId.toString();
             categoryDue = state.categoryDue;
             // paymentTransiction(context);
           }
@@ -1176,12 +1178,13 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                                 child: Column(
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
-                                                    Text("return_ledger_key".tr(),
-                                                        style: GoogleFonts.openSans(
+                                                    Text(
+                                                      "return_ledger_key".tr(),
+                                                      style: GoogleFonts.openSans(
                                                           fontSize: 15,
                                                           fontWeight: FontWeight.w700,
-                                                            color: TextBlackLight
-                                                        ),),
+                                                          color: TextBlackLight),
+                                                    ),
                                                     SizedBox(
                                                       height: 5,
                                                     ),

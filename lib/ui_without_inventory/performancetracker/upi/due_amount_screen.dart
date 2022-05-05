@@ -14,7 +14,6 @@ import 'package:vendor/main.dart';
 import 'package:vendor/model/common_response.dart';
 import 'package:vendor/model/get_due_amount_response.dart';
 import 'package:vendor/model/get_vendor_free_coin.dart';
-import 'package:vendor/ui/money_due_upi/daily_ledger/daily_ledger.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/upi/bloc/due_amount_bloc.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/upi/bloc/due_amount_event.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/upi/bloc/due_amount_state.dart';
@@ -37,9 +36,10 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
   GetVendorFreeCoinData? freecoin;
   List<CategoryDueAmount> categoryDue = [];
   String dueAmount = "0.0";
+  String paymentid = "";
   String result = "";
   String mid = "", orderId = "", token = "", callbackurl = "";
-  int condition = 0;
+  int condition = 1;
   @override
   void initState() {
     super.initState();
@@ -83,7 +83,8 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
   Future<void> paymentTransiction(BuildContext context) async {
     Map<String, dynamic> input = HashMap<String, dynamic>();
     input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
-    input["amount"] = 1;
+    input["amount"] = dueAmount;
+    input["payment_id"] = paymentid;
 
     log("=====? $input");
 
@@ -126,7 +127,10 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
             systemOverlayStyle: SystemUiOverlayStyle(
               statusBarColor: condition == 0 ? ApproveTextColor : ColorPrimary,
             ),
-            title: Text("money_due_upi_key".tr(),style: TextStyle(fontWeight: FontWeight.bold),),
+            title: Text(
+              "money_due_upi_key".tr(),
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
             elevation: 0,
             backgroundColor: condition == 0 ? ApproveTextColor : ColorPrimary,
           ),
@@ -163,7 +167,8 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                             if (state is GetDueAmountState) {
                               moneyDueBloc.add(GetFreeCoins());
                               log("due ammount ---> ${state.dueAmount}");
-                              dueAmount = state.dueAmount;
+                              dueAmount = state.dueAmount[0].myprofitRevenue;
+                              paymentid = state.dueAmount[0].paymentId;
                               categoryDue = state.categoryDue;
                               //  paymentTransiction(context);
                             }
@@ -220,7 +225,9 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                         //     style: GoogleFonts.openSans(color: TextBlackLight, fontWeight: FontWeight.w700, fontSize: 17),
                         //   ),
                         // ),
-                        SizedBox(height: 35,),
+                        SizedBox(
+                          height: 35,
+                        ),
                         Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: Row(
@@ -263,8 +270,11 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                                             SizedBox(
                                               height: 5,
                                             ),
-                                            Text("master_ledger_key".tr(),
-                                               style: GoogleFonts.openSans(color: TextBlackLight, fontWeight: FontWeight.w700, fontSize: 15),),
+                                            Text(
+                                              "master_ledger_key".tr(),
+                                              style: GoogleFonts.openSans(
+                                                  color: TextBlackLight, fontWeight: FontWeight.w700, fontSize: 15),
+                                            ),
                                             SizedBox(
                                               height: 10,
                                             )
@@ -330,7 +340,9 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                               GestureDetector(
                                 onTap: () {
                                   Navigator.push(
-                                      context, PageTransition(child: DailyLedgerWithoutInventory(), type: PageTransitionType.fade));
+                                      context,
+                                      PageTransition(
+                                          child: DailyLedgerWithoutInventory(), type: PageTransitionType.fade));
                                 },
                                 child: Stack(
                                   clipBehavior: Clip.none,
@@ -358,8 +370,11 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text("daily_ledger_key".tr(),
-                                            style: GoogleFonts.openSans(color: TextBlackLight, fontWeight: FontWeight.w700, fontSize: 15),),
+                                          Text(
+                                            "daily_ledger_key".tr(),
+                                            style: GoogleFonts.openSans(
+                                                color: TextBlackLight, fontWeight: FontWeight.w700, fontSize: 15),
+                                          ),
                                           SizedBox(
                                             height: 10,
                                           )
@@ -462,8 +477,11 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text("upi_transfer_key".tr(),
-                                            style: GoogleFonts.openSans(color: TextBlackLight, fontWeight: FontWeight.w700, fontSize: 15),),
+                                          Text(
+                                            "upi_transfer_key".tr(),
+                                            style: GoogleFonts.openSans(
+                                                color: TextBlackLight, fontWeight: FontWeight.w700, fontSize: 15),
+                                          ),
                                           SizedBox(
                                             height: 5,
                                           ),
@@ -562,8 +580,11 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Text("redeem_coins_key".tr(),
-                                              style: GoogleFonts.openSans(color: TextBlackLight, fontWeight: FontWeight.w700, fontSize: 15),),
+                                            Text(
+                                              "redeem_coins_key".tr(),
+                                              style: GoogleFonts.openSans(
+                                                  color: TextBlackLight, fontWeight: FontWeight.w700, fontSize: 15),
+                                            ),
                                             SizedBox(
                                               height: 5,
                                             ),
@@ -690,8 +711,11 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                                           Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Text("free_coins_key".tr(),
-                                                style: GoogleFonts.openSans(color: TextBlackLight, fontWeight: FontWeight.w700, fontSize: 15),),
+                                              Text(
+                                                "free_coins_key".tr(),
+                                                style: GoogleFonts.openSans(
+                                                    color: TextBlackLight, fontWeight: FontWeight.w700, fontSize: 15),
+                                              ),
                                               SizedBox(
                                                 height: 5,
                                               ),
@@ -829,7 +853,7 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                   height: 20,
                 ),
                 Text(
-                  "\u20B9 $status ",
+                  "\u20B9 $dueAmount ",
                   textAlign: TextAlign.center,
                   style: GoogleFonts.openSans(
                     fontSize: 17.0,
