@@ -947,7 +947,7 @@ class _DirectBillingState extends State<DirectBilling> {
                     Navigator.pop(context);
                   },
                   child: new Text(
-                    "done_key".tr(),
+                    "redeem_popup_button_key".tr(),
                     style: GoogleFonts.openSans(
                         fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
                   ),
