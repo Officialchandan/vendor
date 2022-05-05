@@ -1041,15 +1041,17 @@ class _BillingProductsState extends State<BillingProducts> {
         if (availableCoins >= (double.parse(product.redeemCoins) * double.parse(product.count.toString()))) {
           redeemCoins += double.parse(product.redeemCoins) * double.parse(product.count.toString());
           double rc = redeemedCoin / (orderTotal * 3);
+          log("=====>redeemCoins$redeemCoins");
+          log("=====>orderTotal$orderTotal");
           log("=====>$rc");
 
           availableCoins = availableCoins - double.parse(product.redeemCoins) * double.parse(product.count.toString());
         } else {
           double remainingCoin =
               (double.parse(product.redeemCoins) * double.parse(product.count.toString())) - availableCoins;
-          // log("availableCoins1======>$availableCoins");
+          log("availableCoins1======>$availableCoins");
           // log("customerCoins1=====>$customerCoins");
-          // log("amount1 ==> $remainingCoin");
+          log("amount1 ==> $remainingCoin");
           // log("customerCoins1=====>$customerCoins");
           double coinToRupee = remainingCoin / 3;
           // log("amount1== ==> $remainingCoin");
@@ -1058,6 +1060,10 @@ class _BillingProductsState extends State<BillingProducts> {
           totalPay += coinToRupee;
           redeemedCoin += availableCoins;
           redeemCoins += availableCoins;
+          log("=====>totalPay$totalPay");
+          log("=====>redeemedCoin$redeemedCoin");
+          log("=====>redeemCoins$redeemCoins");
+
           availableCoins = 0;
         }
       } else {
@@ -1073,101 +1079,101 @@ class _BillingProductsState extends State<BillingProducts> {
     });
   }
 
-  void calculateAmounts1(List<ProductModel> productList) {
-    totalPay = 0;
-    redeemCoins = 0;
-    earnCoins = 0;
-
-    double availableCoins = widget.coin;
-    double customerCoins = widget.coin;
-    double redeemedCoin = 0;
-    double partialcoin = 0;
-    double partialamount = 0;
-
-    productList.forEach((product) {
-      log("=====>sellingPrice${double.parse(product.sellingPrice)}");
-      log("=====>product.count${product.count}");
-      log("---totalPay$totalPay");
-      log("=====>redeemCoins==>${double.parse(product.redeemCoins)}");
-      //redeemedCoin += double.parse(product.redeemCoins);
-      // log("=====>redeemCoinss==>$redeemedCoin");
-      //log("=====>product.count${product.count}");
-      product.redeemCoins = (double.parse(product.sellingPrice) * 3).toString();
-
-      //log("=====>product.redeemCoins${product.redeemCoins}");
-      if (product.billingcheck) {
-        if (availableCoins >= (double.parse(product.redeemCoins) * double.parse(product.count.toString()))) {
-          redeemCoins += double.parse(product.redeemCoins) * double.parse(product.count.toString());
-          redeemedCoin += double.parse(product.redeemCoins) * double.parse(product.count.toString());
-          availableCoins = availableCoins - double.parse(product.redeemCoins) * double.parse(product.count.toString());
-          log("sellingPrice=====>${double.parse(product.sellingPrice) * product.count}");
-          product.amounttopay = 0;
-          log("customerCoins=====>$customerCoins");
-          log("redeemCoins=====>$redeemCoins");
-          log("availableCoins====>$availableCoins");
-        } else if (availableCoins == 0) {
-          product.amounttopay = double.parse(product.sellingPrice) * product.count;
-          totalPay += double.parse(product.sellingPrice) * product.count;
-          log("yha mai aya hu== $totalPay");
-        } else {
-          if (availableCoins < (double.parse(product.redeemCoins) * double.parse(product.count.toString()))) {
-            log("yha mai aya hu totalPay===>${double.parse(product.redeemCoins) * double.parse(product.count.toString())}");
-            double remainingCoin =
-                (double.parse(product.redeemCoins) * double.parse(product.count.toString())) - availableCoins;
-            log("availableCoins1======>$availableCoins");
-            log("customerCoins1=====>$customerCoins");
-            log("amount1 ==> $remainingCoin");
-            log("customerCoins1=====>$customerCoins");
-            double coinToRupee = remainingCoin / 3;
-
-            log("amount1== ==> $remainingCoin");
-            log("coinToRupee== ==> $coinToRupee");
-
-            product.coinpaid = availableCoins;
-            product.amounttopay = coinToRupee;
-
-            log("product.coinpaid== ==> $availableCoins");
-            log("product.amounttopay== ==> $coinToRupee");
-            partialcoin = double.parse(product.redeemCoins) * double.parse(product.count.toString());
-            log("yha mai aya hu totalPay====>${product.redeemCoins}");
-            redeemedCoin += availableCoins;
-            redeemCoins += availableCoins;
-            availableCoins = 0;
-            product.redeemCoins = partialcoin.toString();
-            log("yha mai aya hu totalPay====>");
-            totalPay = coinToRupee;
-          } else {
-            double remainingCoin =
-                (double.parse(product.redeemCoins) * double.parse(product.count.toString())) - availableCoins;
-            log("availableCoins1======>$availableCoins");
-            log("customerCoins1=====>$customerCoins");
-            log("amount1 ==> $remainingCoin");
-            log("customerCoins1=====>$customerCoins");
-            double coinToRupee = remainingCoin / 3;
-            log("amount1== ==> $remainingCoin");
-            totalPay += coinToRupee;
-            redeemedCoin += availableCoins;
-            redeemCoins += availableCoins;
-            availableCoins = 0;
-          }
-        }
-      } else {
-        product.coinpaid = 0;
-        product.redeemCoins = product.coinpaid.toString();
-        product.amounttopay = double.parse(product.sellingPrice) * product.count;
-        totalPay += double.parse(product.sellingPrice) * product.count;
-      }
-
-      log("=====>product.earningCoins${double.parse(product.earningCoins)}");
-      log("=====>product.count2${product.count}");
-      earnCoins += double.parse(product.earningCoins);
-      //
-      // earnCoins = earnCoins - 0.75;
-      log("---earnCoins==>$earnCoins");
-      log("---totalpay --> $totalPay");
-      log("---redeemCoins --> $redeemCoins");
-    });
-  }
+  // void calculateAmounts1(List<ProductModel> productList) {
+  //   totalPay = 0;
+  //   redeemCoins = 0;
+  //   earnCoins = 0;
+  //
+  //   double availableCoins = widget.coin;
+  //   double customerCoins = widget.coin;
+  //   double redeemedCoin = 0;
+  //   double partialcoin = 0;
+  //   double partialamount = 0;
+  //
+  //   productList.forEach((product) {
+  //     log("=====>sellingPrice${double.parse(product.sellingPrice)}");
+  //     log("=====>product.count${product.count}");
+  //     log("---totalPay$totalPay");
+  //     log("=====>redeemCoins==>${double.parse(product.redeemCoins)}");
+  //     //redeemedCoin += double.parse(product.redeemCoins);
+  //     // log("=====>redeemCoinss==>$redeemedCoin");
+  //     //log("=====>product.count${product.count}");
+  //     product.redeemCoins = (double.parse(product.sellingPrice) * 3).toString();
+  //
+  //     //log("=====>product.redeemCoins${product.redeemCoins}");
+  //     if (product.billingcheck) {
+  //       if (availableCoins >= (double.parse(product.redeemCoins) * double.parse(product.count.toString()))) {
+  //         redeemCoins += double.parse(product.redeemCoins) * double.parse(product.count.toString());
+  //         redeemedCoin += double.parse(product.redeemCoins) * double.parse(product.count.toString());
+  //         availableCoins = availableCoins - double.parse(product.redeemCoins) * double.parse(product.count.toString());
+  //         log("sellingPrice=====>${double.parse(product.sellingPrice) * product.count}");
+  //         product.amounttopay = 0;
+  //         log("customerCoins=====>$customerCoins");
+  //         log("redeemCoins=====>$redeemCoins");
+  //         log("availableCoins====>$availableCoins");
+  //       } else if (availableCoins == 0) {
+  //         product.amounttopay = double.parse(product.sellingPrice) * product.count;
+  //         totalPay += double.parse(product.sellingPrice) * product.count;
+  //         log("yha mai aya hu== $totalPay");
+  //       } else {
+  //         if (availableCoins < (double.parse(product.redeemCoins) * double.parse(product.count.toString()))) {
+  //           log("yha mai aya hu totalPay===>${double.parse(product.redeemCoins) * double.parse(product.count.toString())}");
+  //           double remainingCoin =
+  //               (double.parse(product.redeemCoins) * double.parse(product.count.toString())) - availableCoins;
+  //           log("availableCoins1======>$availableCoins");
+  //           log("customerCoins1=====>$customerCoins");
+  //           log("amount1 ==> $remainingCoin");
+  //           log("customerCoins1=====>$customerCoins");
+  //           double coinToRupee = remainingCoin / 3;
+  //
+  //           log("amount1== ==> $remainingCoin");
+  //           log("coinToRupee== ==> $coinToRupee");
+  //
+  //           product.coinpaid = availableCoins;
+  //           product.amounttopay = coinToRupee;
+  //
+  //           log("product.coinpaid== ==> $availableCoins");
+  //           log("product.amounttopay== ==> $coinToRupee");
+  //           partialcoin = double.parse(product.redeemCoins) * double.parse(product.count.toString());
+  //           log("yha mai aya hu totalPay====>${product.redeemCoins}");
+  //           redeemedCoin += availableCoins;
+  //           redeemCoins += availableCoins;
+  //           availableCoins = 0;
+  //           product.redeemCoins = partialcoin.toString();
+  //           log("yha mai aya hu totalPay====>");
+  //           totalPay = coinToRupee;
+  //         } else {
+  //           double remainingCoin =
+  //               (double.parse(product.redeemCoins) * double.parse(product.count.toString())) - availableCoins;
+  //           log("availableCoins1======>$availableCoins");
+  //           log("customerCoins1=====>$customerCoins");
+  //           log("amount1 ==> $remainingCoin");
+  //           log("customerCoins1=====>$customerCoins");
+  //           double coinToRupee = remainingCoin / 3;
+  //           log("amount1== ==> $remainingCoin");
+  //           totalPay += coinToRupee;
+  //           redeemedCoin += availableCoins;
+  //           redeemCoins += availableCoins;
+  //           availableCoins = 0;
+  //         }
+  //       }
+  //     } else {
+  //       product.coinpaid = 0;
+  //       product.redeemCoins = product.coinpaid.toString();
+  //       product.amounttopay = double.parse(product.sellingPrice) * product.count;
+  //       totalPay += double.parse(product.sellingPrice) * product.count;
+  //     }
+  //
+  //     log("=====>product.earningCoins${double.parse(product.earningCoins)}");
+  //     log("=====>product.count2${product.count}");
+  //     earnCoins += double.parse(product.earningCoins);
+  //     //
+  //     // earnCoins = earnCoins - 0.75;
+  //     log("---earnCoins==>$earnCoins");
+  //     log("---totalpay --> $totalPay");
+  //     log("---redeemCoins --> $redeemCoins");
+  //   });
+  // }
 }
 
 class Dialog extends StatefulWidget {
