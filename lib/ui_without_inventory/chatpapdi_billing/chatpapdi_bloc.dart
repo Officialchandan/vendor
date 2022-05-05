@@ -58,10 +58,13 @@ class ChatPapdiBillingCustomerNumberResponseBloc
         CustomerNumberResponse result = await apiProvider.getCustomerCoins(mobile);
         log("$result");
         if (result.success) {
+
           yield GetChatPapdiBillingCustomerNumberResponseState(
               message: result.message,
               data: result.data!.walletBalance,
               succes: result.success,
+              firstName: result.data!.firstName,
+              lastName: result.data!.lastName,
               status: result.cust_reg_status);
         } else {
           Utility.showToast(msg: result.message);

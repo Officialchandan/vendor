@@ -14,8 +14,10 @@ class GetChatPapdiBillingCustomerNumberResponseState
   final data;
   final succes;
   final status;
+  final firstName;
+  final lastName;
   GetChatPapdiBillingCustomerNumberResponseState(
-      {this.message, this.data, this.succes, this.status});
+      {this.message, this.data, this.succes, this.status, this.firstName,this.lastName});
 
   @override
   List<Object> get props => [message, data, succes, status];

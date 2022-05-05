@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-const ColorPrimary = Color(0xff6657f4);
+const ColorPrimary = Color(0xff844cc6);
 const ColorBagroundPrimary = Color(0xff721dbc);
+// 9046ff
 const ColorTextPrimary = Color(0xff555555);
 const ColorTextFeild = Color(0xfff2f2f2);
 const ButtonInactive = Color(0xffdadada);
