@@ -655,7 +655,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
       var c = await SharedPref.getStringPreference(SharedPref.COMMISSION);
       double commission = double.parse(c);
       String freeCoins = await SharedPref.getStringPreference(SharedPref.VendorCoin);
-      amount = double.parse(freeCoins) != 0 ? amount : amount - (amount * 18) / 100;
+      //amount = double.parse(freeCoins) != 0 ? amount : amount - (amount * 18) / 100;
       amount = (amount * commission) / 100;
 
       amount = amount / 2;

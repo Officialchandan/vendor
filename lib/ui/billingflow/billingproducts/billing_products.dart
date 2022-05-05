@@ -87,7 +87,7 @@ class _BillingProductsState extends State<BillingProducts> {
     log("1=$x");
     x = (x * comission) / 100;
     log("2=$x");
-    x = double.parse(freecoins) != 0 ? x : x - (x * 18) / 100;
+    // x = double.parse(freecoins) != 0 ? x : x - (x * 18) / 100;
     // log("3=$x");
     // x = x - 0.50;
     log("4=$x");
@@ -338,8 +338,7 @@ class _BillingProductsState extends State<BillingProducts> {
                                                       // i = 0;
                                                       if (await Network.isConnected()) {
                                                         _displayDialog(context, index, 0, "edit_amount_key".tr(),
-                                                            "enter_amount_key".tr(),
-                                                            widget.mobile);
+                                                            "enter_amount_key".tr(), widget.mobile);
                                                       } else {
                                                         Utility.showToast(
                                                           msg: "please_check_your_internet_connection_key".tr(),
@@ -655,13 +654,7 @@ class _BillingProductsState extends State<BillingProducts> {
                       otpVerifyList = state.data;
                       log("${otpVerifyList!.otp}");
                       _displayDialog(
-                        context,
-                        0,
-                        1,
-                        "please_enter_password_key".tr(),
-                        "enter_otp_key".tr(),
-                        widget.mobile
-                      );
+                          context, 0, 1, "please_enter_password_key".tr(), "enter_otp_key".tr(), widget.mobile);
                     }
                     if (state is PayBillingProductsStateFailureState) {
                       message = state.message;
@@ -862,9 +855,9 @@ class _BillingProductsState extends State<BillingProducts> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            titlePadding: const EdgeInsets.only(left: 18, right: 18,top: 10,bottom: 10),
-            contentPadding: const EdgeInsets.symmetric(vertical: 10,horizontal: 18),
-            actionsPadding: const EdgeInsets.only(left: 12, right: 12,top: 0,bottom: 18),
+            titlePadding: const EdgeInsets.only(left: 18, right: 18, top: 10, bottom: 10),
+            contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 18),
+            actionsPadding: const EdgeInsets.only(left: 12, right: 12, top: 0, bottom: 18),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             title: RichText(
               text: TextSpan(
@@ -909,7 +902,7 @@ class _BillingProductsState extends State<BillingProducts> {
                 hintStyle: GoogleFonts.openSans(
                   fontWeight: FontWeight.w600,
                 ),
-                contentPadding: const EdgeInsets.only(left: 14.0, right: 14, top: 8,bottom: 8),
+                contentPadding: const EdgeInsets.only(left: 14.0, right: 14, top: 8, bottom: 8),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.white),
                 ),
