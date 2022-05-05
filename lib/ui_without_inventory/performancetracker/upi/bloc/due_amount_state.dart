@@ -14,7 +14,7 @@ class GetDueAmountLoadingState extends MoneyDueState {
 }
 
 class GetDueAmountState extends MoneyDueState {
-  final String dueAmount;
+  final List<TotalDue> dueAmount;
   final List<CategoryDueAmount> categoryDue;
   GetDueAmountState({required this.dueAmount, required this.categoryDue});
 

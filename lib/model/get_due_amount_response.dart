@@ -52,13 +52,13 @@ class TotalDue {
   String toJson() => json.encode(toMap());
 
   factory TotalDue.fromMap(Map<String, dynamic> json) => TotalDue(
-        paymentId: json["payment_id"] == null ? "0" : json["payment_id"],
-        myprofitRevenue: json["myprofit_revenue"] == null ? "0" : json["myprofit_revenue"],
+        paymentId: json["payment_id"] == null ? "0" : json["payment_id"].toString(),
+        myprofitRevenue: json["myprofit_revenue"] == null ? "0" : json["myprofit_revenue"].toString(),
       );
 
   Map<String, dynamic> toMap() => {
         "payment_id": paymentId == null ? null : paymentId,
-        "myprofit_revenue": myprofitRevenue == null ? null : myprofitRevenue,
+        "myprofit_revenue": myprofitRevenue == null ? null : myprofitRevenue.toString(),
       };
 }
 

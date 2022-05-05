@@ -5,7 +5,6 @@ import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:share/share.dart';
-import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/routs.dart';
 import 'package:vendor/utility/utility.dart';
@@ -57,45 +56,45 @@ class _HomeScreenWithoutInventoryState extends State<HomeScreenWithoutInventory>
         leading: Text(""),
         centerTitle: true,
         // backgroundColor: Colors.indigoAccent,
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(
-              top: 15,
-              bottom: 15,
-              right: 15,
-            ),
-            child: InkWell(
-              onTap: () {
-                _onShareWithEmptyOrigin(context);
-              },
-              child: Container(
-                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(5))),
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: 2,
-                    ),
-                    Icon(
-                      Icons.share,
-                      color: ColorPrimary,
-                      size: 12,
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      "${"share_store_key".tr()} ",
-                      style: TextStyle(color: ColorPrimary, fontWeight: FontWeight.w600, fontSize: 12),
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          )
-        ],
+        // actions: [
+        //   Padding(
+        //     padding: EdgeInsets.only(
+        //       top: 15,
+        //       bottom: 15,
+        //       right: 15,
+        //     ),
+        //     child: InkWell(
+        //       onTap: () {
+        //         _onShareWithEmptyOrigin(context);
+        //       },
+        //       child: Container(
+        //         decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(5))),
+        //         child: Row(
+        //           children: [
+        //             SizedBox(
+        //               width: 2,
+        //             ),
+        //             Icon(
+        //               Icons.share,
+        //               color: ColorPrimary,
+        //               size: 12,
+        //             ),
+        //             SizedBox(
+        //               width: 5,
+        //             ),
+        //             Text(
+        //               "${"share_store_key".tr()} ",
+        //               style: TextStyle(color: ColorPrimary, fontWeight: FontWeight.w600, fontSize: 12),
+        //             ),
+        //             SizedBox(
+        //               width: 5,
+        //             ),
+        //           ],
+        //         ),
+        //       ),
+        //     ),
+        //   )
+        // ],
       ),
       body: Container(
           child: StaggeredGridView.countBuilder(

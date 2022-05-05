@@ -174,8 +174,8 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
           if (state is GetDueAmountState) {
             moneyDueBloc.add(GetFreeCoins());
             log("due ammount ---> ${state.dueAmount}");
-            dueAmount = state.dueAmount[0].myprofitRevenue;
-            paymentid = state.dueAmount[0].paymentId;
+            dueAmount = state.dueAmount.first.myprofitRevenue.toString();
+            paymentid = state.dueAmount.first.paymentId.toString();
             categoryDue = state.categoryDue;
             // paymentTransiction(context);
           }
