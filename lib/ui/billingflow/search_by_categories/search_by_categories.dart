@@ -481,7 +481,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
               color: ColorPrimary,
               child: Center(
                 child: Text(
-                  "done_key".tr(),
+                  "proceed_key".tr(),
                   style: TextStyle(color: Colors.white,fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
