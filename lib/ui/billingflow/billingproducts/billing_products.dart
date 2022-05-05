@@ -338,7 +338,8 @@ class _BillingProductsState extends State<BillingProducts> {
                                                       // i = 0;
                                                       if (await Network.isConnected()) {
                                                         _displayDialog(context, index, 0, "edit_amount_key".tr(),
-                                                            "enter_amount_key".tr());
+                                                            "enter_amount_key".tr(),
+                                                            widget.mobile);
                                                       } else {
                                                         Utility.showToast(
                                                           msg: "please_check_your_internet_connection_key".tr(),
@@ -659,6 +660,7 @@ class _BillingProductsState extends State<BillingProducts> {
                         1,
                         "please_enter_password_key".tr(),
                         "enter_otp_key".tr(),
+                        widget.mobile
                       );
                     }
                     if (state is PayBillingProductsStateFailureState) {
@@ -854,91 +856,113 @@ class _BillingProductsState extends State<BillingProducts> {
         });
   }
 
-  _displayDialog(BuildContext context, index, status, text, hintText) async {
+  _displayDialog(BuildContext context, index, status, text, hintText, mobile) async {
     return showDialog(
         context: context,
         barrierDismissible: false,
         builder: (context) {
-          return ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.40),
-            child: AlertDialog(
-              contentPadding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-              titlePadding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-              title: Text(
-                "$text",
-                textAlign: TextAlign.left,
+          return AlertDialog(
+            titlePadding: const EdgeInsets.only(left: 18, right: 18,top: 10,bottom: 10),
+            contentPadding: const EdgeInsets.symmetric(vertical: 10,horizontal: 18),
+            actionsPadding: const EdgeInsets.only(left: 12, right: 12,top: 0,bottom: 18),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            title: RichText(
+              text: TextSpan(
+                text: "${"otp_verification_key".tr()}\n",
                 style: GoogleFonts.openSans(
-                  fontSize: 18.0,
+                  fontSize: 25.0,
+                  height: 2.0,
                   color: TextBlackLight,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w600,
                 ),
-              ),
-              content: TextFormField(
-                controller: _textFieldController,
-                cursorColor: ColorPrimary,
-                keyboardType: TextInputType.number,
-                maxLength: 6,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                style:
-                    GoogleFonts.openSans(fontWeight: FontWeight.w600, color: TextGrey, fontSize: 17, letterSpacing: 1),
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.all(0),
-                  counterText: "",
-                  hintText: "$hintText",
-                  hintStyle: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 17, color: TextGrey),
-                ),
-              ),
-              actions: <Widget>[
-                Center(
-                  child: MaterialButton(
-                    minWidth: MediaQuery.of(context).size.width * 0.40,
-                    height: 50,
-                    padding: const EdgeInsets.all(8.0),
-                    textColor: Colors.white,
-                    color: ColorPrimary,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                    onPressed: () async {
-                      if (status == 0) {
-                        if (_textFieldController.text.isNotEmpty) {
-                          log("onPressed->$status");
-                          // productList[index].sellingPrice = _textFieldController.text;
-                          double y = double.parse(_textFieldController.text.trim());
-                          log("y->$y");
-                          double earningCoin = await earningPrice(
-                              y, double.parse(productList[index].commission), productList[index].count);
-
-                          log("index->$index");
-                          log("earningCoin->$earningCoin");
-
-                          billingProductsBloc
-                              .add(EditBillingProductsEvent(price: y, index: index, earningCoin: earningCoin));
-
-                          Navigator.pop(context);
-                          _textFieldController.clear();
-                        } else {
-                          Utility.showToast(
-                            msg: "please_enter_amount_key".tr(),
-                          );
-                        }
-                      } else {
-                        verifyOtp(context);
-                      }
-                    },
-                    child: new Text(
-                      "submit_button_key".tr(),
-                      style: GoogleFonts.openSans(
-                          fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
+                children: [
+                  TextSpan(
+                    text: "${"please_verify_your_otp_on_key".tr()}\n",
+                    style: GoogleFonts.openSans(
+                      fontSize: 14.0,
+                      height: 1.5,
+                      color: ColorTextPrimary,
+                      fontWeight: FontWeight.w400,
                     ),
                   ),
-                ),
-                Container(
-                  height: 20,
-                  width: MediaQuery.of(context).size.width * 0.95,
-                  color: Colors.transparent,
-                )
-              ],
+                  TextSpan(
+                    text: "+91 $mobile",
+                    style: GoogleFonts.openSans(
+                      fontSize: 14.0,
+                      height: 1.5,
+                      color: ColorTextPrimary,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  )
+                ],
+              ),
             ),
+            content: TextFormField(
+              controller: _textFieldController,
+              cursorColor: ColorPrimary,
+              keyboardType: TextInputType.number,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              decoration: InputDecoration(
+                filled: true,
+                // fillColor: Colors.black,
+                hintText: "enter_otp_key".tr(),
+                hintStyle: GoogleFonts.openSans(
+                  fontWeight: FontWeight.w600,
+                ),
+                contentPadding: const EdgeInsets.only(left: 14.0, right: 14, top: 8,bottom: 8),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+            actions: <Widget>[
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: MaterialButton(
+                  height: 50,
+                  padding: const EdgeInsets.all(8.0),
+                  textColor: Colors.white,
+                  color: ColorPrimary,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  onPressed: () async {
+                    if (status == 0) {
+                      if (_textFieldController.text.isNotEmpty) {
+                        log("onPressed->$status");
+                        // productList[index].sellingPrice = _textFieldController.text;
+                        double y = double.parse(_textFieldController.text.trim());
+                        log("y->$y");
+                        double earningCoin = await earningPrice(
+                            y, double.parse(productList[index].commission), productList[index].count);
+
+                        log("index->$index");
+                        log("earningCoin->$earningCoin");
+
+                        billingProductsBloc
+                            .add(EditBillingProductsEvent(price: y, index: index, earningCoin: earningCoin));
+
+                        Navigator.pop(context);
+                        _textFieldController.clear();
+                      } else {
+                        Utility.showToast(
+                          msg: "please_enter_amount_key".tr(),
+                        );
+                      }
+                    } else {
+                      verifyOtp(context);
+                    }
+                  },
+                  child: new Text(
+                    "submit_button_key".tr(),
+                    style: GoogleFonts.openSans(
+                        fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
+                  ),
+                ),
+              ),
+            ],
           );
         });
   }

@@ -39,6 +39,8 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
   bool? status, redeem = false;
   bool valuefirst = false;
   String coins = "0.0";
+  String firstName = "You";
+  String lastName = "";
   var status1;
   String earningCoins = "0.0";
   String coinss = "0.0";
@@ -106,6 +108,8 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                         if (state is GetChatPapdiBillingCustomerNumberResponseState) {
                           coins = state.data.toString();
                           status1 = state.status;
+                          firstName = state.firstName;
+                          lastName = state.lastName;
                           log("staus=>$status1}");
                         }
 
@@ -873,7 +877,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "hooray_you_saved".tr(),
+                      "${"hooray_you_saved".tr()} $firstName ${"saved_key".tr()}",
                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
                     ),
                     Text(

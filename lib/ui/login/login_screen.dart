@@ -70,46 +70,57 @@ class _LoginScreenState extends State<LoginScreen> {
     return showDialog(
         context: context,
         builder: (context) {
-          return ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: 400),
-            child: AlertDialog(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-              title: RichText(
-                text: TextSpan(
-                  text: "${"otp_verification_key".tr()}\n",
-                  style: GoogleFonts.openSans(
-                    fontSize: 25.0,
-                    height: 2.0,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  children: [
-                    TextSpan(
-                      text: "${"please_verify_your_otp_on_key".tr()} $mobile",
-                      style: GoogleFonts.openSans(
-                        fontSize: 14.0,
-                        height: 1.5,
-                        color: ColorTextPrimary,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    )
-                  ],
+          return AlertDialog(
+            titlePadding: const EdgeInsets.only(left: 18, right: 18,top: 10,bottom: 10),
+            contentPadding: const EdgeInsets.symmetric(vertical: 10,horizontal: 18),
+            actionsPadding: const EdgeInsets.only(left: 12, right: 12,top: 0,bottom: 18),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            title: RichText(
+              text: TextSpan(
+                text: "${"otp_verification_key".tr()}\n",
+                style: GoogleFonts.openSans(
+                  fontSize: 25.0,
+                  height: 2.0,
+                  color: TextBlackLight,
+                  fontWeight: FontWeight.w600,
                 ),
+                children: [
+                  TextSpan(
+                    text: "${"please_verify_your_otp_on_key".tr()}\n",
+                    style: GoogleFonts.openSans(
+                      fontSize: 14.0,
+                      height: 1.5,
+                      color: ColorTextPrimary,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  TextSpan(
+                    text: "+91 $mobile",
+                    style: GoogleFonts.openSans(
+                      fontSize: 14.0,
+                      height: 1.5,
+                      color: ColorTextPrimary,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  )
+                ],
               ),
-              content: TextFormField(
+            ),
+            content: Container(
+              width: MediaQuery.of(context).size.width,
+              child: TextFormField(
                 controller: _textFieldController,
                 cursorColor: ColorPrimary,
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 decoration: InputDecoration(
                   filled: true,
-
                   // fillColor: Colors.black,
                   hintText: "enter_otp_key".tr(),
                   hintStyle: GoogleFonts.openSans(
                     fontWeight: FontWeight.w600,
                   ),
-                  contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                  contentPadding: const EdgeInsets.only(left: 14.0, right: 14, top: 8,bottom: 8),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.white),
                   ),
@@ -119,40 +130,34 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
-              actions: <Widget>[
-                Center(
-                  child: MaterialButton(
-                    minWidth: MediaQuery.of(context).size.width * 0.65,
-                    height: 50,
-                    padding: const EdgeInsets.all(8.0),
-                    textColor: Colors.white,
-                    color: ColorPrimary,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                    onPressed: () {
-                      if (_textFieldController.text.isEmpty) {
-                        Utility.showToast(msg: "please_enter_password_key".tr());
-                      } else {
-                        EasyLoading.show();
-                        loginBloc.add(GetLoginOtpEvent(mobile: mobileController.text, otp: _textFieldController.text));
-                        EasyLoading.dismiss();
-                      }
-                      // loginApiCall(
-                      //     mobileController.text, _textFieldController.text);
-                    },
-                    child: new Text(
-                      "verify_key".tr(),
-                      style: GoogleFonts.openSans(
-                          fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
-                    ),
+            ),
+            actions: <Widget>[
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: MaterialButton(
+                  height: 50,
+                  textColor: Colors.white,
+                  color: ColorPrimary,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  onPressed: () {
+                    if (_textFieldController.text.isEmpty) {
+                      Utility.showToast(msg: "please_enter_password_key".tr());
+                    } else {
+                      EasyLoading.show();
+                      loginBloc.add(GetLoginOtpEvent(mobile: mobileController.text, otp: _textFieldController.text));
+                      EasyLoading.dismiss();
+                    }
+                    // loginApiCall(
+                    //     mobileController.text, _textFieldController.text);
+                  },
+                  child: new Text(
+                    "verify_key".tr(),
+                    style: GoogleFonts.openSans(
+                        fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
                   ),
                 ),
-                Container(
-                  height: 20,
-                  width: MediaQuery.of(context).size.width * 0.95,
-                  color: Colors.transparent,
-                )
-              ],
-            ),
+              ),
+            ],
           );
         });
   }
@@ -240,7 +245,6 @@ class _LoginScreenState extends State<LoginScreen> {
         listener: (context, state) async {
           int status = await SharedPref.getIntegerPreference(SharedPref.USERSTATUS);
           if (state is GetLoginState) {
-            log("display khulja sim");
             _displayDialog(context, mobileController.text);
           }
 

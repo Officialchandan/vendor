@@ -213,13 +213,14 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                                 color: Colors.white)
                           ]),
                       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                        Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Text(
-                            "types_of_money_due_key".tr(),
-                            style: GoogleFonts.openSans(color: TextBlackLight, fontWeight: FontWeight.w700, fontSize: 17),
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.all(15.0),
+                        //   child: Text(
+                        //     "types_of_money_due_key".tr(),
+                        //     style: GoogleFonts.openSans(color: TextBlackLight, fontWeight: FontWeight.w700, fontSize: 17),
+                        //   ),
+                        // ),
+                        SizedBox(height: 35,),
                         Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: Row(
