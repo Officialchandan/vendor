@@ -323,21 +323,22 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 //     );
                 //   },
                 // ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Text(
-                  "add_product_key".tr(),
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
+                // const SizedBox(
+                //   height: 15,
+                // ),
+                // Text(
+                //   "add_product_key".tr(),
+                //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                // ),
+                // const SizedBox(
+                //   height: 10,
+                // ),
 
                 TextFormField(
                   maxLength: 80,
                   controller: edtProductName,
                   decoration: InputDecoration(
+                    labelStyle: TextStyle(fontSize: 16),
                     counter: SizedBox.shrink(),
                     labelText: "product_name_key".tr() + " *",
                   ),
@@ -366,6 +367,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   controller: edtCategory,
                   decoration: InputDecoration(
                       labelText: "category_key".tr() + "*",
+                      labelStyle: TextStyle(fontSize: 16),
                       hintText: "select_category_key".tr(),
                       suffixIcon: Icon(Icons.keyboard_arrow_right_sharp),
                       suffixIconConstraints: BoxConstraints(minWidth: 20, maxWidth: 21, minHeight: 20, maxHeight: 21)),
@@ -420,6 +422,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           controller: edtPurchasePrice,
                           decoration: InputDecoration(
                             labelText: "purchase_price_key".tr(),
+                            labelStyle: TextStyle(fontSize: 16),
                             counter: Container(),
                           ),
                           autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -442,7 +445,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           keyboardType: priceKeyboardType,
                           maxLength: PRICE_TEXT_LENGTH,
                           inputFormatters: priceInputFormatter,
-                          decoration: InputDecoration(labelText: "mrp_key".tr() + "*", counter: Container()),
+                          decoration: InputDecoration(labelText: "mrp_key".tr() + "*",
+                              labelStyle: TextStyle(fontSize: 16),counter: Container()),
+
                           onChanged: (text) {
                             variantModel.mrp = text;
                           },
@@ -458,7 +463,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           keyboardType: priceKeyboardType,
                           maxLength: PRICE_TEXT_LENGTH,
                           inputFormatters: priceInputFormatter,
-                          decoration: InputDecoration(labelText: "selling_price_key".tr() + "*", counter: Container()),
+                          decoration: InputDecoration(labelText: "selling_price_key".tr() + "*",
+                              labelStyle: TextStyle(fontSize: 16),counter: Container()),
                           onChanged: (text) {
                             variantModel.sellingPrice = text;
                           },
@@ -480,7 +486,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           keyboardType: TextInputType.phone,
                           maxLength: 8,
                           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                          decoration: InputDecoration(labelText: "stock_key".tr() + "*", counter: SizedBox.shrink()),
+                          decoration: InputDecoration(labelText: "stock_key".tr() + "*",
+                              labelStyle: TextStyle(fontSize: 16),
+                              counter: SizedBox.shrink()),
                           onChanged: (text) {
                             variantModel.stock = text;
                           },
@@ -573,6 +581,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   decoration: InputDecoration(
                       labelText: "options_key".tr(),
                       hintText: "select_options_key".tr(),
+                      labelStyle: TextStyle(fontSize: 16),
                       suffixIcon: Icon(Icons.keyboard_arrow_right),
                       suffixIconConstraints: BoxConstraints(minWidth: 20, maxWidth: 21, minHeight: 20, maxHeight: 21)),
                 ),
