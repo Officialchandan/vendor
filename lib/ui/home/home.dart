@@ -36,27 +36,32 @@ class _HomeScreenState extends State<HomeScreen> {
   List<String> name = [
     "coins_key".tr(),
     "inventory_key".tr(),
-    "money_due_upi_key".tr(),
     "performance_tracker_key".tr(),
-    "video_tutorials_key".tr(),
+    "money_due_upi_key".tr(),
     "account_management_key".tr(),
+    "video_tutorials_key".tr(),
   ];
   List<String> description = [
     "generate_redeem_key".tr(),
-    "inventory_description_key".tr(),
-    "money_due_upi_description_key".tr(),
-    "staff_management_description_key".tr(),
-    "video_tutorials_description_key".tr(),
+    "",
+    // "inventory_description_key".tr(),
+    "",
+    // "money_due_upi_description_key".tr(),
+    "",
+    // "staff_management_description_key".tr(),
+
+    "",
+    // "video_tutorials_description_key".tr(),
     "online_shop_description_key".tr(),
   ];
 
   List<String> images = [
     "assets/images/point.png",
     "assets/images/home2.png",
-    "assets/images/tr-ic3.png",
     "assets/images/home4.png",
-    "assets/images/home6.png",
+    "assets/images/tr-ic3.png",
     "assets/images/home3.png",
+    "assets/images/home6.png",
   ];
   onShareWithEmptyOrigin(BuildContext context) async {
     await Share.share("https://play.google.com/store/apps/details?id=com.tencent.ig");
@@ -202,9 +207,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         : index == 3
                             ? Color(0xff5086ed)
                             : index == 4
-                                ? Color(0xff3ebc91)
+                                ? Color(0xffc59280)
                                 : index == 5
-                                    ? Color(0xffc59280)
+                                    ? Color(0xff3ebc91)
                                     : Colors.brown,
             //index.isEven ? Colors.indigoAccent : Colors.indigoAccent[100],
           ),
@@ -295,13 +300,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   type: PageTransitionType.fade,
                 ))
-            : index == 2
-                ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: index)
-                : index == 4
+            : index == 3
+                ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: 2)
+                : index == 5
                     ? Navigator.push(context, MaterialPageRoute(builder: (context) => VideoTutorial()))
-                    : index == 3
+                    : index == 2
                         ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: 3)
-                        : index == 5
+                        : index == 4
                             ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: 4)
                             : Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: 4);
   }
