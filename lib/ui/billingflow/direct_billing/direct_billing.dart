@@ -444,6 +444,7 @@ class _DirectBillingState extends State<DirectBilling> {
                       height: 32,
                     ),
                     Container(
+                      height: 40,
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: InkWell(
                         onTap: () {

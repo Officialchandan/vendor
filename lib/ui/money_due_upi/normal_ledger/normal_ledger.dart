@@ -106,52 +106,54 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
             ],
           ),
           body: SmartRefresher(
-              controller: _refreshController,
-              enablePullDown: true,
-              enablePullUp: false,
-              onRefresh: () {
-                normalLedgerApiCall(context);},
-            child: Column(
-                  children: [
-                Padding(
-                  padding: const EdgeInsets.all(14),
-                  child: TextFormField(
-                    cursorColor: ColorPrimary,
-                    controller: _searchController,
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(
-                        Icons.search,
-                        color: Colors.black,
+            controller: _refreshController,
+            enablePullDown: true,
+            enablePullUp: false,
+            onRefresh: () {
+              normalLedgerApiCall(context);
+            },
+            child: CustomScrollView(
+              slivers: [
+                SliverList(
+                    delegate: SliverChildListDelegate([
+                  Padding(
+                    padding: const EdgeInsets.all(14),
+                    child: TextFormField(
+                      cursorColor: ColorPrimary,
+                      controller: _searchController,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.search,
+                          color: Colors.black,
+                        ),
+                        filled: true,
+                        // fillColor: Colors.black,
+                        hintText: "search_here_key".tr(),
+                        hintStyle: GoogleFonts.openSans(fontWeight: FontWeight.w600, color: Colors.black),
+                        contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
                       ),
-                      filled: true,
-                      // fillColor: Colors.black,
-                      hintText: "search_here_key".tr(),
-                      hintStyle: GoogleFonts.openSans(fontWeight: FontWeight.w600, color: Colors.black),
-                      contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
+                      onChanged: (text) {
+                        _normalLedgerHistoryBloc.add(GetFindUserEvent(searchkeyword: text));
+                      },
                     ),
-                    onChanged: (text) {
-                      _normalLedgerHistoryBloc.add(GetFindUserEvent(searchkeyword: text));
-                    },
                   ),
-                ),
-                Expanded(
-                  child: BlocBuilder<NormalLedgerHistoryBloc, NormalLedgerHistoryState>(builder: (context, state) {
+                  BlocBuilder<NormalLedgerHistoryBloc, NormalLedgerHistoryState>(builder: (context, state) {
                     log("state===>$state");
                     if (state is GetNormalLedgerHistoryInitialState) {
                       normalLedgerApiCall(context);
                     }
                     /* if (state is GetNormalLedgerHistoryState) {
-                      _commonLedgerHistory = state.data!;
-                    }*/
+                        _commonLedgerHistory = state.data!;
+                      }*/
                     if (state is GetNormalLedgerState) {
                       orderList = state.orderList;
                       searchList = orderList;
@@ -188,122 +190,292 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                         }
                       }
                     }
-                    return ListView.builder(
-                        itemCount: searchList.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 14,
-                            vertical: 10),
-                            child: InkWell(
-                              splashColor: Colors.transparent,
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => NormalLedgerDetails(
-                                              // commonLedgerHistory: _commonLedgerHistory!,
-                                              order: searchList[index],
-                                            )));
-                              },
-                              child: Stack(children: [
-                                Container(
-                                  height: 80,
-                                  padding: EdgeInsets.all(14),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.shade300,
-                                        offset: Offset(0.0, 0.0), //(x,y)
-                                        blurRadius: 7.0,
-                                      ),
-                                    ],
-                                  ),
-                                  child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                    Column(
-                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "     +91 ${searchList[index].mobile}",
-                                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
-                                          ),
-                                          Text(
-                                            "      ${DateFormat("dd MMM yyyy").format(searchList[index].dateTime)}-${DateFormat.jm().format(searchList[index].dateTime)}",
-                                            style: TextStyle(fontSize: 13, color: TextGrey, fontWeight: FontWeight.bold),
-                                          ),
-                                        ]),
-
-                                    // Center(
-                                    //   child: searchList[index].status == 1
-                                    //       ? Container(
-                                    //           padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
-                                    //           decoration: BoxDecoration(
-                                    //               borderRadius: BorderRadius.circular(20),
-                                    //               color: PendingTextBgColor),
-                                    //           child: Text(
-                                    //             "pending_key".tr(),
-                                    //             style: TextStyle(
-                                    //                 color: PendingTextColor,
-                                    //                 fontSize: 10,
-                                    //                 fontWeight: FontWeight.w400),
-                                    //           ),
-                                    //         )
-                                    //       : Container(
-                                    //           padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
-                                    //           decoration: BoxDecoration(
-                                    //               borderRadius: BorderRadius.circular(20),
-                                    //               color: ApproveTextBgColor),
-                                    //           child: Text(
-                                    //             "paid_key".tr(),
-                                    //             style: TextStyle(
-                                    //                 color: ApproveTextColor,
-                                    //                 fontSize: 10,
-                                    //                 fontWeight: FontWeight.w400),
-                                    //           ),
-                                    //         ),
-                                    // ),
-                                    Text(
-                                      " \u20B9 ${searchList[index].myprofitRevenue} ",
-                                      style: GoogleFonts.openSans(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20,
-                                          color: searchList[index].status == 1 ? RejectedBoxTextColor : GreenBoxTextColor),
+                    return Column(children: [
+                      searchList.first.status == 0
+                          ? Container(
+                              padding: EdgeInsets.only(left: 14, bottom: 10, top: 10),
+                              child: Text(
+                                "Pending",
+                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: ColorTextPrimary),
+                              ),
+                              alignment: Alignment.topLeft,
+                            )
+                          : Container(),
+                      ListView.builder(
+                          itemCount: searchList.length,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            if (searchList[index].status == 1) {
+                              return Container();
+                            }
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                              child: InkWell(
+                                splashColor: Colors.transparent,
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => NormalLedgerDetails(
+                                                // commonLedgerHistory: _commonLedgerHistory!,
+                                                order: searchList[index],
+                                              )));
+                                },
+                                child: Stack(children: [
+                                  Container(
+                                    height: 80,
+                                    padding: EdgeInsets.all(14),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.shade300,
+                                          offset: Offset(0.0, 0.0), //(x,y)
+                                          blurRadius: 7.0,
+                                        ),
+                                      ],
                                     ),
-                                  ]),
-                                ),
-                                searchList[index].isReturn == 1
-                                    ? Positioned(
-                                        left: 0,
-                                        bottom: 0,
-                                        child: Container(
-                                          height: 80,
-                                          width: 28,
-                                          decoration: BoxDecoration(
-                                              color: ColorPrimary,
-                                              borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(7), bottomLeft: Radius.circular(7))),
-                                          child: RotatedBox(
-                                            quarterTurns: 3,
-                                            child: Center(
-                                              child: Text("return_key".tr(),
-                                                  style: TextStyle(
-                                                      color: Colors.white, fontSize: 14, fontWeight: FontWeight.w400)),
+                                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                                      Column(
+                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "     +91 ${searchList[index].mobile}",
+                                              style: TextStyle(
+                                                  fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
+                                            ),
+                                            Text(
+                                              "      ${DateFormat("dd MMM yyyy").format(searchList[index].dateTime)}-${DateFormat.jm().format(searchList[index].dateTime)}",
+                                              style:
+                                                  TextStyle(fontSize: 13, color: TextGrey, fontWeight: FontWeight.bold),
+                                            ),
+                                          ]),
+                                      Text(
+                                        " \u20B9 ${searchList[index].myprofitRevenue} ",
+                                        style: GoogleFonts.openSans(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20,
+                                            color: searchList[index].status == 1
+                                                ? RejectedBoxTextColor
+                                                : GreenBoxTextColor),
+                                      ),
+                                    ]),
+                                  ),
+                                  searchList[index].isReturn == 1
+                                      ? Positioned(
+                                          left: 0,
+                                          bottom: 0,
+                                          child: Container(
+                                            height: 80,
+                                            width: 28,
+                                            decoration: BoxDecoration(
+                                                color: ColorPrimary,
+                                                borderRadius: BorderRadius.only(
+                                                    topLeft: Radius.circular(7), bottomLeft: Radius.circular(7))),
+                                            child: RotatedBox(
+                                              quarterTurns: 3,
+                                              child: Center(
+                                                child: Text("return_key".tr(),
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 14,
+                                                        fontWeight: FontWeight.w400)),
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      )
-                                    : Container(),
-                              ]),
-                            ),
-                          );
-                        });
+                                        )
+                                      : Container(),
+                                ]),
+                              ),
+                            );
+                          }),
+                    ]);
                   }),
-                ),
-              ]),
-          ),
+                  BlocBuilder<NormalLedgerHistoryBloc, NormalLedgerHistoryState>(builder: (context, state) {
+                    log("state===>$state");
+                    if (state is GetNormalLedgerHistoryInitialState) {
+                      normalLedgerApiCall(context);
+                    }
+                    /* if (state is GetNormalLedgerHistoryState) {
+                        _commonLedgerHistory = state.data!;
+                      }*/
+                    if (state is GetNormalLedgerState) {
+                      orderList = state.orderList;
+                      searchList = orderList;
+                    }
+                    if (state is GetNormalLedgerHistoryFailureState) {
+                      return Container(
+                        height: MediaQuery.of(context).size.height * 0.80,
+                        child: Image.asset("assets/images/no_data.gif"),
+                      );
+                    }
+                    if (orderList.isEmpty) {
+                      log("===>$_commonLedgerHistory");
+                      return Container(
+                          height: MediaQuery.of(context).size.height * 0.80,
+                          child: Center(child: CircularProgressIndicator()));
+                    }
+                    if (state is GetNormalLedgerUserSearchState) {
+                      if (state.searchword.isEmpty) {
+                        searchList = orderList;
+                      } else {
+                        List<OrderData> list = [];
+                        orderList.forEach((element) {
+                          if (element.mobile.toLowerCase().contains(state.searchword.toLowerCase())) {
+                            list.add(element);
+                            log("how much -->${state.searchword}");
+                          }
+                        });
+                        if (list == null || list.isEmpty) {
+                          return Center(
+                            child: Image.asset("assets/images/no_data.gif"),
+                          );
+                        } else {
+                          searchList = list;
+                        }
+                      }
+                    }
+                    return Column(children: [
+                      searchList.first.status == 0
+                          ? Container(
+                              padding: EdgeInsets.only(left: 14, bottom: 10, top: 10),
+                              child: Text(
+                                "Settled",
+                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: ColorTextPrimary),
+                              ),
+                              alignment: Alignment.topLeft,
+                            )
+                          : Container(),
+                      ListView.builder(
+                          itemCount: searchList.length,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            if (searchList[index].status == 0) {
+                              return Container();
+                            }
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                              child: InkWell(
+                                splashColor: Colors.transparent,
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => NormalLedgerDetails(
+                                                // commonLedgerHistory: _commonLedgerHistory!,
+                                                order: searchList[index],
+                                              )));
+                                },
+                                child: Stack(children: [
+                                  Container(
+                                    height: 80,
+                                    padding: EdgeInsets.all(14),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.shade300,
+                                          offset: Offset(0.0, 0.0), //(x,y)
+                                          blurRadius: 7.0,
+                                        ),
+                                      ],
+                                    ),
+                                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                                      Column(
+                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "     +91 ${searchList[index].mobile}",
+                                              style: TextStyle(
+                                                  fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
+                                            ),
+                                            Text(
+                                              "      ${DateFormat("dd MMM yyyy").format(searchList[index].dateTime)}-${DateFormat.jm().format(searchList[index].dateTime)}",
+                                              style:
+                                                  TextStyle(fontSize: 13, color: TextGrey, fontWeight: FontWeight.bold),
+                                            ),
+                                          ]),
 
+                                      // Center(
+                                      //   child: searchList[index].status == 1
+                                      //       ? Container(
+                                      //           padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
+                                      //           decoration: BoxDecoration(
+                                      //               borderRadius: BorderRadius.circular(20),
+                                      //               color: PendingTextBgColor),
+                                      //           child: Text(
+                                      //             "pending_key".tr(),
+                                      //             style: TextStyle(
+                                      //                 color: PendingTextColor,
+                                      //                 fontSize: 10,
+                                      //                 fontWeight: FontWeight.w400),
+                                      //           ),
+                                      //         )
+                                      //       : Container(
+                                      //           padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+                                      //           decoration: BoxDecoration(
+                                      //               borderRadius: BorderRadius.circular(20),
+                                      //               color: ApproveTextBgColor),
+                                      //           child: Text(
+                                      //             "paid_key".tr(),
+                                      //             style: TextStyle(
+                                      //                 color: ApproveTextColor,
+                                      //                 fontSize: 10,
+                                      //                 fontWeight: FontWeight.w400),
+                                      //           ),
+                                      //         ),
+                                      // ),
+                                      Text(
+                                        " \u20B9 ${searchList[index].myprofitRevenue} ",
+                                        style: GoogleFonts.openSans(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20,
+                                            color: searchList[index].status == 1
+                                                ? RejectedBoxTextColor
+                                                : GreenBoxTextColor),
+                                      ),
+                                    ]),
+                                  ),
+                                  searchList[index].isReturn == 1
+                                      ? Positioned(
+                                          left: 0,
+                                          bottom: 0,
+                                          child: Container(
+                                            height: 80,
+                                            width: 28,
+                                            decoration: BoxDecoration(
+                                                color: ColorPrimary,
+                                                borderRadius: BorderRadius.only(
+                                                    topLeft: Radius.circular(7), bottomLeft: Radius.circular(7))),
+                                            child: RotatedBox(
+                                              quarterTurns: 3,
+                                              child: Center(
+                                                child: Text("return_key".tr(),
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 14,
+                                                        fontWeight: FontWeight.w400)),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      : Container(),
+                                ]),
+                              ),
+                            );
+                          }),
+                    ]);
+                  }),
+                ]))
+              ],
+            ),
+          ),
         ),
       ),
     );
