@@ -43,6 +43,8 @@ class UpiTansferData {
     required this.responseMsg,
     required this.resultStatus,
     required this.txnDate,
+    required this.from,
+    required this.to,
   });
 
   int id;
@@ -53,6 +55,8 @@ class UpiTansferData {
   String responseMsg;
   String resultStatus;
   String txnDate;
+  String from;
+  String to;
 
   factory UpiTansferData.fromJson(String str) => UpiTansferData.fromMap(json.decode(str));
 
@@ -67,6 +71,8 @@ class UpiTansferData {
         responseMsg: json["response_msg"] == null ? "" : json["response_msg"].toString(),
         resultStatus: json["result_status"] == null ? "" : json["result_status"].toString(),
         txnDate: json["txn_date"] == null ? "" : json["txn_date"].toString(),
+        from: json["from"] == null ? "" : json["from"].toString(),
+        to: json["to"] == null ? "" : json["to"].toString(),
       );
 
   Map<String, dynamic> toMap() => {
@@ -78,5 +84,7 @@ class UpiTansferData {
         "response_msg": responseMsg == null ? null : responseMsg,
         "result_status": resultStatus == null ? null : resultStatus,
         "txn_date": txnDate == null ? null : txnDate,
+        "from": from == null ? null : from,
+        "to": to == null ? null : to,
       };
 }

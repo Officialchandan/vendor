@@ -123,7 +123,7 @@ class _UpiTransferHistoryState extends State<UpiTransferHistory> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  " To: MyProfit",
+                                  " To: ${upiList[index].to}",
                                   style: GoogleFonts.openSans(
                                       fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
                                 ),
