@@ -139,7 +139,7 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
                           Text(snapshot.data!.shopName.toString(),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w400)),
+                              style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w400)),
                         ],
                       ),
                       trailing: Container(
