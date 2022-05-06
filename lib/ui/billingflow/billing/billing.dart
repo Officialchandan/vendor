@@ -1,4 +1,3 @@
-import 'dart:collection';
 import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -342,7 +341,7 @@ class _BillingScreenState extends State<BillingScreen> {
                                   if (check == false) {
                                     if (status == 0) {
                                       if (nameController.text.length > 1) {
-                                        userRegister(context);
+                                        //   userRegister(context);
                                         FocusScope.of(context).unfocus();
                                         Navigator.push(
                                                 context,
@@ -542,7 +541,7 @@ class _BillingScreenState extends State<BillingScreen> {
                   if (check == false) {
                     if (status == 0) {
                       if (nameController.text.length > 1) {
-                        userRegister(context);
+                        //  userRegister(context);
                         FocusScope.of(context).unfocus();
                         Navigator.push(
                                 context,
@@ -672,12 +671,12 @@ class _BillingScreenState extends State<BillingScreen> {
         });
   }
 
-  Future<void> userRegister(BuildContext context) async {
-    Map<String, dynamic> input = HashMap<String, dynamic>();
-    input["mobile"] = mobileController.text;
-    input["first_name"] = nameController.text;
-
-    log("=====? $input");
-    customerNumberResponseBloc.add(GetBillingPartialUserRegisterEvent(input: input));
-  }
+  // Future<void> userRegister(BuildContext context) async {
+  //   Map<String, dynamic> input = HashMap<String, dynamic>();
+  //   input["mobile"] = mobileController.text;
+  //   input["first_name"] = nameController.text;
+  //
+  //   log("=====? $input");
+  //   customerNumberResponseBloc.add(GetBillingPartialUserRegisterEvent(input: input));
+  // }
 }

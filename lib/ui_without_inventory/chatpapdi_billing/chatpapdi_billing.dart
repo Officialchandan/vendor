@@ -582,7 +582,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                           if (mobileController.text.length == 10) {
                             if (amountController.text.length >= 0) {
                               if (nameController.text.length > 1) {
-                                userRegister(context);
+                                //   userRegister(context);
 
                                 if (succes == true) {}
                               } else {
@@ -667,22 +667,24 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
     }
   }
 
-  Future<void> userRegister(BuildContext context) async {
-    Map<String, dynamic> input = HashMap<String, dynamic>();
-    input["mobile"] = mobileController.text;
-    input["first_name"] = nameController.text;
-
-    directBillingCustomerNumberResponseBloc.add(GetChatPapdiPartialUserRegisterEvent(input: input));
-  }
+  // Future<void> userRegister(BuildContext context) async {
+  //   Map<String, dynamic> input = HashMap<String, dynamic>();
+  //   input["mobile"] = mobileController.text;
+  //   input["first_name"] = nameController.text;
+  //
+  //   directBillingCustomerNumberResponseBloc.add(GetChatPapdiPartialUserRegisterEvent(input: input));
+  // }
 
   Future<void> directBilling(BuildContext context) async {
     Map<String, dynamic> input = HashMap<String, dynamic>();
     input["mobile"] = mobileController.text;
     input["bill_amount"] = amountController.text;
+    input["full_name"] = nameController.text;
+
     input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     input["total_pay"] = amount;
     input["coin_deducted"] = coinss;
-
+    log("======>input$input");
     directBillingCustomerNumberResponseBloc.add(GetChatPapdiBillingEvent(input: input));
   }
 
