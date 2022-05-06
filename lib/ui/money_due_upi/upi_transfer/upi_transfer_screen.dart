@@ -78,8 +78,7 @@ class _UpiTransferHistoryState extends State<UpiTransferHistory> {
             ),
           ],
         ),
-        body: Container(
-            child: BlocBuilder<UpiTansferHistoryBloc, UpiTansferHistoryState>(builder: (context, state) {
+        body: Container(child: BlocBuilder<UpiTansferHistoryBloc, UpiTansferHistoryState>(builder: (context, state) {
           if (state is GetUpiTansferHistoryInitialState) {
             filterApiCall(context);
           }
@@ -97,11 +96,11 @@ class _UpiTransferHistoryState extends State<UpiTransferHistory> {
           }
 
           return ListView.builder(
-            padding: const EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.only(top: 10),
               itemCount: upiList.length,
               itemBuilder: (context, index) {
                 return Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10 ,horizontal: 14),
+                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 14),
                   child: Stack(children: [
                     Container(
                       height: 80,
@@ -125,7 +124,8 @@ class _UpiTransferHistoryState extends State<UpiTransferHistory> {
                               children: [
                                 Text(
                                   " To: MyProfit",
-                                  style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.bold,color: TextBlackLight),
+                                  style: GoogleFonts.openSans(
+                                      fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
                                 ),
                                 Text(
                                   " ${DateFormat("dd MMM yyyy").format(DateTime.parse(upiList[index].txnDate))}" +
@@ -188,14 +188,7 @@ class _UpiTransferHistoryState extends State<UpiTransferHistory> {
                         ),
                         Text(
                           "\u20B9" + " ${upiList[index].txnAmount}  ",
-                          style: GoogleFonts.openSans(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: upiList[index].status == 0
-                                  ? RejectedBoxTextColor
-                                  : upiList[index].status == 1
-                                  ? GreenBoxTextColor
-                                  : GreenBoxTextColor),
+                          style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black),
                         ),
                       ]),
                     ),
@@ -216,21 +209,18 @@ class _UpiTransferHistoryState extends State<UpiTransferHistory> {
                                   )
                                 : upiList[index].status == 1
                                     ? Center(
-                                        child: Text(
-                                          "success_key".tr(),
+                                        child: Text("success_key".tr(),
                                             style: TextStyle(
                                                 color: Colors.white, fontSize: 14, fontWeight: FontWeight.w600)),
                                       )
                                     : upiList[index].status == 2
                                         ? Center(
-                                            child: Text(
-                                              "pending_key".tr(),
+                                            child: Text("pending_key".tr(),
                                                 style: TextStyle(
                                                     color: Colors.white, fontSize: 14, fontWeight: FontWeight.w600)),
                                           )
                                         : Center(
-                                            child: Text(
-                                              "pending_key".tr(),
+                                            child: Text("pending_key".tr(),
                                                 style: TextStyle(
                                                     color: Colors.white, fontSize: 14, fontWeight: FontWeight.w400)),
                                           ),
@@ -243,8 +233,8 @@ class _UpiTransferHistoryState extends State<UpiTransferHistory> {
                                       : upiList[index].status == 1
                                           ? PendingTextColor
                                           : PendingTextColor,
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(7), bottomLeft: Radius.circular(7))),
+                              borderRadius:
+                                  BorderRadius.only(topLeft: Radius.circular(7), bottomLeft: Radius.circular(7))),
                         ))
                   ]),
                 );

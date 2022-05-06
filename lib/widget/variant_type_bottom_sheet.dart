@@ -42,13 +42,7 @@ class _VariantTypeBottomSheetState extends State<VariantTypeBottomSheet> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ListTile(
-            contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-            title: Text(
-              "select_variant_options_key".tr(),
-              style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),
-            ),
-          ),
+          SizedBox(height: 5),
           Container(
             height: MediaQuery.of(context).size.height * 0.40,
             child: StreamBuilder<List<VariantType>>(
