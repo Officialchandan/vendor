@@ -889,12 +889,13 @@ class _DirectBillingState extends State<DirectBilling> {
       String freeCoins = await SharedPref.getStringPreference(SharedPref.VendorCoin);
       log("VendorCoin------->$freeCoins");
       amount = (amount * commission) / 100;
-      amount = double.parse(freeCoins) != 0 ? amount : amount - (amount * 18) / 100;
+      //amount = double.parse(freeCoins) != 0 ? amount : amount - (amount * 18) / 100;
+      log("commision--->$commission");
 
       amount = amount / 2;
       amount = amount * 3;
       amount = amount < 0 ? 0 : amount;
-
+      log("amount---->$amount");
       earningCoins = amount.toStringAsFixed(2);
     } else {
       earningCoins = "0.0";
