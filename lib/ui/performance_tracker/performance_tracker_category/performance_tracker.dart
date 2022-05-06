@@ -1,5 +1,6 @@
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
 import 'package:vendor/ui/performance_tracker/performance_tracker_category/earning_tillnow/earning_amount.dart';
@@ -86,8 +87,9 @@ class _PerformanceTrackerByCategoryState extends State<PerformanceTrackerByCateg
                       width: 30,
                       fit: BoxFit.contain,
                     ),
-                    title: Text("${options[index]["title"]}"),
-                    subtitle: Text("${options[index]["subTitle"]}"),
+                    title: Text("${options[index]["title"]}",style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 17,color: TextBlackLight),
+                    ),
+                    // subtitle: Text("${options[index]["subTitle"]}"),
                   ),
                 ),
                 Positioned(

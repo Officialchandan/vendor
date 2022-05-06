@@ -1,5 +1,6 @@
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/report/report_type_screen.dart';
@@ -90,8 +91,8 @@ class _PerformanceTrackerWithoutInventoryState extends State<PerformanceTrackerW
                       fit: BoxFit.contain,
                     ),
                     title: Text("${options[index]["title"]}",
-                      style: TextStyle(fontWeight: FontWeight.w600),),
-                    subtitle: Text("${options[index]["subTitle"]}"),
+                      style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 17,color: TextBlackLight),),
+                    // subtitle: Text("${options[index]["subTitle"]}"),
                   ),
                 ),
                 Positioned(

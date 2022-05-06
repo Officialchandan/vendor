@@ -45,6 +45,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
         ),
         body: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
                 padding: const EdgeInsets.all(20),
@@ -152,12 +153,14 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
 
                   if (state is SaleReturnClearDataState) {
                     return Center(
-                      child: Text(state.message),
+                      child: Text(
+                          state.message),
                     );
                   }
 
                   if (purchasedList.isEmpty) {
-                    return Center(
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 20),
                       child: Text("enter_mobile_to_get_purchase_product".tr()),
                     );
                   }

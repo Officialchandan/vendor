@@ -79,7 +79,7 @@ class _WithoutInventoryPerformanceTrackerByCategoryState extends State<WithoutIn
                       fit: BoxFit.contain,
                     ),
                     title: Text("${options[index]["title"]}"),
-                    subtitle: Text("${options[index]["subTitle"]}"),
+                    // subtitle: Text("${options[index]["subTitle"]}"),
                   ),
                 ),
                 Positioned(
