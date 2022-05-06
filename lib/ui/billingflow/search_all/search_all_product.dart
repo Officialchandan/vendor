@@ -53,6 +53,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
   void initState() {
     super.initState();
     searchAllBloc.add(GetProductsEvent());
+    log("----->name${widget.firstName}");
     // ApiProvider().getAllVendorProducts();
   }
 
@@ -151,10 +152,10 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                       if (state is GetCheckBoxState) {
                         searchList[state.index].check = state.check;
                       }
-                      if(state is GetDecrementState){
+                      if (state is GetDecrementState) {
                         searchList[state.index].count -= state.count;
                       }
-                      if(state is GetIncrementState){
+                      if (state is GetIncrementState) {
                         searchList[state.index].count += state.count;
                         searchAllBloc.add(GetCheckBoxEvent(check: true, index: state.index));
                       }
@@ -182,7 +183,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                 BoxShadow(
                                   color: Colors.grey.shade300,
                                   offset: Offset(0.0, 0.0), //(x,y)
-                                  blurRadius:7.0,
+                                  blurRadius: 7.0,
                                 ),
                               ],
                               borderRadius: BorderRadius.circular(10),
@@ -235,7 +236,8 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                         child: Column(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Row(  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
                                                 Container(
                                                   width: width * 0.45,
@@ -245,132 +247,136 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                           maxLines: 2,
                                                           overflow: TextOverflow.ellipsis,
                                                           style: TextStyle(
-                                                              color: TextBlackLight, fontWeight: FontWeight.bold, fontSize: 15),
-
+                                                              color: TextBlackLight,
+                                                              fontWeight: FontWeight.bold,
+                                                              fontSize: 15),
                                                         )
                                                       : Text(
                                                           "${searchList[index].productName} ($variantName)",
                                                           maxLines: 2,
                                                           overflow: TextOverflow.ellipsis,
                                                           style: TextStyle(
-                                                              color: TextBlackLight, fontWeight: FontWeight.bold, fontSize: 15),
-
+                                                              color: TextBlackLight,
+                                                              fontWeight: FontWeight.bold,
+                                                              fontSize: 15),
                                                         ),
                                                 ),
                                                 searchList[index].check != true
                                                     ? InkWell(
-                                                  onTap: () async {
-                                                    if (await Network.isConnected()) {
-                                                      searchAllBloc.add(GetCheckBoxEvent(check: true, index: index));
-                                                      selectedProductList = searchList[index];
-                                                    } else {
-                                                      Utility.showToast(
-                                                        msg: "please_check_your_internet_connection_key".tr(),
-                                                      );
-                                                    }
-                                                  },
-                                                  child: Container(
-                                                    height: 25,
-                                                    width: 71,
-                                                    decoration: BoxDecoration(
-                                                        color: Buttonactive,
-                                                        borderRadius: BorderRadius.circular(25),
-                                                        border: Border.all(color: ColorPrimary)),
-                                                    child: Center(
-                                                      child: Row(
-                                                        mainAxisAlignment: MainAxisAlignment.center,
-                                                        children: [
-                                                          Text(
-                                                            "add_key".tr(),
-                                                            style: TextStyle(
-                                                                fontSize: 12,
-                                                                fontWeight: FontWeight.bold,
-                                                                color: ColorPrimary),
-                                                          ),
-                                                          SizedBox(
-                                                            width: 3,
-                                                          ),
-                                                          Icon(
-                                                            Icons.add,
-                                                            size: 18,
-                                                            color: ColorPrimary,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                )
-                                                    : Container(
-                                                  height: 25,
-                                                  decoration: BoxDecoration(
-                                                    // color: Colors.amber,
-                                                      borderRadius: BorderRadius.circular(25),
-                                                      border: Border.all(color: ColorPrimary)),
-                                                  child: Row(
-                                                    mainAxisSize: MainAxisSize.min,
-                                                    children: [
-                                                      Container(
-                                                        width: 23,
-                                                        child: IconButton(
-                                                            padding: EdgeInsets.all(0),
-                                                            onPressed: () async {
-                                                              if (await Network.isConnected()) {
-                                                                searchAllBloc.add(
-                                                                    GetDecrementEvent(
-                                                                        index: index, count: 1));
-                                                                if (searchList[index].count <=1) {
-                                                                  searchAllBloc.add(GetCheckBoxEvent(check: false, index: index));
-                                                                }
-                                                              } else {
-                                                                Utility.showToast(
-                                                                  msg: "please_check_your_internet_connection_key",
-                                                                );
-                                                              }
-                                                            },
-                                                            iconSize: 20,
-                                                            splashRadius: 10,
-                                                            icon: Icon(
-                                                              Icons.remove,
-                                                            )),
-                                                      ),
-                                                      Container(
-                                                        width: 23,
-                                                        color: ColorPrimary,
-                                                        child: Center(
-                                                          child: AutoSizeText(
-                                                            "${searchList[index].count}",
-                                                            style: TextStyle(
-                                                              color: Colors.white,
+                                                        onTap: () async {
+                                                          if (await Network.isConnected()) {
+                                                            searchAllBloc
+                                                                .add(GetCheckBoxEvent(check: true, index: index));
+                                                            selectedProductList = searchList[index];
+                                                          } else {
+                                                            Utility.showToast(
+                                                              msg: "please_check_your_internet_connection_key".tr(),
+                                                            );
+                                                          }
+                                                        },
+                                                        child: Container(
+                                                          height: 25,
+                                                          width: 71,
+                                                          decoration: BoxDecoration(
+                                                              color: Buttonactive,
+                                                              borderRadius: BorderRadius.circular(25),
+                                                              border: Border.all(color: ColorPrimary)),
+                                                          child: Center(
+                                                            child: Row(
+                                                              mainAxisAlignment: MainAxisAlignment.center,
+                                                              children: [
+                                                                Text(
+                                                                  "add_key".tr(),
+                                                                  style: TextStyle(
+                                                                      fontSize: 12,
+                                                                      fontWeight: FontWeight.bold,
+                                                                      color: ColorPrimary),
+                                                                ),
+                                                                SizedBox(
+                                                                  width: 3,
+                                                                ),
+                                                                Icon(
+                                                                  Icons.add,
+                                                                  size: 18,
+                                                                  color: ColorPrimary,
+                                                                ),
+                                                              ],
                                                             ),
-                                                            maxFontSize: 14,
-                                                            minFontSize: 10,
                                                           ),
                                                         ),
+                                                      )
+                                                    : Container(
+                                                        height: 25,
+                                                        decoration: BoxDecoration(
+                                                            // color: Colors.amber,
+                                                            borderRadius: BorderRadius.circular(25),
+                                                            border: Border.all(color: ColorPrimary)),
+                                                        child: Row(
+                                                          mainAxisSize: MainAxisSize.min,
+                                                          children: [
+                                                            Container(
+                                                              width: 23,
+                                                              child: IconButton(
+                                                                  padding: EdgeInsets.all(0),
+                                                                  onPressed: () async {
+                                                                    if (await Network.isConnected()) {
+                                                                      searchAllBloc.add(
+                                                                          GetDecrementEvent(index: index, count: 1));
+                                                                      if (searchList[index].count <= 1) {
+                                                                        searchAllBloc.add(GetCheckBoxEvent(
+                                                                            check: false, index: index));
+                                                                      }
+                                                                    } else {
+                                                                      Utility.showToast(
+                                                                        msg:
+                                                                            "please_check_your_internet_connection_key",
+                                                                      );
+                                                                    }
+                                                                  },
+                                                                  iconSize: 20,
+                                                                  splashRadius: 10,
+                                                                  icon: Icon(
+                                                                    Icons.remove,
+                                                                  )),
+                                                            ),
+                                                            Container(
+                                                              width: 23,
+                                                              color: ColorPrimary,
+                                                              child: Center(
+                                                                child: AutoSizeText(
+                                                                  "${searchList[index].count}",
+                                                                  style: TextStyle(
+                                                                    color: Colors.white,
+                                                                  ),
+                                                                  maxFontSize: 14,
+                                                                  minFontSize: 10,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Container(
+                                                              width: 23,
+                                                              child: IconButton(
+                                                                  padding: EdgeInsets.all(0),
+                                                                  onPressed: () async {
+                                                                    if (await Network.isConnected()) {
+                                                                      searchAllBloc.add(
+                                                                          GetIncrementEvent(index: index, count: 1));
+                                                                    } else {
+                                                                      Utility.showToast(
+                                                                        msg:
+                                                                            "please_check_your_internet_connection_key",
+                                                                      );
+                                                                    }
+                                                                  },
+                                                                  iconSize: 20,
+                                                                  splashRadius: 10,
+                                                                  icon: Icon(
+                                                                    Icons.add,
+                                                                  )),
+                                                            ),
+                                                          ],
+                                                        ),
                                                       ),
-                                                      Container(
-                                                        width: 23,
-                                                        child: IconButton(
-                                                            padding: EdgeInsets.all(0),
-                                                            onPressed: () async {
-                                                              if (await Network.isConnected()) {
-                                                                searchAllBloc.add(
-                                                                    GetIncrementEvent(
-                                                                        index: index, count: 1));
-                                                              } else {
-                                                                Utility.showToast(
-                                                                  msg: "please_check_your_internet_connection_key",
-                                                                );
-                                                              }
-                                                            },
-                                                            iconSize: 20,
-                                                            splashRadius: 10,
-                                                            icon: Icon(
-                                                              Icons.add,
-                                                            )),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
                                               ],
                                             ),
                                             SizedBox(
@@ -386,7 +392,9 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                       text:
                                                           '\u20B9 ${double.parse(searchList[index].sellingPrice) * searchList[index].count}  ',
                                                       style: TextStyle(
-                                                          fontWeight: FontWeight.bold, color: ColorPrimary,fontSize: 18),
+                                                          fontWeight: FontWeight.bold,
+                                                          color: ColorPrimary,
+                                                          fontSize: 18),
                                                       children: <TextSpan>[
                                                         new TextSpan(
                                                           text:
@@ -410,14 +418,16 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                       ),
                                                       Container(
                                                           child: Image.asset(
-                                                            "assets/images/point.png",
-                                                            height: 13,
-                                                            width: 13,
-                                                          )),
+                                                        "assets/images/point.png",
+                                                        height: 13,
+                                                        width: 13,
+                                                      )),
                                                       Text(
                                                         " ${(double.parse(searchList[index].earningCoins) * searchList[index].count).toStringAsFixed(2)}",
                                                         style: TextStyle(
-                                                            fontSize: 13, fontWeight: FontWeight.bold, color: ColorPrimary),
+                                                            fontSize: 13,
+                                                            fontWeight: FontWeight.bold,
+                                                            color: ColorPrimary),
                                                       ),
                                                     ],
                                                   ),
@@ -472,7 +482,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                   child: Center(
                     child: Text(
                       "proceed_key".tr(),
-                      style: TextStyle(color: Colors.white,fontSize: 18, fontWeight: FontWeight.bold),
+                      style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                   ),
                   height: height * 0.07,

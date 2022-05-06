@@ -1,6 +1,5 @@
 import 'dart:collection';
 
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +25,7 @@ class SaleReturnScreen extends StatefulWidget {
 
 class _SaleReturnScreenState extends State<SaleReturnScreen> {
   TextEditingController edtMobile = TextEditingController();
-  TextEditingController edtProducts = TextEditingController();
+
   TextEditingController _textFieldController = TextEditingController();
   TextEditingController edtReason = TextEditingController();
   List<SaleReturnProducts> purchasedList = [];
@@ -67,14 +66,15 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                   },
                   // autofocus: true,
                   keyboardType: TextInputType.phone,
-                  decoration: InputDecoration(counterText: "",  hintText: 'enter_customer_phone_number_key'.tr(),
+                  decoration: InputDecoration(
+                    counterText: "",
+                    hintText: 'enter_customer_phone_number_key'.tr(),
                     hintStyle: TextStyle(color: TextBlackLight, fontSize: 16),
                     labelText: 'mobile_number_key'.tr(),
                     labelStyle: TextStyle(color: TextBlackLight, fontSize: 16),
                     enabledBorder:
-                    UnderlineInputBorder(borderSide: BorderSide(color: textFieldBorderColor, width: 1.5)),
-                    focusedBorder:
-                    UnderlineInputBorder(borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
+                        UnderlineInputBorder(borderSide: BorderSide(color: textFieldBorderColor, width: 1.5)),
+                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
                     border: UnderlineInputBorder(borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
                   ),
                 ),
@@ -82,6 +82,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
               BlocConsumer<SaleReturnBloc, SaleReturnState>(
                 listener: (context, state) {
                   if (state is ProductReturnSuccessState) {
+                    //   edtMobile.clear();
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -153,8 +154,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
 
                   if (state is SaleReturnClearDataState) {
                     return Center(
-                      child: Text(
-                          state.message),
+                      child: Text(state.message),
                     );
                   }
 
@@ -192,7 +192,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                                       BoxShadow(
                                         color: Colors.grey.shade400,
                                         offset: Offset(0.0, 0.0), //(x,y)
-                                        blurRadius:7.0,
+                                        blurRadius: 7.0,
                                       ),
                                     ],
                                     borderRadius: BorderRadius.circular(10),
@@ -276,12 +276,11 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                                                     Container(
                                                       width: MediaQuery.of(context).size.width * 0.45,
                                                       child: Text(
-                                                        DateFormat("dd MMM").format(
-                                                                DateTime.parse(purchasedList[index].dateTime)) +
+                                                        DateFormat("dd MMM")
+                                                                .format(DateTime.parse(purchasedList[index].dateTime)) +
                                                             " " +
                                                             DateFormat.jm()
-                                                                .format(
-                                                                    DateTime.parse(purchasedList[index].dateTime))
+                                                                .format(DateTime.parse(purchasedList[index].dateTime))
                                                                 .toLowerCase(),
                                                         style: TextStyle(
                                                             fontSize: 13,
@@ -301,8 +300,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                                                                     isChecked: true, index: index));
                                                               } else {
                                                                 Utility.showToast(
-                                                                  msg: "please_check_your_internet_connection_key"
-                                                                      .tr(),
+                                                                  msg: "please_check_your_internet_connection_key".tr(),
                                                                 );
                                                               }
                                                             },
@@ -356,9 +354,8 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                                                                         );
 
                                                                         if (purchasedList[index].returnQty <= 1) {
-                                                                          saleReturnBloc.add(
-                                                                              SaleReturnCheckBoxEvent(
-                                                                                  isChecked: false, index: index));
+                                                                          saleReturnBloc.add(SaleReturnCheckBoxEvent(
+                                                                              isChecked: false, index: index));
                                                                         }
                                                                       },
                                                                       iconSize: 20,
@@ -373,8 +370,8 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                                                                   child: Center(
                                                                     child: Text(
                                                                       "${purchasedList[index].returnQty.toString()}",
-                                                                      style: TextStyle(
-                                                                          color: Colors.white, fontSize: 14),
+                                                                      style:
+                                                                          TextStyle(color: Colors.white, fontSize: 14),
                                                                     ),
                                                                   ),
                                                                 ),
@@ -385,9 +382,8 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                                                                     onPressed: () {
                                                                       if (purchasedList[index].returnQty <
                                                                           purchasedList[index].qty) {
-                                                                        saleReturnBloc.add(
-                                                                            SaleReturnQtyIncrementEvent(
-                                                                                count: 1, index: index));
+                                                                        saleReturnBloc.add(SaleReturnQtyIncrementEvent(
+                                                                            count: 1, index: index));
                                                                       } else {
                                                                         Utility.showToast(
                                                                             msg:
@@ -423,8 +419,8 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                                                             ),
                                                           )
                                                         : SizedBox(
-                                                      height: 18,
-                                                    ),
+                                                            height: 18,
+                                                          ),
                                                   ],
                                                 )
                                               ],
@@ -514,9 +510,9 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            titlePadding: const EdgeInsets.only(left: 18, right: 18,top: 10,bottom: 10),
-            contentPadding: const EdgeInsets.symmetric(vertical: 10,horizontal: 18),
-            actionsPadding: const EdgeInsets.only(left: 12, right: 12,top: 0,bottom: 18),
+            titlePadding: const EdgeInsets.only(left: 18, right: 18, top: 10, bottom: 10),
+            contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 18),
+            actionsPadding: const EdgeInsets.only(left: 12, right: 12, top: 0, bottom: 18),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             insetPadding: const EdgeInsets.all(50),
             title: RichText(
@@ -562,7 +558,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                 hintStyle: GoogleFonts.openSans(
                   fontWeight: FontWeight.w600,
                 ),
-                contentPadding: const EdgeInsets.only(left: 14.0, right: 14, top: 8,bottom: 8),
+                contentPadding: const EdgeInsets.only(left: 14.0, right: 14, top: 8, bottom: 8),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.white),
                 ),
@@ -598,7 +594,6 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                   ),
                 ),
               ),
-
             ],
           );
         });

@@ -57,7 +57,8 @@ class _BillingProductsState extends State<BillingProducts> {
   void initState() {
     productList.addAll(widget.billingItemList);
     billingProductsBloc.add(TotalPayAmountBillingProductsEvent(mrp: totalPay));
-
+    log("----->name${widget.lastName}");
+    log("----->name${widget.firstName}");
     super.initState();
   }
 

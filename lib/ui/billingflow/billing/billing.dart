@@ -195,9 +195,6 @@ class _BillingScreenState extends State<BillingScreen> {
                                 check = state.succes;
                                 coins = state.data;
                                 customerCoins = state.data;
-                                firstName = state.firstName;
-                                lastName = state.lastName;
-
                               }
                               if (state is GetCustomerNumberResponseFailureState) {
                                 check = state.succes;
@@ -282,9 +279,7 @@ class _BillingScreenState extends State<BillingScreen> {
                                       decoration: InputDecoration(
                                         errorStyle: TextStyle(fontSize: 12),
                                         labelStyle: TextStyle(fontSize: 16, color: TextBlackLight),
-                                        hintStyle: TextStyle(
-                                          fontSize: 16, color: TextBlackLight
-                                        ),
+                                        hintStyle: TextStyle(fontSize: 16, color: TextBlackLight),
                                         hintText: 'enter_customer_phone_number_key'.tr(),
                                         labelText: 'mobile_number_key'.tr(),
                                         counterText: "",
@@ -315,15 +310,9 @@ class _BillingScreenState extends State<BillingScreen> {
                                               controller: nameController,
                                               inputFormatters: [FilteringTextInputFormatter.allow(Validator.name)],
                                               decoration: InputDecoration(
-                                                errorStyle: TextStyle(
-                                                  fontSize: 12
-                                                ),
-                                                hintStyle: TextStyle(
-                                                  fontSize: 16, color:  TextBlackLight
-                                                ),
-                                                labelStyle: TextStyle(
-                                                    fontSize: 16, color:  TextBlackLight
-                                                ),
+                                                errorStyle: TextStyle(fontSize: 12),
+                                                hintStyle: TextStyle(fontSize: 16, color: TextBlackLight),
+                                                labelStyle: TextStyle(fontSize: 16, color: TextBlackLight),
                                                 hintText: 'enter_customer_name_key'.tr(),
                                                 labelText: 'full_name_key'.tr(),
                                                 counterText: "",
@@ -362,7 +351,7 @@ class _BillingScreenState extends State<BillingScreen> {
                                                       mobile: mobileController.text,
                                                       coin: coins = 0.toString(),
                                                       lastName: lastName,
-                                                      firstName: firstName,
+                                                      firstName: nameController.text,
                                                     ),
                                                     type: PageTransitionType.fade))
                                             .then((value) {
@@ -382,7 +371,7 @@ class _BillingScreenState extends State<BillingScreen> {
                                           PageTransition(
                                               child: SearchAllProduct(
                                                 lastName: lastName,
-                                                firstName: firstName,
+                                                firstName: nameController.text,
                                                 mobile: mobileController.text,
                                                 coin: coins,
                                               ),
@@ -423,8 +412,7 @@ class _BillingScreenState extends State<BillingScreen> {
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                               ),
-                              onChanged: (text) {
-                              },
+                              onChanged: (text) {},
                             ),
                             // Container(
                             //   width: MediaQuery.of(context).size.width,
@@ -560,7 +548,7 @@ class _BillingScreenState extends State<BillingScreen> {
                                 context,
                                 PageTransition(
                                     child: SearchByCategory(
-                                      firstName: firstName,
+                                      firstName: nameController.text,
                                       lastName: lastName,
                                       catid: category[index].id.toString(),
                                       mobile: mobileController.text,
@@ -585,7 +573,7 @@ class _BillingScreenState extends State<BillingScreen> {
                           PageTransition(
                               child: SearchByCategory(
                                 lastName: lastName,
-                                firstName: firstName,
+                                firstName: nameController.text,
                                 catid: category[index].id.toString(),
                                 mobile: mobileController.text,
                                 coin: coins,
@@ -613,14 +601,16 @@ class _BillingScreenState extends State<BillingScreen> {
               margin: EdgeInsets.only(top: 10, bottom: 10),
               decoration: BoxDecoration(
                 color: Colors.white,
-                border: Border.all(color: Colors.grey.shade300, width: .5), borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: Colors.grey.shade300, width: .5),
+                borderRadius: BorderRadius.circular(8),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.shade300,
                     offset: Offset(0.0, 0.0), //(x,y)
                     blurRadius: 7.0,
                   ),
-                ],),
+                ],
+              ),
               child: ListTile(
                 minLeadingWidth: 20,
                 leading: CachedNetworkImage(
