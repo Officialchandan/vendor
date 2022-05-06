@@ -370,6 +370,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
             contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 18),
             actionsPadding: const EdgeInsets.only(left: 12, right: 12, top: 0, bottom: 18),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            insetPadding: const EdgeInsets.all(50),
             title: RichText(
               text: TextSpan(
                 text: "${"otp_verification_key".tr()}\n",

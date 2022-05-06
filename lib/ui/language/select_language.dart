@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:vendor/utility/routs.dart';
 import 'package:vendor/utility/sharedpref.dart';
 
+import '../../utility/color.dart';
+
 class SelectLanguage extends StatefulWidget {
   const SelectLanguage({Key? key}) : super(key: key);
 
@@ -16,7 +18,7 @@ class _SelectLanguageState extends State<SelectLanguage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        color: Color(0xff6657f4),
+        color: ColorPrimary,
         child: Center(
           child: Container(
             child: Column(
@@ -63,7 +65,7 @@ class _SelectLanguageState extends State<SelectLanguage> {
                                 borderRadius: BorderRadius.circular(75),
                                 color: Colors.white,
                                 boxShadow: [
-                                  BoxShadow(color: Color(0xff897ef7), spreadRadius: 10, blurRadius: 0),
+                                  BoxShadow(color: Color(0xff9b67d8), spreadRadius: 10, blurRadius: 0),
                                 ],
                               ),
                               height: 100,
@@ -94,7 +96,7 @@ class _SelectLanguageState extends State<SelectLanguage> {
                                 borderRadius: BorderRadius.circular(75),
                                 color: Colors.white,
                                 boxShadow: [
-                                  BoxShadow(color: Color(0xff897ef7), spreadRadius: 10, blurRadius: 0),
+                                  BoxShadow(color: Color(0xff9b67d8), spreadRadius: 10, blurRadius: 0),
                                 ],
                               ),
                               height: 100,

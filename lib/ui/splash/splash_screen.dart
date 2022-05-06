@@ -171,9 +171,12 @@ class _SplashScreenState extends State<SplashScreen> {
                     children: [
                       Align(
                         alignment: Alignment.topLeft,
-                        child: Image.asset('assets/images/splash-top.png', width: deviceWidth * 0.35),
+                        child: Image.asset('assets/images/splash-top.png'),
                       ),
-                      Image.asset('assets/images/splash-bottom.png', width: double.infinity),
+                      Align(
+                          alignment: Alignment.bottomRight,
+                          child: Image.asset('assets/images/splash-bottom.png', width: MediaQuery.of(context).size.width * 0.7)
+                      ),
                     ],
                   ),
                   Positioned(

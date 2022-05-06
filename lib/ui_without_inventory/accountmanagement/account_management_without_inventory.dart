@@ -8,6 +8,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:vendor/api/Endpoint.dart';
 import 'package:vendor/api/api_provider.dart';
 import 'package:vendor/api/server_error.dart';
@@ -23,6 +24,7 @@ import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/utility.dart';
 
 import '../../main.dart';
+import '../../widget/language_bottom_sheet.dart';
 
 // ignore: camel_case_types
 class AccountManagementWithoutInventoryScreen extends StatefulWidget {
@@ -54,7 +56,7 @@ class _AccountManagementWithoutInventoryScreenState extends State<AccountManagem
 
   List<String> imageList = [
     "assets/images/account-ic2.png",
-    "assets/images/setting-ic2.png",
+    "assets/images/account-ic15.png",
     "assets/images/account-ic13.png",
     "assets/images/account-ic11.png",
     "assets/images/account-ic10.png",
@@ -224,10 +226,7 @@ class _AccountManagementWithoutInventoryScreenState extends State<AccountManagem
   Future<void> onClick(BuildContext context, int currentIndex, var data) async {
     switch (currentIndex) {
       case 0:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => AccountSettings()),
-        );
+        languageUpdateSheet(context);
         break;
       case 1:
         Navigator.push(
@@ -357,4 +356,19 @@ class _AccountManagementWithoutInventoryScreenState extends State<AccountManagem
       return VendorDetailResponse(success: false, message: message);
     }
   }
+
+  void languageUpdateSheet(BuildContext context) {
+    showMaterialModalBottomSheet(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(15),
+              topLeft: Radius.circular(15),
+            )),
+        context: context,
+        // barrierColor: Colors.transparent,
+        builder: (context) {
+          return LanguageBottomSheet();
+        });
+  }
+
 }
