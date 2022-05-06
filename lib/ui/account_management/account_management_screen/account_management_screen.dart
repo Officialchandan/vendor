@@ -55,8 +55,8 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
   ];
 
   List<String> imageList = [
-    "assets/images/setting-ic1.png",
-    "assets/images/setting-ic2.png",
+    "assets/images/account-ic14.png",
+    "assets/images/account-ic15.png",
     "assets/images/account-ic13.png",
     "assets/images/account-ic11.png",
     "assets/images/account-ic10.png",

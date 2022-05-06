@@ -68,13 +68,17 @@ class _LoginScreenState extends State<LoginScreen> {
 
   _displayDialog(BuildContext context, mobile) async {
     return showDialog(
+
         context: context,
+
         builder: (context) {
+
           return AlertDialog(
             titlePadding: const EdgeInsets.only(left: 18, right: 18,top: 10,bottom: 10),
             contentPadding: const EdgeInsets.symmetric(vertical: 10,horizontal: 18),
             actionsPadding: const EdgeInsets.only(left: 12, right: 12,top: 0,bottom: 18),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            insetPadding: const EdgeInsets.all(50),
             title: RichText(
               text: TextSpan(
                 text: "${"otp_verification_key".tr()}\n",
@@ -109,6 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
             content: Container(
               width: MediaQuery.of(context).size.width,
               child: TextFormField(
+
                 controller: _textFieldController,
                 cursorColor: ColorPrimary,
                 keyboardType: TextInputType.number,
@@ -120,13 +125,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   hintStyle: GoogleFonts.openSans(
                     fontWeight: FontWeight.w600,
                   ),
-                  contentPadding: const EdgeInsets.only(left: 14.0, right: 14, top: 8,bottom: 8),
+                  contentPadding: const EdgeInsets.only(left: 14.0, right: 14, top: 0,bottom: 8),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.white),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.white),
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(14),
                   ),
                 ),
               ),
@@ -135,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Container(
                 width: MediaQuery.of(context).size.width,
                 child: MaterialButton(
-                  height: 50,
+                  height: 35,
                   textColor: Colors.white,
                   color: ColorPrimary,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -261,138 +266,140 @@ class _LoginScreenState extends State<LoginScreen> {
           }
         },
         builder: (context, state) {
-          return Scaffold(
-            body: SingleChildScrollView(
-              child: RefreshIndicator(
-                onRefresh: () {
-                  return _onrefresh();
-                },
-                child: Container(
-                  child: Stack(
-                    children: [
-                      Container(
-                          // height: deviceHeight,Ftex
-                          //width: 400,
-                          child: Image.asset(
-                        "assets/images/bg.png",
-                        height: deviceHeight - 50,
-                        width: double.infinity,
-                        fit: BoxFit.fill,
-                      )),
-                      Positioned(
-                        left: 20,
-                        right: 20,
-                        top: deviceHeight * 0.17,
-                        child: Container(
-                          width: 500,
-                          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                            Text(
-                              "login_key".tr(),
-                              style: GoogleFonts.openSans(
-                                  fontSize: 28,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w600,
-                                  decoration: TextDecoration.none),
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Text(
-                              "add_your_details_to_login_key".tr(),
-                              style: GoogleFonts.openSans(
-                                  fontSize: 17,
-                                  color: ColorTextPrimary,
-                                  fontWeight: FontWeight.w600,
-                                  decoration: TextDecoration.none),
-                            ),
-                            SizedBox(
-                              height: 40,
-                            ),
-                            mobileNumber,
-                            SizedBox(
-                              height: 80,
-                            ),
-                            Center(
-                              child: Column(
-                                  // mainAxisAlignment: MainAxisAlignment.center,
-                                  // crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    MaterialButton(
-                                      minWidth: deviceWidth,
-                                      height: 50,
-                                      padding: const EdgeInsets.all(8.0),
-                                      textColor: Colors.white,
-                                      color: ColorPrimary,
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                      onPressed: () {
-                                        _textFieldController.clear();
+          return SafeArea(
+            child: Scaffold(
+              body: SingleChildScrollView(
+                child: RefreshIndicator(
+                  onRefresh: () {
+                    return _onrefresh();
+                  },
+                  child: Container(
+                    child: Stack(
+                      children: [
+                        Container(
+                            // height: deviceHeight,Ftex
+                            //width: 400,
+                            child: Image.asset(
+                          "assets/images/bg.png",
+                          // height: deviceHeight - 50,
+                          width: double.infinity,
+                          fit: BoxFit.fill,
+                        )),
+                        Positioned(
+                          left: 20,
+                          right: 20,
+                          top: deviceHeight * 0.17,
+                          child: Container(
+                            width: 500,
+                            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                              Text(
+                                "login_key".tr(),
+                                style: GoogleFonts.openSans(
+                                    fontSize: 28,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600,
+                                    decoration: TextDecoration.none),
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              Text(
+                                "add_your_details_to_login_key".tr(),
+                                style: GoogleFonts.openSans(
+                                    fontSize: 17,
+                                    color: ColorTextPrimary,
+                                    fontWeight: FontWeight.w600,
+                                    decoration: TextDecoration.none),
+                              ),
+                              SizedBox(
+                                height: 40,
+                              ),
+                              mobileNumber,
+                              SizedBox(
+                                height: 80,
+                              ),
+                              Center(
+                                child: Column(
+                                    // mainAxisAlignment: MainAxisAlignment.center,
+                                    // crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      MaterialButton(
+                                        minWidth: deviceWidth,
+                                        height: 50,
+                                        padding: const EdgeInsets.all(8.0),
+                                        textColor: Colors.white,
+                                        color: ColorPrimary,
+                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                        onPressed: () {
+                                          _textFieldController.clear();
 
-                                        print("kuch to ${mobileController.text}");
-                                        // loginApiCall(
-                                        //     nameController.text, passwordController.text);
-                                        if (_tap == true) {
-                                          _tap = false;
-                                          loginApiOtpCall(mobileController.text);
-                                        }
-                                        // _displayDialog(
-                                        //     context, mobileController.text);
-                                      },
-                                      child: new Text(
-                                        "login_key".tr(),
-                                        style: GoogleFonts.openSans(
-                                            fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
+                                          print("kuch to ${mobileController.text}");
+                                          // loginApiCall(
+                                          //     nameController.text, passwordController.text);
+                                          if (_tap == true) {
+                                            _tap = false;
+                                            loginApiOtpCall(mobileController.text);
+                                          }
+                                          // _displayDialog(
+                                          //     context, mobileController.text);
+                                        },
+                                        child: new Text(
+                                          "login_key".tr(),
+                                          style: GoogleFonts.openSans(
+                                              fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 25,
-                                    ),
-                                    // Column(
-                                    //   mainAxisSize: MainAxisSize.max,
-                                    //   mainAxisAlignment: MainAxisAlignment.center,
-                                    //   crossAxisAlignment: CrossAxisAlignment.stretch,
-                                    //   children: <Widget>[
-                                    //     PhoneFieldHint(controller: mobileController),
-                                    //     //  Spacer(),
-                                    //
-                                    //     ElevatedButton(
-                                    //       onPressed: () {
-                                    //         Navigator.of(context)
-                                    //             .push(MaterialPageRoute(builder: (_) => CodeAutoFillTestPage()));
-                                    //       },
-                                    //       child: Text("Test CodeAutoFill mixin"),
-                                    //     )
-                                    //   ],
-                                    // ),
-                                  ]),
-                            ),
-                          ]),
+                                      SizedBox(
+                                        height: 25,
+                                      ),
+                                      // Column(
+                                      //   mainAxisSize: MainAxisSize.max,
+                                      //   mainAxisAlignment: MainAxisAlignment.center,
+                                      //   crossAxisAlignment: CrossAxisAlignment.stretch,
+                                      //   children: <Widget>[
+                                      //     PhoneFieldHint(controller: mobileController),
+                                      //     //  Spacer(),
+                                      //
+                                      //     ElevatedButton(
+                                      //       onPressed: () {
+                                      //         Navigator.of(context)
+                                      //             .push(MaterialPageRoute(builder: (_) => CodeAutoFillTestPage()));
+                                      //       },
+                                      //       child: Text("Test CodeAutoFill mixin"),
+                                      //     )
+                                      //   ],
+                                      // ),
+                                    ]),
+                              ),
+                            ]),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            bottomNavigationBar: Container(
-              height: 50,
-              width: MediaQuery.of(context).size.width,
-              color: Colors.white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 4),
-                    child: Text(
-                      "Powered By ",
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black54),
+              bottomNavigationBar: Container(
+                height: 50,
+                width: MediaQuery.of(context).size.width,
+                color: Colors.white,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: Text(
+                        "Powered By ",
+                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black54),
+                      ),
                     ),
-                  ),
-                  Text(
-                    "TechPoints Concepts Pvt Ltd",
-                    style: TextStyle(
-                        fontSize: 15, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold, color: ColorPrimary),
-                  ),
-                ],
+                    Text(
+                      "TechPoints Concepts Pvt Ltd",
+                      style: TextStyle(
+                          fontSize: 15, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold, color: ColorPrimary),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
