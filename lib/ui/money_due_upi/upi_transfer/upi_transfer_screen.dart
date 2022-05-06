@@ -44,7 +44,7 @@ class _UpiTransferHistoryState extends State<UpiTransferHistory> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            "upi_transfer_key".tr(),
+            "upi_history_key".tr(),
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           ),
           actions: [

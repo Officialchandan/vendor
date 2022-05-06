@@ -413,7 +413,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                                       SizedBox(
                                                         height: 5,
                                                       ),
-                                                      Text("upi_transfer_key".tr(),
+                                                      Text("upi_history_key".tr(),
                                                           style: GoogleFonts.openSans(
                                                               color: TextBlackLight,
                                                               fontSize: 15,
@@ -1078,7 +1078,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                                       SizedBox(
                                                         height: 5,
                                                       ),
-                                                      Text("upi_transfer_key".tr(),
+                                                      Text("upi_history_key".tr(),
                                                           style: GoogleFonts.openSans(
                                                               color: TextBlackLight,
                                                               fontSize: 15,
