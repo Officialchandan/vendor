@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:developer';
 
 import 'package:auto_size_text/auto_size_text.dart';
@@ -5,8 +6,14 @@ import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:share/share.dart';
+import 'package:vendor/main.dart';
+import 'package:vendor/ui/notification_screen/model/notification_response.dart';
+import 'package:vendor/ui_without_inventory/notification/notification_screen.dart';
+import 'package:vendor/utility/color.dart';
+import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/routs.dart';
+import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/utility.dart';
 
 class HomeScreenWithoutInventory extends StatefulWidget {
@@ -18,17 +25,20 @@ class HomeScreenWithoutInventory extends StatefulWidget {
 
 class _HomeScreenWithoutInventoryState extends State<HomeScreenWithoutInventory> {
   List<String> name = [
-    "billing_key".tr(),
+    "coins_key".tr(),
     "performance_tracker_key".tr(),
     "account_management_key".tr(),
-    "money_due_upi_key".tr(),
+    "money_due_upi_title_key".tr(),
     "video_tutorials_key".tr()
   ];
   List<String> description = [
-    "billing_description_key".tr(),
-    "performance_tracker_description_key".tr(),
-    "account_management_description_key".tr(),
-    "money_due_upi_description_key".tr(),
+    "generate_redeem_key".tr(),
+    // "performance_tracker_description_key".tr(),
+    "",
+    // "account_management_description_key".tr(),
+    "",
+    // "money_due_upi_description_key".tr(),
+    "",
     "video_tutorials_description_key".tr()
   ];
 
@@ -39,9 +49,19 @@ class _HomeScreenWithoutInventoryState extends State<HomeScreenWithoutInventory>
     "assets/images/tr-ic3.png",
     "assets/images/home3.png"
   ];
-
+  List<NotificationData>? notificationData;
+  int count = 0;
+  int isReadCount = 0;
+  int totalNotification = 0;
+  String message = "";
   _onShareWithEmptyOrigin(BuildContext context) async {
     await Share.share("https://play.google.com/store/apps/details?id=com.tencent.ig");
+  }
+
+  @override
+  void initState() {
+    getNotifications();
+    super.initState();
   }
 
   @override
@@ -55,6 +75,65 @@ class _HomeScreenWithoutInventoryState extends State<HomeScreenWithoutInventory>
         ),
         leading: Text(""),
         centerTitle: true,
+        actions: [
+          Stack(
+            children: [
+              IconButton(
+                icon: Icon(
+                  Icons.notifications,
+                ),
+                onPressed: () {
+                  message == ""
+                      ? Utility.showToast(msg: "no_notification_key".tr())
+                      : Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => WithoutInventoryNotificationScreen(
+                            notificationData: notificationData!,
+                          ))).then((value) {
+                    setState(() {
+                      count -= value as int;
+                    });
+                  });
+                },
+              ),
+              notificationData != null
+                  ? Positioned(
+                right: 10,
+                top: 8,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(50),
+                  child: new Container(
+                    padding: EdgeInsets.all(1.5),
+                    decoration: new BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(
+                        color: ColorPrimary,
+                      ),
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    constraints: BoxConstraints(
+                      minWidth: 14,
+                      minHeight: 14,
+                    ),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        count.toString(),
+                        style: TextStyle(
+                          color: ColorPrimary,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 8,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              )
+                  : Container()
+            ],
+          ),
+        ],
         // backgroundColor: Colors.indigoAccent,
         // actions: [
         //   Padding(
@@ -204,5 +283,31 @@ class _HomeScreenWithoutInventoryState extends State<HomeScreenWithoutInventory>
                     : index == 4
                         ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY, arguments: 3)
                         : Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY, arguments: 3);
+  }
+  getNotifications() async {
+    String userId = (await SharedPref.getIntegerPreference(SharedPref.VENDORID)).toString();
+    Map input = HashMap();
+    input["vendor_id"] = userId;
+    if (await Network.isConnected()) {
+      NotificationResponse response = await apiProvider.getNotifications(input);
+      message = response.message;
+      if (response.success && response.message != "") {
+        log("--->${response.data}");
+        notificationData = response.data;
+        totalNotification = response.data!.length;
+        response.data!.forEach((element) {
+          if (element.isRead == 1) {
+            isReadCount++;
+          }
+          setState(() {});
+          count = totalNotification - isReadCount;
+        });
+      } else {
+        response.message == "" ? Container() : Utility.showToast(msg: response.message);
+        message = response.message;
+      }
+    } else {
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
+    }
   }
 }

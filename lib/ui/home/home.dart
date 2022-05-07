@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
     "coins_key".tr(),
     "inventory_key".tr(),
     "performance_tracker_key".tr(),
-    "money_due_upi_key".tr(),
+    "money_due_upi_title_key".tr(),
     "account_management_key".tr(),
     "video_tutorials_key".tr(),
   ];
@@ -49,10 +49,9 @@ class _HomeScreenState extends State<HomeScreen> {
     // "money_due_upi_description_key".tr(),
     "",
     // "staff_management_description_key".tr(),
-
     "",
     // "video_tutorials_description_key".tr(),
-    "online_shop_description_key".tr(),
+    "video_tutorials_description_key".tr(),
   ];
 
   List<String> images = [

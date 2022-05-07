@@ -855,12 +855,11 @@ class _BillingProductsState extends State<BillingProducts> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            titlePadding: const EdgeInsets.only(left: 18, right: 18, top: 10, bottom: 10),
+            titlePadding: const EdgeInsets.only(left: 18, right: 18, top: 10, bottom: 0),
             contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 18),
             actionsPadding: const EdgeInsets.only(left: 12, right: 12, top: 0, bottom: 18),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            insetPadding: const EdgeInsets.all(50),
-            title: RichText(
+            title: status == 1? RichText(
               text: TextSpan(
                 text: "${"otp_verification_key".tr()}\n",
                 style: GoogleFonts.openSans(
@@ -890,7 +889,18 @@ class _BillingProductsState extends State<BillingProducts> {
                   )
                 ],
               ),
+            )
+                :Container(
+              height: 50,
+                  child: Text("${"enter_amount_key".tr()}\n",
+                  style: GoogleFonts.openSans(
+                    fontSize: 25.0,
+                    height: 2.0,
+                    color: TextBlackLight,
+                    fontWeight: FontWeight.w600,
+                  ),
             ),
+                ),
             content: TextFormField(
               controller: _textFieldController,
               cursorColor: ColorPrimary,
@@ -899,7 +909,7 @@ class _BillingProductsState extends State<BillingProducts> {
               decoration: InputDecoration(
                 filled: true,
                 // fillColor: Colors.black,
-                hintText: "enter_otp_key".tr(),
+                hintText: status == 1? "enter_otp_key".tr() : "enter_amount_key".tr(),
                 hintStyle: GoogleFonts.openSans(
                   fontWeight: FontWeight.w600,
                 ),
@@ -950,7 +960,7 @@ class _BillingProductsState extends State<BillingProducts> {
                     }
                   },
                   child: new Text(
-                    "submit_button_key".tr(),
+                 status ==1? "submit_button_key".tr(): "done_key".tr(),
                     style: GoogleFonts.openSans(
                         fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
                   ),

@@ -218,7 +218,7 @@
   "settings_key": "Settings",
   "share_store_link_key": "Share store link",
   "video_tutorials_key": "Video tutorials",
-  "video_tutorials_description_key": "Video tutorials for use the app",
+  "video_tutorials_description_key": "Learn how to use the app",
   "get_store_qr_code_key": "Get Store QR Code",
   "add_business_hours_key": "Add business hours",
   "alexa_parker_key": "Alexa Parker",
@@ -292,6 +292,7 @@
   "redeemed_amount_key": "Redeemed Amount",
   "pay_amount_key": "Pay Amount",
   "money_due_upi_key": "Money Due - UPI",
+  "money_due_upi_title_key": "UPI Transfer & Ledger",
   "upi_key": "UPI",
   "month_key": "Month",
   "company_due_amount_key": "Company due amount",
@@ -420,5 +421,6 @@
   "net_return_amt_key": "Net Return Amount",
   "collection_amt_key": "Collection Amount",
   "amount_paid_key": "Amount Paid",
-  "redeem_popup_button_key": "Done"
+  "redeem_popup_button_key": "Done",
+  "order_summary_key": "Order Summary"
 }

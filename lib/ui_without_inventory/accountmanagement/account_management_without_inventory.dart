@@ -124,7 +124,7 @@ class _AccountManagementWithoutInventoryScreenState extends State<AccountManagem
                           Text(snapshot.data!.shopName.toString(),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w600)),
+                              style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w600)),
                         ],
                       ),
                       trailing: Container(
