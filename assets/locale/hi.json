@@ -224,7 +224,7 @@
   "settings_key": "समायोजन",
   "share_store_link_key": "शेयर स्टोर लिंक",
   "video_tutorials_key": "वीडियो शिक्षण",
-  "video_tutorials_description_key": "ऐप का उपयोग करने के लिए वीडियो ट्यूटोरियल",
+  "video_tutorials_description_key": "ऐप का उपयोग करना सीखें",
   "get_store_qr_code_key": "स्टोर क्यूआर कोड प्राप्त करें",
   "add_business_hours_key": "व्यावसायिक घंटे जोड़ें",
   "alexa_parker_key": "व्यावसायिक घंटे जोड़ें",
@@ -296,6 +296,7 @@
   "redeemed_amount_key": "भुनाई गई राशि",
   "pay_amount_key": "भुगतान राशि",
   "money_due_upi_key": "UPI भुगतान + लेनदेन इतिहास",
+  "money_due_upi_title_key": "यूपीआई ट्रांसफर और लेजर",
   "upi_key": "UPI",
   "company_due_amount_key": "कंपनी देय राशि",
   "click_here_to_see_sale_amount_key": "बिक्री राशि देखने के लिए यहां क्लिक करें",
@@ -427,5 +428,6 @@
   "collection_amt_in_cash_key": "ग्राहक से प्राप्त राशि (नगद)",
   "net_return_amt_key": "कुल वापसी राशि",
   "collection_amt_key": "ग्राहक से प्राप्त राशि",
-  "amount_paid_key": "राशि का भुगतान"
+  "amount_paid_key": "राशि का भुगतान",
+  "order_summary_key": "आर्डर विवरण"
 }

@@ -68,11 +68,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   _displayDialog(BuildContext context, mobile) async {
     return showDialog(
-
         context: context,
-
         builder: (context) {
-
           return AlertDialog(
             titlePadding: const EdgeInsets.only(left: 18, right: 18,top: 10,bottom: 10),
             contentPadding: const EdgeInsets.symmetric(vertical: 10,horizontal: 18),
@@ -113,7 +110,6 @@ class _LoginScreenState extends State<LoginScreen> {
             content: Container(
               width: MediaQuery.of(context).size.width,
               child: TextFormField(
-
                 controller: _textFieldController,
                 cursorColor: ColorPrimary,
                 keyboardType: TextInputType.number,
@@ -140,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Container(
                 width: MediaQuery.of(context).size.width,
                 child: MaterialButton(
-                  height: 35,
+                  height: 50  ,
                   textColor: Colors.white,
                   color: ColorPrimary,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
