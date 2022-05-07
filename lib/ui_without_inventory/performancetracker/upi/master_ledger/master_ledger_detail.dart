@@ -131,11 +131,17 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
 
                     hintStyle: GoogleFonts.openSans(fontWeight: FontWeight.w600, color: Colors.black),
                     contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: textFieldBorderColor, width: 1.0),
+                      borderRadius: BorderRadius.circular(5.0),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
+                      borderSide: BorderSide(color: textFieldBorderColor, width: 1.0),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: textFieldBorderColor, width: 1.0),
                       borderRadius: BorderRadius.circular(5),
                     ),
                   ),
@@ -217,106 +223,104 @@ class _ListWidgetState extends State<ListWidget> {
       child: ListView.builder(
           itemCount: widget.searchList.length,
           itemBuilder: (context, index) {
-            return
-             ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Stack(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 14,
-                          vertical: 10),
-                      height: 80,
-                      padding: const EdgeInsets.all(14),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.shade300,
-                            offset: Offset(0.0, 0.0), //(x,y)
-                            blurRadius: 7.0,
-                          ),
-                        ],
-                      ),
-                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                        Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "+91 ${widget.searchList[index].mobile}",
-                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
-                              ),
-                              Text(
-                                "${DateFormat("yyyy MM dd ").format(widget.searchList[index].dateTime)}(${DateFormat.jm().format(widget.searchList[index].dateTime)})",
-                                style: TextStyle(fontSize: 13, color: TextGrey, fontWeight: FontWeight.bold),
-                              ),
-                            ]
+            return ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Stack(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                    height: 80,
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.shade300,
+                          offset: Offset(0.0, 0.0), //(x,y)
+                          blurRadius: 7.0,
                         ),
-                        Text(
-                          " \u20B9 ${widget.searchList[index].myprofitRevenue} ",
-                          style: GoogleFonts.openSans(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: widget.searchList[index].status == 1 ? RejectedBoxTextColor : GreenBoxTextColor),
-                        ),
-                        // Row(
-                        //   children: [
-                        //     Center(
-                        //       child: widget.searchList[index].status == 1
-                        //           ? Container(
-                        //               padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
-                        //               decoration: BoxDecoration(
-                        //                   borderRadius: BorderRadius.circular(20), color: PendingTextBgColor),
-                        //               child: Text(
-                        //                 "pending_key".tr(),
-                        //                 style: TextStyle(
-                        //                     color: PendingTextColor, fontSize: 10, fontWeight: FontWeight.w400),
-                        //               ),
-                        //             )
-                        //           : Container(
-                        //               padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
-                        //               decoration: BoxDecoration(
-                        //                   borderRadius: BorderRadius.circular(20), color: ApproveTextBgColor),
-                        //               child: Text(
-                        //                 "paid_key".tr(),
-                        //                 style: TextStyle(
-                        //                     color: ApproveTextColor, fontSize: 10, fontWeight: FontWeight.w400),
-                        //               ),
-                        //             ),
-                        //     ),
-                        //     SizedBox(
-                        //       width: 5,
-                        //     ),
-                        //     Container(
-                        //       width: 90,
-                        //     )
-                        //   ],
-                        // ),
-                      ]),
+                      ],
                     ),
-                    // Positioned(
-                    //   right: 0,
-                    //   top: 0,
-                    //   child: Container(
-                    //     alignment: Alignment.center,
-                    //     width: 90,
-                    //     height: 76,
-                    //     decoration: BoxDecoration(
-                    //         color: widget.searchList[index].status == 1 ? RejectedTextBgColor : GreenBoxBgColor,
-                    //         borderRadius:
-                    //             BorderRadius.only(bottomRight: Radius.circular(10), topRight: Radius.circular(10))),
-                    //     child: Text(
-                    //       " \u20B9 ${widget.searchList[index].myprofitRevenue} ",
-                    //       style: TextStyle(
-                    //           fontWeight: FontWeight.bold,
-                    //           fontSize: 14,
-                    //           color: widget.searchList[index].status == 1 ? RejectedBoxTextColor : GreenBoxTextColor),
-                    //     ),
-                    //   ),
-                    // )
-                  ],
-                ),);
+                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                      Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "+91 ${widget.searchList[index].mobile}",
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
+                            ),
+                            Text(
+                              "${DateFormat("yyyy MM dd ").format(widget.searchList[index].dateTime)}(${DateFormat.jm().format(widget.searchList[index].dateTime)})",
+                              style: TextStyle(fontSize: 13, color: TextGrey, fontWeight: FontWeight.bold),
+                            ),
+                          ]),
+                      Text(
+                        " \u20B9 ${widget.searchList[index].myprofitRevenue} ",
+                        style: GoogleFonts.openSans(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: widget.searchList[index].status == 1 ? RejectedBoxTextColor : GreenBoxTextColor),
+                      ),
+                      // Row(
+                      //   children: [
+                      //     Center(
+                      //       child: widget.searchList[index].status == 1
+                      //           ? Container(
+                      //               padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
+                      //               decoration: BoxDecoration(
+                      //                   borderRadius: BorderRadius.circular(20), color: PendingTextBgColor),
+                      //               child: Text(
+                      //                 "pending_key".tr(),
+                      //                 style: TextStyle(
+                      //                     color: PendingTextColor, fontSize: 10, fontWeight: FontWeight.w400),
+                      //               ),
+                      //             )
+                      //           : Container(
+                      //               padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+                      //               decoration: BoxDecoration(
+                      //                   borderRadius: BorderRadius.circular(20), color: ApproveTextBgColor),
+                      //               child: Text(
+                      //                 "paid_key".tr(),
+                      //                 style: TextStyle(
+                      //                     color: ApproveTextColor, fontSize: 10, fontWeight: FontWeight.w400),
+                      //               ),
+                      //             ),
+                      //     ),
+                      //     SizedBox(
+                      //       width: 5,
+                      //     ),
+                      //     Container(
+                      //       width: 90,
+                      //     )
+                      //   ],
+                      // ),
+                    ]),
+                  ),
+                  // Positioned(
+                  //   right: 0,
+                  //   top: 0,
+                  //   child: Container(
+                  //     alignment: Alignment.center,
+                  //     width: 90,
+                  //     height: 76,
+                  //     decoration: BoxDecoration(
+                  //         color: widget.searchList[index].status == 1 ? RejectedTextBgColor : GreenBoxBgColor,
+                  //         borderRadius:
+                  //             BorderRadius.only(bottomRight: Radius.circular(10), topRight: Radius.circular(10))),
+                  //     child: Text(
+                  //       " \u20B9 ${widget.searchList[index].myprofitRevenue} ",
+                  //       style: TextStyle(
+                  //           fontWeight: FontWeight.bold,
+                  //           fontSize: 14,
+                  //           color: widget.searchList[index].status == 1 ? RejectedBoxTextColor : GreenBoxTextColor),
+                  //     ),
+                  //   ),
+                  // )
+                ],
+              ),
+            );
           }),
     );
   }

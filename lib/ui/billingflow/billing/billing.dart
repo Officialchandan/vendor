@@ -403,11 +403,13 @@ class _BillingScreenState extends State<BillingScreen> {
                                 hintText: "search_all_products_key".tr(),
                                 hintStyle: GoogleFonts.openSans(fontWeight: FontWeight.w600, color: Colors.black),
                                 contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white),
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(color: textFieldBorderColor, width: 5),
+                                  borderRadius: BorderRadius.circular(5.0),
                                 ),
+
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white),
+                                  borderSide: BorderSide(color: ColorTextPrimary, width: 5),
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                               ),

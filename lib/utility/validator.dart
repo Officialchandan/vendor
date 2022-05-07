@@ -8,7 +8,7 @@ class Validator {
   static RegExp passwordRegex = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
   static RegExp doubleRegex = RegExp(r'^(?:0|[1-9][0-9]*)\.[0-9]+$');
 
-  static RegExp name = RegExp(r'[a-zA-Z]');
+  static RegExp name = RegExp(r'[a-z A-Z]');
 
   static String? emailValidator(String email) {
     if (email.isEmpty) {

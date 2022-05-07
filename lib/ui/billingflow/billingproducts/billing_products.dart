@@ -732,6 +732,7 @@ class _BillingProductsState extends State<BillingProducts> {
     Map<String, dynamic> input = HashMap<String, dynamic>();
     input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     input["mobile"] = widget.mobile;
+    input["full_name"] = widget.firstName;
     input["address_id"] = "";
     input["payment_method"] = "cash";
     input["payment_code"] = "COD";

@@ -121,11 +121,17 @@ class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
 
                 hintStyle: GoogleFonts.openSans(fontWeight: FontWeight.w600, color: Colors.black),
                 contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
+                fillColor: Colors.white,
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: textFieldBorderColor, width: 1.0),
+                  borderRadius: BorderRadius.circular(5.0),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
+                  borderSide: BorderSide(color: textFieldBorderColor, width: 1.0),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: textFieldBorderColor, width: 1.0),
                   borderRadius: BorderRadius.circular(5),
                 ),
               ),
@@ -167,8 +173,11 @@ class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
                   }
                 });
                 if (list.isEmpty) {
-                  return Center(
-                    child: Image.asset("assets/images/no_data.gif"),
+                  return Container(
+                    height: MediaQuery.of(context).size.height * 0.70,
+                    child: Center(
+                      child: Image.asset("assets/images/no_data.gif"),
+                    ),
                   );
                 } else {
                   searchList = list;
@@ -221,7 +230,7 @@ class _ListWidgetState extends State<ListWidget> {
                       BoxShadow(
                         color: Colors.grey.shade300,
                         offset: Offset(0.0, 0.0), //(x,y)
-                        blurRadius:7.0,
+                        blurRadius: 7.0,
                       ),
                     ],
                     borderRadius: BorderRadius.circular(10),
@@ -245,7 +254,7 @@ class _ListWidgetState extends State<ListWidget> {
                           ]),
                     ),
                     Container(
-                      width: 90,
+                      width: 100,
                     ),
                   ]),
                 ),
@@ -255,7 +264,7 @@ class _ListWidgetState extends State<ListWidget> {
                   child: Container(
                     alignment: Alignment.center,
                     padding: EdgeInsets.only(left: 5),
-                    width: 90,
+                    width: 100,
                     height: 70,
                     decoration: BoxDecoration(
                         color: Colors.grey.shade200,

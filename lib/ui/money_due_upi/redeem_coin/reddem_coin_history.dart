@@ -98,11 +98,17 @@ class _ReddemCoinHistoryState extends State<ReddemCoinHistory> {
                       hintText: "search_here_key".tr(),
                       hintStyle: GoogleFonts.openSans(fontWeight: FontWeight.w600, color: Colors.black),
                       contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: textFieldBorderColor, width: 1.0),
+                        borderRadius: BorderRadius.circular(5.0),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
+                        borderSide: BorderSide(color: textFieldBorderColor, width: 1.0),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: textFieldBorderColor, width: 1.0),
                         borderRadius: BorderRadius.circular(5),
                       ),
                     ),
@@ -208,7 +214,7 @@ class _DirectBillingListState extends State<DirectBillingList> {
             BoxShadow(
               color: Colors.grey.shade300,
               offset: Offset(0.0, 0.0), //(x,y)
-              blurRadius:7.0,
+              blurRadius: 7.0,
             ),
           ],
           borderRadius: BorderRadius.circular(10),
