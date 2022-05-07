@@ -1,13 +1,14 @@
 import 'dart:collection';
-import 'dart:developer';
-import 'package:auto_size_text/auto_size_text.dart';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/model/common_response.dart';
 import 'package:vendor/model/sale_return_resonse.dart';
+import 'package:vendor/ui/home/bottom_navigation_home.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/network.dart';
@@ -341,9 +342,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
         bottomNavigationBar: InkWell(
           onTap: () {
             _textFieldController.clear();
-            displayDialog(
-              context, widget.saleReturnData.mobile
-            );
+            displayDialog(context, widget.saleReturnData.mobile);
           },
           child: Container(
             height: 50,
@@ -529,7 +528,11 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   onPressed: () {
                     Navigator.of(context).pop(); //? For alert box
-                    Navigator.of(context).pop(returnData.orderId); //? For screen
+                    // Navigator.of(context).pop(returnData.orderId); //? For screen
+                    Navigator.pushReplacement(
+                      context,
+                      PageTransition(child: BottomNavigationHome(index: 1), type: PageTransitionType.fade),
+                    );
                   },
                   child: new Text(
                     "done_key".tr(),
