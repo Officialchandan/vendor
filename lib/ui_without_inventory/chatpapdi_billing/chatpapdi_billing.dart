@@ -433,7 +433,8 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
               ),
             ),
             bottomNavigationBar: Container(
-              height: MediaQuery.of(context).size.height * 0.32,
+              alignment: Alignment.bottomCenter,
+              height: MediaQuery.of(context).size.height * 0.37,
               child: Column(
                 children: [
                   Container(
@@ -583,7 +584,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                             if (amountController.text.length >= 0) {
                               if (nameController.text.length > 1) {
                                 //   userRegister(context);
-
+                                directBilling(context);
                                 if (succes == true) {}
                               } else {
                                 Utility.showToast(msg: "please_enter_name_key".tr());

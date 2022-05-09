@@ -94,22 +94,27 @@ class _SalesReturnHistoryState extends State<SalesReturnHistory> {
                       ),
                       filled: true,
 
-                      // fillColor: Colors.black,
-                      hintText: "search_here_key".tr(),
-                      hintStyle: GoogleFonts.openSans(fontWeight: FontWeight.w600, color: Colors.black),
-                      contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
+                    // fillColor: Colors.black,
+                    hintText: "search_here_key".tr(),
+                    hintStyle: GoogleFonts.openSans(fontWeight: FontWeight.w600, color: Colors.black),
+                    contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: textFieldBorderColor, width: 1.0),
+                      borderRadius: BorderRadius.circular(5.0),
                     ),
-                    onChanged: (value) {
-                      saleReturnBloc.add(GetSalesReturnDataSearchEvent(keyWord: value));
-                    },
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: textFieldBorderColor, width: 1.0),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: textFieldBorderColor, width: 1.0),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
                   ),
+                  onChanged: (value) {
+                    saleReturnBloc.add(GetSalesReturnDataSearchEvent(keyWord: value));
+                  },
                 ),
                 SizedBox(
                   height: 10,
@@ -197,12 +202,12 @@ class BillingDetailsWidget extends StatefulWidget {
 
 class _BillingDetailsWidgetState extends State<BillingDetailsWidget> {
   BillingDetails? billingDetails;
+
   String payAmt = "0";
   String colorStatus = "";
   @override
   void initState() {
     this.billingDetails = widget.details;
-
     if (double.parse(billingDetails!.amountPaidToMyProfit.isEmpty
             ? "0"
             : billingDetails!.amountPaidToMyProfit.isEmpty
@@ -234,7 +239,6 @@ class _BillingDetailsWidgetState extends State<BillingDetailsWidget> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        FocusScope.of(context).unfocus();
         Navigator.push(
             context,
             MaterialPageRoute(

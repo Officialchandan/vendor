@@ -115,11 +115,17 @@ class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
 
                 hintStyle: GoogleFonts.openSans(fontWeight: FontWeight.w600, color: Colors.black),
                 contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
+                fillColor: Colors.white,
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: textFieldBorderColor, width: 1.0),
+                  borderRadius: BorderRadius.circular(5.0),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
+                  borderSide: BorderSide(color: textFieldBorderColor, width: 1.0),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: textFieldBorderColor, width: 1.0),
                   borderRadius: BorderRadius.circular(5),
                 ),
               ),
@@ -163,8 +169,11 @@ class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
                   }
                 });
                 if (list.isEmpty) {
-                  return Center(
-                    child: Image.asset("assets/images/no_data.gif"),
+                  return Container(
+                    height: MediaQuery.of(context).size.height * 0.70,
+                    child: Center(
+                      child: Image.asset("assets/images/no_data.gif"),
+                    ),
                   );
                 } else {
                   searchList = list;
@@ -245,7 +254,7 @@ class _ListWidgetState extends State<ListWidget> {
                                     width: 15,
                                   )),
                               Text(
-                                " ${widget.searchList[index].orderType == 0? double.parse(widget.searchList[index].totalearningcoins).toStringAsFixed(2): 
+                                " ${widget.searchList[index].orderType == 0? double.parse(widget.searchList[index].totalearningcoins).toStringAsFixed(2):
                                 double.parse(widget.searchList[index].billingDetails[0].earningCoins).toStringAsFixed(2)}",
                                 style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 16, color: ColorPrimary),
                               ),

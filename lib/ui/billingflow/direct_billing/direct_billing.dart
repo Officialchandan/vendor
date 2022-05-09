@@ -598,7 +598,7 @@ class _DirectBillingState extends State<DirectBilling> {
             bottomNavigationBar: IntrinsicHeight(
               child: Container(
                 height: 50,
-                margin: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                // margin: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                 decoration: BoxDecoration(color: ColorPrimary),
                 width: MediaQuery.of(context).size.width,
                 child: MaterialButton(
@@ -608,6 +608,7 @@ class _DirectBillingState extends State<DirectBilling> {
                         if (amountController.text.length >= 0) {
                           if (nameController.text.length > 1) {
                             if (checkbox == true) {
+                              directBilling(context);
                               //   userRegister(context);
                             } else {
                               Utility.showToast(msg: "Please select category".tr());
