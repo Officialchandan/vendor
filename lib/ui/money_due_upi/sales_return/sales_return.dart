@@ -116,6 +116,7 @@ class _SalesReturnHistoryState extends State<SalesReturnHistory> {
                     saleReturnBloc.add(GetSalesReturnDataSearchEvent(keyWord: value));
                   },
                 ),
+                ),
                 SizedBox(
                   height: 10,
                 ),
