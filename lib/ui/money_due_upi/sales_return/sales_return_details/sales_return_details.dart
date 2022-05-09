@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:vendor/ui/money_due_upi/sales_return/response/upi_sales_return_response.dart';
 import 'package:vendor/utility/color.dart';
-import 'package:vendor/widget/sales_return_details_bottom_sheet.dart';
 
 class SalesReturnDetails extends StatefulWidget {
   final BillingDetails billingDetails;
@@ -81,7 +80,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
     calculation();
   }
 
- void  calculation() {
+  void calculation() {
     // Amount Paid
     productDetails.forEach((element) {
       amtPaid += double.parse(element.amountPaid);
@@ -90,7 +89,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
     // Redeem Coin
     productDetails.forEach((element) {
       redeemCoins += double.parse(element.redeemCoins);
-      redeemCoinsRs = redeemCoins/3;
+      redeemCoinsRs = redeemCoins / 3;
     });
 
     // Earn Coins
@@ -168,7 +167,6 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                               " ${DateFormat.jm().format(DateTime.parse(details!.dateTime))}",
                               style: GoogleFonts.openSans(fontSize: 13, fontWeight: FontWeight.w600, color: TextGrey),
                             ),
-
                           ],
                         ),
                       ],
@@ -206,9 +204,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                                     decoration: BoxDecoration(
                                       color: Colors.grey.shade200,
                                       borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(8),
-                                          bottomRight: Radius.circular(8)
-                                      ),
+                                          topRight: Radius.circular(8), bottomRight: Radius.circular(8)),
                                     ),
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.start,
@@ -289,7 +285,6 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                                             ),
                                           ),
                                         )
-
                                       ],
                                     ),
                                   ),
@@ -393,8 +388,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                           children: [
                             Text(
                               "coin_earned_by_customer_key".tr(),
-                              style: GoogleFonts.openSans(fontWeight:
-                              FontWeight.w600, fontSize: 14, color: TextGrey),
+                              style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 14, color: TextGrey),
                             ),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -541,7 +535,6 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                       ],
                     ),
                   ),
-
                 ],
               ),
             ),
