@@ -319,6 +319,7 @@
   "export_key": "Export",
   "days_key": "days",
   "return_ledger_key": "Returns Ledger",
+  "return_ledger_details_key": "Returns Ledger Details",
   "please_select_days_key": "Please select days",
   "coin_redeem_report_key": "Coin Redeem Report",
   "style1_key": "Style1",
@@ -415,6 +416,7 @@
   "coin_generated_successfully_key": "Coins generated successfully",
   "in_customer_wallet_key": "in customer Wallet",
   "earned_coins_key": "Earned Coins",
+  "earned_key": "Earned",
   "insufficient_coin_balance_warning_key": "Warning! Insufficient Coin Balance",
   "return_summary_key": "Return Summary",
   "customer_amt_paid_key": "Customer Amount Paid",
@@ -427,5 +429,6 @@
   "collection_amt_key": "Collection Amount",
   "amount_paid_key": "Amount Paid",
   "redeem_popup_button_key": "Done",
-  "order_summary_key": "Order Summary"
+  "order_summary_key": "Order Summary",
+
 }

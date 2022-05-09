@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:vendor/ui/money_due_upi/redeem_coin/response/redeem_coin_response.dart';
 import 'package:vendor/utility/color.dart';
 
@@ -49,78 +50,65 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
         body: Container(
           width: MediaQuery.of(context).size.width,
           child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
-                  child: Container(
-                    height: 70,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8),
-                      boxShadow: [BoxShadow(color: Colors.black12, spreadRadius: 4, blurRadius: 10)],
-                    ),
+            child: Container(
+              padding: const EdgeInsets.all(14),
+              child: Column(
+                children: [
+                  Container(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 14, right: 14),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "${details!.firstName}",
-                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black87),
-                              ),
-                              Text(
-                                "${DateFormat("dd MMM yyyy").format(DateTime.parse(details!.dateTime))}" +
-                                    " ${DateFormat.jm().format(DateTime.parse(details!.dateTime)).toLowerCase()}",
-                                style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 14, right: 14),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "${details!.mobile}",
-                                style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.grey),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 20),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8),
-                      boxShadow: [BoxShadow(color: Colors.black12, spreadRadius: 4, blurRadius: 10)],
-                    ),
-                    child: Column(
-                      children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 14, top: 10),
-                            child: Text(
-                              "all_items_key".tr(),
-                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "${details!.firstName}",
+                              style: GoogleFonts.openSans(fontSize: 18, fontWeight: FontWeight.bold,
+                                  color: TextBlackLight),
                             ),
-                          ),
+                          ],
                         ),
                         SizedBox(
                           height: 5,
                         ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "${details!.mobile}",
+                              style: GoogleFonts.openSans(fontSize: 13, fontWeight: FontWeight.w600,
+                                  color: TextGrey),
+                            ),
+                            Text(
+                              "${DateFormat("dd MMM yyyy").format(DateTime.parse(details!.dateTime))}" +
+                                  " ${DateFormat.jm().format(DateTime.parse(details!.dateTime))
+                                  }",
+                              style: GoogleFonts.openSans(fontSize: 13, fontWeight: FontWeight.w600,
+                                  color: TextGrey),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "order_summary_key".tr(),
+                            style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
                         Container(
-                          height: commonDetails.length >= 2 ? 160 : 80,
+                          height: commonDetails.length >= 2 ? 160 : 75,
                           child: StreamBuilder<List<CommonDetails>>(
                               stream: detailsController.stream,
                               builder: (context, snapshot) {
@@ -132,92 +120,87 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                                 if (snapshot.hasData) {
                                   var product = snapshot.data!;
                                   return ListView.builder(
+                                    primary: false,
                                     itemCount: snapshot.data!.length,
                                     itemBuilder: ((context, index) {
                                       return Stack(
                                         children: [
-                                          Padding(
+                                          Container(
+                                            height: 70,
                                             padding: const EdgeInsets.all(10),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                color: Colors.grey.shade200,
-                                                borderRadius: BorderRadius.circular(8),
-                                              ),
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(8),
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  children: [
-                                                    Container(
-                                                      child: ClipRRect(
-                                                        borderRadius: BorderRadius.circular(8),
-                                                        child: Container(
-                                                          child: product[index].image.isEmpty
-                                                              ? Image.asset("assets/images/placeholder.webp",
-                                                                  width: 45, height: 45, fit: BoxFit.cover)
-                                                              : CachedNetworkImage(
-                                                                  imageUrl: product[index].image,
-                                                                  progressIndicatorBuilder:
-                                                                      (context, url, downloadProgress) => Center(
-                                                                            child: CircularProgressIndicator(
-                                                                                value: downloadProgress.progress),
-                                                                          ),
-                                                                  errorWidget: (context, url, error) =>
-                                                                      Image.asset("assets/images/placeholder.webp"),
-                                                                  width: 45,
-                                                                  height: 45,
-                                                                  fit: BoxFit.cover),
-                                                        ),
-                                                      ),
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey.shade200,
+                                              borderRadius: BorderRadius.circular(8),
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              children: [
+                                                Container(
+                                                  child: ClipRRect(
+                                                    borderRadius: BorderRadius.circular(8),
+                                                    child: Container(
+                                                      child: product[index].image.isEmpty
+                                                          ? Image.asset("assets/images/placeholder.webp",
+                                                              width: 55, height: 55, fit: BoxFit.contain)
+                                                          : CachedNetworkImage(
+                                                              imageUrl: product[index].image,
+                                                              progressIndicatorBuilder:
+                                                                  (context, url, downloadProgress) => Center(
+                                                                        child: CircularProgressIndicator(
+                                                                            value: downloadProgress.progress),
+                                                                      ),
+                                                              errorWidget: (context, url, error) =>
+                                                                  Image.asset("assets/images/placeholder.webp"),
+                                                              width: 55,
+                                                              height: 55,
+                                                              fit: BoxFit.contain),
                                                     ),
-                                                    SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                    Container(
-                                                      child: Flexible(
-                                                        child: Column(
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Container(
+                                                  child: Flexible(
+                                                    child: Column(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      children: [
+                                                        Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                           children: [
-                                                            Row(
-                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                              children: [
-                                                                Text(
-                                                                  "${product[index].categoryName.isEmpty ? product[index].productName : product[index].categoryName}",
-                                                                  style: TextStyle(
-                                                                      fontSize: 15,
-                                                                      fontWeight: FontWeight.bold,
-                                                                      color: Colors.black87),
-                                                                ),
-                                                                Text(
-                                                                  "\u20B9 ${product[index].total}",
-                                                                  style: TextStyle(
-                                                                      fontSize: 13,
-                                                                      fontWeight: FontWeight.bold,
-                                                                      color: ColorPrimary),
-                                                                ),
-                                                              ],
+                                                            Text(
+                                                              "${product[index].categoryName.isEmpty ? product[index].productName : product[index].categoryName}",
+                                                              style: GoogleFonts.openSans(
+                                                                  fontSize: 16,
+                                                                  fontWeight: FontWeight.bold,
+                                                                  color: TextBlackLight),
                                                             ),
-                                                            SizedBox(
-                                                              height: 4,
-                                                            ),
-                                                            Row(
-                                                              mainAxisAlignment: MainAxisAlignment.start,
-                                                              children: [
-                                                                Text(
-                                                                  "${product[index].qty} x \u20B9 ${product[index].price} ",
-                                                                  style: TextStyle(
-                                                                      fontSize: 13,
-                                                                      fontWeight: FontWeight.bold,
-                                                                      color: Colors.grey),
-                                                                ),
-                                                              ],
+                                                            Text(
+                                                              "\u20B9 ${product[index].total}",
+                                                              style: GoogleFonts.openSans(
+                                                                  fontSize: 16,
+                                                                  fontWeight: FontWeight.bold,
+                                                                  color: TextBlackLight),
                                                             ),
                                                           ],
                                                         ),
-                                                      ),
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
+                                                        Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          children: [
+                                                            Text(
+                                                              "${product[index].qty} x \u20B9 ${product[index].price}",
+                                                              style: TextStyle(
+                                                                  fontSize: 13,
+                                                                  fontWeight: FontWeight.bold,
+                                                                  color: Colors.grey),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
                                             ),
                                           ),
                                         ],
@@ -229,150 +212,198 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                               }),
                         ),
                         SizedBox(
-                          height: 5,
+                          height: 20,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 14, right: 14, top: 14, bottom: 14),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "total_amount_key".tr(),
-                                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "\u20B9 ${totalAmt.toStringAsFixed(2)}",
-                                        style:
-                                            TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "redeem_coins_key".tr(),
-                                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
-                                  ),
-                                  Row(
-                                    children: [
-                                      Image.asset(
-                                        "assets/images/point.png",
-                                        width: 14,
-                                        height: 14,
-                                      ),
-                                      Text(
-                                        " ${totalRedeemCoins.toStringAsFixed(2)} (\u20B9 ${(totalRedeemCoins / 3).toStringAsFixed(2)})",
-                                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "earn_coins_key".tr(),
-                                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
-                                  ),
-                                  Row(
-                                    children: [
-                                      Image.asset(
-                                        "assets/images/point.png",
-                                        width: 14,
-                                        height: 14,
-                                      ),
-                                      Text(
-                                        " ${totalEarnCoin.toStringAsFixed(2)}",
-                                        style:
-                                            TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "pay_amt_key".tr(),
-                                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
-                                  ),
-                                  Text(
-                                    "\u20B9 ${totalPayAmt.toStringAsFixed(2)}",
-                                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: ColorPrimary),
-                                  ),
-                                ],
-                              ),
-                            ],
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "billing_key".tr(),
+                            style: GoogleFonts.openSans(fontSize: 18, fontWeight: FontWeight.bold,
+                                color: TextBlackLight),
                           ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "total_order_value_key".tr(),
+                              style: GoogleFonts.openSans(fontWeight:
+                              FontWeight.w600, fontSize: 14, color: TextGrey),
+                            ),
+                            Text(
+                              "\u20B9${totalAmt.toStringAsFixed(2)}",
+                              style: GoogleFonts.openSans(fontWeight: FontWeight.bold,fontSize: 15, color: TextBlackLight),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "customer_amt_paid_key".tr(),
+                              style: GoogleFonts.openSans(fontWeight:
+                              FontWeight.w600, fontSize: 14, color: TextGrey),
+                            ),
+                            Text(
+                              "\u20B9${totalPayAmt.toStringAsFixed(2)}",
+                              style: GoogleFonts.openSans(fontWeight: FontWeight.bold,fontSize: 15, color: TextBlackLight),
+                            ),
+                          ],
+                        ),
+                        // SizedBox(
+                        //   height: 8,
+                        // ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   children: [
+                        //     Text(
+                        //       "redeem_coins_key".tr(),
+                        //       style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                        //     ),
+                        //     Row(
+                        //       children: [
+                        //         Image.asset(
+                        //           "assets/images/point.png",
+                        //           width: 14,
+                        //           height: 14,
+                        //         ),
+                        //         Text(
+                        //           " ${totalRedeemCoins.toStringAsFixed(2)} (\u20B9 ${(totalRedeemCoins / 3).toStringAsFixed(2)})",
+                        //           style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
+                        //         ),
+                        //       ],
+                        //     ),
+                        //   ],
+                        // ),
+                        // SizedBox(
+                        //   height: 8,
+                        // ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   children: [
+                        //     Text(
+                        //       "earn_coins_key".tr(),
+                        //       style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                        //     ),
+                        //     Row(
+                        //       children: [
+                        //         Image.asset(
+                        //           "assets/images/point.png",
+                        //           width: 14,
+                        //           height: 14,
+                        //         ),
+                        //         Text(
+                        //           " ${totalEarnCoin.toStringAsFixed(2)}",
+                        //           style:
+                        //           TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                        //         ),
+                        //       ],
+                        //     ),
+                        //   ],
+                        // ),
+                        // SizedBox(
+                        //   height: 8,
+                        // ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   children: [
+                        //     Text(
+                        //       "pay_amt_key".tr(),
+                        //       style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                        //     ),
+                        //     Text(
+                        //       "\u20B9 ${totalPayAmt.toStringAsFixed(2)}",
+                        //       style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: ColorPrimary),
+                        //     ),
+                        //   ],
+                        // ),
+                        Container(
+                          margin: const EdgeInsets.only(top: 14,bottom: 5),
+                          height: 1,
+                          color: Colors.grey,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "redemption_key".tr(),
+                              style: GoogleFonts.openSans(fontWeight:
+                              FontWeight.bold, fontSize: 16, color: TextBlackLight),
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  "(",
+                                  style: GoogleFonts.openSans(fontWeight: FontWeight.w600,fontSize: 24, color: ColorPrimary),
+                                ),
+                                Image.asset(
+                                  "assets/images/point.png",
+                                  width: 20,
+                                ),
+                                Text(
+                                  "${(totalPayAmt/3).toStringAsFixed(2)}) \u20B9${totalPayAmt.toStringAsFixed(2)}",
+                                  style: GoogleFonts.openSans(fontWeight: FontWeight.w600,fontSize: 24, color: ColorPrimary),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ],
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 20),
-                  child: Container(
-                    height: 50,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topRight,
-                        end: Alignment.bottomLeft,
-                        // stops: [0.1, 0.5, 0.7, 0.9],
-                        colors: [
-                          RedDarkColor,
-                          RedLightColor,
-                        ],
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                      boxShadow: [BoxShadow(color: Colors.black12, spreadRadius: 4, blurRadius: 10)],
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 14, right: 14),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "redeemed_coins_key".tr(),
-                            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
-                          ),
-                          Row(
-                            children: [
-                              Image.asset(
-                                "assets/images/point.png",
-                                height: 14,
-                                width: 14,
-                              ),
-                              Text(
-                                " ${totalRedeemCoins.toStringAsFixed(2)} (\u20B9 ${(totalRedeemCoins / 3).toStringAsFixed(2)})",
-                                style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+                  // Padding(
+                  //   padding: const EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 20),
+                  //   child: Container(
+                  //     height: 50,
+                  //     decoration: BoxDecoration(
+                  //       gradient: LinearGradient(
+                  //         begin: Alignment.topRight,
+                  //         end: Alignment.bottomLeft,
+                  //         // stops: [0.1, 0.5, 0.7, 0.9],
+                  //         colors: [
+                  //           RedDarkColor,
+                  //           RedLightColor,
+                  //         ],
+                  //       ),
+                  //       borderRadius: BorderRadius.circular(8),
+                  //       boxShadow: [BoxShadow(color: Colors.black12, spreadRadius: 4, blurRadius: 10)],
+                  //     ),
+                  //     child: Padding(
+                  //       padding: const EdgeInsets.only(left: 14, right: 14),
+                  //       child: Row(
+                  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //         children: [
+                  //           Text(
+                  //             "redeemed_coins_key".tr(),
+                  //             style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
+                  //           ),
+                  //           Row(
+                  //             children: [
+                  //               Image.asset(
+                  //                 "assets/images/point.png",
+                  //                 height: 14,
+                  //                 width: 14,
+                  //               ),
+                  //               Text(
+                  //                 " ${totalRedeemCoins.toStringAsFixed(2)} (\u20B9 ${(totalRedeemCoins / 3).toStringAsFixed(2)})",
+                  //                 style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
+                  //               ),
+                  //             ],
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                ],
+              ),
             ),
           ),
         ),

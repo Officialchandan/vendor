@@ -44,7 +44,7 @@ class _SalesReturnHistoryState extends State<SalesReturnHistory> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            "sales_return_key".tr(),
+            "return_ledger_key".tr(),
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           ),
           actions: [
@@ -81,17 +81,18 @@ class _SalesReturnHistoryState extends State<SalesReturnHistory> {
           onRefresh: () {
             getSalesReturnData(startDate, endDate);
           },
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 15.0, right: 15, top: 15),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.search,
-                      color: Colors.black,
-                    ),
-                    filled: true,
+          child: Container(
+            child: Column(
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(left: 14, right: 14, top: 14),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: Colors.black,
+                      ),
+                      filled: true,
 
                     // fillColor: Colors.black,
                     hintText: "search_here_key".tr(),
@@ -115,63 +116,65 @@ class _SalesReturnHistoryState extends State<SalesReturnHistory> {
                     saleReturnBloc.add(GetSalesReturnDataSearchEvent(keyWord: value));
                   },
                 ),
-              ),
-              Expanded(
-                child: BlocBuilder<SalesReturnBloc, SalesReturnStates>(
-                  builder: ((context, state) {
-                    if (state is SalesReturnHistoryState) {
-                      billingDetails = state.response;
-                    }
-                    if (state is SalesReturnLoadingState) {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                    if (state is SalesReturnFailureState) {
-                      return Center(
-                        child: Image.asset("assets/images/no_data.gif"),
-                      );
-                    }
-                    if (state is SalesReturnDataSearchState) {
-                      if (state.keyWord.isEmpty) {
-                        searchList = billingDetails;
-                      } else {
-                        List<BillingDetails> list = [];
-                        billingDetails.forEach((element) {
-                          if (element.vendorName.toLowerCase().contains(state.keyWord.toLowerCase())) {
-                            list.add(element);
-                          }
-                        });
-                        if (list.isEmpty) {
-                          return Center(
-                            child: Image.asset("assets/images/no_data.gif"),
-                          );
+                SizedBox(
+                  height: 10,
+                ),
+                Expanded(
+                  child: BlocBuilder<SalesReturnBloc, SalesReturnStates>(
+                    builder: ((context, state) {
+                      if (state is SalesReturnHistoryState) {
+                        billingDetails = state.response;
+                      }
+                      if (state is SalesReturnLoadingState) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      if (state is SalesReturnFailureState) {
+                        return Center(
+                          child: Image.asset("assets/images/no_data.gif"),
+                        );
+                      }
+                      if (state is SalesReturnDataSearchState) {
+                        if (state.keyWord.isEmpty) {
+                          searchList = billingDetails;
                         } else {
-                          searchList = list;
-                          return ListView.builder(
-                              padding: EdgeInsets.only(left: 15, right: 15, top: 15),
-                              itemCount: searchList.length,
-                              itemBuilder: (context, index) {
-                                return Container(
-                                  child: BillingDetailsWidget(details: billingDetails[index]),
-                                );
-                              });
+                          List<BillingDetails> list = [];
+                          billingDetails.forEach((element) {
+                            if (element.mobile.toLowerCase().contains(state.keyWord.toLowerCase())) {
+                              list.add(element);
+                            }
+                          });
+                          if (list.isEmpty) {
+                            return Center(
+                              child: Image.asset("assets/images/no_data.gif"),
+                            );
+                          } else {
+                            searchList = list;
+                            return ListView.builder(
+                                padding: EdgeInsets.only(left: 15, right: 15, top: 15),
+                                itemCount: searchList.length,
+                                itemBuilder: (context, index) {
+                                  return Container(
+                                    child: BillingDetailsWidget(details: billingDetails[index]),
+                                  );
+                                });
+                          }
                         }
                       }
-                    }
-
-                    return ListView.builder(
-                        padding: EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 5),
-                        itemCount: billingDetails.length,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            child: BillingDetailsWidget(details: billingDetails[index]),
-                          );
-                        });
-                  }),
+                      return ListView.builder(
+                          itemCount: billingDetails.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              padding: const EdgeInsets.only(left: 14, right: 14),
+                              child: BillingDetailsWidget(details: billingDetails[index]),
+                            );
+                          });
+                    }),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -244,7 +247,7 @@ class _BillingDetailsWidgetState extends State<BillingDetailsWidget> {
                     )));
       },
       child: Container(
-          margin: EdgeInsets.only(bottom: 20),
+          margin: EdgeInsets.only(bottom: 10, top: 10),
           // height: billingDetails!.billingType == 1 ? 102 : 82,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -252,127 +255,81 @@ class _BillingDetailsWidgetState extends State<BillingDetailsWidget> {
               BoxShadow(
                 color: Colors.grey.shade300,
                 offset: Offset(0.0, 0.0), //(x,y)
-                blurRadius: 7.0,
+                blurRadius:7.0,
               ),
             ],
             borderRadius: BorderRadius.circular(10),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Stack(
             children: [
-              billingDetails!.billingType == 1
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Container(
+                padding: const EdgeInsets.only(left: 40, top: 10, bottom: 10, right: 10),
+                height: 80,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
-                          height: 20,
-                          width: 70,
-                          decoration: BoxDecoration(
-                            color: ColorPrimary,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              "direct_billing_key".tr(),
-                              style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
-                            ),
-                          ),
+                        Text(
+                          "${billingDetails!.mobile}",
+                          style: TextStyle(
+                              color: TextBlackLight,
+                              fontSize: 17,
+                              fontWeight: FontWeight.w600),
+                        ),
+                        SizedBox(
+                          height: 5,
                         ),
                         Text(
-                          " ${"cancelled_key".tr()}   ",
-                          style: TextStyle(
-                              color: RejectedTextColor,
-                              fontSize: 11,
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.bold),
+                          "${DateFormat("dd MMM yyyy").format(DateTime.parse(billingDetails!.dateTime))}",
+                          style: GoogleFonts.openSans(
+                              color: TextGrey,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600),
                         ),
                       ],
-                    )
-                  : SizedBox(),
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: Row(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(5),
-                      child: CachedNetworkImage(
-                          imageUrl: billingDetails!.vendorImage,
-                          progressIndicatorBuilder: (context, url, downloadProgress) => Center(
-                                child: CircularProgressIndicator(value: downloadProgress.progress),
-                              ),
-                          errorWidget: (context, url, error) => Image.asset(
-                                "assets/images/placeholder.webp",
-                                fit: BoxFit.cover,
-                                width: 55,
-                                height: 55,
-                              ),
-                          width: 55,
-                          height: 55,
-                          fit: BoxFit.cover),
                     ),
-                    SizedBox(
-                      width: 14,
+                    Text(
+                      "\u20B9$payAmt",
+                      style: GoogleFonts.openSans(
+                          color: colorStatus == "0" ? ApproveTextColor : RejectedTextColor,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
                     ),
-                    Flexible(
-                      child: Container(
-                        // height: 60,
-                        width: MediaQuery.of(context).size.width * 0.70,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    width: MediaQuery.of(context).size.width * 0.45,
-                                    child: Text(
-                                      "${billingDetails!.vendorName}",
-                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: colorStatus == "0" ? ApproveTextBgColor : RejectedTextBgColor,
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(top: 2, bottom: 2),
-                                      child: Text(
-                                        "  ${"pay_key".tr()}: \u20B9 $payAmt  ",
-                                        style: TextStyle(
-                                            color: colorStatus == "0" ? ApproveTextColor : RejectedTextColor,
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  )
-                                ]),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                              Text(
-                                "${billingDetails!.mobile}",
-                                style: TextStyle(color: Colors.black, fontSize: 13, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                "${DateFormat("dd MMM yyyy").format(DateTime.parse(billingDetails!.dateTime))}" +
-                                    "-${DateFormat.jm().format(DateTime.parse(billingDetails!.dateTime))}",
-                                style: TextStyle(color: ColorTextPrimary, fontSize: 13),
-                              ),
-                            ]),
-                          ],
-                        ),
-                      ),
-                    )
                   ],
                 ),
               ),
+              billingDetails!.billingType == 1 ?
+              Positioned(
+                top: 0,
+                left: 0,
+                child: Container(
+                  height: 80,
+                  width: 28,
+                  decoration: BoxDecoration(
+                    color: ColorPrimary,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(8),
+                        bottomLeft: Radius.circular(8)
+                    ),
+                  ),
+                  child: RotatedBox(
+                    quarterTurns: 3,
+                    child: Center(
+                      child: Text(
+                        "direct_billing_key".tr(),
+                        style: GoogleFonts.openSans(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 12),
+                      ),
+                    ),
+                  ),
+                ),
+              ): Container()
             ],
           )),
     );

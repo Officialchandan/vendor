@@ -33,12 +33,6 @@ class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
   List<OrderData> searchList = [];
   List<OrderData>? freecoinsdata;
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
   Future<void> filterApiCall(BuildContext context) async {
     Map<String, dynamic> input = HashMap<String, dynamic>();
     input["from_date"] = startDate.isEmpty ? "" : startDate.toString();
@@ -103,7 +97,7 @@ class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
         ),
         body: Column(children: [
           Padding(
-            padding: const EdgeInsets.only(left: 15.0, right: 15, top: 15),
+            padding: const EdgeInsets.only(top: 14, left: 14, right: 14),
             child: TextFormField(
               cursorColor: ColorPrimary,
               controller: _searchController,
@@ -140,6 +134,9 @@ class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
               },
             ),
           ),
+          SizedBox(
+            height: 10,
+          ),
           BlocBuilder<FreeCoinHistoryBloc, FreeCoinHistoryState>(builder: (context, state) {
             if (state is GetFreeCoinHistoryInitialState) {
               filterApiCall(context);
@@ -148,11 +145,10 @@ class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
               freecoinsdata = state.data;
               searchList = freecoinsdata!;
             }
-            if (freecoinsdata == null) {
+            if (state is GetFreeCoinHistoryLoadingState) {
               return Container(
                   height: MediaQuery.of(context).size.height * 0.70, child: Center(child: CircularProgressIndicator()));
             }
-
             if (state is GetFreeCoinHistoryFailureState) {
               return Container(
                 height: MediaQuery.of(context).size.height * 0.70,
@@ -207,10 +203,10 @@ class _ListWidgetState extends State<ListWidget> {
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.builder(
-          padding: EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 5),
+          padding: EdgeInsets.only(left: 14, right: 14,top: 10),
           itemCount: widget.searchList.length,
           itemBuilder: (context, index) {
-            return GestureDetector(
+            return InkWell(
               onTap: () {
                 log("=======${widget.searchList[index]}");
                 Navigator.push(
@@ -219,86 +215,98 @@ class _ListWidgetState extends State<ListWidget> {
                         child: FreeCoinDetail(freecoindetail: widget.searchList[index]),
                         type: PageTransitionType.fade));
               },
-              child: Stack(children: [
+              child:
                 Container(
-                  margin: EdgeInsets.only(top: 15),
-                  padding: EdgeInsets.all(0),
-                  height: 70,
+                  padding: const EdgeInsets.all(14),
+                  margin: const EdgeInsets.only(bottom:14),
+                  height: 80,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     boxShadow: [
                       BoxShadow(
                         color: Colors.grey.shade300,
                         offset: Offset(0.0, 0.0), //(x,y)
-                        blurRadius: 7.0,
+                        blurRadius:7.0,
                       ),
                     ],
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 12.0),
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "+91 ${widget.searchList[index].mobile}",
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                            ),
-                            Text(
-                              "${DateFormat("dd MMM yyyy").format(DateTime.parse(widget.searchList[index].dateTime.toString()))}" +
-                                  " ${DateFormat.jm().format(DateTime.parse(widget.searchList[index].dateTime.toString())).toLowerCase()}",
-                              style: TextStyle(fontSize: 13, color: ColorTextPrimary),
-                            ),
-                          ]),
-                    ),
-                    Container(
-                      width: 100,
+                    Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "+91 ${widget.searchList[index].mobile}",
+                            style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 18, color: TextBlackLight),
+                          ),
+                          SizedBox(
+                            height: 5
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                "${"earned_key".tr()}: ",
+                                style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 13, color: TextGrey),),
+                              Container(
+                                  child: Image.asset(
+                                    "assets/images/point.png",
+                                    width: 15,
+                                  )),
+                              Text(
+                                " ${widget.searchList[index].orderType == 0? double.parse(widget.searchList[index].totalearningcoins).toStringAsFixed(2):
+                                double.parse(widget.searchList[index].billingDetails[0].earningCoins).toStringAsFixed(2)}",
+                                style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 16, color: ColorPrimary),
+                              ),
+                            ],
+                          ),
+                        ]),
+                    Text(
+                      "${DateFormat("dd MMM yyyy").format(DateTime.parse(widget.searchList[index].dateTime.toString()))}",
+                      style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 13, color: TextGrey),
                     ),
                   ]),
                 ),
-                Positioned(
-                  right: 0,
-                  top: 15,
-                  child: Container(
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.only(left: 5),
-                    width: 100,
-                    height: 70,
-                    decoration: BoxDecoration(
-                        color: Colors.grey.shade200,
-                        borderRadius:
-                            BorderRadius.only(bottomRight: Radius.circular(10), topRight: Radius.circular(10))),
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            "earn_key".tr(),
-                            style: TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
-                          ),
-                          Row(children: [
-                            Image.asset(
-                              "assets/images/point.png",
-                              scale: 2.5,
-                            ),
-                            widget.searchList[index].orderType == 0
-                                ? Text(
-                                    " ${widget.searchList[index].totalearningcoins} ",
-                                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: ColorPrimary),
-                                  )
-                                : Text(
-                                    " ${widget.searchList[index].billingDetails[0].earningCoins} ",
-                                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: ColorPrimary),
-                                  ),
-                          ]),
-                        ]),
-                  ),
-                )
-              ]),
             );
           }),
     );
   }
 }
+// Positioned(
+// right: 0,
+// top: 15,
+// child: Container(
+// alignment: Alignment.center,
+// padding: EdgeInsets.only(left: 5),
+// width: 90,
+// height: 70,
+// decoration: BoxDecoration(
+// color: Colors.grey.shade200,
+// borderRadius:
+// BorderRadius.only(bottomRight: Radius.circular(10), topRight: Radius.circular(10))),
+// child: Column(
+// crossAxisAlignment: CrossAxisAlignment.start,
+// mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+// children: [
+// Text(
+// "earn_key".tr(),
+// style: TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
+// ),
+// Row(children: [
+// Image.asset(
+// "assets/images/point.png",
+// scale: 2.5,
+// ),
+// widget.searchList[index].orderType == 0
+// ? Text(
+// " ${widget.searchList[index].totalearningcoins} ",
+// style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: ColorPrimary),
+// )
+// : Text(
+// " ${widget.searchList[index].billingDetails[0].earningCoins} ",
+// style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: ColorPrimary),
+// ),
+// ]),
+// ]),
+// ),
+// )

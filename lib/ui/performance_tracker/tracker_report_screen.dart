@@ -121,11 +121,14 @@ class _TrackerReportDashboardState extends State<TrackerReportDashboard> {
                       width: 30,
                       fit: BoxFit.contain,
                     ),
-                    title: Text(
-                      "${options[index]["title"]}",
+                    title: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      child: Text(
+                        "${options[index]["title"]}",
 
-                      style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 17,color: TextBlackLight),
+                        style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 17,color: TextBlackLight),
 
+                      ),
                     ),
                     // subtitle: Text("${options[index]["subTitle"]}"),
                   ),
