@@ -14,6 +14,7 @@ import 'package:vendor/api/server_error.dart';
 import 'package:vendor/model/log_out.dart';
 import 'package:vendor/model/vendor_profile_response.dart';
 import 'package:vendor/ui/account_management/account_management_screen/account_management_bloc.dart';
+import 'package:vendor/ui/account_management/account_management_screen/privacy_policy_screen.dart';
 import 'package:vendor/ui/account_management/settings/settings.dart';
 import 'package:vendor/ui/home/home.dart';
 import 'package:vendor/ui/login/login_screen.dart';
@@ -40,10 +41,9 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
     "change_language_key".tr(),
     "about_us_key".tr(),
     "contact_us_key".tr(),
-    "privacy_policy_key".tr(),
+    // "privacy_policy_key".tr(),
     "terms_conditions_key".tr(),
-    "cancellation_refund_policy_key".tr(),
-
+    // "cancellation_refund_policy_key".tr(),
     // "delivery_setting_key".tr(),
     // "gift_scheme_key".tr(),
     // "video_tutorials_key".tr(),
@@ -58,9 +58,8 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
     "assets/images/account-ic14.png",
     "assets/images/account-ic15.png",
     "assets/images/account-ic13.png",
-    "assets/images/account-ic11.png",
+    // "assets/images/account-ic11.png",
     "assets/images/account-ic10.png",
-    "assets/images/account-ic12.png",
     "assets/images/account-ic8.png",
   ];
   var message;
@@ -198,8 +197,8 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Image.asset(imageList[index], width: 30),
-                        SizedBox(width: 17),
+                        Image.asset(imageList[index], width: 26),
+                        SizedBox(width: 15),
                         Expanded(
                           child: Text(textList[index],
                               style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w800)),
@@ -307,37 +306,38 @@ Future<void> onClick(BuildContext context, int currentIndex, var data) async {
       );
       break;
     case 3:
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => WebViewScreen(
-                  title: tr("privacy_policy_key"),
-                  url: "http://vendor.myprofitinc.com/privacypolicy",
-                )),
-      );
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //       builder: (context) => WebViewScreen(
+      //             title: tr("privacy_policy_key"),
+      //             url: "http://vendor.myprofitinc.com/privacypolicy",
+      //           )),
+      // );
+    Navigator.push(context, MaterialPageRoute(builder: (context)=> PrivacyPolicyScreen()));
       break;
-    case 4:
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => WebViewScreen(
-                  title: tr("terms_conditions_key"),
-                  url: "http://vendor.myprofitinc.com/terms",
-                )),
-      );
-      break;
-    case 5:
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => WebViewScreen(
-                  title: tr("cancellation_refund_policy_key"),
-                  url: "http://vendor.myprofitinc.com/refundpolicy",
-                )),
-      );
-      break;
+    // case 4:
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (context) => WebViewScreen(
+    //               title: tr("terms_conditions_key"),
+    //               url: "http://vendor.myprofitinc.com/terms",
+    //             )),
+    //   );
+    //   break;
+    // case 5:
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (context) => WebViewScreen(
+    //               title: tr("cancellation_refund_policy_key"),
+    //               url: "http://vendor.myprofitinc.com/refundpolicy",
+    //             )),
+    //   );
+    //   break;
 
-    case 6:
+    case 4:
       logoutDialog(context);
       break;
   }

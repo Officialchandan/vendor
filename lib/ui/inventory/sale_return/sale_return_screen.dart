@@ -130,11 +130,13 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                   }
 
                   if (state is SaleReturnQtyIncrementState) {
-                    purchasedList[state.index].returnQty += state.count;
+                    // purchasedList[state.index].returnQty += state.count;
                   }
 
                   if (state is SaleReturnQtyDecrementState) {
-                    purchasedList[state.index].returnQty -= state.count;
+                    // purchasedList[state.index].returnQty -= state.count;
+                    saleReturnBloc.add(SaleReturnCheckBoxEvent(
+                        isChecked: false, index: state.index));
                   }
 
                   if (state is SaleReturnCheckBoxState) {

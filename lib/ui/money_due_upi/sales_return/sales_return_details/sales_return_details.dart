@@ -105,7 +105,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
     coinBalanceRs = double.parse(details!.customerCoinBalance)/3;
 
     // collection Amount
-    if( redeemCoinsRs>= earnCoinsRs){
+    if(redeemCoinsRs>= earnCoinsRs){
       collectionAmt = 0;
     } else {
       collectionAmt =  earnCoinsRs - redeemCoinsRs;
@@ -131,7 +131,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
             icon: Icon(Icons.arrow_back_ios),
           ),
           title: Text(
-            "sales_return_details_key".tr(),
+            "return_ledger_details_key".tr(),
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
@@ -399,7 +399,8 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                           children: [
                             Text(
                               "coin_earned_by_customer_key".tr(),
-                              style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 14, color: TextGrey),
+                              style: GoogleFonts.openSans(fontWeight:
+                              FontWeight.w600, fontSize: 14, color: TextGrey),
                             ),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -481,7 +482,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                         Container(
                           margin: const EdgeInsets.only(top: 14),
                           height: 1,
-                          color: TextBlackLight,
+                          color: Colors.grey,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

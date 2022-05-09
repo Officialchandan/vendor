@@ -408,6 +408,7 @@
   "daily_ledger_key":"लेनदेन लेजर",
   "return_ledger_key": "रिटर्न लेजर",
   "daily_ledger_details_key":"लेनदेन लेजर विवरण",
+  "return_ledger_details_key": "Returns Ledger विवरण",
   "you_cant_return_more_then_quantity_key":"आप मात्रा से अधिक नहीं लौटा सकते",
   "enter_mobile_to_get_purchase_product": "*प्रोडक्ट वापसी के लिए मोबाइल नंबर दर्ज करें",
   "click_btn_to_add_new_variant": "नया संस्करण जोड़ने के लिए बटन पर क्लिक करें",
@@ -429,5 +430,7 @@
   "net_return_amt_key": "कुल वापसी राशि",
   "collection_amt_key": "ग्राहक से प्राप्त राशि",
   "amount_paid_key": "राशि का भुगतान",
-  "order_summary_key": "आर्डर विवरण"
+  "order_summary_key": "आर्डर विवरण",
+  "redemption_key": "उपयोग Coins",
+  "earned_key": "कमाई"
 }

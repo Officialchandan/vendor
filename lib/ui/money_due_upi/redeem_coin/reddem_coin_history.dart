@@ -85,7 +85,7 @@ class _ReddemCoinHistoryState extends State<ReddemCoinHistory> {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 15.0, right: 15, top: 15),
+                  padding: const EdgeInsets.only(left: 14, right: 14, top: 14),
                   child: TextFormField(
                     controller: searchController,
                     decoration: InputDecoration(
@@ -144,7 +144,6 @@ class _ReddemCoinHistoryState extends State<ReddemCoinHistory> {
                           } else {
                             searchList = list;
                             return ListView.builder(
-                              padding: EdgeInsets.only(left: 15, right: 15),
                               itemCount: searchList.length,
                               itemBuilder: (context, index) {
                                 return Container(
@@ -156,7 +155,7 @@ class _ReddemCoinHistoryState extends State<ReddemCoinHistory> {
                         }
                       }
                       return ListView.builder(
-                        padding: EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 5),
+                        padding: EdgeInsets.only(left: 14, right: 14, top: 5),
                         itemCount: redeemData.length,
                         itemBuilder: (context, index) {
                           return Container(
@@ -188,6 +187,7 @@ class _ReddemCoinHistoryState extends State<ReddemCoinHistory> {
 
 class DirectBillingList extends StatefulWidget {
   final CoinDetail detail;
+
   const DirectBillingList({Key? key, required this.detail}) : super(key: key);
 
   @override
@@ -201,14 +201,13 @@ class _DirectBillingListState extends State<DirectBillingList> {
       Container(
         margin: EdgeInsets.only(top: 15),
         padding: EdgeInsets.all(0),
-        height: 100,
         decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
             BoxShadow(
               color: Colors.grey.shade300,
               offset: Offset(0.0, 0.0), //(x,y)
-              blurRadius:7.0,
+              blurRadius: 7.0,
             ),
           ],
           borderRadius: BorderRadius.circular(10),
@@ -223,57 +222,47 @@ class _DirectBillingListState extends State<DirectBillingList> {
                           detail: widget.detail,
                         )));
           },
-          child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-            SizedBox(width: 10),
-            Container(
-              height: 70,
-              width: 70,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: Image.network("${widget.detail.image}"),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 12.0),
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            child: Padding(
+              padding: const EdgeInsets.all(14),
+              child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                  Text(
+                    "+91 ${widget.detail.mobile}",
+                    style: GoogleFonts.openSans(color: TextBlackLight, fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "${DateFormat("dd MMM yyyy").format(DateTime.parse(widget.detail.dateTime))}",
+                    style: GoogleFonts.openSans(color: TextGrey, fontSize: 13, fontWeight: FontWeight.w600),
+                  ),
+                ]),
+                SizedBox(
+                  height: 8,
+                ),
+                Container(
+                  child: Row(children: [
                     Text(
-                      "${widget.detail.productName}",
-                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+                      "  ${"redeemed_key".tr()}: ",
+                      style: GoogleFonts.openSans(color: TextGrey, fontSize: 13, fontWeight: FontWeight.w600),
                     ),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.62,
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Text("${widget.detail.mobile}"),
-                            Text(
-                              "${DateFormat("dd MMM yyyy").format(DateTime.parse(widget.detail.dateTime))}",
-                              style: TextStyle(fontSize: 13, color: ColorTextPrimary),
-                            ),
-                          ]),
+                    Image.asset(
+                      "assets/images/point.png",
+                      width: 15,
                     ),
-                    Container(
-                      height: 20,
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: Colors.grey.shade200),
-                      child: Row(children: [
-                        Text(
-                          "  ${"redeemed_key".tr()}: ",
-                          style: TextStyle(color: Colors.black, fontSize: 12, fontWeight: FontWeight.w400),
-                        ),
-                        Image.asset("assets/images/point.png"),
-                        Text(
-                          "${(double.parse(widget.detail.totalRedeemCoins)).toStringAsFixed(2)} (\u20B9 ${(double.parse(widget.detail.totalRedeemCoins) / 3).toStringAsFixed(2)})",
-                          style: TextStyle(color: ColorPrimary, fontSize: 12, fontWeight: FontWeight.w400),
-                        ),
-                      ]),
+                    Text(
+                      "${(double.parse(widget.detail.totalRedeemCoins)).toStringAsFixed(2)}",
+                      style: GoogleFonts.openSans(color: TextBlackLight, fontSize: 13, fontWeight: FontWeight.w600),
+                    ),
+                    Text(
+                      " (\u20B9${(double.parse(widget.detail.totalRedeemCoins) / 3).toStringAsFixed(2)})",
+                      style: GoogleFonts.openSans(color: ColorPrimary, fontSize: 16, fontWeight: FontWeight.w600),
                     ),
                   ]),
+                ),
+              ]),
             ),
-          ]),
+          ),
         ),
       ),
     ]);
