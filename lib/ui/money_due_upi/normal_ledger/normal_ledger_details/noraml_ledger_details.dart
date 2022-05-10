@@ -757,8 +757,8 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "sales_return_history_key".tr(),
-                          style: GoogleFonts.openSans(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black87),
+                          "sales_return_key".tr(),
+                          style: GoogleFonts.openSans(fontSize: 18, fontWeight: FontWeight.bold, color: TextBlackLight),
                         ),
                         InkWell(
                           onTap: () {
@@ -768,11 +768,180 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                             "view_details_key".tr(),
                             style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.bold, color: TextGrey),
                           ),
-                        )
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "collection_amt_key".tr(),
+                              style: GoogleFonts.openSans(
+                                  fontWeight: FontWeight.bold, fontSize: 16, color: TextBlackLight),
+                            ),
+                            Text(
+                              "(${"amount_paid_key".tr()} - ${"collection_amt_key".tr()})",
+                              style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 12, color: TextGrey),
+                            ),
+                          ],
+                        ),
+                        Text(
+                          "\u20B9${(finalamount).toStringAsFixed(2)}",
+                          style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 28, color: ColorPrimary),
+                        ),
+                      ],
+                    ),
+                    //  Transaction By
+
+                    Column(
+                      children: [
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "To: MyProfit",
+                                  style:
+                                      GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                                ),
+                                Text(
+                                  "From: George Walker",
+                                  style:
+                                      GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                     SizedBox(
                       height: 8,
+                    ),
+                    Container(
+                      height: 1,
+                      color: Colors.black,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      alignment: Alignment.topLeft,
+                      child: Text("final_ledger_key".tr(),
+                          style:
+                              GoogleFonts.openSans(fontSize: 18, fontWeight: FontWeight.bold, color: TextBlackLight)),
+                    ),
+
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "collection_amt_key".tr(),
+                          style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                        ),
+                        Text(
+                          "\u20B9 0",
+                          style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextBlackLight),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "commission_return_key".tr(),
+                          style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                        ),
+                        Text(
+                          "\u20B9 40",
+                          style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextBlackLight),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Container(
+                      height: 1,
+                      color: Colors.black,
+                      margin: EdgeInsets.only(bottom: 8),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "collection_amt_key".tr(),
+                              style: GoogleFonts.openSans(
+                                  fontWeight: FontWeight.bold, fontSize: 16, color: TextBlackLight),
+                            ),
+                            Text(
+                              "(${"amount_paid_key".tr()} - ${"collection_amt_key".tr()})",
+                              style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 12, color: TextGrey),
+                            ),
+                          ],
+                        ),
+                        Text(
+                          "\u20B9${(finalamount).toStringAsFixed(2)}",
+                          style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 28, color: ColorPrimary),
+                        ),
+                      ],
+                    ),
+                    //  Transaction By
+
+                    Column(
+                      children: [
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "To: MyProfit",
+                                  style:
+                                      GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                                ),
+                                Text(
+                                  "From: George Walker",
+                                  style:
+                                      GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+
+                    SizedBox(
+                      height: 20,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1305,55 +1474,173 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
       ),
       builder: (context) {
         return Container(
-          height: 185,
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(25),
-              topLeft: Radius.circular(25),
-            ),
-          ),
-          child: Column(
-            children: [
-              Container(
-                height: 135,
-                width: MediaQuery.of(context).size.width,
-                child: Text("ddd"),
+            height: MediaQuery.of(context).size.height * 0.50,
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(25),
+                topLeft: Radius.circular(25),
               ),
-              Container(
-                height: 50,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 45, right: 45),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+            ),
+            child: Padding(
+                padding: const EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 20),
+                child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          "Cancel",
-                          style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Colors.black),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          "Export",
-                          style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: ColorPrimary),
-                        ),
+                      Text(
+                        "return_summary_key".tr(),
+                        style: GoogleFonts.openSans(fontSize: 18, fontWeight: FontWeight.bold, color: TextBlackLight),
                       ),
                     ],
                   ),
-                ),
-              )
-            ],
-          ),
-        );
+                  SizedBox(
+                    height: 8,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "customer_amt_paid_key".tr(),
+                        style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.w600, color: TextGrey),
+                      ),
+                      Text(
+                        "\u20B9 ${orderTotal.toStringAsFixed(2)}",
+                        style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "total_commission_key".tr(),
+                        style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.w600, color: TextGrey),
+                      ),
+                      Text(
+                        "\u20B9 ${widget.order.myprofitRevenue}",
+                        style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "customer_amt_paid_key".tr(),
+                        style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.w600, color: TextGrey),
+                      ),
+                      // Row(children: [
+                      double.parse(widget.order.orderTotal) >= reddem
+                          ? Text(
+                              "\u20B9 ${(double.parse(widget.order.orderTotal) - reddem).toStringAsFixed(2)}",
+                              style: GoogleFonts.openSans(
+                                  fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
+                            )
+                          : Text(
+                              "\u20B9 0",
+                              style: GoogleFonts.openSans(
+                                  fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
+                            ),
+                    ],
+                  ),
+
+                  SizedBox(
+                    height: 8,
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      AutoSizeText(
+                        "customer_redemption_key".tr(),
+                        minFontSize: 14,
+                        maxFontSize: 16,
+                        style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.w600, color: TextGrey),
+                      ),
+                      Row(children: [
+                        AutoSizeText(
+                          "(",
+                          minFontSize: 14,
+                          maxFontSize: 16,
+                          style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
+                        ),
+                        Image.asset(
+                          "assets/images/point.png",
+                          scale: 4,
+                        ),
+                        AutoSizeText(
+                          "${(reddem * 3).toStringAsFixed(2)}) ",
+                          minFontSize: 14,
+                          maxFontSize: 16,
+                          style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
+                        ),
+                        AutoSizeText(
+                          "\u20B9 ${reddem.toStringAsFixed(2)}",
+                          minFontSize: 14,
+                          maxFontSize: 16,
+                          style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
+                        ),
+                      ])
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    height: 1,
+                    color: Colors.black,
+                  ),
+
+                  SizedBox(
+                    height: 8,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "net_settlement_amount_key".tr(),
+                            style:
+                                GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextBlackLight),
+                          ),
+                          Text(
+                            "(${"redemption_key".tr()} - ${"commission_key".tr()})",
+                            style: GoogleFonts.openSans(fontWeight: FontWeight.w500, fontSize: 12, color: TextGrey),
+                          ),
+                        ],
+                      ),
+                      Text(
+                        "\u20B9${(finalamount).toStringAsFixed(2)}",
+                        style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 28, color: ColorPrimary),
+                      ),
+                    ],
+                  ),
+                  //  Transaction By
+
+                  Container(
+                    height: 50,
+                    alignment: Alignment.bottomCenter,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text(
+                        "Close",
+                        style: GoogleFonts.openSans(fontSize: 18, fontWeight: FontWeight.bold, color: TextGrey),
+                      ),
+                    ),
+                  )
+                ])));
       },
     );
   }
