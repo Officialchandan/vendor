@@ -87,7 +87,10 @@ class _PerformanceTrackerByCategoryState extends State<PerformanceTrackerByCateg
                       width: 30,
                       fit: BoxFit.contain,
                     ),
-                    title: Text("${options[index]["title"]}",style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 17,color: TextBlackLight),
+                    title: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      child: Text("${options[index]["title"]}",style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 17,color: TextBlackLight),
+                      ),
                     ),
                     // subtitle: Text("${options[index]["subTitle"]}"),
                   ),

@@ -10,6 +10,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:vendor/main.dart';
+import 'package:vendor/model/get_categories_response.dart';
 import 'package:vendor/model/get_sub_category_response.dart';
 import 'package:vendor/model/product_variant.dart';
 import 'package:vendor/model/product_variant_response.dart';
@@ -60,6 +62,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
   ProductVariantModel variantModel = ProductVariantModel();
   List<VariantImage> variantImage = [];
   String productId = "";
+  List<CategoryModel> categories = [];
 
   @override
   void dispose() {
@@ -69,6 +72,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
   @override
   void initState() {
+    getCategory();
     super.initState();
   }
 
@@ -93,7 +97,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
           if (state is UpdateSingleProductVariantState) {
             productVariant[state.index] = state.productVariant;
           }
-
           if (state is DeleteProductVariantState) {
             productVariant.remove(state.productVariant);
           }
@@ -333,7 +336,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 // const SizedBox(
                 //   height: 10,
                 // ),
-
                 TextFormField(
                   maxLength: 80,
                   controller: edtProductName,
@@ -349,6 +351,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 TextFormField(
                   readOnly: true,
                   onTap: () {
+                 if(categories.length !=1){
                     showModalBottomSheet(
                         context: context,
                         shape: RoundedRectangleBorder(
@@ -358,12 +361,13 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         )),
                         isDismissible: false,
                         builder: (context) {
-                          return CategoryBottomSheet(onSelect: (category) {
-                            categoryId = category.id;
-                            edtCategory.text = category.categoryName!;
-                          });
+                           return CategoryBottomSheet(onSelect: (category) {
+                             categoryId = category.id;
+                             edtCategory.text = category.categoryName!;
+                           });
                         }).then((value) {});
-                  },
+                  }
+                 },
                   controller: edtCategory,
                   decoration: InputDecoration(
                       labelText: "category_key".tr() + "*",
@@ -1022,6 +1026,26 @@ class _AddProductScreenState extends State<AddProductScreen> {
       variantImage.add(VariantImage(images: element.productImages));
     });
     addProductBloc.add(AddProductApiEvent(input: input));
+  }
+
+  Future<List<CategoryModel>> getCategory() async {
+    if (await Network.isConnected()) {
+      GetCategoriesResponse response = await apiProvider.getAllCategories();
+
+      if (response.success) {
+        categories = response.data!;
+        if(categories.length ==1 ){
+          categoryId = categories[0].id;
+          edtCategory.text = categories[0].categoryName!;
+        }
+        return categories;
+      } else {
+        return [];
+      }
+    } else {
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
+      return [];
+    }
   }
 }
 class VariantImage {
