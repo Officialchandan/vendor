@@ -1,6 +1,5 @@
 import 'dart:collection';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -94,27 +93,28 @@ class _SalesReturnHistoryState extends State<SalesReturnHistory> {
                       ),
                       filled: true,
 
-                    // fillColor: Colors.black,
-                    hintText: "search_here_key".tr(),
-                    hintStyle: GoogleFonts.openSans(fontWeight: FontWeight.w600, color: Colors.black),
-                    contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(color: textFieldBorderColor, width: 1.0),
-                      borderRadius: BorderRadius.circular(5.0),
+                      // fillColor: Colors.black,
+                      hintText: "search_here_key".tr(),
+                      hintStyle: GoogleFonts.openSans(fontWeight: FontWeight.w600, color: Colors.black),
+                      contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: textFieldBorderColor, width: 1.0),
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: textFieldBorderColor, width: 1.0),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: textFieldBorderColor, width: 1.0),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
                     ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: textFieldBorderColor, width: 1.0),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: textFieldBorderColor, width: 1.0),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
+                    onChanged: (value) {
+                      saleReturnBloc.add(GetSalesReturnDataSearchEvent(keyWord: value));
+                    },
                   ),
-                  onChanged: (value) {
-                    saleReturnBloc.add(GetSalesReturnDataSearchEvent(keyWord: value));
-                  },
                 ),
                 ),
                 SizedBox(
@@ -256,7 +256,7 @@ class _BillingDetailsWidgetState extends State<BillingDetailsWidget> {
               BoxShadow(
                 color: Colors.grey.shade300,
                 offset: Offset(0.0, 0.0), //(x,y)
-                blurRadius:7.0,
+                blurRadius: 7.0,
               ),
             ],
             borderRadius: BorderRadius.circular(10),
@@ -276,20 +276,14 @@ class _BillingDetailsWidgetState extends State<BillingDetailsWidget> {
                       children: [
                         Text(
                           "${billingDetails!.mobile}",
-                          style: TextStyle(
-                              color: TextBlackLight,
-                              fontSize: 17,
-                              fontWeight: FontWeight.w600),
+                          style: TextStyle(color: TextBlackLight, fontSize: 17, fontWeight: FontWeight.w600),
                         ),
                         SizedBox(
                           height: 5,
                         ),
                         Text(
                           "${DateFormat("dd MMM yyyy").format(DateTime.parse(billingDetails!.dateTime))}",
-                          style: GoogleFonts.openSans(
-                              color: TextGrey,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600),
+                          style: GoogleFonts.openSans(color: TextGrey, fontSize: 13, fontWeight: FontWeight.w600),
                         ),
                       ],
                     ),
@@ -303,34 +297,30 @@ class _BillingDetailsWidgetState extends State<BillingDetailsWidget> {
                   ],
                 ),
               ),
-              billingDetails!.billingType == 1 ?
-              Positioned(
-                top: 0,
-                left: 0,
-                child: Container(
-                  height: 80,
-                  width: 28,
-                  decoration: BoxDecoration(
-                    color: ColorPrimary,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(8),
-                        bottomLeft: Radius.circular(8)
-                    ),
-                  ),
-                  child: RotatedBox(
-                    quarterTurns: 3,
-                    child: Center(
-                      child: Text(
-                        "direct_billing_key".tr(),
-                        style: GoogleFonts.openSans(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 12),
+              billingDetails!.billingType == 1
+                  ? Positioned(
+                      top: 0,
+                      left: 0,
+                      child: Container(
+                        height: 80,
+                        width: 28,
+                        decoration: BoxDecoration(
+                          color: ColorPrimary,
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(8), bottomLeft: Radius.circular(8)),
+                        ),
+                        child: RotatedBox(
+                          quarterTurns: 3,
+                          child: Center(
+                            child: Text(
+                              "direct_billing_key".tr(),
+                              style:
+                                  GoogleFonts.openSans(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 12),
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
-              ): Container()
+                    )
+                  : Container()
             ],
           )),
     );
