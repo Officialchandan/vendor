@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
+import 'package:vendor/ui_without_inventory/home/home.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/report/report_type_screen.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/without_inventory_performance_tracker_category/performance_tracker.dart';
 import 'package:vendor/utility/color.dart';
@@ -17,7 +18,7 @@ class PerformanceTrackerWithoutInventory extends StatefulWidget {
 class _PerformanceTrackerWithoutInventoryState extends State<PerformanceTrackerWithoutInventory> {
   final options = [
     {
-      "title": "performance_tracker_key".tr(),
+      "title": "performance_trackers_key".tr(),
       "subTitle": "click_here_to_add_product_key".tr(),
       "image": "assets/images/tr-ic1.png",
       "id": 1
@@ -38,10 +39,23 @@ class _PerformanceTrackerWithoutInventoryState extends State<PerformanceTrackerW
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        title: "trackers_reports_key".tr(),
+      appBar: AppBar(
+        title: Text("trackers_reports_key".tr()),
+        automaticallyImplyLeading: false,
+        actions:[
+          IconButton(
+            icon: Icon(Icons.home),
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  PageTransition(child: HomeScreenWithoutInventory(), type: PageTransitionType.fade),
+                  ModalRoute.withName("/"));
+            },
+          ),
+        ],
       ),
       body: ListView.builder(
+        padding: const EdgeInsets.only(top: 10),
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -90,8 +104,11 @@ class _PerformanceTrackerWithoutInventoryState extends State<PerformanceTrackerW
                       width: 30,
                       fit: BoxFit.contain,
                     ),
-                    title: Text("${options[index]["title"]}",
-                      style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 17,color: TextBlackLight),),
+                    title: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      child: Text("${options[index]["title"]}",
+                        style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 17,color: TextBlackLight),),
+                    ),
                     // subtitle: Text("${options[index]["subTitle"]}"),
                   ),
                 ),

@@ -497,14 +497,24 @@ class _BillingProductsState extends State<BillingProducts> {
                         child: BlocBuilder<BillingProductsBloc, BillingProductsState>(
                           builder: (context, state) {
                             return InkWell(
-                              onTap: () {
-                                if (onTileTap == false) {
-                                  billingProductsBloc
-                                      .add(CheckedBillingProductsEvent(isChecked: true, productList: productList));
-                                }
-                                if (onTileTap == true) {
-                                  billingProductsBloc
-                                      .add(CheckedBillingProductsEvent(isChecked: false, productList: productList));
+                              onTap: () async {
+                                if (double.parse(widget.coin.toString()) >= 3) {
+                                  if (await Network.isConnected()) {
+                                    if (onTileTap == false) {
+                                      billingProductsBloc
+                                          .add(CheckedBillingProductsEvent(isChecked: true, productList: productList));
+                                    }
+                                    if (onTileTap == true) {
+                                      billingProductsBloc
+                                          .add(CheckedBillingProductsEvent(isChecked: false, productList: productList));
+                                    }
+                                  } else {
+                                    Utility.showToast(
+                                      msg: "please_check_your_internet_connection_key".tr(),
+                                    );
+                                  }
+                                } else {
+                                  Utility.showToast(msg: "You_dont_have_enough_coins_key".tr());
                                 }
                               },
                               child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -587,15 +597,21 @@ class _BillingProductsState extends State<BillingProducts> {
                                 ),
                                 Row(
                                   children: [
+                                    Text("(",
+                                        style:
+                                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
                                     Container(
                                         child: Image.asset(
                                       "assets/images/point.png",
                                       width: 16,
                                       height: 16,
                                     )),
-                                    Text(" ${redeemCoins.toStringAsFixed(2)}",
+                                    Text("${redeemCoins.toStringAsFixed(2)})",
                                         style:
                                             TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
+                                    Text(" \u20B9${(redeemCoins/3).toStringAsFixed(2)}",
+                                        style:
+                                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
                                   ],
                                 ),
                               ]),
@@ -861,48 +877,50 @@ class _BillingProductsState extends State<BillingProducts> {
             contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 18),
             actionsPadding: const EdgeInsets.only(left: 12, right: 12, top: 0, bottom: 18),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            title: status == 1? RichText(
-              text: TextSpan(
-                text: "${"otp_verification_key".tr()}\n",
-                style: GoogleFonts.openSans(
-                  fontSize: 25.0,
-                  height: 2.0,
-                  color: TextBlackLight,
-                  fontWeight: FontWeight.w600,
-                ),
-                children: [
-                  TextSpan(
-                    text: "${"please_verify_your_otp_on_key".tr()}\n",
-                    style: GoogleFonts.openSans(
-                      fontSize: 14.0,
-                      height: 1.5,
-                      color: ColorTextPrimary,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  TextSpan(
-                    text: "+91 $mobile",
-                    style: GoogleFonts.openSans(
-                      fontSize: 14.0,
-                      height: 1.5,
-                      color: ColorTextPrimary,
-                      fontWeight: FontWeight.w400,
+            title: status == 1
+                ? RichText(
+                    text: TextSpan(
+                      text: "${"otp_verification_key".tr()}\n",
+                      style: GoogleFonts.openSans(
+                        fontSize: 25.0,
+                        height: 2.0,
+                        color: TextBlackLight,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: "${"please_verify_your_otp_on_key".tr()}\n",
+                          style: GoogleFonts.openSans(
+                            fontSize: 14.0,
+                            height: 1.5,
+                            color: ColorTextPrimary,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        TextSpan(
+                          text: "+91 $mobile",
+                          style: GoogleFonts.openSans(
+                            fontSize: 14.0,
+                            height: 1.5,
+                            color: ColorTextPrimary,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        )
+                      ],
                     ),
                   )
-                ],
-              ),
-            )
-                :Container(
-              height: 50,
-                  child: Text("${"enter_amount_key".tr()}\n",
-                  style: GoogleFonts.openSans(
-                    fontSize: 25.0,
-                    height: 2.0,
-                    color: TextBlackLight,
-                    fontWeight: FontWeight.w600,
+                : Container(
+                    height: 50,
+                    child: Text(
+                      "${"enter_amount_key".tr()}\n",
+                      style: GoogleFonts.openSans(
+                        fontSize: 25.0,
+                        height: 2.0,
+                        color: TextBlackLight,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ),
-            ),
-                ),
             content: TextFormField(
               controller: _textFieldController,
               cursorColor: ColorPrimary,
@@ -911,7 +929,7 @@ class _BillingProductsState extends State<BillingProducts> {
               decoration: InputDecoration(
                 filled: true,
                 // fillColor: Colors.black,
-                hintText: status == 1? "enter_otp_key".tr() : "enter_amount_key".tr(),
+                hintText: status == 1 ? "enter_otp_key".tr() : "enter_amount_key".tr(),
                 hintStyle: GoogleFonts.openSans(
                   fontWeight: FontWeight.w600,
                 ),
@@ -962,7 +980,7 @@ class _BillingProductsState extends State<BillingProducts> {
                     }
                   },
                   child: new Text(
-                 status ==1? "submit_button_key".tr(): "done_key".tr(),
+                    status == 1 ? "submit_button_key".tr() : "done_key".tr(),
                     style: GoogleFonts.openSans(
                         fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
                   ),
@@ -1122,101 +1140,101 @@ class _BillingProductsState extends State<BillingProducts> {
     });
   }
 
-  // void calculateAmounts1(List<ProductModel> productList) {
-  //   totalPay = 0;
-  //   redeemCoins = 0;
-  //   earnCoins = 0;
-  //
-  //   double availableCoins = widget.coin;
-  //   double customerCoins = widget.coin;
-  //   double redeemedCoin = 0;
-  //   double partialcoin = 0;
-  //   double partialamount = 0;
-  //
-  //   productList.forEach((product) {
-  //     log("=====>sellingPrice${double.parse(product.sellingPrice)}");
-  //     log("=====>product.count${product.count}");
-  //     log("---totalPay$totalPay");
-  //     log("=====>redeemCoins==>${double.parse(product.redeemCoins)}");
-  //     //redeemedCoin += double.parse(product.redeemCoins);
-  //     // log("=====>redeemCoinss==>$redeemedCoin");
-  //     //log("=====>product.count${product.count}");
-  //     product.redeemCoins = (double.parse(product.sellingPrice) * 3).toString();
-  //
-  //     //log("=====>product.redeemCoins${product.redeemCoins}");
-  //     if (product.billingcheck) {
-  //       if (availableCoins >= (double.parse(product.redeemCoins) * double.parse(product.count.toString()))) {
-  //         redeemCoins += double.parse(product.redeemCoins) * double.parse(product.count.toString());
-  //         redeemedCoin += double.parse(product.redeemCoins) * double.parse(product.count.toString());
-  //         availableCoins = availableCoins - double.parse(product.redeemCoins) * double.parse(product.count.toString());
-  //         log("sellingPrice=====>${double.parse(product.sellingPrice) * product.count}");
-  //         product.amounttopay = 0;
-  //         log("customerCoins=====>$customerCoins");
-  //         log("redeemCoins=====>$redeemCoins");
-  //         log("availableCoins====>$availableCoins");
-  //       } else if (availableCoins == 0) {
-  //         product.amounttopay = double.parse(product.sellingPrice) * product.count;
-  //         totalPay += double.parse(product.sellingPrice) * product.count;
-  //         log("yha mai aya hu== $totalPay");
-  //       } else {
-  //         if (availableCoins < (double.parse(product.redeemCoins) * double.parse(product.count.toString()))) {
-  //           log("yha mai aya hu totalPay===>${double.parse(product.redeemCoins) * double.parse(product.count.toString())}");
-  //           double remainingCoin =
-  //               (double.parse(product.redeemCoins) * double.parse(product.count.toString())) - availableCoins;
-  //           log("availableCoins1======>$availableCoins");
-  //           log("customerCoins1=====>$customerCoins");
-  //           log("amount1 ==> $remainingCoin");
-  //           log("customerCoins1=====>$customerCoins");
-  //           double coinToRupee = remainingCoin / 3;
-  //
-  //           log("amount1== ==> $remainingCoin");
-  //           log("coinToRupee== ==> $coinToRupee");
-  //
-  //           product.coinpaid = availableCoins;
-  //           product.amounttopay = coinToRupee;
-  //
-  //           log("product.coinpaid== ==> $availableCoins");
-  //           log("product.amounttopay== ==> $coinToRupee");
-  //           partialcoin = double.parse(product.redeemCoins) * double.parse(product.count.toString());
-  //           log("yha mai aya hu totalPay====>${product.redeemCoins}");
-  //           redeemedCoin += availableCoins;
-  //           redeemCoins += availableCoins;
-  //           availableCoins = 0;
-  //           product.redeemCoins = partialcoin.toString();
-  //           log("yha mai aya hu totalPay====>");
-  //           totalPay = coinToRupee;
-  //         } else {
-  //           double remainingCoin =
-  //               (double.parse(product.redeemCoins) * double.parse(product.count.toString())) - availableCoins;
-  //           log("availableCoins1======>$availableCoins");
-  //           log("customerCoins1=====>$customerCoins");
-  //           log("amount1 ==> $remainingCoin");
-  //           log("customerCoins1=====>$customerCoins");
-  //           double coinToRupee = remainingCoin / 3;
-  //           log("amount1== ==> $remainingCoin");
-  //           totalPay += coinToRupee;
-  //           redeemedCoin += availableCoins;
-  //           redeemCoins += availableCoins;
-  //           availableCoins = 0;
-  //         }
-  //       }
-  //     } else {
-  //       product.coinpaid = 0;
-  //       product.redeemCoins = product.coinpaid.toString();
-  //       product.amounttopay = double.parse(product.sellingPrice) * product.count;
-  //       totalPay += double.parse(product.sellingPrice) * product.count;
-  //     }
-  //
-  //     log("=====>product.earningCoins${double.parse(product.earningCoins)}");
-  //     log("=====>product.count2${product.count}");
-  //     earnCoins += double.parse(product.earningCoins);
-  //     //
-  //     // earnCoins = earnCoins - 0.75;
-  //     log("---earnCoins==>$earnCoins");
-  //     log("---totalpay --> $totalPay");
-  //     log("---redeemCoins --> $redeemCoins");
-  //   });
-  // }
+// void calculateAmounts1(List<ProductModel> productList) {
+//   totalPay = 0;
+//   redeemCoins = 0;
+//   earnCoins = 0;
+//
+//   double availableCoins = widget.coin;
+//   double customerCoins = widget.coin;
+//   double redeemedCoin = 0;
+//   double partialcoin = 0;
+//   double partialamount = 0;
+//
+//   productList.forEach((product) {
+//     log("=====>sellingPrice${double.parse(product.sellingPrice)}");
+//     log("=====>product.count${product.count}");
+//     log("---totalPay$totalPay");
+//     log("=====>redeemCoins==>${double.parse(product.redeemCoins)}");
+//     //redeemedCoin += double.parse(product.redeemCoins);
+//     // log("=====>redeemCoinss==>$redeemedCoin");
+//     //log("=====>product.count${product.count}");
+//     product.redeemCoins = (double.parse(product.sellingPrice) * 3).toString();
+//
+//     //log("=====>product.redeemCoins${product.redeemCoins}");
+//     if (product.billingcheck) {
+//       if (availableCoins >= (double.parse(product.redeemCoins) * double.parse(product.count.toString()))) {
+//         redeemCoins += double.parse(product.redeemCoins) * double.parse(product.count.toString());
+//         redeemedCoin += double.parse(product.redeemCoins) * double.parse(product.count.toString());
+//         availableCoins = availableCoins - double.parse(product.redeemCoins) * double.parse(product.count.toString());
+//         log("sellingPrice=====>${double.parse(product.sellingPrice) * product.count}");
+//         product.amounttopay = 0;
+//         log("customerCoins=====>$customerCoins");
+//         log("redeemCoins=====>$redeemCoins");
+//         log("availableCoins====>$availableCoins");
+//       } else if (availableCoins == 0) {
+//         product.amounttopay = double.parse(product.sellingPrice) * product.count;
+//         totalPay += double.parse(product.sellingPrice) * product.count;
+//         log("yha mai aya hu== $totalPay");
+//       } else {
+//         if (availableCoins < (double.parse(product.redeemCoins) * double.parse(product.count.toString()))) {
+//           log("yha mai aya hu totalPay===>${double.parse(product.redeemCoins) * double.parse(product.count.toString())}");
+//           double remainingCoin =
+//               (double.parse(product.redeemCoins) * double.parse(product.count.toString())) - availableCoins;
+//           log("availableCoins1======>$availableCoins");
+//           log("customerCoins1=====>$customerCoins");
+//           log("amount1 ==> $remainingCoin");
+//           log("customerCoins1=====>$customerCoins");
+//           double coinToRupee = remainingCoin / 3;
+//
+//           log("amount1== ==> $remainingCoin");
+//           log("coinToRupee== ==> $coinToRupee");
+//
+//           product.coinpaid = availableCoins;
+//           product.amounttopay = coinToRupee;
+//
+//           log("product.coinpaid== ==> $availableCoins");
+//           log("product.amounttopay== ==> $coinToRupee");
+//           partialcoin = double.parse(product.redeemCoins) * double.parse(product.count.toString());
+//           log("yha mai aya hu totalPay====>${product.redeemCoins}");
+//           redeemedCoin += availableCoins;
+//           redeemCoins += availableCoins;
+//           availableCoins = 0;
+//           product.redeemCoins = partialcoin.toString();
+//           log("yha mai aya hu totalPay====>");
+//           totalPay = coinToRupee;
+//         } else {
+//           double remainingCoin =
+//               (double.parse(product.redeemCoins) * double.parse(product.count.toString())) - availableCoins;
+//           log("availableCoins1======>$availableCoins");
+//           log("customerCoins1=====>$customerCoins");
+//           log("amount1 ==> $remainingCoin");
+//           log("customerCoins1=====>$customerCoins");
+//           double coinToRupee = remainingCoin / 3;
+//           log("amount1== ==> $remainingCoin");
+//           totalPay += coinToRupee;
+//           redeemedCoin += availableCoins;
+//           redeemCoins += availableCoins;
+//           availableCoins = 0;
+//         }
+//       }
+//     } else {
+//       product.coinpaid = 0;
+//       product.redeemCoins = product.coinpaid.toString();
+//       product.amounttopay = double.parse(product.sellingPrice) * product.count;
+//       totalPay += double.parse(product.sellingPrice) * product.count;
+//     }
+//
+//     log("=====>product.earningCoins${double.parse(product.earningCoins)}");
+//     log("=====>product.count2${product.count}");
+//     earnCoins += double.parse(product.earningCoins);
+//     //
+//     // earnCoins = earnCoins - 0.75;
+//     log("---earnCoins==>$earnCoins");
+//     log("---totalpay --> $totalPay");
+//     log("---redeemCoins --> $redeemCoins");
+//   });
+// }
 }
 
 class Dialog extends StatefulWidget {

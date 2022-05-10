@@ -77,6 +77,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
         ],
       ),
       body: ListView.builder(
+        padding: const EdgeInsets.only(top: 10),
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),

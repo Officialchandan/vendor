@@ -69,6 +69,10 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
         initialIndex: 0,
         child: Scaffold(
           appBar: AppBar(
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios),
+              onPressed: (){Navigator.pop(context);},
+            ),
             title: Text(
               "master_ledger_key".tr(),
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
@@ -125,10 +129,7 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                       color: Colors.black,
                     ),
                     filled: true,
-
-                    // fillColor: Colors.black,
                     hintText: "search_here_key".tr(),
-
                     hintStyle: GoogleFonts.openSans(fontWeight: FontWeight.w600, color: Colors.black),
                     contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
                     fillColor: Colors.white,
@@ -167,14 +168,20 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                 }
 
                 if (state is GetFreeCoinHistoryFailureState) {
-                  return Center(
-                    child: Image.asset("assets/images/no_data.gif"),
+                  return Container(
+                    height: MediaQuery.of(context).size.height * 0.70,
+                    child: Center(
+                      child: Image.asset("assets/images/no_data.gif"),
+                    ),
                   );
                 }
 
                 if (state is GetNormalLedgerHistoryFailureState) {
-                  return Center(
-                    child: Image.asset("assets/images/no_data.gif"),
+                  return Container(
+                    height: MediaQuery.of(context).size.height * 0.70,
+                    child: Center(
+                      child: Image.asset("assets/images/no_data.gif"),
+                    ),
                   );
                 }
                 if (state is GetNormalLedgerUserSearchState) {
@@ -249,11 +256,11 @@ class _ListWidgetState extends State<ListWidget> {
                           children: [
                             Text(
                               "+91 ${widget.searchList[index].mobile}",
-                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
+                              style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
                             ),
                             Text(
-                              "${DateFormat("yyyy MM dd ").format(widget.searchList[index].dateTime)}(${DateFormat.jm().format(widget.searchList[index].dateTime)})",
-                              style: TextStyle(fontSize: 13, color: TextGrey, fontWeight: FontWeight.bold),
+                              "${DateFormat("dd MMM yyyy").format(widget.searchList[index].dateTime)}",
+                              style: GoogleFonts.openSans(fontSize: 13, color: TextGrey, fontWeight: FontWeight.w600),
                             ),
                           ]),
                       Text(

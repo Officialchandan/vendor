@@ -14,6 +14,7 @@ import 'package:vendor/main.dart';
 import 'package:vendor/model/common_response.dart';
 import 'package:vendor/model/get_due_amount_response.dart';
 import 'package:vendor/model/get_vendor_free_coin.dart';
+import 'package:vendor/ui_without_inventory/home/home.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/upi/bloc/due_amount_bloc.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/upi/bloc/due_amount_event.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/upi/bloc/due_amount_state.dart';
@@ -40,6 +41,7 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
   String result = "";
   String mid = "", orderId = "", token = "", callbackurl = "";
   int condition = 1;
+
   @override
   void initState() {
     super.initState();
@@ -133,6 +135,15 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
             ),
             elevation: 0,
             backgroundColor: condition == 0 ? ApproveTextColor : ColorPrimary,
+            automaticallyImplyLeading: false,
+            actions: [
+              IconButton(onPressed: (){
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    PageTransition(child: HomeScreenWithoutInventory(), type: PageTransitionType.fade),
+                    ModalRoute.withName("/"));
+              }, icon: Icon(Icons.home))
+            ],
           ),
           body: SingleChildScrollView(
             child: Container(

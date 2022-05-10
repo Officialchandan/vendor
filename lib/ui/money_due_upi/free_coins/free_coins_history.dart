@@ -238,11 +238,9 @@ class _ListWidgetState extends State<ListWidget> {
                         children: [
                           Text(
                             "+91 ${widget.searchList[index].mobile}",
-                            style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 18, color: TextBlackLight),
+                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: TextBlackLight),
                           ),
-                          SizedBox(
-                            height: 5
-                          ),
+
                           Row(
                             children: [
                               Text(

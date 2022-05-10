@@ -33,6 +33,10 @@ class _UpiTransferHistoryWithoutInventoryState extends State<UpiTransferHistoryW
       create: (context) => upiTansferHistoryBloc,
       child: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: (){Navigator.pop(context);},
+          ),
           title: Text(
             "upi_transfer_key".tr(),
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
