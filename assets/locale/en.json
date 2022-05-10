@@ -384,6 +384,7 @@
   "amt_paid_to_vendor_key":"Amount Paid To Vendor",
   "redeem_history_key":"Redeem History",
   "mobile_key":"Mobile",
+
   "redeem_coin_details_key":"Redeem Coins Details",
   "pay_amt_key":"Pay Amount",
   "normal_ledger_details_key":"Normal Ledger Details",
@@ -430,5 +431,6 @@
   "amount_paid_key": "Amount Paid",
   "redeem_popup_button_key": "Done",
   "order_summary_key": "Order Summary",
-
+"final_ledger_key": "Final Ledger",
+  "commission_return_key": "Commission Return"
 }

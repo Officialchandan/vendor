@@ -436,5 +436,7 @@
   "amount_paid_key": "राशि का भुगतान",
   "order_summary_key": "आर्डर विवरण",
   "redemption_key": "उपयोग Coins",
-  "earned_key": "कमाई"
+  "earned_key": "कमाई",
+  "final_ledger_key": "फाइनल लेजर",
+  "commission_return_key": "कमीशन रिटर्न"
 }
