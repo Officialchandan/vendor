@@ -20,7 +20,7 @@ class TrackerReportDashboard extends StatefulWidget {
 class _TrackerReportDashboardState extends State<TrackerReportDashboard> {
   final options = [
     {
-      "title": "performance_tracker_key".tr(),
+      "title": "performance_trackers_key".tr(),
       "subTitle": "click_here_to_add_product_key".tr(),
       "image": "assets/images/tr-ic1.png",
       "id": 1

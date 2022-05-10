@@ -116,6 +116,7 @@ class _SalesReturnHistoryState extends State<SalesReturnHistory> {
                     },
                   ),
                 ),
+                ),
                 SizedBox(
                   height: 10,
                 ),
