@@ -24,6 +24,7 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
   double totalRedeemCoins = 0;
   double totalEarnCoin = 0;
   double totalPayAmt = 0;
+
   @override
   void initState() {
     super.initState();
@@ -63,8 +64,8 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                           children: [
                             Text(
                               "${details!.firstName}",
-                              style: GoogleFonts.openSans(fontSize: 18, fontWeight: FontWeight.bold,
-                                  color: TextBlackLight),
+                              style: GoogleFonts.openSans(
+                                  fontSize: 18, fontWeight: FontWeight.bold, color: TextBlackLight),
                             ),
                           ],
                         ),
@@ -76,15 +77,12 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                           children: [
                             Text(
                               "${details!.mobile}",
-                              style: GoogleFonts.openSans(fontSize: 13, fontWeight: FontWeight.w600,
-                                  color: TextGrey),
+                              style: GoogleFonts.openSans(fontSize: 13, fontWeight: FontWeight.w600, color: TextGrey),
                             ),
                             Text(
                               "${DateFormat("dd MMM yyyy").format(DateTime.parse(details!.dateTime))}" +
-                                  " ${DateFormat.jm().format(DateTime.parse(details!.dateTime))
-                                  }",
-                              style: GoogleFonts.openSans(fontSize: 13, fontWeight: FontWeight.w600,
-                                  color: TextGrey),
+                                  " ${DateFormat.jm().format(DateTime.parse(details!.dateTime))}",
+                              style: GoogleFonts.openSans(fontSize: 13, fontWeight: FontWeight.w600, color: TextGrey),
                             ),
                           ],
                         ),
@@ -101,7 +99,8 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                           alignment: Alignment.centerLeft,
                           child: Text(
                             "order_summary_key".tr(),
-                            style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
+                            style:
+                                GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
                           ),
                         ),
                         SizedBox(
@@ -187,10 +186,18 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                                                         Row(
                                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                           children: [
+                                                            product[index].qty.isNotEmpty?
                                                             Text(
                                                               "${product[index].qty} x \u20B9 ${product[index].price}",
                                                               style: TextStyle(
                                                                   fontSize: 13,
+                                                                  fontWeight: FontWeight.bold,
+                                                                  color: Colors.grey),
+                                                            ): Text(""),
+                                                            Text(
+                                                              "${"commission_key".tr()}: ${product[index].commission}",
+                                                              style: TextStyle(
+                                                                  fontSize: 14,
                                                                   fontWeight: FontWeight.bold,
                                                                   color: Colors.grey),
                                                             ),
@@ -218,8 +225,8 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                           alignment: Alignment.centerLeft,
                           child: Text(
                             "billing_key".tr(),
-                            style: GoogleFonts.openSans(fontSize: 18, fontWeight: FontWeight.bold,
-                                color: TextBlackLight),
+                            style:
+                                GoogleFonts.openSans(fontSize: 18, fontWeight: FontWeight.bold, color: TextBlackLight),
                           ),
                         ),
                         SizedBox(
@@ -230,12 +237,12 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                           children: [
                             Text(
                               "total_order_value_key".tr(),
-                              style: GoogleFonts.openSans(fontWeight:
-                              FontWeight.w600, fontSize: 14, color: TextGrey),
+                              style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 14, color: TextGrey),
                             ),
                             Text(
                               "\u20B9${totalAmt.toStringAsFixed(2)}",
-                              style: GoogleFonts.openSans(fontWeight: FontWeight.bold,fontSize: 15, color: TextBlackLight),
+                              style: GoogleFonts.openSans(
+                                  fontWeight: FontWeight.bold, fontSize: 15, color: TextBlackLight),
                             ),
                           ],
                         ),
@@ -247,84 +254,17 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                           children: [
                             Text(
                               "customer_amt_paid_key".tr(),
-                              style: GoogleFonts.openSans(fontWeight:
-                              FontWeight.w600, fontSize: 14, color: TextGrey),
+                              style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 14, color: TextGrey),
                             ),
                             Text(
                               "\u20B9${totalPayAmt.toStringAsFixed(2)}",
-                              style: GoogleFonts.openSans(fontWeight: FontWeight.bold,fontSize: 15, color: TextBlackLight),
+                              style: GoogleFonts.openSans(
+                                  fontWeight: FontWeight.bold, fontSize: 15, color: TextBlackLight),
                             ),
                           ],
                         ),
-                        // SizedBox(
-                        //   height: 8,
-                        // ),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //   children: [
-                        //     Text(
-                        //       "redeem_coins_key".tr(),
-                        //       style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
-                        //     ),
-                        //     Row(
-                        //       children: [
-                        //         Image.asset(
-                        //           "assets/images/point.png",
-                        //           width: 14,
-                        //           height: 14,
-                        //         ),
-                        //         Text(
-                        //           " ${totalRedeemCoins.toStringAsFixed(2)} (\u20B9 ${(totalRedeemCoins / 3).toStringAsFixed(2)})",
-                        //           style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.red),
-                        //         ),
-                        //       ],
-                        //     ),
-                        //   ],
-                        // ),
-                        // SizedBox(
-                        //   height: 8,
-                        // ),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //   children: [
-                        //     Text(
-                        //       "earn_coins_key".tr(),
-                        //       style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
-                        //     ),
-                        //     Row(
-                        //       children: [
-                        //         Image.asset(
-                        //           "assets/images/point.png",
-                        //           width: 14,
-                        //           height: 14,
-                        //         ),
-                        //         Text(
-                        //           " ${totalEarnCoin.toStringAsFixed(2)}",
-                        //           style:
-                        //           TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
-                        //         ),
-                        //       ],
-                        //     ),
-                        //   ],
-                        // ),
-                        // SizedBox(
-                        //   height: 8,
-                        // ),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //   children: [
-                        //     Text(
-                        //       "pay_amt_key".tr(),
-                        //       style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
-                        //     ),
-                        //     Text(
-                        //       "\u20B9 ${totalPayAmt.toStringAsFixed(2)}",
-                        //       style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: ColorPrimary),
-                        //     ),
-                        //   ],
-                        // ),
                         Container(
-                          margin: const EdgeInsets.only(top: 14,bottom: 5),
+                          margin: const EdgeInsets.only(top: 14, bottom: 5),
                           height: 1,
                           color: Colors.grey,
                         ),
@@ -334,22 +274,24 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                           children: [
                             Text(
                               "redemption_key".tr(),
-                              style: GoogleFonts.openSans(fontWeight:
-                              FontWeight.bold, fontSize: 16, color: TextBlackLight),
+                              style: GoogleFonts.openSans(
+                                  fontWeight: FontWeight.bold, fontSize: 16, color: TextBlackLight),
                             ),
                             Row(
                               children: [
                                 Text(
                                   "(",
-                                  style: GoogleFonts.openSans(fontWeight: FontWeight.w600,fontSize: 24, color: ColorPrimary),
+                                  style: GoogleFonts.openSans(
+                                      fontWeight: FontWeight.w600, fontSize: 24, color: ColorPrimary),
                                 ),
                                 Image.asset(
                                   "assets/images/point.png",
                                   width: 20,
                                 ),
                                 Text(
-                                  "${(totalPayAmt/3).toStringAsFixed(2)}) \u20B9${totalPayAmt.toStringAsFixed(2)}",
-                                  style: GoogleFonts.openSans(fontWeight: FontWeight.w600,fontSize: 24, color: ColorPrimary),
+                                  "${(totalRedeemCoins).toStringAsFixed(2)}) \u20B9${(totalRedeemCoins/3).toStringAsFixed(2)}",
+                                  style: GoogleFonts.openSans(
+                                      fontWeight: FontWeight.w600, fontSize: 24, color: ColorPrimary),
                                 ),
                               ],
                             ),
@@ -414,6 +356,7 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
   getAllItems(CoinDetail details) {
     for (var product in details.orderDetails) {
       CommonDetails productDetails = CommonDetails(
+        commission: product.commission,
         productId: product.productId,
         productName: product.productName,
         image: product.productImage,
@@ -431,6 +374,7 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
 
     for (var product in details.billingDetails) {
       CommonDetails productDetails = CommonDetails(
+        commission: product.commission,
         productId: "",
         productName: "",
         image: product.categoryImage,
@@ -451,7 +395,6 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
       totalRedeemCoins += double.parse(count.redeemCoins.isEmpty ? "0" : count.redeemCoins);
       totalEarnCoin += double.parse(count.earningCoins.isEmpty ? "0" : count.earningCoins);
     }
-    print("totottototo ---${totalAmt.toStringAsFixed(2)}");
     if (totalAmt >= totalRedeemCoins / 3) {
       totalPayAmt = totalAmt - totalRedeemCoins / 3;
     } else {
