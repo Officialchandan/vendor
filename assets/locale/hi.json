@@ -439,5 +439,6 @@
   "redemption_key": "उपयोग Coins",
   "earned_key": "कमाई",
   "final_ledger_key": "फाइनल लेजर",
-  "commission_return_key": "कमीशन रिटर्न"
+  "commission_return_key": "कमीशन रिटर्न",
+  "signature_not_available_key": "हस्ताक्षर उपलब्ध नहीं है"
 }
