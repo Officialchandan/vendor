@@ -69,6 +69,7 @@ class BillingDetails {
   int billingType = 0;
   List<OrderDetail> orderDetails;
   List<DirectBillingDetails> billingDetails;
+
   factory BillingDetails.fromJson(String str) => BillingDetails.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
@@ -83,7 +84,7 @@ class BillingDetails {
         returnCoinsCustomer: json["return_coins_customer"] == null ? "0" : json["return_coins_customer"].toString(),
         returnAmountCustomer: json["return_amount_customer"] == null ? "0" : json["return_amount_customer"].toString(),
         dateTime: json["date_time"] == null ? "" : json["date_time"].toString(),
-    customerCoinBalance: json["customer_coin_balance"] == null ? "0" : json["customer_coin_balance"].toString(),
+        customerCoinBalance: json["customer_coin_balance"] == null ? "0" : json["customer_coin_balance"].toString(),
         amountPaidToMyProfit:
             json["amount_paid_to_myProfit"] == null ? "0" : json["amount_paid_to_myProfit"].toString(),
         amountPaidToVendor: json["amount_paid_to_vendor"] == null ? "" : json["amount_paid_to_vendor"].toString(),
@@ -129,8 +130,10 @@ class OrderDetail {
     required this.redeemCoins,
     required this.earningCoins,
     required this.myProfitRevenue,
+    required this.commission,
   });
 
+  String commission;
   String orderId;
   String mobile;
   String productId;
@@ -149,6 +152,7 @@ class OrderDetail {
   String toJson() => json.encode(toMap());
 
   factory OrderDetail.fromMap(Map<String, dynamic> json) => OrderDetail(
+        commission: json["commission_value"] == null ? "0" : json["commission_value"].toString(),
         orderId: json["order_id"] == null ? "0" : json["order_id"].toString(),
         mobile: json["mobile"] == null ? "" : json["mobile"].toString(),
         productId: json["product_id"] == null ? "0" : json["product_id"].toString(),
@@ -164,6 +168,7 @@ class OrderDetail {
       );
 
   Map<String, dynamic> toMap() => {
+        "commission_value": commission == null ? null : commission,
         "order_id": orderId == null ? null : orderId,
         "mobile": mobile == null ? null : mobile,
         "product_id": productId == null ? null : productId,
@@ -180,18 +185,18 @@ class OrderDetail {
 }
 
 class DirectBillingDetails {
-  DirectBillingDetails({
-    required this.billingId,
-    required this.mobile,
-    required this.categoryId,
-    required this.categoryName,
-    required this.categoryImage,
-    required this.amountPaid,
-    required this.redeemCoins,
-    required this.earningCoins,
-    required this.myProfitRevenue,
-    required this.total,
-  });
+  DirectBillingDetails(
+      {required this.billingId,
+      required this.mobile,
+      required this.categoryId,
+      required this.categoryName,
+      required this.categoryImage,
+      required this.amountPaid,
+      required this.redeemCoins,
+      required this.earningCoins,
+      required this.myProfitRevenue,
+      required this.total,
+      required this.commission});
 
   String billingId;
   String mobile;
@@ -203,12 +208,14 @@ class DirectBillingDetails {
   String earningCoins;
   String myProfitRevenue;
   String total;
+  String commission;
 
   factory DirectBillingDetails.fromJson(String str) => DirectBillingDetails.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
   factory DirectBillingDetails.fromMap(Map<String, dynamic> json) => DirectBillingDetails(
+        commission: json["commission_value"] == null ? "0" : json["commission_value"].toString(),
         billingId: json["billing_id"] == null ? "0" : json["billing_id"].toString(),
         mobile: json["mobile"] == null ? "" : json["mobile"].toString(),
         categoryId: json["category_id"] == null ? "0" : json["category_id"].toString(),
@@ -222,6 +229,7 @@ class DirectBillingDetails {
       );
 
   Map<String, dynamic> toMap() => {
+        "commission_value": commission == null ? null : commission,
         "billing_id": billingId == null ? null : billingId,
         "mobile": mobile == null ? null : mobile,
         "category_id": categoryId == null ? null : categoryId,
@@ -253,7 +261,9 @@ class CommonSaleReturnProductDetails {
     required this.categoryId,
     required this.categoryName,
     required this.categoryImage,
+    required this.commission,
   });
+
   String orderId;
   String mobile;
   String productId;
@@ -266,10 +276,9 @@ class CommonSaleReturnProductDetails {
   String redeemCoins;
   String earningCoins;
   String myProfitRevenue;
-
   String billingId;
-
   String categoryId;
   String categoryName;
   String categoryImage;
+  String commission;
 }

@@ -162,6 +162,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
         billingId: "",
         categoryId: "",
         categoryImage: "",
+        commission: products.commission,
         categoryName: "",
       );
       productDetails.add(normalBillingProducts);
