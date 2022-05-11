@@ -82,7 +82,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
       returnRedemption = double.parse(widget.order.billingDetails.first.redeemCoins);
       returnEarned = double.parse(widget.order.billingDetails.first.earningCoins);
       widget.order.isReturn == 1 ? returnCommisionAmnt = totalComission : totalComission;
-      reddem = reddem / 3;
+
       // if (double.parse(widget.order.myprofitRevenue) > reddem) {
       //   log("${double.parse(widget.order.myprofitRevenue)}");
       //   finalamount = double.parse(widget.order.myprofitRevenue) - reddem;
@@ -919,7 +919,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
                         ),
                         Text(
-                          "\u20B9 $returnCollectionAmnt",
+                          "\u20B9 ${returnCollectionAmnt.toStringAsFixed(2)}",
                           style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextBlackLight),
                         ),
                       ],

@@ -204,6 +204,7 @@ class OrderDetail {
   String redeemCoins;
   String earningCoins;
   String myprofitRevenue;
+
   int isReturn;
   String commissionValue;
   factory OrderDetail.fromJson(String str) => OrderDetail.fromMap(json.decode(str));

@@ -41,6 +41,12 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
   double amtreturn = 0;
   double orderTotal = 0;
   double totalComission = 0;
+  double returnCommision = 0;
+  double returnAmountpaid = 0;
+  double returnRedemption = 0;
+  double returnEarned = 0;
+  double returnCollectionAmnt = 0;
+  double returnCommisionAmnt = 0;
 
   DailyLedgerDetailBloc dailyLedgerDetailBloc = DailyLedgerDetailBloc();
   @override
@@ -68,16 +74,20 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
   void calculation() {
     if (widget.order.orderType == 1) {
       reddem = double.parse(widget.order.billingDetails.first.redeemCoins);
-      reddem = reddem / 3;
+
       orderTotal = double.parse(widget.order.orderTotal);
       totalComission = double.parse(widget.order.billingDetails.first.commissionValue);
+      returnAmountpaid = double.parse(widget.order.billingDetails.first.amountPaid);
+      returnRedemption = double.parse(widget.order.billingDetails.first.redeemCoins);
+      returnEarned = double.parse(widget.order.billingDetails.first.earningCoins);
+      widget.order.isReturn == 1 ? returnCommisionAmnt = totalComission : totalComission;
 
-      if (double.parse(widget.order.myprofitRevenue) > reddem) {
-        log("${double.parse(widget.order.myprofitRevenue)}");
-        finalamount = double.parse(widget.order.myprofitRevenue) - reddem;
-      } else {
-        finalamount = reddem - double.parse(widget.order.myprofitRevenue);
-      }
+      // if (double.parse(widget.order.myprofitRevenue) > reddem) {
+      //   log("${double.parse(widget.order.myprofitRevenue)}");
+      //   finalamount = double.parse(widget.order.myprofitRevenue) - reddem;
+      // } else {
+      //   finalamount = reddem - double.parse(widget.order.myprofitRevenue);
+      // }
     } else {
       // getNormalLedgerData();
       widget.order.orderDetails.forEach((element) {
@@ -86,13 +96,49 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
         reddem = reddem / 3;
         orderTotal += double.parse(element.total);
         totalComission += double.parse(element.commissionValue);
-        if (double.parse(widget.order.myprofitRevenue) > reddem) {
-          log("${double.parse(widget.order.myprofitRevenue)}");
-          finalamount = double.parse(widget.order.myprofitRevenue) - reddem;
-        } else {
-          finalamount = reddem - double.parse(widget.order.myprofitRevenue);
-        }
+        returnAmountpaid += element.isReturn == 1 ? double.parse(element.amountPaid) : 0;
+        returnRedemption += element.isReturn == 1 ? double.parse(element.redeemCoins) : 0;
+        log("returnRedemption--->$returnRedemption");
+        returnEarned = double.parse(element.earningCoins);
+        element.isReturn == 1 ? returnCommisionAmnt += totalComission : 0;
+        log("orderTotal--->$reddem");
+        // if (double.parse(widget.order.myprofitRevenue) > reddem) {
+        //   log("${double.parse(widget.order.myprofitRevenue)}");
+        //   finalamount = double.parse(widget.order.myprofitRevenue) - reddem;
+        // } else {
+        //   finalamount = reddem - double.parse(widget.order.myprofitRevenue);
+        // }
       });
+    }
+  }
+
+  void returnSummaryCollection() {
+    if (returnRedemption >= returnEarned) {
+      returnCollectionAmnt = 0;
+      log("returnCollectionAmnt==>$returnCollectionAmnt");
+    } else {
+      returnCollectionAmnt = returnEarned - returnRedemption;
+      log("returnCollectionAmnt1==>$returnCollectionAmnt");
+      if (double.parse(details!.customerCoinBalance) >= returnCollectionAmnt) {
+        returnCollectionAmnt = 0;
+        log("returnCollectionAmnt0==>$returnCollectionAmnt");
+      } else {
+        log("returnCollectionAmnt2==>$returnCollectionAmnt");
+        returnCollectionAmnt = returnCollectionAmnt - double.parse(details!.customerCoinBalance);
+        log("returnCollectionAmnt3==>$returnCollectionAmnt");
+        returnCollectionAmnt / 3 >= returnAmountpaid
+            ? returnAmountpaid - (returnCollectionAmnt / 3)
+            : returnCollectionAmnt / 3;
+        if (returnCollectionAmnt / 3 <= returnAmountpaid) {
+          returnCollectionAmnt = returnCollectionAmnt / 3;
+          log("returnCollectionAmnt4==>$returnCollectionAmnt");
+        } else {
+          returnCollectionAmnt = returnAmountpaid - (returnCollectionAmnt / 3);
+          log("returnCollectionAmnt5==>$returnCollectionAmnt");
+        }
+        //w   returnCollectionAmnt = returnAmountpaid - returnCollectionAmnt;
+
+      }
     }
   }
 
@@ -200,6 +246,7 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
                       details = billingDetails.first;
 
                       salesreturnCalculations();
+                      returnSummaryCollection();
                     }
                     if (state is DailyLedgerDetailLoadingState) {
                       return Center(
@@ -506,9 +553,9 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
                           style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.w600, color: TextGrey),
                         ),
                         // Row(children: [
-                        double.parse(widget.order.orderTotal) >= reddem
+                        double.parse(widget.order.orderTotal) >= (reddem / 3)
                             ? Text(
-                                "\u20B9 ${(double.parse(widget.order.orderTotal) - reddem).toStringAsFixed(2)}",
+                                "\u20B9 ${(double.parse(widget.order.orderTotal)).toStringAsFixed(2)}",
                                 style: GoogleFonts.openSans(
                                     fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
                               )
@@ -581,14 +628,14 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
                             scale: 4,
                           ),
                           AutoSizeText(
-                            "${(reddem * 3).toStringAsFixed(2)}) ",
+                            "${(reddem).toStringAsFixed(2)}) ",
                             minFontSize: 14,
                             maxFontSize: 16,
                             style:
                                 GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
                           ),
                           AutoSizeText(
-                            "\u20B9 ${reddem.toStringAsFixed(2)}",
+                            "\u20B9 ${(reddem / 3).toStringAsFixed(2)}",
                             minFontSize: 14,
                             maxFontSize: 16,
                             style:
@@ -650,13 +697,13 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
                       ),
                     ],
                   ),
-                  totalComission >= reddem
+                  totalComission >= reddem / 3
                       ? Text(
-                          "\u20B9${(totalComission - reddem).toStringAsFixed(2)}",
+                          "\u20B9${(totalComission - reddem / 3).toStringAsFixed(2)}",
                           style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 28, color: ColorPrimary),
                         )
                       : Text(
-                          "\u20B9${(reddem - totalComission).toStringAsFixed(2)}",
+                          "\u20B9${(reddem / 3 - totalComission).toStringAsFixed(2)}",
                           style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 28, color: ColorPrimary),
                         ),
                 ],
@@ -704,13 +751,13 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
                                   fontWeight: FontWeight.bold, fontSize: 16, color: TextBlackLight),
                             ),
                             Text(
-                              "(${"amount_paid_key".tr()} - ${"collection_amt_key".tr()})",
+                              "(${"amount_paid_key".tr()} - ${"earn_coins_key".tr()})",
                               style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 12, color: TextGrey),
                             ),
                           ],
                         ),
                         Text(
-                          "\u20B9${(finalamount).toStringAsFixed(2)}",
+                          "\u20B9${(returnCollectionAmnt).toStringAsFixed(2)}",
                           style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 28, color: ColorPrimary),
                         ),
                       ],
@@ -742,7 +789,7 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
                           style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
                         ),
                         Text(
-                          "\u20B9 0",
+                          "\u20B9 ${returnCollectionAmnt.toStringAsFixed(2)}",
                           style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextBlackLight),
                         ),
                       ],
@@ -758,7 +805,7 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
                           style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
                         ),
                         Text(
-                          "\u20B9 40",
+                          "\u20B9 ${returnCommisionAmnt.toStringAsFixed(2)}",
                           style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextBlackLight),
                         ),
                       ],
@@ -783,15 +830,22 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
                                   fontWeight: FontWeight.bold, fontSize: 16, color: TextBlackLight),
                             ),
                             Text(
-                              "(${"amount_paid_key".tr()} - ${"collection_amt_key".tr()})",
-                              style: GoogleFonts.openSans(fontWeight: FontWeight.w500, fontSize: 12, color: TextGrey),
+                              "(${"commission_return_key".tr()} - ${"collection_amt_key".tr()})",
+                              style: GoogleFonts.openSans(fontWeight: FontWeight.w500, fontSize: 11, color: TextGrey),
                             ),
                           ],
                         ),
-                        Text(
-                          "\u20B9${(finalamount).toStringAsFixed(2)}",
-                          style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 28, color: ColorPrimary),
-                        ),
+                        returnCollectionAmnt >= returnCommisionAmnt
+                            ? Text(
+                                "\u20B9${(returnCollectionAmnt - returnCommisionAmnt).toStringAsFixed(2)}",
+                                style: GoogleFonts.openSans(
+                                    fontWeight: FontWeight.w600, fontSize: 28, color: ColorPrimary),
+                              )
+                            : Text(
+                                "\u20B9${(returnCommisionAmnt - returnCollectionAmnt).toStringAsFixed(2)}",
+                                style: GoogleFonts.openSans(
+                                    fontWeight: FontWeight.w600, fontSize: 28, color: ColorPrimary),
+                              ),
                       ],
                     ),
                     SizedBox(
@@ -866,7 +920,7 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
                         style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.w600, color: TextGrey),
                       ),
                       Text(
-                        "\u20B9 ${widget.order.myprofitRevenue}",
+                        "\u20B9 $totalComission",
                         style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
                       ),
                     ],
@@ -882,9 +936,9 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
                         style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.w600, color: TextGrey),
                       ),
                       // Row(children: [
-                      double.parse(widget.order.orderTotal) >= reddem
+                      double.parse(widget.order.orderTotal) >= reddem / 3
                           ? Text(
-                              "\u20B9 ${(double.parse(widget.order.orderTotal) - reddem).toStringAsFixed(2)}",
+                              "\u20B9 ${(double.parse(widget.order.orderTotal)).toStringAsFixed(2)}",
                               style: GoogleFonts.openSans(
                                   fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
                             )
@@ -906,7 +960,7 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
                       AutoSizeText(
                         "customer_redemption_key".tr(),
                         minFontSize: 14,
-                        maxFontSize: 16,
+                        maxFontSize: 14,
                         style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.w600, color: TextGrey),
                       ),
                       Row(children: [
@@ -921,13 +975,13 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
                           scale: 4,
                         ),
                         AutoSizeText(
-                          "${(reddem * 3).toStringAsFixed(2)}) ",
+                          "${(reddem).toStringAsFixed(2)}) ",
                           minFontSize: 14,
                           maxFontSize: 16,
                           style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
                         ),
                         AutoSizeText(
-                          "\u20B9 ${reddem.toStringAsFixed(2)}",
+                          "\u20B9 ${(reddem / 3).toStringAsFixed(2)}",
                           minFontSize: 14,
                           maxFontSize: 16,
                           style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
@@ -963,10 +1017,17 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
                           ),
                         ],
                       ),
-                      Text(
-                        "\u20B9${(finalamount).toStringAsFixed(2)}",
-                        style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 28, color: ColorPrimary),
-                      ),
+                      totalComission >= reddem / 3
+                          ? Text(
+                              "\u20B9${(totalComission - (reddem / 3)).toStringAsFixed(2)}",
+                              style:
+                                  GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 28, color: ColorPrimary),
+                            )
+                          : Text(
+                              "\u20B9${((reddem / 3) - totalComission).toStringAsFixed(2)}",
+                              style:
+                                  GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 28, color: ColorPrimary),
+                            ),
                     ],
                   ),
                   //  Transaction By
@@ -1058,17 +1119,10 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
                         "customer_amt_paid_key".tr(),
                         style: GoogleFonts.openSans(fontSize: 14, fontWeight: FontWeight.w600, color: TextGrey),
                       ),
-                      double.parse(widget.order.orderTotal) >= reddem
-                          ? Text(
-                              "\u20B9 ${(double.parse(widget.order.orderTotal) - reddem).toStringAsFixed(2)}",
-                              style: GoogleFonts.openSans(
-                                  fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
-                            )
-                          : Text(
-                              "\u20B9 0",
-                              style: GoogleFonts.openSans(
-                                  fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
-                            ),
+                      Text(
+                        "\u20B9 ${(returnAmountpaid).toStringAsFixed(2)}",
+                        style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -1093,13 +1147,13 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
                           scale: 4,
                         ),
                         AutoSizeText(
-                          "${(reddem * 3).toStringAsFixed(2)}) ",
+                          "${(returnRedemption).toStringAsFixed(2)}) ",
                           minFontSize: 14,
                           maxFontSize: 16,
                           style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
                         ),
                         AutoSizeText(
-                          "\u20B9 ${reddem.toStringAsFixed(2)}",
+                          "\u20B9 ${(returnRedemption / 3).toStringAsFixed(2)}",
                           minFontSize: 14,
                           maxFontSize: 16,
                           style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
@@ -1131,13 +1185,13 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
                           scale: 4,
                         ),
                         AutoSizeText(
-                          "${(earnCoins.toStringAsFixed(2))}) ",
+                          "${(returnEarned.toStringAsFixed(2))}) ",
                           minFontSize: 14,
                           maxFontSize: 16,
                           style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
                         ),
                         AutoSizeText(
-                          "\u20B9 ${(earnCoins / 3).toStringAsFixed(2)}",
+                          "\u20B9 ${(returnEarned / 3).toStringAsFixed(2)}",
                           minFontSize: 14,
                           maxFontSize: 16,
                           style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
@@ -1214,7 +1268,7 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
                         ],
                       ),
                       Text(
-                        "\u20B9${(finalamount).toStringAsFixed(2)}",
+                        "\u20B9${(returnCollectionAmnt).toStringAsFixed(2)}",
                         style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 28, color: ColorPrimary),
                       ),
                     ],
