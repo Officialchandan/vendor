@@ -185,8 +185,14 @@ class _freeCoinDetailstate extends State<FreeCoinDetail> {
                                         Row(
                                           mainAxisAlignment: MainAxisAlignment.start,
                                           children: [
+                                            freeCoinDetails!.orderType == 0?
                                             Text(
-                                              "${"commission_key".tr()}: 40",
+                                              "${"commission_key".tr()}: ${freeCoinDetails!.orderDetails[index].commissionValue}",
+                                              style: GoogleFonts.openSans(
+                                                  fontSize: 14, fontWeight: FontWeight.w600, color: TextGrey),
+                                            ):
+                                            Text(
+                                              "${"commission_key".tr()}: ${freeCoinDetails!.billingDetails[index].commissionValue}",
                                               style: GoogleFonts.openSans(
                                                   fontSize: 14, fontWeight: FontWeight.w600, color: TextGrey),
                                             ),
