@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -47,27 +48,44 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
     this.earningCoinsRs = (double.parse(widget.saleReturnData.earnCoins) / 3).toStringAsFixed(2);
     this.coinBalanceRs = (double.parse(widget.saleReturnData.walletBalance) / 3).toStringAsFixed(2);
     this.redeemCoinsRs = (double.parse(widget.saleReturnData.redeemCoins) / 3).toStringAsFixed(2);
+    log("redeemCoins rs==>$redeemCoinsRs");
     // Calculation for collection amt & return amt
-    if (double.parse(coinBalanceRs!) != 0) {
-      if (double.parse(coinBalanceRs!) >= double.parse(earningCoinsRs!)) {
-        collectionAmt = (double.parse(coinBalanceRs!) - double.parse(earningCoinsRs!)).toStringAsFixed(2);
-      } else {
-        collectionAmt = "0";
-      }
+    // if (double.parse(redeemCoinsRs!) >= earnCoinsRs) {
+    //   collectionAmt = 0;
+    // } else {
+    //   collectionAmt = earnCoinsRs - redeemCoinsRs;
+    //   if (coinBalanceRs >= collectionAmt) {
+    //     collectionAmt = 0;
+    //   } else {
+    //     collectionAmt = collectionAmt - coinBalanceRs;
+    //
+    //     customerReturnAmt = amtPaid - collectionAmt;
+    //   }
+    // }
+
+    if (double.parse(redeemCoinsRs!) <= double.parse(earningCoinsRs!)) {
+      collectionAmt = (double.parse(earningCoinsRs!) - double.parse(redeemCoinsRs!)).toStringAsFixed(2);
+      log("collectionAmt==>1==>$collectionAmt");
+    } else {
+      collectionAmt = "0";
+      log("collectionAmt==>2==>$collectionAmt");
     }
 
-    if (double.parse(redeemCoinsRs!) != 0) {
-      if (double.parse(redeemCoinsRs!) >= double.parse(collectionAmt!)) {
-        collectionAmt = (double.parse(redeemCoinsRs!) - double.parse(collectionAmt!)).toStringAsFixed(2);
-      } else {
-        collectionAmt = (double.parse(collectionAmt!) - double.parse(redeemCoinsRs!)).toStringAsFixed(2);
-      }
+    if (double.parse(coinBalanceRs!) <= double.parse(collectionAmt!)) {
+      collectionAmt = (double.parse(collectionAmt!) - double.parse(coinBalanceRs!)).toStringAsFixed(2);
+      log("collectionAmt==>3==>$collectionAmt");
+    } else {
+      collectionAmt = "0";
+      log("collectionAmt==>4==>$collectionAmt");
     }
 
-    if (double.parse(collectionAmt!) == 0) {
-      returnAmount = (double.parse(amountPaid!) - double.parse(collectionAmt!)).toStringAsFixed(0);
+    if (double.parse(collectionAmt!) != 0) {
+      collectionAmt = collectionAmt;
+      returnAmount = (double.parse(amountPaid!) - double.parse(collectionAmt!)).toStringAsFixed(2);
+      log("collectionAmt==>5==>$collectionAmt");
     } else {
       returnAmount = amountPaid;
+      log("collectionAmt==>6==>$collectionAmt");
       collectionAmt = "0";
     }
     super.initState();
@@ -325,7 +343,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                         ),
                         Text(
                           "(${"amount_paid_key".tr()} - ${"collection_amt_key".tr()})",
-                          style: GoogleFonts.openSans(fontWeight: FontWeight.w500, fontSize: 12, color: TextGrey),
+                          style: GoogleFonts.openSans(fontWeight: FontWeight.w500, fontSize: 11, color: TextGrey),
                         ),
                       ],
                     ),

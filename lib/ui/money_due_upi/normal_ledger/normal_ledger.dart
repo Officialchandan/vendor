@@ -401,7 +401,7 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                                                   fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
                                             ),
                                             Text(
-                                              "      ${DateFormat("dd MMM yyyy").format(searchList[index].dateTime)}-${DateFormat.jm().format(searchList[index].dateTime)}",
+                                              "      ${DateFormat("dd MMM yyyy").format(searchList[index].dateTime)}}",
                                               style:
                                                   TextStyle(fontSize: 13, color: TextGrey, fontWeight: FontWeight.bold),
                                             ),

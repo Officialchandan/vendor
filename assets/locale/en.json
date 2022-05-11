@@ -435,6 +435,8 @@
   "final_ledger_key": "Final Ledger",
   "commission_return_key": "Commission Return",
   "terms_and_condition_not_available_key": "Terms & condition not available",
-  "signature_not_available_key": "Signature not available"
+  "signature_not_available_key": "Signature not available",
 
+
+  "coins_earned__by_customer_key": "Coins Earned by Customer"
 }
