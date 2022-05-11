@@ -174,26 +174,35 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                                                                   fontWeight: FontWeight.bold,
                                                                   color: TextBlackLight),
                                                             ),
-                                                            Text(
-                                                              "\u20B9 ${product[index].total}",
-                                                              style: GoogleFonts.openSans(
-                                                                  fontSize: 16,
-                                                                  fontWeight: FontWeight.bold,
-                                                                  color: TextBlackLight),
-                                                            ),
+                                                            widget.detail.billingType == 0
+                                                                ? Text(
+                                                                    "\u20B9 ${product[index].total}",
+                                                                    style: GoogleFonts.openSans(
+                                                                        fontSize: 16,
+                                                                        fontWeight: FontWeight.bold,
+                                                                        color: TextBlackLight),
+                                                                  )
+                                                                : Text(
+                                                                    "\u20B9 ${widget.detail.orderTotal}",
+                                                                    style: GoogleFonts.openSans(
+                                                                        fontSize: 16,
+                                                                        fontWeight: FontWeight.bold,
+                                                                        color: TextBlackLight),
+                                                                  )
                                                           ],
                                                         ),
                                                         Row(
                                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                           children: [
-                                                            product[index].qty.isNotEmpty?
-                                                            Text(
-                                                              "${product[index].qty} x \u20B9 ${product[index].price}",
-                                                              style: TextStyle(
-                                                                  fontSize: 13,
-                                                                  fontWeight: FontWeight.bold,
-                                                                  color: Colors.grey),
-                                                            ): Text(""),
+                                                            widget.detail.billingType == 0
+                                                                ? Text(
+                                                                    "${product[index].qty} x \u20B9 ${product[index].price}",
+                                                                    style: TextStyle(
+                                                                        fontSize: 13,
+                                                                        fontWeight: FontWeight.bold,
+                                                                        color: Colors.grey),
+                                                                  )
+                                                                : Text(""),
                                                             Text(
                                                               "${"commission_key".tr()}: ${product[index].commission}",
                                                               style: TextStyle(
@@ -239,11 +248,17 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                               "total_order_value_key".tr(),
                               style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 14, color: TextGrey),
                             ),
-                            Text(
-                              "\u20B9${totalAmt.toStringAsFixed(2)}",
-                              style: GoogleFonts.openSans(
-                                  fontWeight: FontWeight.bold, fontSize: 15, color: TextBlackLight),
-                            ),
+                            widget.detail.billingType == 0
+                                ? Text(
+                                    "\u20B9 ${totalAmt.toStringAsFixed(2)}",
+                                    style: GoogleFonts.openSans(
+                                        fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
+                                  )
+                                : Text(
+                                    "\u20B9 ${widget.detail.orderTotal}",
+                                    style: GoogleFonts.openSans(
+                                        fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
+                                  )
                           ],
                         ),
                         SizedBox(
@@ -256,11 +271,17 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                               "customer_amt_paid_key".tr(),
                               style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 14, color: TextGrey),
                             ),
-                            Text(
-                              "\u20B9${totalPayAmt.toStringAsFixed(2)}",
-                              style: GoogleFonts.openSans(
-                                  fontWeight: FontWeight.bold, fontSize: 15, color: TextBlackLight),
-                            ),
+                            widget.detail.billingType == 0
+                                ? Text(
+                                    "\u20B9${totalPayAmt.toStringAsFixed(2)}",
+                                    style: GoogleFonts.openSans(
+                                        fontWeight: FontWeight.bold, fontSize: 15, color: TextBlackLight),
+                                  )
+                                : Text(
+                                    "\u20B9 ${widget.detail.billingDetails.first.amountPaid}",
+                                    style: GoogleFonts.openSans(
+                                        fontSize: 15, fontWeight: FontWeight.bold, color: TextBlackLight),
+                                  )
                           ],
                         ),
                         Container(
@@ -289,7 +310,7 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                                   width: 20,
                                 ),
                                 Text(
-                                  "${(totalRedeemCoins).toStringAsFixed(2)}) \u20B9${(totalRedeemCoins/3).toStringAsFixed(2)}",
+                                  "${(totalRedeemCoins).toStringAsFixed(2)}) \u20B9${(totalRedeemCoins / 3).toStringAsFixed(2)}",
                                   style: GoogleFonts.openSans(
                                       fontWeight: FontWeight.w600, fontSize: 24, color: ColorPrimary),
                                 ),

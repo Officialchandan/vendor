@@ -63,7 +63,6 @@ class CoinDetail {
   String toJson() => json.encode(toMap());
 
   factory CoinDetail.fromMap(Map<String, dynamic> json) => CoinDetail(
-
         orderId: json["order_id"] == null ? "" : json["order_id"].toString(),
         firstName: json["first_name"] == null ? "" : json["first_name"].toString(),
         mobile: json["mobile"] == null ? "" : json["mobile"].toString(),
@@ -79,7 +78,6 @@ class CoinDetail {
       );
 
   Map<String, dynamic> toMap() => {
-
         "order_id": orderId == null ? null : orderId,
         "first_name": firstName == null ? null : firstName,
         "mobile": mobile == null ? null : mobile,
@@ -176,7 +174,7 @@ class BillingDetail {
         categoryImage: json["category_image"] == null ? "" : json["category_image"].toString(),
         amountPaid: json["amount_paid"] == null ? "" : json["amount_paid"].toString(),
         redeemCoins: json["redeem_coins"] == null ? "" : json["redeem_coins"].toString(),
-    commission: json["commission_value"] == null ? "" : json["commission_value"].toString(),
+        commission: json["commission_value"] == null ? "" : json["commission_value"].toString(),
         earningCoins: json["earning_coins"] == null ? "" : json["earning_coins"].toString(),
       );
 
@@ -187,25 +185,24 @@ class BillingDetail {
         "amount_paid": amountPaid == null ? null : amountPaid,
         "redeemed_coins": redeemCoins == null ? null : redeemCoins,
         "earning_coins": earningCoins == null ? null : earningCoins,
-    "commission_value": commission == null ? null : commission,
+        "commission_value": commission == null ? null : commission,
       };
 }
 
 class CommonDetails {
-  CommonDetails({
-    required this.productId,
-    required this.productName,
-    required this.image,
-    required this.qty,
-    required this.price,
-    required this.total,
-    required this.amountPaid,
-    required this.redeemCoins,
-    required this.earningCoins,
-    required this.categoryId,
-    required this.categoryName,
-    required this.commission
-  });
+  CommonDetails(
+      {required this.productId,
+      required this.productName,
+      required this.image,
+      required this.qty,
+      required this.price,
+      required this.total,
+      required this.amountPaid,
+      required this.redeemCoins,
+      required this.earningCoins,
+      required this.categoryId,
+      required this.categoryName,
+      required this.commission});
 
   String productId;
   String productName;
