@@ -71,6 +71,10 @@ class _DailyLedgerWithoutInventoryState extends State<DailyLedgerWithoutInventor
         initialIndex: 0,
         child: Scaffold(
           appBar: AppBar(
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios),
+              onPressed: (){Navigator.pop(context);},
+            ),
             title: Text(
               "daily_ledger_key".tr(),
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),

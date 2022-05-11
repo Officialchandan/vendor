@@ -97,7 +97,7 @@ class SaleReturnBloc extends Bloc<SaleReturnEvent, SaleReturnState> {
           );
           products.add(directBilling);
         }
-
+          products.sort((a, b) => b.dateTime.compareTo(a.dateTime));
         yield GetProductSuccessState(purchaseList: products);
       } else {
         Utility.showToast(msg: response.message);

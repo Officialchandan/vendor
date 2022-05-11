@@ -82,6 +82,7 @@ class _SelectReportTypeScreenState extends State<SelectReportTypeScreen> {
         title: "report_types_key".tr(),
       ),
       body: ListView.builder(
+        padding: const EdgeInsets.only(top: 10),
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),

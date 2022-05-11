@@ -176,6 +176,7 @@ class _DirectBillingState extends State<DirectBilling> {
                                             borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
                                       ),
                                       onChanged: (length) {
+                                        firstname = nameController.text;
                                         // if (name.text.length == 10) {
                                         //   directBillingCustomerNumberResponseBloc.add(
                                         //       GetDirectBillingCustomerNumberResponseEvent(
@@ -247,6 +248,7 @@ class _DirectBillingState extends State<DirectBilling> {
                           message = state.message;
                           status = state.succes;
                           status1 = state.status;
+                          firstname = "";
                         }
                         if (state is GetDirectBillingState) {
                           message = state.message;
@@ -537,12 +539,16 @@ class _DirectBillingState extends State<DirectBilling> {
                                 style: TextStyle(color: TextBlackLight, fontSize: 15, fontWeight: FontWeight.bold),
                               ),
                               Row(children: [
+                                Text("(",
+                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
                                 Container(
                                     child: Image.asset(
                                   "assets/images/point.png",
                                   scale: 3,
                                 )),
-                                Text(" $coinss",
+                                Text("$coinss)",
+                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
+                                Text(" \u20B9${(double.parse(coinss)/3).toStringAsFixed(2)}",
                                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black))
                               ]),
                             ],

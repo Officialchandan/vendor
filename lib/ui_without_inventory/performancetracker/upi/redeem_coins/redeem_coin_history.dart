@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -41,6 +42,10 @@ class _ReddemCoinHistoryState extends State<ReddemCoinHistory> {
       create: (context) => redeemCoinBloc,
       child: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: (){Navigator.pop(context);},
+          ),
           title: Text(
             "redeem_coins_key".tr(),
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
@@ -83,9 +88,10 @@ class _ReddemCoinHistoryState extends State<ReddemCoinHistory> {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 15.0, right: 15, top: 15),
+                  padding: const EdgeInsets.only(left: 14, right: 14, top: 14),
                   child: TextFormField(
                     controller: searchController,
+                    keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       prefixIcon: Icon(
                         Icons.search,
@@ -137,7 +143,7 @@ class _ReddemCoinHistoryState extends State<ReddemCoinHistory> {
                         } else {
                           List<CoinDetail> list = [];
                           redeemData.forEach((element) {
-                            if (element.productName.toLowerCase().contains(state.data.toLowerCase())) {
+                            if (element.mobile.toLowerCase().contains(state.data.toLowerCase())) {
                               list.add(element);
                             }
                           });
@@ -149,7 +155,7 @@ class _ReddemCoinHistoryState extends State<ReddemCoinHistory> {
                           } else {
                             searchList = list;
                             return ListView.builder(
-                              padding: EdgeInsets.only(left: 15, right: 15),
+                              padding: EdgeInsets.only(left: 14, right: 14),
                               itemCount: searchList.length,
                               itemBuilder: (context, index) {
                                 return Container(
@@ -161,7 +167,7 @@ class _ReddemCoinHistoryState extends State<ReddemCoinHistory> {
                         }
                       }
                       return ListView.builder(
-                        padding: EdgeInsets.only(left: 15, right: 15),
+                        padding: EdgeInsets.only(left: 14, right: 14),
                         itemCount: redeemData.length,
                         itemBuilder: (context, index) {
                           return Container(
@@ -202,56 +208,49 @@ class DirectBillingList extends StatefulWidget {
 class _DirectBillingListState extends State<DirectBillingList> {
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Container(
-        margin: EdgeInsets.only(top: 15),
-        padding: EdgeInsets.all(0),
-        height: 100,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.white,
-            border: Border.all(color: Colors.white38),
-            boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 1.0, spreadRadius: 1)]),
-        child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-          SizedBox(width: 10),
-          Container(
-            height: 70,
-            width: 70,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-            ),
-            child: Image.network("${widget.detail.image}"),
+    return Container(
+      margin: EdgeInsets.only(top: 14),
+      padding: EdgeInsets.all(14),
+      height: 80,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade300,
+            offset: Offset(0.0, 0.0), //(x,y)
+            blurRadius: 7.0,
           ),
-          Padding(
-            padding: EdgeInsets.only(left: 12.0),
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "${widget.detail.productName}",
-                    style: TextStyle(fontWeight: FontWeight.w600),
-                  ),
-                  Text("${"mobile_key".tr()}" ": ${widget.detail.mobile}"),
-                  Container(
-                    height: 20,
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: Colors.grey.shade200),
-                    child: Row(children: [
-                      Text(
-                        "  ${"redeemed_key".tr()}: ",
-                        style: TextStyle(color: Colors.black, fontSize: 12, fontWeight: FontWeight.w400),
-                      ),
-                      Image.asset("assets/images/point.png"),
-                      Text(
-                        "${widget.detail.totalRedeemCoins} (\u20B9 ${(double.parse(widget.detail.totalRedeemCoins) / 3).toStringAsFixed(2)})",
-                        style: TextStyle(color: ColorPrimary, fontSize: 12, fontWeight: FontWeight.w400),
-                      ),
-                    ]),
-                  ),
-                ]),
-          ),
-        ]),
+        ],
+        borderRadius: BorderRadius.circular(10),
       ),
-    ]);
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("${widget.detail.mobile}",style: TextStyle(color: TextBlackLight, fontWeight: FontWeight.bold, fontSize: 18),),
+                Text("${DateFormat("dd MMM yyyy").format(DateTime.parse(widget.detail.dateTime))}",
+                  style: GoogleFonts.openSans(color: TextBlackLight, fontWeight: FontWeight.w600, fontSize: 13),),
+              ],
+            ),
+            Row(children: [
+              Text(
+                "${"redeemed_key".tr()}: ",
+                  style: GoogleFonts.openSans(color: TextGrey, fontWeight: FontWeight.w600, fontSize: 13),
+              ),
+              Image.asset("assets/images/point.png",width: 14,),
+              Text(
+                "${widget.detail.totalRedeemCoins} ",
+                style: GoogleFonts.openSans(color: TextBlackLight, fontWeight: FontWeight.bold, fontSize: 13),
+              ),
+              Text(
+                "(\u20B9${(double.parse(widget.detail.totalRedeemCoins) / 3).toStringAsFixed(2)})",
+                style: GoogleFonts.openSans(color: ColorPrimary, fontWeight: FontWeight.w600, fontSize: 16),
+              ),
+            ]),
+          ]),
+    );
   }
 }

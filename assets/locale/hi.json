@@ -440,5 +440,6 @@
   "earned_key": "कमाई",
   "final_ledger_key": "फाइनल लेजर",
   "commission_return_key": "कमीशन रिटर्न",
+  "signature_not_available_key": "हस्ताक्षर उपलब्ध नहीं है",
   "coins_earned__by_customer_key": "ग्राहक द्वारा अर्जित सिक्के"
 }

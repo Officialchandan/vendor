@@ -63,6 +63,10 @@ class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
       create: (context) => freeCoinHistoryBloc,
       child: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: (){Navigator.pop(context);},
+          ),
           title: Text(
             "free_coins_key".tr(),
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
@@ -107,7 +111,7 @@ class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
           },
           child: Column(children: [
             Padding(
-              padding: const EdgeInsets.only(left: 15.0, right: 15, top: 15),
+              padding: const EdgeInsets.only(left: 14, right: 14, top: 14),
               child: TextFormField(
                 cursorColor: ColorPrimary,
                 controller: _searchController,
@@ -144,6 +148,9 @@ class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
                 },
               ),
             ),
+            SizedBox(
+              height: 5,
+            ),
             BlocBuilder<FreeCoinHistoryBloc, FreeCoinHistoryState>(builder: (context, state) {
               if (state is GetFreeCoinHistoryInitialState) {
                 filterApiCall(context);
@@ -157,7 +164,6 @@ class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
                     height: MediaQuery.of(context).size.height * 0.70,
                     child: Center(child: CircularProgressIndicator()));
               }
-
               if (state is GetFreeCoinUserSearchState) {
                 if (state.searchword.isEmpty) {
                   searchList = freecoinsdata!;
@@ -208,79 +214,61 @@ class _ListWidgetState extends State<ListWidget> {
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.builder(
-          padding: EdgeInsets.only(left: 15, right: 15, bottom: 15),
+          padding: EdgeInsets.only(left: 14, right: 14, bottom: 14),
           itemCount: widget.searchList.length,
           itemBuilder: (context, index) {
-            return Stack(children: [
-              Container(
-                margin: EdgeInsets.only(top: 15),
-                padding: EdgeInsets.all(0),
-                height: 70,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.white,
-                    border: Border.all(color: Colors.white38),
-                    boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 1.0, spreadRadius: 1)]),
-                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 12.0),
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "+91 ${widget.searchList[index].mobile}",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            "${DateFormat("dd MMM yyyy").format(widget.searchList[index].dateTime)} " +
-                                DateFormat.jm().format(widget.searchList[index].dateTime),
-                          ),
-                        ]),
+            return Container(
+              margin: EdgeInsets.only(top: 14),
+              padding: EdgeInsets.all(14),
+              height: 80,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.shade300,
+                    offset: Offset(0.0, 0.0), //(x,y)
+                    blurRadius: 7.0,
                   ),
-                  Container(
-                    width: 90,
-                  ),
-                ]),
+                ],
               ),
-              Positioned(
-                right: 0,
-                top: 15,
-                child: Container(
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.only(left: 5),
-                  width: 90,
-                  height: 70,
-                  decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
-                      borderRadius: BorderRadius.only(bottomRight: Radius.circular(10), topRight: Radius.circular(10))),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "earn_key".tr(),
-                          style: TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
+                          "+91 ${widget.searchList[index].mobile}",
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18,color: TextBlackLight),
+                        ), Text(
+                          "${DateFormat("dd MMM yyyy").format(widget.searchList[index].dateTime)}",
+                          style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 13,color: TextGrey),
                         ),
-                        Row(children: [
+                      ],
+                    ),
+                    Row(
+                        children: [
+                          Text(
+                            "${"earned_key".tr()}: ",
+                            style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 13,color: TextGrey),
+                          ),
                           Image.asset(
                             "assets/images/point.png",
                             scale: 2.5,
                           ),
                           widget.searchList[index].orderType == 0
                               ? Text(
-                                  " ${widget.searchList[index].totalearningcoins} ",
-                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: ColorPrimary),
-                                )
+                            " ${widget.searchList[index].totalearningcoins} ",
+                            style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: ColorPrimary),
+                          )
                               : Text(
-                                  " ${widget.searchList[index].billingDetails[0].earningCoins} ",
-                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: ColorPrimary),
-                                ),
+                            " ${widget.searchList[index].billingDetails[0].earningCoins} ",
+                            style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: ColorPrimary),
+                          ),
                         ]),
-                      ]),
-                ),
-              )
-            ]);
+                  ]),
+            );
           }),
     );
   }

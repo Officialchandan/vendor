@@ -42,7 +42,8 @@ class _ReportTypeScreenState extends State<ReportTypeScreen> {
         title: "report_types_key".tr(),
       ),
       body: ListView.builder(
-        itemBuilder: (context, index) {
+          padding: const EdgeInsets.only(top: 10),
+          itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Stack(

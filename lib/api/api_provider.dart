@@ -61,6 +61,7 @@ import 'package:vendor/model/upload_image_response.dart';
 import 'package:vendor/model/validate_app_version.dart';
 import 'package:vendor/model/vendor_profile_response.dart';
 import 'package:vendor/model/verify_otp.dart';
+import 'package:vendor/ui/account_management/terms_and_condition/t&c_response.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/model/normal_ladger_response.dart';
 import 'package:vendor/ui/money_due_upi/redeem_coin/customer_coin_history_response.dart';
 import 'package:vendor/ui/money_due_upi/redeem_coin/response/redeem_coin_response.dart';
@@ -1668,6 +1669,24 @@ class ApiProvider {
       print("Exception occurred: $message stackTrace: $error");
       return IntiatePaymnetResponse(
           success: false, message: "", orderId: "", mid: "", signature: "", txnToken: "", callbackUrl: "");
+    }
+  }
+
+  Future<TermsResponse> tncWithSignature(Map<String, dynamic> input) async {
+    try {
+      Response res = await dio.post(Endpoint.TNC_WITH_SIGNATURE, data: input);
+      return TermsResponse.fromJson(res.toString());
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return TermsResponse(
+          success: false, message: "");
     }
   }
 }

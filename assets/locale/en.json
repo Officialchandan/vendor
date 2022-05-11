@@ -432,7 +432,11 @@
   "amount_paid_key": "Amount Paid",
   "redeem_popup_button_key": "Done",
   "order_summary_key": "Order Summary",
-"final_ledger_key": "Final Ledger",
+  "final_ledger_key": "Final Ledger",
   "commission_return_key": "Commission Return",
+  "terms_and_condition_not_available_key": "Terms & condition not available",
+  "signature_not_available_key": "Signature not available",
+
+
   "coins_earned__by_customer_key": "Coins Earned by Customer"
 }

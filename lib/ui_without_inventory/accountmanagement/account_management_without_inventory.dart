@@ -14,6 +14,7 @@ import 'package:vendor/api/api_provider.dart';
 import 'package:vendor/api/server_error.dart';
 import 'package:vendor/model/log_out.dart';
 import 'package:vendor/model/vendor_profile_response.dart';
+import 'package:vendor/ui/account_management/account_management_screen/privacy_policy_screen.dart';
 import 'package:vendor/ui/login/login_screen.dart';
 import 'package:vendor/ui/web_view_screen/webview_screen.dart';
 import 'package:vendor/ui_without_inventory/account_settings/account_settings.dart';
@@ -36,31 +37,18 @@ class AccountManagementWithoutInventoryScreen extends StatefulWidget {
 
 class _AccountManagementWithoutInventoryScreenState extends State<AccountManagementWithoutInventoryScreen> {
   List<String> textList = [
-    // "discount_codes_key".tr(),
-    "settings_key".tr(),
+    "change_language_key".tr(),
     "about_us_key".tr(),
     "contact_us_key".tr(),
-    "privacy_policy_key".tr(),
     "terms_conditions_key".tr(),
-    "cancellation_refund_policy_key".tr(),
-
-    // "delivery_setting_key".tr(),
-    // "gift_scheme_key".tr(),
-    // "video_tutorials_key".tr(),
-    // "share_store_link_key".tr(),
-    // "get_store_qr_code_key".tr(),
-    // "add_business_hours_key".tr(),
-    // "t&c_with_signature".tr(),
     "logout_key".tr(),
   ];
 
   List<String> imageList = [
-    "assets/images/account-ic2.png",
+    "assets/images/account-ic14.png",
     "assets/images/account-ic15.png",
     "assets/images/account-ic13.png",
-    "assets/images/account-ic11.png",
     "assets/images/account-ic10.png",
-    "assets/images/account-ic12.png",
     "assets/images/account-ic8.png",
   ];
   var message;
@@ -181,7 +169,7 @@ class _AccountManagementWithoutInventoryScreenState extends State<AccountManagem
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Image.asset("${imageList[index]}", width: 30),
+                        Image.asset("${imageList[index]}", width: 25),
                         SizedBox(width: 17),
                         Expanded(
                           child: Text(textList[index],
@@ -249,36 +237,37 @@ class _AccountManagementWithoutInventoryScreenState extends State<AccountManagem
         );
         break;
       case 3:
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => WebViewScreen(
-                    title: tr("privacy_policy_key"),
-                    url: "http://vendor.myprofitinc.com/privacypolicy",
-                  )),
-        );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //       builder: (context) => WebViewScreen(
+        //             title: tr("privacy_policy_key"),
+        //             url: "http://vendor.myprofitinc.com/privacypolicy",
+        //           )),
+        // );
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> PrivacyPolicyScreen()));
         break;
+      // case 2:
+      //   Navigator.push(
+      //     context,
+      //     MaterialPageRoute(
+      //         builder: (context) => WebViewScreen(
+      //               title: tr("terms_conditions_key"),
+      //               url: "http://vendor.myprofitinc.com/terms",
+      //             )),
+      //   );
+      //   break;
+      // case 3:
+      //   Navigator.push(
+      //     context,
+      //     MaterialPageRoute(
+      //         builder: (context) => WebViewScreen(
+      //               title: tr("cancellation_refund_policy_key"),
+      //               url: "http://vendor.myprofitinc.com/refundpolicy",
+      //             )),
+      //   );
+      //   break;
       case 4:
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => WebViewScreen(
-                    title: tr("terms_conditions_key"),
-                    url: "http://vendor.myprofitinc.com/terms",
-                  )),
-        );
-        break;
-      case 5:
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => WebViewScreen(
-                    title: tr("cancellation_refund_policy_key"),
-                    url: "http://vendor.myprofitinc.com/refundpolicy",
-                  )),
-        );
-        break;
-      case 6:
         logoutDialog(context);
         break;
     }

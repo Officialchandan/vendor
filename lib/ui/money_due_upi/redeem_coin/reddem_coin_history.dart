@@ -205,8 +205,9 @@ class _DirectBillingListState extends State<DirectBillingList> {
   Widget build(BuildContext context) {
     return Column(children: [
       Container(
-        margin: EdgeInsets.only(top: 15),
-        padding: EdgeInsets.all(0),
+        height: 80,
+        margin: EdgeInsets.only(top: 14),
+        padding: EdgeInsets.all(14),
         decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
@@ -230,44 +231,38 @@ class _DirectBillingListState extends State<DirectBillingList> {
           },
           child: Container(
             width: MediaQuery.of(context).size.width,
-            child: Padding(
-              padding: const EdgeInsets.all(14),
-              child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-                Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                  Text(
-                    "+91 ${widget.detail.mobile}",
-                    style: GoogleFonts.openSans(color: TextBlackLight, fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    "${DateFormat("dd MMM yyyy").format(DateTime.parse(widget.detail.dateTime))}",
-                    style: GoogleFonts.openSans(color: TextGrey, fontSize: 13, fontWeight: FontWeight.w600),
-                  ),
-                ]),
-                SizedBox(
-                  height: 8,
+            child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                Text(
+                  "+91 ${widget.detail.mobile}",
+                  style: TextStyle(color: TextBlackLight, fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                Container(
-                  child: Row(children: [
-                    Text(
-                      "  ${"redeemed_key".tr()}: ",
-                      style: GoogleFonts.openSans(color: TextGrey, fontSize: 13, fontWeight: FontWeight.w600),
-                    ),
-                    Image.asset(
-                      "assets/images/point.png",
-                      width: 15,
-                    ),
-                    Text(
-                      "${(double.parse(widget.detail.totalRedeemCoins)).toStringAsFixed(2)}",
-                      style: GoogleFonts.openSans(color: TextBlackLight, fontSize: 13, fontWeight: FontWeight.w600),
-                    ),
-                    Text(
-                      " (\u20B9${(double.parse(widget.detail.totalRedeemCoins) / 3).toStringAsFixed(2)})",
-                      style: GoogleFonts.openSans(color: ColorPrimary, fontSize: 16, fontWeight: FontWeight.w600),
-                    ),
-                  ]),
+                Text(
+                  "${DateFormat("dd MMM yyyy").format(DateTime.parse(widget.detail.dateTime))}",
+                  style: GoogleFonts.openSans(color: TextGrey, fontSize: 13, fontWeight: FontWeight.w600),
                 ),
               ]),
-            ),
+              Container(
+                child: Row(children: [
+                  Text(
+                    "  ${"redeemed_key".tr()}: ",
+                    style: GoogleFonts.openSans(color: TextGrey, fontSize: 13, fontWeight: FontWeight.w600),
+                  ),
+                  Image.asset(
+                    "assets/images/point.png",
+                    width: 15,
+                  ),
+                  Text(
+                    "${(double.parse(widget.detail.totalRedeemCoins)).toStringAsFixed(2)}",
+                    style: GoogleFonts.openSans(color: TextBlackLight, fontSize: 13, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    " (\u20B9${(double.parse(widget.detail.totalRedeemCoins) / 3).toStringAsFixed(2)})",
+                    style: GoogleFonts.openSans(color: ColorPrimary, fontSize: 16, fontWeight: FontWeight.w600),
+                  ),
+                ]),
+              ),
+            ]),
           ),
         ),
       ),

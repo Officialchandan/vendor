@@ -75,6 +75,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
+              automaticallyImplyLeading: false,
               title: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Text("billing_key".tr(), style: TextStyle(fontWeight: FontWeight.w600)),
                 SizedBox(width: 5),
@@ -86,15 +87,17 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                   width: 35,
                 )
               ]),
-              leading: IconButton(
-                icon: Icon(Icons.arrow_back_ios),
-                onPressed: () {
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      PageTransition(child: HomeScreenWithoutInventory(), type: PageTransitionType.fade),
-                      ModalRoute.withName("/"));
-                },
-              ),
+              actions:[
+                IconButton(
+                  icon: Icon(Icons.home),
+                  onPressed: () {
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        PageTransition(child: HomeScreenWithoutInventory(), type: PageTransitionType.fade),
+                        ModalRoute.withName("/"));
+                  },
+                ),
+              ],
               centerTitle: true,
             ),
             body: SingleChildScrollView(
@@ -520,12 +523,16 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                               style: TextStyle(color: TextBlackLight, fontSize: 15, fontWeight: FontWeight.bold),
                             ),
                             Row(children: [
+                              Text("(",
+                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
                               Container(
                                   child: Image.asset(
                                 "assets/images/point.png",
                                 scale: 3,
                               )),
-                              Text(" $coinss",
+                              Text(" $coinss)",
+                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
+                              Text(" \u20B9${(double.parse(coinss)/3).toStringAsFixed(2)}",
                                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black))
                             ]),
                           ],

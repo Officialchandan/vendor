@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:vendor/ui/account_management/terms_and_condition/terms_and_condition.dart';
 import 'package:vendor/ui/web_view_screen/webview_screen.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/utility.dart';
@@ -33,7 +34,9 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
-          onPressed:(){Navigator.pop(context);},
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
         elevation: 0,
         // toolbarHeight: 120,
@@ -110,6 +113,12 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                     title: tr("cancellation_refund_policy_key"),
                     url: "http://vendor.myprofitinc.com/refundpolicy",
                   )),
+        );
+        break;
+      case 3:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => TermsAndCondition()),
         );
         break;
     }

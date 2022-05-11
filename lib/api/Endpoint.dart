@@ -181,4 +181,6 @@ class Endpoint {
   static const String CHECK_PAYMENT = "checkOnlinePayment";
 
   static const String UPI_PAYMENT_HISTORY = "getUpiHistory";
+
+  static const String TNC_WITH_SIGNATURE = "getVendorTncWithSign";
 }
