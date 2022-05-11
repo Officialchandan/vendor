@@ -599,7 +599,7 @@ class _BillingProductsState extends State<BillingProducts> {
                                   children: [
                                     Text("(",
                                         style:
-                                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
+                                            TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
                                     Container(
                                         child: Image.asset(
                                       "assets/images/point.png",
@@ -609,9 +609,9 @@ class _BillingProductsState extends State<BillingProducts> {
                                     Text("${redeemCoins.toStringAsFixed(2)})",
                                         style:
                                             TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
-                                    Text(" \u20B9${(redeemCoins/3).toStringAsFixed(2)}",
+                                    Text(" \u20B9${(redeemCoins / 3).toStringAsFixed(2)}",
                                         style:
-                                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
+                                            TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
                                   ],
                                 ),
                               ]),
@@ -773,10 +773,12 @@ class _BillingProductsState extends State<BillingProducts> {
         log("=====>redeemCoins$redeemCoins");
         log("=====>orderTotal$orderTotal ");
         double rc = redeemCoins / (orderTotal * 3);
+        log("=====>rc$rc");
         double rev = rc * (double.parse(productList[i].sellingPrice * productList[i].count) * 3);
+        log("=====>rc1$rev");
         productList[i].redeemCoins = rev.toStringAsFixed(2);
         print("=====>productList[i].redeemCoins$rc");
-        log("=====>rc$rev");
+
         billingProduct["product_redeem"] = productList[i].redeemCoins;
         billingProduct["amount_paid"] = (double.parse(productList[i].sellingPrice * productList[i].count) -
                 double.parse(productList[i].redeemCoins) / 3)

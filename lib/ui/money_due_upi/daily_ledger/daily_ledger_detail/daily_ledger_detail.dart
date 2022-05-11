@@ -75,7 +75,9 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
     if (widget.order.orderType == 1) {
       reddem = double.parse(widget.order.billingDetails.first.redeemCoins);
 
-      orderTotal = double.parse(widget.order.orderTotal);
+      orderTotal = double.parse(widget.order.billingDetails.first.total);
+      log("ordertt-->${double.parse(widget.order.billingDetails.first.total)} ");
+      log("ordertt-->${(reddem / 3)} ");
       totalComission = double.parse(widget.order.billingDetails.first.commissionValue);
       returnAmountpaid = double.parse(widget.order.billingDetails.first.amountPaid);
       returnRedemption = double.parse(widget.order.billingDetails.first.redeemCoins);
