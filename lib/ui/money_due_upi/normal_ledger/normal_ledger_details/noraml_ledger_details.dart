@@ -73,10 +73,12 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
 
   void calculation() {
     if (widget.order.orderType == 1) {
-      log("reddem--->${widget.order.billingDetails.first.redeemCoins}");
+      log("reddem--->@${widget.order.billingDetails.first.redeemCoins}");
       reddem = double.parse(widget.order.billingDetails.first.redeemCoins);
-      log("reddem--->$reddem");
-      orderTotal = double.parse(widget.order.orderTotal);
+      log("reddem--->@$reddem");
+      orderTotal = double.parse(widget.order.billingDetails.first.total);
+      log("ordertt-->${double.parse(widget.order.billingDetails.first.total)} ");
+      log("ordertt-->${(reddem / 3)} ");
       totalComission = double.parse(widget.order.billingDetails.first.commissionValue);
       returnAmountpaid = double.parse(widget.order.billingDetails.first.amountPaid);
       returnRedemption = double.parse(widget.order.billingDetails.first.redeemCoins);
@@ -562,6 +564,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.w600, color: TextGrey),
                         ),
                         // Row(children: [
+
                         double.parse(widget.order.orderTotal) >= (reddem / 3)
                             ? Text(
                                 "\u20B9 ${(double.parse(widget.order.orderTotal)).toStringAsFixed(2)}",
