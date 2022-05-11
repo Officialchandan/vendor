@@ -48,6 +48,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
         redeemCoins: products.redeemCoins,
         earningCoins: products.earningCoins,
         myProfitRevenue: products.myProfitRevenue,
+        commission: products.commission,
         billingId: "",
         categoryId: "",
         categoryImage: "",
@@ -65,6 +66,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
         productImage: "",
         qty: "1",
         price: "",
+        commission: products.commission,
         total: products.total,
         amountPaid: products.amountPaid,
         redeemCoins: products.redeemCoins,
@@ -266,14 +268,16 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   children: [
                                                     Text(
-                                                      "${productDetails[index].qty} x \u20B9 ${details!.billingType == 1 ? productDetails[index].total : productDetails[index].price}",
+                                                      "${productDetails[index].qty} x \u20B9 ${details!.billingType == 1 ? productDetails[index].total
+                                                          : productDetails[index].price}",
                                                       style: TextStyle(
                                                           fontSize: 13,
                                                           fontWeight: FontWeight.bold,
                                                           color: Colors.grey),
                                                     ),
                                                     Text(
-                                                      "${"commission_key".tr()}: 40",
+                                                      "${"commission_key".tr()}: ${details!.billingType == 1 ? productDetails[index].commission
+                                                          : productDetails[index].commission}",
                                                       style: TextStyle(
                                                           fontSize: 13,
                                                           fontWeight: FontWeight.bold,

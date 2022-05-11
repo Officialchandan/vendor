@@ -163,6 +163,7 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
         categoryId: "",
         categoryImage: "",
         categoryName: "",
+        commission: products.commission,
       );
       productDetails.add(dailyBillingProducts);
     }
