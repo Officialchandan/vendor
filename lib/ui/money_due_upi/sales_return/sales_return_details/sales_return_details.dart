@@ -106,11 +106,11 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
       collectionAmt = 0;
     } else {
       collectionAmt = earnCoinsRs - redeemCoinsRs;
-      if (coinBalanceRs >= earnCoinsRs) {
+      if (coinBalanceRs >= collectionAmt) {
         collectionAmt = 0;
       } else {
-        collectionAmt = earnCoinsRs - coinBalanceRs;
-        collectionFinalAmt = collectionAmt;
+        collectionAmt = collectionAmt - coinBalanceRs;
+
         customerReturnAmt = amtPaid - collectionAmt;
       }
     }

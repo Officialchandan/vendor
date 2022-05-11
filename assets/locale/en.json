@@ -433,5 +433,6 @@
   "redeem_popup_button_key": "Done",
   "order_summary_key": "Order Summary",
 "final_ledger_key": "Final Ledger",
-  "commission_return_key": "Commission Return"
+  "commission_return_key": "Commission Return",
+  "coins_earned__by_customer_key": "Coins Earned by Customer"
 }

@@ -439,5 +439,6 @@
   "redemption_key": "उपयोग Coins",
   "earned_key": "कमाई",
   "final_ledger_key": "फाइनल लेजर",
-  "commission_return_key": "कमीशन रिटर्न"
+  "commission_return_key": "कमीशन रिटर्न",
+  "coins_earned__by_customer_key": "ग्राहक द्वारा अर्जित सिक्के"
 }
