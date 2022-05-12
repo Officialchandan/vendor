@@ -100,7 +100,7 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                           child: Text(
                             "order_summary_key".tr(),
                             style:
-                                GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
+                                GoogleFonts.openSans(fontSize: 18, fontWeight: FontWeight.bold, color: TextBlackLight),
                           ),
                         ),
                         SizedBox(
@@ -126,6 +126,7 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                                         children: [
                                           Container(
                                             height: 70,
+                                            margin: EdgeInsets.only(bottom: 20),
                                             padding: const EdgeInsets.all(10),
                                             decoration: BoxDecoration(
                                               color: Colors.grey.shade200,
@@ -200,7 +201,7 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                                                                     style: TextStyle(
                                                                         fontSize: 13,
                                                                         fontWeight: FontWeight.bold,
-                                                                        color: Colors.grey),
+                                                                        color: TextBlackLight),
                                                                   )
                                                                 : Text(""),
                                                             Text(
@@ -208,7 +209,7 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                                                               style: TextStyle(
                                                                   fontSize: 14,
                                                                   fontWeight: FontWeight.bold,
-                                                                  color: Colors.grey),
+                                                                  color: TextBlackLight),
                                                             ),
                                                           ],
                                                         ),
@@ -245,7 +246,7 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "total_order_value_key".tr(),
+                              "totals_order_value_key".tr(),
                               style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 14, color: TextGrey),
                             ),
                             widget.detail.billingType == 0
@@ -273,7 +274,7 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                             ),
                             widget.detail.billingType == 0
                                 ? Text(
-                                    "\u20B9${totalPayAmt.toStringAsFixed(2)}",
+                                    "\u20B9 ${totalPayAmt.toStringAsFixed(2)}",
                                     style: GoogleFonts.openSans(
                                         fontWeight: FontWeight.bold, fontSize: 15, color: TextBlackLight),
                                   )
@@ -291,12 +292,12 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
                               "redemption_key".tr(),
                               style: GoogleFonts.openSans(
-                                  fontWeight: FontWeight.bold, fontSize: 16, color: TextBlackLight),
+                                  fontWeight: FontWeight.bold, fontSize: 18, color: TextBlackLight),
                             ),
                             Row(
                               children: [
@@ -310,7 +311,7 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                                   width: 20,
                                 ),
                                 Text(
-                                  "${(totalRedeemCoins).toStringAsFixed(2)}) \u20B9${(totalRedeemCoins / 3).toStringAsFixed(2)}",
+                                  "${(totalRedeemCoins).toStringAsFixed(0)}) \u20B9${(totalRedeemCoins / 3).toStringAsFixed(0)}",
                                   style: GoogleFonts.openSans(
                                       fontWeight: FontWeight.w600, fontSize: 24, color: ColorPrimary),
                                 ),

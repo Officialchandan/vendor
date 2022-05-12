@@ -201,7 +201,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                                 children: [
                                   Container(
                                     height: 70,
-                                    margin: const EdgeInsets.only(left: 20, top: 10),
+                                    margin: const EdgeInsets.only(left: 20, bottom: 20),
                                     padding: const EdgeInsets.all(10),
                                     decoration: BoxDecoration(
                                       color: Colors.grey.shade200,
@@ -268,16 +268,14 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   children: [
                                                     Text(
-                                                      "${productDetails[index].qty} x \u20B9 ${details!.billingType == 1 ? productDetails[index].total
-                                                          : productDetails[index].price}",
+                                                      "${productDetails[index].qty} x \u20B9 ${details!.billingType == 1 ? productDetails[index].total : productDetails[index].price}",
                                                       style: TextStyle(
                                                           fontSize: 13,
                                                           fontWeight: FontWeight.bold,
                                                           color: Colors.grey),
                                                     ),
                                                     Text(
-                                                      "${"commission_key".tr()}: ${details!.billingType == 1 ? productDetails[index].commission
-                                                          : productDetails[index].commission}",
+                                                      "${"commission_key".tr()}: ${details!.billingType == 1 ? productDetails[index].commission : productDetails[index].commission}",
                                                       style: TextStyle(
                                                           fontSize: 13,
                                                           fontWeight: FontWeight.bold,
@@ -293,7 +291,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                                     ),
                                   ),
                                   Positioned(
-                                    top: 10,
+                                    top: 0,
                                     left: 0,
                                     child: Container(
                                       height: 70,
