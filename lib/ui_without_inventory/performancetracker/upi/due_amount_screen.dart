@@ -599,9 +599,6 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                                             SizedBox(
                                               height: 5,
                                             ),
-                                            SizedBox(
-                                              height: 10,
-                                            )
                                           ],
                                         ),
                                       ),

@@ -105,7 +105,7 @@ class _freeCoinDetailstate extends State<FreeCoinDetail> {
                       : freeCoinDetails!.billingDetails.length,
                   itemBuilder: ((context, index) {
                     return Container(
-                      margin: const EdgeInsets.symmetric(vertical: 6),
+                      margin: const EdgeInsets.symmetric(vertical: 8),
                       decoration: BoxDecoration(
                         color: Colors.grey.shade200,
                         borderRadius: BorderRadius.circular(8),
@@ -143,7 +143,7 @@ class _freeCoinDetailstate extends State<FreeCoinDetail> {
                                             ? Text(
                                                 "${freeCoinDetails!.orderDetails[index].productName}",
                                                 style: GoogleFonts.openSans(
-                                                    fontSize: 18, fontWeight: FontWeight.bold, color: TextBlackLight),
+                                                    fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
                                               )
                                             : Text(
                                                 "${freeCoinDetails!.billingDetails[index].categoryName}",
@@ -306,11 +306,11 @@ class _freeCoinDetailstate extends State<FreeCoinDetail> {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     "earn_coins_key".tr(),
-                    style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextBlackLight),
+                    style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 18, color: TextBlackLight),
                   ),
                   Row(
                     children: [
@@ -324,7 +324,8 @@ class _freeCoinDetailstate extends State<FreeCoinDetail> {
                       ),
                       freeCoinDetails!.orderType == 0
                           ? Text(
-                              "${freeCoinDetails!.orderDetails[0].earningCoins}) \u20B9${double.parse(freeCoinDetails!.orderDetails[0].earningCoins)}",
+                              "${freeCoinDetails!.orderDetails[0].earningCoins})"
+                                  " \u20B9${(double.parse(freeCoinDetails!.orderDetails[0].earningCoins)/3).toStringAsFixed(2)}",
                               style:
                                   GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 24, color: ColorPrimary),
                             )

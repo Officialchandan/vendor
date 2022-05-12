@@ -1,5 +1,6 @@
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/without_inventory_performance_tracker_category/without_inventory_earning_tillnow/earning_amount.dart';
@@ -41,6 +42,7 @@ class _WithoutInventoryPerformanceTrackerByCategoryState extends State<WithoutIn
         title: "trackers_reports_key".tr(),
       ),
       body: ListView.builder(
+        padding:const EdgeInsets.only(top: 10),
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -52,9 +54,9 @@ class _WithoutInventoryPerformanceTrackerByCategoryState extends State<WithoutIn
                     color: Colors.white,
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey,
-                        offset: Offset(0.0, 1.0), //(x,y)
-                        blurRadius: 6.0,
+                        color: Colors.grey.shade300,
+                        offset: Offset(0.0, 0.0), //(x,y)
+                        blurRadius: 7.0,
                       ),
                     ],
                     borderRadius: BorderRadius.circular(10),
@@ -78,7 +80,11 @@ class _WithoutInventoryPerformanceTrackerByCategoryState extends State<WithoutIn
                       width: 30,
                       fit: BoxFit.contain,
                     ),
-                    title: Text("${options[index]["title"]}"),
+                    title: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      child: Text("${options[index]["title"]}",
+                      style: GoogleFonts.openSans(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 16),),
+                    ),
                     // subtitle: Text("${options[index]["subTitle"]}"),
                   ),
                 ),
