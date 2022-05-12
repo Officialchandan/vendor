@@ -40,7 +40,7 @@ class _PerformanceTrackerWithoutInventoryState extends State<PerformanceTrackerW
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("trackers_reports_key".tr()),
+        title: Text("trackers_reports_key".tr(),style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
         automaticallyImplyLeading: false,
         actions:[
           IconButton(

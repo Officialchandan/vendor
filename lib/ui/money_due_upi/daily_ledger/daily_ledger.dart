@@ -31,6 +31,7 @@ class _DailyLedgerState extends State<DailyLedger> with TickerProviderStateMixin
   String year = "";
   String startDate = "";
   String endDate = "";
+  double totalValue = 0;
   List<CommonLedgerHistory>? _commonLedgerHistory;
   List<OrderData> searchList = [];
 
@@ -351,6 +352,34 @@ class _DailyLedgerState extends State<DailyLedger> with TickerProviderStateMixin
               );
             }),
           ]),
+          bottomNavigationBar: Container(
+            height: 50,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.shade400,
+                  offset: Offset(0.0, 0.0), //(x,y)
+                  blurRadius: 7.0,
+                ),
+              ],
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "net_settlement_amount_key".tr(),
+                    style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 18, color: TextGrey),
+                  ), Text(
+                 " \u20B9${"100".tr()}",
+                    style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 18, color: Colors.green),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );

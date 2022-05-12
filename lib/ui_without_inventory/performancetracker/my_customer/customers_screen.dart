@@ -1,10 +1,13 @@
 import 'dart:async';
 import 'dart:collection';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/model/get_my_customer_response.dart';
+import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/sharedpref.dart';
@@ -44,7 +47,10 @@ class _CustomerScreenState extends State<CustomerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("my_customers_key".tr()),
+        title: Text(
+          "my_customers_key".tr(),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
         actions: [
           InkWell(
             onTap: () {
@@ -88,7 +94,7 @@ class _CustomerScreenState extends State<CustomerScreen> {
                     List<Customer> searchList = [];
 
                     customerList.forEach((element) {
-                      if (element.customerName.toLowerCase().contains(text.trim().toLowerCase())) {
+                      if (element.mobile.toLowerCase().contains(text.trim().toLowerCase())) {
                         searchList.add(element);
                       }
                     });
@@ -99,20 +105,32 @@ class _CustomerScreenState extends State<CustomerScreen> {
                   }
                 },
                 decoration: InputDecoration(
-                    prefixIcon: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Icon(
-                        Icons.search,
-                        color: Colors.black,
-                      ),
+                  prefixIcon: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Icon(
+                      Icons.search,
+                      color: Colors.black,
                     ),
-                    contentPadding: const EdgeInsets.all(10),
-                    prefixIconConstraints: BoxConstraints(maxHeight: 50, maxWidth: 50),
-                    fillColor: Colors.grey.shade200,
-                    filled: true,
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: BorderSide.none),
-                    hintText: "search_customer_key".tr(),
-                    hintStyle: TextStyle(fontWeight: FontWeight.bold)),
+                  ),
+                  contentPadding: const EdgeInsets.all(10),
+                  prefixIconConstraints: BoxConstraints(maxHeight: 50, maxWidth: 50),
+                  filled: true,
+                  hintText: "search_customer_key".tr(),
+                  hintStyle: TextStyle(fontWeight: FontWeight.bold),
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(color: textFieldBorderColor, width: 1.0),
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: textFieldBorderColor, width: 1.0),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: textFieldBorderColor, width: 1.0),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
               ),
             ),
             const SizedBox(
@@ -237,37 +255,38 @@ class _CustomerScreenState extends State<CustomerScreen> {
                       Customer customer = snapshot.data![index];
 
                       return Container(
+                        height: 70,
                         margin: EdgeInsets.only(left: 10, right: 10),
-                        padding: EdgeInsets.all(10),
+                        padding: EdgeInsets.all(12),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.grey,
-                              offset: Offset(0.0, 1.0), //(x,y)
-                              blurRadius: 6.0,
+                              color: Colors.grey.shade300,
+                              offset: Offset(0.0, 0.0), //(x,y)
+                              blurRadius: 7.0,
                             ),
                           ],
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Expanded(
                                     child: Text(
                                   customer.customerName,
-                                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
+                                  style: GoogleFonts.openSans(
+                                      color: TextBlackLight, fontWeight: FontWeight.bold, fontSize: 16),
                                 )),
                                 Text(
-                                  Utility.getFormatDate1(customer.date),
-                                  style: TextStyle(color: Colors.black, fontSize: 11),
+                                  DateFormat("dd MMM yyyy").format(customer.date),
+                                  style:
+                                      GoogleFonts.openSans(color: TextGrey, fontSize: 13, fontWeight: FontWeight.w600),
                                 ),
                               ],
-                            ),
-                            const SizedBox(
-                              height: 10,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -275,7 +294,8 @@ class _CustomerScreenState extends State<CustomerScreen> {
                                 Expanded(
                                     child: Text(
                                   "+91 ${customer.mobile}",
-                                  style: TextStyle(color: Colors.black, fontSize: 14),
+                                  style:
+                                      GoogleFonts.openSans(color: TextGrey, fontSize: 13, fontWeight: FontWeight.w600),
                                 )),
                                 // Text(
                                 //   "amount_spend_key".tr() +
