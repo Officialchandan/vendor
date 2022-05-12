@@ -363,7 +363,6 @@ class _DailyLedgerState extends State<DailyLedger> with TickerProviderStateMixin
                   blurRadius: 7.0,
                 ),
               ],
-              borderRadius: BorderRadius.circular(10),
             ),
             child: Center(
               child: Row(
