@@ -266,11 +266,11 @@ class _ViewProductScreenState extends State<ViewProductScreen> {
 
       if (response.success) {
         products = response.data!;
-
         // products.sort((a, b) => int.parse(b.sellingPrice).compareTo(int.parse(a.sellingPrice)));
         streamController.add(products);
       } else {
         Utility.showToast(msg: response.message);
+        streamController.add([]);
       }
     } else {
       Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
