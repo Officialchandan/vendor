@@ -721,32 +721,29 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                 ],
               ),
               //  Transaction By
-
-              Column(
-                children: [
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "To: MyProfit",
-                            style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
-                          ),
-                          Text(
-                            "From: George Walker",
-                            style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
+              SizedBox(
+                height: 5,
               ),
+              widget.order.status == 1
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "To: ${widget.order.paymentDetails.first.to}",
+                              style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                            ),
+                            Text(
+                              "From: ${widget.order.paymentDetails.first.from}",
+                              style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                            ),
+                          ],
+                        ),
+                      ],
+                    )
+                  : Container(),
               // SizedBox(
               //   height: 8,
               // ),
@@ -757,60 +754,44 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
               SizedBox(
                 height: 20,
               ),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.32,
-                padding: const EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 20),
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: TextGrey), borderRadius: BorderRadius.circular(5)),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "UPI Transaction ID",
-                      style: GoogleFonts.openSans(fontSize: 16, color: TextGrey),
-                    ),
-                    Text(
-                      "2114587950365",
-                      style: GoogleFonts.openSans(fontSize: 16, color: TextBlackLight, fontWeight: FontWeight.w600),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      "To: MyProfit",
-                      style: GoogleFonts.openSans(fontSize: 16, color: TextGrey),
-                    ),
-                    Text(
-                      "paytm25974556wer584206",
-                      style: GoogleFonts.openSans(fontSize: 16, color: TextBlackLight, fontWeight: FontWeight.w600),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      "From: George Walker",
-                      style: GoogleFonts.openSans(fontSize: 16, color: TextGrey),
-                    ),
-                    Text(
-                      "George.walker@gmail.com",
-                      style: GoogleFonts.openSans(fontSize: 16, color: TextBlackLight, fontWeight: FontWeight.w600),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      "Paytm Transaction ID",
-                      style: GoogleFonts.openSans(fontSize: 16, color: TextGrey),
-                    ),
-                    Text(
-                      "DudAk45987",
-                      style: GoogleFonts.openSans(fontSize: 16, color: TextBlackLight, fontWeight: FontWeight.w600),
-                    ),
-                  ],
-                ),
-              ),
+              widget.order.status == 1
+                  ? Container(
+                      height: MediaQuery.of(context).size.height * 0.20,
+                      padding: const EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 20),
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 1, color: TextGrey), borderRadius: BorderRadius.circular(5)),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Bank Transaction ID",
+                            style: GoogleFonts.openSans(fontSize: 16, color: TextGrey),
+                          ),
+                          Text(
+                            "${widget.order.paymentDetails.first.txnId}",
+                            style:
+                                GoogleFonts.openSans(fontSize: 16, color: TextBlackLight, fontWeight: FontWeight.w600),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            "To: ${widget.order.paymentDetails.first.to}",
+                            style: GoogleFonts.openSans(fontSize: 16, color: TextGrey),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            "From: ${widget.order.paymentDetails.first.from}",
+                            style: GoogleFonts.openSans(fontSize: 16, color: TextGrey),
+                          ),
+                        ],
+                      ),
+                    )
+                  : Container(),
             ],
           ),
         ),
@@ -867,34 +848,31 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                       ],
                     ),
                     //  Transaction By
-
-                    Column(
-                      children: [
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "To: MyProfit",
-                                  style:
-                                      GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
-                                ),
-                                Text(
-                                  "From: George Walker",
-                                  style:
-                                      GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
+                    SizedBox(
+                      height: 5,
                     ),
+                    widget.order.status == 1
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "To: ${widget.order.paymentDetails.first.to}",
+                                    style: GoogleFonts.openSans(
+                                        fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                                  ),
+                                  Text(
+                                    "From: ${widget.order.paymentDetails.first.from}",
+                                    style: GoogleFonts.openSans(
+                                        fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )
+                        : Container(),
                     SizedBox(
                       height: 8,
                     ),
@@ -983,34 +961,31 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                       ],
                     ),
                     //  Transaction By
-
-                    Column(
-                      children: [
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "To: MyProfit",
-                                  style:
-                                      GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
-                                ),
-                                Text(
-                                  "From: George Walker",
-                                  style:
-                                      GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
+                    SizedBox(
+                      height: 5,
                     ),
+                    widget.order.status == 1
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "To: ${widget.order.paymentDetails.first.to}",
+                                    style: GoogleFonts.openSans(
+                                        fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                                  ),
+                                  Text(
+                                    "From: ${widget.order.paymentDetails.first.from}",
+                                    style: GoogleFonts.openSans(
+                                        fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )
+                        : Container(),
 
                     SizedBox(
                       height: 20,
@@ -1496,32 +1471,31 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                     ],
                   ),
                   //  Transaction By
-
-                  Column(
-                    children: [
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "To: MyProfit",
-                                style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
-                              ),
-                              Text(
-                                "From: George Walker",
-                                style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
+                  SizedBox(
+                    height: 5,
                   ),
+                  widget.order.status == 1
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "To: ${widget.order.paymentDetails.first.to}",
+                                  style:
+                                      GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                                ),
+                                Text(
+                                  "From: ${widget.order.paymentDetails.first.from}",
+                                  style:
+                                      GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                                ),
+                              ],
+                            ),
+                          ],
+                        )
+                      : Container(),
                   Container(
                     height: 50,
                     alignment: Alignment.bottomCenter,

@@ -47,12 +47,14 @@ class OrderData {
     required this.orderTotal,
     required this.myprofitRevenue,
     required this.status,
+    required this.txnId,
     required this.dateTime,
     required this.isReturn,
     required this.totalearningcoins,
     required this.orderDetails,
-    required this.billingDetails,
+    required this.paymentDetails,
     required this.vendorGivenCoins,
+    required this.billingDetails,
     // required this.orderType,
   });
 
@@ -63,9 +65,12 @@ class OrderData {
   String orderTotal;
   String myprofitRevenue;
   int status;
+  String txnId;
   DateTime dateTime;
+
   int isReturn;
   String totalearningcoins;
+  List<PaymentDetail> paymentDetails;
   List<OrderDetail> orderDetails;
   List<BillingDetail> billingDetails;
   String vendorGivenCoins;
@@ -84,9 +89,14 @@ class OrderData {
         orderTotal: json["order_total"] == null ? "0" : json["order_total"].toString(),
         myprofitRevenue: json["myprofit_revenue"] == null ? "" : json["myprofit_revenue"].toString(),
         status: json["status"] == null ? -1 : json["status"],
+        txnId: json["txn_id"] == null ? "0" : json["txn_id"].toString(),
         dateTime: json["date_time"] == null ? DateTime.now() : DateTime.parse(json["date_time"]),
+
         isReturn: json["is_return"] == null ? -1 : json["is_return"],
         totalearningcoins: json["total_earning_coins"] == null ? "" : json["total_earning_coins"].toString(),
+        paymentDetails: json["payment_details"] == null
+            ? []
+            : List<PaymentDetail>.from(json["payment_details"].map((x) => PaymentDetail.fromMap(x))),
         orderDetails: json["order_details"] == null
             ? []
             : List<OrderDetail>.from(json["order_details"].map((x) => OrderDetail.fromMap(x))),
@@ -105,7 +115,9 @@ class OrderData {
         "order_total": orderTotal == null ? null : orderTotal,
         "myprofit_revenue": myprofitRevenue == null ? null : myprofitRevenue,
         "status": status == null ? null : status,
+        "txn_id": txnId == null ? null : txnId,
         "date_time": dateTime == null ? null : dateTime.toIso8601String(),
+        "payment_details": paymentDetails == null ? null : List<dynamic>.from(paymentDetails.map((x) => x.toMap())),
         "is_return": isReturn == null ? null : isReturn,
         "total_earning_coins": totalearningcoins == null ? null : totalearningcoins,
         "order_details": orderDetails == null ? null : List<dynamic>.from(orderDetails.map((x) => x.toMap())),
@@ -113,7 +125,11 @@ class OrderData {
 
   @override
   String toString() {
-    return 'OrderData{vendorId: $vendorId, firstName: $firstName, mobile: $mobile, orderId: $orderId, orderTotal: $orderTotal, myprofitRevenue: $myprofitRevenue, status: $status, dateTime: $dateTime, isReturn: $isReturn, orderDetails: $orderDetails, billingDetails: $billingDetails, orderType: $orderType}';
+    return 'OrderData{vendorId: $vendorId, firstName: $firstName, '
+        'mobile: $mobile, orderId: $orderId, orderTotal: $orderTotal,'
+        ' myprofitRevenue: $myprofitRevenue, status: $status, dateTime: $dateTime,'
+        ' isReturn: $isReturn, orderDetails: $orderDetails, '
+        'billingDetails: $billingDetails, orderType: $orderType}';
   }
 }
 
@@ -293,5 +309,53 @@ class BillingDetail {
         "earning_coins": earningCoins == null ? null : earningCoins,
         "amount_paid": amountPaid == null ? null : amountPaid,
         "commission_value": commissionValue == null ? null : commissionValue,
+      };
+}
+
+class PaymentDetail {
+  PaymentDetail({
+    required this.txnId,
+    required this.txnType,
+    required this.gatewayName,
+    required this.paymentMode,
+    required this.responseMsg,
+    required this.txnDate,
+    required this.from,
+    required this.to,
+  });
+
+  String txnId;
+  String txnType;
+  String gatewayName;
+  String paymentMode;
+  String responseMsg;
+  String txnDate;
+  String from;
+  String to;
+
+  factory PaymentDetail.fromJson(String str) => PaymentDetail.fromMap(json.decode(str));
+
+  String toJson() => json.encode(toMap());
+
+  factory PaymentDetail.fromMap(Map<String, dynamic> json) => PaymentDetail(
+        txnId: json["txn_id"] == null ? "" : json["txn_id"].toString(),
+        txnType: json["txnType"] == null ? "" : json["txnType"].toString(),
+        gatewayName: json["gateway_name"] == null ? "" : json["gateway_name"].toString(),
+        paymentMode: json["payment_mode"] == null ? "" : json["payment_mode"].toString(),
+        responseMsg: json["response_msg"] == null ? "" : json["response_msg"].toString(),
+        txnDate: json["txn_date"] == null ? "" : json["txn_date"].toString(),
+        from: json["from"] == null ? "" : json["from"].toString(),
+        to: json["to"] == null ? "" : json["to"].toString(),
+      );
+
+  Map<String, dynamic> toMap() => {
+        "txn_id": txnId == null ? null : txnId,
+        "txnType": txnType == null ? null : txnType,
+        "gateway_name": gatewayName == null ? null : gatewayName,
+        "payment_mode": paymentMode == null ? null : paymentMode,
+        "response_msg": responseMsg == null ? null : responseMsg,
+        "txn_date": txnDate == null ? null : txnDate,
+        "from": from == null ? null : from,
+        "to": to == null ? null : to,
       };
 }
