@@ -201,6 +201,7 @@ class _BillingScreenState extends State<BillingScreen> {
                                 check = state.succes;
                                 message = state.message;
                                 status = state.status;
+                                nameController.clear();
                                 firstName = "";
                                 lastName = "";
                               }
