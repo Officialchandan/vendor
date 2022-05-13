@@ -286,17 +286,25 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 20, bottom: 20),
+          padding: const EdgeInsets.only(
+            top: 20,
+            bottom: 20,
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Container(
-                alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.only(left: 14, right: 0),
-                child: Text(
-                  "${widget.order.firstName}",
-                  style: GoogleFonts.openSans(fontSize: 18, fontWeight: FontWeight.bold, color: TextBlackLight),
-                ),
+              Padding(
+                padding: const EdgeInsets.only(left: 14, right: 14),
+                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                  Text(
+                    "${widget.order.firstName}",
+                    style: GoogleFonts.openSans(fontSize: 18, fontWeight: FontWeight.bold, color: TextBlackLight),
+                  ),
+                  Text(
+                    "orderId : ${widget.order.orderId}",
+                    style: GoogleFonts.openSans(fontSize: 13, fontWeight: FontWeight.w600, color: TextGrey),
+                  ),
+                ]),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 14, right: 14),
@@ -733,7 +741,8 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           children: [
                             Text(
                               "To: ${widget.order.paymentDetails.first.to}",
-                              style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                              style: GoogleFonts.openSans(
+                                  fontWeight: FontWeight.bold, fontSize: 16, color: TextBlackLight),
                             ),
                             Text(
                               "From: ${widget.order.paymentDetails.first.from}",
@@ -770,7 +779,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                             style: GoogleFonts.openSans(fontSize: 16, color: TextGrey),
                           ),
                           Text(
-                            "${widget.order.paymentDetails.first.txnId}",
+                            "${widget.order.paymentDetails.first.bankTxnId}",
                             style:
                                 GoogleFonts.openSans(fontSize: 16, color: TextBlackLight, fontWeight: FontWeight.w600),
                           ),
@@ -1483,8 +1492,8 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                               children: [
                                 Text(
                                   "To: ${widget.order.paymentDetails.first.to}",
-                                  style:
-                                      GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                                  style: GoogleFonts.openSans(
+                                      fontWeight: FontWeight.w600, fontSize: 16, color: TextBlackLight),
                                 ),
                                 Text(
                                   "From: ${widget.order.paymentDetails.first.from}",
@@ -1527,7 +1536,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
       ),
       builder: (context) {
         return Container(
-            height: MediaQuery.of(context).size.height * 0.42,
+            height: MediaQuery.of(context).size.height * 0.50,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
               color: Colors.white,
@@ -1766,8 +1775,8 @@ class DirectBillingListItem extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: Container(
-                          child: Image.asset(
-                            "assets/images/account-ic6.png",
+                          child: Image.network(
+                            "${detail.categoryImage}",
                             height: 45,
                             width: 45,
                             fit: BoxFit.cover,

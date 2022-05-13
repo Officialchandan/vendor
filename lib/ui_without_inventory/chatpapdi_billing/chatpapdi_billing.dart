@@ -87,7 +87,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                   width: 35,
                 )
               ]),
-              actions:[
+              actions: [
                 IconButton(
                   icon: Icon(Icons.home),
                   onPressed: () {
@@ -532,7 +532,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                               )),
                               Text(" $coinss)",
                                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
-                              Text(" \u20B9${(double.parse(coinss)/3).toStringAsFixed(2)}",
+                              Text(" \u20B9${(double.parse(coinss) / 3).toStringAsFixed(2)}",
                                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black))
                             ]),
                           ],
@@ -688,7 +688,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
     input["mobile"] = mobileController.text;
     input["bill_amount"] = amountController.text;
     input["full_name"] = nameController.text;
-
+    input["category_id"] = "0";
     input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     input["total_pay"] = amount;
     input["coin_deducted"] = coinss;

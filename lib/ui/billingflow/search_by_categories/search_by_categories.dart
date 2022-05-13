@@ -24,7 +24,8 @@ class SearchByCategory extends StatefulWidget {
   final String firstName;
   final String lastName;
 
-  SearchByCategory({required this.catid, required this.mobile, required this.coin, required this.firstName, required this.lastName});
+  SearchByCategory(
+      {required this.catid, required this.mobile, required this.coin, required this.firstName, required this.lastName});
 
   @override
   _SearchByCategoryState createState() => _SearchByCategoryState(this.catid, this.mobile, this.coin);
@@ -64,6 +65,10 @@ class _SearchByCategoryState extends State<SearchByCategory> {
   void initState() {
     super.initState();
     searchByCategoriesBloc.add(ProductsSearchByCategoriesEvent(input: widget.catid));
+    log("widget.firstName---->${widget.firstName}");
+    log("widget.lastName---->${widget.lastName}");
+    log("widget.coin---->${widget.coin}");
+
     // ApiProvider().getProductByCategories(widget.catid);
   }
 
@@ -184,7 +189,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                         BoxShadow(
                           color: Colors.grey.shade300,
                           offset: Offset(0.0, 0.0), //(x,y)
-                          blurRadius:7.0,
+                          blurRadius: 7.0,
                         ),
                       ],
                       borderRadius: BorderRadius.circular(10),
@@ -318,10 +323,12 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                                           onPressed: () async {
                                                             if (await Network.isConnected()) {
                                                               searchByCategoriesBloc.add(
-                                                                SearchByCategoriesDecrementEvent(
-                                                                    index: index, count: 1));
-                                                              if (searchList[index].count <=1) {
-                                                                searchByCategoriesBloc.add(CheckBoxSearchByCategoriesEvent(check: false, index: index));
+                                                                  SearchByCategoriesDecrementEvent(
+                                                                      index: index, count: 1));
+                                                              if (searchList[index].count <= 1) {
+                                                                searchByCategoriesBloc.add(
+                                                                    CheckBoxSearchByCategoriesEvent(
+                                                                        check: false, index: index));
                                                               }
                                                             } else {
                                                               Utility.showToast(
@@ -466,7 +473,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                             mobile: widget.mobile,
                             firstName: widget.firstName,
                             lastName: widget.lastName,
-                            coin: double.parse(widget.coin),
+                            coin: widget.coin != null ? double.parse(widget.coin) : 0.0,
                           ),
                           type: PageTransitionType.fade));
                 }
@@ -482,7 +489,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
               child: Center(
                 child: Text(
                   "proceed_key".tr(),
-                  style: TextStyle(color: Colors.white,fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
               height: height * 0.07,

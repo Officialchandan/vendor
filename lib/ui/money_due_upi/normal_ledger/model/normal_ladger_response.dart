@@ -47,7 +47,7 @@ class OrderData {
     required this.orderTotal,
     required this.myprofitRevenue,
     required this.status,
-    required this.txnId,
+    required this.paymentOrderId,
     required this.dateTime,
     required this.isReturn,
     required this.totalearningcoins,
@@ -65,7 +65,7 @@ class OrderData {
   String orderTotal;
   String myprofitRevenue;
   int status;
-  String txnId;
+  String paymentOrderId;
   DateTime dateTime;
 
   int isReturn;
@@ -89,7 +89,8 @@ class OrderData {
         orderTotal: json["order_total"] == null ? "0" : json["order_total"].toString(),
         myprofitRevenue: json["myprofit_revenue"] == null ? "" : json["myprofit_revenue"].toString(),
         status: json["status"] == null ? -1 : json["status"],
-        txnId: json["txn_id"] == null ? "0" : json["txn_id"].toString(),
+        paymentOrderId: json["payment_order_id"] == null ? "0" : json["payment_order_id"].toString(),
+
         dateTime: json["date_time"] == null ? DateTime.now() : DateTime.parse(json["date_time"]),
 
         isReturn: json["is_return"] == null ? -1 : json["is_return"],
@@ -115,7 +116,7 @@ class OrderData {
         "order_total": orderTotal == null ? null : orderTotal,
         "myprofit_revenue": myprofitRevenue == null ? null : myprofitRevenue,
         "status": status == null ? null : status,
-        "txn_id": txnId == null ? null : txnId,
+        "payment_order_id": paymentOrderId == null ? null : paymentOrderId,
         "date_time": dateTime == null ? null : dateTime.toIso8601String(),
         "payment_details": paymentDetails == null ? null : List<dynamic>.from(paymentDetails.map((x) => x.toMap())),
         "is_return": isReturn == null ? null : isReturn,
@@ -314,7 +315,7 @@ class BillingDetail {
 
 class PaymentDetail {
   PaymentDetail({
-    required this.txnId,
+    required this.bankTxnId,
     required this.txnType,
     required this.gatewayName,
     required this.paymentMode,
@@ -324,7 +325,7 @@ class PaymentDetail {
     required this.to,
   });
 
-  String txnId;
+  String bankTxnId;
   String txnType;
   String gatewayName;
   String paymentMode;
@@ -338,7 +339,7 @@ class PaymentDetail {
   String toJson() => json.encode(toMap());
 
   factory PaymentDetail.fromMap(Map<String, dynamic> json) => PaymentDetail(
-        txnId: json["txn_id"] == null ? "" : json["txn_id"].toString(),
+        bankTxnId: json["bankTxnId"] == null ? "" : json["bankTxnId"].toString(),
         txnType: json["txnType"] == null ? "" : json["txnType"].toString(),
         gatewayName: json["gateway_name"] == null ? "" : json["gateway_name"].toString(),
         paymentMode: json["payment_mode"] == null ? "" : json["payment_mode"].toString(),
@@ -349,7 +350,7 @@ class PaymentDetail {
       );
 
   Map<String, dynamic> toMap() => {
-        "txn_id": txnId == null ? null : txnId,
+        "bankTxnId": bankTxnId == null ? null : bankTxnId,
         "txnType": txnType == null ? null : txnType,
         "gateway_name": gatewayName == null ? null : gatewayName,
         "payment_mode": paymentMode == null ? null : paymentMode,
