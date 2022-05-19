@@ -519,7 +519,11 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           },
                           child: Text(
                             "view_details_key".tr(),
-                            style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.bold, color: TextGrey),
+                            style: GoogleFonts.openSans(
+                                decoration: TextDecoration.underline,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: TextGrey),
                           ),
                         )
                       : Container(
@@ -830,7 +834,11 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           },
                           child: Text(
                             "view_details_key".tr(),
-                            style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.bold, color: TextGrey),
+                            style: GoogleFonts.openSans(
+                                decoration: TextDecoration.underline,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: TextGrey),
                           ),
                         ),
                       ],

@@ -234,7 +234,7 @@ class DirectBillingDetails {
         earningCoins: json["earning_coins"] == null ? "" : json["earning_coins"].toString(),
         myProfitRevenue: json["myprofit_revenue"] == null ? "0" : json["myprofit_revenue"].toString(),
         total: json["total"] == null ? "0" : json["total"].toString(),
-        orderedWalletBalance: json["ordered_wallet_balance"] == null ? null : json["ordered_wallet_balance"],
+        orderedWalletBalance: json["ordered_wallet_balance"] == null ? "" : json["ordered_wallet_balance"].toString(),
       );
 
   Map<String, dynamic> toMap() => {

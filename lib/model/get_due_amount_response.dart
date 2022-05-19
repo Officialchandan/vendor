@@ -1,7 +1,7 @@
-// // To parse this JSON data, do
+// // // To parse this JSON data, do
+// // //
+// // //     final getDueAmountResponse = getDueAmountResponseFromMap(jsonString);
 // //
-// //     final getDueAmountResponse = getDueAmountResponseFromMap(jsonString);
-//
 // import 'dart:convert';
 //
 // class GetDueAmountResponse {

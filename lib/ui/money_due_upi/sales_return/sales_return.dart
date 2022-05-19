@@ -286,13 +286,18 @@ class _BillingDetailsWidgetState extends State<BillingDetailsWidget> {
                         ),
                       ],
                     ),
-                    Text(
-                      "\u20B9$payAmt",
-                      style: GoogleFonts.openSans(
-                          color: colorStatus == "0" ? ApproveTextColor : RejectedTextColor,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
-                    ),
+                    payAmt == "0"
+                        ? Text(
+                            "\u20B9$payAmt",
+                            style: GoogleFonts.openSans(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+                          )
+                        : Text(
+                            "\u20B9$payAmt",
+                            style: GoogleFonts.openSans(
+                                color: colorStatus == "0" ? ApproveTextColor : RejectedTextColor,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
                   ],
                 ),
               ),
