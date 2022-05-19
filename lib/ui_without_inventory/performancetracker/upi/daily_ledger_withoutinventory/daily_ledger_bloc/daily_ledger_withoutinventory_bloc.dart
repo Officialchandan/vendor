@@ -23,7 +23,7 @@ class DailyLedgerHistoryBloc extends Bloc<DailyLedgerHistoryEvent, DailyLedgerHi
   }
 
   Stream<DailyLedgerHistoryState> getDailyLedgerHistoryApi(input) async* {
-    log("===>getDailyLedgerHistoryApi");
+    log("===>getDailyLedgerHistoryApi$input");
     if (await Network.isConnected()) {
       NormalLedgerResponse response = await apiProvider.getNormalLedgerHistory(input);
       if (response.success) {
@@ -38,91 +38,6 @@ class DailyLedgerHistoryBloc extends Bloc<DailyLedgerHistoryEvent, DailyLedgerHi
         orderList.sort((a, b) => b.dateTime.compareTo(a.dateTime));
         yield GetDailyLedgerState(orderList: orderList);
 
-        /*
-        List<CommonLedgerHistory> products = [];
-        for (GetNormalLedgerHistoryData data in response.data!) {
-          List<CommonData> listOrderDetail = [];
-          data.orderDetails.forEach((element) {
-            CommonData commonData = CommonData(
-                orderId: element.orderId.toString(),
-                billingId: "",
-                categoryId: "",
-                categoryName: "",
-                categoryImage: "",
-                productImage: element.productImage,
-                productId: element.productId.toString(),
-                productName: element.productName,
-                price: element.price,
-                qty: element.qty.toString(),
-                total: element.total,
-                amountPaid: element.amountPaid,
-                redeemCoins: element.redeemCoins,
-                earningCoins: element.earningCoins,
-                myprofitRevenue: element.myprofitRevenue,
-                isReturn: element.isReturn.toString());
-
-            listOrderDetail.add(commonData);
-          });
-          CommonLedgerHistory commonLedgerHistory = CommonLedgerHistory(
-            vendorId: data.vendorId.toString(),
-            mobile: data.mobile,
-            firstName: data.firstName,
-            orderId: data.orderId,
-            billingId: data.billingId,
-            orderTotal: data.orderTotal,
-            myprofitRevenue: data.myprofitRevenue,
-            status: data.status.toString(),
-            dateTime: data.dateTime,
-            isReturn: data.isReturn.toString(),
-            orderDetails: listOrderDetail,
-            billingDetails: [],
-          );
-          commonLedgerHistory.billingType = 0;
-          products.add(commonLedgerHistory);
-        }
-        for (GetNormalLedgerHistoryDirectBilling data in response.directBilling!) {
-          List<CommonData> listOrderDetail = [];
-          data.billingDetails.forEach((element) {
-            CommonData commonData = CommonData(
-              orderId: "",
-              billingId: element.billingId.toString(),
-              categoryId: element.categoryId,
-              categoryName: element.categoryName,
-              categoryImage: element.categoryImage,
-              productImage: "",
-              productId: "",
-              productName: "",
-              price: "",
-              qty: "",
-              total: "",
-              amountPaid: element.amountPaid,
-              redeemCoins: element.redeemCoins,
-              earningCoins: element.earningCoins,
-              myprofitRevenue: "",
-              isReturn: "",
-            );
-
-            listOrderDetail.add(commonData);
-          });
-          CommonLedgerHistory commonLedgerHistory = CommonLedgerHistory(
-            vendorId: data.vendorId.toString(),
-            mobile: data.mobile,
-            firstName: data.firstName,
-            orderId: "",
-            billingId: data.billingId.toString(),
-            orderTotal: data.orderTotal,
-            myprofitRevenue: data.myprofitRevenue,
-            status: data.status.toString(),
-            dateTime: data.dateTime,
-            isReturn: data.isReturn.toString(),
-            orderDetails: [],
-            billingDetails: listOrderDetail,
-          );
-          log("====>${commonLedgerHistory}");
-          commonLedgerHistory.billingType = 1;
-          products.add(commonLedgerHistory);
-        }
-        log("====>${products[0].myprofitRevenue}");*/
         // yield GetNormalLedgerHistoryState(data: products);
       } else {
         yield GetDailyLedgerHistoryFailureState(succes: response.success, message: response.message);

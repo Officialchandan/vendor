@@ -10,6 +10,7 @@ import 'package:vendor/ui/money_due_upi/redeem_coin/response/redeem_coin_respons
 import 'package:vendor/ui_without_inventory/performancetracker/upi/redeem_coins/bloc/redeem_coin_history_bloc.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/upi/redeem_coins/bloc/redeem_coin_history_event.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/upi/redeem_coins/bloc/redeem_coin_history_state.dart';
+import 'package:vendor/ui_without_inventory/performancetracker/upi/redeem_coins/redeem_coin_detail.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/widget/calendar_bottom_sheet.dart';
@@ -44,7 +45,9 @@ class _ReddemCoinHistoryState extends State<ReddemCoinHistory> {
         appBar: AppBar(
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios),
-            onPressed: (){Navigator.pop(context);},
+            onPressed: () {
+              Navigator.pop(context);
+            },
           ),
           title: Text(
             "redeem_coins_key".tr(),
@@ -210,7 +213,7 @@ class _DirectBillingListState extends State<DirectBillingList> {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 14),
-      padding: EdgeInsets.all(14),
+      padding: EdgeInsets.all(12),
       height: 80,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -223,34 +226,53 @@ class _DirectBillingListState extends State<DirectBillingList> {
         ],
         borderRadius: BorderRadius.circular(10),
       ),
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("${widget.detail.mobile}",style: TextStyle(color: TextBlackLight, fontWeight: FontWeight.bold, fontSize: 18),),
-                Text("${DateFormat("dd MMM yyyy").format(DateTime.parse(widget.detail.dateTime))}",
-                  style: GoogleFonts.openSans(color: TextBlackLight, fontWeight: FontWeight.w600, fontSize: 13),),
-              ],
-            ),
-            Row(children: [
-              Text(
-                "${"redeemed_key".tr()}: ",
+      child: InkWell(
+        splashColor: Colors.transparent,
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => RedeemCoinDetails(
+                        detail: widget.detail,
+                      )));
+        },
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "${widget.detail.mobile}",
+                    style: TextStyle(color: TextBlackLight, fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                  Text(
+                    "${DateFormat("dd MMM yyyy").format(DateTime.parse(widget.detail.dateTime))}",
+                    style: GoogleFonts.openSans(color: TextBlackLight, fontWeight: FontWeight.w600, fontSize: 13),
+                  ),
+                ],
+              ),
+              Row(children: [
+                Text(
+                  "${"redeemed_key".tr()}: ",
                   style: GoogleFonts.openSans(color: TextGrey, fontWeight: FontWeight.w600, fontSize: 13),
-              ),
-              Image.asset("assets/images/point.png",width: 14,),
-              Text(
-                "${widget.detail.totalRedeemCoins} ",
-                style: GoogleFonts.openSans(color: TextBlackLight, fontWeight: FontWeight.bold, fontSize: 13),
-              ),
-              Text(
-                "(\u20B9${(double.parse(widget.detail.totalRedeemCoins) / 3).toStringAsFixed(2)})",
-                style: GoogleFonts.openSans(color: ColorPrimary, fontWeight: FontWeight.w600, fontSize: 16),
-              ),
+                ),
+                Image.asset(
+                  "assets/images/point.png",
+                  width: 14,
+                ),
+                Text(
+                  "${widget.detail.totalRedeemCoins} ",
+                  style: GoogleFonts.openSans(color: TextBlackLight, fontWeight: FontWeight.bold, fontSize: 13),
+                ),
+                Text(
+                  "(\u20B9${(double.parse(widget.detail.totalRedeemCoins) / 3).toStringAsFixed(2)})",
+                  style: GoogleFonts.openSans(color: ColorPrimary, fontWeight: FontWeight.w600, fontSize: 20),
+                ),
+              ]),
             ]),
-          ]),
+      ),
     );
   }
 }

@@ -6,7 +6,8 @@ import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vendor/main.dart';
-import 'package:vendor/model/get_my_customer_response.dart';
+import 'package:vendor/model/chat_papdi_module/get_customer_of_chatpapdi.dart';
+import 'package:vendor/ui_without_inventory/performancetracker/my_customer/customer_detail_screen.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/network.dart';
@@ -136,102 +137,6 @@ class _CustomerScreenState extends State<CustomerScreen> {
             const SizedBox(
               height: 20,
             ),
-            // MaterialButton(
-            //   onPressed: () {
-            //     equation = txtSearch.text.trim();
-            //     expression = equation;
-            //
-            //
-            //     String str1 = expression;
-            //
-            //
-            //     List<String> charList = [];
-            //     String ma = "";
-            //     for (int i = 0; i < str1.length; i++) {
-            //       if (str1[i] == "+" ||
-            //           str1[i] == "-" ||
-            //           str1[i] == "×" ||
-            //           str1[i] == "÷" ||
-            //           str1[i] == "/" ||
-            //           str1[i] == "*" ||
-            //           str1[i] == "%") {
-            //         if (ma.isNotEmpty) {
-            //           charList.add(ma);
-            //         }
-            //         charList.add(str1[i]);
-            //         ma = "";
-            //       } else {
-            //         ma = ma + str1[i];
-            //         if (i == str1.length - 1) {
-            //           if (ma.isNotEmpty) {
-            //             charList.add(ma);
-            //           }
-            //         }
-            //       }
-            //     }
-            //
-            //     int l = charList.where((element) => element == "%").toList().length;
-            //
-            //     for (int i = 0; i < l; i++) {
-            //       print("charList-->$charList");
-            //       int i = charList.indexWhere((element) => element == "%");
-            //       int a = i - 1;
-            //       int b = i + 1;
-            //       double aa = double.parse(charList[a]);
-            //       double bb = double.parse(charList[b]);
-            //       double cc = (aa * bb) / 100;
-            //       print("cc-->$cc");
-            //       charList[a] = cc.toString();
-            //       print("charList1-->$charList");
-            //       charList.removeAt(b);
-            //       print("charList1-->$charList");
-            //       charList.removeAt(i);
-            //       print("charList1-->$charList");
-            //     }
-            //
-            //     String exp = "";
-            //     charList.forEach((element) {
-            //       exp += element;
-            //     });
-            //
-            //     print("exp-->$exp");
-            //     expression = exp;
-            //
-            //     // str[0].replaceAll("+", "_").replaceAll("-", "_").replaceAll("×", "_").replaceAll("÷", "_");
-            //     // List<String> strList1 = str[0].split("_");
-            //     // String str2 = strList1.last;
-            //     //
-            //     // String str3 = str[1];
-            //     // str[1].replaceAll("+", "_").replaceAll("-", "_").replaceAll("×", "_").replaceAll("÷", "_");
-            //     // List<String> strList2 = str[1].split("_");
-            //     // String str4 = strList1.first;
-            //     //
-            //     // strList2.removeAt(0);
-            //     // strList1.removeLast();
-            //
-            //     expression = expression.replaceAll('×', '*');
-            //     expression = expression.replaceAll('÷', '/');
-            //     print(expression);
-            //
-            //     //12*311*54/45%45 = 9952
-            //     //42*78/45%48=151.66
-            //     // 8*5-9/4*6+8%4+8 = 34.82
-            //     // 40-2.25*6+0.32+8
-            //     //40-13.5+0.35+8
-            //
-            //     try {
-            //       Parser p = Parser();
-            //       Expression exp = p.parse(expression);
-            //
-            //       ContextModel cm = ContextModel();
-            //       result = '${exp.evaluate(EvaluationType.REAL, cm)}';
-            //       print(result);
-            //     } catch (e) {
-            //       result = "";
-            //     }
-            //   },
-            //   child: Text("calculate"),
-            // ),
             Expanded(
                 child: StreamBuilder<List<Customer>>(
               stream: streamController.stream,
@@ -269,45 +174,55 @@ class _CustomerScreenState extends State<CustomerScreen> {
                           ],
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Expanded(
-                                    child: Text(
-                                  customer.customerName,
-                                  style: GoogleFonts.openSans(
-                                      color: TextBlackLight, fontWeight: FontWeight.bold, fontSize: 16),
-                                )),
-                                Text(
-                                  DateFormat("dd MMM yyyy").format(customer.date),
-                                  style:
-                                      GoogleFonts.openSans(color: TextGrey, fontSize: 13, fontWeight: FontWeight.w600),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                    child: Text(
-                                  "+91 ${customer.mobile}",
-                                  style:
-                                      GoogleFonts.openSans(color: TextGrey, fontSize: 13, fontWeight: FontWeight.w600),
-                                )),
-                                // Text(
-                                //   "amount_spend_key".tr() +
-                                //       ": ${customer.amountSpend}",
-                                //   style: TextStyle(
-                                //       color: ColorPrimary,
-                                //       fontWeight: FontWeight.bold,
-                                //       fontSize: 14),
-                                // ),
-                              ],
-                            )
-                          ],
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CustomerDetailScreen(
+                                          customer: customer,
+                                        )));
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Expanded(
+                                      child: Text(
+                                    customer.customerName,
+                                    style: GoogleFonts.openSans(
+                                        color: TextBlackLight, fontWeight: FontWeight.bold, fontSize: 16),
+                                  )),
+                                  Text(
+                                    DateFormat("dd MMM yyyy").format(customer.date),
+                                    style: GoogleFonts.openSans(
+                                        color: TextGrey, fontSize: 13, fontWeight: FontWeight.w600),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                      child: Text(
+                                    "+91 ${customer.mobile}",
+                                    style: GoogleFonts.openSans(
+                                        color: TextGrey, fontSize: 13, fontWeight: FontWeight.w600),
+                                  )),
+                                  // Text(
+                                  //   "amount_spend_key".tr() +
+                                  //       ": ${customer.amountSpend}",
+                                  //   style: TextStyle(
+                                  //       color: ColorPrimary,
+                                  //       fontWeight: FontWeight.bold,
+                                  //       fontSize: 14),
+                                  // ),
+                                ],
+                              )
+                            ],
+                          ),
                         ),
                       );
                     },
@@ -332,8 +247,7 @@ class _CustomerScreenState extends State<CustomerScreen> {
       input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
       input["from_date"] = startDate;
       input["to_date"] = endDate;
-
-      GetMyCustomerResponse response = await apiProvider.getChatPapdiCustomer(input);
+      GetMyChatPapdiCustomerResponse response = await apiProvider.getChatPapdiCustomer(input);
 
       if (response.success) {
         customerList = response.data!;

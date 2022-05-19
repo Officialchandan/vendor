@@ -28,6 +28,7 @@ class _DailyLedgerState extends State<DailyLedger> with TickerProviderStateMixin
   List<String> months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   DateTime? dateTime;
   DateTime now = DateTime.now();
+  double amount = 0;
   String year = "";
   String startDate = "";
   String endDate = "";
@@ -51,6 +52,12 @@ class _DailyLedgerState extends State<DailyLedger> with TickerProviderStateMixin
     // normalLedgerApiCall(context);
   }
 
+  void calculation() {
+    searchList.forEach((element) {
+      amount += double.parse(element.myprofitRevenue);
+    });
+  }
+
   Future<void> normalLedgerApiCall(BuildContext context) async {
     DateTime datenow = DateTime.now();
     String date = DateFormat("yyyy/MM/dd").format(datenow);
@@ -59,7 +66,7 @@ class _DailyLedgerState extends State<DailyLedger> with TickerProviderStateMixin
     input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     // input["from_date"] = startDate.isEmpty ? "" : startDate.toString();
     // input["to_date"] = endDate.isEmpty ? startDate.toString() : endDate.toString();
-    input["date"] = "${DateFormat("yyyy-MM-dd").format(DateTime.now())}";
+    //input["date"] = "${DateFormat("yyyy-MM-dd").format(DateTime.now())}";
 
     log("input---->${input}");
     _dailyLedgerHistoryBloc.add(GetDailyLedgerHistoryEvent(input: input));
@@ -123,12 +130,11 @@ class _DailyLedgerState extends State<DailyLedger> with TickerProviderStateMixin
               if (state is GetDailyLedgerHistoryInitialState) {
                 normalLedgerApiCall(context);
               }
-              /* if (state is GetNormalLedgerHistoryState) {
-                _commonLedgerHistory = state.data!;
-              }*/
+
               if (state is GetDailyLedgerState) {
                 orderList = state.orderList;
                 searchList = orderList;
+                //calculation();
               }
               if (state is GetDailyLedgerHistoryFailureState) {
                 return Container(
@@ -160,10 +166,6 @@ class _DailyLedgerState extends State<DailyLedger> with TickerProviderStateMixin
                   }
                 }
               }
-              // if (_commonLedgerHistory == null) {
-              //   log("===>$_commonLedgerHistory");
-              //   return Center(child: CircularProgressIndicator());
-              // }
 
               if (state is GetDailyLedgerHistoryFailureState) {
                 return Center(child: Image.asset("assets/images/no_data.gif"));
@@ -233,86 +235,8 @@ class _DailyLedgerState extends State<DailyLedger> with TickerProviderStateMixin
                                           color:
                                               searchList[index].status == 1 ? RejectedBoxTextColor : GreenBoxTextColor),
                                     ),
-                                    // Row(
-                                    //   children: [
-                                    //     Center(
-                                    //       child: searchList[index].status == 1
-                                    //           ? Container(
-                                    //               padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
-                                    //               decoration: BoxDecoration(
-                                    //                   borderRadius: BorderRadius.circular(20),
-                                    //                   color: PendingTextBgColor),
-                                    //               child: Text(
-                                    //                 "pending_key".tr(),
-                                    //                 style: TextStyle(
-                                    //                     color: PendingTextColor,
-                                    //                     fontSize: 10,
-                                    //                     fontWeight: FontWeight.w400),
-                                    //               ),
-                                    //             )
-                                    //           : Container(
-                                    //               padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
-                                    //               decoration: BoxDecoration(
-                                    //                   borderRadius: BorderRadius.circular(20),
-                                    //                   color: ApproveTextBgColor),
-                                    //               child: Text(
-                                    //                 "paid_key".tr(),
-                                    //                 style: TextStyle(
-                                    //                     color: ApproveTextColor,
-                                    //                     fontSize: 10,
-                                    //                     fontWeight: FontWeight.w400),
-                                    //               ),
-                                    //             ),
-                                    //     ),
-                                    //     SizedBox(
-                                    //       width: 5,
-                                    //     ),
-                                    //     Container(
-                                    //       width: 90,
-                                    //     )
-                                    //   ],
-                                    // ),
                                   ]),
                                 ),
-                                // searchList[index].isReturn == 1
-                                //     ? Positioned(
-                                //         top: -28,
-                                //         left: -25,
-                                //         child: Transform.rotate(
-                                //           angle: -0.6,
-                                //           child: Container(
-                                //             padding: EdgeInsets.fromLTRB(18, 32, 30, 2),
-                                //             decoration: BoxDecoration(
-                                //               color: Color(0xff6657f4),
-                                //             ),
-                                //             child: Text("return_key".tr(),
-                                //                 style: TextStyle(
-                                //                     color: Colors.white, fontSize: 10, fontWeight: FontWeight.w400)),
-                                //           ),
-                                //         ),
-                                //       )
-                                //     : Container(),
-                                // Positioned(
-                                //   right: 0,
-                                //   top: 0,
-                                //   child: Container(
-                                //     alignment: Alignment.center,
-                                //     width: 90,
-                                //     height: 76,
-                                //     decoration: BoxDecoration(
-                                //         color: searchList[index].status == 1 ? RejectedTextBgColor : GreenBoxBgColor,
-                                //         borderRadius: BorderRadius.only(
-                                //             bottomRight: Radius.circular(10), topRight: Radius.circular(10))),
-                                //     child: Text(
-                                //       " \u20B9 ${searchList[index].myprofitRevenue} ",
-                                //       style: TextStyle(
-                                //           fontWeight: FontWeight.bold,
-                                //           fontSize: 14,
-                                //           color:
-                                //               searchList[index].status == 1 ? RejectedBoxTextColor : GreenBoxTextColor),
-                                //     ),
-                                //   ),
-                                // )
                                 searchList[index].isReturn == 1
                                     ? Positioned(
                                         left: 0,
@@ -354,6 +278,7 @@ class _DailyLedgerState extends State<DailyLedger> with TickerProviderStateMixin
           ]),
           bottomNavigationBar: Container(
             height: 50,
+            padding: EdgeInsets.all(0),
             decoration: BoxDecoration(
               color: Colors.white,
               boxShadow: [
@@ -365,17 +290,9 @@ class _DailyLedgerState extends State<DailyLedger> with TickerProviderStateMixin
               ],
             ),
             child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "net_settlement_amount_key".tr(),
-                    style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 18, color: TextGrey),
-                  ), Text(
-                 " \u20B9${"100".tr()}",
-                    style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 18, color: Colors.green),
-                  ),
-                ],
+              child: Text(
+                "net_settlement_amount_key".tr() + " ₹ 313.44",
+                style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 18, color: TextGrey),
               ),
             ),
           ),

@@ -12,6 +12,7 @@ import 'package:vendor/model/add_suggested_product_response.dart';
 import 'package:vendor/model/billing_product_response.dart';
 import 'package:vendor/model/chat_papdi_module/billing_chatpapdi.dart';
 import 'package:vendor/model/chat_papdi_module/billing_chatpapdi_otp.dart';
+import 'package:vendor/model/chat_papdi_module/get_customer_of_chatpapdi.dart';
 import 'package:vendor/model/chat_papdi_module/without_inventory_Daily_Earning.dart';
 import 'package:vendor/model/chat_papdi_module/without_inventory_Daily_Sale.dart';
 import 'package:vendor/model/chat_papdi_module/without_inventory_Daily_walkin.dart';
@@ -1076,11 +1077,11 @@ class ApiProvider {
     }
   }
 
-  Future<GetMyCustomerResponse> getChatPapdiCustomer(Map<String, dynamic> input) async {
+  Future<GetMyChatPapdiCustomerResponse> getChatPapdiCustomer(Map<String, dynamic> input) async {
     try {
       Response res = await dio.post(Endpoint.GET_CUSTOMER_OF_CHAT_PAPDI, data: input);
       log("===>otp$res");
-      return GetMyCustomerResponse.fromJson(res.toString());
+      return GetMyChatPapdiCustomerResponse.fromJson(res.toString());
     } catch (error) {
       String message = "";
       if (error is DioError) {
@@ -1090,7 +1091,7 @@ class ApiProvider {
         message = "Please try again later!";
       }
       print("Exception occurred: $message stackTrace: $error");
-      return GetMyCustomerResponse(success: false, message: message);
+      return GetMyChatPapdiCustomerResponse(success: false, message: message);
     }
   }
 
@@ -1127,7 +1128,7 @@ class ApiProvider {
         message = "Please try again later!";
       }
       print("Exception occurred: $message stackTrace: $error");
-      return GetDueAmountResponse(success: false, message: message, totalDue: [], data: []);
+      return GetDueAmountResponse(success: false, message: message);
     }
   }
 
@@ -1564,10 +1565,10 @@ class ApiProvider {
   }
 
   Future<NormalLedgerResponse> getNormalLedgerHistory(Map<String, dynamic> input) async {
-   // try {
-      Response res = await dio.post(Endpoint.GET_MASTER_LEDGER_HISTORY, data: input);
+    // try {
+    Response res = await dio.post(Endpoint.GET_MASTER_LEDGER_HISTORY, data: input);
 
-      return NormalLedgerResponse.fromJson(res.toString());
+    return NormalLedgerResponse.fromJson(res.toString());
     // } catch (error) {
     //   String message = "";
     //   if (error is DioError) {
@@ -1685,8 +1686,7 @@ class ApiProvider {
         message = "Please try again later!";
       }
       print("Exception occurred: $message stackTrace: $error");
-      return TermsResponse(
-          success: false, message: "");
+      return TermsResponse(success: false, message: "");
     }
   }
 }

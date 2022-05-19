@@ -35,7 +35,9 @@ class _UpiTransferHistoryWithoutInventoryState extends State<UpiTransferHistoryW
         appBar: AppBar(
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios),
-            onPressed: (){Navigator.pop(context);},
+            onPressed: () {
+              Navigator.pop(context);
+            },
           ),
           title: Text(
             "upi_transfer_key".tr(),
@@ -120,7 +122,8 @@ class _UpiTransferHistoryWithoutInventoryState extends State<UpiTransferHistoryW
                               children: [
                                 Text(
                                   " To: MyProfit",
-                                  style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.bold,color: TextBlackLight),
+                                  style: GoogleFonts.openSans(
+                                      fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
                                 ),
                                 Text(
                                   " ${DateFormat("dd MMM yyyy").format(DateTime.parse(upiList[index].txnDate))}" +
@@ -205,42 +208,43 @@ class _UpiTransferHistoryWithoutInventoryState extends State<UpiTransferHistoryW
                                 color: upiList[index].status == 0
                                     ? RejectedTextColor
                                     : upiList[index].status == 1
-                                    ? ApproveTextColor
-                                    : upiList[index].status == 1
-                                    ? PendingTextColor
-                                    : PendingTextColor,
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(7), bottomLeft: Radius.circular(7))),
+                                        ? ApproveTextColor
+                                        : upiList[index].status == 1
+                                            ? PendingTextColor
+                                            : PendingTextColor,
+                                borderRadius:
+                                    BorderRadius.only(topLeft: Radius.circular(7), bottomLeft: Radius.circular(7))),
                             child: RotatedBox(
-                              quarterTurns: 3,
-                              child: upiList[index].status == 0
-                                  ? Center(
-                                child: Text(
-                                  "rejected_key".tr(),
-                                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: Colors.white),
-                                ),
-                              )
-                                  : upiList[index].status == 1
-                                      ? Center(
-                                child: Text(
-                                    "accepted_key".tr(),
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 14, fontWeight: FontWeight.w400)),
-                              )
-                                      : upiList[index].status == 2
-                                          ? Center(
-                                child: Text(
-                                    "pending_key".tr(),
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 14, fontWeight: FontWeight.w400)),
-                              )
-                                          : Center(
-                                child: Text(
-                                    "pending_key".tr(),
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 14, fontWeight: FontWeight.w400)),
-                              )
-                            ))),
+                                quarterTurns: 3,
+                                child: upiList[index].status == 0
+                                    ? Center(
+                                        child: Text(
+                                          "failed_key".tr(),
+                                          style:
+                                              TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: Colors.white),
+                                        ),
+                                      )
+                                    : upiList[index].status == 1
+                                        ? Center(
+                                            child: Text("accepted_key".tr(),
+                                                style: TextStyle(
+                                                    color: Colors.white, fontSize: 14, fontWeight: FontWeight.w400)),
+                                          )
+                                        : upiList[index].status == 2
+                                            ? Center(
+                                                child: Text("pending_key".tr(),
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 14,
+                                                        fontWeight: FontWeight.w400)),
+                                              )
+                                            : Center(
+                                                child: Text("pending_key".tr(),
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 14,
+                                                        fontWeight: FontWeight.w400)),
+                                              )))),
                   ]),
                 );
               });

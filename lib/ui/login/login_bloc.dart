@@ -65,6 +65,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         SharedPref.setStringPreference(SharedPref.OWNERNAME, result.ownerName!);
         SharedPref.setStringPreference(SharedPref.VendorCoin, result.vendorCoins!);
         log("VendorCoin------->${result.vendorCoins!}");
+        log("VendorCoin------->${result.vendorName!}");
         if (result.commission!.isNotEmpty) {
           SharedPref.setStringPreference(SharedPref.COMMISSION, result.commission!);
         }

@@ -14,12 +14,12 @@ class GetDueAmountLoadingState extends MoneyDueState {
 }
 
 class GetDueAmountState extends MoneyDueState {
-  final List<TotalDue> dueAmount;
-  final List<CategoryDueAmount> categoryDue;
-  GetDueAmountState({required this.dueAmount, required this.categoryDue});
+  final GetDueAmountData dueAmount;
+
+  GetDueAmountState({required this.dueAmount});
 
   @override
-  List<Object?> get props => [dueAmount, categoryDue];
+  List<Object?> get props => [dueAmount];
 }
 
 class GetFreeCoinInitialState extends MoneyDueState {

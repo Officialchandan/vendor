@@ -437,7 +437,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
             ),
             bottomNavigationBar: Container(
               alignment: Alignment.bottomCenter,
-              height: MediaQuery.of(context).size.height * 0.37,
+              height: MediaQuery.of(context).size.height * 0.35,
               child: Column(
                 children: [
                   Container(
@@ -499,7 +499,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "total_order_value_key".tr(),
+                              "totals_order_value_key".tr(),
                               style: TextStyle(color: TextBlackLight, fontSize: 15, fontWeight: FontWeight.bold),
                             ),
                             Row(
@@ -674,14 +674,6 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
       earningCoins = "0.0";
     }
   }
-
-  // Future<void> userRegister(BuildContext context) async {
-  //   Map<String, dynamic> input = HashMap<String, dynamic>();
-  //   input["mobile"] = mobileController.text;
-  //   input["first_name"] = nameController.text;
-  //
-  //   directBillingCustomerNumberResponseBloc.add(GetChatPapdiPartialUserRegisterEvent(input: input));
-  // }
 
   Future<void> directBilling(BuildContext context) async {
     Map<String, dynamic> input = HashMap<String, dynamic>();

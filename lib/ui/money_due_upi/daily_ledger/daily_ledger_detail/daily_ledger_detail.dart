@@ -49,6 +49,13 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
   double returnCommisionAmnt = 0;
 
   DailyLedgerDetailBloc dailyLedgerDetailBloc = DailyLedgerDetailBloc();
+  String vendorName = "";
+  void getname() async {
+    vendorName = await SharedPref.getStringPreference(SharedPref.VENDORNAME);
+    setState(() {});
+    log("=======>$vendorName");
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -57,6 +64,7 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
     // index = widget.index;
     log("orderType-->${widget.order.orderType}");
     log("order-->${widget.order.toString()}");
+    getname();
     calculation();
   }
 
@@ -164,6 +172,7 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
         categoryImage: "",
         categoryName: "",
         commission: products.commission,
+        orderedWalletBalance: products.orderedWalletBalance,
       );
       productDetails.add(dailyBillingProducts);
     }
@@ -282,13 +291,18 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Container(
-                alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.only(left: 14, right: 0),
-                child: Text(
-                  "${widget.order.firstName}",
-                  style: GoogleFonts.openSans(fontSize: 18, fontWeight: FontWeight.bold, color: TextBlackLight),
-                ),
+              Padding(
+                padding: const EdgeInsets.only(left: 14, right: 14),
+                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                  Text(
+                    "${widget.order.firstName}",
+                    style: GoogleFonts.openSans(fontSize: 18, fontWeight: FontWeight.bold, color: TextBlackLight),
+                  ),
+                  Text(
+                    "orderId : ${widget.order.orderId}",
+                    style: GoogleFonts.openSans(fontSize: 13, fontWeight: FontWeight.w600, color: TextGrey),
+                  ),
+                ]),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 14, right: 14),
@@ -709,6 +723,37 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
                           "\u20B9${(reddem / 3 - totalComission).toStringAsFixed(2)}",
                           style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 28, color: ColorPrimary),
                         ),
+                ],
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      totalComission <= reddem / 3
+                          ? Text(
+                              "To: $vendorName",
+                              style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                            )
+                          : Text(
+                              "To: MyProfit",
+                              style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                            ),
+                      totalComission >= reddem / 3
+                          ? Text(
+                              "From: $vendorName",
+                              style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                            )
+                          : Text(
+                              "From: MyProfit",
+                              style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                            ),
+                    ],
+                  ),
                 ],
               ),
               //  Transaction By

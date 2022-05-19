@@ -33,7 +33,8 @@ class _EarningAmountState extends State<EarningAmount> {
 
   Future<WithoutInventoryMonthlyEarningData> getDhabasMonthly() async {
     resultMonthly = await ApiProvider().getChatPapdiMonthlyEarningAmount();
-    log('${resultMonthly!.data}');
+
+    //log('${resultMonthly!.data!}');
     return resultMonthly!.data!;
   }
 
@@ -60,9 +61,7 @@ class _EarningAmountState extends State<EarningAmount> {
                   unselectedLabelColor: Colors.black,
                   labelColor: ColorPrimary,
                   indicator: BoxDecoration(
-                      color: TabBarColor,
-                      border: Border(
-                          bottom: BorderSide(color: ColorPrimary, width: 3))),
+                      color: TabBarColor, border: Border(bottom: BorderSide(color: ColorPrimary, width: 3))),
                   onTap: (index) {
                     // Tab index when user select it, it start from zero
                   },
@@ -70,22 +69,19 @@ class _EarningAmountState extends State<EarningAmount> {
                     Tab(
                       child: Text(
                         "hourly_key".tr(),
-                        style: TextStyle(
-                            fontSize: 17, fontWeight: FontWeight.w600),
+                        style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
                       ),
                     ),
                     Tab(
                       child: Text(
                         "daily_key".tr(),
-                        style: TextStyle(
-                            fontSize: 17, fontWeight: FontWeight.w600),
+                        style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
                       ),
                     ),
                     Tab(
                       child: Text(
                         "monthly_key".tr(),
-                        style: TextStyle(
-                            fontSize: 17, fontWeight: FontWeight.w600),
+                        style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
                       ),
                     ),
                   ],
@@ -107,338 +103,237 @@ class _EarningAmountState extends State<EarningAmount> {
                   child: FutureBuilder<Map<String, String>>(
                       future: getDhabasHourly(),
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
                           return Center(child: CircularProgressIndicator());
                         }
                         if (snapshot.hasError) {
-                          return Center(
-                            child: Text("data_not_found_key".tr()),
+                          return Container(
+                            height: MediaQuery.of(context).size.height * 0.70,
+                            child: Center(
+                              child: Image.asset("assets/images/no_data.gif"),
+                            ),
                           );
                         }
                         if (snapshot.hasData) {
                           return Container(
                               padding: EdgeInsets.all(20),
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                // Checkbox(
+                                //     value: checked,
+                                //     onChanged: (check) => saleAmountBloc
+                                //         .add(CheckBoxEvent(checked: check!))),
+
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Table(
+                                  defaultColumnWidth: FixedColumnWidth(deviceWidth * 0.44),
+                                  border: TableBorder.all(color: Colors.black12, style: BorderStyle.solid, width: 1),
                                   children: [
-                                    // Checkbox(
-                                    //     value: checked,
-                                    //     onChanged: (check) => saleAmountBloc
-                                    //         .add(CheckBoxEvent(checked: check!))),
-
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Table(
-                                      defaultColumnWidth:
-                                          FixedColumnWidth(deviceWidth * 0.44),
-                                      border: TableBorder.all(
-                                          color: Colors.black12,
-                                          style: BorderStyle.solid,
-                                          width: 1),
-                                      children: [
-                                        TableRow(children: [
-                                          Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                    height: 50,
-                                                    width: deviceWidth * 0.44,
-                                                    color: TabBarColor,
-                                                    child: Align(
-                                                      alignment:
-                                                          Alignment.centerLeft,
-                                                      child: Text(
-                                                          "  " + "hourly_key",
-                                                          style: TextStyle(
-                                                              fontSize: 20.0,
-                                                              color:
-                                                                  ColorPrimary)),
-                                                    ))
-                                              ]),
+                                    TableRow(children: [
+                                      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                        Container(
+                                            height: 50,
+                                            width: deviceWidth * 0.44,
+                                            color: TabBarColor,
+                                            child: Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text("  " + "hourly_key".tr(),
+                                                  style: TextStyle(fontSize: 20.0, color: ColorPrimary)),
+                                            ))
+                                      ]),
+                                      Container(
+                                        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                                           Container(
-                                            child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Container(
-                                                      height: 50,
-                                                      width: deviceWidth * 0.44,
-                                                      color: TabBarColor,
-                                                      child: Align(
-                                                        alignment: Alignment
-                                                            .centerLeft,
-                                                        child: AutoSizeText(
-                                                            "  " +
-                                                                "earning_key"
-                                                                    .tr(),
-                                                            style: TextStyle(
-                                                                fontSize: 18.0,
-                                                                color:
-                                                                    ColorPrimary)),
-                                                      ))
-                                                ]),
-                                          ),
+                                              height: 50,
+                                              width: deviceWidth * 0.44,
+                                              color: TabBarColor,
+                                              child: Align(
+                                                alignment: Alignment.centerLeft,
+                                                child: AutoSizeText("  " + "earning_key".tr(),
+                                                    style: TextStyle(fontSize: 18.0, color: ColorPrimary)),
+                                              ))
                                         ]),
-                                        TableRow(children: [
-                                          Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                    height: 50,
-                                                    width: deviceWidth * 0.44,
-                                                    color: Colors.white,
-                                                    child: Align(
-                                                      alignment:
-                                                          Alignment.centerLeft,
-                                                      child: AutoSizeText(
-                                                        '  ${snapshot.data!.keys.toList()[0]}',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 14.0,
-                                                            color:
-                                                                Colors.black),
-                                                        maxFontSize: 14,
-                                                        minFontSize: 12,
-                                                      ),
-                                                    ))
-                                              ]),
-                                          Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                    height: 50,
-                                                    width: deviceWidth * 0.44,
-                                                    color: Colors.white,
-                                                    child: Align(
-                                                      alignment:
-                                                          Alignment.centerLeft,
-                                                      child: Text(
-                                                          '  ${snapshot.data!.values.toList()[0]}',
-                                                          style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              fontSize: 15.0,
-                                                              color: Colors
-                                                                  .black)),
-                                                    ))
-                                              ]),
-                                        ]),
-                                        TableRow(children: [
-                                          Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                    height: 50,
-                                                    width: deviceWidth * 0.44,
-                                                    color: Colors.white,
-                                                    child: Align(
-                                                      alignment:
-                                                          Alignment.centerLeft,
-                                                      child: AutoSizeText(
-                                                        '  ${snapshot.data!.keys.toList()[1]}',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 14.0,
-                                                            color:
-                                                                Colors.black),
-                                                        maxFontSize: 14,
-                                                        minFontSize: 12,
-                                                      ),
-                                                    ))
-                                              ]),
-                                          Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                    height: 50,
-                                                    width: deviceWidth * 0.44,
-                                                    color: Colors.white,
-                                                    child: Align(
-                                                      alignment:
-                                                          Alignment.centerLeft,
-                                                      child: Text(
-                                                          '  ${snapshot.data!.values.toList()[1]}',
-                                                          style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              fontSize: 15.0,
-                                                              color: Colors
-                                                                  .black)),
-                                                    ))
-                                              ]),
-                                        ]),
-                                        TableRow(children: [
-                                          Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                    height: 50,
-                                                    width: deviceWidth * 0.44,
-                                                    color: Colors.white,
-                                                    child: Align(
-                                                      alignment:
-                                                          Alignment.centerLeft,
-                                                      child: AutoSizeText(
-                                                        '  ${snapshot.data!.keys.toList()[2]}',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 14.0,
-                                                            color:
-                                                                Colors.black),
-                                                        maxFontSize: 14,
-                                                        minFontSize: 12,
-                                                      ),
-                                                    ))
-                                              ]),
-                                          Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                    height: 50,
-                                                    width: deviceWidth * 0.44,
-                                                    color: Colors.white,
-                                                    child: Align(
-                                                      alignment:
-                                                          Alignment.centerLeft,
-                                                      child: Text(
-                                                          '  ${snapshot.data!.values.toList()[2]}',
-                                                          style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              fontSize: 15.0,
-                                                              color: Colors
-                                                                  .black)),
-                                                    ))
-                                              ]),
-                                        ]),
-                                        TableRow(children: [
-                                          Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                    height: 50,
-                                                    width: deviceWidth * 0.44,
-                                                    color: Colors.white,
-                                                    child: Align(
-                                                      alignment:
-                                                          Alignment.centerLeft,
-                                                      child: AutoSizeText(
-                                                        '  ${snapshot.data!.keys.toList()[3]}',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 14.0,
-                                                            color:
-                                                                Colors.black),
-                                                        maxFontSize: 14,
-                                                        minFontSize: 12,
-                                                      ),
-                                                    ))
-                                              ]),
-                                          Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                    height: 50,
-                                                    width: deviceWidth * 0.44,
-                                                    color: Colors.white,
-                                                    child: Align(
-                                                      alignment:
-                                                          Alignment.centerLeft,
-                                                      child: Text(
-                                                          '  ${snapshot.data!.values.toList()[3]}',
-                                                          style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              fontSize: 15.0,
-                                                              color: Colors
-                                                                  .black)),
-                                                    ))
-                                              ]),
-                                        ]),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 30,
-                                    ),
-                                    Container(
-                                      height: 200,
-                                      child: SfCartesianChart(
-                                        plotAreaBorderWidth: 2,
-                                        plotAreaBorderColor: Colors.transparent,
-                                        //palette: <Color>[ColorPrimary],
-                                        borderColor: Colors.grey.shade500,
-
-                                        title: ChartTitle(
-                                            text: "earning_amt_inr_key".tr() +
-                                                " ",
-                                            textStyle: TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.grey.shade600)),
-                                        // legend: Legend(isVisible: true),
-                                        tooltipBehavior: _tooltipBehavior,
-                                        enableMultiSelection: true,
-
-                                        series: <ChartSeries>[
-                                          BarSeries<GDPDatass, String>(
-                                              color: ColorPrimary,
-
-                                              // name: '',
-                                              dataSource:
-                                                  getChartDatass(snapshot.data),
-                                              xValueMapper:
-                                                  (GDPDatass gdp, _) =>
-                                                      gdp.continent,
-                                              yValueMapper:
-                                                  (GDPDatass gdp, _) =>
-                                                      gdp.sale,
-                                              //  dataLabelSettings: DataLabelSettings(isVisible: true),
-                                              enableTooltip: false)
-                                        ],
-                                        primaryXAxis: CategoryAxis(
-                                            interval: 1,
-                                            majorGridLines:
-                                                MajorGridLines(width: 0),
-                                            labelStyle: TextStyle(
-                                                fontSize: 10,
-                                                fontWeight: FontWeight.w600),
-                                            desiredIntervals: 1),
-                                        primaryYAxis: NumericAxis(
-                                          edgeLabelPlacement:
-                                              EdgeLabelPlacement.shift,
-                                          // desiredIntervals: 6,
-                                          // interval: 2000,
-
-                                          //numberFormat: NumberFormat.currency(),
-                                          title: AxisTitle(
-                                              alignment: ChartAlignment.center,
-                                              text: "earning_amt_inr_key".tr() +
-                                                  " ",
-                                              textStyle: TextStyle(
-                                                  fontSize: 11,
-                                                  color: Colors.grey.shade600)),
-                                        ),
                                       ),
-                                    )
-                                  ]));
+                                    ]),
+                                    TableRow(children: [
+                                      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                        Container(
+                                            height: 50,
+                                            width: deviceWidth * 0.44,
+                                            color: Colors.white,
+                                            child: Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: AutoSizeText(
+                                                '  ${snapshot.data!.keys.toList()[0]}',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w600, fontSize: 14.0, color: Colors.black),
+                                                maxFontSize: 14,
+                                                minFontSize: 12,
+                                              ),
+                                            ))
+                                      ]),
+                                      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                        Container(
+                                            height: 50,
+                                            width: deviceWidth * 0.44,
+                                            color: Colors.white,
+                                            child: Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text('  ${snapshot.data!.values.toList()[0]}',
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.w600,
+                                                      fontSize: 15.0,
+                                                      color: Colors.black)),
+                                            ))
+                                      ]),
+                                    ]),
+                                    TableRow(children: [
+                                      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                        Container(
+                                            height: 50,
+                                            width: deviceWidth * 0.44,
+                                            color: Colors.white,
+                                            child: Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: AutoSizeText(
+                                                '  ${snapshot.data!.keys.toList()[1]}',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w600, fontSize: 14.0, color: Colors.black),
+                                                maxFontSize: 14,
+                                                minFontSize: 12,
+                                              ),
+                                            ))
+                                      ]),
+                                      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                        Container(
+                                            height: 50,
+                                            width: deviceWidth * 0.44,
+                                            color: Colors.white,
+                                            child: Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text('  ${snapshot.data!.values.toList()[1]}',
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.w600,
+                                                      fontSize: 15.0,
+                                                      color: Colors.black)),
+                                            ))
+                                      ]),
+                                    ]),
+                                    TableRow(children: [
+                                      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                        Container(
+                                            height: 50,
+                                            width: deviceWidth * 0.44,
+                                            color: Colors.white,
+                                            child: Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: AutoSizeText(
+                                                '  ${snapshot.data!.keys.toList()[2]}',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w600, fontSize: 14.0, color: Colors.black),
+                                                maxFontSize: 14,
+                                                minFontSize: 12,
+                                              ),
+                                            ))
+                                      ]),
+                                      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                        Container(
+                                            height: 50,
+                                            width: deviceWidth * 0.44,
+                                            color: Colors.white,
+                                            child: Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text('  ${snapshot.data!.values.toList()[2]}',
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.w600,
+                                                      fontSize: 15.0,
+                                                      color: Colors.black)),
+                                            ))
+                                      ]),
+                                    ]),
+                                    TableRow(children: [
+                                      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                        Container(
+                                            height: 50,
+                                            width: deviceWidth * 0.44,
+                                            color: Colors.white,
+                                            child: Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: AutoSizeText(
+                                                '  ${snapshot.data!.keys.toList()[3]}',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w600, fontSize: 14.0, color: Colors.black),
+                                                maxFontSize: 14,
+                                                minFontSize: 12,
+                                              ),
+                                            ))
+                                      ]),
+                                      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                        Container(
+                                            height: 50,
+                                            width: deviceWidth * 0.44,
+                                            color: Colors.white,
+                                            child: Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text('  ${snapshot.data!.values.toList()[3]}',
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.w600,
+                                                      fontSize: 15.0,
+                                                      color: Colors.black)),
+                                            ))
+                                      ]),
+                                    ]),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 30,
+                                ),
+                                Container(
+                                  height: 200,
+                                  child: SfCartesianChart(
+                                    plotAreaBorderWidth: 2,
+                                    plotAreaBorderColor: Colors.transparent,
+                                    //palette: <Color>[ColorPrimary],
+                                    borderColor: Colors.grey.shade500,
+
+                                    title: ChartTitle(
+                                        text: "earning_amt_inr_key".tr() + " ",
+                                        textStyle: TextStyle(fontSize: 14, color: Colors.grey.shade600)),
+                                    // legend: Legend(isVisible: true),
+                                    tooltipBehavior: _tooltipBehavior,
+                                    enableMultiSelection: true,
+
+                                    series: <ChartSeries>[
+                                      BarSeries<GDPDatass, String>(
+                                          color: ColorPrimary,
+
+                                          // name: '',
+                                          dataSource: getChartDatass(snapshot.data),
+                                          xValueMapper: (GDPDatass gdp, _) => gdp.continent,
+                                          yValueMapper: (GDPDatass gdp, _) => gdp.sale,
+                                          //  dataLabelSettings: DataLabelSettings(isVisible: true),
+                                          enableTooltip: false)
+                                    ],
+                                    primaryXAxis: CategoryAxis(
+                                        interval: 1,
+                                        majorGridLines: MajorGridLines(width: 0),
+                                        labelStyle: TextStyle(fontSize: 10, fontWeight: FontWeight.w600),
+                                        desiredIntervals: 1),
+                                    primaryYAxis: NumericAxis(
+                                      edgeLabelPlacement: EdgeLabelPlacement.shift,
+                                      // desiredIntervals: 6,
+                                      // interval: 2000,
+
+                                      //numberFormat: NumberFormat.currency(),
+                                      title: AxisTitle(
+                                          alignment: ChartAlignment.center,
+                                          text: "earning_amt_inr_key".tr() + " ",
+                                          textStyle: TextStyle(fontSize: 11, color: Colors.grey.shade600)),
+                                    ),
+                                  ),
+                                )
+                              ]));
                         }
                         return Container();
                       })),
@@ -446,421 +341,310 @@ class _EarningAmountState extends State<EarningAmount> {
                   child: FutureBuilder<WithoutInventoryDailyEarningData>(
                       future: getDhabasDay(),
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
                           return Center(child: CircularProgressIndicator());
                         }
                         if (snapshot.hasError) {
-                          return Center(
-                            child: Text("data_not_found_key".tr()),
+                          return Container(
+                            height: MediaQuery.of(context).size.height * 0.70,
+                            child: Center(
+                              child: Image.asset("assets/images/no_data.gif"),
+                            ),
                           );
                         }
                         return Container(
                             padding: EdgeInsets.all(20),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                              // Checkbox(
+                              //     value: checked,
+                              //     onChanged: (check) => saleAmountBloc
+                              //         .add(CheckBoxEvent(checked: check!))),
+
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Table(
+                                defaultColumnWidth: FixedColumnWidth(deviceWidth * 0.44),
+                                border: TableBorder.all(color: Colors.black12, style: BorderStyle.solid, width: 1),
                                 children: [
-                                  // Checkbox(
-                                  //     value: checked,
-                                  //     onChanged: (check) => saleAmountBloc
-                                  //         .add(CheckBoxEvent(checked: check!))),
-
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Table(
-                                    defaultColumnWidth:
-                                        FixedColumnWidth(deviceWidth * 0.44),
-                                    border: TableBorder.all(
-                                        color: Colors.black12,
-                                        style: BorderStyle.solid,
-                                        width: 1),
-                                    children: [
-                                      TableRow(children: [
-                                        Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                  height: 50,
-                                                  width: deviceWidth * 0.44,
-                                                  color: TabBarColor,
-                                                  child: Align(
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    child: Text(
-                                                        "  " + "day_key".tr(),
-                                                        style: TextStyle(
-                                                            fontSize: 20.0,
-                                                            color:
-                                                                ColorPrimary)),
-                                                  ))
-                                            ]),
+                                  TableRow(children: [
+                                    Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                      Container(
+                                          height: 50,
+                                          width: deviceWidth * 0.44,
+                                          color: TabBarColor,
+                                          child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text("  " + "day_key".tr(),
+                                                style: TextStyle(fontSize: 20.0, color: ColorPrimary)),
+                                          ))
+                                    ]),
+                                    Container(
+                                      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                                         Container(
-                                          child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                    height: 50,
-                                                    width: deviceWidth * 0.44,
-                                                    color: TabBarColor,
-                                                    child: Align(
-                                                      alignment:
-                                                          Alignment.centerLeft,
-                                                      child: AutoSizeText(
-                                                          "  " +
-                                                              "earning_key"
-                                                                  .tr(),
-                                                          style: TextStyle(
-                                                              fontSize: 18.0,
-                                                              color:
-                                                                  ColorPrimary)),
-                                                    ))
-                                              ]),
-                                        ),
+                                            height: 50,
+                                            width: deviceWidth * 0.44,
+                                            color: TabBarColor,
+                                            child: Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: AutoSizeText("  " + "earning_key".tr(),
+                                                  style: TextStyle(fontSize: 18.0, color: ColorPrimary)),
+                                            ))
                                       ]),
-                                      TableRow(children: [
-                                        Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                  height: 50,
-                                                  width: deviceWidth * 0.44,
-                                                  color: Colors.white,
-                                                  child: Align(
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    child: AutoSizeText(
-                                                      '  ${snapshot.data!.today}',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          fontSize: 14.0,
-                                                          color: Colors.black),
-                                                      maxFontSize: 14,
-                                                      minFontSize: 12,
-                                                    ),
-                                                  ))
-                                            ]),
-                                        Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                  height: 50,
-                                                  width: deviceWidth * 0.44,
-                                                  color: Colors.white,
-                                                  child: Align(
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    child: Text(
-                                                        '  ${snapshot.data!.todayEarning}',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 15.0,
-                                                            color:
-                                                                Colors.black)),
-                                                  ))
-                                            ]),
-                                      ]),
-                                      TableRow(children: [
-                                        Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                  height: 50,
-                                                  width: deviceWidth * 0.44,
-                                                  color: Colors.white,
-                                                  child: Align(
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    child: AutoSizeText(
-                                                      '  ${snapshot.data!.yesterday}',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          fontSize: 14.0,
-                                                          color: Colors.black),
-                                                      maxFontSize: 14,
-                                                      minFontSize: 12,
-                                                    ),
-                                                  ))
-                                            ]),
-                                        Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                  height: 50,
-                                                  width: deviceWidth * 0.44,
-                                                  color: Colors.white,
-                                                  child: Align(
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    child: Text(
-                                                        '  ${snapshot.data!.yesterdayEarning}',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 15.0,
-                                                            color:
-                                                                Colors.black)),
-                                                  ))
-                                            ]),
-                                      ]),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 30,
-                                  ),
-                                  Container(
-                                    height: 200,
-                                    child: SfCartesianChart(
-                                      plotAreaBorderWidth: 2,
-                                      plotAreaBorderColor: Colors.transparent,
-                                      //palette: <Color>[ColorPrimary],
-                                      borderColor: Colors.grey.shade500,
-
-                                      title: ChartTitle(
-                                          text:
-                                              "earning_amt_inr_key".tr() + " ",
-                                          textStyle: TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.grey.shade600)),
-                                      // legend: Legend(isVisible: true),
-                                      tooltipBehavior: _tooltipBehavior,
-                                      enableMultiSelection: true,
-
-                                      series: <ChartSeries>[
-                                        BarSeries<GDPData, String>(
-                                            color: ColorPrimary,
-
-                                            // name: '',
-                                            dataSource:
-                                                getChartData(snapshot.data),
-                                            xValueMapper: (GDPData gdp, _) =>
-                                                gdp.continent,
-                                            yValueMapper: (GDPData gdp, _) =>
-                                                gdp.sale,
-                                            //  dataLabelSettings: DataLabelSettings(isVisible: true),
-                                            enableTooltip: false)
-                                      ],
-                                      primaryXAxis: CategoryAxis(
-                                          majorGridLines:
-                                              MajorGridLines(width: 0),
-                                          labelStyle: TextStyle(
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w600),
-                                          desiredIntervals: 1),
-                                      primaryYAxis: NumericAxis(
-                                        edgeLabelPlacement:
-                                            EdgeLabelPlacement.shift,
-                                        // desiredIntervals: 6,
-                                        // interval: 2000,
-
-                                        //numberFormat: NumberFormat.currency(),
-                                        title: AxisTitle(
-                                            alignment: ChartAlignment.center,
-                                            text: "earning_amt_inr_key".tr() +
-                                                " ",
-                                            textStyle: TextStyle(
-                                                fontSize: 11,
-                                                color: Colors.grey.shade600)),
-                                      ),
                                     ),
-                                  )
-                                ]));
+                                  ]),
+                                  TableRow(children: [
+                                    Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                      Container(
+                                          height: 50,
+                                          width: deviceWidth * 0.44,
+                                          color: Colors.white,
+                                          child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: AutoSizeText(
+                                              '  ${snapshot.data!.today}',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w600, fontSize: 14.0, color: Colors.black),
+                                              maxFontSize: 14,
+                                              minFontSize: 12,
+                                            ),
+                                          ))
+                                    ]),
+                                    Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                      Container(
+                                          height: 50,
+                                          width: deviceWidth * 0.44,
+                                          color: Colors.white,
+                                          child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text('  ${snapshot.data!.todayEarning}',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w600, fontSize: 15.0, color: Colors.black)),
+                                          ))
+                                    ]),
+                                  ]),
+                                  TableRow(children: [
+                                    Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                      Container(
+                                          height: 50,
+                                          width: deviceWidth * 0.44,
+                                          color: Colors.white,
+                                          child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: AutoSizeText(
+                                              '  ${snapshot.data!.yesterday}',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w600, fontSize: 14.0, color: Colors.black),
+                                              maxFontSize: 14,
+                                              minFontSize: 12,
+                                            ),
+                                          ))
+                                    ]),
+                                    Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                      Container(
+                                          height: 50,
+                                          width: deviceWidth * 0.44,
+                                          color: Colors.white,
+                                          child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text('  ${snapshot.data!.yesterdayEarning}',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w600, fontSize: 15.0, color: Colors.black)),
+                                          ))
+                                    ]),
+                                  ]),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 30,
+                              ),
+                              Container(
+                                height: 200,
+                                child: SfCartesianChart(
+                                  plotAreaBorderWidth: 2,
+                                  plotAreaBorderColor: Colors.transparent,
+                                  //palette: <Color>[ColorPrimary],
+                                  borderColor: Colors.grey.shade500,
+
+                                  title: ChartTitle(
+                                      text: "earning_amt_inr_key".tr() + " ",
+                                      textStyle: TextStyle(fontSize: 14, color: Colors.grey.shade600)),
+                                  // legend: Legend(isVisible: true),
+                                  tooltipBehavior: _tooltipBehavior,
+                                  enableMultiSelection: true,
+
+                                  series: <ChartSeries>[
+                                    BarSeries<GDPData, String>(
+                                        color: ColorPrimary,
+
+                                        // name: '',
+                                        dataSource: getChartData(snapshot.data),
+                                        xValueMapper: (GDPData gdp, _) => gdp.continent,
+                                        yValueMapper: (GDPData gdp, _) => gdp.sale,
+                                        //  dataLabelSettings: DataLabelSettings(isVisible: true),
+                                        enableTooltip: false)
+                                  ],
+                                  primaryXAxis: CategoryAxis(
+                                      majorGridLines: MajorGridLines(width: 0),
+                                      labelStyle: TextStyle(fontSize: 10, fontWeight: FontWeight.w600),
+                                      desiredIntervals: 1),
+                                  primaryYAxis: NumericAxis(
+                                    edgeLabelPlacement: EdgeLabelPlacement.shift,
+                                    // desiredIntervals: 6,
+                                    // interval: 2000,
+
+                                    //numberFormat: NumberFormat.currency(),
+                                    title: AxisTitle(
+                                        alignment: ChartAlignment.center,
+                                        text: "earning_amt_inr_key".tr() + " ",
+                                        textStyle: TextStyle(fontSize: 11, color: Colors.grey.shade600)),
+                                  ),
+                                ),
+                              )
+                            ]));
                       })),
               SingleChildScrollView(
                   child: FutureBuilder<WithoutInventoryMonthlyEarningData>(
                       future: getDhabasMonthly(),
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
                           return Center(child: CircularProgressIndicator());
                         }
                         if (snapshot.hasError) {
-                          return Center(
-                            child: Text("data_not_found_key".tr()),
+                          return Container(
+                            height: MediaQuery.of(context).size.height * 0.70,
+                            child: Center(
+                              child: Image.asset("assets/images/no_data.gif"),
+                            ),
                           );
                         }
-                        return Container(
-                            padding: EdgeInsets.all(20),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  // Checkbox(
-                                  //     value: checked,
-                                  //     onChanged: (check) => saleAmountBloc
-                                  //         .add(CheckBoxEvent(checked: check!))),
+                        if (snapshot.hasData) {
+                          return Container(
+                              padding: EdgeInsets.all(20),
+                              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                // Checkbox(
+                                //     value: checked,
+                                //     onChanged: (check) => saleAmountBloc
+                                //         .add(CheckBoxEvent(checked: check!))),
 
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Table(
-                                    defaultColumnWidth:
-                                        FixedColumnWidth(deviceWidth * 0.44),
-                                    border: TableBorder.all(
-                                        color: Colors.black12,
-                                        style: BorderStyle.solid,
-                                        width: 1),
-                                    children: [
-                                      TableRow(children: [
-                                        Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                  height: 50,
-                                                  width: deviceWidth * 0.44,
-                                                  color: TabBarColor,
-                                                  child: Align(
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    child: Text(
-                                                        "  " + "day_key".tr(),
-                                                        style: TextStyle(
-                                                            fontSize: 20.0,
-                                                            color:
-                                                                ColorPrimary)),
-                                                  ))
-                                            ]),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Table(
+                                  defaultColumnWidth: FixedColumnWidth(deviceWidth * 0.44),
+                                  border: TableBorder.all(color: Colors.black12, style: BorderStyle.solid, width: 1),
+                                  children: [
+                                    TableRow(children: [
+                                      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                                         Container(
-                                          child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                    height: 50,
-                                                    width: deviceWidth * 0.44,
-                                                    color: TabBarColor,
-                                                    child: Align(
-                                                      alignment:
-                                                          Alignment.centerLeft,
-                                                      child: AutoSizeText(
-                                                          "  " +
-                                                              "earning_key"
-                                                                  .tr(),
-                                                          style: TextStyle(
-                                                              fontSize: 18.0,
-                                                              color:
-                                                                  ColorPrimary)),
-                                                    ))
-                                              ]),
-                                        ),
+                                            height: 50,
+                                            width: deviceWidth * 0.44,
+                                            color: TabBarColor,
+                                            child: Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text("  " + "day_key".tr(),
+                                                  style: TextStyle(fontSize: 20.0, color: ColorPrimary)),
+                                            ))
                                       ]),
-                                      TableRow(children: [
-                                        Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                  height: 50,
-                                                  width: deviceWidth * 0.44,
-                                                  color: Colors.white,
-                                                  child: Align(
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    child: AutoSizeText(
-                                                      '  ${snapshot.data!.month}',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          fontSize: 14.0,
-                                                          color: Colors.black),
-                                                      maxFontSize: 14,
-                                                      minFontSize: 12,
-                                                    ),
-                                                  ))
-                                            ]),
-                                        Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                  height: 50,
-                                                  width: deviceWidth * 0.44,
-                                                  color: Colors.white,
-                                                  child: Align(
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    child: Text(
-                                                        '  ${snapshot.data!.monthlyEarning}',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 15.0,
-                                                            color:
-                                                                Colors.black)),
-                                                  ))
-                                            ]),
-                                      ]),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 30,
-                                  ),
-                                  Container(
-                                    height: 200,
-                                    child: SfCartesianChart(
-                                      plotAreaBorderWidth: 2,
-                                      plotAreaBorderColor: Colors.transparent,
-                                      //palette: <Color>[ColorPrimary],
-                                      borderColor: Colors.grey.shade500,
-
-                                      title: ChartTitle(
-                                          text:
-                                              "earning_amt_inr_key".tr() + " ",
-                                          textStyle: TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.grey.shade600)),
-                                      // legend: Legend(isVisible: true),
-                                      tooltipBehavior: _tooltipBehavior,
-                                      enableMultiSelection: true,
-
-                                      series: <ChartSeries>[
-                                        BarSeries<GDPDatas, String>(
-                                            color: ColorPrimary,
-
-                                            // name: '',
-                                            dataSource:
-                                                getChartDatas(snapshot.data),
-                                            xValueMapper: (GDPDatas gdp, _) =>
-                                                gdp.continent,
-                                            yValueMapper: (GDPDatas gdp, _) =>
-                                                gdp.sale,
-                                            //  dataLabelSettings: DataLabelSettings(isVisible: true),
-                                            enableTooltip: false)
-                                      ],
-                                      primaryXAxis: CategoryAxis(
-                                          majorGridLines:
-                                              MajorGridLines(width: 0),
-                                          labelStyle: TextStyle(
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w600),
-                                          desiredIntervals: 1),
-                                      primaryYAxis: NumericAxis(
-                                        edgeLabelPlacement:
-                                            EdgeLabelPlacement.shift,
-                                        // desiredIntervals: 6,
-                                        // interval: 2000,
-
-                                        //numberFormat: NumberFormat.currency(),
-                                        title: AxisTitle(
-                                            alignment: ChartAlignment.center,
-                                            text: "earning_amt_inr_key".tr() +
-                                                " ",
-                                            textStyle: TextStyle(
-                                                fontSize: 11,
-                                                color: Colors.grey.shade600)),
+                                      Container(
+                                        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                          Container(
+                                              height: 50,
+                                              width: deviceWidth * 0.44,
+                                              color: TabBarColor,
+                                              child: Align(
+                                                alignment: Alignment.centerLeft,
+                                                child: AutoSizeText("  " + "earning_key".tr(),
+                                                    style: TextStyle(fontSize: 18.0, color: ColorPrimary)),
+                                              ))
+                                        ]),
                                       ),
+                                    ]),
+                                    TableRow(children: [
+                                      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                        Container(
+                                            height: 50,
+                                            width: deviceWidth * 0.44,
+                                            color: Colors.white,
+                                            child: Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: AutoSizeText(
+                                                '  ${snapshot.data!.month}',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w600, fontSize: 14.0, color: Colors.black),
+                                                maxFontSize: 14,
+                                                minFontSize: 12,
+                                              ),
+                                            ))
+                                      ]),
+                                      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                        Container(
+                                            height: 50,
+                                            width: deviceWidth * 0.44,
+                                            color: Colors.white,
+                                            child: Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text('  ${snapshot.data!.monthlyEarning}',
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.w600,
+                                                      fontSize: 15.0,
+                                                      color: Colors.black)),
+                                            ))
+                                      ]),
+                                    ]),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 30,
+                                ),
+                                Container(
+                                  height: 200,
+                                  child: SfCartesianChart(
+                                    plotAreaBorderWidth: 2,
+                                    plotAreaBorderColor: Colors.transparent,
+                                    //palette: <Color>[ColorPrimary],
+                                    borderColor: Colors.grey.shade500,
+
+                                    title: ChartTitle(
+                                        text: "earning_amt_inr_key".tr() + " ",
+                                        textStyle: TextStyle(fontSize: 14, color: Colors.grey.shade600)),
+                                    // legend: Legend(isVisible: true),
+                                    tooltipBehavior: _tooltipBehavior,
+                                    enableMultiSelection: true,
+
+                                    series: <ChartSeries>[
+                                      BarSeries<GDPDatas, String>(
+                                          color: ColorPrimary,
+
+                                          // name: '',
+                                          dataSource: getChartDatas(snapshot.data),
+                                          xValueMapper: (GDPDatas gdp, _) => gdp.continent,
+                                          yValueMapper: (GDPDatas gdp, _) => gdp.sale,
+                                          //  dataLabelSettings: DataLabelSettings(isVisible: true),
+                                          enableTooltip: false)
+                                    ],
+                                    primaryXAxis: CategoryAxis(
+                                        majorGridLines: MajorGridLines(width: 0),
+                                        labelStyle: TextStyle(fontSize: 10, fontWeight: FontWeight.w600),
+                                        desiredIntervals: 1),
+                                    primaryYAxis: NumericAxis(
+                                      edgeLabelPlacement: EdgeLabelPlacement.shift,
+                                      // desiredIntervals: 6,
+                                      // interval: 2000,
+
+                                      //numberFormat: NumberFormat.currency(),
+                                      title: AxisTitle(
+                                          alignment: ChartAlignment.center,
+                                          text: "earning_amt_inr_key".tr() + " ",
+                                          textStyle: TextStyle(fontSize: 11, color: Colors.grey.shade600)),
                                     ),
-                                  )
-                                ]));
+                                  ),
+                                )
+                              ]));
+                        }
+                        return Center(
+                          child: Text("data_not_found_key".tr()),
+                        );
                       })),
             ],
           ),
@@ -876,8 +660,7 @@ class _EarningAmountState extends State<EarningAmount> {
         double.parse(data!.todayEarning.toString()),
       ),
       GDPData(' ', 0),
-      GDPData(
-          "yesterday_key".tr(), double.parse(data.yesterdayEarning.toString())),
+      GDPData("yesterday_key".tr(), double.parse(data.yesterdayEarning.toString())),
     ];
     return chartData;
   }

@@ -1,15 +1,15 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vendor/main.dart';
-import 'package:vendor/model/get_customer_product_response.dart';
-import 'package:vendor/model/get_my_customer_response.dart';
+import 'package:vendor/model/chat_papdi_module/get_customer_of_chatpapdi.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/utility.dart';
+
+import '../../../model/get_customer_product_response.dart';
 
 class CustomerDetailScreen extends StatefulWidget {
   final Customer customer;
@@ -83,14 +83,6 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return CircularProgressIndicator();
                   }
-                  if (snapshot.hasError) {
-                    return Container(
-                      height: MediaQuery.of(context).size.height,
-                      child: Center(
-                        child: Image.asset("assets/images/no_data.gif"),
-                      ),
-                    );
-                  }
                   if (snapshot.hasData) {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,7 +93,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                         ),
                         Column(
                           children: List.generate(
-                              snapshot.data!.length,
+                              commnModel.length,
                               (index) => Stack(
                                     children: [
                                       Container(
@@ -113,27 +105,14 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                                           mainAxisSize: MainAxisSize.max,
                                           crossAxisAlignment: CrossAxisAlignment.center,
                                           children: [
-                                            snapshot.data![index].orderType == 0
-                                                ? CachedNetworkImage(
-                                                    imageBuilder: (context, imageProvider) =>
-                                                        Image(image: imageProvider),
-                                                    imageUrl: snapshot.data![index].productImages.isNotEmpty
-                                                        ? snapshot.data![index].productImages.first.productImage
-                                                        : "https://bitsofco.de/content/images/2018/12/broken-1.png",
-                                                    placeholder: (context, str) =>
-                                                        Image.asset("assets/images/no_data.gif"),
-                                                    height: 45,
-                                                    width: 45,
-                                                    fit: BoxFit.cover,
-                                                  )
-                                                : CachedNetworkImage(
-                                                    imageBuilder: (context, imageProvider) =>
-                                                        Image(image: imageProvider),
-                                                    imageUrl: snapshot.data![index].categoryImage,
-                                                    height: 45,
-                                                    width: 45,
-                                                    fit: BoxFit.contain,
-                                                  ),
+                                            Image(
+                                              image: NetworkImage(snapshot.data![index].categoryImage.isNotEmpty
+                                                  ? snapshot.data![index].categoryImage
+                                                  : "assets/images/placeholder.webp"),
+                                              height: 45,
+                                              width: 45,
+                                              fit: BoxFit.contain,
+                                            ),
                                             const SizedBox(
                                               width: 5,
                                             ),
@@ -145,21 +124,13 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                                                       mainAxisSize: MainAxisSize.max,
                                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                       children: [
-                                                        snapshot.data![index].orderType == 0
-                                                            ? Text(
-                                                                "${snapshot.data![index].productName}",
-                                                                style: GoogleFonts.openSans(
-                                                                    color: TextBlackLight,
-                                                                    fontWeight: FontWeight.bold,
-                                                                    fontSize: 16),
-                                                              )
-                                                            : Text(
-                                                                "${snapshot.data![index].categoryName}",
-                                                                style: GoogleFonts.openSans(
-                                                                    color: TextBlackLight,
-                                                                    fontWeight: FontWeight.bold,
-                                                                    fontSize: 16),
-                                                              ),
+                                                        Text(
+                                                          "${snapshot.data![index].categoryName}",
+                                                          style: GoogleFonts.openSans(
+                                                              color: TextBlackLight,
+                                                              fontWeight: FontWeight.bold,
+                                                              fontSize: 16),
+                                                        ),
                                                         Text(
                                                           "₹ ${snapshot.data![index].total}",
                                                           style: GoogleFonts.openSans(
@@ -175,15 +146,13 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                                                     Row(
                                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                       children: [
-                                                        snapshot.data![index].orderType == 0
-                                                            ? Text(
-                                                                "${snapshot.data![index].qty} x ${snapshot.data![index].price}",
-                                                                style: GoogleFonts.openSans(
-                                                                    color: TextGrey,
-                                                                    fontWeight: FontWeight.w600,
-                                                                    fontSize: 13),
-                                                              )
-                                                            : Container(),
+                                                        Text(
+                                                          "",
+                                                          style: GoogleFonts.openSans(
+                                                              color: TextGrey,
+                                                              fontWeight: FontWeight.w600,
+                                                              fontSize: 13),
+                                                        ),
                                                         Text(
                                                           "commission_key".tr() +
                                                               ": ${snapshot.data![index].commissionValue}",
@@ -338,21 +307,21 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
   Future<List<CommnModel>> getCustomerProduct() async {
     if (await Network.isConnected()) {
       Map<String, dynamic> input = {
-        "customer_id": widget.customer.customerId,
+        "customer_id": "${widget.customer.customerId}",
         "vendor_id": await SharedPref.getIntegerPreference(SharedPref.VENDORID)
       };
 
       GetCustomerProductResponse response = await apiProvider.getCustomerProduct(input);
       if (response.success) {
-        await Future.forEach(response.data!, (CommnModel common) async {
-          common.orderType = 0;
-          commnModel.add(common);
-        });
+        // await Future.forEach(response.data!, (CommnModel common) async {
+        //   common.orderType = 0;
+        //   commnModel.add(common);
+        // });
         await Future.forEach(response.directBilling!, (CommnModel common) {
           common.orderType = 1;
           commnModel.add(common);
         });
-        commnModel.sort((a, b) => b.date.compareTo(a.date));
+        // commnModel.sort((a, b) => b.date.compareTo(a.date));
         ;
         commnModel.forEach((product) {
           totalPay += double.parse(product.amountPaid);

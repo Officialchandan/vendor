@@ -63,6 +63,7 @@ class BillingDetails {
   String returnAmountCustomer;
   String dateTime;
   String customerCoinBalance;
+
   String amountPaidToMyProfit;
   String amountPaidToVendor;
   String billingId;
@@ -131,6 +132,7 @@ class OrderDetail {
     required this.earningCoins,
     required this.myProfitRevenue,
     required this.commission,
+    required this.orderedWalletBalance,
   });
 
   String commission;
@@ -145,6 +147,8 @@ class OrderDetail {
   String amountPaid;
   String redeemCoins;
   String earningCoins;
+  String orderedWalletBalance;
+
   String myProfitRevenue;
 
   factory OrderDetail.fromJson(String str) => OrderDetail.fromMap(json.decode(str));
@@ -164,6 +168,7 @@ class OrderDetail {
         amountPaid: json["amount_paid"] == null ? "0" : json["amount_paid"].toString(),
         redeemCoins: json["redeem_coins"] == null ? "0" : json["redeem_coins"].toString(),
         earningCoins: json["earning_coins"] == null ? "0" : json["earning_coins"].toString(),
+        orderedWalletBalance: json["ordered_wallet_balance"] == null ? "" : json["ordered_wallet_balance"].toString(),
         myProfitRevenue: json["myprofit_revenue"] == null ? "0" : json["myprofit_revenue"].toString(),
       );
 
@@ -180,23 +185,26 @@ class OrderDetail {
         "amount_paid": amountPaid == null ? null : amountPaid,
         "redeem_coins": redeemCoins == null ? null : redeemCoins,
         "earning_coins": earningCoins == null ? null : earningCoins,
+        "ordered_wallet_balance": orderedWalletBalance == null ? null : orderedWalletBalance,
         "myprofit_revenue": myProfitRevenue == null ? null : myProfitRevenue,
       };
 }
 
 class DirectBillingDetails {
-  DirectBillingDetails(
-      {required this.billingId,
-      required this.mobile,
-      required this.categoryId,
-      required this.categoryName,
-      required this.categoryImage,
-      required this.amountPaid,
-      required this.redeemCoins,
-      required this.earningCoins,
-      required this.myProfitRevenue,
-      required this.total,
-      required this.commission});
+  DirectBillingDetails({
+    required this.billingId,
+    required this.mobile,
+    required this.categoryId,
+    required this.categoryName,
+    required this.categoryImage,
+    required this.amountPaid,
+    required this.redeemCoins,
+    required this.earningCoins,
+    required this.myProfitRevenue,
+    required this.total,
+    required this.commission,
+    required this.orderedWalletBalance,
+  });
 
   String billingId;
   String mobile;
@@ -209,7 +217,7 @@ class DirectBillingDetails {
   String myProfitRevenue;
   String total;
   String commission;
-
+  String orderedWalletBalance;
   factory DirectBillingDetails.fromJson(String str) => DirectBillingDetails.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
@@ -226,6 +234,7 @@ class DirectBillingDetails {
         earningCoins: json["earning_coins"] == null ? "" : json["earning_coins"].toString(),
         myProfitRevenue: json["myprofit_revenue"] == null ? "0" : json["myprofit_revenue"].toString(),
         total: json["total"] == null ? "0" : json["total"].toString(),
+        orderedWalletBalance: json["ordered_wallet_balance"] == null ? null : json["ordered_wallet_balance"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -240,6 +249,7 @@ class DirectBillingDetails {
         "earning_coins": earningCoins == null ? null : earningCoins,
         "myprofit_revenue": myProfitRevenue == null ? null : myProfitRevenue,
         "total": total == null ? null : total,
+        "ordered_wallet_balance": orderedWalletBalance == null ? null : orderedWalletBalance,
       };
 }
 
@@ -262,6 +272,7 @@ class CommonSaleReturnProductDetails {
     required this.categoryName,
     required this.categoryImage,
     required this.commission,
+    required this.orderedWalletBalance,
   });
 
   String orderId;
@@ -281,4 +292,5 @@ class CommonSaleReturnProductDetails {
   String categoryName;
   String categoryImage;
   String commission;
+  String orderedWalletBalance;
 }

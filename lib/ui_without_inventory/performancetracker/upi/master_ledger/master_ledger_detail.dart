@@ -415,6 +415,7 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                               borderRadius: BorderRadius.circular(10),
                               child: InkWell(
                                 onTap: () {
+                                  log("searchList[index]=>${searchList[index].paymentDetails.first.bankTxnId}");
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(

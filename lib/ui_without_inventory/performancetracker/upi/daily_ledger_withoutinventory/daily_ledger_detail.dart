@@ -8,18 +8,18 @@ import 'package:vendor/ui/money_due_upi/normal_ledger/model/normal_ladger_respon
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
 
-class NormalLedgerDetails extends StatefulWidget {
+class SettlementLedgerDetails extends StatefulWidget {
   // final List<OrderData> commonLedgerHistory;
   final OrderData order;
 
   // final int index;
-  NormalLedgerDetails({Key? key, required this.order}) : super(key: key);
+  SettlementLedgerDetails({Key? key, required this.order}) : super(key: key);
 
   @override
-  State<NormalLedgerDetails> createState() => _NormalLedgerDetailsState();
+  State<SettlementLedgerDetails> createState() => _SettlementLedgerDetailsState();
 }
 
-class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
+class _SettlementLedgerDetailsState extends State<SettlementLedgerDetails> {
   // late List<CommonLedgerHistory> commonLedgerHistory;
 
   double reddem = 0, finalamount = 0;
@@ -340,44 +340,6 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
               SizedBox(
                 height: 20,
               ),
-              widget.order.status == 1
-                  ? Container(
-                      height: MediaQuery.of(context).size.height * 0.20,
-                      padding: const EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 20),
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 1, color: TextGrey), borderRadius: BorderRadius.circular(5)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Bank Transaction ID",
-                            style: GoogleFonts.openSans(fontSize: 16, color: TextGrey),
-                          ),
-                          Text(
-                            "${widget.order.paymentDetails.first.bankTxnId}",
-                            style:
-                                GoogleFonts.openSans(fontSize: 16, color: TextBlackLight, fontWeight: FontWeight.w600),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            "To: ${widget.order.paymentDetails.first.to}",
-                            style: GoogleFonts.openSans(fontSize: 16, color: TextGrey),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            "From: ${widget.order.paymentDetails.first.from}",
-                            style: GoogleFonts.openSans(fontSize: 16, color: TextGrey),
-                          ),
-                        ],
-                      ),
-                    )
-                  : Container(),
             ],
           ),
         ),

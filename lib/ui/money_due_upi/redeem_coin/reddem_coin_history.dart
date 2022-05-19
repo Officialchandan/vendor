@@ -207,7 +207,7 @@ class _DirectBillingListState extends State<DirectBillingList> {
       Container(
         height: 80,
         margin: EdgeInsets.only(top: 14),
-        padding: EdgeInsets.all(14),
+        padding: EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
@@ -258,7 +258,7 @@ class _DirectBillingListState extends State<DirectBillingList> {
                   ),
                   Text(
                     " (\u20B9${(double.parse(widget.detail.totalRedeemCoins) / 3).toStringAsFixed(2)})",
-                    style: GoogleFonts.openSans(color: ColorPrimary, fontSize: 16, fontWeight: FontWeight.w600),
+                    style: GoogleFonts.openSans(color: ColorPrimary, fontSize: 20, fontWeight: FontWeight.w600),
                   ),
                 ]),
               ),

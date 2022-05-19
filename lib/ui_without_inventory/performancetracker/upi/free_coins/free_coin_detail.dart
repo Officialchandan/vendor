@@ -18,7 +18,6 @@ class _freeCoinDetailstate extends State<FreeCoinDetail> {
   double count = 0;
   double redeemCoins = 0;
   double orderTotal = 0;
-  double amtpaid = 0;
 
   @override
   void initState() {
@@ -31,7 +30,6 @@ class _freeCoinDetailstate extends State<FreeCoinDetail> {
       widget.freecoindetail.orderDetails.forEach((element) {
         orderTotal += double.parse(element.total);
         redeemCoins += double.parse(element.redeemCoins);
-        amtpaid += double.parse(element.amountPaid);
       });
     } else {
       widget.freecoindetail.billingDetails.forEach((element) {
@@ -101,7 +99,9 @@ class _freeCoinDetailstate extends State<FreeCoinDetail> {
                 height: count == 1 ? 80 : 240,
                 child: ListView.builder(
                   primary: false,
-                  itemCount: freeCoinDetails!.orderType != 0 ? 1 : freeCoinDetails!.billingDetails.length,
+                  itemCount: freeCoinDetails!.orderType == 0
+                      ? freeCoinDetails!.orderDetails.length
+                      : freeCoinDetails!.billingDetails.length,
                   itemBuilder: ((context, index) {
                     return Container(
                       margin: const EdgeInsets.symmetric(vertical: 8),
@@ -118,19 +118,11 @@ class _freeCoinDetailstate extends State<FreeCoinDetail> {
                               borderRadius: BorderRadius.circular(8),
                               child: Container(
                                 color: Colors.white,
-                                child: freeCoinDetails!.orderType != 0
-                                    ? Image.network(
-                                        "${freeCoinDetails!.billingDetails.first.categoryImage}",
-                                        width: 45,
-                                        height: 45,
-                                        fit: BoxFit.cover,
-                                      )
-                                    : Image.network(
-                                        "${freeCoinDetails!.orderDetails[index].productImage}",
-                                        width: 45,
-                                        height: 45,
-                                        fit: BoxFit.cover,
-                                      ),
+                                child: Image.network(
+                                  "${widget.freecoindetail.billingDetails.first.categoryImage}",
+                                  width: 45,
+                                  fit: BoxFit.contain,
+                                ),
                               ),
                             ),
                             SizedBox(
@@ -153,7 +145,7 @@ class _freeCoinDetailstate extends State<FreeCoinDetail> {
                                                     fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
                                               )
                                             : Text(
-                                                "${freeCoinDetails!.billingDetails.first.categoryName}",
+                                                "${freeCoinDetails!.billingDetails[index].categoryName}",
                                                 style: GoogleFonts.openSans(
                                                     fontSize: 18, fontWeight: FontWeight.bold, color: TextBlackLight),
                                               ),
@@ -164,7 +156,7 @@ class _freeCoinDetailstate extends State<FreeCoinDetail> {
                                                     fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
                                               )
                                             : Text(
-                                                "\u20B9${freeCoinDetails!.billingDetails.first.total}",
+                                                "\u20B9${freeCoinDetails!.billingDetails[index].total}",
                                                 style: GoogleFonts.openSans(
                                                     fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
                                               ),
@@ -199,7 +191,7 @@ class _freeCoinDetailstate extends State<FreeCoinDetail> {
                                                         fontSize: 14, fontWeight: FontWeight.w600, color: TextGrey),
                                                   )
                                                 : Text(
-                                                    "${"commission_key".tr()}: ${freeCoinDetails!.billingDetails.first.commissionValue}",
+                                                    "${"commission_key".tr()}: ${freeCoinDetails!.billingDetails[index].commissionValue}",
                                                     style: GoogleFonts.openSans(
                                                         fontSize: 14, fontWeight: FontWeight.w600, color: TextGrey),
                                                   ),
@@ -235,7 +227,7 @@ class _freeCoinDetailstate extends State<FreeCoinDetail> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "totals_order_value_key".tr(),
+                    "total_order_value_key".tr(),
                     style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 14, color: TextGrey),
                   ),
                   Text(
@@ -256,7 +248,7 @@ class _freeCoinDetailstate extends State<FreeCoinDetail> {
                   ),
                   freeCoinDetails!.orderType == 0
                       ? Text(
-                          "\u20B9${amtpaid}",
+                          "\u20B9${freeCoinDetails!.orderDetails[0].amountPaid}",
                           style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 15, color: TextBlackLight),
                         )
                       : Text(
@@ -294,7 +286,7 @@ class _freeCoinDetailstate extends State<FreeCoinDetail> {
                                   fontWeight: FontWeight.bold, fontSize: 15, color: TextBlackLight),
                             )
                           : Text(
-                              "${freeCoinDetails!.billingDetails.first.redeemCoins}) \u20B9${(double.parse(freeCoinDetails!.billingDetails.first.redeemCoins) / 3).toStringAsFixed(2)}",
+                              "${freeCoinDetails!.billingDetails[0].redeemCoins}) \u20B9${(double.parse(freeCoinDetails!.billingDetails[0].redeemCoins) / 3).toStringAsFixed(2)}",
                               style: GoogleFonts.openSans(
                                   fontWeight: FontWeight.bold, fontSize: 15, color: TextBlackLight),
                             ),
@@ -330,8 +322,8 @@ class _freeCoinDetailstate extends State<FreeCoinDetail> {
                       ),
                       freeCoinDetails!.orderType == 0
                           ? Text(
-                              "${freeCoinDetails!.totalearningcoins})"
-                              " \u20B9${(double.parse(freeCoinDetails!.totalearningcoins) / 3).toStringAsFixed(2)}",
+                              "${freeCoinDetails!.orderDetails[0].earningCoins})"
+                              " \u20B9${(double.parse(freeCoinDetails!.orderDetails[0].earningCoins) / 3).toStringAsFixed(2)}",
                               style:
                                   GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 24, color: ColorPrimary),
                             )
@@ -349,22 +341,3 @@ class _freeCoinDetailstate extends State<FreeCoinDetail> {
     );
   }
 }
-// Row(
-// children: [
-// Image.asset(
-// "assets/images/point.png",
-// scale: 3,
-// ),
-// freeCoinDetails!.orderType == 0
-// ? Text(
-// " ${freeCoinDetails!.orderDetails[0].earningCoins} (\u20B9${(double.parse(freeCoinDetails!.orderDetails[0].earningCoins) / 3).toStringAsFixed(2)})",
-// style:
-// GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 15, color: TextBlackLight),
-// )
-// : Text(
-// " ${freeCoinDetails!.billingDetails[0].earningCoins} (\u20B9${(double.parse(freeCoinDetails!.billingDetails[0].earningCoins) / 3).toStringAsFixed(2)})",
-// style:
-// GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 15, color: TextBlackLight),
-// ),
-// ],
-// ),

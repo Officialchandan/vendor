@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -53,6 +55,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
         categoryId: "",
         categoryImage: "",
         categoryName: "",
+        orderedWalletBalance: products.orderedWalletBalance,
       );
       productDetails.add(normalBillingProducts);
     }
@@ -76,6 +79,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
         categoryId: products.categoryId,
         categoryImage: products.categoryImage,
         categoryName: products.categoryName,
+        orderedWalletBalance: products.orderedWalletBalance,
       );
       productDetails.add(normalBillingProducts);
     }
@@ -106,14 +110,21 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
     // collection Amount
     if (redeemCoinsRs >= earnCoinsRs) {
       collectionAmt = 0;
+      customerReturnAmt = amtPaid;
+      log("====>1 $collectionAmt");
     } else {
       collectionAmt = earnCoinsRs - redeemCoinsRs;
+      log("====>2 $collectionAmt");
       if (coinBalanceRs >= collectionAmt) {
         collectionAmt = 0;
+        customerReturnAmt = amtPaid;
+        log("====>3 $collectionAmt");
       } else {
         collectionAmt = collectionAmt - coinBalanceRs;
-
+        log("====>4 $collectionAmt");
+        log("====>4 $amtPaid");
         customerReturnAmt = amtPaid - collectionAmt;
+        log("====>5 $collectionAmt");
       }
     }
   }

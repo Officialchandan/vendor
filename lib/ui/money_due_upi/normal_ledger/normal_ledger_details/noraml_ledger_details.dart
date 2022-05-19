@@ -48,6 +48,12 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
   double returnCommisionAmnt = 0;
 
   NormalLedgerDetailBloc normalLedgerDetailBloc = NormalLedgerDetailBloc();
+  String vendorName = "";
+  void getname() async {
+    vendorName = await SharedPref.getStringPreference(SharedPref.VENDORNAME);
+    setState(() {});
+    log("=======>$vendorName");
+  }
 
   @override
   void initState() {
@@ -57,6 +63,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
     // index = widget.index;
     log("orderType-->${widget.order.orderType}");
     log("order-->${widget.order.toString()}");
+    getname();
     calculation();
   }
 
@@ -83,14 +90,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
       returnAmountpaid = double.parse(widget.order.billingDetails.first.amountPaid);
       returnRedemption = double.parse(widget.order.billingDetails.first.redeemCoins);
       returnEarned = double.parse(widget.order.billingDetails.first.earningCoins);
-      widget.order.isReturn == 1 ? returnCommisionAmnt = totalComission : totalComission;
-
-      // if (double.parse(widget.order.myprofitRevenue) > reddem) {
-      //   log("${double.parse(widget.order.myprofitRevenue)}");
-      //   finalamount = double.parse(widget.order.myprofitRevenue) - reddem;
-      // } else {
-      //   finalamount = reddem - double.parse(widget.order.myprofitRevenue);
-      // }
+      widget.order.isReturn == 1 ? returnCommisionAmnt = totalComission - reddem / 3 : totalComission;
     } else {
       // getNormalLedgerData();
       widget.order.orderDetails.forEach((element) {
@@ -99,12 +99,15 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
         // reddem = reddem / 3;
         orderTotal += double.parse(element.total);
         totalComission += double.parse(element.commissionValue);
+        double r = element.isReturn == 1 ? double.parse(element.commissionValue) : 0;
         //returnCommision += element.isReturn == 1 ? double.parse(element.commissionValue) : 0;
         returnAmountpaid += element.isReturn == 1 ? double.parse(element.amountPaid) : 0;
         returnRedemption += element.isReturn == 1 ? double.parse(element.redeemCoins) : 0;
         log("returnRedemption--->$returnRedemption");
         returnEarned = double.parse(element.earningCoins);
-        element.isReturn == 1 ? returnCommisionAmnt += totalComission : 0;
+        element.isReturn == 1
+            ? returnCommisionAmnt += r >= returnRedemption ? r - returnRedemption / 3 : returnRedemption / 3 - r
+            : 0;
         log("orderTotal--->$reddem");
         // if (double.parse(widget.order.myprofitRevenue) > reddem) {
         //   log("${double.parse(widget.order.myprofitRevenue)}");
@@ -166,6 +169,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
         categoryImage: "",
         commission: products.commission,
         categoryName: "",
+        orderedWalletBalance: products.orderedWalletBalance,
       );
       productDetails.add(normalBillingProducts);
     }
@@ -262,6 +266,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                       );
                     }
                     if (state is NormalLedgerDetailFailureState) {
+                      log("hi");
                       return Container(
                         height: MediaQuery.of(context).size.height,
                         child: Center(
@@ -732,34 +737,35 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
               SizedBox(
                 height: 5,
               ),
-              widget.order.status == 1
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "To: ${widget.order.paymentDetails.first.to}",
-                              style: GoogleFonts.openSans(
-                                  fontWeight: FontWeight.bold, fontSize: 16, color: TextBlackLight),
-                            ),
-                            Text(
-                              "From: ${widget.order.paymentDetails.first.from}",
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      totalComission <= reddem / 3
+                          ? Text(
+                              "To: $vendorName",
+                              style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                            )
+                          : Text(
+                              "To: MyProfit",
                               style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
                             ),
-                          ],
-                        ),
-                      ],
-                    )
-                  : Container(),
-              // SizedBox(
-              //   height: 8,
-              // ),
-              // Container(
-              //   height: 1.5,
-              //   color: Colors.black,
-              // ),
+                      totalComission >= reddem / 3
+                          ? Text(
+                              "From: $vendorName",
+                              style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                            )
+                          : Text(
+                              "From: MyProfit",
+                              style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                            ),
+                    ],
+                  ),
+                ],
+              ),
+
               SizedBox(
                 height: 20,
               ),
@@ -860,28 +866,24 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                     SizedBox(
                       height: 5,
                     ),
-                    widget.order.status == 1
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "To: ${widget.order.paymentDetails.first.to}",
-                                    style: GoogleFonts.openSans(
-                                        fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
-                                  ),
-                                  Text(
-                                    "From: ${widget.order.paymentDetails.first.from}",
-                                    style: GoogleFonts.openSans(
-                                        fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          )
-                        : Container(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "To: MyProfit",
+                              style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                            ),
+                            Text(
+                              "From: $vendorName",
+                              style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                     SizedBox(
                       height: 8,
                     ),
@@ -973,28 +975,38 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                     SizedBox(
                       height: 5,
                     ),
-                    widget.order.status == 1
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "To: ${widget.order.paymentDetails.first.to}",
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            returnCollectionAmnt <= returnCommisionAmnt
+                                ? Text(
+                                    "To: $vendorName",
+                                    style: GoogleFonts.openSans(
+                                        fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                                  )
+                                : Text(
+                                    "To: MyProfit",
                                     style: GoogleFonts.openSans(
                                         fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
                                   ),
-                                  Text(
-                                    "From: ${widget.order.paymentDetails.first.from}",
+                            returnCollectionAmnt >= returnCommisionAmnt
+                                ? Text(
+                                    "From: $vendorName",
+                                    style: GoogleFonts.openSans(
+                                        fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                                  )
+                                : Text(
+                                    "From: MyProfit",
                                     style: GoogleFonts.openSans(
                                         fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
                                   ),
-                                ],
-                              ),
-                            ],
-                          )
-                        : Container(),
+                          ],
+                        ),
+                      ],
+                    ),
 
                     SizedBox(
                       height: 20,
@@ -1483,28 +1495,38 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                   SizedBox(
                     height: 5,
                   ),
-                  widget.order.status == 1
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "To: ${widget.order.paymentDetails.first.to}",
-                                  style: GoogleFonts.openSans(
-                                      fontWeight: FontWeight.w600, fontSize: 16, color: TextBlackLight),
-                                ),
-                                Text(
-                                  "From: ${widget.order.paymentDetails.first.from}",
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          totalComission <= reddem / 3
+                              ? Text(
+                                  "To: $vendorName",
+                                  style:
+                                      GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                                )
+                              : Text(
+                                  "To: MyProfit",
                                   style:
                                       GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
                                 ),
-                              ],
-                            ),
-                          ],
-                        )
-                      : Container(),
+                          totalComission >= reddem / 3
+                              ? Text(
+                                  "From: $vendorName",
+                                  style:
+                                      GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                                )
+                              : Text(
+                                  "From: MyProfit",
+                                  style:
+                                      GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                                ),
+                        ],
+                      ),
+                    ],
+                  ),
                   Container(
                     height: 50,
                     alignment: Alignment.bottomCenter,

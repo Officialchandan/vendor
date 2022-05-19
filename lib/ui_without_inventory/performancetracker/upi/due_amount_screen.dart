@@ -12,7 +12,6 @@ import 'package:paytm_allinonesdk/paytm_allinonesdk.dart';
 import 'package:vendor/api/server_error.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/model/common_response.dart';
-import 'package:vendor/model/get_due_amount_response.dart';
 import 'package:vendor/model/get_vendor_free_coin.dart';
 import 'package:vendor/ui_without_inventory/home/home.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/upi/bloc/due_amount_bloc.dart';
@@ -35,7 +34,7 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
   static const paytmUpiPayment = MethodChannel("com.myprofit.vendor/paytmUpiPayment");
   MoneyDueBloc moneyDueBloc = MoneyDueBloc();
   GetVendorFreeCoinData? freecoin;
-  List<CategoryDueAmount> categoryDue = [];
+
   String dueAmount = "0.0";
   String paymentid = "";
   String result = "";
@@ -137,12 +136,14 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
             backgroundColor: condition == 0 ? ApproveTextColor : ColorPrimary,
             automaticallyImplyLeading: false,
             actions: [
-              IconButton(onPressed: (){
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    PageTransition(child: HomeScreenWithoutInventory(), type: PageTransitionType.fade),
-                    ModalRoute.withName("/"));
-              }, icon: Icon(Icons.home))
+              IconButton(
+                  onPressed: () {
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        PageTransition(child: HomeScreenWithoutInventory(), type: PageTransitionType.fade),
+                        ModalRoute.withName("/"));
+                  },
+                  icon: Icon(Icons.home))
             ],
           ),
           body: SingleChildScrollView(
@@ -178,9 +179,9 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                             if (state is GetDueAmountState) {
                               moneyDueBloc.add(GetFreeCoins());
                               log("due ammount ---> ${state.dueAmount}");
-                              dueAmount = state.dueAmount[0].myprofitRevenue;
-                              paymentid = state.dueAmount[0].paymentId;
-                              categoryDue = state.categoryDue;
+                              dueAmount = state.dueAmount.myProfitVendorDue;
+                              paymentid = state.dueAmount.myprofitVendorPaymentId;
+
                               //  paymentTransiction(context);
                             }
                             if (state is GetPaymentTransictionState) {

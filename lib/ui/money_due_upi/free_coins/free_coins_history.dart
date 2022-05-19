@@ -203,7 +203,7 @@ class _ListWidgetState extends State<ListWidget> {
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.builder(
-          padding: EdgeInsets.only(left: 14, right: 14,top: 10),
+          padding: EdgeInsets.only(left: 14, right: 14, top: 10),
           itemCount: widget.searchList.length,
           itemBuilder: (context, index) {
             return InkWell(
@@ -215,56 +215,58 @@ class _ListWidgetState extends State<ListWidget> {
                         child: FreeCoinDetail(freecoindetail: widget.searchList[index]),
                         type: PageTransitionType.fade));
               },
-              child:
-                Container(
-                  padding: const EdgeInsets.all(14),
-                  margin: const EdgeInsets.only(bottom:14),
-                  height: 80,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.shade300,
-                        offset: Offset(0.0, 0.0), //(x,y)
-                        blurRadius:7.0,
-                      ),
-                    ],
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                    Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "+91 ${widget.searchList[index].mobile}",
-                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: TextBlackLight),
-                          ),
-
-                          Row(
-                            children: [
-                              Text(
-                                "${"earned_key".tr()}: ",
-                                style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 13, color: TextGrey),),
-                              Container(
-                                  child: Image.asset(
-                                    "assets/images/point.png",
-                                    width: 15,
-                                  )),
-                              Text(
-                                " ${widget.searchList[index].orderType == 0? double.parse(widget.searchList[index].totalearningcoins).toStringAsFixed(2):
-                                double.parse(widget.searchList[index].billingDetails[0].earningCoins).toStringAsFixed(2)}",
-                                style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 16, color: ColorPrimary),
-                              ),
-                            ],
-                          ),
-                        ]),
-                    Text(
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                margin: const EdgeInsets.only(bottom: 14),
+                height: 80,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.shade300,
+                      offset: Offset(0.0, 0.0), //(x,y)
+                      blurRadius: 7.0,
+                    ),
+                  ],
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "+91 ${widget.searchList[index].mobile}",
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: TextBlackLight),
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              "${"earned_key".tr()}: ",
+                              style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 13, color: TextGrey),
+                            ),
+                            Container(
+                                child: Image.asset(
+                              "assets/images/point.png",
+                              width: 15,
+                            )),
+                            Text(
+                              " ${widget.searchList[index].orderType == 0 ? double.parse(widget.searchList[index].totalearningcoins).toStringAsFixed(2) : double.parse(widget.searchList[index].billingDetails[0].earningCoins).toStringAsFixed(2)}",
+                              style:
+                                  GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 20, color: ColorPrimary),
+                            ),
+                          ],
+                        ),
+                      ]),
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Text(
                       "${DateFormat("dd MMM yyyy").format(DateTime.parse(widget.searchList[index].dateTime.toString()))}",
                       style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 13, color: TextGrey),
                     ),
-                  ]),
-                ),
+                  ),
+                ]),
+              ),
             );
           }),
     );

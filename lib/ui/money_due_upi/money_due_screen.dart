@@ -12,7 +12,6 @@ import 'package:paytm_allinonesdk/paytm_allinonesdk.dart';
 import 'package:vendor/api/server_error.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/model/common_response.dart';
-import 'package:vendor/model/get_due_amount_response.dart';
 import 'package:vendor/ui/home/bottom_navigation_home.dart';
 import 'package:vendor/ui/home/home.dart';
 import 'package:vendor/ui/money_due_upi/bloc/money_due_bloc.dart';
@@ -61,7 +60,6 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
 
   MoneyDueBloc moneyDueBloc = MoneyDueBloc();
 
-  List<CategoryDueAmount> categoryDue = [];
   String dueAmount = "0.0";
   String paymentid = "";
   GetVendorFreeCoinData? freecoin;
@@ -174,9 +172,13 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
           if (state is GetDueAmountState) {
             moneyDueBloc.add(GetFreeCoins());
             log("due ammount ---> ${state.dueAmount}");
-            dueAmount = state.dueAmount.first.myprofitRevenue.toString();
-            paymentid = state.dueAmount.first.paymentId.toString();
-            categoryDue = state.categoryDue;
+            dueAmount = state.dueAmount.myProfitVendorDue == "0"
+                ? state.dueAmount.vendorMyProfitDue
+                : state.dueAmount.myProfitVendorDue;
+            paymentid = state.dueAmount.myProfitVendorDue == "0"
+                ? state.dueAmount.myprofitVendorPaymentId
+                : state.dueAmount.vendorMyprofitPaymentId;
+
             // paymentTransiction(context);
           }
           return Scaffold(
@@ -236,8 +238,11 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                               "₹ $dueAmount",
                               style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),
                             ),
+                            SizedBox(
+                              height: 10,
+                            ),
                             Text(
-                              "company_due_amount_key".tr(),
+                              "Gyaniji से MyProfit",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600,

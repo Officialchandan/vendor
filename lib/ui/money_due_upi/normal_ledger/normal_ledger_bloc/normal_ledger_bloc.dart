@@ -26,6 +26,10 @@ class NormalLedgerHistoryBloc extends Bloc<NormalLedgerHistoryEvent, NormalLedge
     log("===>getNormalLedgerHistoryApi");
     if (await Network.isConnected()) {
       NormalLedgerResponse response = await apiProvider.getNormalLedgerHistory(input);
+      log("response.data=== >${response.toString()}");
+      log("response.data===== >${response.data}");
+      log(" response.direct==>${response.directBilling}");
+      log(" response.paymentDetails==>${response.directBilling[5].paymentDetails.toString()}");
       if (response.success) {
         List<OrderData> orderList = [];
         // orderList.addAll(response.data);
@@ -34,11 +38,15 @@ class NormalLedgerHistoryBloc extends Bloc<NormalLedgerHistoryEvent, NormalLedge
         await Future.forEach(response.data, (OrderData order) async {
           order.orderType = 0;
           orderList.add(order);
+          log(" orderList.add(order)1${orderList}");
+          log(" orderList.add(order)1${order}");
         });
         await Future.forEach(response.directBilling, (OrderData order) async {
           order.orderType = 1;
 
           orderList.add(order);
+          log(" orderList.add(order)2${orderList}");
+          log(" orderList.add(order)2${order}");
         });
         orderList.sort((a, b) => b.dateTime.compareTo(a.dateTime));
 

@@ -6,11 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/model/normal_ladger_response.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/upi/free_coins/bloc/free_coin_history_bloc.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/upi/free_coins/bloc/free_coin_history_event.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/upi/free_coins/bloc/free_coin_history_state.dart';
+import 'package:vendor/ui_without_inventory/performancetracker/upi/free_coins/free_coin_detail.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/widget/calendar_bottom_sheet.dart';
@@ -65,7 +67,9 @@ class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
         appBar: AppBar(
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios),
-            onPressed: (){Navigator.pop(context);},
+            onPressed: () {
+              Navigator.pop(context);
+            },
           ),
           title: Text(
             "free_coins_key".tr(),
@@ -219,7 +223,7 @@ class _ListWidgetState extends State<ListWidget> {
           itemBuilder: (context, index) {
             return Container(
               margin: EdgeInsets.only(top: 14),
-              padding: EdgeInsets.all(14),
+              padding: EdgeInsets.all(12),
               height: 80,
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -232,42 +236,55 @@ class _ListWidgetState extends State<ListWidget> {
                   ),
                 ],
               ),
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "+91 ${widget.searchList[index].mobile}",
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18,color: TextBlackLight),
-                        ), Text(
-                          "${DateFormat("dd MMM yyyy").format(widget.searchList[index].dateTime)}",
-                          style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 13,color: TextGrey),
-                        ),
-                      ],
-                    ),
-                    Row(
+              child: InkWell(
+                onTap: () {
+                  log("=======${widget.searchList[index]}");
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          child: FreeCoinDetail(freecoindetail: widget.searchList[index]),
+                          type: PageTransitionType.fade));
+                },
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "${"earned_key".tr()}: ",
-                            style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 13,color: TextGrey),
+                            "+91 ${widget.searchList[index].mobile}",
+                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: TextBlackLight),
                           ),
-                          Image.asset(
-                            "assets/images/point.png",
-                            scale: 2.5,
+                          Text(
+                            "${DateFormat("dd MMM yyyy").format(widget.searchList[index].dateTime)}",
+                            style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 13, color: TextGrey),
                           ),
-                          widget.searchList[index].orderType == 0
-                              ? Text(
-                            " ${widget.searchList[index].totalearningcoins} ",
-                            style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: ColorPrimary),
-                          )
-                              : Text(
-                            " ${widget.searchList[index].billingDetails[0].earningCoins} ",
-                            style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: ColorPrimary),
-                          ),
-                        ]),
-                  ]),
+                        ],
+                      ),
+                      Row(children: [
+                        Text(
+                          "${"earned_key".tr()}: ",
+                          style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 13, color: TextGrey),
+                        ),
+                        Image.asset(
+                          "assets/images/point.png",
+                          scale: 2.5,
+                        ),
+                        widget.searchList[index].orderType == 0
+                            ? Text(
+                                " ${widget.searchList[index].totalearningcoins} ",
+                                style: GoogleFonts.openSans(
+                                    fontWeight: FontWeight.bold, fontSize: 20, color: ColorPrimary),
+                              )
+                            : Text(
+                                " ${widget.searchList[index].billingDetails[0].earningCoins} ",
+                                style: GoogleFonts.openSans(
+                                    fontWeight: FontWeight.bold, fontSize: 20, color: ColorPrimary),
+                              ),
+                      ]),
+                    ]),
+              ),
             );
           }),
     );

@@ -13,6 +13,7 @@ import 'package:vendor/ui/money_due_upi/normal_ledger/model/normal_ladger_respon
 import 'package:vendor/ui_without_inventory/performancetracker/upi/daily_ledger_withoutinventory/daily_ledger_bloc/daily_ledger_withoutinventory_bloc.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/upi/daily_ledger_withoutinventory/daily_ledger_bloc/daily_ledger_withoutinventory_event.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/upi/daily_ledger_withoutinventory/daily_ledger_bloc/daily_ledger_withoutinventory_state.dart';
+import 'package:vendor/ui_without_inventory/performancetracker/upi/daily_ledger_withoutinventory/daily_ledger_detail.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
 
@@ -55,7 +56,7 @@ class _DailyLedgerWithoutInventoryState extends State<DailyLedgerWithoutInventor
     Map<String, dynamic> input = HashMap<String, dynamic>();
     input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     // input["to_date"] = endDate.isEmpty ? startDate.toString() : endDate.toString();
-    input["date"] = DateFormat("yyyy-mm-dd").format(DateTime.now());
+    input["date"] = date;
 
     log("input---->${input}");
     _dailyLedgerHistoryBloc.add(GetDailyLedgerHistoryEvent(input: input));
@@ -73,7 +74,9 @@ class _DailyLedgerWithoutInventoryState extends State<DailyLedgerWithoutInventor
           appBar: AppBar(
             leading: IconButton(
               icon: Icon(Icons.arrow_back_ios),
-              onPressed: (){Navigator.pop(context);},
+              onPressed: () {
+                Navigator.pop(context);
+              },
             ),
             title: Text(
               "daily_ledger_key".tr(),
@@ -197,16 +200,18 @@ class _DailyLedgerWithoutInventoryState extends State<DailyLedgerWithoutInventor
                       child: ListView.builder(
                           itemCount: searchList.length,
                           itemBuilder: (context, index) {
+                            if (searchList[index].status == 1) {
+                              return Container();
+                            }
                             return InkWell(
                               splashColor: Colors.transparent,
                               onTap: () {
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) => NormalLedgerDetails(
-                                //           // commonLedgerHistory: _commonLedgerHistory!,
-                                //           order: searchList[index],
-                                //         )));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SettlementLedgerDetails(
+                                              order: searchList[index],
+                                            )));
                               },
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
