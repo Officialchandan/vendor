@@ -272,10 +272,30 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                               "customer_redemption_key".tr(),
                               style: GoogleFonts.openSans(color: TextGrey, fontWeight: FontWeight.w600, fontSize: 16),
                             ),
-                            Text(
-                              "₹ ${redeemedCoin.toStringAsFixed(2)}",
-                              style: GoogleFonts.openSans(
-                                  color: TextBlackLight, fontWeight: FontWeight.w600, fontSize: 16),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  "(",
+                                  style: GoogleFonts.openSans(
+                                      color: TextBlackLight, fontWeight: FontWeight.w600, fontSize: 16),
+                                ),
+                                Image(
+                                  image: AssetImage("assets/images/point.png"),
+                                  width: 15,
+                                  height: 15,
+                                ),
+                                Text(
+                                  "${redeemedCoin.toStringAsFixed(2)})",
+                                  style: GoogleFonts.openSans(
+                                      color: TextBlackLight, fontWeight: FontWeight.w600, fontSize: 16),
+                                ),
+                                Text(
+                                  " ₹ ${(redeemedCoin / 3).toStringAsFixed(2)}",
+                                  style: GoogleFonts.openSans(
+                                      color: TextBlackLight, fontWeight: FontWeight.w600, fontSize: 16),
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -313,7 +333,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                                       color: ColorPrimary, fontWeight: FontWeight.w600, fontSize: 20),
                                 ),
                                 Text(
-                                  " ₹ ${(earnCoin / 3).toStringAsFixed(2)}",
+                                  "₹ ${(earnCoin / 3).toStringAsFixed(2)}",
                                   style: GoogleFonts.openSans(
                                       color: ColorPrimary, fontWeight: FontWeight.w600, fontSize: 20),
                                 ),

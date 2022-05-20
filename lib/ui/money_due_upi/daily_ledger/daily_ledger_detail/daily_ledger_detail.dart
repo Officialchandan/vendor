@@ -103,7 +103,7 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
       widget.order.orderDetails.forEach((element) {
         reddem += double.parse(element.redeemCoins);
         log("$reddem");
-        reddem = reddem / 3;
+        //  reddem = reddem / 3;
         orderTotal += double.parse(element.total);
         totalComission += double.parse(element.commissionValue);
         double r = element.isReturn == 1 ? double.parse(element.commissionValue) : 0;
@@ -934,38 +934,6 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
                     ),
                     SizedBox(
                       height: 5,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            returnCollectionAmnt <= returnCommisionAmnt
-                                ? Text(
-                                    "To: $vendorName",
-                                    style: GoogleFonts.openSans(
-                                        fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
-                                  )
-                                : Text(
-                                    "To: MyProfit",
-                                    style: GoogleFonts.openSans(
-                                        fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
-                                  ),
-                            returnCollectionAmnt >= returnCommisionAmnt
-                                ? Text(
-                                    "From: $vendorName",
-                                    style: GoogleFonts.openSans(
-                                        fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
-                                  )
-                                : Text(
-                                    "From: MyProfit",
-                                    style: GoogleFonts.openSans(
-                                        fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
-                                  ),
-                          ],
-                        ),
-                      ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,

@@ -1627,7 +1627,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
-                    color: condition == 0 ? Colors.white : Colors.black,
+                    color: condition == 0 ? Colors.white : Colors.white,
                   ),
                 ),
               ));
