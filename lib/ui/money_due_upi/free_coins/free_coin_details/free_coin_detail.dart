@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -23,6 +25,11 @@ class _freeCoinDetailstate extends State<FreeCoinDetail> {
   @override
   void initState() {
     super.initState();
+    // log("widget.freecoindetail${widget.freecoindetail.orderDetails.first.productName}");
+    // log("widget.freecoindetail${widget.freecoindetail.orderDetails.first.qty}");
+    // log("widget.freecoindetail${widget.freecoindetail.orderDetails.first.price}");
+    // log("widget.freecoindetail${widget.freecoindetail.orderDetails.first.commissionValue}");
+    // log("widget.freecoindetail${widget.freecoindetail.orderDetails.first.productImage}");
     freeCoinDetails = widget.freecoindetail;
     count = freeCoinDetails!.orderType == 0
         ? double.parse(freeCoinDetails!.orderDetails.length.toString())
@@ -101,8 +108,10 @@ class _freeCoinDetailstate extends State<FreeCoinDetail> {
                 height: count == 1 ? 80 : 240,
                 child: ListView.builder(
                   primary: false,
-                  itemCount: freeCoinDetails!.orderType != 0 ? 1 : freeCoinDetails!.billingDetails.length,
+                  itemCount: freeCoinDetails!.orderType != 0 ? 1 : freeCoinDetails!.orderDetails.length,
                   itemBuilder: ((context, index) {
+                    log("  freeCoinDetails!.orderType${freeCoinDetails!.orderType}");
+                    print("  freeCoinDetails!.orderType${freeCoinDetails!.orderType}");
                     return Container(
                       margin: const EdgeInsets.symmetric(vertical: 8),
                       decoration: BoxDecoration(

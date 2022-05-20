@@ -29,7 +29,7 @@ class NormalLedgerHistoryBloc extends Bloc<NormalLedgerHistoryEvent, NormalLedge
       log("response.data=== >${response.toString()}");
       log("response.data===== >${response.data}");
       log(" response.direct==>${response.directBilling}");
-      // log(" response.paymentDetails==>${response.directBilling[5].paymentDetails.toString()}");
+
       if (response.success) {
         List<OrderData> orderList = [];
         // orderList.addAll(response.data);

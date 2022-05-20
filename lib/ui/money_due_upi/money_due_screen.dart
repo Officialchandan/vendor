@@ -162,9 +162,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
             freecoin = state.data;
             SharedPref.setStringPreference(SharedPref.VendorCoin, freecoin!.availableCoins);
 
-            if (freecoin!.availableCoins == "0") {
-              condition = 0;
-            }
+            if (freecoin!.availableCoins == "0") {}
           }
           if (state is MoneyDueInitialState) {
             moneyDueBloc.add(GetDueAmount());
@@ -175,10 +173,11 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
             dueAmount = state.dueAmount.myProfitVendorDue == "0"
                 ? state.dueAmount.vendorMyProfitDue
                 : state.dueAmount.myProfitVendorDue;
+
             paymentid = state.dueAmount.myProfitVendorDue == "0"
                 ? state.dueAmount.myprofitVendorPaymentId
                 : state.dueAmount.vendorMyprofitPaymentId;
-
+            state.dueAmount.myProfitVendorDue == "0" ? condition = 1 : condition = 0;
             // paymentTransiction(context);
           }
           return Scaffold(
@@ -235,20 +234,29 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                               height: MediaQuery.of(context).size.width * 0.08,
                             ),
                             Text(
-                              "₹ $dueAmount",
+                              "₹ ${double.parse(dueAmount).toStringAsFixed(2)}",
                               style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),
                             ),
                             SizedBox(
                               height: 10,
                             ),
-                            Text(
-                              "Gyaniji से MyProfit",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18,
-                              ),
-                            ),
+                            condition == 0
+                                ? Text(
+                                    " MyProfit से Gyaniji ",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 18,
+                                    ),
+                                  )
+                                : Text(
+                                    "Gyaniji से MyProfit",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 18,
+                                    ),
+                                  ),
                           ],
                         ),
                       ),
@@ -325,9 +333,6 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                                     SizedBox(
                                                       height: 5,
                                                     ),
-                                                    SizedBox(
-                                                      height: 10,
-                                                    )
                                                   ],
                                                 ),
                                               ),
@@ -1610,15 +1615,20 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                 ),
               ),
               bottomNavigationBar: MaterialButton(
+                elevation: 0,
                 onPressed: () {
-                  paymentTransiction(context);
+                  condition == 1 ? paymentTransiction(context) : Container();
                 },
-                color: condition == 0 ? PurpleLightColor : ColorPrimary,
+                color: condition == 0 ? Colors.white : ColorPrimary,
                 height: 50,
                 shape: RoundedRectangleBorder(),
                 child: Text(
                   "upi_transfer_key".tr(),
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    color: condition == 0 ? Colors.white : Colors.white,
+                  ),
                 ),
               ));
         }));

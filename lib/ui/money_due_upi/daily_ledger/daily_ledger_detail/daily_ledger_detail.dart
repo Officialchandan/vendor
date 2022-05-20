@@ -90,7 +90,7 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
       returnAmountpaid = double.parse(widget.order.billingDetails.first.amountPaid);
       returnRedemption = double.parse(widget.order.billingDetails.first.redeemCoins);
       returnEarned = double.parse(widget.order.billingDetails.first.earningCoins);
-      widget.order.isReturn == 1 ? returnCommisionAmnt = totalComission : totalComission;
+      widget.order.isReturn == 1 ? returnCommisionAmnt = totalComission - reddem / 3 : totalComission;
 
       // if (double.parse(widget.order.myprofitRevenue) > reddem) {
       //   log("${double.parse(widget.order.myprofitRevenue)}");
@@ -103,14 +103,18 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
       widget.order.orderDetails.forEach((element) {
         reddem += double.parse(element.redeemCoins);
         log("$reddem");
-        reddem = reddem / 3;
+        //  reddem = reddem / 3;
         orderTotal += double.parse(element.total);
         totalComission += double.parse(element.commissionValue);
+        double r = element.isReturn == 1 ? double.parse(element.commissionValue) : 0;
+
         returnAmountpaid += element.isReturn == 1 ? double.parse(element.amountPaid) : 0;
         returnRedemption += element.isReturn == 1 ? double.parse(element.redeemCoins) : 0;
         log("returnRedemption--->$returnRedemption");
         returnEarned = double.parse(element.earningCoins);
-        element.isReturn == 1 ? returnCommisionAmnt += totalComission : 0;
+        element.isReturn == 1
+            ? returnCommisionAmnt += r >= returnRedemption ? r - returnRedemption / 3 : returnRedemption / 3 - r
+            : 0;
         log("orderTotal--->$reddem");
         // if (double.parse(widget.order.myprofitRevenue) > reddem) {
         //   log("${double.parse(widget.order.myprofitRevenue)}");
@@ -511,7 +515,11 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
                           },
                           child: Text(
                             "view_details_key".tr(),
-                            style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.bold, color: TextGrey),
+                            style: GoogleFonts.openSans(
+                                decoration: TextDecoration.underline,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: TextGrey),
                           ),
                         )
                       : Container(
@@ -760,6 +768,9 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
             ],
           ),
         ),
+        SizedBox(
+          height: 20,
+        ),
         widget.order.isReturn == 1
             ? Padding(
                 padding: const EdgeInsets.only(left: 14, right: 14, top: 14, bottom: 14),
@@ -779,7 +790,11 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
                           },
                           child: Text(
                             "view_details_key".tr(),
-                            style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.bold, color: TextGrey),
+                            style: GoogleFonts.openSans(
+                                decoration: TextDecoration.underline,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: TextGrey),
                           ),
                         ),
                       ],
@@ -807,6 +822,27 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
                         Text(
                           "\u20B9${(returnCollectionAmnt).toStringAsFixed(2)}",
                           style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 28, color: ColorPrimary),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "To: MyProfit",
+                              style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                            ),
+                            Text(
+                              "From: $vendorName",
+                              style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -894,6 +930,41 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
                                 style: GoogleFonts.openSans(
                                     fontWeight: FontWeight.w600, fontSize: 28, color: ColorPrimary),
                               ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            returnCollectionAmnt <= returnCommisionAmnt
+                                ? Text(
+                                    "To: $vendorName",
+                                    style: GoogleFonts.openSans(
+                                        fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                                  )
+                                : Text(
+                                    "To: MyProfit",
+                                    style: GoogleFonts.openSans(
+                                        fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                                  ),
+                            returnCollectionAmnt >= returnCommisionAmnt
+                                ? Text(
+                                    "From: $vendorName",
+                                    style: GoogleFonts.openSans(
+                                        fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                                  )
+                                : Text(
+                                    "From: MyProfit",
+                                    style: GoogleFonts.openSans(
+                                        fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                                  ),
+                          ],
+                        ),
                       ],
                     ),
                     SizedBox(
@@ -1085,24 +1156,24 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
                       SizedBox(
                         height: 15,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "To: MyProfit",
-                                style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
-                              ),
-                              Text(
-                                "From: George Walker",
-                                style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                      totalComission <= reddem / 3
+                          ? Text(
+                              "To: $vendorName",
+                              style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                            )
+                          : Text(
+                              "To: MyProfit",
+                              style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                            ),
+                      totalComission >= reddem / 3
+                          ? Text(
+                              "From: $vendorName",
+                              style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                            )
+                          : Text(
+                              "From: MyProfit",
+                              style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                            ),
                     ],
                   ),
                   Container(

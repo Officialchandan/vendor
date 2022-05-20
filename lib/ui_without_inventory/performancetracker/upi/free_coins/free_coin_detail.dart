@@ -114,17 +114,29 @@ class _freeCoinDetailstate extends State<FreeCoinDetail> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: Container(
-                                color: Colors.white,
-                                child: Image.network(
-                                  "${widget.freecoindetail.billingDetails.first.categoryImage}",
-                                  width: 45,
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
-                            ),
+                            freeCoinDetails!.orderType == 0
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: Container(
+                                      color: Colors.white,
+                                      child: Image.network(
+                                        "${widget.freecoindetail.orderDetails[index].productImage}",
+                                        width: 45,
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+                                  )
+                                : ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: Container(
+                                      color: Colors.white,
+                                      child: Image.network(
+                                        "${widget.freecoindetail.billingDetails.first.categoryImage}",
+                                        width: 45,
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+                                  ),
                             SizedBox(
                               width: 10,
                             ),
@@ -145,7 +157,7 @@ class _freeCoinDetailstate extends State<FreeCoinDetail> {
                                                     fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
                                               )
                                             : Text(
-                                                "${freeCoinDetails!.billingDetails[index].categoryName}",
+                                                "${freeCoinDetails!.billingDetails.first.categoryName}",
                                                 style: GoogleFonts.openSans(
                                                     fontSize: 18, fontWeight: FontWeight.bold, color: TextBlackLight),
                                               ),
@@ -156,7 +168,7 @@ class _freeCoinDetailstate extends State<FreeCoinDetail> {
                                                     fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
                                               )
                                             : Text(
-                                                "\u20B9${freeCoinDetails!.billingDetails[index].total}",
+                                                "\u20B9${freeCoinDetails!.billingDetails.first.total}",
                                                 style: GoogleFonts.openSans(
                                                     fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
                                               ),
@@ -175,7 +187,7 @@ class _freeCoinDetailstate extends State<FreeCoinDetail> {
                                                         fontSize: 13, fontWeight: FontWeight.w600, color: TextGrey),
                                                   )
                                                 : Text(
-                                                    "",
+                                                    "${freeCoinDetails!.orderTotal}",
                                                     style: GoogleFonts.openSans(
                                                         fontSize: 13, fontWeight: FontWeight.w600, color: TextGrey),
                                                   ),
@@ -191,7 +203,7 @@ class _freeCoinDetailstate extends State<FreeCoinDetail> {
                                                         fontSize: 14, fontWeight: FontWeight.w600, color: TextGrey),
                                                   )
                                                 : Text(
-                                                    "${"commission_key".tr()}: ${freeCoinDetails!.billingDetails[index].commissionValue}",
+                                                    "${"commission_key".tr()}: ${freeCoinDetails!.billingDetails.first.commissionValue}",
                                                     style: GoogleFonts.openSans(
                                                         fontSize: 14, fontWeight: FontWeight.w600, color: TextGrey),
                                                   ),

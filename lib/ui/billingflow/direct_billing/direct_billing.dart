@@ -548,7 +548,7 @@ class _DirectBillingState extends State<DirectBilling> {
                                 )),
                                 Text("$coinss)",
                                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
-                                Text(" \u20B9${(double.parse(coinss)/3).toStringAsFixed(2)}",
+                                Text(" \u20B9${(double.parse(coinss) / 3).toStringAsFixed(2)}",
                                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black))
                               ]),
                             ],
@@ -934,10 +934,12 @@ class _DirectBillingState extends State<DirectBilling> {
                   children: [
                     Text(
                       "${"hooray_you_saved".tr()} $firstname ${"saved_key".tr()}",
+                      maxLines: 2,
                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
                     ),
                     Text(
                       " \u20B9${(double.parse(coinss) / 3).toStringAsFixed(2)}",
+                      maxLines: 2,
                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: ColorPrimary),
                     ),
                   ],

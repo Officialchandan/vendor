@@ -80,9 +80,9 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
 
   void calculation() {
     if (widget.order.orderType == 1) {
-      log("reddem--->@${widget.order.billingDetails.first.redeemCoins}");
+      log("reddems--->@${widget.order.billingDetails.first.redeemCoins}");
       reddem = double.parse(widget.order.billingDetails.first.redeemCoins);
-      log("reddem--->@$reddem");
+      log("reddems--->@$reddem");
       orderTotal = double.parse(widget.order.billingDetails.first.total);
       log("ordertt-->${double.parse(widget.order.billingDetails.first.total)} ");
       log("ordertt-->${(reddem / 3)} ");
@@ -519,7 +519,11 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           },
                           child: Text(
                             "view_details_key".tr(),
-                            style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.bold, color: TextGrey),
+                            style: GoogleFonts.openSans(
+                                decoration: TextDecoration.underline,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: TextGrey),
                           ),
                         )
                       : Container(
@@ -830,7 +834,11 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           },
                           child: Text(
                             "view_details_key".tr(),
-                            style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.bold, color: TextGrey),
+                            style: GoogleFonts.openSans(
+                                decoration: TextDecoration.underline,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: TextGrey),
                           ),
                         ),
                       ],
