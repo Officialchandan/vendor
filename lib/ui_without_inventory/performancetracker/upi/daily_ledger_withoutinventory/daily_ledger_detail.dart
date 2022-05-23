@@ -214,7 +214,7 @@ class _SettlementLedgerDetailsState extends State<SettlementLedgerDetails> {
                                     fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
                               )
                             : Text(
-                                "\u20B9 0",
+                                "\u20B9 $amtPaid",
                                 style: GoogleFonts.openSans(
                                     fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
                               ),

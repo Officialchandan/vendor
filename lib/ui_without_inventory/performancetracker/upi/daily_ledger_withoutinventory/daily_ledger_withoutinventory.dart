@@ -18,7 +18,8 @@ import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
 
 class DailyLedgerWithoutInventory extends StatefulWidget {
-  const DailyLedgerWithoutInventory({Key? key}) : super(key: key);
+  String amount;
+  DailyLedgerWithoutInventory({required this.amount});
 
   @override
   _DailyLedgerWithoutInventoryState createState() => _DailyLedgerWithoutInventoryState();
@@ -56,7 +57,7 @@ class _DailyLedgerWithoutInventoryState extends State<DailyLedgerWithoutInventor
     Map<String, dynamic> input = HashMap<String, dynamic>();
     input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     // input["to_date"] = endDate.isEmpty ? startDate.toString() : endDate.toString();
-    input["date"] = date;
+    //input["date"] = date;
 
     log("input---->${input}");
     _dailyLedgerHistoryBloc.add(GetDailyLedgerHistoryEvent(input: input));
@@ -131,10 +132,20 @@ class _DailyLedgerWithoutInventoryState extends State<DailyLedgerWithoutInventor
               }
 
               if (state is GetDailyLedgerHistoryFailureState) {
-                return Center(child: Image.asset("assets/images/no_data.gif"));
+                return Container(
+                    height: MediaQuery.of(context).size.height * 0.70,
+                    child: Center(child: Image.asset("assets/images/no_data.gif")));
+              }
+              if (orderList.isEmpty) {
+                log("===>$_commonLedgerHistory");
+                return Container(
+                    height: MediaQuery.of(context).size.height * 0.70,
+                    child: Center(child: CircularProgressIndicator()));
               }
               if (state is GetDailyLedgerHistoryLoadingState) {
-                return Center(child: CircularProgressIndicator());
+                return Container(
+                    height: MediaQuery.of(context).size.height * 0.70,
+                    child: Center(child: CircularProgressIndicator()));
               }
               if (state is GetDailyLedgerUserSearchState) {
                 if (state.searchword.isEmpty) {
@@ -382,6 +393,26 @@ class _DailyLedgerWithoutInventoryState extends State<DailyLedgerWithoutInventor
                 ),
               );
             }),
+          ),
+          bottomNavigationBar: Container(
+            height: 50,
+            padding: EdgeInsets.all(0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.shade400,
+                  offset: Offset(0.0, 0.0), //(x,y)
+                  blurRadius: 7.0,
+                ),
+              ],
+            ),
+            child: Center(
+              child: Text(
+                "net_settlement_amount_key".tr() + " ₹ " + "${widget.amount}",
+                style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 18, color: TextGrey),
+              ),
+            ),
           ),
         ),
       ),

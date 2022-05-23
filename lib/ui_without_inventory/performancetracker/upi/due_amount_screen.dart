@@ -40,11 +40,18 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
   String result = "";
   String mid = "", orderId = "", token = "", callbackurl = "";
   int condition = 1;
+  String vendorName = "";
+  void getname() async {
+    vendorName = await SharedPref.getStringPreference(SharedPref.VENDORNAME);
+    setState(() {});
+    log("=======>$vendorName");
+  }
 
   @override
   void initState() {
     super.initState();
     moneyDueBloc.add(GetFreeCoins());
+    getname();
   }
 
   callMethod() {
@@ -212,7 +219,7 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                             ),
                             condition == 0
                                 ? Text(
-                                    " MyProfit से Gyaniji ",
+                                    "MyProfit " + "to_key".tr() + " $vendorName ",
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.w600,
@@ -220,7 +227,7 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                                     ),
                                   )
                                 : Text(
-                                    "Gyaniji से MyProfit",
+                                    " $vendorName " + "to_key".tr() + " MyProfit",
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.w600,
@@ -369,7 +376,8 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                                       Navigator.push(
                                           context,
                                           PageTransition(
-                                              child: DailyLedgerWithoutInventory(), type: PageTransitionType.fade));
+                                              child: DailyLedgerWithoutInventory(amount: dueAmount),
+                                              type: PageTransitionType.fade));
                                     },
                                     child: Stack(
                                       clipBehavior: Clip.none,

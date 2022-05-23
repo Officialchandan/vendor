@@ -442,5 +442,6 @@
   "commission_return_key": "कमीशन रिटर्न",
   "terms_and_condition_not_available_key": "नियम और शर्तें उपलब्ध नहीं हैं",
   "signature_not_available_key": "हस्ताक्षर उपलब्ध नहीं है",
-  "coins_earned__by_customer_key": "ग्राहक द्वारा अर्जित सिक्के"
+  "coins_earned__by_customer_key": "ग्राहक द्वारा अर्जित सिक्के",
+  "to_key": "से"
 }

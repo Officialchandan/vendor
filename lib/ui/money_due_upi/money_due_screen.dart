@@ -66,10 +66,17 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
   String result = "";
   String mid = "", orderId = "", token = "", callbackurl = "";
   int condition = 1;
+  String vendorName = "";
+  void getname() async {
+    vendorName = await SharedPref.getStringPreference(SharedPref.VENDORNAME);
+    setState(() {});
+    log("=======>$vendorName");
+  }
+
   @override
   void initState() {
     super.initState();
-
+    getname();
     moneyDueBloc.add(GetFreeCoins());
   }
 
@@ -242,7 +249,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                             ),
                             condition == 0
                                 ? Text(
-                                    " MyProfit से Gyaniji ",
+                                    "MyProfit " + "to_key".tr() + " $vendorName ",
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.w600,
@@ -250,7 +257,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                     ),
                                   )
                                 : Text(
-                                    "Gyaniji से MyProfit",
+                                    " $vendorName " + "to_key".tr() + " MyProfit",
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.w600,
@@ -296,8 +303,11 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                       children: [
                                         GestureDetector(
                                           onTap: () {
-                                            Navigator.push(context,
-                                                PageTransition(child: DailyLedger(), type: PageTransitionType.fade));
+                                            Navigator.push(
+                                                context,
+                                                PageTransition(
+                                                    child: DailyLedger(amount: dueAmount),
+                                                    type: PageTransitionType.fade));
                                           },
                                           child: Stack(
                                             clipBehavior: Clip.none,
@@ -953,8 +963,13 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                         ),
                                         GestureDetector(
                                           onTap: () {
-                                            Navigator.push(context,
-                                                PageTransition(child: DailyLedger(), type: PageTransitionType.fade));
+                                            Navigator.push(
+                                                context,
+                                                PageTransition(
+                                                    child: DailyLedger(
+                                                      amount: dueAmount,
+                                                    ),
+                                                    type: PageTransitionType.fade));
                                           },
                                           child: Stack(
                                             clipBehavior: Clip.none,

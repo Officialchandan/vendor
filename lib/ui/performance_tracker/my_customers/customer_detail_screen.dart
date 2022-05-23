@@ -333,7 +333,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                                       color: ColorPrimary, fontWeight: FontWeight.w600, fontSize: 20),
                                 ),
                                 Text(
-                                  "₹ ${(earnCoin / 3).toStringAsFixed(2)}",
+                                  " ₹ ${(earnCoin / 3).toStringAsFixed(2)}",
                                   style: GoogleFonts.openSans(
                                       color: ColorPrimary, fontWeight: FontWeight.w600, fontSize: 20),
                                 ),

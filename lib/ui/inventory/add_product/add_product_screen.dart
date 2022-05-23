@@ -351,23 +351,23 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 TextFormField(
                   readOnly: true,
                   onTap: () {
-                 if(categories.length !=1){
-                    showModalBottomSheet(
-                        context: context,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(15),
-                          topRight: Radius.circular(15),
-                        )),
-                        isDismissible: false,
-                        builder: (context) {
-                           return CategoryBottomSheet(onSelect: (category) {
-                             categoryId = category.id;
-                             edtCategory.text = category.categoryName!;
-                           });
-                        }).then((value) {});
-                  }
-                 },
+                    if (categories.length != 1) {
+                      showModalBottomSheet(
+                          context: context,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(15),
+                            topRight: Radius.circular(15),
+                          )),
+                          isDismissible: false,
+                          builder: (context) {
+                            return CategoryBottomSheet(onSelect: (category) {
+                              categoryId = category.id;
+                              edtCategory.text = category.categoryName!;
+                            });
+                          }).then((value) {});
+                    }
+                  },
                   controller: edtCategory,
                   decoration: InputDecoration(
                       labelText: "category_key".tr() + "*",
@@ -449,9 +449,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           keyboardType: priceKeyboardType,
                           maxLength: PRICE_TEXT_LENGTH,
                           inputFormatters: priceInputFormatter,
-                          decoration: InputDecoration(labelText: "mrp_key".tr() + "*",
-                              labelStyle: TextStyle(fontSize: 16),counter: Container()),
-
+                          decoration: InputDecoration(
+                              labelText: "mrp_key".tr() + "*",
+                              labelStyle: TextStyle(fontSize: 16),
+                              counter: Container()),
                           onChanged: (text) {
                             variantModel.mrp = text;
                           },
@@ -467,8 +468,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           keyboardType: priceKeyboardType,
                           maxLength: PRICE_TEXT_LENGTH,
                           inputFormatters: priceInputFormatter,
-                          decoration: InputDecoration(labelText: "selling_price_key".tr() + "*",
-                              labelStyle: TextStyle(fontSize: 16),counter: Container()),
+                          decoration: InputDecoration(
+                              labelText: "selling_price_key".tr() + "*",
+                              labelStyle: TextStyle(fontSize: 16),
+                              counter: Container()),
                           onChanged: (text) {
                             variantModel.sellingPrice = text;
                           },
@@ -490,7 +493,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           keyboardType: TextInputType.phone,
                           maxLength: 8,
                           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                          decoration: InputDecoration(labelText: "stock_key".tr() + "*",
+                          decoration: InputDecoration(
+                              labelText: "stock_key".tr() + "*",
                               labelStyle: TextStyle(fontSize: 16),
                               counter: SizedBox.shrink()),
                           onChanged: (text) {
@@ -930,31 +934,31 @@ class _AddProductScreenState extends State<AddProductScreen> {
       Utility.showToast(msg: "please_enter_valid_mrp_key".tr());
       return;
     }
-    if (variantModel.mrp.isEmpty) {
-      Utility.showToast(msg: "please_enter_mrp_key".tr());
-      return;
-    }
-    if (variantModel.mrp == "0") {
-      Utility.showToast(msg: "please_enter_valid_mrp_key".tr());
-      return;
-    }
-    if (double.parse(variantModel.sellingPrice.trim()) > double.parse(variantModel.mrp.trim())) {
-      Utility.showToast(msg: "selling_price_cannot_be_more_than_mrp_key".tr());
-      return;
-    }
+    // if (variantModel.mrp.isEmpty) {
+    //   Utility.showToast(msg: "please_enter_mrp_key".tr());
+    //   return;
+    // }
+    // if (variantModel.mrp == "0") {
+    //   Utility.showToast(msg: "please_enter_valid_mrp_key".tr());
+    //   return;
+    // }
+    // if (double.parse(variantModel.sellingPrice.trim()) > double.parse(variantModel.mrp.trim())) {
+    //   Utility.showToast(msg: "selling_price_cannot_be_more_than_mrp_key".tr());
+    //   return;
+    // }
 
     // if (edtUnit.text.isEmpty) {
     //   Utility.showToast("please_select_unit_key".tr());
     //   return;
     // }
-    if (variantModel.stock.isEmpty) {
-      Utility.showToast(msg: "stock_can_not_be_empty_key".tr());
-      return;
-    }
-    if (int.parse(variantModel.stock) <= 0) {
-      Utility.showToast(msg: "stock_can_not_be_zero_key".tr());
-      return;
-    }
+    // if (variantModel.stock.isEmpty) {
+    //   Utility.showToast(msg: "stock_can_not_be_empty_key".tr());
+    //   return;
+    // }
+    // if (int.parse(variantModel.stock) <= 0) {
+    //   Utility.showToast(msg: "stock_can_not_be_zero_key".tr());
+    //   return;
+    // }
     if (variantModel.option.isNotEmpty) {
       for (int i = 0; i < variantModel.option.length; i++) {
         if (variantModel.option[i].value.isEmpty) {
@@ -1034,7 +1038,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
       if (response.success) {
         categories = response.data!;
-        if(categories.length ==1 ){
+        if (categories.length == 1) {
           categoryId = categories[0].id;
           edtCategory.text = categories[0].categoryName!;
         }
@@ -1048,6 +1052,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
     }
   }
 }
+
 class VariantImage {
   String? variantId;
   List<File>? images;

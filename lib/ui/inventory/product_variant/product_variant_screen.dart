@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:easy_localization/src/public_ext.dart';
@@ -67,8 +66,10 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
           stream: controller.stream,
           initialData: [],
           builder: (context, snapshot) {
-            if(productVariant.isEmpty){
-              return Center(child: Text("click_btn_to_add_new_variant".tr()),);
+            if (productVariant.isEmpty) {
+              return Center(
+                child: Text("click_btn_to_add_new_variant".tr()),
+              );
             }
             if (snapshot.hasData) {
               return ListView.builder(
@@ -156,14 +157,14 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
                           }
                         }
                       }
-                      if (productVariant[j].mrp.isEmpty) {
-                        Utility.showToast(msg: "please_enter_mrp_key".tr());
-                        return;
-                      }
-                      if (productVariant[j].mrp == "0") {
-                        Utility.showToast(msg: "please_enter_valid_mrp_key".tr());
-                        return;
-                      }
+                      // if (productVariant[j].mrp.isEmpty) {
+                      //   Utility.showToast(msg: "please_enter_mrp_key".tr());
+                      //   return;
+                      // }
+                      // if (productVariant[j].mrp == "0") {
+                      //   Utility.showToast(msg: "please_enter_valid_mrp_key".tr());
+                      //   return;
+                      // }
                       if (productVariant[j].sellingPrice.isEmpty) {
                         Utility.showToast(msg: "please_enter_selling_price_key".tr());
                         return;
@@ -172,20 +173,20 @@ class _ProductVariantScreenState extends State<ProductVariantScreen> {
                         Utility.showToast(msg: "please_enter_valid_selling_price_key".tr());
                         return;
                       }
-                      if (double.parse(productVariant[j].sellingPrice.trim()) >
-                          double.parse(productVariant[j].mrp.trim())) {
-                        Utility.showToast(msg: "selling_price_cannot_be_more_than_mrp_key".tr());
-                        return;
-                      }
-
-                      if (productVariant[j].stock.isEmpty) {
-                        Utility.showToast(msg: "please_enter_stock_key".tr());
-                        return;
-                      }
-                      if (int.parse(productVariant[j].stock) <= 0) {
-                        Utility.showToast(msg: "stock_can_not_be_zero_key".tr());
-                        return;
-                      }
+                      // if (double.parse(productVariant[j].sellingPrice.trim()) >
+                      //     double.parse(productVariant[j].mrp.trim())) {
+                      //   Utility.showToast(msg: "selling_price_cannot_be_more_than_mrp_key".tr());
+                      //   return;
+                      // }
+                      //
+                      // if (productVariant[j].stock.isEmpty) {
+                      //   Utility.showToast(msg: "please_enter_stock_key".tr());
+                      //   return;
+                      // }
+                      // if (int.parse(productVariant[j].stock) <= 0) {
+                      //   Utility.showToast(msg: "stock_can_not_be_zero_key".tr());
+                      //   return;
+                      // }
                     }
                   }
                   Navigator.pop(context, productVariant);

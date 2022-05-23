@@ -83,12 +83,14 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
       log("reddems--->@${widget.order.billingDetails.first.redeemCoins}");
       reddem = double.parse(widget.order.billingDetails.first.redeemCoins);
       log("reddems--->@$reddem");
+      log("reddems--->@${(widget.order.orderTotal)}");
       orderTotal = double.parse(widget.order.billingDetails.first.total);
       log("ordertt-->${double.parse(widget.order.billingDetails.first.total)} ");
       log("ordertt-->${(reddem / 3)} ");
       totalComission = double.parse(widget.order.billingDetails.first.commissionValue);
       returnAmountpaid = double.parse(widget.order.billingDetails.first.amountPaid);
       returnRedemption = double.parse(widget.order.billingDetails.first.redeemCoins);
+      log("returnRedemption$returnRedemption");
       returnEarned = double.parse(widget.order.billingDetails.first.earningCoins);
       widget.order.isReturn == 1 ? returnCommisionAmnt = totalComission - reddem / 3 : totalComission;
     } else {
@@ -104,11 +106,11 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
         returnAmountpaid += element.isReturn == 1 ? double.parse(element.amountPaid) : 0;
         returnRedemption += element.isReturn == 1 ? double.parse(element.redeemCoins) : 0;
         log("returnRedemption--->$returnRedemption");
-        returnEarned = double.parse(element.earningCoins);
+        element.isReturn == 1 ? returnEarned = double.parse(element.earningCoins) : 0;
         element.isReturn == 1
             ? returnCommisionAmnt += r >= returnRedemption ? r - returnRedemption / 3 : returnRedemption / 3 - r
             : 0;
-        log("orderTotal--->$reddem");
+        log("returnCommisionAmnt--->$returnCommisionAmnt");
         // if (double.parse(widget.order.myprofitRevenue) > reddem) {
         //   log("${double.parse(widget.order.myprofitRevenue)}");
         //   finalamount = double.parse(widget.order.myprofitRevenue) - reddem;
@@ -366,12 +368,6 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                                   decoration: BoxDecoration(
                                     color: Colors.grey.shade200,
                                     borderRadius: BorderRadius.circular(8),
-                                    // boxShadow: [
-                                    //   BoxShadow(
-                                    //       color: Colors.black12,
-                                    //       spreadRadius: 4,
-                                    //       blurRadius: 10)
-                                    // ],
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(8),
@@ -589,7 +585,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                                     fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
                               )
                             : Text(
-                                "\u20B9 0",
+                                "\u20B9 ${(double.parse(widget.order.orderTotal)).toStringAsFixed(2)}",
                                 style: GoogleFonts.openSans(
                                     fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
                               ),
@@ -983,38 +979,59 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                     SizedBox(
                       height: 5,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            returnCollectionAmnt <= returnCommisionAmnt
-                                ? Text(
-                                    "To: $vendorName",
-                                    style: GoogleFonts.openSans(
-                                        fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
-                                  )
-                                : Text(
+                    returnRedemption > returnCommisionAmnt
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
                                     "To: MyProfit",
                                     style: GoogleFonts.openSans(
                                         fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
                                   ),
-                            returnCollectionAmnt >= returnCommisionAmnt
-                                ? Text(
+                                  Text(
                                     "From: $vendorName",
                                     style: GoogleFonts.openSans(
                                         fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
                                   )
-                                : Text(
-                                    "From: MyProfit",
-                                    style: GoogleFonts.openSans(
-                                        fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
-                                  ),
-                          ],
-                        ),
-                      ],
-                    ),
+                                ],
+                              ),
+                            ],
+                          )
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  returnCollectionAmnt <= returnCommisionAmnt
+                                      ? Text(
+                                          "To: $vendorName",
+                                          style: GoogleFonts.openSans(
+                                              fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                                        )
+                                      : Text(
+                                          "To: MyProfit",
+                                          style: GoogleFonts.openSans(
+                                              fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                                        ),
+                                  returnCollectionAmnt >= returnCommisionAmnt
+                                      ? Text(
+                                          "From: $vendorName",
+                                          style: GoogleFonts.openSans(
+                                              fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                                        )
+                                      : Text(
+                                          "From: MyProfit",
+                                          style: GoogleFonts.openSans(
+                                              fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                                        ),
+                                ],
+                              ),
+                            ],
+                          ),
 
                     SizedBox(
                       height: 20,
@@ -1830,9 +1847,9 @@ class DirectBillingListItem extends StatelessWidget {
                                       fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black87),
                                 ),
                                 Text(
-                                  "\u20B9 ${detail.amountPaid}",
+                                  "\u20B9 ${detail.total}",
                                   style: GoogleFonts.openSans(
-                                      fontSize: 13, fontWeight: FontWeight.bold, color: ColorPrimary),
+                                      fontSize: 20, fontWeight: FontWeight.bold, color: ColorPrimary),
                                 ),
                               ],
                             ),

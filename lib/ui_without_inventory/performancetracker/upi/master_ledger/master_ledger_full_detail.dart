@@ -214,7 +214,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                                     fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
                               )
                             : Text(
-                                "\u20B9 0",
+                                "\u20B9 $amtPaid",
                                 style: GoogleFonts.openSans(
                                     fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
                               ),
@@ -445,7 +445,7 @@ class DirectBillingListItem extends StatelessWidget {
                                 Text(
                                   "\u20B9 ${detail.total}",
                                   style: GoogleFonts.openSans(
-                                      fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
+                                      fontSize: 20, fontWeight: FontWeight.bold, color: TextBlackLight),
                                 ),
                                 Text(
                                   "${"commission_key".tr()} \u20B9${detail.commissionValue}",

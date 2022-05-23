@@ -58,7 +58,8 @@ class RedeemCoinBloc extends Bloc<RedeemCoinEvents, RedeemCoinStates> {
           detail.billingType = 1;
           orderList.add(detail);
         });
-        orderList.sort(((a, b) => a.dateTime.compareTo(b.dateTime))); // Recent First
+        orderList.sort(((a, b) => b.dateTime.compareTo(a.dateTime))); // Recent
+
         yield GetRedeemCoinState(data: orderList);
       } else {
         yield RedeemCoinFailureState(message: response.message);

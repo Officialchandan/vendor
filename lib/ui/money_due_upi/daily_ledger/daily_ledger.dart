@@ -17,7 +17,8 @@ import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
 
 class DailyLedger extends StatefulWidget {
-  const DailyLedger({Key? key}) : super(key: key);
+  String amount;
+  DailyLedger({required this.amount});
 
   @override
   _DailyLedgerState createState() => _DailyLedgerState();
@@ -291,7 +292,7 @@ class _DailyLedgerState extends State<DailyLedger> with TickerProviderStateMixin
             ),
             child: Center(
               child: Text(
-                "net_settlement_amount_key".tr() + " ₹ 313.44",
+                "net_settlement_amount_key".tr() + " ₹ " + "${widget.amount}",
                 style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 18, color: TextGrey),
               ),
             ),

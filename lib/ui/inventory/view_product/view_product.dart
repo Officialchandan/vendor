@@ -139,7 +139,7 @@ class _ViewProductScreenState extends State<ViewProductScreen> {
                                     BoxShadow(
                                       color: Colors.grey.shade300,
                                       offset: Offset(0.0, 0.0), //(x,y)
-                                      blurRadius:7.0,
+                                      blurRadius: 7.0,
                                     ),
                                   ],
                                   borderRadius: BorderRadius.circular(10),
@@ -214,25 +214,24 @@ class _ViewProductScreenState extends State<ViewProductScreen> {
                             ),
                             Positioned(
                               child: Container(
+                                color: Colors.white,
                                 child: Center(
                                   child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: product.productImages.isNotEmpty
-                                        ? Image(
-                                            height: 60,
-                                            width: 60,
-                                            fit: BoxFit.contain,
-                                            image: NetworkImage(snapshot.data![index].productImages.first.productImage),
-                                          )
-                                        : Image(
-                                            image: AssetImage(
-                                              "assets/images/placeholder.webp",
-                                            ),
-                                            height: 60,
-                                            width: 60,
-                                            fit: BoxFit.cover,
-                                          ),
-                                  ),
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: product.productImages.isNotEmpty
+                                          ? Image(
+                                              height: 60,
+                                              width: 60,
+                                              fit: BoxFit.contain,
+                                              image:
+                                                  NetworkImage(snapshot.data![index].productImages.first.productImage),
+                                            )
+                                          : Image(
+                                              height: 45,
+                                              width: 45,
+                                              fit: BoxFit.contain,
+                                              image: NetworkImage(snapshot.data![index].categoryImage),
+                                            )),
                                 ),
                               ),
                               left: 20,
