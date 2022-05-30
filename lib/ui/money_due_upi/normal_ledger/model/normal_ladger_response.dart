@@ -39,31 +39,32 @@ class NormalLedgerResponse {
 }
 
 class OrderData {
-  OrderData({
-    required this.vendorId,
-    required this.firstName,
-    required this.mobile,
-    required this.orderId,
-    required this.orderTotal,
-    required this.myprofitRevenue,
-    required this.status,
-    required this.paymentOrderId,
-    required this.dateTime,
-    required this.isReturn,
-    required this.orderDetails,
-    required this.paymentDetails,
-    required this.billingDetails,
-    required this.totalearningcoins,
-    required this.vendorGivenCoins,
-    // required this.orderType,
-  });
+  OrderData(
+      {required this.vendorId,
+      required this.firstName,
+      required this.mobile,
+      required this.orderId,
+      required this.orderTotal,
+      required this.status,
+      required this.paymentOrderId,
+      required this.dateTime,
+      required this.isReturn,
+      required this.orderDetails,
+      required this.paymentDetails,
+      required this.billingDetails,
+      required this.totalearningcoins,
+      required this.vendorGivenCoins,
+      required this.myProfitVendor,
+      required this.vendorMyProfit
+      // required this.orderType,
+      });
 
   String vendorId;
   String firstName;
   String mobile;
   String orderId;
   String orderTotal;
-  String myprofitRevenue;
+
   int status;
   String paymentOrderId;
   DateTime dateTime;
@@ -74,6 +75,8 @@ class OrderData {
   List<BillingDetail> billingDetails;
   String vendorGivenCoins;
   int orderType = 0;
+  String myProfitVendor;
+  String vendorMyProfit;
 
   factory OrderData.fromJson(String str) => OrderData.fromMap(json.decode(str));
 
@@ -86,7 +89,7 @@ class OrderData {
         orderId: json["order_id"] == null ? "" : json["order_id"].toString(),
         vendorGivenCoins: json["vendor_given_coins"] == null ? "" : json["vendor_given_coins"].toString(),
         orderTotal: json["order_total"] == null ? "0" : json["order_total"].toString(),
-        myprofitRevenue: json["myprofit_revenue"] == null ? "" : json["myprofit_revenue"].toString(),
+
         status: json["status"] == null ? -1 : json["status"],
         paymentOrderId: json["payment_order_id"] == null ? "0" : json["payment_order_id"].toString(),
 
@@ -104,6 +107,9 @@ class OrderData {
         billingDetails: json["billing_details"] == null
             ? []
             : List<BillingDetail>.from(json["billing_details"].map((x) => BillingDetail.fromMap(x))),
+        myProfitVendor: json["myProfit_vendor"] == null ? "0" : json["myProfit_vendor"].toString(),
+        vendorMyProfit: json["vendor_myProfit"] == null ? "0" : json["vendor_myProfit"].toString(),
+
         // orderType: json["order_id"] == null ? 0 : 1
       );
 
@@ -114,7 +120,6 @@ class OrderData {
         "order_id": orderId == null ? null : orderId,
         "vendor_given_coins": vendorGivenCoins == null ? null : vendorGivenCoins,
         "order_total": orderTotal == null ? null : orderTotal,
-        "myprofit_revenue": myprofitRevenue == null ? null : myprofitRevenue,
         "status": status == null ? null : status,
         "payment_order_id": paymentOrderId == null ? null : paymentOrderId,
         "date_time": dateTime == null ? null : dateTime.toIso8601String(),
@@ -122,34 +127,36 @@ class OrderData {
         "is_return": isReturn == null ? null : isReturn,
         "total_earning_coins": totalearningcoins == null ? null : totalearningcoins,
         "order_details": orderDetails == null ? null : List<dynamic>.from(orderDetails.map((x) => x.toMap())),
+        "myProfit_vendor": myProfitVendor == null ? null : myProfitVendor,
+        "vendor_myProfit": vendorMyProfit == null ? null : vendorMyProfit,
       };
 
   @override
   String toString() {
     return 'OrderData{vendorId: $vendorId, firstName: $firstName, '
-        'mobile: $mobile, orderId: $orderId, orderTotal: $orderTotal,'
-        ' myprofitRevenue: $myprofitRevenue, status: $status, dateTime: $dateTime,'
+        'mobile: $mobile, orderId: $orderId, orderTotal: $orderTotal, status: $status, dateTime: $dateTime,'
         ' isReturn: $isReturn, orderDetails: $orderDetails, '
         'billingDetails: $billingDetails, orderType: $orderType,payment_details:$paymentDetails}';
   }
 }
 
 class OrderDetail {
-  OrderDetail(
-      {required this.orderId,
-      required this.productId,
-      required this.productName,
-      required this.productImage,
-      required this.price,
-      required this.qty,
-      required this.total,
-      required this.amountPaid,
-      required this.redeemCoins,
-      required this.earningCoins,
-      required this.myprofitRevenue,
-      required this.isReturn,
-      required this.categoryId,
-      required this.commissionValue});
+  OrderDetail({
+    required this.orderId,
+    required this.productId,
+    required this.productName,
+    required this.productImage,
+    required this.price,
+    required this.qty,
+    required this.total,
+    required this.amountPaid,
+    required this.redeemCoins,
+    required this.earningCoins,
+    required this.isReturn,
+    required this.categoryId,
+    required this.commissionValue,
+    required this.vendorRevenue,
+  });
 
   int orderId;
   int productId;
@@ -162,10 +169,11 @@ class OrderDetail {
   String amountPaid;
   String redeemCoins;
   String earningCoins;
-  String myprofitRevenue;
 
   int isReturn;
   String commissionValue;
+  String vendorRevenue;
+
   factory OrderDetail.fromJson(String str) => OrderDetail.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
@@ -182,9 +190,9 @@ class OrderDetail {
         amountPaid: json["amount_paid"] == null ? "0" : json["amount_paid"],
         redeemCoins: json["redeem_coins"] == null ? "0" : json["redeem_coins"],
         earningCoins: json["earning_coins"] == null ? "0" : json["earning_coins"],
-        myprofitRevenue: json["myprofit_revenue"] == null ? "0" : json["myprofit_revenue"],
         isReturn: json["is_return"] == null ? -1 : json["is_return"],
         commissionValue: json["commission_value"] == null ? "" : json["commission_value"].toString(),
+        vendorRevenue: json["vendor_revenue"] == null ? "" : json["vendor_revenue"].toString(),
       );
 
   Map<String, dynamic> toMap() => {
@@ -199,14 +207,14 @@ class OrderDetail {
         "amount_paid": amountPaid == null ? null : amountPaid,
         "redeem_coins": redeemCoins == null ? null : redeemCoins,
         "earning_coins": earningCoins == null ? null : earningCoins,
-        "myprofit_revenue": myprofitRevenue == null ? null : myprofitRevenue,
         "is_return": isReturn == null ? null : isReturn,
         "commission_value": commissionValue == null ? null : commissionValue,
+        "vendor_revenue": vendorRevenue == null ? null : vendorRevenue,
       };
 
   @override
   String toString() {
-    return 'OrderDetail{orderId: $orderId, productId: $productId, categoryId: $categoryId, productName: $productName, productImage: $productImage, price: $price, qty: $qty, total: $total, amountPaid: $amountPaid, redeemCoins: $redeemCoins, earningCoins: $earningCoins, myprofitRevenue: $myprofitRevenue, isReturn: $isReturn, commissionValue: $commissionValue}';
+    return 'OrderDetail{orderId: $orderId, productId: $productId, categoryId: $categoryId, productName: $productName, productImage: $productImage, price: $price, qty: $qty, total: $total, amountPaid: $amountPaid, redeemCoins: $redeemCoins, earningCoins: $earningCoins, isReturn: $isReturn, commissionValue: $commissionValue}';
   }
 }
 
@@ -221,6 +229,7 @@ class BillingDetail {
     required this.earningCoins,
     required this.amountPaid,
     required this.commissionValue,
+    required this.vendorRevenue,
   });
   int orderId;
   String categoryId;
@@ -231,6 +240,7 @@ class BillingDetail {
   String earningCoins;
   String amountPaid;
   String commissionValue;
+  String vendorRevenue;
   factory BillingDetail.fromJson(String str) => BillingDetail.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
@@ -245,6 +255,7 @@ class BillingDetail {
         earningCoins: json["earning_coins"] == null ? "0" : json["earning_coins"].toString(),
         amountPaid: json["amount_paid"] == null ? "0" : json["amount_paid"].toString(),
         commissionValue: json["commission_value"] == null ? "" : json["commission_value"].toString(),
+        vendorRevenue: json["vendor_revenue"] == null ? "" : json["vendor_revenue"].toString(),
       );
 
   Map<String, dynamic> toMap() => {
@@ -257,6 +268,7 @@ class BillingDetail {
         "earning_coins": earningCoins == null ? null : earningCoins,
         "amount_paid": amountPaid == null ? null : amountPaid,
         "commission_value": commissionValue == null ? null : commissionValue,
+        "vendor_revenue": vendorRevenue == null ? null : vendorRevenue,
       };
 }
 

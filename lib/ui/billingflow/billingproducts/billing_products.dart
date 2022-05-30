@@ -770,18 +770,25 @@ class _BillingProductsState extends State<BillingProducts> {
         billingProduct["price"] = productList[i].sellingPrice;
         billingProduct["total"] = double.parse(productList[i].sellingPrice) * productList[i].count;
         //  if (billingChecked) {
-        log("=====>redeemCoins$redeemCoins");
-        log("=====>orderTotal$orderTotal ");
+        log("=====>redeemCoins-$redeemCoins");
+        log("=====>orderTotal-$orderTotal ");
         double rc = redeemCoins / (orderTotal * 3);
         log("=====>rc$rc");
-        double rev = rc * (double.parse(productList[i].sellingPrice * productList[i].count) * 3);
-        log("=====>rc1$rev");
+        // log("=====>rccalculation${double.parse(productList[i].sellingPrice) * (productList[i].count)}");
+        // log("=====>rccalculation${double.parse(productList[i].sellingPrice)}");
+        // log("=====>rccalculation${productList[i].count}");
+        // log("=====>rccalculation$rc");
+
+        double rev = (rc * (double.parse(productList[i].sellingPrice) * (productList[i].count) * 3));
+        log("=====>rc1=>$rev");
         productList[i].redeemCoins = rev.toStringAsFixed(2);
         print("=====>productList[i].redeemCoins$rc");
-
+        log("amount p[aid==>${((double.parse(productList[i].sellingPrice * productList[i].count)))}");
+        log("amount p[aid==>${((double.parse(productList[i].sellingPrice * productList[i].count)) - (double.parse(productList[i].redeemCoins) / 3))}");
+        log("amount p[aid==>${((double.parse(productList[i].sellingPrice) * (productList[i].count)) - (double.parse(productList[i].redeemCoins) / 3))}");
         billingProduct["product_redeem"] = productList[i].redeemCoins;
-        billingProduct["amount_paid"] = (double.parse(productList[i].sellingPrice * productList[i].count) -
-                double.parse(productList[i].redeemCoins) / 3)
+        billingProduct["amount_paid"] = ((double.parse(productList[i].sellingPrice) * (productList[i].count)) -
+                (double.parse(productList[i].redeemCoins) / 3))
             .toStringAsFixed(2);
         //}
         // if (mCoins >= double.parse(productList[i].redeemCoins)) {
@@ -835,11 +842,11 @@ class _BillingProductsState extends State<BillingProducts> {
                   children: [
                     Text(
                       "${"hooray_you_saved".tr()} ${widget.firstName} ${"saved_key".tr()}",
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
                     ),
                     Text(
-                      " \u20B9${(double.parse(redeemCoins) / 3).toStringAsFixed(2)}",
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: ColorPrimary),
+                      " \u20B9${(double.parse(redeemCoins) / 3).toStringAsFixed(0)}",
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: ColorPrimary),
                     ),
                   ],
                 ),
@@ -925,11 +932,13 @@ class _BillingProductsState extends State<BillingProducts> {
                   ),
             content: TextFormField(
               controller: _textFieldController,
+              maxLength: status == 1 ? 4 : 5,
               cursorColor: ColorPrimary,
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               decoration: InputDecoration(
                 filled: true,
+                counterText: "",
                 // fillColor: Colors.black,
                 hintText: status == 1 ? "enter_otp_key".tr() : "enter_amount_key".tr(),
                 hintStyle: GoogleFonts.openSans(

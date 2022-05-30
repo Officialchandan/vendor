@@ -258,15 +258,19 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                                                   TextStyle(fontSize: 13, color: TextGrey, fontWeight: FontWeight.bold),
                                             ),
                                           ]),
-                                      Text(
-                                        " \u20B9 ${searchList[index].myprofitRevenue} ",
-                                        style: GoogleFonts.openSans(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20,
-                                            color: searchList[index].status == 1
-                                                ? RejectedBoxTextColor
-                                                : GreenBoxTextColor),
-                                      ),
+                                      searchList[index].myProfitVendor == "0"
+                                          ? Text(
+                                              " \u20B9 ${double.parse(searchList[index].vendorMyProfit).toStringAsFixed(2)} ",
+                                              style: GoogleFonts.openSans(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20,
+                                                  color: RejectedBoxTextColor),
+                                            )
+                                          : Text(
+                                              " \u20B9 ${double.parse(searchList[index].myProfitVendor).toStringAsFixed(2)} ",
+                                              style: GoogleFonts.openSans(
+                                                  fontWeight: FontWeight.bold, fontSize: 20, color: GreenBoxTextColor),
+                                            ),
                                     ]),
                                   ),
                                   searchList[index].isReturn == 1
@@ -441,15 +445,21 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                                             //           ),
                                             //         ),
                                             // ),
-                                            Text(
-                                              " \u20B9 ${searchList[index].myprofitRevenue} ",
-                                              style: GoogleFonts.openSans(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 20,
-                                                  color: searchList[index].status == 1
-                                                      ? RejectedBoxTextColor
-                                                      : GreenBoxTextColor),
-                                            ),
+                                            searchList[index].myProfitVendor == "0"
+                                                ? Text(
+                                                    " \u20B9 ${double.parse(searchList[index].vendorMyProfit).toStringAsFixed(2)} ",
+                                                    style: GoogleFonts.openSans(
+                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: 20,
+                                                        color: RejectedBoxTextColor),
+                                                  )
+                                                : Text(
+                                                    " \u20B9 ${double.parse(searchList[index].myProfitVendor).toStringAsFixed(2)} ",
+                                                    style: GoogleFonts.openSans(
+                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: 20,
+                                                        color: GreenBoxTextColor),
+                                                  ),
                                           ]),
                                         ),
                                         searchList[index].isReturn == 1

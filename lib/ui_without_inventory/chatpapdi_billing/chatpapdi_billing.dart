@@ -750,7 +750,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
               ),
               content: TextFormField(
                 controller: otpController,
-                maxLength: 6,
+                maxLength: 4,
                 cursorColor: ColorPrimary,
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],

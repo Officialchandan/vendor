@@ -4,7 +4,7 @@
   "username_key": "Username",
   "please_enter_username_key": "Please Enter Mobile number",
   "please_enter_password_key": "Please Enter OTP",
-  "please_enter_6_digit_valid_otp_key": "Please enter 6 digit valid otp",
+  "please_enter_6_digit_valid_otp_key": "Please enter 4 digit valid otp",
   "password_key": "Password",
   "login_button_key": "Login",
   "forget_your_password_key": "Forget your password?",

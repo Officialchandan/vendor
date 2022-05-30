@@ -286,7 +286,7 @@ class _SalesReturnDetailsState extends State<SalesReturnDetails> {
                                                           color: Colors.grey),
                                                     ),
                                                     Text(
-                                                      "${"commission_key".tr()}: ${details!.billingType == 1 ? productDetails[index].commission : productDetails[index].commission}",
+                                                      "${"commission_key".tr()}: \u20B9${details!.billingType == 1 ? productDetails[index].commission : productDetails[index].commission}",
                                                       style: TextStyle(
                                                           fontSize: 13,
                                                           fontWeight: FontWeight.bold,

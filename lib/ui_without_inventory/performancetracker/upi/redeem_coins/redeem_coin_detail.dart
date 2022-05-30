@@ -205,7 +205,7 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                                                                   )
                                                                 : Text(""),
                                                             Text(
-                                                              "${"commission_key".tr()}: ${product[index].commission}",
+                                                              "${"commission_key".tr()}: \u20B9${product[index].commission}",
                                                               style: TextStyle(
                                                                   fontSize: 14,
                                                                   fontWeight: FontWeight.bold,

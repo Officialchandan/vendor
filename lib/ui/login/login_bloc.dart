@@ -54,6 +54,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     if (await Network.isConnected()) {
       //try {
       LoginResponse result = await apiProvider.verifyOtp(mobile, otp);
+      EasyLoading.dismiss();
       if (result.success) {
         SharedPref.setBooleanPreference(SharedPref.LOGIN, true);
         SharedPref.setStringPreference(SharedPref.TOKEN, result.token!);
@@ -79,6 +80,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       //   yield GetLoginFailureState(message: "internal_server_error_key".tr());
       // }
     } else {
+      EasyLoading.dismiss();
       Utility.showToast(msg: "please_check_your_internet_connection_key".tr());
     }
   }

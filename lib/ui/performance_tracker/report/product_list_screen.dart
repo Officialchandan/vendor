@@ -113,7 +113,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                     RichText(
                                         text: TextSpan(children: [
                                       TextSpan(
-                                          text: "₹ ${product.purchasePrice}\t", style: TextStyle(color: ColorPrimary)),
+                                          text: "₹ ${product.sellingPrice}\t", style: TextStyle(color: ColorPrimary)),
                                       // TextSpan(
                                       //     text: "₹ ${product.total}",
                                       //     style: TextStyle(color: Colors.black, decoration: TextDecoration.lineThrough))

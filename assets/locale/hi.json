@@ -174,7 +174,7 @@
   "please_enter_storage_key": "कृपया संग्रहण दर्ज करें",
   "invalid_otp_key": "अमान्य OTP",
   "please_enter_password_key": "कृपया OTP दर्ज करें",
-  "please_enter_6_digit_valid_otp_key": "कृपया 6 अंकों का वैध OTP दर्ज करें",
+  "please_enter_6_digit_valid_otp_key": "कृपया 4 अंकों का वैध OTP दर्ज करें",
   "amount_key": "राशि",
   "amount_spend_key": "राशि खर्च ",
   "email_is_required_key": "ईमेल जरुरी है",

@@ -422,11 +422,13 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
             content: TextFormField(
               controller: _textFieldController,
               cursorColor: ColorPrimary,
+              maxLength: 4,
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               decoration: InputDecoration(
                 filled: true,
                 // fillColor: Colors.black,
+                counterText: "",
                 hintText: "enter_otp_key".tr(),
                 hintStyle: GoogleFonts.openSans(
                   fontWeight: FontWeight.w600,
@@ -474,7 +476,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
   }
 
   verifyOTP(SaleReturnData saleReturnData) async {
-    if (_textFieldController.text.length == 6) {
+    if (_textFieldController.text.length == 4) {
       Map<String, dynamic> input = HashMap();
       input["mobile"] = saleReturnData.mobile;
       input["otp"] = _textFieldController.text;

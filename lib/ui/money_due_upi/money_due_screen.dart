@@ -61,7 +61,8 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
   MoneyDueBloc moneyDueBloc = MoneyDueBloc();
 
   String dueAmount = "0.0";
-  String paymentid = "";
+  String vendorToMyProfitPaymentid = "";
+  String myProfitToVendorPaymentid = "";
   GetVendorFreeCoinData? freecoin;
   String result = "";
   String mid = "", orderId = "", token = "", callbackurl = "";
@@ -145,7 +146,8 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
     Map<String, dynamic> input = HashMap<String, dynamic>();
     input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     input["amount"] = dueAmount;
-    input["payment_id"] = paymentid.toString();
+    input["vendor_myprofit_payment_id"] = vendorToMyProfitPaymentid.toString();
+    input["myprofit_vendor_payment_id"] = myProfitToVendorPaymentid.toString();
     log("=====? $input");
 
     moneyDueBloc.add(GetInitiateTransiction(input));
@@ -181,9 +183,13 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                 ? state.dueAmount.vendorMyProfitDue
                 : state.dueAmount.myProfitVendorDue;
 
-            paymentid = state.dueAmount.myProfitVendorDue == "0"
-                ? state.dueAmount.myprofitVendorPaymentId
-                : state.dueAmount.vendorMyprofitPaymentId;
+            // paymentid = state.dueAmount.myProfitVendorDue == "0"
+            //     ? state.dueAmount.myprofitVendorPaymentId
+            //     : state.dueAmount.vendorMyprofitPaymentId;
+            vendorToMyProfitPaymentid =
+                state.dueAmount.vendorMyprofitPaymentId.isEmpty ? "" : state.dueAmount.vendorMyprofitPaymentId;
+            myProfitToVendorPaymentid =
+                state.dueAmount.myprofitVendorPaymentId.isEmpty ? "" : state.dueAmount.myprofitVendorPaymentId;
             state.dueAmount.myProfitVendorDue == "0" ? condition = 1 : condition = 0;
             // paymentTransiction(context);
           }

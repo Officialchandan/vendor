@@ -29,7 +29,7 @@ class _DailyLedgerState extends State<DailyLedger> with TickerProviderStateMixin
   List<String> months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   DateTime? dateTime;
   DateTime now = DateTime.now();
-  double amount = 0;
+
   String year = "";
   String startDate = "";
   String endDate = "";
@@ -51,12 +51,6 @@ class _DailyLedgerState extends State<DailyLedger> with TickerProviderStateMixin
     _tabController = TabController(length: 12, vsync: this, initialIndex: now.month - 1);
     log("${year}");
     // normalLedgerApiCall(context);
-  }
-
-  void calculation() {
-    searchList.forEach((element) {
-      amount += double.parse(element.myprofitRevenue);
-    });
   }
 
   Future<void> normalLedgerApiCall(BuildContext context) async {
@@ -228,14 +222,17 @@ class _DailyLedgerState extends State<DailyLedger> with TickerProviderStateMixin
                                             ),
                                           ]),
                                     ),
-                                    Text(
-                                      " \u20B9 ${searchList[index].myprofitRevenue} ",
-                                      style: GoogleFonts.openSans(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20,
-                                          color:
-                                              searchList[index].status == 1 ? RejectedBoxTextColor : GreenBoxTextColor),
-                                    ),
+                                    searchList[index].myProfitVendor == "0"
+                                        ? Text(
+                                            " \u20B9 ${searchList[index].vendorMyProfit} ",
+                                            style: GoogleFonts.openSans(
+                                                fontWeight: FontWeight.bold, fontSize: 20, color: RejectedBoxTextColor),
+                                          )
+                                        : Text(
+                                            " \u20B9 ${searchList[index].myProfitVendor} ",
+                                            style: GoogleFonts.openSans(
+                                                fontWeight: FontWeight.bold, fontSize: 20, color: GreenBoxTextColor),
+                                          ),
                                   ]),
                                 ),
                                 searchList[index].isReturn == 1
@@ -292,7 +289,7 @@ class _DailyLedgerState extends State<DailyLedger> with TickerProviderStateMixin
             ),
             child: Center(
               child: Text(
-                "net_settlement_amount_key".tr() + " ₹ " + "${widget.amount}",
+                "net_settlement_amount_key".tr() + " ₹ " + "${double.parse(widget.amount).toStringAsFixed(2)}",
                 style: GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 18, color: TextGrey),
               ),
             ),

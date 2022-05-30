@@ -281,6 +281,7 @@ class _DirectBillingState extends State<DirectBilling> {
                         }
                         if (state is DirectBillingCheckBoxState) {
                           categoryList[state.index].isChecked = state.isChecked;
+
                           checkbox = state.isChecked;
                           categoryList[state.index].onTileTap = state.isChecked;
                           if (state.isChecked) {
@@ -767,7 +768,7 @@ class _DirectBillingState extends State<DirectBilling> {
             ),
             content: TextFormField(
               controller: otpController,
-              maxLength: 6,
+              maxLength: 4,
               cursorColor: ColorPrimary,
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -935,12 +936,12 @@ class _DirectBillingState extends State<DirectBilling> {
                     Text(
                       "${"hooray_you_saved".tr()} $firstname ${"saved_key".tr()}",
                       maxLines: 2,
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
                     ),
                     Text(
                       " \u20B9${(double.parse(coinss) / 3).toStringAsFixed(2)}",
                       maxLines: 2,
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: ColorPrimary),
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: ColorPrimary),
                     ),
                   ],
                 ),
@@ -961,7 +962,7 @@ class _DirectBillingState extends State<DirectBilling> {
                   child: new Text(
                     "redeem_popup_button_key".tr(),
                     style: GoogleFonts.openSans(
-                        fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
+                        fontSize: 18, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
                   ),
                 ),
               ),

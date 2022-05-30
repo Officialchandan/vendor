@@ -269,15 +269,21 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                                                     fontSize: 13, color: TextGrey, fontWeight: FontWeight.w600),
                                               ),
                                             ]),
-                                        Text(
-                                          " \u20B9 ${searchList[index].myprofitRevenue} ",
-                                          style: GoogleFonts.openSans(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
-                                              color: searchList[index].status == 1
-                                                  ? RejectedBoxTextColor
-                                                  : GreenBoxTextColor),
-                                        ),
+                                        searchList[index].myProfitVendor == "0"
+                                            ? Text(
+                                                " \u20B9 ${searchList[index].vendorMyProfit} ",
+                                                style: GoogleFonts.openSans(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 20,
+                                                    color: RejectedBoxTextColor),
+                                              )
+                                            : Text(
+                                                " \u20B9 ${searchList[index].myProfitVendor} ",
+                                                style: GoogleFonts.openSans(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 20,
+                                                    color: GreenBoxTextColor),
+                                              ),
                                         // Row(
                                         //   children: [
                                         //     Center(
@@ -457,15 +463,21 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                                                     fontSize: 13, color: TextGrey, fontWeight: FontWeight.w600),
                                               ),
                                             ]),
-                                        Text(
-                                          " \u20B9 ${searchList[index].myprofitRevenue} ",
-                                          style: GoogleFonts.openSans(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
-                                              color: searchList[index].status == 1
-                                                  ? RejectedBoxTextColor
-                                                  : GreenBoxTextColor),
-                                        ),
+                                        searchList[index].myProfitVendor == "0"
+                                            ? Text(
+                                                " \u20B9 ${searchList[index].vendorMyProfit} ",
+                                                style: GoogleFonts.openSans(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 20,
+                                                    color: RejectedBoxTextColor),
+                                              )
+                                            : Text(
+                                                " \u20B9 ${searchList[index].myProfitVendor} ",
+                                                style: GoogleFonts.openSans(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 20,
+                                                    color: GreenBoxTextColor),
+                                              ),
                                         // Row(
                                         //   children: [
                                         //     Center(

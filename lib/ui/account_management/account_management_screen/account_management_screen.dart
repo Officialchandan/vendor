@@ -314,7 +314,7 @@ Future<void> onClick(BuildContext context, int currentIndex, var data) async {
       //             url: "http://vendor.myprofitinc.com/privacypolicy",
       //           )),
       // );
-    Navigator.push(context, MaterialPageRoute(builder: (context)=> PrivacyPolicyScreen()));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => PrivacyPolicyScreen()));
       break;
     // case 4:
     //   Navigator.push(

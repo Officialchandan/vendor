@@ -71,9 +71,9 @@ class _LoginScreenState extends State<LoginScreen> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            titlePadding: const EdgeInsets.only(left: 18, right: 18,top: 10,bottom: 10),
-            contentPadding: const EdgeInsets.symmetric(vertical: 10,horizontal: 18),
-            actionsPadding: const EdgeInsets.only(left: 12, right: 12,top: 0,bottom: 18),
+            titlePadding: const EdgeInsets.only(left: 18, right: 18, top: 10, bottom: 10),
+            contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 18),
+            actionsPadding: const EdgeInsets.only(left: 12, right: 12, top: 0, bottom: 18),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             insetPadding: const EdgeInsets.all(50),
             title: RichText(
@@ -112,16 +112,18 @@ class _LoginScreenState extends State<LoginScreen> {
               child: TextFormField(
                 controller: _textFieldController,
                 cursorColor: ColorPrimary,
+                maxLength: 4,
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 decoration: InputDecoration(
                   filled: true,
+                  counterText: "",
                   // fillColor: Colors.black,
                   hintText: "enter_otp_key".tr(),
                   hintStyle: GoogleFonts.openSans(
                     fontWeight: FontWeight.w600,
                   ),
-                  contentPadding: const EdgeInsets.only(left: 14.0, right: 14, top: 0,bottom: 8),
+                  contentPadding: const EdgeInsets.only(left: 14.0, right: 14, top: 0, bottom: 8),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.white),
                   ),
@@ -136,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Container(
                 width: MediaQuery.of(context).size.width,
                 child: MaterialButton(
-                  height: 50  ,
+                  height: 50,
                   textColor: Colors.white,
                   color: ColorPrimary,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -144,9 +146,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     if (_textFieldController.text.isEmpty) {
                       Utility.showToast(msg: "please_enter_password_key".tr());
                     } else {
+                      log("===>${_textFieldController.text}");
                       EasyLoading.show();
                       loginBloc.add(GetLoginOtpEvent(mobile: mobileController.text, otp: _textFieldController.text));
-                      EasyLoading.dismiss();
                     }
                     // loginApiCall(
                     //     mobileController.text, _textFieldController.text);
@@ -173,18 +175,8 @@ class _LoginScreenState extends State<LoginScreen> {
     } else {
       EasyLoading.show();
       loginBloc.add(GetLoginEvent(mobile: mobileController.text));
-
+      log("===>$_tap");
       _tap = true;
-    }
-  }
-
-  loginApiCall(mobile, otp) async {
-    if (_textFieldController.text.isEmpty) {
-      Utility.showToast(msg: "please_enter_password_key".tr());
-    } else if (_textFieldController.text.length != 6) {
-      Utility.showToast(msg: "please_enter_6_digit_valid_otp_key".tr());
-    } else {
-      loginBloc.add(GetLoginOtpEvent(mobile: mobileController.text, otp: _textFieldController.text));
     }
   }
 
@@ -330,8 +322,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           _textFieldController.clear();
 
                                           print("kuch to ${mobileController.text}");
-                                          // loginApiCall(
-                                          //     nameController.text, passwordController.text);
+
                                           if (_tap == true) {
                                             _tap = false;
                                             loginApiOtpCall(mobileController.text);
@@ -342,7 +333,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                         child: new Text(
                                           "login_key".tr(),
                                           style: GoogleFonts.openSans(
-                                              fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.w600,
+                                              decoration: TextDecoration.none),
                                         ),
                                       ),
                                       SizedBox(

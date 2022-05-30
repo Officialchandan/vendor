@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
+import 'dart:developer';
 
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
@@ -162,7 +163,7 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                               BoxShadow(
                                 color: Colors.grey.shade300,
                                 offset: Offset(0.0, 0.0), //(x,y)
-                                blurRadius:7.0,
+                                blurRadius: 7.0,
                               ),
                             ],
                             borderRadius: BorderRadius.circular(10),
@@ -212,7 +213,7 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                   );
                 }
                 return Center(
-                  child: Text("customer_not_found_key".tr()),
+                  child: Image.asset("assets/images/no_data.gif"),
                 );
               },
             ))
@@ -233,8 +234,17 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
       GetMyCustomerResponse response = await apiProvider.getMyCustomer(input);
 
       if (response.success) {
-        customerList = response.data!;
-        streamController.add(response.data!);
+        await Future.forEach(response.data!, (Customer order) async {
+          customerList.add(order);
+          log(" orderList.add(order)1${customerList}");
+        });
+        await Future.forEach(response.directBilling!, (Customer order) async {
+          customerList.add(order);
+          log(" orderList.add(order)1${customerList}");
+        });
+        customerList.sort((a, b) => b.date.compareTo(a.date));
+
+        streamController.add(customerList);
       } else {
         customerList = [];
         streamController.addError("${response.message}");

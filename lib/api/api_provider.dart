@@ -1060,21 +1060,21 @@ class ApiProvider {
   }
 
   Future<GetMyCustomerResponse> getMyCustomer(Map<String, dynamic> input) async {
-    try {
-      Response res = await dio.post(Endpoint.GET_MY_CUSTOMER, data: input);
-      log("===>otp$res");
-      return GetMyCustomerResponse.fromJson(res.toString());
-    } catch (error) {
-      String message = "";
-      if (error is DioError) {
-        ServerError e = ServerError.withError(error: error);
-        message = e.getErrorMessage();
-      } else {
-        message = "Please try again later!";
-      }
-      print("Exception occurred: $message stackTrace: $error");
-      return GetMyCustomerResponse(success: false, message: message);
-    }
+    //try {
+    Response res = await dio.post(Endpoint.GET_MY_CUSTOMER, data: input);
+    log("===>otp$res");
+    return GetMyCustomerResponse.fromJson(res.toString());
+    // } catch (error) {
+    //   String message = "";
+    //   if (error is DioError) {
+    //     ServerError e = ServerError.withError(error: error);
+    //     message = e.getErrorMessage();
+    //   } else {
+    //     message = "Please try again later!";
+    //   }
+    //   print("Exception occurred: $message stackTrace: $error");
+    //   return GetMyCustomerResponse(success: false, message: message);
+    // }
   }
 
   Future<GetMyChatPapdiCustomerResponse> getChatPapdiCustomer(Map<String, dynamic> input) async {
