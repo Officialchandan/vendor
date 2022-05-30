@@ -40,7 +40,7 @@ class _DirectBillingState extends State<DirectBilling> {
   DirectBillingCustomerNumberResponseBloc directBillingCustomerNumberResponseBloc =
       DirectBillingCustomerNumberResponseBloc();
   var value = true;
-  var checkbox = false;
+  bool checkbox = false;
   var message = "";
   var status1, succes;
   String earningCoins = "0.0";
@@ -282,7 +282,6 @@ class _DirectBillingState extends State<DirectBilling> {
                         if (state is DirectBillingCheckBoxState) {
                           categoryList[state.index].isChecked = state.isChecked;
 
-                          checkbox = state.isChecked;
                           categoryList[state.index].onTileTap = state.isChecked;
                           if (state.isChecked) {
                             categoryIdList.add(categoryList[state.index].id);
@@ -293,6 +292,11 @@ class _DirectBillingState extends State<DirectBilling> {
                         }
                         if (state is DirectBillingRedeemCheckBoxState) {
                           redeem = false;
+                          categoryList.forEach((element) {
+                            if(element.isChecked == true){
+                              redeem = true;
+                            }
+                          });
                           if (mobileController.text.length == 10) {
                             if (amountController.text.length > 0) {
                               if (double.parse(coins) >= 3) {
@@ -334,11 +338,6 @@ class _DirectBillingState extends State<DirectBilling> {
                         }
                         return Container(
                           height: 225,
-                          // categoryList.isNotEmpty
-                          //     ? categoryList.length > 3
-                          //     ? 225
-                          //     : (70 * (categoryList.length.toDouble()))
-                          //     : 70,
                           width: MediaQuery.of(context).size.width,
                           child: categoryList.isNotEmpty
                               ? ListView.builder(
@@ -348,7 +347,6 @@ class _DirectBillingState extends State<DirectBilling> {
                                   itemBuilder: (context, index) {
                                     if (categoryList.isNotEmpty) {
                                       if (categoryList.length == 1) {
-                                        checkbox = true;
                                         categoryList[index].isChecked = true;
                                         if (!categoryIdList.contains(categoryList[index].id)) {
                                           categoryIdList.add(categoryList[index].id);
@@ -610,6 +608,12 @@ class _DirectBillingState extends State<DirectBilling> {
                 width: MediaQuery.of(context).size.width,
                 child: MaterialButton(
                   onPressed: () async {
+                    checkbox = false;
+                  categoryList.forEach((element) {
+                    if(element.isChecked == true){
+                      checkbox = true;
+                    }
+                  });
                     if (status1 == 0) {
                       if (mobileController.text.length == 10) {
                         if (amountController.text.length >= 0) {
@@ -683,15 +687,6 @@ class _DirectBillingState extends State<DirectBilling> {
       amount = length.toString();
     }
   }
-
-  // Future<void> userRegister(BuildContext context) async {
-  //   Map<String, dynamic> input = HashMap<String, dynamic>();
-  //   input["mobile"] = mobileController.text;
-  //   input["first_name"] = nameController.text;
-  //
-  //   log("=====? $input");
-  //   directBillingCustomerNumberResponseBloc.add(GetDirectBillingPartialUserRegisterEvent(input: input));
-  // }
 
   Future<void> directBilling(BuildContext context) async {
     Map<String, dynamic> input = HashMap<String, dynamic>();
