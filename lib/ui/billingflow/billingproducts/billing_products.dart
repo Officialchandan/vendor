@@ -6,6 +6,7 @@ import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/model/billing_product_response.dart';
@@ -817,6 +818,7 @@ class _BillingProductsState extends State<BillingProducts> {
     }
     input["product"] = billingProductList;
     log("input @=====> $input");
+
     billingProductsBloc.add(PayBillingProductsEvent(input: input));
   }
 
@@ -975,7 +977,7 @@ class _BillingProductsState extends State<BillingProducts> {
 
                         log("index->$index");
                         log("earningCoin->$earningCoin");
-
+                        EasyLoading.show();
                         billingProductsBloc
                             .add(EditBillingProductsEvent(price: y, index: index, earningCoin: earningCoin));
 

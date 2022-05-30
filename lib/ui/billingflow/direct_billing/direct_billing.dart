@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/model/direct_billing.dart';
@@ -721,6 +722,7 @@ class _DirectBillingState extends State<DirectBilling> {
     input["vendor_available_coins"] = datas!.vendorAvailableCoins;
 
     log("=====? $input");
+    EasyLoading.show();
     directBillingCustomerNumberResponseBloc.add(GetDirectBillingOtpEvent(input: input));
   }
 

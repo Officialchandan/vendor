@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/main.dart';
@@ -458,6 +459,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
                     } else {
 // input["otp"] = _textFieldController.text.trim();
 // saleReturnBloc.add(VerifyOtpEvent(input: input));
+                      EasyLoading.show();
                       verifyOTP(widget.saleReturnData);
                     }
 // loginApiCall(
@@ -489,6 +491,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
         CommonResponse response = await apiProvider.saleReturnOtpApi(input);
 
         if (response.success) {
+          EasyLoading.dismiss();
           Navigator.of(context).pop(); //? For alert box
 
           successDialog(context, saleReturnData);

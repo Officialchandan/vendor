@@ -49,17 +49,13 @@ class DirectBillingCustomerNumberResponseBloc
       yield* getVendorCategoryByIdResponse();
     }
 
-    if(event is GetDirectBillingCheckBoxEvent){
+    if (event is GetDirectBillingCheckBoxEvent) {
       yield DirectBillingLoadingState();
-      yield DirectBillingCheckBoxState(
-        index: event.index, isChecked: event.isChecked
-      );
+      yield DirectBillingCheckBoxState(index: event.index, isChecked: event.isChecked);
     }
-    if(event is GetDirectBillingRedeemCheckBoxEvent){
+    if (event is GetDirectBillingRedeemCheckBoxEvent) {
       yield DirectBillingLoadingState();
-      yield DirectBillingRedeemCheckBoxState(
-            isChecked: event.isChecked
-      );
+      yield DirectBillingRedeemCheckBoxState(isChecked: event.isChecked);
     }
   }
 
@@ -70,6 +66,7 @@ class DirectBillingCustomerNumberResponseBloc
       EasyLoading.dismiss();
       try {
         CustomerNumberResponse result = await apiProvider.getCustomerCoins(mobile);
+
         log("$result");
         if (result.success) {
           yield GetDirectBillingCustomerNumberResponseState(
@@ -126,6 +123,7 @@ class DirectBillingCustomerNumberResponseBloc
         DirectBillingOtpResponse result = await apiProvider.getDirectBillingOtp(input);
         log("$result");
         if (result.success) {
+          EasyLoading.dismiss();
           yield GetDirectBillingOtpState(message: result.message, data: result.message, succes: result.success);
         } else {
           Utility.showToast(

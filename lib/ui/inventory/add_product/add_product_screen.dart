@@ -450,9 +450,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           maxLength: PRICE_TEXT_LENGTH,
                           inputFormatters: priceInputFormatter,
                           decoration: InputDecoration(
-                              labelText: "mrp_key".tr() + "*",
-                              labelStyle: TextStyle(fontSize: 16),
-                              counter: Container()),
+                              labelText: "mrp_key".tr(), labelStyle: TextStyle(fontSize: 16), counter: Container()),
                           onChanged: (text) {
                             variantModel.mrp = text;
                           },
@@ -494,7 +492,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           maxLength: 8,
                           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                           decoration: InputDecoration(
-                              labelText: "stock_key".tr() + "*",
+                              labelText: "stock_key".tr(),
                               labelStyle: TextStyle(fontSize: 16),
                               counter: SizedBox.shrink()),
                           onChanged: (text) {
