@@ -224,12 +224,12 @@ class _DailyLedgerState extends State<DailyLedger> with TickerProviderStateMixin
                                     ),
                                     searchList[index].myProfitVendor == "0"
                                         ? Text(
-                                            " \u20B9 ${searchList[index].vendorMyProfit} ",
+                                            " \u20B9 ${double.parse(searchList[index].vendorMyProfit).toStringAsFixed(2)} ",
                                             style: GoogleFonts.openSans(
                                                 fontWeight: FontWeight.bold, fontSize: 20, color: RejectedBoxTextColor),
                                           )
                                         : Text(
-                                            " \u20B9 ${searchList[index].myProfitVendor} ",
+                                            " \u20B9 ${double.parse(searchList[index].myProfitVendor).toStringAsFixed(2)} ",
                                             style: GoogleFonts.openSans(
                                                 fontWeight: FontWeight.bold, fontSize: 20, color: GreenBoxTextColor),
                                           ),

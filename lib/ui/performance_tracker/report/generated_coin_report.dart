@@ -278,10 +278,12 @@ class _GeneratedCoinReportState extends State<GeneratedCoinReport> {
             ? Endpoint.GET_GENERATE_COIN_REPORT_BY_DATE
             : Endpoint.GET_GENERATE_COIN_REPORT_BY_DATE_OF_CHAT_PAPDI;
         input["from_date"] = startDate;
-
-        DateTime dateTime = DateTime.parse(endDate);
-
-        input["to_date"] = Utility.getFormatDate(DateTime(dateTime.year, dateTime.month, dateTime.day + 1));
+        //log("DateTime.parse(endDate)${DateTime.parse(endDate)}");
+        //DateTime dateTime = DateTime.parse(endDate);
+        input["to_date"] = endDate;
+        // input["to_date"] = dateTime.toString().isEmpty
+        //     ? startDate
+        //     : Utility.getFormatDate(DateTime(dateTime.year, dateTime.month, dateTime.day + 1));
       } else {
         url = widget.chatPapdi == 0
             ? Endpoint.GET_GENERATE_COIN_REPORT_BY_DAY
@@ -319,14 +321,28 @@ class _GeneratedCoinReportState extends State<GeneratedCoinReport> {
         EasyLoading.dismiss();
         print("result-->$result");
         if (result["success"]) {
-          List<Map<String, dynamic>> report = List<Map<String, dynamic>>.from(result["data"]!.map((x) => x));
-          reportList = report;
+          List<Map<String, dynamic>> report =
+              result["data"] == null ? [] : List<Map<String, dynamic>>.from(result["data"]!.map((x) => x));
+          List<Map<String, dynamic>> reportDirect = result["direct_billing"] == null
+              ? []
+              : List<Map<String, dynamic>>.from(result["direct_billing"]!.map((x) => x));
+          report.forEach((element) {
+            debugPrint("element-->$element");
+
+            reportList.add(element);
+          });
+          reportDirect.forEach((element) {
+            debugPrint("element-->$element");
+
+            reportList.add(element);
+          });
+          reportList.sort((a, b) => b["date"].compareTo(a["date"]));
           Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => GeneratedCoinReportDataGrid(
                         reportData: reportList,
-                      )));
+                      ))).then((value) => reportList.clear());
           // exportReport(context);
         } else {
           EasyLoading.dismiss();

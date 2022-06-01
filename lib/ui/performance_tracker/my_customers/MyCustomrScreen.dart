@@ -142,6 +142,11 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                 }
 
                 if (snapshot.hasData) {
+                  if (snapshot.data! == null || snapshot.data!.isEmpty) {
+                    return Container(
+                        height: MediaQuery.of(context).size.height * 0.70,
+                        child: Center(child: Image.asset("assets/images/no_data.gif")));
+                  }
                   return ListView.builder(
                     keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                     itemBuilder: (context, index) {

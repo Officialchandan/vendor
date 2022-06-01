@@ -96,7 +96,7 @@ class _SelectReportTypeScreenState extends State<SelectReportTypeScreen> {
                       BoxShadow(
                         color: Colors.grey.shade300,
                         offset: Offset(0.0, 0.0), //(x,y)
-                        blurRadius:7.0,
+                        blurRadius: 7.0,
                       ),
                     ],
                     borderRadius: BorderRadius.circular(10),
@@ -173,7 +173,7 @@ class _SelectReportTypeScreenState extends State<SelectReportTypeScreen> {
               MaterialPageRoute(
                   builder: (context) => ReadyStockReportDataGrid(
                         reportData: reportList,
-                      )));
+                      ))).then((value) => reportList.clear());
           // exportReport(context);
         } else {
           EasyLoading.dismiss();

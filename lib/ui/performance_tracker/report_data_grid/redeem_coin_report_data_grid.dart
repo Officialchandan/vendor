@@ -46,8 +46,10 @@ class _RedeemCoinReportDataGridState extends State<RedeemCoinReportDataGrid> {
                 Navigator.of(context).pop();
               },
               icon: Icon(Icons.arrow_back_ios)),
-          title: Text("coin_redeemed_reports_key".tr(),
-            style: TextStyle(fontWeight: FontWeight.bold),),
+          title: Text(
+            "coin_redeemed_reports_key".tr(),
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
           actions: [
             IconButton(
                 onPressed: () {
@@ -230,10 +232,12 @@ class ReportDataSource extends DataGridSource {
   ReportDataSource({required List<Map<String, dynamic>> reportData}) {
     _reportData = reportData
         .map<DataGridRow>((e) => DataGridRow(cells: [
-              DataGridCell<String>(columnName: 'Product Name', value: e['product_name']),
-              DataGridCell<String>(columnName: 'Redeem Coins', value: e['redeem_coins']),
-              DataGridCell<String>(columnName: 'Date', value: e['date']),
-              DataGridCell<String>(columnName: 'Time', value: e['time']),
+              DataGridCell<String>(
+                  columnName: 'Product Name', value: e['product_name'] == null ? "-" : e['product_name'].toString()),
+              DataGridCell<String>(
+                  columnName: 'Redeem Coins', value: e['redeem_coins'] == null ? "-" : e['redeem_coins'].toString()),
+              DataGridCell<String>(columnName: 'Date', value: e['date'] == null ? "-" : e['date'].toString()),
+              DataGridCell<String>(columnName: 'Time', value: e['time'] == null ? "-" : e['time'].toString()),
             ]))
         .toList();
   }

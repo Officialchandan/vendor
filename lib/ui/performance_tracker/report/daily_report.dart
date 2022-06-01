@@ -15,7 +15,6 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart' as xls;
 import 'package:vendor/api/Endpoint.dart';
-import 'package:vendor/api/server_error.dart';
 import 'package:vendor/model/get_categories_response.dart';
 import 'package:vendor/model/product_model.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
@@ -319,57 +318,72 @@ class _DailyReportState extends State<DailyReport> {
 
       EasyLoading.show();
 
-      try {
-        Response response = await dio.post(url, data: input);
-        Map<String, dynamic> result = json.decode(response.toString());
+      // try {
+      Response response = await dio.post(url, data: input);
+      Map<String, dynamic> result = json.decode(response.toString());
+      EasyLoading.dismiss();
+      print("result-->$result");
+      if (result["success"]) {
+        List<Map<String, dynamic>> report =
+            result["data"] == null ? [] : List<Map<String, dynamic>>.from(result["data"]!.map((x) => x));
+        List<Map<String, dynamic>> reportDirect = result["direct_billing"] == null
+            ? []
+            : List<Map<String, dynamic>>.from(result["direct_billing"]!.map((x) => x));
+        report.forEach((element) {
+          element.remove("created_at");
+          element.remove("time");
+          // element["total"] = element["total_pay"];
+          element.remove("total_pay");
+
+          debugPrint("element-->$element");
+
+          reportList.add(element);
+        });
+        reportDirect.forEach((element) {
+          element.remove("created_at");
+          element.remove("time");
+          // element["total"] = element["total_pay"];
+          element.remove("total_pay");
+
+          debugPrint("element-->$element");
+
+          reportList.add(element);
+        });
+        reportList.sort((a, b) => b["date"].compareTo(a["date"]));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => DailyReportDataGrid(
+                      reportData: reportList,
+                    ))).then((value) => reportList.clear());
+
+        // reportList = report;
+
+        // employeeDataSource = EmployeeDataSource(employeeData: reportList);
+        //
+        // setState(() {});
+        //
+        // Future.delayed(Duration(seconds: 3), () {
+        //   generateReport();
+        // });
+
+        // exportExcelReport(context);
+        // generateReport(context);
+      } else {
         EasyLoading.dismiss();
-        print("result-->$result");
-        if (result["success"]) {
-          List<Map<String, dynamic>> report = List<Map<String, dynamic>>.from(result["data"]!.map((x) => x));
-
-          report.forEach((element) {
-            element.remove("created_at");
-            element.remove("time");
-            // element["total"] = element["total_pay"];
-            element.remove("total_pay");
-
-            debugPrint("element-->$element");
-
-            reportList.add(element);
-          });
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => DailyReportDataGrid(
-                        reportData: reportList,
-                      ))).then((value) => reportList.clear());
-
-          // reportList = report;
-
-          // employeeDataSource = EmployeeDataSource(employeeData: reportList);
-          //
-          // setState(() {});
-          //
-          // Future.delayed(Duration(seconds: 3), () {
-          //   generateReport();
-          // });
-
-          // exportExcelReport(context);
-          // generateReport(context);
-        } else {
-          EasyLoading.dismiss();
-          Utility.showToast(msg: response.data["message"]);
-        }
-      } catch (exception) {
-        print("exception-->$exception");
-        if (exception is DioError) {
-          ServerError e = ServerError.withError(error: exception);
-        }
-        EasyLoading.dismiss();
+        Utility.showToast(msg: response.data["message"]);
       }
-    } else {
-      Utility.showToast(msg: "please_check_your_internet_connection_key".tr());
     }
+    //   catch (exception) {
+    //     print("exception-->$exception");
+    //     if (exception is DioError) {
+    //       ServerError e = ServerError.withError(error: exception);
+    //     }
+    //     EasyLoading.dismiss();
+    //   }
+    // } else {
+    //   Utility.showToast(msg: "please_check_your_internet_connection_key".tr());
+    // }
   }
 
   void exportExcelReport(BuildContext context) async {

@@ -294,7 +294,7 @@ class _DirectBillingState extends State<DirectBilling> {
                         if (state is DirectBillingRedeemCheckBoxState) {
                           redeem = false;
                           categoryList.forEach((element) {
-                            if(element.isChecked == true){
+                            if (element.isChecked == true) {
                               redeem = true;
                             }
                           });
@@ -479,8 +479,14 @@ class _DirectBillingState extends State<DirectBilling> {
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
                                     side: BorderSide(width: 1.5),
                                     onChanged: (redeems) {
-                                      directBillingCustomerNumberResponseBloc
-                                          .add(GetDirectBillingRedeemCheckBoxEvent(isChecked: redeems!));
+                                      if (redeems == false) {
+                                        directBillingCustomerNumberResponseBloc
+                                            .add(GetDirectBillingRedeemCheckBoxEvent(isChecked: true));
+                                      }
+                                      if (redeems == true) {
+                                        directBillingCustomerNumberResponseBloc
+                                            .add(GetDirectBillingRedeemCheckBoxEvent(isChecked: false));
+                                      }
                                     },
                                   ),
                                 ),
@@ -610,11 +616,11 @@ class _DirectBillingState extends State<DirectBilling> {
                 child: MaterialButton(
                   onPressed: () async {
                     checkbox = false;
-                  categoryList.forEach((element) {
-                    if(element.isChecked == true){
-                      checkbox = true;
-                    }
-                  });
+                    categoryList.forEach((element) {
+                      if (element.isChecked == true) {
+                        checkbox = true;
+                      }
+                    });
                     if (status1 == 0) {
                       if (mobileController.text.length == 10) {
                         if (amountController.text.length >= 0) {

@@ -268,14 +268,24 @@ class ReportDataSource extends DataGridSource {
   ReportDataSource({required List<Map<String, dynamic>> reportData}) {
     _reportData = reportData
         .map<DataGridRow>((e) => DataGridRow(cells: [
-              DataGridCell<String>(columnName: 'Category Name', value: e['category_name']),
-              DataGridCell<String>(columnName: 'Product Name', value: e['product_name']),
-              DataGridCell<int>(columnName: 'Quantity', value: e['qty']),
-              DataGridCell<String>(columnName: 'Earning Coins', value: e['earning_coins']),
-              DataGridCell<String>(columnName: 'Mobile', value: e['mobile']),
-              DataGridCell<String>(columnName: 'Date', value: e['date']),
-              DataGridCell<String>(columnName: 'Time', value: e['time']),
-              DataGridCell<String>(columnName: 'Monetary Value', value: e['monetary_value'].toString()),
+              DataGridCell<String>(
+                  columnName: 'Category Name', value: e['category_name'] == null ? "-" : e['category_name'].toString()),
+              DataGridCell<String>(
+                  columnName: 'Product Name',
+                  value: e['product_name'] == null || e['product_name'].toString().isEmpty
+                      ? "-"
+                      : e['product_name'].toString()),
+              DataGridCell<String>(
+                  columnName: 'Quantity',
+                  value: e['qty'] == null || e['qty'].toString().isEmpty ? "1" : e['qty'].toString()),
+              DataGridCell<String>(
+                  columnName: 'Earning Coins', value: e['earning_coins'] == null ? "-" : e['earning_coins'].toString()),
+              DataGridCell<String>(columnName: 'Mobile', value: e['mobile'] == null ? "-" : e['mobile'].toString()),
+              DataGridCell<String>(columnName: 'Date', value: e['date'] == null ? "-" : e['date'].toString()),
+              DataGridCell<String>(columnName: 'Time', value: e['time'] == null ? "-" : e['time'].toString()),
+              DataGridCell<String>(
+                  columnName: 'Monetary Value',
+                  value: e['monetary_value'] == null ? "-" : e['monetary_value'].toString()),
             ]))
         .toList();
   }

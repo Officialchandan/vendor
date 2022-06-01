@@ -79,7 +79,7 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
                 Expanded(
                   child: RadioListTile(
                       activeColor: ColorPrimary,
-                      title: Text("date_wise_key".tr()),
+                      title: Text("day_wise_key".tr()),
                       value: 2,
                       groupValue: groupValue,
                       onChanged: (value) {
@@ -278,9 +278,9 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
             ? Endpoint.GET_COIN_REDEEM_REPORT_BY_DATE
             : Endpoint.GET_COIN_REDEEM_REPORT_BY_DATE_OF_CHAT_PAPDI;
         input["from_date"] = startDate;
-        DateTime dateTime = DateTime.parse(endDate);
+        //   DateTime dateTime = DateTime.parse(endDate);
 
-        input["to_date"] = Utility.getFormatDate(DateTime(dateTime.year, dateTime.month, dateTime.day + 1));
+        input["to_date"] = endDate;
       } else {
         url = widget.chatPapdi == 0
             ? Endpoint.GET_COIN_REDEEM_REPORT_BY_DAY
@@ -319,15 +319,29 @@ class _CoinRedeemReportState extends State<CoinRedeemReport> {
         EasyLoading.dismiss();
 
         if (result["success"]) {
-          List<Map<String, dynamic>> report = List<Map<String, dynamic>>.from(result["data"]!.map((x) => x));
-          reportList = report;
+          List<Map<String, dynamic>> report =
+              result["data"] == null ? [] : List<Map<String, dynamic>>.from(result["data"]!.map((x) => x));
+          List<Map<String, dynamic>> reportDirect = result["direct_billing"] == null
+              ? []
+              : List<Map<String, dynamic>>.from(result["direct_billing"]!.map((x) => x));
+          report.forEach((element) {
+            debugPrint("element-->$element");
+
+            reportList.add(element);
+          });
+          reportDirect.forEach((element) {
+            debugPrint("element-->$element");
+
+            reportList.add(element);
+          });
+          reportList.sort((a, b) => b["date"].compareTo(a["date"]));
 
           Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => RedeemCoinReportDataGrid(
                         reportData: reportList,
-                      )));
+                      ))).then((value) => reportList.clear());
           // exportReport(context);
         } else {
           EasyLoading.dismiss();

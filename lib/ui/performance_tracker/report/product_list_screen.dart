@@ -78,7 +78,15 @@ class _ProductListScreenState extends State<ProductListScreen> {
         initialData: products,
         stream: streamController.stream,
         builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
           if (snapshot.hasData) {
+            if (snapshot.data! == null || snapshot.data!.isEmpty) {
+              return Container(
+                  height: MediaQuery.of(context).size.height * 0.70,
+                  child: Center(child: Image.asset("assets/images/no_data.gif")));
+            }
             return ListView.separated(
                 itemBuilder: (context, index) {
                   ProductModel product = snapshot.data![index];
@@ -124,6 +132,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                   ],
                                 )),
                                 trailing: Checkbox(
+                                  activeColor: ColorPrimary,
                                   value: product.check,
                                   onChanged: (value) {
                                     product.check = value!;
@@ -171,7 +180,10 @@ class _ProductListScreenState extends State<ProductListScreen> {
                 },
                 itemCount: snapshot.data!.length);
           }
-          return Container();
+
+          return Container(
+              height: MediaQuery.of(context).size.height * 0.70,
+              child: Center(child: Image.asset("assets/images/no_data.gif")));
         },
       ),
       bottomNavigationBar: Container(

@@ -300,14 +300,28 @@ class _SaleReturnReportState extends State<SaleReturnReport> {
         EasyLoading.dismiss();
 
         if (result["success"]) {
-          List<Map<String, dynamic>> report = List<Map<String, dynamic>>.from(result["data"]!.map((x) => x));
-          reportList = report;
+          List<Map<String, dynamic>> report =
+              result["data"] == null ? [] : List<Map<String, dynamic>>.from(result["data"]!.map((x) => x));
+          List<Map<String, dynamic>> reportDirect = result["direct_billing"] == null
+              ? []
+              : List<Map<String, dynamic>>.from(result["direct_billing"]!.map((x) => x));
+          report.forEach((element) {
+            debugPrint("element-->$element");
+
+            reportList.add(element);
+          });
+          reportDirect.forEach((element) {
+            debugPrint("element-->$element");
+
+            reportList.add(element);
+          });
+          reportList.sort((a, b) => b["date"].compareTo(a["date"]));
           Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => SalesReturnReportDataGrid(
                         reportData: reportList,
-                      )));
+                      ))).then((value) => reportList.clear());
           // exportReport(context);
         } else {
           EasyLoading.dismiss();

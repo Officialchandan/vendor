@@ -123,15 +123,6 @@ class _DailyReportDataGridState extends State<DailyReportDataGrid> {
                       overflow: TextOverflow.ellipsis,
                     ))),
             GridColumn(
-                columnName: 'Purchase Price',
-                label: Container(
-                    padding: const EdgeInsets.all(16.0),
-                    alignment: Alignment.center,
-                    child: const Text(
-                      "Purchase Price",
-                      overflow: TextOverflow.ellipsis,
-                    ))),
-            GridColumn(
                 columnName: 'MRP',
                 label: Container(
                     padding: const EdgeInsets.all(16.0),
@@ -304,18 +295,25 @@ class ReportDataSource extends DataGridSource {
   ReportDataSource({required List<Map<String, dynamic>> reportData}) {
     _reportData = reportData
         .map<DataGridRow>((e) => DataGridRow(cells: [
-              DataGridCell<int>(columnName: 'Order ID', value: e['order_id']),
-              DataGridCell<int>(columnName: 'Product ID', value: e['product_id']),
-              DataGridCell<int>(columnName: 'Category ID', value: e['category_id']),
-              DataGridCell<String>(columnName: 'Product Name', value: e['product_name']),
-              DataGridCell<int>(columnName: 'Customer ID', value: e['customer_id']),
-              DataGridCell<String>(columnName: 'Mobile', value: e['mobile']),
-              DataGridCell<String>(columnName: 'Purchase Price', value: e['purchase_price']),
-              DataGridCell<String>(columnName: 'MRP', value: e['mrp'].toString()),
-              DataGridCell<String>(columnName: 'Total', value: e['total']),
-              DataGridCell<String>(columnName: 'Earning Coins', value: e['earning_coins']),
-              DataGridCell<String>(columnName: 'Redeem Coins', value: e['redeem_coins']),
-              DataGridCell<String>(columnName: 'Date', value: e['date']),
+              DataGridCell<String>(
+                  columnName: 'Order ID', value: e['order_id'] == null ? "-" : e['order_id'].toString()),
+              DataGridCell<String>(
+                  columnName: 'Product ID',
+                  value: e['product_id'].toString().isEmpty ? "Direct" : e['product_id'].toString()),
+              DataGridCell<String>(
+                  columnName: 'Category ID', value: e['category_id'] == null ? "-" : e['category_id'].toString()),
+              DataGridCell<String>(
+                  columnName: 'Product Name', value: e['product_name'] == null ? "-" : e['product_name'].toString()),
+              DataGridCell<String>(
+                  columnName: 'Customer ID', value: e['customer_id'] == null ? "-" : e['customer_id'].toString()),
+              DataGridCell<String>(columnName: 'Mobile', value: e['mobile'] == null ? "-" : e['mobile'].toString()),
+              DataGridCell<String>(columnName: 'MRP', value: e['mrp'] == null ? "-" : e['mrp'].toString()),
+              DataGridCell<String>(columnName: 'Total', value: e['total'] == null ? "-" : e['total'].toString()),
+              DataGridCell<String>(
+                  columnName: 'Earning Coins', value: e['earning_coins'] == null ? "-" : e['earning_coins'].toString()),
+              DataGridCell<String>(
+                  columnName: 'Redeem Coins', value: e['redeem_coins'] == null ? "-" : e['redeem_coins'].toString()),
+              DataGridCell<String>(columnName: 'Date', value: e['date'].toString()),
             ]))
         .toList();
   }

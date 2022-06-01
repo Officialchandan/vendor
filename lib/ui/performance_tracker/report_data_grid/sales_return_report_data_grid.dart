@@ -45,8 +45,10 @@ class _SalesReturnReportDataGridState extends State<SalesReturnReportDataGrid> {
                 Navigator.of(context).pop();
               },
               icon: Icon(Icons.arrow_back_ios)),
-          title: Text("sale_return_reports_key".tr(),
-            style: TextStyle(fontWeight: FontWeight.bold),),
+          title: Text(
+            "sale_return_reports_key".tr(),
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
           actions: [
             IconButton(
                 onPressed: () {
@@ -111,14 +113,23 @@ class _SalesReturnReportDataGridState extends State<SalesReturnReportDataGrid> {
                       overflow: TextOverflow.ellipsis,
                     ))),
             GridColumn(
-                columnName: 'Reason',
+                columnName: 'Return Amount',
                 label: Container(
                     padding: const EdgeInsets.all(16.0),
                     alignment: Alignment.center,
                     child: const Text(
-                      "Reason",
+                      "Return Amount",
                       overflow: TextOverflow.ellipsis,
                     ))),
+            // GridColumn(
+            //     columnName: 'Reason',
+            //     label: Container(
+            //         padding: const EdgeInsets.all(16.0),
+            //         alignment: Alignment.center,
+            //         child: const Text(
+            //           "Reason",
+            //           overflow: TextOverflow.ellipsis,
+            //         ))),
             GridColumn(
                 columnName: 'Date',
                 label: Container(
@@ -265,14 +276,21 @@ class ReportDataSource extends DataGridSource {
   ReportDataSource({required List<Map<String, dynamic>> reportData}) {
     _reportData = reportData
         .map<DataGridRow>((e) => DataGridRow(cells: [
-              DataGridCell<String>(columnName: 'Category Name', value: e['category_name']),
-              DataGridCell<String>(columnName: 'Product Name', value: e['product_name']),
-              DataGridCell<int>(columnName: 'Quantity', value: e['qty']),
-              DataGridCell<String>(columnName: 'Mobile', value: e['mobile']),
-              DataGridCell<String>(columnName: 'Return Coins', value: e['return_coins']),
-              DataGridCell<String>(columnName: 'Reason', value: e['reason']),
-              DataGridCell<String>(columnName: 'Date', value: e['date']),
-              DataGridCell<String>(columnName: 'Time', value: e['time']),
+              DataGridCell<String>(
+                  columnName: 'Category Name', value: e['category_name'] == null ? "-" : e['category_name'].toString()),
+              DataGridCell<String>(
+                  columnName: 'Product Name', value: e['product_name'] == null ? "-" : e['product_name'].toString()),
+              DataGridCell<String>(
+                  columnName: 'Quantity',
+                  value: e['qty'] == null || e['qty'].toString().isEmpty ? "1" : e['qty'].toString()),
+              DataGridCell<String>(columnName: 'Mobile', value: e['mobile'] == null ? "-" : e['mobile'].toString()),
+              DataGridCell<String>(
+                  columnName: 'Return Coins', value: e['return_coins'] == null ? "-" : e['return_coins'].toString()),
+              DataGridCell<String>(
+                  columnName: 'Return Amount', value: e['return_amount'] == null ? "-" : e['return_amount'].toString()),
+              // DataGridCell<String>(columnName: 'Reason', value: e['reason'] == null ? "-" : e['reason'].toString()),
+              DataGridCell<String>(columnName: 'Date', value: e['date'] == null ? "-" : e['date'].toString()),
+              DataGridCell<String>(columnName: 'Time', value: e['time'] == null ? "-" : e['time'].toString()),
             ]))
         .toList();
   }
