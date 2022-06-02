@@ -295,7 +295,12 @@ class _DailyReportState extends State<DailyReport> {
         input["from_date"] = startDate;
         input["to_date"] = endDate;
       } else {
-        input["days"] = days!.optionId;
+        if (days == null) {
+          Utility.showToast(msg: "please_select_days_key".tr());
+          return;
+        } else {
+          input["days"] = days!.optionId;
+        }
       }
 
       if (widget.chatPapdi == 0) {

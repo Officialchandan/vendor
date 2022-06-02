@@ -77,15 +77,15 @@ class _DailyReportDataGridState extends State<DailyReportDataGrid> {
                       "Order ID",
                       overflow: TextOverflow.ellipsis,
                     ))),
-            GridColumn(
-                columnName: 'Product ID',
-                label: Container(
-                    padding: const EdgeInsets.all(16.0),
-                    alignment: Alignment.center,
-                    child: const Text(
-                      "Product ID",
-                      overflow: TextOverflow.ellipsis,
-                    ))),
+            // GridColumn(
+            //     columnName: 'Product ID',
+            //     label: Container(
+            //         padding: const EdgeInsets.all(16.0),
+            //         alignment: Alignment.center,
+            //         child: const Text(
+            //           "Product ID",
+            //           overflow: TextOverflow.ellipsis,
+            //         ))),
             GridColumn(
                 columnName: 'Category ID',
                 label: Container(
@@ -102,15 +102,6 @@ class _DailyReportDataGridState extends State<DailyReportDataGrid> {
                     alignment: Alignment.center,
                     child: const Text(
                       "Product Name",
-                      overflow: TextOverflow.ellipsis,
-                    ))),
-            GridColumn(
-                columnName: 'Customer ID',
-                label: Container(
-                    padding: const EdgeInsets.all(16.0),
-                    alignment: Alignment.center,
-                    child: const Text(
-                      "Customer ID",
                       overflow: TextOverflow.ellipsis,
                     ))),
             GridColumn(
@@ -297,15 +288,13 @@ class ReportDataSource extends DataGridSource {
         .map<DataGridRow>((e) => DataGridRow(cells: [
               DataGridCell<String>(
                   columnName: 'Order ID', value: e['order_id'] == null ? "-" : e['order_id'].toString()),
-              DataGridCell<String>(
-                  columnName: 'Product ID',
-                  value: e['product_id'].toString().isEmpty ? "Direct" : e['product_id'].toString()),
+              // DataGridCell<String>(
+              //     columnName: 'Product ID',
+              //     value: e['product_id'].toString().isEmpty ? "Direct" : e['product_id'].toString()),
               DataGridCell<String>(
                   columnName: 'Category ID', value: e['category_id'] == null ? "-" : e['category_id'].toString()),
               DataGridCell<String>(
                   columnName: 'Product Name', value: e['product_name'] == null ? "-" : e['product_name'].toString()),
-              DataGridCell<String>(
-                  columnName: 'Customer ID', value: e['customer_id'] == null ? "-" : e['customer_id'].toString()),
               DataGridCell<String>(columnName: 'Mobile', value: e['mobile'] == null ? "-" : e['mobile'].toString()),
               DataGridCell<String>(columnName: 'MRP', value: e['mrp'] == null ? "-" : e['mrp'].toString()),
               DataGridCell<String>(columnName: 'Total', value: e['total'] == null ? "-" : e['total'].toString()),
