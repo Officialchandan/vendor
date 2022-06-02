@@ -652,6 +652,7 @@ class EmployeeDataSource extends DataGridSource {
     return DataGridRowAdapter(
         cells: row.getCells().map<Widget>((e) {
       return Container(
+
         alignment: Alignment.center,
         padding: EdgeInsets.all(8.0),
         child: Text(e.value.toString()),
