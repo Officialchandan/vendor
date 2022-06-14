@@ -132,7 +132,7 @@ class _SelectCategoryWidgetState extends State<SelectCategoryWidget> {
   Future<List<CategoryModel>> getCategory() async {
     if (await Network.isConnected()) {
       GetCategoriesResponse response = await apiProvider.getAllCategories();
-
+//asdfasdfasdf
       if (response.success) {
         categories = response.data!;
         return categories;
