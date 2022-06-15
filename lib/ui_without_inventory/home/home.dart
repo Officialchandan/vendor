@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:share/share.dart';
 import 'package:vendor/main.dart';
+import 'package:vendor/ui/account_management/video_tutorial/Video_listscreen.dart';
 import 'package:vendor/ui/notification_screen/model/notification_response.dart';
 import 'package:vendor/ui_without_inventory/notification/notification_screen.dart';
 import 'package:vendor/utility/color.dart';
@@ -86,50 +87,50 @@ class _HomeScreenWithoutInventoryState extends State<HomeScreenWithoutInventory>
                   message == ""
                       ? Utility.showToast(msg: "no_notification_key".tr())
                       : Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => WithoutInventoryNotificationScreen(
-                            notificationData: notificationData!,
-                          ))).then((value) {
-                    setState(() {
-                      count -= value as int;
-                    });
-                  });
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => WithoutInventoryNotificationScreen(
+                                    notificationData: notificationData!,
+                                  ))).then((value) {
+                          setState(() {
+                            count -= value as int;
+                          });
+                        });
                 },
               ),
               notificationData != null
                   ? Positioned(
-                right: 10,
-                top: 8,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(50),
-                  child: new Container(
-                    padding: EdgeInsets.all(1.5),
-                    decoration: new BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(
-                        color: ColorPrimary,
-                      ),
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    constraints: BoxConstraints(
-                      minWidth: 14,
-                      minHeight: 14,
-                    ),
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        count.toString(),
-                        style: TextStyle(
-                          color: ColorPrimary,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 8,
+                      right: 10,
+                      top: 8,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(50),
+                        child: new Container(
+                          padding: EdgeInsets.all(1.5),
+                          decoration: new BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(
+                              color: ColorPrimary,
+                            ),
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          constraints: BoxConstraints(
+                            minWidth: 14,
+                            minHeight: 14,
+                          ),
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              count.toString(),
+                              style: TextStyle(
+                                color: ColorPrimary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 8,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                ),
-              )
+                    )
                   : Container()
             ],
           ),
@@ -281,9 +282,10 @@ class _HomeScreenWithoutInventoryState extends State<HomeScreenWithoutInventory>
                 : index == 3
                     ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY, arguments: 2)
                     : index == 4
-                        ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY, arguments: 3)
+                        ? Navigator.push(context, MaterialPageRoute(builder: (context) => VideoList()))
                         : Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY, arguments: 3);
   }
+
   getNotifications() async {
     String userId = (await SharedPref.getIntegerPreference(SharedPref.VENDORID)).toString();
     Map input = HashMap();

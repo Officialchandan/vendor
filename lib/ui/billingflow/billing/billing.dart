@@ -105,13 +105,15 @@ class _BillingScreenState extends State<BillingScreen> {
                   ),
                 ]),
                 leadingWidth: 100,
-                leading: userStatus == 1
+                leading: userStatus == 1 || userStatus == 3
                     ? Padding(
                         padding: const EdgeInsets.only(top: 15.0, bottom: 15, left: 20),
                         child: InkWell(
                           onTap: () {
                             Navigator.push(
-                                context, PageTransition(child: DirectBilling(), type: PageTransitionType.fade));
+                                context,
+                                PageTransition(
+                                    child: DirectBilling(usertype: userStatus), type: PageTransitionType.fade));
                           },
                           child: Container(
                             decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5)),
@@ -353,7 +355,7 @@ class _BillingScreenState extends State<BillingScreen> {
                                                       mobile: mobileController.text,
                                                       coin: coins = 0.toString(),
                                                       lastName: lastName,
-                                                      firstName:  firstName.isEmpty? nameController.text: firstName,
+                                                      firstName: firstName.isEmpty ? nameController.text : firstName,
                                                     ),
                                                     type: PageTransitionType.fade))
                                             .then((value) {
@@ -373,7 +375,7 @@ class _BillingScreenState extends State<BillingScreen> {
                                           PageTransition(
                                               child: SearchAllProduct(
                                                 lastName: lastName,
-                                                firstName: firstName.isEmpty? nameController.text: firstName,
+                                                firstName: firstName.isEmpty ? nameController.text : firstName,
                                                 mobile: mobileController.text,
                                                 coin: coins,
                                               ),
@@ -468,7 +470,12 @@ class _BillingScreenState extends State<BillingScreen> {
                                 customerNumberResponseBloc.add(GetVendorCategoryEvent());
                               }
                               if (state is GetCategoryByVendorIdState) {
-                                category = state.data!;
+                                if (userStatus == 3) {
+                                  category = state.data;
+                                  category.removeWhere((element) => element.id == "21" || element.id == "31");
+                                } else {
+                                  category = state.data;
+                                }
                               }
                               if (state is GetCategoryByVendorIdLoadingstate) {
                                 return Container(
@@ -552,7 +559,7 @@ class _BillingScreenState extends State<BillingScreen> {
                                 context,
                                 PageTransition(
                                     child: SearchByCategory(
-                                      firstName: firstName.isEmpty? nameController.text: firstName,
+                                      firstName: firstName.isEmpty ? nameController.text : firstName,
                                       lastName: lastName,
                                       catid: category[index].id.toString(),
                                       mobile: mobileController.text,
@@ -577,7 +584,7 @@ class _BillingScreenState extends State<BillingScreen> {
                           PageTransition(
                               child: SearchByCategory(
                                 lastName: lastName,
-                                firstName: firstName.isEmpty? nameController.text: firstName,
+                                firstName: firstName.isEmpty ? nameController.text : firstName,
                                 catid: category[index].id.toString(),
                                 mobile: mobileController.text,
                                 coin: coins,

@@ -5,6 +5,7 @@ import 'package:vendor/model/get_categories_response.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/network.dart';
+import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/utility.dart';
 
 class SelectCategoryWidget extends StatefulWidget {
@@ -132,9 +133,13 @@ class _SelectCategoryWidgetState extends State<SelectCategoryWidget> {
   Future<List<CategoryModel>> getCategory() async {
     if (await Network.isConnected()) {
       GetCategoriesResponse response = await apiProvider.getAllCategories();
-//asdfasdfasdf
+      int userStatus = await SharedPref.getIntegerPreference(SharedPref.USERSTATUS);
       if (response.success) {
         categories = response.data!;
+       if (userStatus == 3) {
+        categories.removeWhere((element) => element.id == "21" || element.id == "31");
+
+      }
         return categories;
       } else {
         Utility.showToast(msg: response.message);

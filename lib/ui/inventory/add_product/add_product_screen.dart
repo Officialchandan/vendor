@@ -1033,12 +1033,19 @@ class _AddProductScreenState extends State<AddProductScreen> {
   Future<List<CategoryModel>> getCategory() async {
     if (await Network.isConnected()) {
       GetCategoriesResponse response = await apiProvider.getAllCategories();
-
+      int userStatus = await SharedPref.getIntegerPreference(SharedPref.USERSTATUS);
       if (response.success) {
         categories = response.data!;
-        if (categories.length == 1) {
+        log("userstatus$userStatus");
+        if (response.data!.length == 1) {
           categoryId = categories[0].id;
           edtCategory.text = categories[0].categoryName!;
+        } else if (userStatus == 3) {
+          categories.removeWhere((element) => element.id == "21" || element.id == "31");
+          if (categories.length == 1) {
+            categoryId = categories[0].id;
+            edtCategory.text = categories[0].categoryName!;
+          }
         }
         return categories;
       } else {

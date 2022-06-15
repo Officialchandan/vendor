@@ -25,6 +25,7 @@ import 'package:vendor/ui/money_due_upi/sales_return/sales_return.dart';
 import 'package:vendor/ui/money_due_upi/upi_transfer/upi_transfer_screen.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
+import 'package:vendor/utility/utility.dart';
 
 import '../../model/get_vendor_free_coin.dart';
 
@@ -145,7 +146,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
   Future<void> paymentTransiction(BuildContext context) async {
     Map<String, dynamic> input = HashMap<String, dynamic>();
     input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
-    input["amount"] = dueAmount;
+    input["amount"] = double.parse(dueAmount).toStringAsFixed(3);
     input["vendor_myprofit_payment_id"] = vendorToMyProfitPaymentid.toString();
     input["myprofit_vendor_payment_id"] = myProfitToVendorPaymentid.toString();
     log("=====? $input");
@@ -1523,11 +1524,17 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                                           freecoin = state.data;
                                                           log("=====>${freecoin}");
                                                         }
-
+                                                        if (state is GetPaymentTransictionFailureState) {
+                                                          Utility.showToast(msg: "${state.message}");
+                                                          log("=====>${freecoin}");
+                                                        }
                                                         if (freecoin == null) {
                                                           return Container(
                                                               height: 70,
-                                                              child: Center(child: CircularProgressIndicator()));
+                                                              child: Center(
+                                                                  child: CircularProgressIndicator(
+                                                                color: ColorPrimary,
+                                                              )));
                                                         }
                                                         return Column(
                                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

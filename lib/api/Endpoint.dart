@@ -183,4 +183,6 @@ class Endpoint {
   static const String UPI_PAYMENT_HISTORY = "getUpiHistory";
 
   static const String TNC_WITH_SIGNATURE = "getVendorTncWithSign";
+
+  static const String GET_VENDOR_Video = "getVendorVideo";
 }

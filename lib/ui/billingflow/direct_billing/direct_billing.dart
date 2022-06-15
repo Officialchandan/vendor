@@ -22,7 +22,8 @@ import 'package:vendor/utility/utility.dart';
 import 'package:vendor/utility/validator.dart';
 
 class DirectBilling extends StatefulWidget {
-  DirectBilling({Key? key}) : super(key: key);
+  int usertype;
+  DirectBilling({required this.usertype, Key? key}) : super(key: key);
 
   @override
   _DirectBillingState createState() => _DirectBillingState();
@@ -331,11 +332,18 @@ class _DirectBillingState extends State<DirectBilling> {
                           return Container(
                               height: MediaQuery.of(context).size.height * 0.20,
                               child: Center(
-                                child: CircularProgressIndicator(),
+                                child: CircularProgressIndicator(
+                                  color: ColorPrimary,
+                                ),
                               ));
                         }
                         if (state is GetDirectBillingCategoryByVendorIdState) {
-                          categoryList = state.data;
+                          if (widget.usertype == 3) {
+                            categoryList = state.data;
+                            categoryList.removeWhere((element) => element.id == "11");
+                          } else {
+                            categoryList = state.data;
+                          }
                         }
                         return Container(
                           height: 225,
@@ -436,7 +444,9 @@ class _DirectBillingState extends State<DirectBilling> {
                                   })
                               : succes == true
                                   ? Center(
-                                      child: CircularProgressIndicator(),
+                                      child: CircularProgressIndicator(
+                                        color: ColorPrimary,
+                                      ),
                                     )
                                   : Container(),
                         );
@@ -916,7 +926,6 @@ class _DirectBillingState extends State<DirectBilling> {
     }
   }
 
-//asdf asdfasdfasdf
   redeemDialog(BuildContext context) async {
     return showDialog(
         barrierDismissible: false,

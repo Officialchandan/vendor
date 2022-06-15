@@ -24,6 +24,7 @@ import 'package:vendor/ui_without_inventory/performancetracker/upi/redeem_coins/
 import 'package:vendor/ui_without_inventory/performancetracker/upi/upi_transfer/upi_transfer_history.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
+import 'package:vendor/utility/utility.dart';
 
 class DueAmountScreen extends StatefulWidget {
   @override
@@ -91,7 +92,7 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
   Future<void> paymentTransiction(BuildContext context) async {
     Map<String, dynamic> input = HashMap<String, dynamic>();
     input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
-    input["amount"] = dueAmount;
+    input["amount"] = double.parse(dueAmount).toStringAsFixed(3);
     input["payment_id"] = paymentid;
 
     log("=====? $input");
@@ -859,7 +860,12 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
               ),
               bottomNavigationBar: MaterialButton(
                 onPressed: () {
-                  condition == 1 ? paymentTransiction(context) : Container();
+                  double.parse(dueAmount) >= 0
+                      ? condition == 1
+                          ? paymentTransiction(context)
+                          : Container()
+                      : Utility.showToast(msg: "Your amount is 0 unable to make payment");
+                  ;
                 },
                 color: condition == 0 ? Colors.white : ColorPrimary,
                 height: 50,
@@ -868,7 +874,7 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                   "upi_transfer_key".tr(),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: condition == 0 ? Colors.white : Colors.black,
+                    color: condition == 0 ? Colors.white : Colors.white,
                   ),
                 ),
               ));

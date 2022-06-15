@@ -62,6 +62,7 @@ import 'package:vendor/model/upload_image_response.dart';
 import 'package:vendor/model/validate_app_version.dart';
 import 'package:vendor/model/vendor_profile_response.dart';
 import 'package:vendor/model/verify_otp.dart';
+import 'package:vendor/model/videoresponse.dart';
 import 'package:vendor/ui/account_management/terms_and_condition/t&c_response.dart';
 import 'package:vendor/ui/money_due_upi/normal_ledger/model/normal_ladger_response.dart';
 import 'package:vendor/ui/money_due_upi/redeem_coin/customer_coin_history_response.dart';
@@ -1687,6 +1688,26 @@ class ApiProvider {
       }
       print("Exception occurred: $message stackTrace: $error");
       return TermsResponse(success: false, message: "");
+    }
+  }
+
+  Future<VideoPlayerResponse> getVideo() async {
+    try {
+      Response res = await dio.post(
+        Endpoint.GET_VENDOR_Video,
+      );
+
+      return VideoPlayerResponse.fromJson(res.toString());
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return VideoPlayerResponse(success: false, message: message);
     }
   }
 }

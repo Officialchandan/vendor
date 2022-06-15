@@ -8,7 +8,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:share/share.dart';
 import 'package:vendor/main.dart';
-import 'package:vendor/ui/account_management/video_tutorial/video_tutorial.dart';
+import 'package:vendor/ui/account_management/video_tutorial/Video_listscreen.dart';
 import 'package:vendor/ui/notification_screen/model/notification_response.dart';
 import 'package:vendor/ui/notification_screen/notification_screen.dart';
 import 'package:vendor/utility/color.dart';
@@ -302,7 +302,7 @@ class _HomeScreenState extends State<HomeScreen> {
             : index == 3
                 ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: 2)
                 : index == 5
-                    ? Navigator.push(context, MaterialPageRoute(builder: (context) => VideoTutorial()))
+                    ? Navigator.push(context, MaterialPageRoute(builder: (context) => VideoList()))
                     : index == 2
                         ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: 3)
                         : index == 4

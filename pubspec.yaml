@@ -117,7 +117,9 @@ dependencies:
   paytm_allinonesdk:
 #auto fetch number
   sms_autofill:
-  
+#video player
+  chewie:
+  video_player:
     
 dev_dependencies:
   flutter_test:
