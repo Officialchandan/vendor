@@ -6,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/model/direct_billing.dart';
@@ -317,7 +316,17 @@ class _DirectBillingState extends State<DirectBilling> {
                             Utility.showToast(msg: "please_enter_10_digits_number_key".tr());
                           }
                           if (redeem == true) {
-                            redeemDialog(context);
+                            if (mobileController.text.length == 10) {
+                              if (amountController.text.length > 0) {
+                                redeemDialog(context);
+                              } else {
+                                Utility.showToast(
+                                  msg: "please_enter_amount_key".tr(),
+                                );
+                              }
+                            } else {
+                              Utility.showToast(msg: "please_enter_10_digits_number_key".tr());
+                            }
                           }
                           calculation(amountController.text.isEmpty ? "0" : amountController.text);
                           calculateEarnCoins(double.parse(amountController.text.isEmpty ? "0" : amountController.text));
@@ -733,7 +742,7 @@ class _DirectBillingState extends State<DirectBilling> {
     input["vendor_available_coins"] = datas!.vendorAvailableCoins;
 
     log("=====? $input");
-    EasyLoading.show();
+
     directBillingCustomerNumberResponseBloc.add(GetDirectBillingOtpEvent(input: input));
   }
 
@@ -812,13 +821,19 @@ class _DirectBillingState extends State<DirectBilling> {
                   color: ColorPrimary,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   onPressed: () {
-                    if (status == 0) {
-                      // directBillingCustomerNumberResponseBloc.add((
-                      //     price: y, index: index, earningCoin: earningCoin));
-                      otpController.clear();
-                      Navigator.pop(context);
+                    if (otpController.text.length == 4) {
+                      if (status == 0) {
+                        // directBillingCustomerNumberResponseBloc.add((
+                        //     price: y, index: index, earningCoin: earningCoin));
+                        otpController.clear();
+                        Navigator.pop(context);
+                      } else {
+                        verifyOtp(context);
+                      }
                     } else {
-                      verifyOtp(context);
+                      Utility.showToast(
+                        msg: "please enter 4 digit otp",
+                      );
                     }
                   },
                   child: new Text(

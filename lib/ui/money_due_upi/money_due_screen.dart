@@ -68,11 +68,14 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
   String result = "";
   String mid = "", orderId = "", token = "", callbackurl = "";
   int condition = 1;
+  String availableconis = "0";
   String vendorName = "";
   void getname() async {
     vendorName = await SharedPref.getStringPreference(SharedPref.VENDORNAME);
+    availableconis = await SharedPref.getStringPreference(SharedPref.VendorCoin);
     setState(() {});
     log("=======>$vendorName");
+    log("=======>$availableconis");
   }
 
   @override
@@ -288,18 +291,8 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                     offset: Offset(0.0, 0.0), //(x,y)
                                     color: Colors.white)
                               ]),
-                          child: condition == 0
+                          child: double.parse(availableconis) <= 0.00
                               ? Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                                  // Padding(
-                                  //   padding: const EdgeInsets.all(15.0),
-                                  //   child: Text(
-                                  //     "types_of_money_due_key".tr(),
-                                  //       style: GoogleFonts.openSans(
-                                  //           color: TextBlackLight,
-                                  //           fontSize: 17,
-                                  //           fontWeight: FontWeight.w700)
-                                  //   ),
-                                  // ),
                                   SizedBox(
                                     height: 30,
                                   ),
