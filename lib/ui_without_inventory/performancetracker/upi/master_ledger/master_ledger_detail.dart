@@ -180,10 +180,8 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                     }
                     if (state is GetNormalLedgerHistoryFailureState) {
                       return Container(
-                        height: MediaQuery.of(context).size.height * 0.80,
-                        child: Center(
-                          child: Image.asset("assets/images/no_data.gif"),
-                        ),
+                        height: MediaQuery.of(context).size.height * .50,
+                        child: Center(child: Image.asset("assets/images/no_data.gif")),
                       );
                     }
                     if (state is GetNormalLedgerUserSearchState) {
@@ -198,8 +196,9 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                           }
                         });
                         if (list.isEmpty) {
-                          return Center(
-                            child: Image.asset("assets/images/no_data.gif"),
+                          return Container(
+                            height: MediaQuery.of(context).size.height * .50,
+                            child: Center(child: Image.asset("assets/images/no_data.gif")),
                           );
                         } else {
                           searchList = list;
@@ -370,10 +369,8 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                     }
                     if (state is GetNormalLedgerHistoryFailureState) {
                       return Container(
-                        height: MediaQuery.of(context).size.height * 0.80,
-                        child: Center(
-                          child: Image.asset("assets/images/no_data.gif"),
-                        ),
+                        height: MediaQuery.of(context).size.height * 0.0,
+                        child: Center(),
                       );
                     }
                     if (state is GetNormalLedgerUserSearchState) {
@@ -388,9 +385,7 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                           }
                         });
                         if (list.isEmpty) {
-                          return Center(
-                            child: Image.asset("assets/images/no_data.gif"),
-                          );
+                          return Center();
                         } else {
                           searchList = list;
 

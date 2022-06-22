@@ -146,7 +146,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
   Future<void> paymentTransiction(BuildContext context) async {
     Map<String, dynamic> input = HashMap<String, dynamic>();
     input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
-    input["amount"] = double.parse(dueAmount).toStringAsFixed(3);
+    input["amount"] = double.parse(dueAmount).toStringAsFixed(2);
     input["vendor_myprofit_payment_id"] = vendorToMyProfitPaymentid.toString();
     input["myprofit_vendor_payment_id"] = myProfitToVendorPaymentid.toString();
     log("=====? $input");

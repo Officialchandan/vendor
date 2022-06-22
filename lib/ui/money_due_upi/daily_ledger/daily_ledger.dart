@@ -155,7 +155,10 @@ class _DailyLedgerState extends State<DailyLedger> with TickerProviderStateMixin
                     }
                   });
                   if (list == null || list.isEmpty) {
-                    return Image.asset("assets/images/no_data.gif");
+                    return Container(
+                      height: MediaQuery.of(context).size.height * .50,
+                      child: Center(child: Image.asset("assets/images/no_data.gif")),
+                    );
                   } else {
                     searchList = list;
                   }

@@ -87,12 +87,12 @@ class _DailyReportDataGridState extends State<DailyReportDataGrid> {
             //           overflow: TextOverflow.ellipsis,
             //         ))),
             GridColumn(
-                columnName: 'Category ID',
+                columnName: 'Category Name',
                 label: Container(
                     padding: const EdgeInsets.all(16.0),
                     alignment: Alignment.center,
                     child: const Text(
-                      "Category ID",
+                      "Category Name",
                       overflow: TextOverflow.ellipsis,
                     ))),
             GridColumn(
@@ -292,7 +292,7 @@ class ReportDataSource extends DataGridSource {
               //     columnName: 'Product ID',
               //     value: e['product_id'].toString().isEmpty ? "Direct" : e['product_id'].toString()),
               DataGridCell<String>(
-                  columnName: 'Category ID', value: e['category_id'] == null ? "-" : e['category_id'].toString()),
+                  columnName: 'Category Name', value: e['category_name'] == null ? "-" : e['category_name'].toString()),
               DataGridCell<String>(
                   columnName: 'Product Name', value: e['product_name'] == null ? "-" : e['product_name'].toString()),
               DataGridCell<String>(columnName: 'Mobile', value: e['mobile'] == null ? "-" : e['mobile'].toString()),

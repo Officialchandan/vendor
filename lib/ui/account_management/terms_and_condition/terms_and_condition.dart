@@ -5,7 +5,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:vendor/main.dart';
-import 'package:vendor/model/vendor_profile_response.dart';
 import 'package:vendor/ui/account_management/terms_and_condition/t&c_response.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
 import 'package:vendor/utility/color.dart';
@@ -60,8 +59,7 @@ class _TermsAndConditionState extends State<TermsAndCondition> {
                           width: MediaQuery.of(context).size.width,
                           padding: const EdgeInsets.all(14),
                           child: Text(
-                            "${snapshot.data!.termAndCondition.isEmpty?
-                            "terms_and_condition_not_available_key".tr(): snapshot.data!.termAndCondition}",
+                            "${snapshot.data!.termAndCondition.isEmpty ? "terms_and_condition_not_available_key".tr() : snapshot.data!.termAndCondition}",
                             style: TextStyle(
                               overflow: TextOverflow.ellipsis,
                               color: TextBlackLight,
@@ -84,7 +82,8 @@ class _TermsAndConditionState extends State<TermsAndCondition> {
                             imageUrl: snapshot.data!.ownerSignature,
                             progressIndicatorBuilder: (context, url, downloadProgress) =>
                                 Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
-                            errorWidget: (context, url, error) => Center(child: Text("signature_not_available_key".tr())),
+                            errorWidget: (context, url, error) =>
+                                Center(child: Text("signature_not_available_key".tr())),
                             fit: BoxFit.cover,
                             width: MediaQuery.of(context).size.width * 0.70,
                           ),
@@ -94,7 +93,49 @@ class _TermsAndConditionState extends State<TermsAndCondition> {
                   ),
                 );
               }
-              return Container();
+              return Container(
+                height: MediaQuery.of(context).size.height - 84,
+                child: Column(
+                  children: [
+                    Flexible(
+                      flex: 5,
+                      child: Container(
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
+                        padding: const EdgeInsets.all(14),
+                        child: Text(
+                          "${snapshot.data!.termAndCondition.isEmpty ? "terms_and_condition_not_available_key".tr() : snapshot.data!.termAndCondition}",
+                          style: TextStyle(
+                            overflow: TextOverflow.ellipsis,
+                            color: TextBlackLight,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                      flex: 2,
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade100,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: CachedNetworkImage(
+                          imageUrl: snapshot.data!.ownerSignature,
+                          progressIndicatorBuilder: (context, url, downloadProgress) =>
+                              Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
+                          errorWidget: (context, url, error) => Center(child: Text("signature_not_available_key".tr())),
+                          fit: BoxFit.cover,
+                          width: MediaQuery.of(context).size.width * 0.70,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
             }),
       ),
     );

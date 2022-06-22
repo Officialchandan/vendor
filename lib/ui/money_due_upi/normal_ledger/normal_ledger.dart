@@ -187,8 +187,9 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                           }
                         });
                         if (list == null || list.isEmpty) {
-                          return Center(
-                            child: Image.asset("assets/images/no_data.gif"),
+                          return Container(
+                            height: MediaQuery.of(context).size.height * .50,
+                            child: Center(child: Image.asset("assets/images/no_data.gif")),
                           );
                         } else {
                           searchList = list;
@@ -339,9 +340,7 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                           }
                         });
                         if (list == null || list.isEmpty) {
-                          return Center(
-                            child: Image.asset("assets/images/no_data.gif"),
-                          );
+                          return Container();
                         } else {
                           searchList = list;
                         }
