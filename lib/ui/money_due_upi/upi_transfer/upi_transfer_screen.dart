@@ -1,6 +1,6 @@
 import 'dart:collection';
 import 'dart:developer';
-
+import 'package:vendor/widget/progress_indecator.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -87,7 +87,7 @@ class _UpiTransferHistoryState extends State<UpiTransferHistory> {
             searchList = upiList;
           }
           if (state is GetUpiTansferHistoryLoadingState) {
-            return Center(child: CircularProgressIndicator());
+            return Center(child: CircularLoader());
           }
           if (state is GetUpiTansferHistoryFailureState) {
             return Center(

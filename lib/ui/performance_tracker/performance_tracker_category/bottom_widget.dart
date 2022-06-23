@@ -496,7 +496,7 @@ class _BottomWidgetState extends State<BottomWidget> {
 //         //height: MediaQuery.of(context).size.height * 0.060,
 //         child:
 //             //             // result == null
-//             //             //     ? Center(child: CircularProgressIndicator())
+//             //             //     ? Center(child: CircularLoader())
 //             //             //     :
 //             //             // GestureDetector(
 //             //             //     onTap: () {

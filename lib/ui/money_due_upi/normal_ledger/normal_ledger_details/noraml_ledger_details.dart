@@ -1,6 +1,6 @@
 import 'dart:collection';
 import 'dart:developer';
-
+import 'package:vendor/widget/progress_indecator.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -263,7 +263,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                       return Container(
                         height: MediaQuery.of(context).size.height,
                         child: Center(
-                          child: CircularProgressIndicator(),
+                          child: CircularLoader(),
                         ),
                       );
                     }
@@ -278,7 +278,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                     }
                     if (billingDetails.isEmpty) {
                       log("===>$billingDetails");
-                      return Center(child: CircularProgressIndicator());
+                      return Center(child: CircularLoader());
                     }
                     return dataSalesReturn(context);
                   }))

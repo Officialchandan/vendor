@@ -9,6 +9,8 @@ import 'package:vendor/ui/inventory/suggested_product/bloc/suggested_product_sta
 import 'package:vendor/ui/inventory/suggested_product/suggested_product_list.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/utility.dart';
+import 'package:vendor/widget/progress_indecator.dart';
+import 'package:vendor/widget/progress_indecator.dart';
 
 class SuggestedProductScreen extends StatefulWidget {
   @override
@@ -102,11 +104,11 @@ class _SuggestedProductScreenState extends State<SuggestedProductScreen> with Ti
                 currentIndex = state.index;
                 if (productMap[tabs[_tabController!.index].categoryName!] == null) {
                   suggestedProductBloc.add(GetProductEvent(categoryId: tabs[state.index].id));
-                  return CircularProgressIndicator();
+                  return CircularLoader();
                 }
               }
               if (state is LoadingState) {
-                return Center(child: CircularProgressIndicator());
+                return Center(child: CircularLoader());
               }
               if (state is GetProductFailureState) {
                 return Center(child: Text(state.message));
@@ -119,7 +121,7 @@ class _SuggestedProductScreenState extends State<SuggestedProductScreen> with Ti
               if (productMap[tabs[_tabController!.index].categoryName!] != null) {
                 return SuggestedProductList(productMap[tabs[_tabController!.index].categoryName!]!);
               }
-              return CircularProgressIndicator();
+              return CircularLoader();
             },
           ),
           bottomNavigationBar: Container(child: BlocBuilder<SuggestedProductBloc, SuggestedProductState>(

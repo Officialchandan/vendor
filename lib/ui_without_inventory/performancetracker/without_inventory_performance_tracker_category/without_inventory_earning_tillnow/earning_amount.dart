@@ -9,6 +9,7 @@ import 'package:vendor/model/chat_papdi_module/without_inventory_Daily_Earning.d
 import 'package:vendor/model/chat_papdi_module/without_inventory_Hourly_Earning.dart';
 import 'package:vendor/model/chat_papdi_module/without_inventory_Monthly_Earning.dart';
 import 'package:vendor/utility/color.dart';
+import 'package:vendor/widget/progress_indecator.dart';
 
 class EarningAmount extends StatefulWidget {
   EarningAmount({Key? key}) : super(key: key);
@@ -104,7 +105,7 @@ class _EarningAmountState extends State<EarningAmount> {
                       future: getDhabasHourly(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.waiting) {
-                          return Center(child: CircularProgressIndicator());
+                          return Center(child: CircularLoader());
                         }
                         if (snapshot.hasError) {
                           return Container(
@@ -342,7 +343,7 @@ class _EarningAmountState extends State<EarningAmount> {
                       future: getDhabasDay(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.waiting) {
-                          return Center(child: CircularProgressIndicator());
+                          return Center(child: CircularLoader());
                         }
                         if (snapshot.hasError) {
                           return Container(
@@ -508,7 +509,7 @@ class _EarningAmountState extends State<EarningAmount> {
                       future: getDhabasMonthly(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.waiting) {
-                          return Center(child: CircularProgressIndicator());
+                          return Center(child: CircularLoader());
                         }
                         if (snapshot.hasError) {
                           return Container(
