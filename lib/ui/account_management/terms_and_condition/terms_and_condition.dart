@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
-
+import 'package:vendor/widget/progress_indecator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +43,7 @@ class _TermsAndConditionState extends State<TermsAndCondition> {
                 return Container(
                   height: MediaQuery.of(context).size.height - 84,
                   child: Center(
-                    child: CircularProgressIndicator(),
+                    child: CircularLoader(),
                   ),
                 );
               }

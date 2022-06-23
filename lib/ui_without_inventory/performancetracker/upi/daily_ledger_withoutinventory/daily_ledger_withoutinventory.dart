@@ -16,6 +16,7 @@ import 'package:vendor/ui_without_inventory/performancetracker/upi/daily_ledger_
 import 'package:vendor/ui_without_inventory/performancetracker/upi/daily_ledger_withoutinventory/daily_ledger_detail.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
+import 'package:vendor/widget/progress_indecator.dart';
 
 class DailyLedgerWithoutInventory extends StatefulWidget {
   String amount;
@@ -179,12 +180,12 @@ class _DailyLedgerWithoutInventoryState extends State<DailyLedgerWithoutInventor
                   log("===>$_commonLedgerHistory");
                   return Container(
                       height: MediaQuery.of(context).size.height * 0.50,
-                      child: Center(child: CircularProgressIndicator()));
+                      child: Center(child: CircularLoader()));
                 }
                 if (state is GetDailyLedgerHistoryLoadingState) {
                   return Container(
                       height: MediaQuery.of(context).size.height * 0.70,
-                      child: Center(child: CircularProgressIndicator()));
+                      child: Center(child: CircularLoader()));
                 }
                 if (state is GetDailyLedgerUserSearchState) {
                   if (state.searchword.isEmpty) {

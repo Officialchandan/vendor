@@ -1475,7 +1475,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                                                   //
                                                   //       if (freecoin == null) {
                                                   //         return Container(
-                                                  //             height: 70, child: Center(child: CircularProgressIndicator()));
+                                                  //             height: 70, child: Center(child: CircularLoader()));
                                                   //       }
                                                   //       return Column(
                                                   //         mainAxisAlignment: MainAxisAlignment.spaceBetween,

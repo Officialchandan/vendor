@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vendor/ui/custom_widget/app_bar.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-
+import 'package:vendor/widget/progress_indecator.dart';
 class WebViewScreen extends StatefulWidget {
   final String url;
   final String title;
@@ -37,7 +37,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
             isLoading
                 ? Align(
                     alignment: Alignment.center,
-                    child: CircularProgressIndicator(),
+                    child: CircularLoader(),
                   )
                 : SizedBox(
                     width: 0,

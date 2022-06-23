@@ -7,6 +7,7 @@ import 'package:vendor/model/get_colors_response.dart';
 import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/utility.dart';
+import 'package:vendor/widget/progress_indecator.dart';
 
 class SelectColorBottomSheet extends StatefulWidget {
   final Function(ColorModel color) onSelect;
@@ -54,7 +55,7 @@ class _SelectColorBottomSheetState extends State<SelectColorBottomSheet> {
               builder: (context, snap) {
                 if (snap.connectionState == ConnectionState.waiting) {
                   return Center(
-                    child: CircularProgressIndicator(),
+                    child: CircularLoader(),
                   );
                 }
                 if (snap.hasData && snap.data!.isNotEmpty) {

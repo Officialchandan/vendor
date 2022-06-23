@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
-
+import 'package:vendor/widget/progress_indecator.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:vendor/model/add_sub_category_response.dart';
@@ -61,7 +61,7 @@ class _SelectSubCategoryState extends State<SelectSubCategory> {
           builder: (context, snap) {
             if (snap.connectionState == ConnectionState.waiting) {
               return Center(
-                child: CircularProgressIndicator(),
+                child: CircularLoader(),
               );
             }
             if (snap.hasData && snap.data!.isNotEmpty) {

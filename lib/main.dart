@@ -41,14 +41,15 @@ NavigationService navigationService = NavigationService();
 configEasyLoading() {
   EasyLoading.instance
     ..indicatorType = EasyLoadingIndicatorType.fadingCircle
-    ..loadingStyle = EasyLoadingStyle.dark
+    ..loadingStyle = EasyLoadingStyle.light
     ..indicatorSize = 45.0
     ..radius = 10.0
-    ..progressColor = Colors.yellow
-    ..backgroundColor = Colors.green
-    ..indicatorColor = Colors.yellow
-    ..textColor = Colors.yellow
-    ..maskColor = Colors.blue.withOpacity(0.5)
+    ..backgroundColor = Colors.transparent
+    ..progressColor = ColorPrimary
+    ..backgroundColor = ColorPrimary
+    ..indicatorColor = ColorPrimary
+    ..textColor = ColorPrimary
+    ..maskColor = ColorPrimary
     ..userInteractions = false
     ..dismissOnTap = false;
 }
