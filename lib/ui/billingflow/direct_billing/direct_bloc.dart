@@ -120,6 +120,7 @@ class DirectBillingCustomerNumberResponseBloc
     if (await Network.isConnected()) {
       // yield GetDirectBillingOtpLoadingstate();
       try {
+        EasyLoading.show();
         DirectBillingOtpResponse result = await apiProvider.getDirectBillingOtp(input);
         log("$result");
         if (result.success) {
