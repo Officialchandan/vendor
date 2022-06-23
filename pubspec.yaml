@@ -74,8 +74,6 @@ dependencies:
   auto_size_text: ^3.0.0-nullsafety.0
 #LOADER
   flutter_easyloading:
-  loading_indicator:
-  loading_overlay_pro: ^2.1.1
 
 #sycnfussion
   syncfusion_flutter_xlsio:

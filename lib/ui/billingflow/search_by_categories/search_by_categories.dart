@@ -1,5 +1,5 @@
 import 'dart:developer';
-import 'package:vendor/widget/progress_indecator.dart';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
@@ -122,7 +122,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
               }
               if (state is SearchByCategoriesLoadingState) {
                 return Center(
-                  child: CircularLoader(),
+                  child: CircularProgressIndicator(),
                 );
               }
               if (state is GetSearchByCategoriesState) {

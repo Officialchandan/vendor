@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:collection';
 import 'dart:developer';
-import 'package:vendor/widget/progress_indecator.dart';
+
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -132,7 +132,7 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
-                    child: CircularLoader(),
+                    child: CircularProgressIndicator(),
                   );
                 }
                 if (snapshot.hasError) {

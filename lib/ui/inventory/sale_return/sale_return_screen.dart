@@ -17,7 +17,6 @@ import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/utility.dart';
-import 'package:vendor/widget/progress_indecator.dart';
 
 class SaleReturnScreen extends StatefulWidget {
   @override
@@ -116,7 +115,7 @@ class _SaleReturnScreenState extends State<SaleReturnScreen> {
                     return Container(
                       height: MediaQuery.of(context).size.height * 0.60,
                       child: Center(
-                        child: CircularLoader(),
+                        child: CircularProgressIndicator(),
                       ),
                     );
                   }

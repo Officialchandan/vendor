@@ -9,7 +9,6 @@ import 'package:vendor/model/chat_papdi_module/without_inventory_Daily_walkin.da
 import 'package:vendor/model/chat_papdi_module/without_inventory_Hourly_walkin.dart';
 import 'package:vendor/model/chat_papdi_module/without_inventory_Monthly_walkin.dart';
 import 'package:vendor/utility/color.dart';
-import 'package:vendor/widget/progress_indecator.dart';
 
 class WalkInAmount extends StatefulWidget {
   WalkInAmount({Key? key}) : super(key: key);
@@ -103,7 +102,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                       future: getDhabasHourly(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.waiting) {
-                          return Center(child: CircularLoader());
+                          return Center(child: CircularProgressIndicator());
                         }
                         if (snapshot.hasError) {
                           return Container(
@@ -330,7 +329,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                       future: getDhabasDay(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.waiting) {
-                          return Center(child: CircularLoader());
+                          return Center(child: CircularProgressIndicator());
                         }
                         if (snapshot.hasError) {
                           return Container(
@@ -496,7 +495,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                       future: getDhabasMonthly(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.waiting) {
-                          return Center(child: CircularLoader());
+                          return Center(child: CircularProgressIndicator());
                         }
                         if (snapshot.hasError) {
                           return Container(

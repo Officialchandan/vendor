@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:vendor/widget/progress_indecator.dart';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -113,7 +113,7 @@ class _RedeemCoinDetailsState extends State<RedeemCoinDetails> {
                               builder: (context, snapshot) {
                                 if (snapshot.connectionState == ConnectionState.waiting) {
                                   return Center(
-                                    child: CircularLoader(),
+                                    child: CircularProgressIndicator(),
                                   );
                                 }
                                 if (snapshot.hasData) {

@@ -1,6 +1,6 @@
 import 'dart:collection';
 import 'dart:developer';
-import 'package:vendor/widget/progress_indecator.dart';
+
 import 'package:dio/dio.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
@@ -722,7 +722,7 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                                     return Container();
                                   }
                                   if (freecoin == null) {
-                                    return Container(height: 70, child: Center(child: CircularLoader()));
+                                    return Container(height: 70, child: Center(child: CircularProgressIndicator()));
                                   }
                                   return double.parse(freecoin!.availableCoins) > 0.00
                                       ? Padding(

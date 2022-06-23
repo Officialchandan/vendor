@@ -10,7 +10,6 @@ import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/utility.dart';
-import 'package:vendor/widget/progress_indecator.dart';
 
 class CustomerDetailScreen extends StatefulWidget {
   final Customer customer;
@@ -82,7 +81,7 @@ class _CustomerDetailScreenState extends State<CustomerDetailScreen> {
                 future: getCustomerProduct(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularLoader();
+                    return CircularProgressIndicator();
                   }
                   if (snapshot.hasError) {
                     return Container(

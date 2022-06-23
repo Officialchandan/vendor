@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:vendor/widget/progress_indecator.dart';
+
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:vendor/main.dart';
@@ -79,7 +79,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
         stream: streamController.stream,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularLoader());
+            return Center(child: CircularProgressIndicator());
           }
           if (snapshot.hasData) {
             if (snapshot.data! == null || snapshot.data!.isEmpty) {

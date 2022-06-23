@@ -6,7 +6,6 @@ import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/utility.dart';
-import 'package:vendor/widget/progress_indecator.dart';
 
 class UnitBottomSheet extends StatefulWidget {
   final Function(UnitModel unit) onSelect;
@@ -37,7 +36,7 @@ class _UnitBottomSheetState extends State<UnitBottomSheet> {
               builder: (context, snap) {
                 if (snap.connectionState == ConnectionState.waiting) {
                   return Center(
-                    child: CircularLoader(),
+                    child: CircularProgressIndicator(),
                   );
                 }
                 if (snap.hasData && snap.data!.isNotEmpty) {

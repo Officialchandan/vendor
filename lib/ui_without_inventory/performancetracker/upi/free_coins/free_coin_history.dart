@@ -1,6 +1,6 @@
 import 'dart:collection';
 import 'dart:developer';
-import 'package:vendor/widget/progress_indecator.dart';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -166,7 +166,7 @@ class _FreeCoinsHistoryState extends State<FreeCoinsHistory> {
               if (state is GetFreeCoinHistoryLoadingState) {
                 return Container(
                     height: MediaQuery.of(context).size.height * 0.70,
-                    child: Center(child: CircularLoader()));
+                    child: Center(child: CircularProgressIndicator()));
               }
               if (state is GetFreeCoinUserSearchState) {
                 if (state.searchword.isEmpty) {

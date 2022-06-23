@@ -10,7 +10,6 @@ import 'package:vendor/main.dart';
 import 'package:vendor/ui/money_due_upi/redeem_coin/customer_coin_history_response.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
-import 'package:vendor/widget/progress_indecator.dart';
 
 class SalesReturnDetailsSheet extends StatefulWidget {
   final String customerId;
@@ -63,7 +62,7 @@ class _SalesReturnDetailsSheetState extends State<SalesReturnDetailsSheet> {
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Center(
-                        child: CircularLoader(),
+                        child: CircularProgressIndicator(),
                       );
                     }
                     if (snapshot.hasData) {
