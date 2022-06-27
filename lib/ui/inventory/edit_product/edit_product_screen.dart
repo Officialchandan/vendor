@@ -457,14 +457,14 @@ class EditProductScreenState extends State<EditProductScreen> {
       Utility.showToast(msg: "please_enter_selling_price_key".tr());
       return;
     }
-    if (variantModel.mrp.isEmpty) {
-      Utility.showToast(msg: "please_enter_mrp_key".tr());
-      return;
-    }
-    if (double.parse(variantModel.sellingPrice.trim()) > double.parse(variantModel.mrp.trim())) {
-      Utility.showToast(msg: "selling_price_cannot_be_more_than_mrp_key".tr());
-      return;
-    }
+    // if (variantModel.mrp.isEmpty) {
+    //   Utility.showToast(msg: "please_enter_mrp_key".tr());
+    //   return;
+    // }
+    // if (double.parse(variantModel.sellingPrice.trim()) > double.parse(variantModel.mrp.trim())) {
+    //   Utility.showToast(msg: "selling_price_cannot_be_more_than_mrp_key".tr());
+    //   return;
+    // }
     if (edtUnit.text.isEmpty) {
       Utility.showToast(msg: "please_select_unit_key".tr());
       return;
@@ -509,7 +509,7 @@ class EditProductScreenState extends State<EditProductScreen> {
     price["selling_price"] = variantModel.sellingPrice;
 
     productVariantMap["variant_price"] = price;
-    productVariantMap["product_option_variant_id"] = optionIds;
+    productVariantMap["product_option_variant_id"] = widget.product.productOptionVariantId;
     productVariantMap["variant_value"] = variantValue;
 
     productVariantMap["stock"] = variantModel.stock;

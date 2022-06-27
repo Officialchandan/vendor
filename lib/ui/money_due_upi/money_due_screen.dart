@@ -6,6 +6,7 @@ import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:paytm_allinonesdk/paytm_allinonesdk.dart';
@@ -40,24 +41,24 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
   static const platform = MethodChannel('samples.flutter.dev/battery');
   static const paytmUpiPayment = MethodChannel("com.myprofit.vendor/paytmUpiPayment");
   // Get battery level.
-  String _batteryLevel = 'Unknown battery level.';
+  // String _batteryLevel = 'Unknown battery level.';
 
-  Future<void> _getBatteryLevel() async {
-    String batteryLevel;
-
-    try {
-      final int result = await platform.invokeMethod('getBatteryLevel');
-      log("battery level 1-->$result");
-      batteryLevel = 'Battery level at $result % .';
-    } on PlatformException catch (e) {
-      batteryLevel = "Failed to get battery level: '${e.message}'.";
-      log("battery level 1-->$batteryLevel");
-    }
-
-    setState(() {
-      _batteryLevel = batteryLevel;
-    });
-  }
+  // Future<void> _getBatteryLevel() async {
+  //   String batteryLevel;
+  //
+  //   try {
+  //     final int result = await platform.invokeMethod('getBatteryLevel');
+  //     log("battery level 1-->$result");
+  //     batteryLevel = 'Battery level at $result % .';
+  //   } on PlatformException catch (e) {
+  //     batteryLevel = "Failed to get battery level: '${e.message}'.";
+  //     log("battery level 1-->$batteryLevel");
+  //   }
+  //
+  //   setState(() {
+  //     _batteryLevel = batteryLevel;
+  //   });
+  // }
 
   MoneyDueBloc moneyDueBloc = MoneyDueBloc();
 
@@ -153,7 +154,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
     input["vendor_myprofit_payment_id"] = vendorToMyProfitPaymentid.toString();
     input["myprofit_vendor_payment_id"] = myProfitToVendorPaymentid.toString();
     log("=====? $input");
-
+    EasyLoading.show();
     moneyDueBloc.add(GetInitiateTransiction(input));
   }
 

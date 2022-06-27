@@ -127,12 +127,14 @@ class DirectBillingCustomerNumberResponseBloc
           EasyLoading.dismiss();
           yield GetDirectBillingOtpState(message: result.message, data: result.message, succes: result.success);
         } else {
+          EasyLoading.dismiss();
           Utility.showToast(
             msg: result.message,
           );
           yield GetDirectBillingOtpFailureState(message: result.message, succes: result.success);
         }
       } catch (error) {
+        EasyLoading.dismiss();
         yield GetDirectBillingOtpFailureState(message: "internal_server_error_key".tr(), succes: false);
       }
     } else {

@@ -62,7 +62,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       );
                     },
                     child: Text("Update")),
-                mandotory == 1
+                mandotory == 5
                     ? Container()
                     : TextButton(
                         onPressed: () async {
@@ -175,8 +175,8 @@ class _SplashScreenState extends State<SplashScreen> {
                       ),
                       Align(
                           alignment: Alignment.bottomRight,
-                          child: Image.asset('assets/images/splash-bottom.png', width: MediaQuery.of(context).size.width * 0.7)
-                      ),
+                          child: Image.asset('assets/images/splash-bottom.png',
+                              width: MediaQuery.of(context).size.width * 0.7)),
                     ],
                   ),
                   Positioned(

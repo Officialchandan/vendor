@@ -498,11 +498,11 @@ class _DirectBillingState extends State<DirectBilling> {
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
                                     side: BorderSide(width: 1.5),
                                     onChanged: (redeems) {
-                                      if (redeems == false) {
+                                      if (redeem == false) {
                                         directBillingCustomerNumberResponseBloc
                                             .add(GetDirectBillingRedeemCheckBoxEvent(isChecked: true));
                                       }
-                                      if (redeems == true) {
+                                      if (redeem == true) {
                                         directBillingCustomerNumberResponseBloc
                                             .add(GetDirectBillingRedeemCheckBoxEvent(isChecked: false));
                                       }

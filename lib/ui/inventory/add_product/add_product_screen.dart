@@ -949,14 +949,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
     //   Utility.showToast("please_select_unit_key".tr());
     //   return;
     // }
-    // if (variantModel.stock.isEmpty) {
-    //   Utility.showToast(msg: "stock_can_not_be_empty_key".tr());
-    //   return;
-    // }
-    // if (int.parse(variantModel.stock) <= 0) {
-    //   Utility.showToast(msg: "stock_can_not_be_zero_key".tr());
-    //   return;
-    // }
+    if (variantModel.stock.isEmpty) {
+      Utility.showToast(msg: "stock_can_not_be_empty_key".tr());
+      return;
+    }
+    if (int.parse(variantModel.stock) <= 0) {
+      Utility.showToast(msg: "stock_can_not_be_zero_key".tr());
+      return;
+    }
     if (variantModel.option.isNotEmpty) {
       for (int i = 0; i < variantModel.option.length; i++) {
         if (variantModel.option[i].value.isEmpty) {

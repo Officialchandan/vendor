@@ -1,6 +1,6 @@
 import 'dart:collection';
 import 'dart:developer';
-import 'package:vendor/widget/progress_indecator.dart';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +13,7 @@ import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_details/norm
 import 'package:vendor/ui/money_due_upi/sales_return/response/upi_sales_return_response.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
+import 'package:vendor/widget/progress_indecator.dart';
 
 class NormalLedgerDetails extends StatefulWidget {
   // final List<OrderData> commonLedgerHistory;
@@ -559,7 +560,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                           style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.w600, color: TextGrey),
                         ),
                         Text(
-                          "\u20B9 $totalComission",
+                          "\u20B9 ${totalComission.toStringAsFixed(2)}",
                           style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
                         ),
                       ],
@@ -1406,7 +1407,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                         style: GoogleFonts.openSans(fontSize: 14, fontWeight: FontWeight.w600, color: TextGrey),
                       ),
                       Text(
-                        "\u20B9 $totalComission",
+                        "\u20B9 ${totalComission.toStringAsFixed(2)}",
                         style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
                       ),
                     ],

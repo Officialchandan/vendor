@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
-import 'package:vendor/widget/progress_indecator.dart';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +14,7 @@ import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/utility.dart';
 import 'package:vendor/widget/calendar_bottom_sheet.dart';
+import 'package:vendor/widget/progress_indecator.dart';
 
 class CustomerScreen extends StatefulWidget {
   const CustomerScreen({Key? key}) : super(key: key);
@@ -148,6 +149,11 @@ class _CustomerScreenState extends State<CustomerScreen> {
                 }
 
                 if (snapshot.hasData) {
+                  if (snapshot.data! == null || snapshot.data!.isEmpty) {
+                    return Container(
+                        height: MediaQuery.of(context).size.height * 0.70,
+                        child: Center(child: Image.asset("assets/images/no_data.gif")));
+                  }
                   return ListView.separated(
                     padding: EdgeInsets.symmetric(vertical: 10),
                     separatorBuilder: (context, index) {

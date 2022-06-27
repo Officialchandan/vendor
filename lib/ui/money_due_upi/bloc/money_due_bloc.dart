@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/model/get_due_amount_response.dart';
 import 'package:vendor/model/payment/initiate_payment_response.dart';
@@ -43,8 +44,10 @@ class MoneyDueBloc extends Bloc<MoneyDueEvent, MoneyDueState> {
     if (await Network.isConnected()) {
       GetVendorFreeCoinResponse response = await apiProvider.getVendorFreeCoins();
       if (response.success) {
+        EasyLoading.dismiss();
         yield GetFreeCoinState(data: response.data);
       } else {
+        EasyLoading.dismiss();
         yield GetFreeCoinFailureState(
           message: response.message,
           succes: response.success,
@@ -59,6 +62,7 @@ class MoneyDueBloc extends Bloc<MoneyDueEvent, MoneyDueState> {
     if (await Network.isConnected()) {
       IntiatePaymnetResponse response = await apiProvider.initiatePayment(input);
       if (response.success) {
+        EasyLoading.dismiss();
         yield GetPaymentTransictionState(
             txnToken: response.txnToken,
             signature: response.signature,
@@ -66,12 +70,14 @@ class MoneyDueBloc extends Bloc<MoneyDueEvent, MoneyDueState> {
             orderId: response.orderId,
             callbackUrl: response.callbackUrl);
       } else {
+        EasyLoading.dismiss();
         yield GetPaymentTransictionFailureState(
           message: response.message,
           succes: response.success,
         );
       }
     } else {
+      EasyLoading.dismiss();
       Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
     }
   }

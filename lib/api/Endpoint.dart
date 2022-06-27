@@ -185,4 +185,6 @@ class Endpoint {
   static const String TNC_WITH_SIGNATURE = "getVendorTncWithSign";
 
   static const String GET_VENDOR_Video = "getVendorVideo";
+
+  static const String GET_SALES_RETURN_NEW_OTP = "salesReturnNewOTP";
 }

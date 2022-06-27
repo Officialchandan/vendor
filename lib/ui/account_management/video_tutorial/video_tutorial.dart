@@ -1,8 +1,6 @@
 import 'package:chewie/chewie.dart';
-import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:vendor/ui/custom_widget/app_bar.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:video_player/video_player.dart';
 
@@ -43,7 +41,7 @@ class _VideoTutorialState extends State<VideoTutorial> {
       fullScreenByDefault: true,
       allowPlaybackSpeedChanging: false,
       allowMuting: false,
-      aspectRatio: 4 / 7,
+      aspectRatio: 4 / 8.5,
       autoInitialize: true,
       autoPlay: widget.autoplay,
       looping: widget.looping,
@@ -69,9 +67,6 @@ class _VideoTutorialState extends State<VideoTutorial> {
       },
       child: Scaffold(
           backgroundColor: ColorPrimary,
-          appBar: CustomAppBar(
-            title: "video_tutorials_key".tr(),
-          ),
           body: Container(
             child: Chewie(
               controller: _chewieController,

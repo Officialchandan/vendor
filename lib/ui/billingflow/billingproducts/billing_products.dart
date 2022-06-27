@@ -783,9 +783,9 @@ class _BillingProductsState extends State<BillingProducts> {
         log("=====>rc1=>$rev");
         productList[i].redeemCoins = rev.toStringAsFixed(2);
         print("=====>productList[i].redeemCoins$rc");
-        log("amount p[aid==>${((double.parse(productList[i].sellingPrice * productList[i].count)))}");
-        log("amount p[aid==>${((double.parse(productList[i].sellingPrice * productList[i].count)) - (double.parse(productList[i].redeemCoins) / 3))}");
-        log("amount p[aid==>${((double.parse(productList[i].sellingPrice) * (productList[i].count)) - (double.parse(productList[i].redeemCoins) / 3))}");
+        //log("amount p[aid==>${((double.parse(productList[i].sellingPrice * productList[i].count)))}");
+        // log("amount p[aid==>${((double.parse(productList[i].sellingPrice * productList[i].count)) - (double.parse(productList[i].redeemCoins) / 3))}");
+        // log("amount p[aid==>${((double.parse(productList[i].sellingPrice) * (productList[i].count)) - (double.parse(productList[i].redeemCoins) / 3))}");
         billingProduct["product_redeem"] = productList[i].redeemCoins;
         billingProduct["amount_paid"] = ((double.parse(productList[i].sellingPrice) * (productList[i].count)) -
                 (double.parse(productList[i].redeemCoins) / 3))

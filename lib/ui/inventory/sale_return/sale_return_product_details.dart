@@ -10,6 +10,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/model/common_response.dart';
 import 'package:vendor/model/sale_return_resonse.dart';
+import 'package:vendor/model/saler_return_otp.dart';
 import 'package:vendor/ui/home/bottom_navigation_home.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/constant.dart';
@@ -361,7 +362,8 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
         bottomNavigationBar: InkWell(
           onTap: () {
             _textFieldController.clear();
-            displayDialog(context, widget.saleReturnData.mobile);
+            sendOTP();
+            //  displayDialog(context, widget.saleReturnData.mobile);
           },
           child: Container(
             height: 50,
@@ -477,6 +479,26 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
         });
   }
 
+  sendOTP() async {
+    Map input = HashMap<String, dynamic>();
+    input["mobile"] = widget.saleReturnData.mobile;
+    input["order_id"] = widget.saleReturnData.orderId;
+    input["return_amount"] = returnAmount;
+    if (await Network.isConnected()) {
+      SaleReturnOtp response = await apiProvider.getSalesReturnOtp(input);
+      log("$response");
+      if (response.success) {
+        displayDialog(context, widget.saleReturnData.mobile);
+        // Navigator.of(context).pop(saleReturnData.orderId); //? For screen
+        Utility.showToast(msg: "OTP Sent Succefully on Customer Number");
+      } else {
+        Utility.showToast(msg: response.message);
+      }
+    } else {
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
+    }
+  }
+
   verifyOTP(SaleReturnData saleReturnData) async {
     if (_textFieldController.text.length == 4) {
       Map<String, dynamic> input = HashMap();
@@ -499,6 +521,7 @@ class _SaleReturnProductDetailsState extends State<SaleReturnProductDetails> {
           // Navigator.of(context).pop(saleReturnData.orderId); //? For screen
           Utility.showToast(msg: response.message);
         } else {
+          EasyLoading.dismiss();
           Utility.showToast(msg: response.message);
         }
       } else {

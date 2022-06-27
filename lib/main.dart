@@ -244,7 +244,13 @@ class _MyAppState extends State<MyApp> {
       theme: themeData(context),
       debugShowCheckedModeBanner: false,
       navigatorKey: navigationService.navigatorKey,
-      builder: EasyLoading.init(),
+      builder: (context, child) {
+        child = EasyLoading.init()(context, child);
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(textScaleFactor: 1),
+          child: child,
+        );
+      },
       onGenerateRoute: (route) {
         switch (route.name) {
           case "/":

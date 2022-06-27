@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:collection';
 import 'dart:developer';
-import 'package:vendor/widget/progress_indecator.dart';
+
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -13,6 +13,7 @@ import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/utility.dart';
 import 'package:vendor/widget/calendar_bottom_sheet.dart';
+import 'package:vendor/widget/progress_indecator.dart';
 
 class MyCustomerScreen extends StatefulWidget {
   const MyCustomerScreen({Key? key}) : super(key: key);
@@ -63,8 +64,7 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                         onSelect: (startDate, endDate) {
                           this.startDate = startDate;
                           this.endDate = endDate;
-                          print("startDate->$startDate");
-                          print("endDate->$endDate");
+
                           getCustomer();
                         });
                   });
@@ -184,7 +184,7 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
                                     style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
                                   )),
                                   Text(
-                                    Utility.getFormatDate1(customer.date),
+                                    Utility.getFormatDate(customer.date),
                                     style: TextStyle(color: Colors.black, fontSize: 11),
                                   ),
                                 ],
@@ -231,11 +231,12 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
   void getCustomer() async {
     if (await Network.isConnected()) {
       Map<String, dynamic> input = HashMap<String, dynamic>();
-
+      log("======${startDate}");
+      log("======${endDate}");
       input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
       input["from_date"] = startDate;
       input["to_date"] = endDate;
-
+      customerList.clear();
       GetMyCustomerResponse response = await apiProvider.getMyCustomer(input);
 
       if (response.success) {

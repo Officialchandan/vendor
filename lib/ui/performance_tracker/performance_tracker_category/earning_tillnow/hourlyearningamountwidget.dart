@@ -242,7 +242,7 @@ class _HourlyEarningAmountState extends State<HourlyEarningAmount> implements Pe
                                 color: ColorPrimary,
 
                                 // name: '',
-                                dataSource: getChartDatass(snapshot.data!.data!),
+                                dataSource: getChartDatass(snapshot.data!),
                                 xValueMapper: (GDPDatass gdp, _) => gdp.continent,
                                 yValueMapper: (GDPDatass gdp, _) => gdp.sale,
                                 //  dataLabelSettings: DataLabelSettings(isVisible: true),
@@ -272,23 +272,24 @@ class _HourlyEarningAmountState extends State<HourlyEarningAmount> implements Pe
             }));
   }
 
-  List<GDPDatass> getChartDatass(Map<String, String>? data) {
+  List<GDPDatass> getChartDatass(HourlyEarningAmountResponse? data) {
+    // log("====>${double.parse(data!.data!.values.toList()[0]) + double.parse(data.billingData!.values.toList()[0])}");
     final List<GDPDatass> chartData = [
       GDPDatass(
-        '${data!.keys.toList()[0]}',
-        double.parse(data.values.toList()[0]),
+        '${data!.data!.keys.toList()[0]}',
+        ((double.parse(data.data!.values.toList()[0])) + double.parse(data.billingData!.values.toList()[0])),
       ),
       GDPDatass(
-        '${data.keys.toList()[1]}',
-        double.parse(data.values.toList()[1]),
+        '${data.data!.keys.toList()[1]}',
+        ((double.parse(data.data!.values.toList()[1])) + double.parse(data.billingData!.values.toList()[1])),
       ),
       GDPDatass(
-        '${data.keys.toList()[2]}',
-        double.parse(data.values.toList()[2]),
+        '${data.data!.keys.toList()[2]}',
+        ((double.parse(data.data!.values.toList()[2]) + double.parse(data.billingData!.values.toList()[2]))),
       ),
       GDPDatass(
-        '${data.keys.toList()[3]}',
-        double.parse(data.values.toList()[3]),
+        '${data.data!.keys.toList()[3]}',
+        ((double.parse(data.data!.values.toList()[3]) + double.parse(data.billingData!.values.toList()[3]))),
       ),
     ];
     return chartData;

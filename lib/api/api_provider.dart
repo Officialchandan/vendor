@@ -57,6 +57,7 @@ import 'package:vendor/model/product_by_category_response.dart';
 import 'package:vendor/model/product_variant_response.dart';
 import 'package:vendor/model/qr_code.dart';
 import 'package:vendor/model/sale_return_resonse.dart';
+import 'package:vendor/model/saler_return_otp.dart';
 import 'package:vendor/model/upi_transfer_history.dart';
 import 'package:vendor/model/upload_image_response.dart';
 import 'package:vendor/model/validate_app_version.dart';
@@ -1709,5 +1710,26 @@ class ApiProvider {
       print("Exception occurred: $message stackTrace: $error");
       return VideoPlayerResponse(success: false, message: message);
     }
+  }
+
+  Future<SaleReturnOtp> getSalesReturnOtp(input) async {
+    //try {
+      Response res = await dio.post(
+        Endpoint.GET_SALES_RETURN_NEW_OTP,
+        data: input,
+      );
+
+      return SaleReturnOtp.fromJson(res.toString());
+    // } catch (error) {
+    //   String message = "";
+    //   if (error is DioError) {
+    //     ServerError e = ServerError.withError(error: error);
+    //     message = e.getErrorMessage();
+    //   } else {
+    //     message = "Please try again later!";
+    //   }
+    //   print("Exception occurred: $message stackTrace: $error");
+    //   return SaleReturnOtp(success: false, message: message);
+    // }
   }
 }
