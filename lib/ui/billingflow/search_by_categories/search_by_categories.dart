@@ -1,5 +1,5 @@
 import 'dart:developer';
-import 'package:vendor/widget/progress_indecator.dart';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +16,7 @@ import 'package:vendor/ui/billingflow/search_by_categories/search_by_categories_
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/utility.dart';
+import 'package:vendor/widget/progress_indecator.dart';
 
 class SearchByCategory extends StatefulWidget {
   String catid;
@@ -429,7 +430,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                                 width: 13,
                                               )),
                                               Text(
-                                                " ${(double.parse(searchList[index].earningCoins) * searchList[index].count).toStringAsFixed(2)}",
+                                                " ${(double.parse(searchList[index].earningCoins) * searchList[index].count).toStringAsFixed(1)}",
                                                 style: TextStyle(
                                                     fontSize: 13, fontWeight: FontWeight.bold, color: ColorPrimary),
                                               ),

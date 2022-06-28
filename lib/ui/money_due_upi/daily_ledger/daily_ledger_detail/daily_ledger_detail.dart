@@ -1,6 +1,6 @@
 import 'dart:collection';
 import 'dart:developer';
-import 'package:vendor/widget/progress_indecator.dart';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +12,7 @@ import 'package:vendor/ui/money_due_upi/daily_ledger/daily_ledger_detail/daily_l
 import 'package:vendor/ui/money_due_upi/sales_return/response/upi_sales_return_response.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
+import 'package:vendor/widget/progress_indecator.dart';
 
 import '../../normal_ledger/model/normal_ladger_response.dart';
 
@@ -47,7 +48,7 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
   double returnEarned = 0;
   double returnCollectionAmnt = 0;
   double returnCommisionAmnt = 0;
-
+  double r = 0;
   DailyLedgerDetailBloc dailyLedgerDetailBloc = DailyLedgerDetailBloc();
   String vendorName = "";
   void getname() async {
@@ -90,7 +91,7 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
       returnAmountpaid = double.parse(widget.order.billingDetails.first.amountPaid);
       returnRedemption = double.parse(widget.order.billingDetails.first.redeemCoins);
       returnEarned = double.parse(widget.order.billingDetails.first.earningCoins);
-      widget.order.isReturn == 1 ? returnCommisionAmnt = totalComission - reddem / 3 : totalComission;
+      widget.order.isReturn == 1 ? returnCommisionAmnt = totalComission - (reddem / 3) : totalComission;
 
       // if (double.parse(widget.order.myprofitRevenue) > reddem) {
       //   log("${double.parse(widget.order.myprofitRevenue)}");
@@ -106,16 +107,22 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
         //  reddem = reddem / 3;
         orderTotal += double.parse(element.total);
         totalComission += double.parse(element.commissionValue);
-        double r = element.isReturn == 1 ? double.parse(element.commissionValue) : 0;
+        r += element.isReturn == 1 ? double.parse(element.commissionValue) : 0;
 
         returnAmountpaid += element.isReturn == 1 ? double.parse(element.amountPaid) : 0;
         returnRedemption += element.isReturn == 1 ? double.parse(element.redeemCoins) : 0;
         log("returnRedemption--->$returnRedemption");
         element.isReturn == 1 ? returnEarned = double.parse(element.earningCoins) : 0;
         element.isReturn == 1
-            ? returnCommisionAmnt += r >= returnRedemption ? r - returnRedemption / 3 : returnRedemption / 3 - r
+            ? returnCommisionAmnt = r >= returnRedemption ? r - (returnRedemption / 3) : returnRedemption / 3 - r
             : 0;
+        log("returnCommisionAmnt--->$returnRedemption");
+        log("r--->$r");
+        log("returnCommisionAmnt--->${returnRedemption / 3}");
+        log("returnCommisionAmnt--->$returnCommisionAmnt");
+        log("totalComission--->$totalComission");
         log("orderTotal--->$reddem");
+
         // if (double.parse(widget.order.myprofitRevenue) > reddem) {
         //   log("${double.parse(widget.order.myprofitRevenue)}");
         //   finalamount = double.parse(widget.order.myprofitRevenue) - reddem;
@@ -932,57 +939,57 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
                     ),
                     returnRedemption >= returnCommisionAmnt
                         ? Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "To: MyProfit",
-                              style: GoogleFonts.openSans(
-                                  fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
-                            ),
-                            Text(
-                              "From: $vendorName",
-                              style: GoogleFonts.openSans(
-                                  fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
-                            )
-                          ],
-                        ),
-                      ],
-                    )
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "To: MyProfit",
+                                    style: GoogleFonts.openSans(
+                                        fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                                  ),
+                                  Text(
+                                    "From: $vendorName",
+                                    style: GoogleFonts.openSans(
+                                        fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                                  )
+                                ],
+                              ),
+                            ],
+                          )
                         : Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            returnCollectionAmnt <= returnCommisionAmnt
-                                ? Text(
-                              "To: $vendorName",
-                              style: GoogleFonts.openSans(
-                                  fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
-                            )
-                                : Text(
-                              "To: MyProfit",
-                              style: GoogleFonts.openSans(
-                                  fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
-                            ),
-                            returnCollectionAmnt >= returnCommisionAmnt
-                                ? Text(
-                              "From: $vendorName",
-                              style: GoogleFonts.openSans(
-                                  fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
-                            )
-                                : Text(
-                              "From: MyProfit",
-                              style: GoogleFonts.openSans(
-                                  fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  returnCollectionAmnt <= returnCommisionAmnt
+                                      ? Text(
+                                          "To: $vendorName",
+                                          style: GoogleFonts.openSans(
+                                              fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                                        )
+                                      : Text(
+                                          "To: MyProfit",
+                                          style: GoogleFonts.openSans(
+                                              fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                                        ),
+                                  returnCollectionAmnt >= returnCommisionAmnt
+                                      ? Text(
+                                          "From: $vendorName",
+                                          style: GoogleFonts.openSans(
+                                              fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                                        )
+                                      : Text(
+                                          "From: MyProfit",
+                                          style: GoogleFonts.openSans(
+                                              fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                                        ),
+                                ],
+                              ),
+                            ],
+                          ),
                     SizedBox(
                       height: 20,
                     ),

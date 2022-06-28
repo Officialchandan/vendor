@@ -47,7 +47,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
   double returnEarned = 0;
   double returnCollectionAmnt = 0;
   double returnCommisionAmnt = 0;
-
+  double r=0;
   NormalLedgerDetailBloc normalLedgerDetailBloc = NormalLedgerDetailBloc();
   String vendorName = "";
   void getname() async {
@@ -102,14 +102,14 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
         // reddem = reddem / 3;
         orderTotal += double.parse(element.total);
         totalComission += double.parse(element.commissionValue);
-        double r = element.isReturn == 1 ? double.parse(element.commissionValue) : 0;
+         r += element.isReturn == 1 ? double.parse(element.commissionValue) : 0;
         //returnCommision += element.isReturn == 1 ? double.parse(element.commissionValue) : 0;
         returnAmountpaid += element.isReturn == 1 ? double.parse(element.amountPaid) : 0;
         returnRedemption += element.isReturn == 1 ? double.parse(element.redeemCoins) : 0;
         log("returnRedemption--->$returnRedemption");
         element.isReturn == 1 ? returnEarned = double.parse(element.earningCoins) : 0;
         element.isReturn == 1
-            ? returnCommisionAmnt += r >= returnRedemption ? r - returnRedemption / 3 : returnRedemption / 3 - r
+            ? returnCommisionAmnt = r >= returnRedemption ? r - returnRedemption / 3 : returnRedemption / 3 - r
             : 0;
         log("returnCommisionAmnt--->$returnCommisionAmnt");
         // if (double.parse(widget.order.myprofitRevenue) > reddem) {
