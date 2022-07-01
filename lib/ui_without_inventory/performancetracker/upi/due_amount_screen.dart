@@ -1,11 +1,12 @@
 import 'dart:collection';
 import 'dart:developer';
-import 'package:vendor/widget/progress_indecator.dart';
+
 import 'package:dio/dio.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:paytm_allinonesdk/paytm_allinonesdk.dart';
@@ -26,6 +27,7 @@ import 'package:vendor/ui_without_inventory/performancetracker/upi/upi_transfer/
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/utility.dart';
+import 'package:vendor/widget/progress_indecator.dart';
 
 class DueAmountScreen extends StatefulWidget {
   @override
@@ -99,7 +101,7 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
     input["vendor_myprofit_payment_id"] = vendorToMyProfitPaymentid.toString();
     input["myprofit_vendor_payment_id"] = myProfitToVendorPaymentid.toString();
     log("=====? $input");
-
+    EasyLoading.show();
     moneyDueBloc.add(GetInitiateTransiction(input));
   }
 
@@ -526,7 +528,7 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                "upi_transfer_key".tr(),
+                                                "upi_history_key".tr(),
                                                 style: GoogleFonts.openSans(
                                                     color: TextBlackLight, fontWeight: FontWeight.w700, fontSize: 15),
                                               ),
@@ -631,7 +633,7 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  "redeem_coins_key".tr(),
+                                                  "redeem_coins_history_key".tr(),
                                                   style: GoogleFonts.openSans(
                                                       color: TextBlackLight, fontWeight: FontWeight.w700, fontSize: 15),
                                                 ),

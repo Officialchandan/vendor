@@ -227,7 +227,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                               }
                             }),
                         SizedBox(
-                          height: 10,
+                          height: 5,
                         ),
                         status1 == 0
                             ? TextFormField(
@@ -254,7 +254,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                       ]),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: status1 == 0 ? 5 : 0,
                     ),
                     Container(
                       child: TextFormField(

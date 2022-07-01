@@ -529,7 +529,7 @@ class _WalkInAmountState extends State<WalkInAmount> {
                                           color: TabBarColor,
                                           child: Align(
                                             alignment: Alignment.centerLeft,
-                                            child: Text("  " + "day_key".tr(),
+                                            child: Text("  " + "monthly_key".tr(),
                                                 style: TextStyle(fontSize: 20.0, color: ColorPrimary)),
                                           ))
                                     ]),

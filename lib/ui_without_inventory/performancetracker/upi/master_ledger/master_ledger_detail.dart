@@ -1,6 +1,6 @@
 import 'dart:collection';
 import 'dart:developer';
-import 'package:vendor/widget/progress_indecator.dart';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +17,7 @@ import 'package:vendor/ui_without_inventory/performancetracker/upi/master_ledger
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/widget/calendar_bottom_sheet.dart';
+import 'package:vendor/widget/progress_indecator.dart';
 
 class NormalLedger extends StatefulWidget {
   const NormalLedger({Key? key}) : super(key: key);
@@ -58,6 +59,7 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
     input["from_date"] = startDate.isEmpty ? "" : startDate.toString();
     input["to_date"] = endDate.isEmpty ? startDate.toString() : endDate.toString();
     _normalLedgerHistoryBloc.add(GetNormalLedgerHistoryEvent(input: input));
+    _refreshController.refreshCompleted();
   }
 
   @override
@@ -174,9 +176,20 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
 
                     if (orderList.isEmpty) {
                       log("===>$_commonLedgerHistory");
-                      return Container(
-                          height: MediaQuery.of(context).size.height * 0.80,
-                          child: Center(child: CircularLoader()));
+                      if (state is GetNormalLedgerHistoryFailureState) {
+                        return Container(
+                          height: MediaQuery.of(context).size.height * .50,
+                          child: Center(child: Image.asset("assets/images/no_data.gif")),
+                        );
+                      } else if (state is GetNormalLedgerUserSearchState) {
+                        return Container(
+                          height: MediaQuery.of(context).size.height * .50,
+                          child: Center(child: Image.asset("assets/images/no_data.gif")),
+                        );
+                      } else {
+                        return Container(
+                            height: MediaQuery.of(context).size.height * 0.80, child: Center(child: CircularLoader()));
+                      }
                     }
                     if (state is GetNormalLedgerHistoryFailureState) {
                       return Container(
@@ -363,9 +376,20 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
 
                     if (orderList.isEmpty) {
                       log("===>$_commonLedgerHistory");
-                      return Container(
-                          height: MediaQuery.of(context).size.height * 0.80,
-                          child: Center(child: CircularLoader()));
+                      if (state is GetNormalLedgerHistoryFailureState) {
+                        return Container(
+                          height: MediaQuery.of(context).size.height * .50,
+                          child: Center(),
+                        );
+                      } else if (state is GetNormalLedgerUserSearchState) {
+                        return Container(
+                          height: MediaQuery.of(context).size.height * .50,
+                          child: Center(),
+                        );
+                      } else {
+                        return Container(
+                            height: MediaQuery.of(context).size.height * 0.80, child: Center(child: CircularLoader()));
+                      }
                     }
                     if (state is GetNormalLedgerHistoryFailureState) {
                       return Container(

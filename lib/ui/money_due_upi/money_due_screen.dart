@@ -206,7 +206,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
                 ),
                 backgroundColor: condition == 0 ? ApproveTextColor : ColorPrimary,
                 title: Text(
-                  "money_due_upi_title_key".tr(),
+                  "money_due_upi_key".tr(),
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 automaticallyImplyLeading: widget.isShow!,

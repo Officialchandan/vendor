@@ -1,6 +1,6 @@
 import 'dart:collection';
 import 'dart:developer';
-import 'package:vendor/widget/progress_indecator.dart';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +16,7 @@ import 'package:vendor/ui/money_due_upi/normal_ledger/normal_ledger_details/nora
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/widget/calendar_bottom_sheet.dart';
+import 'package:vendor/widget/progress_indecator.dart';
 
 import '../../../model/get_master_ledger_history.dart';
 
@@ -171,9 +172,20 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                     }
                     if (orderList.isEmpty) {
                       log("===>$_commonLedgerHistory");
-                      return Container(
-                          height: MediaQuery.of(context).size.height * 0.80,
-                          child: Center(child: CircularLoader()));
+                      if (state is GetNormalLedgerHistoryFailureState) {
+                        return Container(
+                          height: MediaQuery.of(context).size.height * .50,
+                          child:  Center(child: Image.asset("assets/images/no_data.gif")),
+                        );
+                      } else if (state is GetNormalLedgerUserSearchState) {
+                        return Container(
+                          height: MediaQuery.of(context).size.height * .50,
+                          child: Center(child: Image.asset("assets/images/no_data.gif")),
+                        );
+                      } else {
+                        return Container(
+                            height: MediaQuery.of(context).size.height * 0.80, child: Center(child: CircularLoader()));
+                      }
                     }
                     if (state is GetNormalLedgerUserSearchState) {
                       if (state.searchword.isEmpty) {

@@ -112,9 +112,9 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
         returnAmountpaid += element.isReturn == 1 ? double.parse(element.amountPaid) : 0;
         returnRedemption += element.isReturn == 1 ? double.parse(element.redeemCoins) : 0;
         log("returnRedemption--->$returnRedemption");
-        element.isReturn == 1 ? returnEarned = double.parse(element.earningCoins) : 0;
+        element.isReturn == 1 ? returnEarned += double.parse(element.earningCoins) : 0;
         element.isReturn == 1
-            ? returnCommisionAmnt = r >= returnRedemption ? r - (returnRedemption / 3) : returnRedemption / 3 - r
+            ? returnCommisionAmnt = r >= returnRedemption / 3 ? r - (returnRedemption / 3) : returnRedemption / 3 - r
             : 0;
         log("returnCommisionAmnt--->$returnRedemption");
         log("r--->$r");

@@ -61,8 +61,8 @@ class _DailyLedgerWithoutInventoryState extends State<DailyLedgerWithoutInventor
     //input["date"] = date;
 
     log("input---->${input}");
-    _dailyLedgerHistoryBloc.add(GetDailyLedgerHistoryEvent(input: input));
     _refreshController.refreshCompleted();
+    _dailyLedgerHistoryBloc.add(GetDailyLedgerHistoryEvent(input: input));
   }
 
   @override
@@ -173,19 +173,27 @@ class _DailyLedgerWithoutInventoryState extends State<DailyLedgerWithoutInventor
 
                 if (state is GetDailyLedgerHistoryFailureState) {
                   return Container(
-                      height: MediaQuery.of(context).size.height * 0.80,
+                      height: MediaQuery.of(context).size.height * 0.50,
                       child: Center(child: Image.asset("assets/images/no_data.gif")));
                 }
                 if (orderList.isEmpty) {
                   log("===>$_commonLedgerHistory");
-                  return Container(
-                      height: MediaQuery.of(context).size.height * 0.50,
-                      child: Center(child: CircularLoader()));
+                  if (state is GetDailyLedgerHistoryFailureState) {
+                    return Container(
+                        height: MediaQuery.of(context).size.height * 0.50,
+                        child: Center(child: Image.asset("assets/images/no_data.gif")));
+                  } else if (state is GetDailyLedgerUserSearchState) {
+                    return Container(
+                        height: MediaQuery.of(context).size.height * 0.50,
+                        child: Center(child: Image.asset("assets/images/no_data.gif")));
+                  } else {
+                    return Container(
+                        height: MediaQuery.of(context).size.height * 0.50, child: Center(child: CircularLoader()));
+                  }
                 }
                 if (state is GetDailyLedgerHistoryLoadingState) {
                   return Container(
-                      height: MediaQuery.of(context).size.height * 0.70,
-                      child: Center(child: CircularLoader()));
+                      height: MediaQuery.of(context).size.height * 0.70, child: Center(child: CircularLoader()));
                 }
                 if (state is GetDailyLedgerUserSearchState) {
                   if (state.searchword.isEmpty) {
