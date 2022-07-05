@@ -47,7 +47,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
   double returnEarned = 0;
   double returnCollectionAmnt = 0;
   double returnCommisionAmnt = 0;
-  double r=0;
+  double r = 0;
   NormalLedgerDetailBloc normalLedgerDetailBloc = NormalLedgerDetailBloc();
   String vendorName = "";
   void getname() async {
@@ -102,7 +102,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
         // reddem = reddem / 3;
         orderTotal += double.parse(element.total);
         totalComission += double.parse(element.commissionValue);
-         r += element.isReturn == 1 ? double.parse(element.commissionValue) : 0;
+        r += element.isReturn == 1 ? double.parse(element.commissionValue) : 0;
         //returnCommision += element.isReturn == 1 ? double.parse(element.commissionValue) : 0;
         returnAmountpaid += element.isReturn == 1 ? double.parse(element.amountPaid) : 0;
         returnRedemption += element.isReturn == 1 ? double.parse(element.redeemCoins) : 0;
@@ -556,7 +556,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "total_commission_key".tr(),
+                          "total_commission_key".tr() + " (${widget.order.commissionPercentage}%)",
                           style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.w600, color: TextGrey),
                         ),
                         Text(
@@ -1403,7 +1403,7 @@ class _NormalLedgerDetailsState extends State<NormalLedgerDetails> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "total_commission_key".tr(),
+                        "total_commission_key".tr() + " (${widget.order.commissionPercentage}%)",
                         style: GoogleFonts.openSans(fontSize: 14, fontWeight: FontWeight.w600, color: TextGrey),
                       ),
                       Text(

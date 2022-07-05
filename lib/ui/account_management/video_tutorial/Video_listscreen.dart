@@ -70,6 +70,7 @@ class _VideoListState extends State<VideoList> {
                                           VideoPlayerController.network('${snapshot.data![index].url}'),
                                       looping: false,
                                       autoplay: true,
+                                      id: "${snapshot.data![index].videoId}",
                                     ),
                                   ));
                             },

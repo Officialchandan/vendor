@@ -39,25 +39,25 @@ class NormalLedgerResponse {
 }
 
 class OrderData {
-  OrderData(
-      {required this.vendorId,
-      required this.firstName,
-      required this.mobile,
-      required this.orderId,
-      required this.orderTotal,
-      required this.status,
-      required this.paymentOrderId,
-      required this.dateTime,
-      required this.isReturn,
-      required this.orderDetails,
-      required this.paymentDetails,
-      required this.billingDetails,
-      required this.totalearningcoins,
-      required this.vendorGivenCoins,
-      required this.myProfitVendor,
-      required this.vendorMyProfit
-      // required this.orderType,
-      });
+  OrderData({
+    required this.vendorId,
+    required this.firstName,
+    required this.mobile,
+    required this.orderId,
+    required this.orderTotal,
+    required this.status,
+    required this.paymentOrderId,
+    required this.dateTime,
+    required this.isReturn,
+    required this.orderDetails,
+    required this.paymentDetails,
+    required this.billingDetails,
+    required this.totalearningcoins,
+    required this.vendorGivenCoins,
+    required this.myProfitVendor,
+    required this.vendorMyProfit,
+    required this.commissionPercentage,
+  });
 
   String vendorId;
   String firstName;
@@ -76,6 +76,7 @@ class OrderData {
   String vendorGivenCoins;
   int orderType = 0;
   String myProfitVendor;
+  String commissionPercentage;
   String vendorMyProfit;
 
   factory OrderData.fromJson(String str) => OrderData.fromMap(json.decode(str));
@@ -108,6 +109,8 @@ class OrderData {
             ? []
             : List<BillingDetail>.from(json["billing_details"].map((x) => BillingDetail.fromMap(x))),
         myProfitVendor: json["myProfit_vendor"] == null ? "0" : json["myProfit_vendor"].toString(),
+        commissionPercentage: json["commission_percentage"] == null ? "" : json["commission_percentage"].toString(),
+
         vendorMyProfit: json["vendor_myProfit"] == null ? "0" : json["vendor_myProfit"].toString(),
 
         // orderType: json["order_id"] == null ? 0 : 1
@@ -128,6 +131,7 @@ class OrderData {
         "total_earning_coins": totalearningcoins == null ? null : totalearningcoins,
         "order_details": orderDetails == null ? null : List<dynamic>.from(orderDetails.map((x) => x.toMap())),
         "myProfit_vendor": myProfitVendor == null ? null : myProfitVendor,
+        "commission_percentage": commissionPercentage == null ? null : commissionPercentage,
         "vendor_myProfit": vendorMyProfit == null ? null : vendorMyProfit,
       };
 

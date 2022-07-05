@@ -558,7 +558,7 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "total_commission_key".tr(),
+                          "total_commission_key".tr() + " (${widget.order.commissionPercentage}%)",
                           style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.w600, color: TextGrey),
                         ),
                         Text(
@@ -1058,7 +1058,7 @@ class _DailyLedgerDetailsState extends State<DailyLedgerDetails> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "total_commission_key".tr(),
+                        "total_commission_key".tr() + " (${widget.order.commissionPercentage}%)",
                         style: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.w600, color: TextGrey),
                       ),
                       Text(

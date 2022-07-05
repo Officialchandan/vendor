@@ -41,6 +41,7 @@ class VideoPlayerData {
     required this.title,
     required this.url,
     required this.description,
+    required this.videoId,
     required this.image,
   });
 
@@ -50,6 +51,7 @@ class VideoPlayerData {
   String url;
   String description;
   String image;
+  String videoId;
 
   factory VideoPlayerData.fromJson(String str) => VideoPlayerData.fromMap(json.decode(str));
 
@@ -62,6 +64,7 @@ class VideoPlayerData {
         url: json["url"] == null ? "" : json["url"].toString(),
         description: json["description"] == null ? "" : json["description"].toString(),
         image: json["image"] == null ? "" : json["image"].toString(),
+        videoId: json["video_id"] == null ? "" : json["video_id"].toString(),
       );
 
   Map<String, dynamic> toMap() => {
@@ -71,5 +74,6 @@ class VideoPlayerData {
         "url": url == null ? null : url,
         "description": description == null ? null : description,
         "image": image == null ? null : image,
+        "video_id": videoId == null ? null : videoId,
       };
 }
