@@ -144,6 +144,7 @@ final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("A bg Message showed up: ${message.messageId}");
+  print("A bg Message showed up: ${message.data}");
 }
 
 fcmToken() async {
@@ -163,9 +164,16 @@ void main() async {
   FirebaseMessaging.onBackgroundMessage((_firebaseMessagingBackgroundHandler));
 
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    print("onMessage==>${message.data}");
+    print("onMessage==>${message.notification!.title}");
+    print("onMessage==>${message.notification!.body}");
+
     RemoteNotification? notification = message.notification;
     AndroidNotification? android = message.notification?.android;
 
+    var data = message.data;
+
+    print("notification route==>${data["route"]}");
     if (notification != null && android != null) {
       flutterLocalNotificationsPlugin.show(
           notification.hashCode,
@@ -175,17 +183,99 @@ void main() async {
             android: AndroidNotificationDetails(channel.id, channel.name,
                 color: ColorPrimary, playSound: true, icon: "logo"),
           ));
+      message.data["route"] == "MoneyDueScreen"
+          ? Navigator.push(
+              navigationService.navigatorKey.currentContext!, MaterialPageRoute(builder: (_) => MoneyDueScreen(true)))
+          : "";
+      // String grade = "${message.data["route"]}";
+      // print("object$grade");
+      // switch (grade) {
+      //   case "MoneyDueScreen":
+      //     {
+      //       Navigator.push(navigationService.navigatorKey.currentContext!,
+      //           MaterialPageRoute(builder: (_) => MoneyDueScreen(true)));
+      //       print("Excellent");
+      //     }
+      //     break;
+      //
+      //   case "B":
+      //     {
+      //       print("Good");
+      //     }
+      //     break;
+      //
+      //   case "C":
+      //     {
+      //       print("Fair");
+      //     }
+      //     break;
+      //
+      //   case "D":
+      //     {
+      //       print("Poor");
+      //     }
+      //     break;
+      //
+      //   default:
+      //     {
+      //       print("Invalid choice");
+      //     }
+      //     break;
+      // }
     }
-    // Navigator.push(navigationService.navigatorKey.currentContext!,
-    //     MaterialPageRoute(builder: (_) => MoneyDueScreen()));
   });
 
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    print("onMessageOpenedApp==>${message.data}");
     RemoteNotification? notification = message.notification;
     AndroidNotification? android = message.notification?.android;
+
+    var data = message.data;
+
+    print("notification data==>$data");
+
+    print("notification route==>${data["route"]}");
+
     if (notification != null && android != null) {
-      Navigator.push(
-          navigationService.navigatorKey.currentContext!, MaterialPageRoute(builder: (_) => MoneyDueScreen(true)));
+      message.data["route"] == "MoneyDueScreen"
+          ? Navigator.push(
+              navigationService.navigatorKey.currentContext!, MaterialPageRoute(builder: (_) => MoneyDueScreen(true)))
+          : "";
+      // String grade = "${message.data["route"]}";
+      // print("object$grade");
+      // switch (grade) {
+      //   case "MoneyDueScreen":
+      //     {
+      //       Navigator.push(navigationService.navigatorKey.currentContext!,
+      //           MaterialPageRoute(builder: (_) => MoneyDueScreen(true)));
+      //       print("Excellent");
+      //     }
+      //     break;
+      //
+      //   case "B":
+      //     {
+      //       print("Good");
+      //     }
+      //     break;
+      //
+      //   case "C":
+      //     {
+      //       print("Fair");
+      //     }
+      //     break;
+      //
+      //   case "D":
+      //     {
+      //       print("Poor");
+      //     }
+      //     break;
+      //
+      //   default:
+      //     {
+      //       print("Invalid choice");
+      //     }
+      //     break;
+      // }
     }
   });
 
