@@ -14,6 +14,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:vendor/api/Endpoint.dart';
 import 'package:vendor/api/NavigationService.dart';
 import 'package:vendor/api/api_provider.dart';
+import 'package:vendor/ui/fcm_notification/fcm_config.dart';
 import 'package:vendor/ui/home/bottom_navigation_home.dart';
 import 'package:vendor/ui/home/home.dart';
 import 'package:vendor/ui/language/select_language.dart';
@@ -145,6 +146,8 @@ final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("A bg Message showed up: ${message.messageId}");
   print("A bg Message showed up: ${message.data}");
+  await Firebase.initializeApp();
+  print(message.notification!.title);
 }
 
 fcmToken() async {
@@ -160,9 +163,8 @@ void main() async {
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp();
   await fcmToken();
-
   FirebaseMessaging.onBackgroundMessage((_firebaseMessagingBackgroundHandler));
-
+  await FcmConfig.configNotification();
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     print("onMessage==>${message.data}");
     print("onMessage==>${message.notification!.title}");
@@ -278,6 +280,16 @@ void main() async {
       // }
     }
   });
+  checkForInitialMessage() async {
+    await Firebase.initializeApp();
+    RemoteMessage? initialMessage =
+        await FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) async {});
+    ;
+    log("in terminated");
+    if (initialMessage != null) {
+      log("in terminated");
+    }
+  }
 
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()

@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/src/public_ext.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:page_transition/page_transition.dart';
@@ -18,6 +19,7 @@ import 'package:vendor/utility/routs.dart';
 import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/utility.dart';
 
+import '../fcm_notification/fcm_config.dart';
 import 'bottom_navigation_home.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -66,9 +68,27 @@ class _HomeScreenState extends State<HomeScreen> {
     await Share.share("https://play.google.com/store/apps/details?id=com.tencent.ig");
   }
 
+  checkInitialMessage() async {
+    // RemoteMessage? message = await firebaseMessaging.getInitialMessage();
+    firebaseMessaging.getInitialMessage().then((RemoteMessage? message) async {
+      print("checkInitialMessage--->$message");
+      if (message != null) {
+        FcmConfig.getInitialMessage(message);
+        setState(() {});
+      }
+      // if(message == null && message!.notification!.android!.clickAction == null) {
+      //   print("checkForInitialMessage-------------L>");
+      // }else if () {
+      //
+      // }
+    });
+  }
+
   @override
   void initState() {
+    checkInitialMessage();
     super.initState();
+
     getNotifications();
   }
 

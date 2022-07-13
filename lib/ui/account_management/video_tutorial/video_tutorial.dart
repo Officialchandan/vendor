@@ -83,7 +83,6 @@ class _VideoTutorialState extends State<VideoTutorial> {
             desktopMode: true,
             loop: true,
             showControls: true,
-            startAt: Duration(seconds: 30),
           ),
         );
       });
