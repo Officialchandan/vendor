@@ -55,6 +55,7 @@ class _SplashScreenState extends State<SplashScreen> {
               contentPadding: EdgeInsets.all(15),
               actions: [
                 TextButton(
+                    ////
                     onPressed: () async {
                       StoreRedirect.redirect(
                         androidAppId: "com.myprofit.vendor",
