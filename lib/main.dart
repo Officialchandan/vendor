@@ -19,14 +19,12 @@ import 'package:vendor/ui/home/bottom_navigation_home.dart';
 import 'package:vendor/ui/home/home.dart';
 import 'package:vendor/ui/language/select_language.dart';
 import 'package:vendor/ui/login/login_screen.dart';
-import 'package:vendor/ui/money_due_upi/money_due_screen.dart';
 import 'package:vendor/ui/money_due_upi/upi_transfer/upi_transfer_screen.dart';
 import 'package:vendor/ui/performance_tracker/report/select_report_types.dart';
 import 'package:vendor/ui/splash/splash_screen.dart';
 import 'package:vendor/ui_without_inventory/home/bottom_navigation_bar.dart';
 import 'package:vendor/ui_without_inventory/home/home.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/report/report_type_screen.dart';
-import 'package:vendor/ui_without_inventory/performancetracker/upi/due_amount_screen.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/upi/upi_transfer/upi_transfer_history.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/constant.dart';
@@ -169,8 +167,68 @@ void selectNotification(String? payload) async {
   if (payload != null) {
     debugPrint('notification payload: $payload');
   }
-  await Navigator.push(
-      navigationService.navigatorKey.currentContext!, MaterialPageRoute(builder: (_) => MoneyDueScreen(true)));
+  String grade = payload!;
+  print("object$grade");
+  switch (grade) {
+    case "MoneyDueScreen":
+      {
+        Navigator.push(
+            navigationService.navigatorKey.currentContext!,
+            MaterialPageRoute(
+                builder: (_) => BottomNavigationHome(
+                      index: 2,
+                    )));
+        print("Excellent");
+      }
+      break;
+
+    case "DueAmountScreen":
+      {
+        Navigator.push(
+            navigationService.navigatorKey.currentContext!,
+            MaterialPageRoute(
+                builder: (_) => BottomNavigationHomeWithOutInventory(
+                      index: 2,
+                    )));
+        print("Good");
+      }
+      break;
+
+    case "UpiTransferHistory":
+      {
+        Navigator.push(
+            navigationService.navigatorKey.currentContext!, MaterialPageRoute(builder: (_) => UpiTransferHistory()));
+        print("Fair");
+      }
+      break;
+
+    case "UpiTransferHistoryWithoutInventory":
+      {
+        Navigator.push(navigationService.navigatorKey.currentContext!,
+            MaterialPageRoute(builder: (_) => UpiTransferHistoryWithoutInventory()));
+        print("Poor");
+      }
+      break;
+    case "SelectReportTypeScreen":
+      {
+        Navigator.push(navigationService.navigatorKey.currentContext!,
+            MaterialPageRoute(builder: (_) => SelectReportTypeScreen()));
+        print("Poor");
+      }
+      break;
+    case "ReportTypeScreen":
+      {
+        Navigator.push(
+            navigationService.navigatorKey.currentContext!, MaterialPageRoute(builder: (_) => ReportTypeScreen()));
+        print("Poor");
+      }
+      break;
+    default:
+      {
+        print("Invalid choice");
+      }
+      break;
+  }
 }
 
 void main() async {
@@ -194,19 +252,21 @@ void main() async {
             android: initializationSettingsAndroid,
           ),
           onSelectNotification: selectNotification);
-      // flutterLocalNotificationsPlugin.show(
-      //     notification.hashCode,
-      //     notification.title,
-      //     notification.body,
-      //     NotificationDetails(
-      //       android: AndroidNotificationDetails(
-      //         channel.id,
-      //         channel.name,
-      //         color: ColorPrimary,
-      //         playSound: true,
-      //         icon: "logo",
-      //       ),
-      //     ));
+      flutterLocalNotificationsPlugin.show(
+        notification.hashCode,
+        notification.title,
+        notification.body,
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            channel.id,
+            channel.name,
+            color: ColorPrimary,
+            playSound: true,
+            icon: "logo",
+          ),
+        ),
+        payload: data["route"],
+      );
       // message.data["route"] == "MoneyDueScreen"
       //     ? Navigator.push(
       //         navigationService.navigatorKey.currentContext!, MaterialPageRoute(builder: (_) => MoneyDueScreen(true)))
@@ -287,7 +347,11 @@ void main() async {
       case "MoneyDueScreen":
         {
           Navigator.push(
-              navigationService.navigatorKey.currentContext!, MaterialPageRoute(builder: (_) => MoneyDueScreen(true)));
+              navigationService.navigatorKey.currentContext!,
+              MaterialPageRoute(
+                  builder: (_) => BottomNavigationHome(
+                        index: 2,
+                      )));
           print("Excellent");
         }
         break;
@@ -295,7 +359,11 @@ void main() async {
       case "DueAmountScreen":
         {
           Navigator.push(
-              navigationService.navigatorKey.currentContext!, MaterialPageRoute(builder: (_) => DueAmountScreen()));
+              navigationService.navigatorKey.currentContext!,
+              MaterialPageRoute(
+                  builder: (_) => BottomNavigationHomeWithOutInventory(
+                        index: 2,
+                      )));
           print("Good");
         }
         break;
