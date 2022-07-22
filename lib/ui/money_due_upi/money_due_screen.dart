@@ -172,6 +172,9 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
             callbackurl = state.callbackUrl;
             payment();
           }
+          if (state is GetPaymentTransictionFailureState) {
+            Utility.showToast(msg: "${state.message}");
+          }
           if (state is GetFreeCoinState) {
             freecoin = state.data;
             SharedPref.setStringPreference(SharedPref.VendorCoin, freecoin!.availableCoins);

@@ -1034,15 +1034,20 @@ class _AddProductScreenState extends State<AddProductScreen> {
     if (await Network.isConnected()) {
       GetCategoriesResponse response = await apiProvider.getAllCategories();
       int userStatus = await SharedPref.getIntegerPreference(SharedPref.USERSTATUS);
+      log("000000000000");
       if (response.success) {
         categories = response.data!;
         log("userstatus$userStatus");
         if (response.data!.length == 1) {
+          log("categories2$categories");
           categoryId = categories[0].id;
           edtCategory.text = categories[0].categoryName!;
         } else if (userStatus == 3) {
-          categories.removeWhere((element) => element.id == "21" || element.id == "31");
+          categories.removeWhere((element) => element.id == "21");
+          categories.removeWhere((element) => element.id == "31");
+          log("categories$categories");
           if (categories.length == 1) {
+            log("categories3$categories");
             categoryId = categories[0].id;
             edtCategory.text = categories[0].categoryName!;
           }

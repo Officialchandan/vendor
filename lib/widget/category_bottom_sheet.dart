@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +8,7 @@ import 'package:vendor/model/get_categories_response.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/network.dart';
+import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/utility.dart';
 import 'package:vendor/widget/progress_indecator.dart';
 
@@ -94,11 +97,17 @@ class _CategoryBottomSheetState extends State<CategoryBottomSheet> {
   }
 
   Future<List<CategoryModel>> getCategory() async {
+    int userStatus = await SharedPref.getIntegerPreference(SharedPref.USERSTATUS);
     if (await Network.isConnected()) {
       GetCategoriesResponse response = await apiProvider.getAllCategories();
 
       if (response.success) {
         categories = response.data!;
+        if (userStatus == 3) {
+          categories.removeWhere((element) => element.id == "21");
+          categories.removeWhere((element) => element.id == "31");
+          log("categories$categories");
+        }
         return categories;
       } else {
         return [];

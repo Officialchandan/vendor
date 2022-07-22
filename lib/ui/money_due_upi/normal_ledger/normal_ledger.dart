@@ -175,7 +175,7 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                       if (state is GetNormalLedgerHistoryFailureState) {
                         return Container(
                           height: MediaQuery.of(context).size.height * .50,
-                          child:  Center(child: Image.asset("assets/images/no_data.gif")),
+                          child: Center(child: Image.asset("assets/images/no_data.gif")),
                         );
                       } else if (state is GetNormalLedgerUserSearchState) {
                         return Container(
@@ -421,7 +421,7 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                                                         color: TextBlackLight),
                                                   ),
                                                   Text(
-                                                    "      ${DateFormat("dd MMM yyyy").format(searchList[index].dateTime)}}",
+                                                    "      ${DateFormat("dd MMM yyyy").format(searchList[index].dateTime)}",
                                                     style: TextStyle(
                                                         fontSize: 13, color: TextGrey, fontWeight: FontWeight.bold),
                                                   ),

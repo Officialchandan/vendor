@@ -2,6 +2,7 @@ class Endpoint {
   // static const String BASE_URL = "http://vendor.tekzee.in/api/v1/";
   // http://vendor.myprofitinc.com/
   static const String BASE_URL = "http://vendor.myprofitinc.com/api/v1/";
+
   static const String GENERATE_OTP = "genereateOTP";
 
   static const String VERIFY_OTP = "verifyOTP";
@@ -181,6 +182,10 @@ class Endpoint {
   static const String CHECK_PAYMENT = "checkOnlinePayment";
 
   static const String UPI_PAYMENT_HISTORY = "getUpiHistory";
+
+  static const String UPI_PAYMENT_HISTORY_DETAIL = "getUpiHistroyOrders";
+
+  static const String UPI_PAYMENT_HISTORY_DETAIL_LEDGER = "getUpiHistoryDetails";
 
   static const String TNC_WITH_SIGNATURE = "getVendorTncWithSign";
 

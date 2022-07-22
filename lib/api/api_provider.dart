@@ -58,6 +58,8 @@ import 'package:vendor/model/product_variant_response.dart';
 import 'package:vendor/model/qr_code.dart';
 import 'package:vendor/model/sale_return_resonse.dart';
 import 'package:vendor/model/saler_return_otp.dart';
+import 'package:vendor/model/upi_tansfer_detail_response.dart';
+import 'package:vendor/model/upi_transfer_detail_ledger_response.dart';
 import 'package:vendor/model/upi_transfer_history.dart';
 import 'package:vendor/model/upload_image_response.dart';
 import 'package:vendor/model/validate_app_version.dart';
@@ -1567,21 +1569,21 @@ class ApiProvider {
   }
 
   Future<NormalLedgerResponse> getNormalLedgerHistory(Map<String, dynamic> input) async {
-    // try {
-    Response res = await dio.post(Endpoint.GET_MASTER_LEDGER_HISTORY, data: input);
+    try {
+      Response res = await dio.post(Endpoint.GET_MASTER_LEDGER_HISTORY, data: input);
 
-    return NormalLedgerResponse.fromJson(res.toString());
-    // } catch (error) {
-    //   String message = "";
-    //   if (error is DioError) {
-    //     ServerError e = ServerError.withError(error: error);
-    //     message = e.getErrorMessage();
-    //   } else {
-    //     message = "Please try again later!";
-    //   }
-    //   print("Exception occurred: $message stackTrace: $error");
-    //   return NormalLedgerResponse(success: false, message: message, data: [], directBilling: []);
-    // }
+      return NormalLedgerResponse.fromJson(res.toString());
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return NormalLedgerResponse(success: false, message: message, data: [], directBilling: []);
+    }
   }
 
   Future<UpiRedeemCoinResponse> upiRedeemCoin(Map<String, dynamic> input) async {
@@ -1656,6 +1658,42 @@ class ApiProvider {
     }
   }
 
+  Future<UpiHistroyOrdersResponse> upiPaymentHistoryDetail(Map<String, dynamic> input) async {
+    try {
+      Response res = await dio.post(Endpoint.UPI_PAYMENT_HISTORY_DETAIL, data: input);
+
+      return UpiHistroyOrdersResponse.fromJson(res.toString());
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return UpiHistroyOrdersResponse(success: false, message: "", data: []);
+    }
+  }
+
+  Future<UpiHistroyOrdersLedgerResponse> upiPaymentHistoryDetailLedger(Map<String, dynamic> input) async {
+    try {
+      Response res = await dio.post(Endpoint.UPI_PAYMENT_HISTORY_DETAIL_LEDGER, data: input);
+
+      return UpiHistroyOrdersLedgerResponse.fromJson(res.toString());
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return UpiHistroyOrdersLedgerResponse(success: false, message: "", data: []);
+    }
+  }
+
   Future<IntiatePaymnetResponse> initiatePayment(Map<String, dynamic> input) async {
     try {
       Response res = await dio.post(Endpoint.GET_INITIATE_PAYMENT_RESPONSE, data: input);
@@ -1713,23 +1751,23 @@ class ApiProvider {
   }
 
   Future<SaleReturnOtp> getSalesReturnOtp(input) async {
-    //try {
+    try {
       Response res = await dio.post(
         Endpoint.GET_SALES_RETURN_NEW_OTP,
         data: input,
       );
 
       return SaleReturnOtp.fromJson(res.toString());
-    // } catch (error) {
-    //   String message = "";
-    //   if (error is DioError) {
-    //     ServerError e = ServerError.withError(error: error);
-    //     message = e.getErrorMessage();
-    //   } else {
-    //     message = "Please try again later!";
-    //   }
-    //   print("Exception occurred: $message stackTrace: $error");
-    //   return SaleReturnOtp(success: false, message: message);
-    // }
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return SaleReturnOtp(success: false, message: message);
+    }
   }
 }

@@ -318,7 +318,9 @@ class _DirectBillingState extends State<DirectBilling> {
                           if (redeem == true) {
                             if (mobileController.text.length == 10) {
                               if (amountController.text.length > 0) {
-                                redeemDialog(context);
+                                if (double.parse(coins) >= 3) {
+                                  redeemDialog(context);
+                                }
                               } else {
                                 Utility.showToast(
                                   msg: "please_enter_amount_key".tr(),
@@ -350,6 +352,7 @@ class _DirectBillingState extends State<DirectBilling> {
                           if (widget.usertype == 3) {
                             categoryList = state.data;
                             categoryList.removeWhere((element) => element.id == "11");
+                            categoryList.removeWhere((element) => element.id == "41");
                           } else {
                             categoryList = state.data;
                           }
@@ -469,13 +472,17 @@ class _DirectBillingState extends State<DirectBilling> {
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: InkWell(
                         onTap: () {
-                          if (redeem == false) {
-                            directBillingCustomerNumberResponseBloc
-                                .add(GetDirectBillingRedeemCheckBoxEvent(isChecked: true));
-                          }
-                          if (redeem == true) {
-                            directBillingCustomerNumberResponseBloc
-                                .add(GetDirectBillingRedeemCheckBoxEvent(isChecked: false));
+                          if (double.parse(coins) >= 3) {
+                            if (redeem == false) {
+                              directBillingCustomerNumberResponseBloc
+                                  .add(GetDirectBillingRedeemCheckBoxEvent(isChecked: true));
+                            }
+                            if (redeem == true) {
+                              directBillingCustomerNumberResponseBloc
+                                  .add(GetDirectBillingRedeemCheckBoxEvent(isChecked: false));
+                            }
+                          } else {
+                            Utility.showToast(msg: "You_dont_have_enough_coins_key".tr());
                           }
                         },
                         child: Row(
@@ -498,13 +505,17 @@ class _DirectBillingState extends State<DirectBilling> {
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
                                     side: BorderSide(width: 1.5),
                                     onChanged: (redeems) {
-                                      if (redeem == false) {
-                                        directBillingCustomerNumberResponseBloc
-                                            .add(GetDirectBillingRedeemCheckBoxEvent(isChecked: true));
-                                      }
-                                      if (redeem == true) {
-                                        directBillingCustomerNumberResponseBloc
-                                            .add(GetDirectBillingRedeemCheckBoxEvent(isChecked: false));
+                                      if (double.parse(coins) >= 3) {
+                                        if (redeem == false) {
+                                          directBillingCustomerNumberResponseBloc
+                                              .add(GetDirectBillingRedeemCheckBoxEvent(isChecked: true));
+                                        }
+                                        if (redeem == true) {
+                                          directBillingCustomerNumberResponseBloc
+                                              .add(GetDirectBillingRedeemCheckBoxEvent(isChecked: false));
+                                        }
+                                      } else {
+                                        Utility.showToast(msg: "You_dont_have_enough_coins_key".tr());
                                       }
                                     },
                                   ),

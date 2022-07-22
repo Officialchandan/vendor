@@ -1,11 +1,11 @@
 import 'dart:developer';
+
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:vendor/ui/performance_tracker/listner/performancetrackerlistner.dart';
 import 'package:vendor/ui/performance_tracker/performance_tracker_category/bottom_widget.dart';
 import 'package:vendor/ui/performance_tracker/performance_tracker_category/sale_amount/dailysaleamountwidget.dart';
-import 'package:vendor/ui/performance_tracker/performance_tracker_category/sale_amount/hourlysaleamountwidget.dart';
 import 'package:vendor/ui/performance_tracker/performance_tracker_category/sale_amount/monthlysaleamountwidget.dart';
 import 'package:vendor/utility/color.dart';
 
@@ -31,14 +31,14 @@ class _SaleAmountState extends State<SaleAmount> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    _tabController = new TabController(vsync: this, length: 3);
+    _tabController = new TabController(vsync: this, length: 2);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
@@ -52,9 +52,7 @@ class _SaleAmountState extends State<SaleAmount> with TickerProviderStateMixin {
                   labelColor: ColorPrimary,
                   controller: _tabController,
                   indicator: BoxDecoration(
-                      color: TabBarColor,
-                      border: Border(
-                          bottom: BorderSide(color: ColorPrimary, width: 3))),
+                      color: TabBarColor, border: Border(bottom: BorderSide(color: ColorPrimary, width: 3))),
                   onTap: (index) {
                     log("$index");
 
@@ -63,23 +61,14 @@ class _SaleAmountState extends State<SaleAmount> with TickerProviderStateMixin {
                   tabs: [
                     Tab(
                       child: Text(
-                        "hourly_key".tr(),
-                        style: TextStyle(
-                            fontSize: 17, fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                    Tab(
-                      child: Text(
                         "daily_key".tr(),
-                        style: TextStyle(
-                            fontSize: 17, fontWeight: FontWeight.w600),
+                        style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
                       ),
                     ),
                     Tab(
                       child: Text(
                         "monthly_key".tr(),
-                        style: TextStyle(
-                            fontSize: 17, fontWeight: FontWeight.w600),
+                        style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
                       ),
                     ),
                   ],
@@ -99,8 +88,7 @@ class _SaleAmountState extends State<SaleAmount> with TickerProviderStateMixin {
                           index: _tabController!.index,
                           screenindex: saleindex,
                           onSelect: (categoryid, listSelected, date) {
-                            performanceTrackerListner!
-                                .onFiterSelect(categoryid, listSelected, date);
+                            performanceTrackerListner!.onFiterSelect(categoryid, listSelected, date);
                           },
                         );
                       }).then((value) {
@@ -111,10 +99,7 @@ class _SaleAmountState extends State<SaleAmount> with TickerProviderStateMixin {
                 splashColor: Colors.transparent,
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.filter_alt_sharp),
-                    Text("filter_key".tr())
-                  ],
+                  children: [Icon(Icons.filter_alt_sharp), Text("filter_key".tr())],
                 ),
               ),
               const SizedBox(
@@ -131,11 +116,11 @@ class _SaleAmountState extends State<SaleAmount> with TickerProviderStateMixin {
           body: TabBarView(
             controller: _tabController,
             children: [
-              HourlySaleAmount(
-                onInit: (PerformanceTrackerListner hourlyListner) {
-                  performanceTrackerListner = hourlyListner;
-                },
-              ),
+              // HourlySaleAmount(
+              //   onInit: (PerformanceTrackerListner hourlyListner) {
+              //     performanceTrackerListner = hourlyListner;
+              //   },
+              // ),
               DailySaleAmount(
                 onInit: (PerformanceTrackerListner dailyListner) {
                   performanceTrackerListner = dailyListner;

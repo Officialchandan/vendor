@@ -1,5 +1,5 @@
 import 'dart:collection';
-import 'package:vendor/widget/progress_indecator.dart';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,9 +8,12 @@ import 'package:vendor/model/upi_transfer_history.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/upi/upi_transfer/upi_transfer_bloc/upi_transfer_bloc.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/upi/upi_transfer/upi_transfer_bloc/upi_transfer_event.dart';
 import 'package:vendor/ui_without_inventory/performancetracker/upi/upi_transfer/upi_transfer_bloc/upi_transfer_state.dart';
+import 'package:vendor/ui_without_inventory/performancetracker/upi/upi_transfer/without_inventory_upi_transfer_detail/without_inventory_upi_transfer_detailscreen.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
+import 'package:vendor/utility/utility.dart';
 import 'package:vendor/widget/calendar_bottom_sheet.dart';
+import 'package:vendor/widget/progress_indecator.dart';
 
 class UpiTransferHistoryWithoutInventory extends StatefulWidget {
   const UpiTransferHistoryWithoutInventory({Key? key}) : super(key: key);
@@ -97,155 +100,170 @@ class _UpiTransferHistoryWithoutInventoryState extends State<UpiTransferHistoryW
               itemBuilder: (context, index) {
                 return Container(
                   margin: EdgeInsets.symmetric(vertical: 10),
-                  child: Stack(children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      padding: const EdgeInsets.all(14),
-                      height: 80,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.shade300,
-                            offset: Offset(0.0, 0.0), //(x,y)
-                            blurRadius: 7.0,
+                  child: InkWell(
+                    onTap: () {
+                      upiList[index].status == 0
+                          ? Utility.showToast(msg: "Tansiction detail are not available".tr())
+                          : Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => UpiTransferDetail(
+                                        orderId: upiList[index].orderId,
+                                        amount: upiList[index].txnAmount,
+                                        date: DateTime.parse(upiList[index].txnDate),
+                                        status: upiList[index].status,
+                                      )));
+                    },
+                    child: Stack(children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        padding: const EdgeInsets.all(14),
+                        height: 80,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.shade300,
+                              offset: Offset(0.0, 0.0), //(x,y)
+                              blurRadius: 7.0,
+                            ),
+                          ],
+                        ),
+                        child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: 20.0),
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    " To: MyProfit",
+                                    style: GoogleFonts.openSans(
+                                        fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
+                                  ),
+                                  Text(
+                                    " ${DateFormat("dd MMM yyyy").format(DateTime.parse(upiList[index].txnDate))}" +
+                                        " - ${DateFormat.jm().format(DateTime.parse(upiList[index].txnDate))}",
+                                    style: TextStyle(fontSize: 13, color: TextGrey, fontWeight: FontWeight.bold),
+                                  ),
+                                  // Container(
+                                  //   height: 20,
+                                  //   decoration: BoxDecoration(
+                                  //       borderRadius: BorderRadius.circular(20), color: Colors.orange.shade50),
+                                  //   child: upiList[index].status == 0
+                                  //       ? Container(
+                                  //           padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
+                                  //           decoration: BoxDecoration(
+                                  //               borderRadius: BorderRadius.circular(20), color: RejectedTextBgColor),
+                                  //           child: Text(
+                                  //             "rejected_key".tr(),
+                                  //             style: TextStyle(
+                                  //                 color: RejectedTextColor, fontSize: 10, fontWeight: FontWeight.w400),
+                                  //           ),
+                                  //         )
+                                  //       : upiList[index].status == 1
+                                  //           ? Container(
+                                  //               padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+                                  //               decoration: BoxDecoration(
+                                  //                   borderRadius: BorderRadius.circular(20), color: ApproveTextBgColor),
+                                  //               child: Text(
+                                  //                 "accepted_key".tr(),
+                                  //                 style: TextStyle(
+                                  //                     color: ApproveTextColor, fontSize: 10, fontWeight: FontWeight.w400),
+                                  //               ),
+                                  //             )
+                                  //           : upiList[index].status == 2
+                                  //               ? Container(
+                                  //                   padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
+                                  //                   decoration: BoxDecoration(
+                                  //                       borderRadius: BorderRadius.circular(20), color: PendingTextBgColor),
+                                  //                   child: Text(
+                                  //                     "pending_key".tr(),
+                                  //                     style: TextStyle(
+                                  //                         color: PendingTextColor,
+                                  //                         fontSize: 10,
+                                  //                         fontWeight: FontWeight.w400),
+                                  //                   ),
+                                  //                 )
+                                  //               : Container(
+                                  //                   padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
+                                  //                   decoration: BoxDecoration(
+                                  //                       borderRadius: BorderRadius.circular(20), color: PendingTextBgColor),
+                                  //                   child: Text(
+                                  //                     "pending_key".tr(),
+                                  //                     style: TextStyle(
+                                  //                         color: PendingTextColor,
+                                  //                         fontSize: 10,
+                                  //                         fontWeight: FontWeight.w400),
+                                  //                   ),
+                                  //                 ),
+                                  // ),
+                                ]),
                           ),
-                        ],
-                      ),
-                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 20.0),
-                          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  " To: MyProfit",
-                                  style: GoogleFonts.openSans(
-                                      fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
-                                ),
-                                Text(
-                                  " ${DateFormat("dd MMM yyyy").format(DateTime.parse(upiList[index].txnDate))}" +
-                                      " - ${DateFormat.jm().format(DateTime.parse(upiList[index].txnDate))}",
-                                  style: TextStyle(fontSize: 13, color: TextGrey, fontWeight: FontWeight.bold),
-                                ),
-                                // Container(
-                                //   height: 20,
-                                //   decoration: BoxDecoration(
-                                //       borderRadius: BorderRadius.circular(20), color: Colors.orange.shade50),
-                                //   child: upiList[index].status == 0
-                                //       ? Container(
-                                //           padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
-                                //           decoration: BoxDecoration(
-                                //               borderRadius: BorderRadius.circular(20), color: RejectedTextBgColor),
-                                //           child: Text(
-                                //             "rejected_key".tr(),
-                                //             style: TextStyle(
-                                //                 color: RejectedTextColor, fontSize: 10, fontWeight: FontWeight.w400),
-                                //           ),
-                                //         )
-                                //       : upiList[index].status == 1
-                                //           ? Container(
-                                //               padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
-                                //               decoration: BoxDecoration(
-                                //                   borderRadius: BorderRadius.circular(20), color: ApproveTextBgColor),
-                                //               child: Text(
-                                //                 "accepted_key".tr(),
-                                //                 style: TextStyle(
-                                //                     color: ApproveTextColor, fontSize: 10, fontWeight: FontWeight.w400),
-                                //               ),
-                                //             )
-                                //           : upiList[index].status == 2
-                                //               ? Container(
-                                //                   padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
-                                //                   decoration: BoxDecoration(
-                                //                       borderRadius: BorderRadius.circular(20), color: PendingTextBgColor),
-                                //                   child: Text(
-                                //                     "pending_key".tr(),
-                                //                     style: TextStyle(
-                                //                         color: PendingTextColor,
-                                //                         fontSize: 10,
-                                //                         fontWeight: FontWeight.w400),
-                                //                   ),
-                                //                 )
-                                //               : Container(
-                                //                   padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
-                                //                   decoration: BoxDecoration(
-                                //                       borderRadius: BorderRadius.circular(20), color: PendingTextBgColor),
-                                //                   child: Text(
-                                //                     "pending_key".tr(),
-                                //                     style: TextStyle(
-                                //                         color: PendingTextColor,
-                                //                         fontSize: 10,
-                                //                         fontWeight: FontWeight.w400),
-                                //                   ),
-                                //                 ),
-                                // ),
-                              ]),
-                        ),
-                        Text(
-                          " \u20B9" + "${upiList[index].txnAmount}  ",
-                          style: GoogleFonts.openSans(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: upiList[index].status == 0
-                                  ? RejectedBoxTextColor
-                                  : upiList[index].status == 1
-                                      ? GreenBoxTextColor
-                                      : PendingTextColor),
-                        ),
-                      ]),
-                    ),
-                    Positioned(
-                        left: 0,
-                        bottom: 0,
-                        child: Container(
-                            alignment: Alignment.center,
-                            height: 80,
-                            width: 28,
-                            decoration: BoxDecoration(
+                          Text(
+                            " \u20B9" + "${upiList[index].txnAmount}  ",
+                            style: GoogleFonts.openSans(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
                                 color: upiList[index].status == 0
-                                    ? RejectedTextColor
+                                    ? RejectedBoxTextColor
                                     : upiList[index].status == 1
-                                        ? ApproveTextColor
-                                        : upiList[index].status == 1
-                                            ? PendingTextColor
-                                            : PendingTextColor,
-                                borderRadius:
-                                    BorderRadius.only(topLeft: Radius.circular(7), bottomLeft: Radius.circular(7))),
-                            child: RotatedBox(
-                                quarterTurns: 3,
-                                child: upiList[index].status == 0
-                                    ? Center(
-                                        child: Text(
-                                          "failed_key".tr(),
-                                          style:
-                                              TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: Colors.white),
-                                        ),
-                                      )
-                                    : upiList[index].status == 1
-                                        ? Center(
-                                            child: Text("accepted_key".tr(),
-                                                style: TextStyle(
-                                                    color: Colors.white, fontSize: 14, fontWeight: FontWeight.w400)),
-                                          )
-                                        : upiList[index].status == 2
-                                            ? Center(
-                                                child: Text("pending_key".tr(),
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 14,
-                                                        fontWeight: FontWeight.w400)),
-                                              )
-                                            : Center(
-                                                child: Text("pending_key".tr(),
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 14,
-                                                        fontWeight: FontWeight.w400)),
-                                              )))),
-                  ]),
+                                        ? GreenBoxTextColor
+                                        : PendingTextColor),
+                          ),
+                        ]),
+                      ),
+                      Positioned(
+                          left: 0,
+                          bottom: 0,
+                          child: Container(
+                              alignment: Alignment.center,
+                              height: 80,
+                              width: 28,
+                              decoration: BoxDecoration(
+                                  color: upiList[index].status == 0
+                                      ? RejectedTextColor
+                                      : upiList[index].status == 1
+                                          ? ApproveTextColor
+                                          : upiList[index].status == 1
+                                              ? PendingTextColor
+                                              : PendingTextColor,
+                                  borderRadius:
+                                      BorderRadius.only(topLeft: Radius.circular(7), bottomLeft: Radius.circular(7))),
+                              child: RotatedBox(
+                                  quarterTurns: 3,
+                                  child: upiList[index].status == 0
+                                      ? Center(
+                                          child: Text(
+                                            "failed_key".tr(),
+                                            style: TextStyle(
+                                                fontSize: 13, fontWeight: FontWeight.w500, color: Colors.white),
+                                          ),
+                                        )
+                                      : upiList[index].status == 1
+                                          ? Center(
+                                              child: Text("accepted_key".tr(),
+                                                  style: TextStyle(
+                                                      color: Colors.white, fontSize: 14, fontWeight: FontWeight.w400)),
+                                            )
+                                          : upiList[index].status == 2
+                                              ? Center(
+                                                  child: Text("pending_key".tr(),
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 14,
+                                                          fontWeight: FontWeight.w400)),
+                                                )
+                                              : Center(
+                                                  child: Text("pending_key".tr(),
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 14,
+                                                          fontWeight: FontWeight.w400)),
+                                                )))),
+                    ]),
+                  ),
                 );
               });
         })
