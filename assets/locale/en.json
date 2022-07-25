@@ -1,6 +1,9 @@
 {
   "login_key": "Login",
   "add_your_details_to_login_key": "Add your details to login",
+  "upi_transaction_details" : "UPI Transaction Details",
+  "upi_transaction_are_not_available" : "Transaction Detail Are Not Available",
+  "upi_transaction_product_details" : "UPI Transaction Product Details",
   "username_key": "Username",
   "please_enter_username_key": "Please Enter Mobile number",
   "please_enter_password_key": "Please Enter OTP",

@@ -1,6 +1,9 @@
 {
   "login_key": "लॉग इन करें",
   "add_your_details_to_login_key": "लॉगिन करने के लिए अपना विवरण जोड़ें",
+  "upi_transaction_details" : "UPI लेनदेन विवरण",
+  "upi_transaction_are_not_available" : "लेन-देन विवरण उपलब्ध नहीं हैं",
+  "upi_transaction_product_details" : "UPI लेनदेन उत्पाद विवरण",
   "username_key": "इस्तेमालकर्ता नाम",
   "password_key": "Password",
   "please_enter_username_key": "मोबाइल नंबर दर्ज करें",
