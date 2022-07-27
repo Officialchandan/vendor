@@ -60,7 +60,7 @@ class _UpiTransferDetailState extends State<UpiTransferDetail> {
       child: Scaffold(
           appBar: AppBar(
             title: Text(
-              "UPI Tansiction Detail",
+              "upi_transaction_details".tr(),
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
           ),

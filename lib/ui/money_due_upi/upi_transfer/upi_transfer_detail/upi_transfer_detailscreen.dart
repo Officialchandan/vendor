@@ -20,7 +20,12 @@ class UpiTransferDetail extends StatefulWidget {
   DateTime date;
   int status;
 
-  UpiTransferDetail({Key? key, required this.orderId, required this.amount, required this.date, required this.status})
+  UpiTransferDetail(
+      {Key? key,
+      required this.orderId,
+      required this.amount,
+      required this.date,
+      required this.status})
       : super(key: key);
 
   @override
@@ -28,15 +33,18 @@ class UpiTransferDetail extends StatefulWidget {
 }
 
 class _UpiTransferDetailState extends State<UpiTransferDetail> {
-  UpiTansferHistoryDetailBloc _upiTansferHistoryDetailBloc = UpiTansferHistoryDetailBloc();
+  UpiTansferHistoryDetailBloc _upiTansferHistoryDetailBloc =
+      UpiTansferHistoryDetailBloc();
   List<UpiHistroyOrdersData> upiList = [];
   Future<void> filterApiCall(BuildContext context) async {
     Map<String, dynamic> input = HashMap<String, dynamic>();
 
-    input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    input["vendor_id"] =
+        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     input["order_id"] = widget.orderId;
     log("=====? $input");
-    _upiTansferHistoryDetailBloc.add(GetUpiTansferHistoryDetailEvent(input: input));
+    _upiTansferHistoryDetailBloc
+        .add(GetUpiTansferHistoryDetailEvent(input: input));
   }
 
   String name = "";
@@ -60,11 +68,12 @@ class _UpiTransferDetailState extends State<UpiTransferDetail> {
       child: Scaffold(
           appBar: AppBar(
             title: Text(
-              "UPI Tansiction Detail",
+              "upi_transaction_details".tr(),
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
           ),
-          body: BlocConsumer<UpiTansferHistoryDetailBloc, UpiTansferHistoryDetailState>(
+          body: BlocConsumer<UpiTansferHistoryDetailBloc,
+                  UpiTansferHistoryDetailState>(
               listener: (context, state) {},
               builder: (context, state) {
                 if (state is GetUpiTansferHistoryDetailInitialState) {
@@ -114,12 +123,16 @@ class _UpiTransferDetailState extends State<UpiTransferDetail> {
                                   Text(
                                     "Amount".tr(),
                                     style: GoogleFonts.openSans(
-                                        fontWeight: FontWeight.bold, fontSize: 20, color: TextBlackLight),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                        color: TextBlackLight),
                                   ),
                                   Text(
                                     "  \u20B9 ${widget.amount.toStringAsFixed(2)}",
                                     style: GoogleFonts.openSans(
-                                        fontWeight: FontWeight.w600, fontSize: 28, color: ColorPrimary),
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 28,
+                                        color: ColorPrimary),
                                   ),
                                 ],
                               ),
@@ -129,10 +142,14 @@ class _UpiTransferDetailState extends State<UpiTransferDetail> {
                               widget.status == 1
                                   ? Text("Status: Succesful",
                                       style: GoogleFonts.openSans(
-                                          fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight))
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: TextBlackLight))
                                   : Text("Status: Failed",
                                       style: GoogleFonts.openSans(
-                                          fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight)),
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: TextBlackLight)),
                               SizedBox(
                                 height: 25,
                               ),
@@ -142,12 +159,16 @@ class _UpiTransferDetailState extends State<UpiTransferDetail> {
                                   Text(
                                     "To: MyProfit",
                                     style: GoogleFonts.openSans(
-                                        fontWeight: FontWeight.w600, fontSize: 18, color: TextGrey),
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 18,
+                                        color: TextGrey),
                                   ),
                                   Text(
                                     "From: $name",
                                     style: GoogleFonts.openSans(
-                                        fontWeight: FontWeight.w600, fontSize: 18, color: TextGrey),
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 18,
+                                        color: TextGrey),
                                   )
                                 ],
                               ),
@@ -156,14 +177,19 @@ class _UpiTransferDetailState extends State<UpiTransferDetail> {
                               ),
                               Text("Settlement Id: ${widget.orderId}",
                                   style: GoogleFonts.openSans(
-                                      fontSize: 16, fontWeight: FontWeight.w600, color: TextBlackLight)),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                      color: TextBlackLight)),
                               SizedBox(
                                 height: 5,
                               ),
                               Text(
                                 "Date: ${DateFormat("dd MMM yyyy").format(widget.date)}" +
                                     " - ${DateFormat.jm().format(widget.date)}",
-                                style: TextStyle(fontSize: 13, color: TextGrey, fontWeight: FontWeight.w600),
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    color: TextGrey,
+                                    fontWeight: FontWeight.w600),
                               ),
                               SizedBox(
                                 height: 5,
@@ -180,7 +206,8 @@ class _UpiTransferDetailState extends State<UpiTransferDetail> {
                               //   return Container();
                               // }
                               return Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 10),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10),
                                 // child:
                                 // InkWell(
                                 //   splashColor: Colors.transparent,
@@ -210,37 +237,57 @@ class _UpiTransferDetailState extends State<UpiTransferDetail> {
                                       ],
                                     ),
                                     child: Padding(
-                                      padding: const EdgeInsets.only(left: 20.0),
-                                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                        Column(
-                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                "+91 ${upiList[index].mobile}",
-                                                style: TextStyle(
-                                                    fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
-                                              ),
-                                              Text(
-                                                "${DateFormat("dd MMM yyyy").format(upiList[index].date)}",
-                                                style: TextStyle(
-                                                    fontSize: 13, color: TextGrey, fontWeight: FontWeight.bold),
-                                              ),
-                                            ]),
-                                        upiList[index].vendorMyProfit.isEmpty
-                                            ? Text(
-                                                " \u20B9 ${double.parse(upiList[index].myProfitVendor).toStringAsFixed(2)} ",
-                                                style: GoogleFonts.openSans(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20,
-                                                    color: GreenBoxTextColor),
-                                              )
-                                            : Text(
-                                                " \u20B9 ${double.parse(upiList[index].vendorMyProfit).toStringAsFixed(2)} ",
-                                                style: GoogleFonts.openSans(
-                                                    fontWeight: FontWeight.bold, fontSize: 20, color: Colors.red),
-                                              ),
-                                      ]),
+                                      padding:
+                                          const EdgeInsets.only(left: 20.0),
+                                      child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceEvenly,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    "+91 ${upiList[index].mobile}",
+                                                    style: TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: TextBlackLight),
+                                                  ),
+                                                  Text(
+                                                    "${DateFormat("dd MMM yyyy").format(upiList[index].date)}",
+                                                    style: TextStyle(
+                                                        fontSize: 13,
+                                                        color: TextGrey,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ]),
+                                            upiList[index]
+                                                    .vendorMyProfit
+                                                    .isEmpty
+                                                ? Text(
+                                                    " \u20B9 ${double.parse(upiList[index].myProfitVendor).toStringAsFixed(2)} ",
+                                                    style: GoogleFonts.openSans(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 20,
+                                                        color:
+                                                            GreenBoxTextColor),
+                                                  )
+                                                : Text(
+                                                    " \u20B9 ${double.parse(upiList[index].vendorMyProfit).toStringAsFixed(2)} ",
+                                                    style: GoogleFonts.openSans(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 20,
+                                                        color: Colors.red),
+                                                  ),
+                                          ]),
                                     ),
                                   ),
                                   upiList[index].isReturn == 1
@@ -253,7 +300,9 @@ class _UpiTransferDetailState extends State<UpiTransferDetail> {
                                             decoration: BoxDecoration(
                                                 color: ColorPrimary,
                                                 borderRadius: BorderRadius.only(
-                                                    topLeft: Radius.circular(7), bottomLeft: Radius.circular(7))),
+                                                    topLeft: Radius.circular(7),
+                                                    bottomLeft:
+                                                        Radius.circular(7))),
                                             child: RotatedBox(
                                               quarterTurns: 3,
                                               child: Center(
@@ -261,7 +310,8 @@ class _UpiTransferDetailState extends State<UpiTransferDetail> {
                                                     style: TextStyle(
                                                         color: Colors.white,
                                                         fontSize: 14,
-                                                        fontWeight: FontWeight.w400)),
+                                                        fontWeight:
+                                                            FontWeight.w400)),
                                               ),
                                             ),
                                           ),
@@ -284,12 +334,16 @@ class _UpiTransferDetailState extends State<UpiTransferDetail> {
                             Text(
                               "Net Settlement Amount".tr(),
                               style: GoogleFonts.openSans(
-                                  fontWeight: FontWeight.bold, fontSize: 16, color: TextBlackLight),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: TextBlackLight),
                             ),
                             Text(
                               "\u20B9 ${widget.amount.toStringAsFixed(2)}",
-                              style:
-                                  GoogleFonts.openSans(fontWeight: FontWeight.w600, fontSize: 28, color: ColorPrimary),
+                              style: GoogleFonts.openSans(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 28,
+                                  color: ColorPrimary),
                             ),
                           ],
                         ),
@@ -304,13 +358,17 @@ class _UpiTransferDetailState extends State<UpiTransferDetail> {
                               children: [
                                 Text(
                                   "To: MyProfit",
-                                  style:
-                                      GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                                  style: GoogleFonts.openSans(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                      color: TextGrey),
                                 ),
                                 Text(
                                   "From: $name",
-                                  style:
-                                      GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 16, color: TextGrey),
+                                  style: GoogleFonts.openSans(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                      color: TextGrey),
                                 )
                               ],
                             ),
@@ -321,37 +379,44 @@ class _UpiTransferDetailState extends State<UpiTransferDetail> {
                         ),
                         Container(
                           height: MediaQuery.of(context).size.height * 0.20,
-                          padding: const EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 20),
+                          padding: const EdgeInsets.only(
+                              left: 14, right: 14, top: 10, bottom: 20),
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
-                              border: Border.all(width: 1, color: TextGrey), borderRadius: BorderRadius.circular(5)),
+                              border: Border.all(width: 1, color: TextGrey),
+                              borderRadius: BorderRadius.circular(5)),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 "Bank Transaction ID",
-                                style: GoogleFonts.openSans(fontSize: 16, color: TextGrey),
+                                style: GoogleFonts.openSans(
+                                    fontSize: 16, color: TextGrey),
                               ),
                               Text(
                                 "2020282826826",
                                 //"${widget.order.paymentDetails.first.bankTxnId}",
                                 style: GoogleFonts.openSans(
-                                    fontSize: 16, color: TextBlackLight, fontWeight: FontWeight.w600),
+                                    fontSize: 16,
+                                    color: TextBlackLight,
+                                    fontWeight: FontWeight.w600),
                               ),
                               SizedBox(
                                 height: 10,
                               ),
                               Text(
                                 "To: MyProfit",
-                                style: GoogleFonts.openSans(fontSize: 16, color: TextGrey),
+                                style: GoogleFonts.openSans(
+                                    fontSize: 16, color: TextGrey),
                               ),
                               SizedBox(
                                 height: 10,
                               ),
                               Text(
                                 "From: $name",
-                                style: GoogleFonts.openSans(fontSize: 16, color: TextGrey),
+                                style: GoogleFonts.openSans(
+                                    fontSize: 16, color: TextGrey),
                               ),
                             ],
                           ),
