@@ -7,6 +7,7 @@ import 'package:vendor/main.dart';
 import 'package:vendor/model/chat_papdi_module/billing_chatpapdi.dart';
 import 'package:vendor/model/chat_papdi_module/billing_chatpapdi_otp.dart';
 import 'package:vendor/model/customer_number_response.dart';
+import 'package:vendor/model/get_categories_response.dart';
 import 'package:vendor/model/partial_user_register.dart';
 import 'package:vendor/ui_without_inventory/chatpapdi_billing/chatpapdi_event.dart';
 import 'package:vendor/ui_without_inventory/chatpapdi_billing/chatpapdi_state.dart';
@@ -31,7 +32,10 @@ class ChatPapdiBillingCustomerNumberResponseBloc
         );
       }
     }
-
+    if (event is GetDirectBillingCheckBoxEvent) {
+      yield GetChatPapdiBillingOtpLoadingstate();
+      yield DirectBillingCheckBoxState(index: event.index, isChecked: event.isChecked);
+    }
     if (event is GetChatPapdiBillingEvent) {
       yield* getChatPapdiBilling(event.input);
     }
@@ -43,9 +47,12 @@ class ChatPapdiBillingCustomerNumberResponseBloc
     if (event is GetChatPapdiPartialUserRegisterEvent) {
       yield* getChatPapdiPartialUserRegister(event.input);
     }
-    if(event is ChatPapdiCheckBoxEvent){
+    if (event is ChatPapdiCheckBoxEvent) {
       yield GetChatPapdiPartialUserLoadingstate();
       yield ChatPapdiCheckboxState(isChecked: event.isChecked);
+    }
+    if (event is GetDirectBillingCategoryEvent) {
+      yield* getVendorCategoryByIdResponse();
     }
   }
 
@@ -58,7 +65,6 @@ class ChatPapdiBillingCustomerNumberResponseBloc
         CustomerNumberResponse result = await apiProvider.getCustomerCoins(mobile);
         log("$result");
         if (result.success) {
-
           yield GetChatPapdiBillingCustomerNumberResponseState(
               message: result.message,
               data: result.data!.walletBalance,
@@ -134,6 +140,25 @@ class ChatPapdiBillingCustomerNumberResponseBloc
         }
       } catch (error) {
         yield GetChatPapdiPartialUserFailureState(message: "internal_server_error_key".tr(), succes: false);
+      }
+    } else {
+      Utility.showToast(msg: "please_check_your_internet_connection_key".tr());
+    }
+  }
+
+  Stream<ChatPapdiBillingCustomerNumberResponseState> getVendorCategoryByIdResponse() async* {
+    if (await Network.isConnected()) {
+      yield GetDirectBillingCategoryByVendorIdLoadingstate();
+      try {
+        GetCategoriesResponse result = await apiProvider.getCategoryByVendorId();
+        log("$result");
+        if (result.success) {
+          yield GetDirectBillingCategoryByVendorIdState(message: result.message, data: result.data!);
+        } else {
+          yield GetDirectBillingCategoryByVendorIdFailureState(message: result.message);
+        }
+      } catch (error) {
+        yield GetDirectBillingCategoryByVendorIdFailureState(message: "internal_server_error_key".tr());
       }
     } else {
       Utility.showToast(msg: "please_check_your_internet_connection_key".tr());

@@ -351,8 +351,8 @@ class _DirectBillingState extends State<DirectBilling> {
                         if (state is GetDirectBillingCategoryByVendorIdState) {
                           if (widget.usertype == 3) {
                             categoryList = state.data;
-                            categoryList.removeWhere((element) => element.id == "11");
-                            categoryList.removeWhere((element) => element.id == "41");
+                            categoryList.removeWhere((element) => element.id == "51");
+                            categoryList.removeWhere((element) => element.id == "52");
                           } else {
                             categoryList = state.data;
                           }

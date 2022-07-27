@@ -136,10 +136,9 @@ class _SelectCategoryWidgetState extends State<SelectCategoryWidget> {
       int userStatus = await SharedPref.getIntegerPreference(SharedPref.USERSTATUS);
       if (response.success) {
         categories = response.data!;
-       if (userStatus == 3) {
-        categories.removeWhere((element) => element.id == "21" || element.id == "31");
-
-      }
+        if (userStatus == 3) {
+          categories.removeWhere((element) => element.id == "41" || element.id == "42");
+        }
         return categories;
       } else {
         Utility.showToast(msg: response.message);

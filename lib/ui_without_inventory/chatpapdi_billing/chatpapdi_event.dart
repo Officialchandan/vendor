@@ -5,16 +5,14 @@ class ChatPapdiBillingCustomerNumberResponseEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class GetChatPapdiBillingCustomerNumberResponseEvent
-    extends ChatPapdiBillingCustomerNumberResponseEvent {
+class GetChatPapdiBillingCustomerNumberResponseEvent extends ChatPapdiBillingCustomerNumberResponseEvent {
   final String mobile;
   GetChatPapdiBillingCustomerNumberResponseEvent({required this.mobile});
   @override
   List<Object> get props => [mobile];
 }
 
-class GetChatPapdiBillingEvent
-    extends ChatPapdiBillingCustomerNumberResponseEvent {
+class GetChatPapdiBillingEvent extends ChatPapdiBillingCustomerNumberResponseEvent {
   final Map<String, dynamic> input;
 
   GetChatPapdiBillingEvent({required this.input});
@@ -22,8 +20,15 @@ class GetChatPapdiBillingEvent
   List<Object> get props => [input];
 }
 
-class GetChatPapdiBillingOtpEvent
-    extends ChatPapdiBillingCustomerNumberResponseEvent {
+class GetDirectBillingCheckBoxEvent extends ChatPapdiBillingCustomerNumberResponseEvent {
+  final int index;
+  final bool isChecked;
+  GetDirectBillingCheckBoxEvent({required this.index, required this.isChecked});
+  @override
+  List<Object> get props => [isChecked, index];
+}
+
+class GetChatPapdiBillingOtpEvent extends ChatPapdiBillingCustomerNumberResponseEvent {
   final Map<String, dynamic> input;
 
   GetChatPapdiBillingOtpEvent({required this.input});
@@ -31,8 +36,7 @@ class GetChatPapdiBillingOtpEvent
   List<Object> get props => [input];
 }
 
-class GetChatPapdiPartialUserRegisterEvent
-    extends ChatPapdiBillingCustomerNumberResponseEvent {
+class GetChatPapdiPartialUserRegisterEvent extends ChatPapdiBillingCustomerNumberResponseEvent {
   final Map<String, dynamic> input;
 
   GetChatPapdiPartialUserRegisterEvent({required this.input});
@@ -40,10 +44,13 @@ class GetChatPapdiPartialUserRegisterEvent
   List<Object> get props => [input];
 }
 
-class ChatPapdiCheckBoxEvent
-    extends ChatPapdiBillingCustomerNumberResponseEvent {
+class ChatPapdiCheckBoxEvent extends ChatPapdiBillingCustomerNumberResponseEvent {
   final bool isChecked;
   ChatPapdiCheckBoxEvent({required this.isChecked});
   @override
   List<Object> get props => [isChecked];
+}
+
+class GetDirectBillingCategoryEvent extends ChatPapdiBillingCustomerNumberResponseEvent {
+  GetDirectBillingCategoryEvent();
 }

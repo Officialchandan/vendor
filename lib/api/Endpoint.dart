@@ -3,6 +3,8 @@ class Endpoint {
   // http://vendor.myprofitinc.com/
   static const String BASE_URL = "http://vendor.myprofitinc.com/api/v1/";
 
+  static const String TEST_BASE_URL = "http://vendor.tekzee.in/api/v2/verifyOTP";
+  static const String GET_ALL_CATEGORY_V2 = "http://vendor.tekzee.in/api/v2/getAllCategoryByVendorID";
   static const String GENERATE_OTP = "genereateOTP";
 
   static const String VERIFY_OTP = "verifyOTP";

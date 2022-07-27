@@ -105,7 +105,7 @@ class ApiProvider {
 
   Future<LoginResponse> verifyOtp(mobile, otp) async {
     try {
-      Response res = await dio.post(Endpoint.VERIFY_OTP,
+      Response res = await dio.post(Endpoint.TEST_BASE_URL,
           data: {"mobile": mobile, "otp": otp, "device_token": await firebaseMessaging.getToken()});
 
       return LoginResponse.fromJson(res.toString());
@@ -516,7 +516,7 @@ class ApiProvider {
       //input["category_id"] = categoryId;
 
       Response res = await dio.post(
-        Endpoint.GET_SUBCATEGORY_VENDORID,
+        Endpoint.GET_ALL_CATEGORY_V2,
         data: input,
       );
 

@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/model/chat_papdi_module/billing_chatpapdi.dart';
+import 'package:vendor/model/get_categories_response.dart';
 import 'package:vendor/ui_without_inventory/chatpapdi_billing/ScannerChatPapdi/scanner_chatpapdi.dart';
 import 'package:vendor/ui_without_inventory/chatpapdi_billing/chatpapdi_bloc.dart';
 import 'package:vendor/ui_without_inventory/chatpapdi_billing/chatpapdi_event.dart';
@@ -18,6 +19,7 @@ import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/utility.dart';
 import 'package:vendor/utility/validator.dart';
+import 'package:vendor/widget/progress_indecator.dart';
 
 class ChatPapdiBilling extends StatefulWidget {
   ChatPapdiBilling({Key? key}) : super(key: key);
@@ -34,6 +36,8 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
   TextEditingController otpController = TextEditingController();
   ChatPapdiBillingCustomerNumberResponseBloc directBillingCustomerNumberResponseBloc =
       ChatPapdiBillingCustomerNumberResponseBloc();
+  List<CategoryModel> categoryList = [];
+  List categoryIdList = [];
   var value = true;
   var message = "";
   bool? status, redeem = false;
@@ -46,7 +50,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
   String coinss = "0.0";
 
   String amount = "0.0";
-  var billing, succes;
+  var billing, succes, indicator;
   ChatPapdiData? datas;
   ChatPapdiData? passing;
   Widget show(var coins) {
@@ -64,6 +68,19 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
         ),
       ],
     );
+  }
+
+  int userStatus = 0;
+  Future<void> userType() async {
+    userStatus = await SharedPref.getIntegerPreference(SharedPref.USERSTATUS);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    userType();
+    directBillingCustomerNumberResponseBloc.add(GetDirectBillingCategoryEvent());
   }
 
   @override
@@ -148,7 +165,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                           //         builder: (BuildContext context) =>
                           //             BottomNavigationHomeWithOutInventory()));
                         }
-                        if (state is GetChatPapdiBillingOtpLoadingstate) {}
+
                         if (state is GetChatPapdiBillingOtpFailureState) {
                           Utility.showToast(msg: state.message);
                         }
@@ -292,342 +309,348 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                         },
                       ),
                     ),
-                    // SizedBox(
-                    //   height: 210,
-                    // ),
-                    // Container(
-                    //     padding: const EdgeInsets.symmetric(horizontal: 10),
-                    //   child: InkWell(
-                    //     onTap: (){
-                    //       if(redeem == false){
-                    //         directBillingCustomerNumberResponseBloc.add(ChatPapdiCheckBoxEvent(isChecked: true));
-                    //       }
-                    //
-                    //       if(redeem == true){
-                    //         directBillingCustomerNumberResponseBloc.add(ChatPapdiCheckBoxEvent(isChecked: false));
-                    //       }
-                    //     },
-                    //     child: Row(
-                    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //       children: [
-                    //         Text(
-                    //           "redeem_coins_key".tr(),
-                    //           style: TextStyle(fontSize: 15, color: ColorTextPrimary, fontWeight: FontWeight.bold),
-                    //         ),
-                    //         SizedBox(
-                    //           height: 20,
-                    //           width: 20,
-                    //           child: Checkbox(
-                    //             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    //             value: this.redeem,
-                    //             checkColor: Colors.white,
-                    //             shape: RoundedRectangleBorder(
-                    //                 borderRadius: BorderRadius.circular(2)
-                    //             ),
-                    //             side: BorderSide(width: 1.5),
-                    //             activeColor: ColorPrimary,
-                    //             onChanged: (value) {
-                    //               directBillingCustomerNumberResponseBloc.add(ChatPapdiCheckBoxEvent(isChecked: value!));
-                    //             },
-                    //           ),
-                    //         ),
-                    //
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
-                    // SizedBox(
-                    //   height: 14,
-                    // ),
-                    // Container(
-                    //   padding: EdgeInsets.symmetric(vertical: 10,horizontal: 14),
-                    //   width: MediaQuery.of(context).size.width,
-                    //   decoration:
-                    //       BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10), boxShadow: [
-                    //     BoxShadow(
-                    //       color: Colors.grey.shade300,
-                    //       offset: Offset(0.0, 0.0), //(x,y)
-                    //       blurRadius: 7.0,
-                    //     ),
-                    //   ]),
-                    //   child: Column(
-                    //     crossAxisAlignment: CrossAxisAlignment.start,
-                    //     children: [
-                    //       Row(
-                    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //         children: [
-                    //           Text(
-                    //             "total_order_value_key".tr(),
-                    //             style: TextStyle(color: TextBlackLight, fontSize: 15, fontWeight: FontWeight.bold),
-                    //           ),
-                    //           Row(
-                    //             children: [
-                    //               Text("\u20B9",
-                    //                   style:
-                    //                   TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black)),
-                    //               Text("${amountController.text.isEmpty ? 0.0 : amountController.text}",
-                    //                   style:
-                    //                   TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
-                    //             ],
-                    //           ),
-                    //         ],
-                    //       ),
-                    //       SizedBox(
-                    //         height: 10,
-                    //       ),
-                    //       Row(
-                    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //         children: [
-                    //           Text("redeemed_coins_key".tr(),
-                    //             style: TextStyle(color: TextBlackLight, fontSize: 15, fontWeight: FontWeight.bold),),
-                    //           Row(children: [
-                    //             Container(
-                    //                 child: Image.asset(
-                    //               "assets/images/point.png",
-                    //               scale: 3,
-                    //             )),
-                    //             Text(" $coinss", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black))
-                    //           ]),
-                    //         ],
-                    //       ),
-                    //       SizedBox(
-                    //         height: 10,
-                    //       ),
-                    //       Row(
-                    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //         children: [
-                    //           Text("earned_coins_key".tr(),
-                    //             style: TextStyle(color: TextBlackLight, fontSize: 15, fontWeight: FontWeight.bold),),
-                    //           Row(
-                    //             children: [
-                    //               Container(
-                    //                   child: Image.asset(
-                    //                 "assets/images/point.png",
-                    //                 scale: 3,
-                    //               )),
-                    //               Text(" $earningCoins",style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
-                    //             ],
-                    //           ),
-                    //         ],
-                    //       ),
-                    //       SizedBox(
-                    //         height: 10,
-                    //       ),
-                    //       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                    //         Text(
-                    //           "net_payable_key".tr(),
-                    //           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: ColorPrimary),
-                    //         ),
-                    //         Row(
-                    //           children: [
-                    //             Text("\u20B9",
-                    //                 style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold, color: ColorPrimary)),
-                    //             Text("$amount",
-                    //                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: ColorPrimary)),
-                    //           ],
-                    //         ),
-                    //       ],
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-                  ],
-                ),
-              ),
-            ),
-            bottomNavigationBar: Container(
-              alignment: Alignment.bottomCenter,
-              height: MediaQuery.of(context).size.height * 0.35,
-              child: Column(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 25),
-                    child: InkWell(
-                      onTap: () {
-                        if (redeem == false) {
-                          directBillingCustomerNumberResponseBloc.add(ChatPapdiCheckBoxEvent(isChecked: true));
-                        }
+                    SizedBox(
+                      height: 20,
+                    ),
+                    BlocConsumer<ChatPapdiBillingCustomerNumberResponseBloc,
+                        ChatPapdiBillingCustomerNumberResponseState>(listener: (context, state) {
+                      log("state --->$state");
+                      if (state is DirectBillingCheckBoxState) {
+                        categoryList[state.index].isChecked = state.isChecked;
 
-                        if (redeem == true) {
-                          directBillingCustomerNumberResponseBloc.add(ChatPapdiCheckBoxEvent(isChecked: false));
+                        categoryList[state.index].onTileTap = state.isChecked;
+                        if (state.isChecked) {
+                          categoryIdList.add(categoryList[state.index].id);
+                        } else {
+                          categoryIdList.remove(categoryList[state.index].id);
                         }
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "redeem_coins_key".tr(),
-                            style: TextStyle(fontSize: 15, color: ColorTextPrimary, fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            height: 20,
-                            width: 20,
-                            child: Checkbox(
-                              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                              value: this.redeem,
-                              checkColor: Colors.white,
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
-                              side: BorderSide(width: 1.5),
-                              activeColor: ColorPrimary,
-                              onChanged: (value) {
-                                directBillingCustomerNumberResponseBloc.add(ChatPapdiCheckBoxEvent(isChecked: value!));
-                              },
+                        log("List of Selected Category ${categoryIdList.join(',')}");
+                      }
+                    }, builder: (context, state) {
+                      log("state --->$state");
+                      if (state is GetDirectBillingCategoryByVendorIdState) {
+                        if (userStatus == 3) {
+                          categoryList = state.data;
+                          categoryList.removeWhere((element) => element.id == "51");
+                          categoryList.removeWhere((element) => element.id == "52");
+                        } else {
+                          categoryList = state.data;
+                        }
+                      }
+                      if (state is GetDirectBillingCategoryByVendorIdLoadingstate) {
+                        indicator = true;
+                        Container(
+                            height: MediaQuery.of(context).size.height * 0.80, child: Center(child: CircularLoader()));
+                      }
+
+                      return Container(
+                        height: 200,
+                        width: MediaQuery.of(context).size.width,
+                        child: categoryList.isNotEmpty
+                            ? ListView.builder(
+                                primary: false,
+                                shrinkWrap: true,
+                                itemCount: categoryList.length,
+                                itemBuilder: (context, index) {
+                                  if (categoryList.isNotEmpty) {
+                                    if (categoryList.length == 1) {
+                                      categoryList[index].isChecked = true;
+                                      if (!categoryIdList.contains(categoryList[index].id)) {
+                                        categoryIdList.add(categoryList[index].id);
+                                      }
+                                    }
+                                  }
+                                  var list = categoryList[index];
+                                  return Padding(
+                                    padding: const EdgeInsets.only(
+                                      top: 10,
+                                      bottom: 10,
+                                    ),
+                                    child: Container(
+                                      height: 55,
+                                      width: MediaQuery.of(context).size.width,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        border: Border.all(color: Colors.grey.shade300, width: .5),
+                                        borderRadius: BorderRadius.circular(8),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.shade300,
+                                            offset: Offset(0.0, 0.0), //(x,y)
+                                            blurRadius: 7.0,
+                                          ),
+                                        ],
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 14),
+                                        child: InkWell(
+                                          onTap: () {
+                                            if (categoryList[index].onTileTap == false) {
+                                              directBillingCustomerNumberResponseBloc
+                                                  .add(GetDirectBillingCheckBoxEvent(index: index, isChecked: true));
+                                            }
+                                            if (categoryList[index].onTileTap == true) {
+                                              directBillingCustomerNumberResponseBloc
+                                                  .add(GetDirectBillingCheckBoxEvent(index: index, isChecked: false));
+                                            }
+                                          },
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Image.network(
+                                                    list.image!,
+                                                    width: 20,
+                                                    height: 20,
+                                                    color: ColorPrimary,
+                                                    fit: BoxFit.contain,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 14,
+                                                  ),
+                                                  Text(
+                                                    list.categoryName!,
+                                                    style: TextStyle(
+                                                        fontSize: 16,
+                                                        color: TextBlackLight,
+                                                        fontWeight: FontWeight.bold),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                width: 20,
+                                                height: 20,
+                                                child: Checkbox(
+                                                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                                  value: list.isChecked,
+                                                  checkColor: Colors.white,
+                                                  activeColor: ColorPrimary,
+                                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
+                                                  side: BorderSide(width: 1.5),
+                                                  onChanged: (isCheck) {
+                                                    directBillingCustomerNumberResponseBloc.add(
+                                                        GetDirectBillingCheckBoxEvent(
+                                                            index: index, isChecked: isCheck!));
+                                                  },
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                })
+                            : indicator == true
+                                ? Center(
+                                    child: CircularProgressIndicator(
+                                      color: ColorPrimary,
+                                    ),
+                                  )
+                                : Container(),
+                      );
+                    }),
+                    SizedBox(
+                      height: 32,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: InkWell(
+                        onTap: () {
+                          if (redeem == false) {
+                            directBillingCustomerNumberResponseBloc.add(ChatPapdiCheckBoxEvent(isChecked: true));
+                          }
+
+                          if (redeem == true) {
+                            directBillingCustomerNumberResponseBloc.add(ChatPapdiCheckBoxEvent(isChecked: false));
+                          }
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "redeem_coins_key".tr(),
+                              style: TextStyle(fontSize: 15, color: ColorTextPrimary, fontWeight: FontWeight.bold),
                             ),
-                          ),
-                        ],
+                            SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: Checkbox(
+                                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                value: this.redeem,
+                                checkColor: Colors.white,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
+                                side: BorderSide(width: 1.5),
+                                activeColor: ColorPrimary,
+                                onChanged: (value) {
+                                  directBillingCustomerNumberResponseBloc
+                                      .add(ChatPapdiCheckBoxEvent(isChecked: value!));
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 4,
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 14),
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 14),
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10), boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.shade300,
-                        offset: Offset(0.0, 0.0), //(x,y)
-                        blurRadius: 7.0,
-                      ),
-                    ]),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "totals_order_value_key".tr(),
-                              style: TextStyle(color: TextBlackLight, fontSize: 15, fontWeight: FontWeight.bold),
-                            ),
-                            Row(
-                              children: [
-                                Text("\u20B9",
-                                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black)),
-                                Text("${amountController.text.isEmpty ? 0.0 : amountController.text}",
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 0),
+                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 14),
+                      width: MediaQuery.of(context).size.width,
+                      decoration:
+                          BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10), boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.shade300,
+                          offset: Offset(0.0, 0.0), //(x,y)
+                          blurRadius: 7.0,
+                        ),
+                      ]),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "totals_order_value_key".tr(),
+                                style: TextStyle(color: TextBlackLight, fontSize: 15, fontWeight: FontWeight.bold),
+                              ),
+                              Row(
+                                children: [
+                                  Text("\u20B9",
+                                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black)),
+                                  Text("${amountController.text.isEmpty ? 0.0 : amountController.text}",
+                                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
+                                ],
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "redeemed_coins_key".tr(),
+                                style: TextStyle(color: TextBlackLight, fontSize: 15, fontWeight: FontWeight.bold),
+                              ),
+                              Row(children: [
+                                Text("(",
                                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
-                              ],
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "redeemed_coins_key".tr(),
-                              style: TextStyle(color: TextBlackLight, fontSize: 15, fontWeight: FontWeight.bold),
-                            ),
-                            Row(children: [
-                              Text("(",
-                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
-                              Container(
-                                  child: Image.asset(
-                                "assets/images/point.png",
-                                scale: 3,
-                              )),
-                              Text(" $coinss)",
-                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
-                              Text(" \u20B9${(double.parse(coinss) / 3).toStringAsFixed(2)}",
-                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black))
-                            ]),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "earned_coins_key".tr(),
-                              style: TextStyle(color: TextBlackLight, fontSize: 15, fontWeight: FontWeight.bold),
-                            ),
-                            Row(
-                              children: [
                                 Container(
                                     child: Image.asset(
                                   "assets/images/point.png",
                                   scale: 3,
                                 )),
-                                Text(" $earningCoins",
+                                Text(" $coinss)",
                                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
-                              ],
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "net_payable_key".tr(),
-                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: ColorPrimary),
-                            ),
-                            Row(
-                              children: [
-                                Text("\u20B9",
-                                    style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold, color: ColorPrimary)),
-                                Text("$amount",
-                                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: ColorPrimary)),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
+                                Text(" \u20B9${(double.parse(coinss) / 3).toStringAsFixed(2)}",
+                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black))
+                              ]),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "earned_coins_key".tr(),
+                                style: TextStyle(color: TextBlackLight, fontSize: 15, fontWeight: FontWeight.bold),
+                              ),
+                              Row(
+                                children: [
+                                  Container(
+                                      child: Image.asset(
+                                    "assets/images/point.png",
+                                    scale: 3,
+                                  )),
+                                  Text(" $earningCoins",
+                                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
+                                ],
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "net_payable_key".tr(),
+                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: ColorPrimary),
+                              ),
+                              Row(
+                                children: [
+                                  Text("\u20B9",
+                                      style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold, color: ColorPrimary)),
+                                  Text("$amount",
+                                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: ColorPrimary)),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Center(
-                    child: InkWell(
-                      onTap: () {
-                        if (status1 == 0) {
-                          if (mobileController.text.length == 10) {
-                            if (amountController.text.length >= 0) {
-                              if (nameController.text.length > 1) {
-                                //   userRegister(context);
-                                directBilling(context);
-                                if (succes == true) {}
-                              } else {
-                                Utility.showToast(msg: "please_enter_name_key".tr());
-                              }
+                  ],
+                ),
+              ),
+            ),
+            bottomNavigationBar: IntrinsicHeight(
+              child: Container(
+                height: 50,
+                alignment: Alignment.bottomCenter,
+                child: Center(
+                  child: InkWell(
+                    onTap: () {
+                      if (status1 == 0) {
+                        if (mobileController.text.length == 10) {
+                          if (amountController.text.length >= 0) {
+                            if (nameController.text.length > 1) {
+                              //   userRegister(context);
+                              directBilling(context);
+                              if (succes == true) {}
                             } else {
-                              Utility.showToast(msg: "please_enter_amount_key".tr());
+                              Utility.showToast(msg: "please_enter_name_key".tr());
                             }
                           } else {
-                            Utility.showToast(msg: "please_enter_10_digits_number_key".tr());
+                            Utility.showToast(msg: "please_enter_amount_key".tr());
                           }
                         } else {
-                          if (mobileController.text.length == 10) {
-                            if (amountController.text.length >= 0) {
-                              directBilling(context);
-                            } else {
-                              Utility.showToast(msg: "please_enter_amount_key");
-                            }
-                          } else {
-                            Utility.showToast(msg: "please_enter_10_digits_number_key".tr());
-                          }
+                          Utility.showToast(msg: "please_enter_10_digits_number_key".tr());
                         }
-                      },
-                      child: Container(
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: ColorPrimary,
-                        ),
-                        width: MediaQuery.of(context).size.width,
-                        child: Center(
-                          child: Text("submit_button_key".tr(),
-                              style: TextStyle(fontSize: 17, color: Colors.white, fontWeight: FontWeight.w600)),
-                        ),
+                      } else {
+                        if (mobileController.text.length == 10) {
+                          if (amountController.text.length >= 0) {
+                            directBilling(context);
+                          } else {
+                            Utility.showToast(msg: "please_enter_amount_key");
+                          }
+                        } else {
+                          Utility.showToast(msg: "please_enter_10_digits_number_key".tr());
+                        }
+                      }
+                    },
+                    child: Container(
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: ColorPrimary,
+                      ),
+                      width: MediaQuery.of(context).size.width,
+                      child: Center(
+                        child: Text("submit_button_key".tr(),
+                            style: TextStyle(fontSize: 17, color: Colors.white, fontWeight: FontWeight.w600)),
                       ),
                     ),
                   ),
-                ],
+                ),
               ),
             ),
           );
