@@ -17,7 +17,6 @@ import 'package:vendor/model/vendor_profile_response.dart';
 import 'package:vendor/ui/account_management/account_management_screen/privacy_policy_screen.dart';
 import 'package:vendor/ui/login/login_screen.dart';
 import 'package:vendor/ui/web_view_screen/webview_screen.dart';
-import 'package:vendor/ui_without_inventory/account_settings/account_settings.dart';
 import 'package:vendor/ui_without_inventory/home/home.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/network.dart';
@@ -74,9 +73,14 @@ class _AccountManagementWithoutInventoryScreenState extends State<AccountManagem
         appBar: AppBar(
           automaticallyImplyLeading: false,
           elevation: 0,
+          systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarColor: ColorPrimary,
+          ),
           // toolbarHeight: 120,
-          title: Text('account_key'.tr(),
-            style: TextStyle(fontWeight: FontWeight.w600),),
+          title: Text(
+            'account_key'.tr(),
+            style: TextStyle(fontWeight: FontWeight.w600),
+          ),
           centerTitle: true,
           bottom: PreferredSize(
             preferredSize: Size.fromHeight(80),
@@ -245,7 +249,7 @@ class _AccountManagementWithoutInventoryScreenState extends State<AccountManagem
         //             url: "http://vendor.myprofitinc.com/privacypolicy",
         //           )),
         // );
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> PrivacyPolicyScreen()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => PrivacyPolicyScreen()));
         break;
       // case 2:
       //   Navigator.push(
@@ -350,14 +354,13 @@ class _AccountManagementWithoutInventoryScreenState extends State<AccountManagem
     showMaterialModalBottomSheet(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-              topRight: Radius.circular(15),
-              topLeft: Radius.circular(15),
-            )),
+          topRight: Radius.circular(15),
+          topLeft: Radius.circular(15),
+        )),
         context: context,
         // barrierColor: Colors.transparent,
         builder: (context) {
           return LanguageBottomSheet();
         });
   }
-
 }

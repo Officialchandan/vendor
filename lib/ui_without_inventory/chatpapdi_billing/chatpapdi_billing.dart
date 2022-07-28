@@ -48,7 +48,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
   var status1;
   String earningCoins = "0.0";
   String coinss = "0.0";
-
+  bool checkbox = false;
   String amount = "0.0";
   var billing, succes, indicator;
   ChatPapdiData? datas;
@@ -344,7 +344,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                       }
 
                       return Container(
-                        height: 200,
+                        height: 160,
                         width: MediaQuery.of(context).size.width,
                         child: categoryList.isNotEmpty
                             ? ListView.builder(
@@ -610,13 +610,23 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                 child: Center(
                   child: InkWell(
                     onTap: () {
+                      checkbox = false;
+                      categoryList.forEach((element) {
+                        if (element.isChecked == true) {
+                          checkbox = true;
+                        }
+                      });
                       if (status1 == 0) {
                         if (mobileController.text.length == 10) {
                           if (amountController.text.length >= 0) {
                             if (nameController.text.length > 1) {
                               //   userRegister(context);
-                              directBilling(context);
-                              if (succes == true) {}
+                              if (checkbox == true) {
+                                directBilling(context);
+                                if (succes == true) {}
+                              } else {
+                                Utility.showToast(msg: "Please select category".tr());
+                              }
                             } else {
                               Utility.showToast(msg: "please_enter_name_key".tr());
                             }
@@ -629,7 +639,11 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                       } else {
                         if (mobileController.text.length == 10) {
                           if (amountController.text.length >= 0) {
-                            directBilling(context);
+                            if (checkbox == true) {
+                              directBilling(context);
+                            } else {
+                              Utility.showToast(msg: "Please select category".tr());
+                            }
                           } else {
                             Utility.showToast(msg: "please_enter_amount_key");
                           }
@@ -703,7 +717,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
     input["mobile"] = mobileController.text;
     input["bill_amount"] = amountController.text;
     input["full_name"] = nameController.text;
-    input["category_id"] = "0";
+    input["category_id"] = categoryIdList.join(',');
     input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     input["total_pay"] = amount;
     input["coin_deducted"] = coinss;

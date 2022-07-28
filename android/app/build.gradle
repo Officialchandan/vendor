@@ -31,13 +31,13 @@ android {
 //keytool -list -v -keystore /Users/mac/Documents/vaibhav/myprofit_vendor/android/app/src/main/assets/vendor.jks -alias vendor
 
 //            keytool -list -v -keystore ~/.android/app/src/main/assets/vendor.jks -alias vendor -storepass 123456 -keypass 123456
-            storeFile file('/home/tekzee-d17/Desktop/vendor/android/app/src/main/assets/vendor.jks')
+            storeFile file('/Users/mac/Documents/vaibhav/myprofit_vendor/android/app/src/main/assets/vendor.jks')
             storePassword '123456'
             keyAlias 'vendor'
             keyPassword '123456'
         }
         release {
-            storeFile file('/home/tekzee-d17/Desktop/vendor/android/app/src/main/assets/vendor.jks')
+            storeFile file('/Users/mac/Documents/vaibhav/myprofit_vendor/android/app/src/main/assets/vendor.jks')
             storePassword '123456'
             keyAlias 'vendor'
             keyPassword '123456'

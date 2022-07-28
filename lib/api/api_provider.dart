@@ -1138,7 +1138,7 @@ class ApiProvider {
 
   Future<ChatPapdiResponse> getChatPapdiBilling(Map<String, dynamic> input) async {
     try {
-      Response res = await dio.post(Endpoint.GET_CHATPAPDI_BILLING, data: input);
+      Response res = await dio.post(Endpoint.GET_CHATPAPDI_BILLING_V2, data: input);
       log("===>billing$res");
       return ChatPapdiResponse.fromJson(res.toString());
     } catch (error, stacktrace) {

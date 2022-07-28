@@ -5,6 +5,8 @@ class Endpoint {
 
   static const String TEST_BASE_URL = "http://vendor.tekzee.in/api/v2/verifyOTP";
   static const String GET_ALL_CATEGORY_V2 = "http://vendor.tekzee.in/api/v2/getAllCategoryByVendorID";
+  static const String GET_CHATPAPDI_BILLING_V2 = "http://vendor.tekzee.in/api/v2/chatPapdiBilling";
+
   static const String GENERATE_OTP = "genereateOTP";
 
   static const String VERIFY_OTP = "verifyOTP";

@@ -96,6 +96,9 @@ class _AccountManagementScreenState extends State<AccountManagementScreen> {
       child: Scaffold(
         backgroundColor: ColorPrimary,
         appBar: AppBar(
+          systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarColor: ColorPrimary,
+          ),
           automaticallyImplyLeading: false,
           elevation: 0,
           // toolbarHeight: 120,
