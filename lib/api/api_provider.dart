@@ -105,7 +105,7 @@ class ApiProvider {
 
   Future<LoginResponse> verifyOtp(mobile, otp) async {
     try {
-      Response res = await dio.post(Endpoint.TEST_BASE_URL,
+      Response res = await dio.post(Endpoint.VERIFY_OTP,
           data: {"mobile": mobile, "otp": otp, "device_token": await firebaseMessaging.getToken()});
 
       return LoginResponse.fromJson(res.toString());
@@ -516,7 +516,7 @@ class ApiProvider {
       //input["category_id"] = categoryId;
 
       Response res = await dio.post(
-        Endpoint.GET_ALL_CATEGORY_V2,
+        Endpoint.GET_ALL_CATEGORY,
         data: input,
       );
 
@@ -1138,7 +1138,7 @@ class ApiProvider {
 
   Future<ChatPapdiResponse> getChatPapdiBilling(Map<String, dynamic> input) async {
     try {
-      Response res = await dio.post(Endpoint.GET_CHATPAPDI_BILLING_V2, data: input);
+      Response res = await dio.post(Endpoint.GET_CHATPAPDI_BILLING, data: input);
       log("===>billing$res");
       return ChatPapdiResponse.fromJson(res.toString());
     } catch (error, stacktrace) {
