@@ -19,14 +19,16 @@ class ScannerBloc extends Bloc<ScannerEvent, ScannerState> {
 
 Stream<ScannerState> scannerApi(input) async* {
   if (await Network.isConnected()) {
+    yield GetScannerStateLoadingstate();
     EasyLoading.show();
     QrcodeResponse response = await apiProvider.getQRcode(input);
     EasyLoading.dismiss();
-    if (response.success) {
+
+    if (response.success == true) {
       yield GetScannerState(message: response.message, succes: response.success);
     } else {
       EasyLoading.dismiss();
-      Utility.showToast(msg: response.message);
+      yield GetScannerStateFailureState(message: response.message, succes: response.success);
     }
   } else {
     Utility.showToast(msg: "please_check_your_internet_connection_key".trim());

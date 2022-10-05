@@ -86,7 +86,7 @@ dependencies:
 
 #qrcode
   qr_code_scanner: 
-
+  flutter_barcode_scanner:
 #GRAFH
   syncfusion_flutter_charts:
 

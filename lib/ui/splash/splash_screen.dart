@@ -63,7 +63,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       );
                     },
                     child: Text("Update")),
-                mandotory == 8
+                mandotory == 9
                     ? Container()
                     : TextButton(
                         onPressed: () async {

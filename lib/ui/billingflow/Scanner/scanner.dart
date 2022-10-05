@@ -3,7 +3,6 @@ import 'dart:collection';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
@@ -14,8 +13,8 @@ import 'package:vendor/ui/billingflow/Scanner/scanner_event.dart';
 import 'package:vendor/ui/billingflow/Scanner/scanner_state.dart';
 import 'package:vendor/ui/home/bottom_navigation_home.dart';
 import 'package:vendor/utility/utility.dart';
-
-import '../../../widget/coin_genrate_pop.dart';
+import 'package:vendor/widget/gift_scan_successfull.dart';
+import 'package:vendor/widget/retry_popup.dart';
 
 class Scanner extends StatefulWidget {
   final VerifyEarningCoinsOtpData data;
@@ -31,7 +30,7 @@ class _ScannerState extends State<Scanner> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   ScannerBloc scannerBloc = ScannerBloc();
   StreamController<QRViewController> imgController = StreamController();
-
+  bool api = true;
   // In order to get hot reload to work we need to pause the camera if the platform
   // is android, or resume the camera if the platform is iOS.
   @override
@@ -48,43 +47,15 @@ class _ScannerState extends State<Scanner> {
     super.initState();
   }
 
-  add() {
-    log("message=>${result!.code}");
-    log("data==>${widget.data}");
-    scanner(context);
-    Utility.showToast(msg: "Scan QRcode Succesfully");
-  }
-
   Future<void> scanner(BuildContext context) async {
     Map<String, dynamic> input = HashMap<String, dynamic>();
     input["order_id"] = widget.data.orderId;
     input["vendor_id"] = widget.data.vendorId;
     input["gift_id"] = 1;
-    input["qr_code"] = "brc_01";
+    input["qr_code"] = result!.code;
     input["customer_id"] = widget.data.customerId;
-
+    api = false;
     scannerBloc.add(GetScannerEvent(data: input));
-    // Navigator.of(context).pop(result!.code);
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //       builder: (context) => BottomNavigationHome(
-    //             index: 0,
-    //           )),
-    // );
-    Navigator.pop(context);
-    Navigator.pushAndRemoveUntil(context, PageTransition(child: BottomNavigationHome(), type: PageTransitionType.fade),
-        ModalRoute.withName("/"));
-    // CoinDialog.displayCoinDialog(context);
-    // Navigator.pushAndRemoveUntil(
-    //     context,
-    //     MaterialPageRoute(
-    //         builder: (context) => BottomNavigationHome(
-    //               index: 0,
-    //             )),
-    //     (route) => false);
-    // Navigator.push(
-    //     context, MaterialPageRoute(builder: (context) => ChatPapdiBilling()));
   }
 
   @override
@@ -96,153 +67,94 @@ class _ScannerState extends State<Scanner> {
       create: (context) => scannerBloc,
       child: BlocListener<ScannerBloc, ScannerState>(
         listener: (context, state) {
+          log("state-->$state");
           // TODO: implement listener
           if (state is GetScannerState) {
-            //add();
             // Navigator.of(context).pop(result!.code);
+            GiftScanDialouge.displayGiftScanDialouge(context);
+            Utility.showToast(msg: state.message);
           }
-          if (state is GetScannerStateLoadingstate) {
-            setState(() {});
-          }
+          if (state is GetScannerStateLoadingstate) {}
           if (state is IntitalScannerstate) {}
-          if (state is GetScannerStateFailureState) {}
+          if (state is GetScannerStateFailureState) {
+            RetryDialouge.displayRetryDialouge(context).then((value) {
+              api = value;
+              log("==>api$api");
+            });
+            Utility.showToast(msg: state.message);
+            Timer(Duration(seconds: 3), () => api = true);
+          }
         },
         child: BlocBuilder<ScannerBloc, ScannerState>(
           builder: (context, state) {
             return Scaffold(
-              body: StreamBuilder<QRViewController>(
-                  stream: imgController.stream,
-                  builder: (contex, snap) {
-                    return Column(
-                      children: <Widget>[
-                        Container(height: height * 0.80, child: _buildQrView(context)),
-                        Container(
-                          child: FittedBox(
-                            fit: BoxFit.contain,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                if (result != null)
-                                  Container(
-                                    margin: const EdgeInsets.all(8),
-                                    child: ElevatedButton(
-                                      onPressed: () async {
-                                        log("message=>${result!.code}");
-                                        log("data==>${widget.data}");
-                                        scanner(context);
-                                        Utility.showToast(msg: "Scan QRcode Succesfully");
+              body: Column(
+                children: <Widget>[
+                  Container(height: height * 0.90, child: _buildQrView(context)),
+                  Container(
+                    child: FittedBox(
+                      fit: BoxFit.contain,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          // if (result != null)
+                          //   Container(
+                          //     margin: const EdgeInsets.all(8),
+                          //     child: ElevatedButton(
+                          //       onPressed: () async {
+                          //         log("message=>${result!.code}");
+                          //         log("data==>${widget.data}");
+                          //         scanner(context);
+                          //       },
+                          //       child: const Text('Done', style: TextStyle(fontSize: 20)),
+                          //     ),
+                          //   )
+                          // else
+                          //   const Text('Scan a code'),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                margin: const EdgeInsets.all(8),
+                                child: ElevatedButton(
+                                    onPressed: () async {
+                                      await controller?.flipCamera();
+                                      setState(() {});
+                                    },
+                                    child: FutureBuilder(
+                                      future: controller?.getCameraInfo(),
+                                      builder: (context, snapshot) {
+                                        if (snapshot.data != null) {
+                                          return Icon(Icons.flip_camera_android_rounded);
+                                        } else {
+                                          return const Text('loading');
+                                        }
                                       },
-                                      child: const Text('Done', style: TextStyle(fontSize: 20)),
-                                    ),
-                                  )
-                                else
-                                  Container(height: height * 0.05, child: const Text('Scan a code')),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    // Container(
-                                    //   margin: const EdgeInsets.all(8),
-                                    //   child: ElevatedButton(
-                                    //       onPressed: () async {
-                                    //         await controller?.toggleFlash();
-                                    //         setState(() {});
-                                    //       },
-                                    //       child: FutureBuilder(
-                                    //         future: controller?.getFlashStatus(),
-                                    //         builder: (context, snapshot) {
-                                    //           return Text('Flash: ${snapshot.data}');
-                                    //         },
-                                    //       )),
-                                    // ),
-                                    Container(
-                                      margin: const EdgeInsets.all(8),
-                                      child: ElevatedButton(
-                                          onPressed: () async {
-                                            await controller?.flipCamera();
-                                            setState(() {});
-                                          },
-                                          child: FutureBuilder(
-                                            future: controller?.getCameraInfo(),
-                                            builder: (context, snapshot) {
-                                              if (snapshot.data != null) {
-                                                return Text('Camera facing ${describeEnum(snapshot.data!)}');
-                                              } else {
-                                                return const Text('loading');
-                                              }
-                                            },
-                                          )),
-                                    ),
-
-                                    Container(
-                                      height: height * 0.05,
-                                      margin: const EdgeInsets.all(8),
-                                      child: ElevatedButton(
-                                        onPressed: () async {
-                                          Utility.showToast(msg: "Skiped QR code ");
-                                          Navigator.pop(context);
-                                          CoinDialog.displayCoinDialog(context);
-                                          // Navigator.pushAndRemoveUntil(
-                                          //     context,
-                                          //     PageTransition(
-                                          //         child: BottomNavigationHome(),
-                                          //         type:
-                                          //             PageTransitionType.fade),
-                                          //     ModalRoute.withName("/"));
-                                        },
-                                        child: const Text('Skip', style: TextStyle(fontSize: 20)),
-                                      ),
-                                    ),
-                                  ],
+                                    )),
+                              ),
+                              Container(
+                                margin: const EdgeInsets.all(8),
+                                child: ElevatedButton(
+                                  onPressed: () async {
+                                    Navigator.pop(context);
+                                    // CoinDialog.displayCoinDialog(context);
+                                    Navigator.pushAndRemoveUntil(
+                                        context,
+                                        PageTransition(child: BottomNavigationHome(), type: PageTransitionType.fade),
+                                        ModalRoute.withName("/"));
+                                  },
+                                  child: const Text('Skip', style: TextStyle(fontSize: 20)),
                                 ),
-                                // Row(
-                                //   children: [
-                                //     Container(
-                                //       margin: const EdgeInsets.all(8),
-                                //       child: ElevatedButton(
-                                //         onPressed: () async {
-                                //           log("message=>${result!.code}");
-                                //           Navigator.of(context).pop(result!.code);
-                                //         },
-                                //         child: const Text('Done',
-                                //             style: TextStyle(fontSize: 20)),
-                                //       ),
-                                //     ),
-                                //   ],
-                                // )
-                                // Row(
-                                //   mainAxisAlignment: MainAxisAlignment.center,
-                                //   crossAxisAlignment: CrossAxisAlignment.center,
-                                //   children: <Widget>[
-                                //     Container(
-                                //       margin: const EdgeInsets.all(8),
-                                //       child: ElevatedButton(
-                                //         onPressed: () async {
-                                //           await controller?.pauseCamera();
-                                //         },
-                                //         child: const Text('pause',
-                                //             style: TextStyle(fontSize: 20)),
-                                //       ),
-                                //     ),
-                                //     Container(
-                                //       margin: const EdgeInsets.all(8),
-                                //       child: ElevatedButton(
-                                //         onPressed: () async {
-                                //           await controller?.resumeCamera();
-                                //         },
-                                //         child: const Text('resume',
-                                //             style: TextStyle(fontSize: 20)),
-                                //       ),
-                                //     )
-                                //   ],
-                                // ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        )
-                      ],
-                    );
-                  }),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
             );
           },
         ),
@@ -261,6 +173,7 @@ class _ScannerState extends State<Scanner> {
       onQRViewCreated: _onQRViewCreated,
       overlay: QrScannerOverlayShape(
           borderColor: Colors.red, borderRadius: 10, borderLength: 30, borderWidth: 10, cutOutSize: scanArea),
+      cameraFacing: CameraFacing.front,
       onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
     );
   }
@@ -269,9 +182,13 @@ class _ScannerState extends State<Scanner> {
     setState(() {
       this.controller = controller;
     });
+    controller.flipCamera();
     controller.scannedDataStream.listen((scanData) {
-      setState(() {
-        result = scanData;
+      Future.delayed(Duration(seconds: 1), () {
+        if (api == true) {
+          result = scanData;
+          scanner(context);
+        }
       });
     });
   }

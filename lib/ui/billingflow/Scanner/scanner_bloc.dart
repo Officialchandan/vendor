@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:vendor/main.dart';
@@ -19,14 +21,18 @@ class ScannerBloc extends Bloc<ScannerEvent, ScannerState> {
 
 Stream<ScannerState> scannerApi(input) async* {
   if (await Network.isConnected()) {
+    yield GetScannerStateLoadingstate();
     EasyLoading.show();
     QrcodeResponse response = await apiProvider.getNormalQRcode(input);
     EasyLoading.dismiss();
-    if (response.success) {
+    log("hiiii=>");
+    if (response.success == true) {
+      log("hiiii=>1");
       yield GetScannerState(message: response.message, succes: response.success);
     } else {
+      log("hiiii=>2");
       EasyLoading.dismiss();
-      Utility.showToast(msg: response.message);
+      yield GetScannerStateFailureState(message: response.message, succes: response.success);
     }
   } else {
     Utility.showToast(msg: "please_check_your_internet_connection_key".trim());

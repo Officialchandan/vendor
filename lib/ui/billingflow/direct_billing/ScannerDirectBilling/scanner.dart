@@ -1,8 +1,8 @@
+import 'dart:async';
 import 'dart:collection';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
@@ -14,7 +14,8 @@ import 'package:vendor/ui/billingflow/direct_billing/ScannerDirectBilling/scanne
 import 'package:vendor/ui/home/bottom_navigation_home.dart';
 import 'package:vendor/ui_without_inventory/chatpapdi_billing/chatpapdi_billing.dart';
 import 'package:vendor/utility/utility.dart';
-import 'package:vendor/widget/coin_genrate_pop.dart';
+import 'package:vendor/widget/gift_scan_successfull.dart';
+import 'package:vendor/widget/retry_popup.dart';
 
 class Scanner extends StatefulWidget {
   final DirectBillingData data;
@@ -29,13 +30,12 @@ class _ScannerState extends State<Scanner> {
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   ScannerBloc scannerBloc = ScannerBloc();
-  // In order to get hot reload to work we need to pause the camera if the platform
-  // is android, or resume the camera if the platform is iOS.
+  bool api = true;
   @override
   void reassemble() {
     super.reassemble();
     if (Platform.isAndroid) {
-      controller!.pauseCamera();
+      controller!.resumeCamera();
     }
     controller!.resumeCamera();
   }
@@ -49,17 +49,17 @@ class _ScannerState extends State<Scanner> {
     input["bill_id"] = widget.data.billId;
     input["vendor_id"] = widget.data.vendorId;
     input["gift_id"] = 1;
-    input["qr_code"] = "brc_01";
+    input["qr_code"] = result!.code;
     input["customer_id"] = widget.data.customerId;
     log("yha tak");
+    api = false;
     scannerBloc.add(GetScannerEvent(data: input));
-    //Navigator.of(context).pop(result!.code);
-    Navigator.pop(context);
-    CoinDialog.displayCoinDialog(context);
-    // Navigator.pushAndRemoveUntil(
-    //     context,
-    //     MaterialPageRoute(builder: (context) => BottomNavigationHome()),
-    //     (route) => false);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
   }
 
   @override
@@ -71,72 +71,54 @@ class _ScannerState extends State<Scanner> {
       create: (context) => scannerBloc,
       child: BlocListener<ScannerBloc, ScannerState>(
         listener: (context, state) {
+          log("state-->$state");
           // TODO: implement listener
           if (state is GetScannerState) {
             // Navigator.of(context).pop(result!.code);
+            GiftScanDialouge.displayGiftScanDialouge(context);
             Utility.showToast(msg: state.message);
           }
           if (state is GetScannerStateLoadingstate) {}
           if (state is IntitalScannerstate) {}
-          if (state is GetScannerStateFailureState) {}
+          if (state is GetScannerStateFailureState) {
+            RetryDialouge.displayRetryDialouge(context).then((value) {
+              api = value;
+              log("==>api$api");
+            });
+            Utility.showToast(msg: state.message);
+            Timer(Duration(seconds: 3), () => api = true);
+          }
         },
         child: BlocBuilder<ScannerBloc, ScannerState>(
           builder: (context, state) {
             return Scaffold(
               body: Column(
                 children: <Widget>[
-                  Container(height: height * 0.80, child: _buildQrView(context)),
+                  Container(height: height * 0.90, child: _buildQrView(context)),
                   Container(
                     child: FittedBox(
                       fit: BoxFit.contain,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          if (result != null)
-                            // add()
-                            // Navigator.of(context).pop(result!.code)
-
-                            Container(
-                              margin: const EdgeInsets.all(8),
-                              child: ElevatedButton(
-                                onPressed: () async {
-                                  log("message=>${result!.code}");
-                                  log("data==>${widget.data}");
-                                  scanner(context);
-                                  // Utility.showToast(
-                                  //     msg: "${}");
-                                },
-                                child: const Text('Done', style: TextStyle(fontSize: 20)),
-                              ),
-                            )
-                          // Text(
-                          //   "Scann Done",
-                          //   style: TextStyle(fontSize: 16),
-                          // )
-                          // Text(
-                          //   'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}',
-                          //   style: TextStyle(fontSize: 16),
-                          // )
-                          else
-                            const Text('Scan a code'),
+                          // if (result != null)
+                          //   Container(
+                          //     margin: const EdgeInsets.all(8),
+                          //     child: ElevatedButton(
+                          //       onPressed: () async {
+                          //         log("message=>${result!.code}");
+                          //         log("data==>${widget.data}");
+                          //         scanner(context);
+                          //       },
+                          //       child: const Text('Done', style: TextStyle(fontSize: 20)),
+                          //     ),
+                          //   )
+                          // else
+                          //   const Text('Scan a code'),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
-                              // Container(
-                              //   margin: const EdgeInsets.all(8),
-                              //   child: ElevatedButton(
-                              //       onPressed: () async {
-                              //         await controller?.toggleFlash();
-                              //         setState(() {});
-                              //       },
-                              //       child: FutureBuilder(
-                              //         future: controller?.getFlashStatus(),
-                              //         builder: (context, snapshot) {
-                              //           return Text('Flash: ${snapshot.data}');
-                              //         },
-                              //       )),
-                              // ),
                               Container(
                                 margin: const EdgeInsets.all(8),
                                 child: ElevatedButton(
@@ -148,14 +130,13 @@ class _ScannerState extends State<Scanner> {
                                       future: controller?.getCameraInfo(),
                                       builder: (context, snapshot) {
                                         if (snapshot.data != null) {
-                                          return Text('Camera facing ${describeEnum(snapshot.data!)}');
+                                          return Icon(Icons.flip_camera_android_rounded);
                                         } else {
                                           return const Text('loading');
                                         }
                                       },
                                     )),
                               ),
-
                               Container(
                                 margin: const EdgeInsets.all(8),
                                 child: ElevatedButton(
@@ -172,47 +153,6 @@ class _ScannerState extends State<Scanner> {
                               ),
                             ],
                           ),
-                          // Row(
-                          //   children: [
-                          //     Container(
-                          //       margin: const EdgeInsets.all(8),
-                          //       child: ElevatedButton(
-                          //         onPressed: () async {
-                          //           log("message=>${result!.code}");
-                          //           Navigator.of(context).pop(result!.code);
-                          //         },
-                          //         child: const Text('Done',
-                          //             style: TextStyle(fontSize: 20)),
-                          //       ),
-                          //     ),
-                          //   ],
-                          // )
-                          // Row(
-                          //   mainAxisAlignment: MainAxisAlignment.center,
-                          //   crossAxisAlignment: CrossAxisAlignment.center,
-                          //   children: <Widget>[
-                          //     Container(
-                          //       margin: const EdgeInsets.all(8),
-                          //       child: ElevatedButton(
-                          //         onPressed: () async {
-                          //           await controller?.pauseCamera();
-                          //         },
-                          //         child: const Text('pause',
-                          //             style: TextStyle(fontSize: 20)),
-                          //       ),
-                          //     ),
-                          //     Container(
-                          //       margin: const EdgeInsets.all(8),
-                          //       child: ElevatedButton(
-                          //         onPressed: () async {
-                          //           await controller?.resumeCamera();
-                          //         },
-                          //         child: const Text('resume',
-                          //             style: TextStyle(fontSize: 20)),
-                          //       ),
-                          //     )
-                          //   ],
-                          // ),
                         ],
                       ),
                     ),
@@ -237,6 +177,7 @@ class _ScannerState extends State<Scanner> {
       onQRViewCreated: _onQRViewCreated,
       overlay: QrScannerOverlayShape(
           borderColor: Colors.red, borderRadius: 10, borderLength: 30, borderWidth: 10, cutOutSize: scanArea),
+      cameraFacing: CameraFacing.front,
       onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
     );
   }
@@ -245,9 +186,13 @@ class _ScannerState extends State<Scanner> {
     setState(() {
       this.controller = controller;
     });
+    controller.flipCamera();
     controller.scannedDataStream.listen((scanData) {
-      setState(() {
-        result = scanData;
+      Future.delayed(Duration(seconds: 1), () {
+        if (api == true) {
+          result = scanData;
+          scanner(context);
+        }
       });
     });
   }

@@ -897,6 +897,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                     color: ColorPrimary,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                     onPressed: () {
+                      log("sta==>$sta");
                       sta == 1
                           ? Navigator.push(context, MaterialPageRoute(builder: (context) => Scanner(data: datas!)))
                           : Navigator.pushAndRemoveUntil(

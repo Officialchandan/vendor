@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:vendor/ui/login/login_screen.dart';
+import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
 
 import '../main.dart';
@@ -44,9 +46,47 @@ class ServerError implements Exception {
           print("come here-->");
           _errorMessage = "";
           logout();
-        } else {
-          _errorMessage = "Internal server Error";
         }
+        if (error.response!.statusCode == 404) {
+          print("come here-->");
+          Fluttertoast.showToast(
+              msg: "Request not found. Please try again after some time.", backgroundColor: ColorPrimary);
+        }
+        if (error.response!.statusCode == 202) {
+          print("come here-->");
+
+          Fluttertoast.showToast(
+              msg: "Network congestion error. Please check your internet connection.", backgroundColor: ColorPrimary);
+        }
+        if (error.response!.statusCode == 429) {
+          print("come here-->");
+
+          Fluttertoast.showToast(
+              msg: "Network congestion error.. Please try again after some time.", backgroundColor: ColorPrimary);
+        }
+        if (error.response!.statusCode == 500) {
+          print("come here-->");
+          Fluttertoast.showToast(
+              msg: "Something went wrong. Please try again after some time.", backgroundColor: ColorPrimary);
+        }
+        if (error.response!.statusCode == 502) {
+          print("come here-->");
+          Fluttertoast.showToast(
+              msg: "Network congestion error.. Please try again after some time.", backgroundColor: ColorPrimary);
+        }
+        if (error.response!.statusCode == 503) {
+          print("come here-->");
+          Fluttertoast.showToast(
+              msg: "The server is currently unavailable. Please try again after some time.",
+              backgroundColor: ColorPrimary);
+        }
+        if (error.response!.statusCode == 504) {
+          print("come here-->");
+          Fluttertoast.showToast(
+              msg: "Gateway timeout. Please try again after some time.", backgroundColor: ColorPrimary);
+        }
+
+        break;
 
         break;
 
