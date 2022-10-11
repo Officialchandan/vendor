@@ -472,7 +472,7 @@ class _BillingScreenState extends State<BillingScreen> {
                               if (state is GetCategoryByVendorIdState) {
                                 if (userStatus == 3) {
                                   category = state.data;
-                                  category.removeWhere((element) => element.id == "41" || element.id == "42");
+                                  category.removeWhere((element) => element.id == "21" || element.id == "31");
                                 } else {
                                   category = state.data;
                                 }

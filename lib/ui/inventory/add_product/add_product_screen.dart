@@ -1043,8 +1043,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
           categoryId = categories[0].id;
           edtCategory.text = categories[0].categoryName!;
         } else if (userStatus == 3) {
-          categories.removeWhere((element) => element.id == "41");
-          categories.removeWhere((element) => element.id == "42");
+          categories.removeWhere((element) => element.id == "21");
+          categories.removeWhere((element) => element.id == "31");
           log("categories$categories");
           if (categories.length == 1) {
             log("categories3$categories");

@@ -104,8 +104,8 @@ class _CategoryBottomSheetState extends State<CategoryBottomSheet> {
       if (response.success) {
         categories = response.data!;
         if (userStatus == 3) {
-          categories.removeWhere((element) => element.id == "41");
-          categories.removeWhere((element) => element.id == "42");
+          categories.removeWhere((element) => element.id == "21");
+          categories.removeWhere((element) => element.id == "31");
           log("categories$categories");
         }
         return categories;

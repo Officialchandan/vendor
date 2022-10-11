@@ -331,8 +331,8 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                       if (state is GetDirectBillingCategoryByVendorIdState) {
                         if (userStatus == 3) {
                           categoryList = state.data;
-                          categoryList.removeWhere((element) => element.id == "51");
-                          categoryList.removeWhere((element) => element.id == "52");
+                          categoryList.removeWhere((element) => element.id == "11");
+                          categoryList.removeWhere((element) => element.id == "41");
                         } else {
                           categoryList = state.data;
                         }

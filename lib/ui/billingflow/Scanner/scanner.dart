@@ -71,7 +71,7 @@ class _ScannerState extends State<Scanner> {
           // TODO: implement listener
           if (state is GetScannerState) {
             // Navigator.of(context).pop(result!.code);
-            GiftScanDialouge.displayGiftScanDialouge(context);
+            GiftScanDialouge.displayGiftScanDialouge(context, 1);
             Utility.showToast(msg: state.message);
           }
           if (state is GetScannerStateLoadingstate) {}

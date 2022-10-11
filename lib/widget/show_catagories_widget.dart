@@ -137,7 +137,7 @@ class _SelectCategoryWidgetState extends State<SelectCategoryWidget> {
       if (response.success) {
         categories = response.data!;
         if (userStatus == 3) {
-          categories.removeWhere((element) => element.id == "41" || element.id == "42");
+          categories.removeWhere((element) => element.id == "21" || element.id == "31");
         }
         return categories;
       } else {
