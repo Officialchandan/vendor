@@ -14,12 +14,7 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  List<String> textList = [
-    "change_language_key".tr(),
-    "about_us_key".tr(),
-    "rate_us_key".tr(),
-    "share_app_key".tr()
-  ];
+  List<String> textList = ["change_language_key".tr(), "about_us_key".tr(), "rate_us_key".tr(), "share_app_key".tr()];
 
   @override
   Widget build(BuildContext context) {
@@ -41,24 +36,18 @@ class _SettingsState extends State<Settings> {
                 child: Container(
                   padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
                   decoration: BoxDecoration(
-                    border: Border(
-                        bottom: BorderSide(width: 1, color: Color(0xffbdbdbd))),
+                    border: Border(bottom: BorderSide(width: 1, color: Color(0xffbdbdbd))),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Image.asset("assets/images/setting-ic${index + 1}.png",
-                          width: 24),
+                      Image.asset("assets/images/setting-ic${index + 1}.png", width: 24),
                       SizedBox(width: 17),
                       Expanded(
                         child: Text(textList[index],
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600)),
+                            style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600)),
                       ),
-                      Icon(Icons.arrow_forward_ios,
-                          color: Colors.black, size: 15),
+                      Icon(Icons.arrow_forward_ios, color: Colors.black, size: 15),
                     ],
                   ),
                 ),

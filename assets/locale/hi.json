@@ -29,6 +29,8 @@
   "no_key": "नहीं",
   "yes_key": "हां",
   "gift_received_key": "उपहार मिला",
+  "amount_remaining_key": "इस शेष बिलिंग राशि के बाद, आपको एक विक्रेता से",
+  "amount_remaining_gift_key": "उपहार मिलेगा",
   "gift_scan_key": "उपहार स्कैन सफलतापूर्वक",
   "companey_information_key": "कंपनी की जानकारी",
   "rate_us_key": "हमें रेटिंग दें",

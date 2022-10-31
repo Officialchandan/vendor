@@ -51,6 +51,7 @@ class _BillingScreenState extends State<BillingScreen> {
   @override
   void initState() {
     super.initState();
+    log("my data==>");
   }
 
   refresh() {

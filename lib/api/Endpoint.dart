@@ -34,6 +34,7 @@ class Endpoint {
   // static const String GET_PRODUCT_VARIANT_TYPE = "getProductVariants";
 
   static const String BILLING_PRODUCT = "billingProducts";
+  static const String BILLING_PRODUCT_V2 = "http://vendor.tekzee.in/api/v2/billingProducts";
 
   static const String GET_PRODUCT_VARIANT_TYPE = "getVariants";
 
@@ -118,6 +119,7 @@ class Endpoint {
   static const String GET_MONTHLY_WALKIN_AMOUNT = "monthlyWalkIns";
 
   static const String GET_DIRECT_BILLING = "directBilling";
+  static const String GET_DIRECT_BILLING_v2 = "http://vendor.tekzee.in/api/v2/directBilling";
 
   static const String GET_DIRECT_BILLING_OTP = "confirmBillingByOtp";
 

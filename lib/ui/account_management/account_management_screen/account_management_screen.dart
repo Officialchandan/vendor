@@ -369,10 +369,12 @@ logoutDialog(context) {
               onPressed: () async {
                 log("ndndnd");
                 LogOutResponse logoutData = await ApiProvider().getLogOut();
-                print("kai kroge +${logoutData.success}");
-                await SharedPref.setBooleanPreference(SharedPref.LOGIN, false);
-                print("kai kroge +${logoutData.success}");
+
                 if (await Network.isConnected()) {
+                  print("kai kroge +${logoutData.success}");
+                  await SharedPref.setBooleanPreference(SharedPref.LOGIN, false);
+                  print("kai kroge +${logoutData.success}");
+                  SharedPref.clearSharedPreference(context);
                   SystemChannels.textInput.invokeMethod("TextInput.hide");
                   print("kai kroge +");
                   Navigator.pushAndRemoveUntil(

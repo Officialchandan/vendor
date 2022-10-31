@@ -45,6 +45,8 @@ class BillingProductData {
     required this.myprofitrevenue,
     required this.orderDate,
     required this.qrCodeStatus,
+    required this.remainingOrdAmt,
+    required this.freeGiftName,
     required this.vendorAvailableCoins,
   });
 
@@ -59,6 +61,8 @@ class BillingProductData {
   String myprofitrevenue;
   String orderDate;
   int qrCodeStatus;
+  String remainingOrdAmt;
+  String freeGiftName;
   String vendorAvailableCoins;
 
   factory BillingProductData.fromJson(String str) => BillingProductData.fromMap(json.decode(str));
@@ -76,7 +80,9 @@ class BillingProductData {
         earningCoins: json["earning_coins"].toString(),
         myprofitrevenue: json["myprofit_revenue"] == null ? "" : json["myprofit_revenue"].toString(),
         orderDate: json["order_date"] == null ? "" : json["order_date"].toString(),
-        qrCodeStatus: json["qr_code_status"] == null ? null : json["qr_code_status"],
+        qrCodeStatus: json["qr_code_status"] == null ? -1 : json["qr_code_status"],
+        remainingOrdAmt: json["remaining_ord_amt"] == null ? "0" : json["remaining_ord_amt"].toString(),
+        freeGiftName: json["free_gift__name"] == null ? "" : json["free_gift__name"].toString(),
         vendorAvailableCoins: json["vendor_available_coins"] == null ? "" : json["vendor_available_coins"].toString(),
       );
 
@@ -92,6 +98,8 @@ class BillingProductData {
         "myprofit_revenue": myprofitrevenue,
         "order_date": orderDate,
         "qr_code_status": qrCodeStatus == null ? null : qrCodeStatus,
+        "remaining_ord_amt": remainingOrdAmt == null ? null : remainingOrdAmt,
+        "free_gift__name": freeGiftName == null ? null : freeGiftName,
         "vendor_available_coins": vendorAvailableCoins == null ? null : vendorAvailableCoins,
       };
 }

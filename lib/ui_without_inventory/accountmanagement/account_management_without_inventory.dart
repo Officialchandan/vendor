@@ -304,6 +304,7 @@ class _AccountManagementWithoutInventoryScreenState extends State<AccountManagem
                   await SharedPref.setBooleanPreference(SharedPref.LOGIN, false);
                   print("kai kroge +${logoutData.success}");
                   if (await Network.isConnected()) {
+                    SharedPref.clearSharedPreference(context);
                     SystemChannels.textInput.invokeMethod("TextInput.hide");
                     print("kai kroge +");
                     Navigator.pushAndRemoveUntil(

@@ -155,9 +155,15 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                           Utility.showToast(msg: state.message);
 
                           // var result = await
-                          datas!.qrCodeStatus == 0
-                              ? _displayDialogs(context, datas!.earningCoins, 0, "")
-                              : _displayDialogs(context, datas!.earningCoins, 1, datas);
+                          datas!.remainingOrdAmt == "0"
+                              ? _displayCumulative(context, datas!.remainingOrdAmt, datas!.freeGiftName).then((value) {
+                                  datas!.qrCodeStatus == 0
+                                      ? _displayDialogs(context, datas!.earningCoins, 0, "")
+                                      : _displayDialogs(context, datas!.earningCoins, 1, datas);
+                                })
+                              : datas!.qrCodeStatus == 0
+                                  ? _displayDialogs(context, datas!.earningCoins, 0, "")
+                                  : _displayDialogs(context, datas!.earningCoins, 1, datas);
                           // log("-------$result --------");
                           // Navigator.pushReplacement(
                           //     context,
@@ -916,6 +922,70 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                 SizedBox(
                   height: 10,
                 )
+              ],
+            ),
+          );
+        });
+  }
+
+  _displayCumulative(BuildContext context, remainingAmount, giftName) async {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
+            child: AlertDialog(
+              titlePadding: const EdgeInsets.all(20),
+              actionsPadding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+              contentPadding: const EdgeInsets.only(left: 20, right: 20),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              title: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                Image.asset(
+                  "assets/images/otp-wallet.png",
+                  fit: BoxFit.cover,
+                  height: 70,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text("${datas!.remainingOrdAmt}",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.openSans(
+                      fontSize: 17.0,
+                      color: ColorTextPrimary,
+                      fontWeight: FontWeight.w600,
+                    )),
+                Text("${"amount_remaining_key".tr()} ${datas!.freeGiftName} ${"amount_remaining_gift_key".tr()}",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.openSans(
+                      fontSize: 17.0,
+                      color: ColorTextPrimary,
+                      fontWeight: FontWeight.w600,
+                    )),
+              ]),
+              actions: <Widget>[
+                Center(
+                  child: MaterialButton(
+                    minWidth: MediaQuery.of(context).size.width * 0.40,
+                    height: 50,
+                    padding: const EdgeInsets.all(8.0),
+                    textColor: Colors.white,
+                    color: ColorPrimary,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: new Text(
+                      "done_key".tr(),
+                      style: GoogleFonts.openSans(
+                          fontSize: 18, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
+                    ),
+                  ),
+                ),
               ],
             ),
           );

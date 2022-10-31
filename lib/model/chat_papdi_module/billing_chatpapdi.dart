@@ -44,6 +44,8 @@ class ChatPapdiData {
     required this.earningCoins,
     required this.myProfitRevenue,
     required this.qrCodeStatus,
+    required this.remainingOrdAmt,
+    required this.freeGiftName,
     required this.vendorAvailableCoins,
   });
 
@@ -57,6 +59,8 @@ class ChatPapdiData {
   String earningCoins;
   String myProfitRevenue;
   int qrCodeStatus;
+  String remainingOrdAmt;
+  String freeGiftName;
   String vendorAvailableCoins;
 
   factory ChatPapdiData.fromJson(String str) => ChatPapdiData.fromMap(json.decode(str));
@@ -74,6 +78,8 @@ class ChatPapdiData {
         earningCoins: json["earning_coins"] == null ? "" : json["earning_coins"].toString(),
         myProfitRevenue: json["myprofit_revenue"] == null ? "" : json["myprofit_revenue"].toString(),
         qrCodeStatus: json["qr_code_status"] == null ? null : json["qr_code_status"],
+        remainingOrdAmt: json["remaining_ord_amt"] == null ? "0" : json["remaining_ord_amt"].toString(),
+        freeGiftName: json["free_gift__name"] == null ? "" : json["free_gift__name"].toString(),
         vendorAvailableCoins: json["vendor_available_coins"] == null ? "" : json["vendor_available_coins"].toString(),
       );
 
@@ -88,6 +94,8 @@ class ChatPapdiData {
         "earning_coins": earningCoins == null ? null : earningCoins,
         "myprofit_revenue": myProfitRevenue == null ? null : myProfitRevenue,
         "qr_code_status": qrCodeStatus == null ? null : qrCodeStatus,
+        "remaining_ord_amt": remainingOrdAmt == null ? null : remainingOrdAmt,
+        "free_gift__name": freeGiftName == null ? null : freeGiftName,
         "vendor_available_coins": vendorAvailableCoins == null ? null : vendorAvailableCoins,
       };
 }

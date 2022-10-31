@@ -702,7 +702,7 @@ class ApiProvider {
 
   Future<BillingProductResponse> getBillingProducts(Map<String, dynamic> input) async {
     try {
-      Response res = await dio.post(Endpoint.BILLING_PRODUCT, data: input);
+      Response res = await dio.post(Endpoint.BILLING_PRODUCT_V2, data: input);
 
       return BillingProductResponse.fromJson(res.toString());
     } catch (error) {
@@ -1029,7 +1029,7 @@ class ApiProvider {
 
   Future<DirectBillingResponse> getDirectBilling(Map<String, dynamic> input) async {
     try {
-      Response res = await dio.post(Endpoint.GET_DIRECT_BILLING, data: input);
+      Response res = await dio.post(Endpoint.GET_DIRECT_BILLING_v2, data: input);
       log("===>billing$res");
       return DirectBillingResponse.fromJson(res.toString());
     } catch (error) {
@@ -1138,7 +1138,7 @@ class ApiProvider {
 
   Future<ChatPapdiResponse> getChatPapdiBilling(Map<String, dynamic> input) async {
     try {
-      Response res = await dio.post(Endpoint.GET_CHATPAPDI_BILLING, data: input);
+      Response res = await dio.post(Endpoint.GET_CHATPAPDI_BILLING_V2, data: input);
       log("===>billing$res");
       return ChatPapdiResponse.fromJson(res.toString());
     } catch (error, stacktrace) {

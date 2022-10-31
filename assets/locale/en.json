@@ -25,6 +25,8 @@
   "gift_scheme_key": "Gift Scheme",
   "gift_received_key": "Gift Received",
   "gift_scan_key": "Gift Scan SuccessFully",
+  "amount_remaining_key": "After this remaining billing amount, you will get a",
+  "amount_remaining_gift_key":" gift from a vendor",
   "performance_key": "Reports",
   "outstanding_key": "Outstanding",
   "home_key": "Home",

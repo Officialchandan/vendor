@@ -45,6 +45,8 @@ class DirectBillingData {
     required this.myprofitRevenue,
     required this.qrCodeStatus,
     required this.categoryId,
+    required this.remainingOrdAmt,
+    required this.freeGiftName,
     required this.vendorAvailableCoins,
   });
 
@@ -58,6 +60,8 @@ class DirectBillingData {
   String earningCoins;
   String myprofitRevenue;
   String qrCodeStatus;
+  String remainingOrdAmt;
+  String freeGiftName;
   String categoryId;
 
   String vendorAvailableCoins;
@@ -78,6 +82,8 @@ class DirectBillingData {
         myprofitRevenue: json["myprofit_revenue"] == null ? "" : json["myprofit_revenue"].toString(),
         qrCodeStatus: json["qr_code_status"] == null ? "" : json["qr_code_status"].toString(),
         categoryId: json["category_id"] == null ? "" : json["category_id"].toString(),
+        remainingOrdAmt: json["remaining_ord_amt"] == null ? "0" : json["remaining_ord_amt"].toString(),
+        freeGiftName: json["free_gift__name"] == null ? "" : json["free_gift__name"].toString(),
         vendorAvailableCoins: json["vendor_available_coins"] == null ? "" : json["vendor_available_coins"].toString(),
       );
 
@@ -93,6 +99,8 @@ class DirectBillingData {
         "myprofit_revenue": myprofitRevenue,
         "qr_code_status": qrCodeStatus == null ? null : qrCodeStatus,
         "category_id": categoryId == null ? null : categoryId,
+        "remaining_ord_amt": remainingOrdAmt == null ? null : remainingOrdAmt,
+        "free_gift__name": freeGiftName == null ? null : freeGiftName,
         "vendor_available_coins": vendorAvailableCoins == null ? null : vendorAvailableCoins,
       };
 }

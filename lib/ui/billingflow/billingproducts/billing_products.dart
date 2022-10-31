@@ -671,7 +671,13 @@ class _BillingProductsState extends State<BillingProducts> {
                       otpVerifyList = state.data;
                       log("${otpVerifyList!.otp}");
                       _displayDialog(
-                          context, 0, 1, "please_enter_password_key".tr(), "enter_otp_key".tr(), widget.mobile);
+                        context,
+                        0,
+                        1,
+                        "please_enter_password_key".tr(),
+                        "enter_otp_key".tr(),
+                        widget.mobile,
+                      );
                     }
                     if (state is PayBillingProductsStateFailureState) {
                       message = state.message;
@@ -686,9 +692,17 @@ class _BillingProductsState extends State<BillingProducts> {
                       Utility.showToast(
                         msg: state.message,
                       );
-                      otpVerifyList!.qrCodeStatus == 0
-                          ? _displayDialogs(context, passing!.earningCoins, 0, "")
-                          : _displayDialogs(context, passing!.earningCoins, 1, passing);
+
+                      otpVerifyList!.remainingOrdAmt == "0"
+                          ? _displayCumulative(context, otpVerifyList!.remainingOrdAmt, otpVerifyList!.freeGiftName)
+                              .then((value) {
+                              otpVerifyList!.qrCodeStatus == 0
+                                  ? _displayDialogs(context, passing!.earningCoins, 0, "")
+                                  : _displayDialogs(context, passing!.earningCoins, 1, passing);
+                            })
+                          : otpVerifyList!.qrCodeStatus == 0
+                              ? _displayDialogs(context, passing!.earningCoins, 0, "")
+                              : _displayDialogs(context, passing!.earningCoins, 1, passing);
                       //log("-------$result --------");
                       // codes = result;
                       // Navigator.push(
@@ -877,7 +891,14 @@ class _BillingProductsState extends State<BillingProducts> {
         });
   }
 
-  _displayDialog(BuildContext context, index, status, text, hintText, mobile) async {
+  _displayDialog(
+    BuildContext context,
+    index,
+    status,
+    text,
+    hintText,
+    mobile,
+  ) async {
     return showDialog(
         context: context,
         barrierDismissible: false,
@@ -1078,6 +1099,114 @@ class _BillingProductsState extends State<BillingProducts> {
         });
   }
 
+  _displayCumulative(BuildContext context, remainingAmount, giftName) async {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
+            child: AlertDialog(
+              titlePadding: const EdgeInsets.all(20),
+              actionsPadding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+              contentPadding: const EdgeInsets.only(left: 20, right: 20),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              title: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                Image.asset(
+                  "assets/images/otp-wallet.png",
+                  fit: BoxFit.cover,
+                  height: 70,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text("${otpVerifyList!.remainingOrdAmt}",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.openSans(
+                      fontSize: 17.0,
+                      color: ColorTextPrimary,
+                      fontWeight: FontWeight.w600,
+                    )),
+                Text(
+                    "${"amount_remaining_key".tr()} ${otpVerifyList!.freeGiftName} ${"amount_remaining_gift_key".tr()}",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.openSans(
+                      fontSize: 17.0,
+                      color: ColorTextPrimary,
+                      fontWeight: FontWeight.w600,
+                    )),
+              ]),
+              actions: <Widget>[
+                Center(
+                  child: MaterialButton(
+                    minWidth: MediaQuery.of(context).size.width * 0.40,
+                    height: 50,
+                    padding: const EdgeInsets.all(8.0),
+                    textColor: Colors.white,
+                    color: ColorPrimary,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: new Text(
+                      "done_key".tr(),
+                      style: GoogleFonts.openSans(
+                          fontSize: 18, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
+  }
+
+  // return showDialog(
+  // context: context,
+  // builder: (context) {
+  // return ConstrainedBox(
+  // constraints: BoxConstraints(maxWidth: 400),
+  // child: AlertDialog(
+  // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+  // title: Container(
+  // height: 100,
+  // width: 70,
+  // child: Image.asset("assets/images/coins.png", fit: BoxFit.contain),
+  // ),
+  // contentTextStyle: TextStyle(fontSize: 22, color: TextBlack),
+  // content: Text("amount_remaining_key".tr()),
+  // actions: <Widget>[
+  // Center(
+  // child: MaterialButton(
+  // minWidth: MediaQuery.of(context).size.width * 0.40,
+  // height: 50,
+  // padding: const EdgeInsets.all(8.0),
+  // textColor: Colors.white,
+  // color: ColorPrimary,
+  // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+  // onPressed: () {
+  // Navigator.pop(context);
+  // CoinDialog.displayCoinDialog(context, route);
+  // },
+  // child: new Text(
+  // "done_key".tr(),
+  // style: GoogleFonts.openSans(
+  // fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
+  // ),
+  // ),
+  // ),
+  // Container(
+  // height: 20,
+  // width: MediaQuery.of(context).size.width * 0.95,
+  // color: Colors.transparent,
+  // )
+  // ],
+  // ),
+  // );
+  // });
   Future<void> verifyOtp(BuildContext context) async {
     Map<String, dynamic> input = HashMap<String, dynamic>();
     input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
