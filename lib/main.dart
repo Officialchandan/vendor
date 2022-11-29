@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:page_transition/page_transition.dart';
@@ -456,7 +457,7 @@ void main() async {
         supportedLocales: Constant.language,
         path: 'assets/locale',
         fallbackLocale: Locale('en'),
-        child: MyApp()),
+        child: Phoenix(child: MyApp())),
   );
 }
 
