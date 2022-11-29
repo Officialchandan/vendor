@@ -63,7 +63,9 @@
   "pay_key": "वेतन",
   "first_time_customer_key": "पहली बार ग्राहक",
   "first_name_key": "पहला नाम",
+  "first_name_excp_key":"कृपया पहला नाम दर्ज करें",
   "last_name_key": "अंतिम नाम",
+  "last_name_excp_key": "कृपया अंतिम नाम दर्ज करें",
   "refferal_mobile_no_key": "रेफरल मोबाइल नंबर (यदि कोई हो)",
   "address_key": "पता (निवास)",
   "address_for_the_gift_key": "पता (उपहार के लिए यदि अलग है)",
@@ -243,6 +245,8 @@
   "enter_customer_phone_number_key": "ग्राहक का फोन नंबर दर्ज करें",
   "mobile_number_key": "ग्राहक का फोन नंबर दर्ज करें",
   "enter_customer_name_key": "ग्राहक का नाम दर्ज करें",
+  "enter_customer_first_name_key":"ग्राहक का पहला नाम दर्ज करें",
+  "enter_customer_last_name_key":"ग्राहक का अंतिम नाम दर्ज करें",
   "full_name_key": "पूरा नाम",
   "please_enter_name_key": "कृपया नाम दर्ज करें",
   "search_all_products_key": "प्रोडक्ट्स खोजें",
@@ -450,5 +454,11 @@
   "terms_and_condition_not_available_key": "नियम और शर्तें उपलब्ध नहीं हैं",
   "signature_not_available_key": "हस्ताक्षर उपलब्ध नहीं है",
   "coins_earned__by_customer_key": "ग्राहक द्वारा अर्जित सिक्के",
-  "to_key": "से"
+  "to_key": "से",
+  "otp_resend": "ओटीपी पुनः भेजें",
+  "resend_OTP_after" : "ओटीपी पुनः भेजे",
+  "seconds" : "सेकंड",
+  "otp_resend_successfully":"ओटीपी सफलतापूर्वक भेजा गया",
+  "try_after": "",
+  "try_after_hi" : "के बाद प्रयास करे"
 }

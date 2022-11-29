@@ -4,9 +4,10 @@ import 'package:vendor/model/product_model.dart';
 abstract class BillingProductsState extends Equatable {}
 
 class CheckerBillingProductstate extends BillingProductsState {
- List<ProductModel> productList;
- bool isChecked;
-  CheckerBillingProductstate({required this.productList , required this.isChecked});
+  List<ProductModel> productList;
+  bool isChecked;
+  CheckerBillingProductstate(
+      {required this.productList, required this.isChecked});
 
   @override
   List<Object?> get props => [productList, isChecked];
@@ -78,6 +79,17 @@ class PayBillingProductsState extends BillingProductsState {
   final succes;
 
   PayBillingProductsState({this.message, this.data, this.succes});
+
+  @override
+  List<Object> get props => [message, data, succes];
+}
+
+class OtpResendBillingProductState extends BillingProductsState {
+  final message;
+  final data;
+  final succes;
+
+  OtpResendBillingProductState({this.message, this.data, this.succes});
 
   @override
   List<Object> get props => [message, data, succes];

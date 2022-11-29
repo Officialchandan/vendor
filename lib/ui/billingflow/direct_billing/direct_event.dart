@@ -24,6 +24,16 @@ class GetDirectBillingEvent extends DirectBillingCustomerNumberResponseEvent {
   List<Object> get props => [input];
 }
 
+class ResendOtpDirectBillingEvent
+    extends DirectBillingCustomerNumberResponseEvent {
+  final Map<String, dynamic> input;
+
+  ResendOtpDirectBillingEvent({required this.input});
+
+  @override
+  List<Object> get props => [input];
+}
+
 class GetDirectBillingOtpEvent
     extends DirectBillingCustomerNumberResponseEvent {
   final Map<String, dynamic> input;
@@ -56,6 +66,7 @@ class GetDirectBillingCheckBoxEvent
   @override
   List<Object> get props => [isChecked, index];
 }
+
 class GetDirectBillingRedeemCheckBoxEvent
     extends DirectBillingCustomerNumberResponseEvent {
   final bool isChecked;

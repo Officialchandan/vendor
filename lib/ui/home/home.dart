@@ -65,7 +65,8 @@ class _HomeScreenState extends State<HomeScreen> {
     "assets/images/home6.png",
   ];
   onShareWithEmptyOrigin(BuildContext context) async {
-    await Share.share("https://play.google.com/store/apps/details?id=com.tencent.ig");
+    await Share.share(
+        "https://play.google.com/store/apps/details?id=com.tencent.ig");
   }
 
   checkInitialMessage() async {
@@ -214,7 +215,7 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: EdgeInsets.fromLTRB(20, 25, 20, 0),
         crossAxisCount: 2,
         itemCount: 6,
-        itemBuilder: (BuildContext context, int index) => new Container(
+        itemBuilder: (BuildContext context, int index) => Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20.0),
             color: index == 0
@@ -240,7 +241,8 @@ class _HomeScreenState extends State<HomeScreen> {
               if (await Network.isConnected()) {
                 routeManager(index);
               } else {
-                Utility.showToast(msg: "please_check_your_internet_connection_key".tr());
+                Utility.showToast(
+                    msg: "please_check_your_internet_connection_key".tr());
               }
             },
             child: Container(
@@ -253,6 +255,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: EdgeInsets.only(left: 10, top: 10),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           AutoSizeText(
                             name[index],
@@ -309,7 +312,8 @@ class _HomeScreenState extends State<HomeScreen> {
   routeManager(index) {
     log("$index");
     index == 0
-        ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: index)
+        ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME,
+            arguments: index)
         : index == 1
             ? Navigator.push(
                 context,
@@ -320,18 +324,27 @@ class _HomeScreenState extends State<HomeScreen> {
                   type: PageTransitionType.fade,
                 ))
             : index == 3
-                ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: 2)
+                ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME,
+                    arguments: 2)
                 : index == 5
-                    ? Navigator.push(context, MaterialPageRoute(builder: (context) => VideoList()))
+                    ? Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => VideoList()))
                     : index == 2
-                        ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: 3)
+                        ? Navigator.pushNamed(
+                            context, Routes.BOTTOM_NAVIGATION_HOME,
+                            arguments: 3)
                         : index == 4
-                            ? Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: 4)
-                            : Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: 4);
+                            ? Navigator.pushNamed(
+                                context, Routes.BOTTOM_NAVIGATION_HOME,
+                                arguments: 4)
+                            : Navigator.pushNamed(
+                                context, Routes.BOTTOM_NAVIGATION_HOME,
+                                arguments: 4);
   }
 
   getNotifications() async {
-    String userId = (await SharedPref.getIntegerPreference(SharedPref.VENDORID)).toString();
+    String userId =
+        (await SharedPref.getIntegerPreference(SharedPref.VENDORID)).toString();
     Map input = HashMap();
     input["vendor_id"] = userId;
     if (await Network.isConnected()) {
@@ -350,7 +363,9 @@ class _HomeScreenState extends State<HomeScreen> {
           count = totalNotification - isReadCount;
         });
       } else {
-        response.message == "" ? Container() : Utility.showToast(msg: response.message);
+        response.message == ""
+            ? Container()
+            : Utility.showToast(msg: response.message);
         message = response.message;
       }
     } else {

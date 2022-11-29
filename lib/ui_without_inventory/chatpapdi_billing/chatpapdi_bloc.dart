@@ -15,9 +15,11 @@ import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/utility.dart';
 
-class ChatPapdiBillingCustomerNumberResponseBloc
-    extends Bloc<ChatPapdiBillingCustomerNumberResponseEvent, ChatPapdiBillingCustomerNumberResponseState> {
-  ChatPapdiBillingCustomerNumberResponseBloc() : super(ChatPapdiBillingCustomerNumberResponseIntialState());
+class ChatPapdiBillingCustomerNumberResponseBloc extends Bloc<
+    ChatPapdiBillingCustomerNumberResponseEvent,
+    ChatPapdiBillingCustomerNumberResponseState> {
+  ChatPapdiBillingCustomerNumberResponseBloc()
+      : super(ChatPapdiBillingCustomerNumberResponseIntialState());
 
   @override
   Stream<ChatPapdiBillingCustomerNumberResponseState> mapEventToState(
@@ -34,10 +36,14 @@ class ChatPapdiBillingCustomerNumberResponseBloc
     }
     if (event is GetDirectBillingCheckBoxEvent) {
       yield GetChatPapdiBillingOtpLoadingstate();
-      yield DirectBillingCheckBoxState(index: event.index, isChecked: event.isChecked);
+      yield DirectBillingCheckBoxState(
+          index: event.index, isChecked: event.isChecked);
     }
     if (event is GetChatPapdiBillingEvent) {
       yield* getChatPapdiBilling(event.input);
+    }
+    if (event is GetChatPapdiResendOtpEvent) {
+      yield* getChatPapdiResendOtp(event.input);
     }
 
     if (event is GetChatPapdiBillingOtpEvent) {
@@ -56,13 +62,15 @@ class ChatPapdiBillingCustomerNumberResponseBloc
     }
   }
 
-  Stream<ChatPapdiBillingCustomerNumberResponseState> getChatPapdiBillingCustomerNumberResponse(mobile) async* {
+  Stream<ChatPapdiBillingCustomerNumberResponseState>
+      getChatPapdiBillingCustomerNumberResponse(mobile) async* {
     if (await Network.isConnected()) {
       EasyLoading.show();
       yield GetChatPapdiBillingCustomerNumberResponseLoadingstate();
       EasyLoading.dismiss();
       try {
-        CustomerNumberResponse result = await apiProvider.getCustomerCoins(mobile);
+        CustomerNumberResponse result =
+            await apiProvider.getCustomerCoins(mobile);
         log("$result");
         if (result.success) {
           yield GetChatPapdiBillingCustomerNumberResponseState(
@@ -75,7 +83,9 @@ class ChatPapdiBillingCustomerNumberResponseBloc
         } else {
           Utility.showToast(msg: result.message);
           yield GetChatPapdiBillingCustomerNumberResponseFailureState(
-              message: result.message, succes: result.success, status: result.cust_reg_status);
+              message: result.message,
+              succes: result.success,
+              status: result.cust_reg_status);
         }
       } catch (error) {
         yield GetChatPapdiBillingCustomerNumberResponseFailureState(
@@ -86,79 +96,132 @@ class ChatPapdiBillingCustomerNumberResponseBloc
     }
   }
 
-  Stream<ChatPapdiBillingCustomerNumberResponseState> getChatPapdiBilling(input) async* {
+  Stream<ChatPapdiBillingCustomerNumberResponseState> getChatPapdiBilling(
+      input) async* {
     if (await Network.isConnected()) {
       yield GetChatPapdiBillingLoadingstate();
       try {
         ChatPapdiResponse result = await apiProvider.getChatPapdiBilling(input);
         log("$result");
         if (result.success) {
-          SharedPref.setStringPreference(SharedPref.VendorCoin, result.data!.vendorAvailableCoins);
-          yield GetChatPapdiBillingState(message: result.message, data: result.data!, succes: result.success);
+          SharedPref.setStringPreference(
+              SharedPref.VendorCoin, result.data!.vendorAvailableCoins);
+          yield GetChatPapdiBillingState(
+              message: result.message,
+              data: result.data!,
+              succes: result.success);
         } else {
           Utility.showToast(msg: result.message);
-          yield GetChatPapdiBillingFailureState(message: result.message, succes: result.success);
+          yield GetChatPapdiBillingFailureState(
+              message: result.message, succes: result.success);
         }
       } catch (error) {
-        yield GetChatPapdiBillingFailureState(message: "internal_server_error_key".tr(), succes: false);
+        yield GetChatPapdiBillingFailureState(
+            message: "internal_server_error_key".tr(), succes: false);
       }
     } else {
       Utility.showToast(msg: "please_check_your_internet_connection_key".tr());
     }
   }
 
-  Stream<ChatPapdiBillingCustomerNumberResponseState> getChatPapdiBillingOtp(input) async* {
+  Stream<ChatPapdiBillingCustomerNumberResponseState> getChatPapdiResendOtp(
+      input) async* {
+    if (await Network.isConnected()) {
+      yield GetChatPapdiBillingLoadingstate();
+      try {
+        ChatPapdiResponse result = await apiProvider.getChatPapdiBilling(input);
+        log("$result");
+        if (result.success) {
+          SharedPref.setStringPreference(
+              SharedPref.VendorCoin, result.data!.vendorAvailableCoins);
+          yield GetChatPapdiResendOtpState(
+              message: result.message,
+              data: result.data!,
+              succes: result.success);
+        } else {
+          Utility.showToast(msg: result.message);
+          yield GetChatPapdiBillingFailureState(
+              message: result.message, succes: result.success);
+        }
+      } catch (error) {
+        yield GetChatPapdiBillingFailureState(
+            message: "internal_server_error_key".tr(), succes: false);
+      }
+    } else {
+      Utility.showToast(msg: "please_check_your_internet_connection_key".tr());
+    }
+  }
+
+  Stream<ChatPapdiBillingCustomerNumberResponseState> getChatPapdiBillingOtp(
+      input) async* {
     if (await Network.isConnected()) {
       yield GetChatPapdiBillingOtpLoadingstate();
       try {
         ChatPapdiOtpResponse result = await apiProvider.getChatPapdiOtp(input);
         log("$result");
         if (result.success) {
-          yield GetChatPapdiBillingOtpState(message: result.message, data: result.message, succes: result.success);
+          yield GetChatPapdiBillingOtpState(
+              message: result.message,
+              data: result.message,
+              succes: result.success);
         } else {
           Utility.showToast(msg: result.message);
-          yield GetChatPapdiBillingOtpFailureState(message: result.message, succes: result.success);
+          yield GetChatPapdiBillingOtpFailureState(
+              message: result.message, succes: result.success);
         }
       } catch (error) {
-        yield GetChatPapdiBillingOtpFailureState(message: "internal_server_error_key".tr(), succes: false);
+        yield GetChatPapdiBillingOtpFailureState(
+            message: "internal_server_error_key".tr(), succes: false);
       }
     } else {
       Utility.showToast(msg: "please_check_your_internet_connection_key".tr());
     }
   }
 
-  Stream<ChatPapdiBillingCustomerNumberResponseState> getChatPapdiPartialUserRegister(input) async* {
+  Stream<ChatPapdiBillingCustomerNumberResponseState>
+      getChatPapdiPartialUserRegister(input) async* {
     if (await Network.isConnected()) {
       try {
-        PartialUserRegisterResponse result = await apiProvider.getChatPapdiPatialUserRegister(input);
+        PartialUserRegisterResponse result =
+            await apiProvider.getChatPapdiPatialUserRegister(input);
         log("$result");
         if (result.success) {
-          yield GetChatPapdiPartialUserState(message: result.message, data: result.message, succes: result.success);
+          yield GetChatPapdiPartialUserState(
+              message: result.message,
+              data: result.message,
+              succes: result.success);
         } else {
           Utility.showToast(msg: result.message);
-          yield GetChatPapdiPartialUserFailureState(message: result.message, succes: result.success);
+          yield GetChatPapdiPartialUserFailureState(
+              message: result.message, succes: result.success);
         }
       } catch (error) {
-        yield GetChatPapdiPartialUserFailureState(message: "internal_server_error_key".tr(), succes: false);
+        yield GetChatPapdiPartialUserFailureState(
+            message: "internal_server_error_key".tr(), succes: false);
       }
     } else {
       Utility.showToast(msg: "please_check_your_internet_connection_key".tr());
     }
   }
 
-  Stream<ChatPapdiBillingCustomerNumberResponseState> getVendorCategoryByIdResponse() async* {
+  Stream<ChatPapdiBillingCustomerNumberResponseState>
+      getVendorCategoryByIdResponse() async* {
     if (await Network.isConnected()) {
       yield GetDirectBillingCategoryByVendorIdLoadingstate();
       try {
-        GetCategoriesResponse result = await apiProvider.getCategoryByVendorId();
+        GetCategoriesResponse result =
+            await apiProvider.getCategoryByVendorId();
         log("$result");
         if (result.success) {
-          yield GetDirectBillingCategoryByVendorIdState(message: result.message, data: result.data!);
+          yield GetDirectBillingCategoryByVendorIdState(
+              message: result.message, data: result.data!);
         } else {
-          yield GetDirectBillingCategoryByVendorIdFailureState(message: result.message);
+          yield GetDirectBillingCategoryByVendorIdFailureState(
+              message: result.message);
         }
       } catch (error) {
-        yield GetDirectBillingCategoryByVendorIdFailureState(message: "internal_server_error_key".tr());
+        yield GetDirectBillingCategoryByVendorIdFailureState(
+            message: "internal_server_error_key".tr());
       }
     } else {
       Utility.showToast(msg: "please_check_your_internet_connection_key".tr());

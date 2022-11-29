@@ -17,7 +17,12 @@ class GetDirectBillingCustomerNumberResponseState
   final firstName;
   final lastName;
   GetDirectBillingCustomerNumberResponseState(
-      {this.message, this.status, this.data, this.succes, this.firstName, this.lastName});
+      {this.message,
+      this.status,
+      this.data,
+      this.succes,
+      this.firstName,
+      this.lastName});
 
   @override
   List<Object> get props => [message, data, succes, firstName, lastName];
@@ -47,6 +52,17 @@ class GetDirectBillingState extends DirectBillingCustomerNumberResponseState {
   final data;
   final succes;
   GetDirectBillingState({this.message, this.data, this.succes});
+
+  @override
+  List<Object> get props => [message, data, succes];
+}
+
+class ResendOtpDirectBillingState
+    extends DirectBillingCustomerNumberResponseState {
+  final message;
+  final data;
+  final succes;
+  ResendOtpDirectBillingState({this.message, this.data, this.succes});
 
   @override
   List<Object> get props => [message, data, succes];
@@ -143,23 +159,27 @@ class GetDirectBillingCategoryByVendorIdFailureState
   @override
   List<Object?> get props => [message];
 }
-class DirectBillingCheckBoxState extends DirectBillingCustomerNumberResponseState{
+
+class DirectBillingCheckBoxState
+    extends DirectBillingCustomerNumberResponseState {
   final int index;
   final bool isChecked;
   DirectBillingCheckBoxState({required this.index, required this.isChecked});
   @override
   List<Object?> get props => [index, isChecked];
 }
-class DirectBillingRedeemCheckBoxState extends DirectBillingCustomerNumberResponseState{
+
+class DirectBillingRedeemCheckBoxState
+    extends DirectBillingCustomerNumberResponseState {
   final bool isChecked;
   DirectBillingRedeemCheckBoxState({required this.isChecked});
   @override
   List<Object?> get props => [isChecked];
 }
 
-class DirectBillingLoadingState extends DirectBillingCustomerNumberResponseState{
+class DirectBillingLoadingState
+    extends DirectBillingCustomerNumberResponseState {
   DirectBillingLoadingState();
   @override
   List<Object?> get props => [];
-
 }

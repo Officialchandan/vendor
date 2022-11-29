@@ -13,6 +13,14 @@ class GetLoginEvent extends LoginEvent {
   List<Object?> get props => [mobile];
 }
 
+class GetotpResendEvent extends LoginEvent {
+  final mobile;
+  GetotpResendEvent({required this.mobile});
+
+  @override
+  List<Object?> get props => [mobile];
+}
+
 class GetLoginOtpEvent extends LoginEvent {
   final mobile;
   final otp;

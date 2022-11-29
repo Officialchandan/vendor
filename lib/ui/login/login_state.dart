@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+
 abstract class LoginState extends Equatable {}
 
 class LoginInitialState extends LoginState {
@@ -13,6 +14,14 @@ class GetLoginState extends LoginState {
 
   @override
   List<Object> get props => [message];
+}
+
+class GetResendOptState extends LoginState {
+  final bool isCheckStatus;
+  GetResendOptState({required this.isCheckStatus});
+
+  @override
+  List<Object> get props => [isCheckStatus];
 }
 
 class LoadingState extends LoginState {

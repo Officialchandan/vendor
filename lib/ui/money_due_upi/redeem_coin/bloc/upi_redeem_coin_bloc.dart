@@ -20,9 +20,11 @@ class RedeemCoinBloc extends Bloc<RedeemCoinEvents, RedeemCoinStates> {
     }
   }
 
-  Stream<RedeemCoinStates> getRedeemCoinData(GetRedeemCoinDataEvent event) async* {
+  Stream<RedeemCoinStates> getRedeemCoinData(
+      GetRedeemCoinDataEvent event) async* {
     if (await Network.isConnected()) {
-      UpiRedeemCoinResponse response = await apiProvider.upiRedeemCoin(event.input);
+      UpiRedeemCoinResponse response =
+          await apiProvider.upiRedeemCoin(event.input);
 
       if (response.success) {
         List<CoinDetail> orderList = [];

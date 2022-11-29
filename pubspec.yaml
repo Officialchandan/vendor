@@ -36,7 +36,6 @@ dependencies:
   #bloc architecture
   flutter_bloc: 7.3.3
   page_transition:
-  #toast msg
   fluttertoast:
 
   #internet connection
@@ -125,6 +124,10 @@ dependencies:
   video_player:
   youtube_player_iframe:
   flutter_inappwebview: ^5.4.3+7
+#restartapp
+  flutter_phoenix: ^1.1.0
+  flutter_cache_manager: ^3.3.0
+
 
 dev_dependencies:
   flutter_test:

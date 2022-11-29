@@ -31,9 +31,11 @@ class BillingScreen extends StatefulWidget {
 }
 
 class _BillingScreenState extends State<BillingScreen> {
-  CustomerNumberResponseBloc customerNumberResponseBloc = CustomerNumberResponseBloc();
+  CustomerNumberResponseBloc customerNumberResponseBloc =
+      CustomerNumberResponseBloc();
   TextEditingController mobileController = TextEditingController();
   TextEditingController nameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
   List<CategoryModel> category = [];
 
   var check;
@@ -46,7 +48,8 @@ class _BillingScreenState extends State<BillingScreen> {
   var status;
   var status1;
   int navig = 1;
-  RefreshController _refreshController = RefreshController(initialRefresh: false);
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
 
   @override
   void initState() {
@@ -72,7 +75,8 @@ class _BillingScreenState extends State<BillingScreen> {
         )),
         Text(
           "  0.0",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: ColorPrimary),
+          style: TextStyle(
+              fontSize: 20, fontWeight: FontWeight.w700, color: ColorPrimary),
         ),
       ],
     );
@@ -82,20 +86,27 @@ class _BillingScreenState extends State<BillingScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomeScreen()), (route) => false);
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => HomeScreen()),
+            (route) => false);
         return true;
       },
       child: BlocProvider<CustomerNumberResponseBloc>(
         create: (context) => customerNumberResponseBloc,
-        child: BlocConsumer<CustomerNumberResponseBloc, CustomerNumberResponseState>(
+        child: BlocConsumer<CustomerNumberResponseBloc,
+            CustomerNumberResponseState>(
           listener: (context, state) async {
-            userStatus = await SharedPref.getIntegerPreference(SharedPref.USERSTATUS);
+            userStatus =
+                await SharedPref.getIntegerPreference(SharedPref.USERSTATUS);
           },
           builder: (context, state) {
             return Scaffold(
               appBar: AppBar(
-                title: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Text("billing_key".tr(), style: TextStyle(fontWeight: FontWeight.w600)),
+                title:
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Text("billing_key".tr(),
+                      style: TextStyle(fontWeight: FontWeight.w600)),
                   SizedBox(width: 5),
                   Image.asset(
                     "assets/images/point.png",
@@ -108,27 +119,36 @@ class _BillingScreenState extends State<BillingScreen> {
                 leadingWidth: 100,
                 leading: userStatus == 1 || userStatus == 3
                     ? Padding(
-                        padding: const EdgeInsets.only(top: 15.0, bottom: 15, left: 20),
+                        padding: const EdgeInsets.only(
+                            top: 15.0, bottom: 15, left: 20),
                         child: InkWell(
                           onTap: () {
                             Navigator.push(
                                 context,
                                 PageTransition(
-                                    child: DirectBilling(usertype: userStatus), type: PageTransitionType.fade));
+                                    child: DirectBilling(usertype: userStatus),
+                                    type: PageTransitionType.fade));
                           },
                           child: Container(
-                            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5)),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(5)),
                             child: Center(
-                              child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-                                Text(
-                                  "direct_billing_key".tr(),
-                                  style: TextStyle(color: ColorPrimary, fontWeight: FontWeight.bold),
-                                ),
-                                Image.asset(
-                                  "assets/images/point.png",
-                                  scale: 3,
-                                ),
-                              ]),
+                              child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Text(
+                                      "direct_billing_key".tr(),
+                                      style: TextStyle(
+                                          color: ColorPrimary,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Image.asset(
+                                      "assets/images/point.png",
+                                      scale: 3,
+                                    ),
+                                  ]),
                             ),
                           ),
                         ),
@@ -138,8 +158,12 @@ class _BillingScreenState extends State<BillingScreen> {
                 actions: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushAndRemoveUntil(context,
-                          PageTransition(child: HomeScreen(), type: PageTransitionType.fade), ModalRoute.withName("/"));
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          PageTransition(
+                              child: HomeScreen(),
+                              type: PageTransitionType.fade),
+                          ModalRoute.withName("/"));
                       // Navigator.pop(context);
                       log("$userStatus");
                       log("${SharedPref.getIntegerPreference(SharedPref.VENDORID)}");
@@ -183,15 +207,22 @@ class _BillingScreenState extends State<BillingScreen> {
                               mobileController.text.length == 10
                                   ? Text(
                                       " $customerCoins",
-                                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: ColorPrimary),
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w700,
+                                          color: ColorPrimary),
                                     )
                                   : Text(
                                       " 0.0",
-                                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: ColorPrimary),
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w700,
+                                          color: ColorPrimary),
                                     ),
                             ],
                           ),
-                          BlocConsumer<CustomerNumberResponseBloc, CustomerNumberResponseState>(
+                          BlocConsumer<CustomerNumberResponseBloc,
+                              CustomerNumberResponseState>(
                             listener: (context, state) {
                               if (state is GetCustomerNumberResponseState) {
                                 firstName = state.firstName;
@@ -200,11 +231,13 @@ class _BillingScreenState extends State<BillingScreen> {
                                 coins = state.data;
                                 customerCoins = state.data;
                               }
-                              if (state is GetCustomerNumberResponseFailureState) {
+                              if (state
+                                  is GetCustomerNumberResponseFailureState) {
                                 check = state.succes;
                                 message = state.message;
                                 status = state.status;
                                 nameController.clear();
+                                lastNameController.clear();
                                 firstName = "";
                                 lastName = "";
                               }
@@ -269,7 +302,8 @@ class _BillingScreenState extends State<BillingScreen> {
                               return Container();
                             },
                           ),
-                          BlocConsumer<CustomerNumberResponseBloc, CustomerNumberResponseState>(
+                          BlocConsumer<CustomerNumberResponseBloc,
+                              CustomerNumberResponseState>(
                             listener: (context, state) {},
                             builder: (context, state) {
                               return Container(
@@ -277,58 +311,146 @@ class _BillingScreenState extends State<BillingScreen> {
                                   TextFormField(
                                       controller: mobileController,
                                       keyboardType: TextInputType.number,
-                                      validator: (numb) => Validator.validateMobile(numb!, context),
-                                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                      validator: (numb) =>
+                                          Validator.validateMobile(
+                                              numb!, context),
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.digitsOnly
+                                      ],
                                       maxLength: 10,
                                       decoration: InputDecoration(
                                         errorStyle: TextStyle(fontSize: 12),
-                                        labelStyle: TextStyle(fontSize: 16, color: TextBlackLight),
-                                        hintStyle: TextStyle(fontSize: 16, color: TextBlackLight),
-                                        hintText: 'enter_customer_phone_number_key'.tr(),
+                                        labelStyle: TextStyle(
+                                            fontSize: 16,
+                                            color: TextBlackLight),
+                                        hintStyle: TextStyle(
+                                            fontSize: 16,
+                                            color: TextBlackLight),
+                                        hintText:
+                                            'enter_customer_phone_number_key'
+                                                .tr(),
                                         labelText: 'mobile_number_key'.tr(),
                                         counterText: "",
                                         contentPadding: EdgeInsets.all(0),
                                         fillColor: Colors.transparent,
                                         enabledBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(color: textFieldBorderColor, width: 1.5)),
+                                            borderSide: BorderSide(
+                                                color: textFieldBorderColor,
+                                                width: 1.5)),
                                         focusedBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
+                                            borderSide: BorderSide(
+                                                color: ColorPrimary,
+                                                width: 1.5)),
                                         border: UnderlineInputBorder(
-                                            borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
+                                            borderSide: BorderSide(
+                                                color: ColorPrimary,
+                                                width: 1.5)),
                                       ),
                                       onChanged: (length) {
-                                        if (mobileController.text.length == 10) {
-                                          customerNumberResponseBloc
-                                              .add(GetCustomerNumberResponseEvent(mobile: mobileController.text));
+                                        if (mobileController.text.length ==
+                                            10) {
+                                          customerNumberResponseBloc.add(
+                                              GetCustomerNumberResponseEvent(
+                                                  mobile:
+                                                      mobileController.text));
                                         }
                                         if (mobileController.text.length == 9) {
                                           customerCoins = "0.0";
-                                          customerNumberResponseBloc
-                                              .add(GetCustomerNumberResponseEvent(mobile: mobileController.text));
+                                          customerNumberResponseBloc.add(
+                                              GetCustomerNumberResponseEvent(
+                                                  mobile:
+                                                      mobileController.text));
                                         }
                                       }),
                                   status == 0
                                       ? Padding(
-                                          padding: const EdgeInsets.only(top: 8.0),
+                                          padding:
+                                              const EdgeInsets.only(top: 8.0),
                                           child: TextFormField(
                                               controller: nameController,
-                                              inputFormatters: [FilteringTextInputFormatter.allow(Validator.name)],
+                                              inputFormatters: [
+                                                FilteringTextInputFormatter
+                                                    .allow(Validator.name)
+                                              ],
                                               decoration: InputDecoration(
-                                                errorStyle: TextStyle(fontSize: 12),
-                                                hintStyle: TextStyle(fontSize: 16, color: TextBlackLight),
-                                                labelStyle: TextStyle(fontSize: 16, color: TextBlackLight),
-                                                hintText: 'enter_customer_name_key'.tr(),
-                                                labelText: 'full_name_key'.tr(),
+                                                errorStyle:
+                                                    TextStyle(fontSize: 12),
+                                                hintStyle: TextStyle(
+                                                    fontSize: 16,
+                                                    color: TextBlackLight),
+                                                labelStyle: TextStyle(
+                                                    fontSize: 16,
+                                                    color: TextBlackLight),
+                                                hintText:
+                                                    'enter_customer_first_name_key'
+                                                        .tr(),
+                                                labelText:
+                                                    'first_name_key'.tr(),
                                                 counterText: "",
-                                                contentPadding: EdgeInsets.all(0),
+                                                contentPadding:
+                                                    EdgeInsets.all(0),
                                                 fillColor: Colors.transparent,
                                                 enabledBorder: UnderlineInputBorder(
-                                                    borderSide: BorderSide(color: textFieldBorderColor, width: 1.5)),
-                                                focusedBorder: UnderlineInputBorder(
-                                                    borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
+                                                    borderSide: BorderSide(
+                                                        color:
+                                                            textFieldBorderColor,
+                                                        width: 1.5)),
+                                                focusedBorder:
+                                                    UnderlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                            color: ColorPrimary,
+                                                            width: 1.5)),
                                                 border: UnderlineInputBorder(
-                                                    borderSide: BorderSide(color: ColorPrimary, width: 1.5)),
+                                                    borderSide: BorderSide(
+                                                        color: ColorPrimary,
+                                                        width: 1.5)),
+                                              ),
+                                              onChanged: (length) {}),
+                                        )
+                                      : Container(),
+                                  status == 0
+                                      ? Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 8.0),
+                                          child: TextFormField(
+                                              controller: lastNameController,
+                                              inputFormatters: [
+                                                FilteringTextInputFormatter
+                                                    .allow(Validator.name)
+                                              ],
+                                              decoration: InputDecoration(
+                                                errorStyle:
+                                                    TextStyle(fontSize: 12),
+                                                hintStyle: TextStyle(
+                                                    fontSize: 16,
+                                                    color: TextBlackLight),
+                                                labelStyle: TextStyle(
+                                                    fontSize: 16,
+                                                    color: TextBlackLight),
+                                                hintText:
+                                                    'enter_customer_last_name_key'
+                                                        .tr(),
+                                                labelText: 'last_name_key'.tr(),
+                                                counterText: "",
+                                                contentPadding:
+                                                    EdgeInsets.all(0),
+                                                fillColor: Colors.transparent,
+                                                enabledBorder: UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color:
+                                                            textFieldBorderColor,
+                                                        width: 1.5)),
+                                                focusedBorder:
+                                                    UnderlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                            color: ColorPrimary,
+                                                            width: 1.5)),
+                                                border: UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color: ColorPrimary,
+                                                        width: 1.5)),
                                               ),
                                               onChanged: (length) {}),
                                         )
@@ -346,26 +468,46 @@ class _BillingScreenState extends State<BillingScreen> {
                                 if (mobileController.text.length == 10) {
                                   if (check == false) {
                                     if (status == 0) {
-                                      if (nameController.text.length > 1) {
+                                      if (nameController.text.trim().length >=
+                                          3) {
                                         //   userRegister(context);
-                                        FocusScope.of(context).unfocus();
-                                        Navigator.push(
-                                                context,
-                                                PageTransition(
-                                                    child: SearchAllProduct(
-                                                      mobile: mobileController.text,
-                                                      coin: coins = 0.toString(),
-                                                      lastName: lastName,
-                                                      firstName: firstName.isEmpty ? nameController.text : firstName,
-                                                    ),
-                                                    type: PageTransitionType.fade))
-                                            .then((value) {
-                                          // nameController.clear();
-                                          // mobileController.clear();
-                                          FocusScope.of(context).unfocus();
-                                        });
+                                        if (lastNameController.text
+                                                .trim()
+                                                .length >=
+                                            3) {
+                                          Navigator.push(
+                                                  context,
+                                                  PageTransition(
+                                                      child: SearchAllProduct(
+                                                        mobile: mobileController
+                                                            .text,
+                                                        coin: coins =
+                                                            0.toString(),
+                                                        lastName: lastNameController
+                                                                .text.isEmpty
+                                                            ? lastName
+                                                            : lastNameController
+                                                                .text,
+                                                        firstName:
+                                                            firstName.isEmpty
+                                                                ? nameController
+                                                                    .text
+                                                                : firstName,
+                                                      ),
+                                                      type: PageTransitionType
+                                                          .fade))
+                                              .then((value) {
+                                            // nameController.clear();
+                                            // mobileController.clear();
+                                            FocusScope.of(context).unfocus();
+                                          });
+                                        } else {
+                                          Utility.showToast(
+                                              msg: "last_name_excp_key".tr());
+                                        }
                                       } else {
-                                        Utility.showToast(msg: "please_enter_name_key".tr());
+                                        Utility.showToast(
+                                            msg: "first_name_excp_key".tr());
                                       }
                                     }
                                   } else {
@@ -375,8 +517,16 @@ class _BillingScreenState extends State<BillingScreen> {
                                           context,
                                           PageTransition(
                                               child: SearchAllProduct(
-                                                lastName: lastName,
-                                                firstName: firstName.isEmpty ? nameController.text : firstName,
+                                                lastName: lastNameController
+                                                        .text
+                                                        .trim()
+                                                        .isEmpty
+                                                    ? lastName
+                                                    : lastNameController.text
+                                                        .trim(),
+                                                firstName: firstName.isEmpty
+                                                    ? nameController.text.trim()
+                                                    : firstName,
                                                 mobile: mobileController.text,
                                                 coin: coins,
                                               ),
@@ -386,18 +536,25 @@ class _BillingScreenState extends State<BillingScreen> {
                                     }
                                   }
                                 } else {
-                                  Utility.showToast(msg: "please_enter_vailid_number_first_key".tr());
+                                  Utility.showToast(
+                                      msg:
+                                          "please_enter_vailid_number_first_key"
+                                              .tr());
                                 }
                               } else {
                                 Utility.showToast(
-                                  msg: "please_check_your_internet_connection_key".tr(),
+                                  msg:
+                                      "please_check_your_internet_connection_key"
+                                          .tr(),
                                 );
                               }
                             },
                             child: TextFormField(
                               cursorColor: ColorPrimary,
                               keyboardType: TextInputType.number,
-                              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
                               decoration: InputDecoration(
                                 prefixIcon: Icon(
                                   Icons.search,
@@ -407,15 +564,20 @@ class _BillingScreenState extends State<BillingScreen> {
                                 enabled: false,
                                 // fillColor: Colors.black,
                                 hintText: "search_all_products_key".tr(),
-                                hintStyle: GoogleFonts.openSans(fontWeight: FontWeight.w600, color: Colors.black),
-                                contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                                hintStyle: GoogleFonts.openSans(
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black),
+                                contentPadding: const EdgeInsets.only(
+                                    left: 14.0, bottom: 8.0, top: 8.0),
                                 border: OutlineInputBorder(
-                                  borderSide: BorderSide(color: textFieldBorderColor, width: 5),
+                                  borderSide: BorderSide(
+                                      color: textFieldBorderColor, width: 5),
                                   borderRadius: BorderRadius.circular(5.0),
                                 ),
 
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: ColorTextPrimary, width: 5),
+                                  borderSide: BorderSide(
+                                      color: ColorTextPrimary, width: 5),
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                               ),
@@ -442,12 +604,16 @@ class _BillingScreenState extends State<BillingScreen> {
                           ),
                           Text(
                             "search_by_category_key".tr(),
-                            style: TextStyle(fontSize: 16, color: TextBlackLight, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: TextBlackLight,
+                                fontWeight: FontWeight.bold),
                           ),
                           SizedBox(
                             height: 10,
                           ),
-                          BlocConsumer<CustomerNumberResponseBloc, CustomerNumberResponseState>(
+                          BlocConsumer<CustomerNumberResponseBloc,
+                              CustomerNumberResponseState>(
                             listener: (context, state) {
                               if (state is GetCategoryByVendorIdState) {
                                 // Utility.showToast(
@@ -468,12 +634,14 @@ class _BillingScreenState extends State<BillingScreen> {
                             },
                             builder: (context, state) {
                               if (state is CustomerNumberResponseIntialState) {
-                                customerNumberResponseBloc.add(GetVendorCategoryEvent());
+                                customerNumberResponseBloc
+                                    .add(GetVendorCategoryEvent());
                               }
                               if (state is GetCategoryByVendorIdState) {
                                 if (userStatus == 3) {
                                   category = state.data;
-                                  category.removeWhere((element) => element.id == "21" || element.id == "31");
+                                  category.removeWhere((element) =>
+                                      element.id == "21" || element.id == "31");
                                 } else {
                                   category = state.data;
                                 }
@@ -490,7 +658,8 @@ class _BillingScreenState extends State<BillingScreen> {
                               return Container(
                                   color: Colors.transparent,
                                   //   padding: EdgeInsets.only(bottom: 80),
-                                  height: MediaQuery.of(context).size.height * 0.42,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.42,
                                   child: categoryListWidget(category));
                             },
                           ),
@@ -506,8 +675,11 @@ class _BillingScreenState extends State<BillingScreen> {
                   onTap: () async {
                     if (await Network.isConnected()) {
                       FocusScope.of(context).unfocus();
-                      Navigator.push(context,
-                              PageTransition(child: AddProductScreen(status: 0), type: PageTransitionType.fade))
+                      Navigator.push(
+                              context,
+                              PageTransition(
+                                  child: AddProductScreen(status: 0),
+                                  type: PageTransitionType.fade))
                           .then((value) => FocusScope.of(context).unfocus());
                     } else {
                       Utility.showToast(
@@ -525,7 +697,10 @@ class _BillingScreenState extends State<BillingScreen> {
                     child: Center(
                         child: Text(
                       "add_new_product_key".tr(),
-                      style: TextStyle(color: ColorPrimary, fontSize: 18, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                          color: ColorPrimary,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600),
                     )),
                   ),
                 ),
@@ -553,27 +728,37 @@ class _BillingScreenState extends State<BillingScreen> {
                 if (mobileController.text.length == 10) {
                   if (check == false) {
                     if (status == 0) {
-                      if (nameController.text.length > 1) {
+                      if (nameController.text.trim().length >= 3) {
                         //  userRegister(context);
-                        FocusScope.of(context).unfocus();
-                        Navigator.push(
-                                context,
-                                PageTransition(
-                                    child: SearchByCategory(
-                                      firstName: firstName.isEmpty ? nameController.text : firstName,
-                                      lastName: lastName,
-                                      catid: category[index].id.toString(),
-                                      mobile: mobileController.text,
-                                      coin: coins,
-                                    ),
-                                    type: PageTransitionType.fade))
-                            .then((value) {
-                          // nameController.clear();
-                          // mobileController.clear();
-                        });
+                        if (lastNameController.text.trim().length >= 3) {
+                          FocusScope.of(context).unfocus();
+                          Navigator.push(
+                                  context,
+                                  PageTransition(
+                                      child: SearchByCategory(
+                                        firstName: firstName.isEmpty
+                                            ? nameController.text.trim()
+                                            : firstName,
+                                        lastName: lastNameController.text
+                                                .trim()
+                                                .isEmpty
+                                            ? lastName
+                                            : lastNameController.text.trim(),
+                                        catid: category[index].id.toString(),
+                                        mobile: mobileController.text,
+                                        coin: coins,
+                                      ),
+                                      type: PageTransitionType.fade))
+                              .then((value) {
+                            // nameController.clear();
+                            // mobileController.clear();
+                          });
+                        } else {
+                          Utility.showToast(msg: "last_name_excp_key".tr());
+                        }
                       } else {
                         Utility.showToast(
-                          msg: "please_enter_name_key".tr(),
+                          msg: "first_name_excp_key".tr(),
                         );
                       }
                     }
@@ -584,8 +769,12 @@ class _BillingScreenState extends State<BillingScreen> {
                           context,
                           PageTransition(
                               child: SearchByCategory(
-                                lastName: lastName,
-                                firstName: firstName.isEmpty ? nameController.text : firstName,
+                                lastName: lastNameController.text.trim().isEmpty
+                                    ? lastName
+                                    : lastNameController.text.trim(),
+                                firstName: firstName.isEmpty
+                                    ? nameController.text.trim()
+                                    : firstName,
                                 catid: category[index].id.toString(),
                                 mobile: mobileController.text,
                                 coin: coins,
@@ -598,7 +787,8 @@ class _BillingScreenState extends State<BillingScreen> {
                     }
                   }
                 } else {
-                  Utility.showToast(msg: "please_enter_vailid_number_first_key".tr());
+                  Utility.showToast(
+                      msg: "please_enter_vailid_number_first_key".tr());
                 }
               } else {
                 Utility.showToast(
@@ -636,7 +826,8 @@ class _BillingScreenState extends State<BillingScreen> {
                         //colorBlendMode: BlendMode.clear,
                         fit: BoxFit.contain);
                   },
-                  progressIndicatorBuilder: (context, url, downloadProgress) => Icon(
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      Icon(
                     Icons.image,
                     color: ColorPrimary,
                   ),
@@ -647,7 +838,10 @@ class _BillingScreenState extends State<BillingScreen> {
                   transform: Matrix4.translationValues(0, -2, 0),
                   child: Text(
                     "${category[index].categoryName}",
-                    style: TextStyle(fontSize: 16, color: TextBlackLight, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: TextBlackLight,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
                 // trailing: ButtonTheme(

@@ -28,9 +28,10 @@ class DeleteBillingProductsEvent extends BillingProductsEvent {
 }
 
 class CheckedBillingProductsEvent extends BillingProductsEvent {
- List<ProductModel> productList;
-bool isChecked;
-  CheckedBillingProductsEvent({required this.productList, required this.isChecked});
+  List<ProductModel> productList;
+  bool isChecked;
+  CheckedBillingProductsEvent(
+      {required this.productList, required this.isChecked});
 
   @override
   List<Object?> get props => [productList, isChecked];
@@ -69,6 +70,15 @@ class PayBillingProductsEvent extends BillingProductsEvent {
   final Map<String, dynamic> input;
 
   PayBillingProductsEvent({required this.input});
+
+  @override
+  List<Object> get props => [input];
+}
+
+class OtpResendProductsEvent extends BillingProductsEvent {
+  final Map<String, dynamic> input;
+
+  OtpResendProductsEvent({required this.input});
 
   @override
   List<Object> get props => [input];

@@ -6,6 +6,7 @@ import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/model/billing_product_response.dart';
@@ -38,7 +39,8 @@ class BillingProducts extends StatefulWidget {
   final mobile;
 
   @override
-  _BillingProductsState createState() => _BillingProductsState(this.billingItemList, this.mobile, this.coin);
+  _BillingProductsState createState() =>
+      _BillingProductsState(this.billingItemList, this.mobile, this.coin);
 }
 
 class _BillingProductsState extends State<BillingProducts> {
@@ -52,6 +54,29 @@ class _BillingProductsState extends State<BillingProducts> {
   BillingProductData? otpVerifyList;
   TextEditingController _textFieldController = TextEditingController();
   BillingProductsBloc billingProductsBloc = BillingProductsBloc();
+
+  // -- otpReSend functionality start here -- //
+
+  bool isResendOTPpage = false;
+  int _counter = 0;
+  StreamController<int> events = StreamController.broadcast();
+
+  Timer? _timer;
+  void startTimer() {
+    _counter = 60;
+    if (_timer != null) {
+      _timer!.cancel();
+    }
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      //setState(() {
+      (_counter > 0) ? _counter-- : _timer!.cancel();
+      //});
+      //   print(_counter);
+      events.sink.add(_counter);
+    });
+  }
+
+  // -- otpReSend functionality end here -- //
 
   @override
   void initState() {
@@ -102,6 +127,13 @@ class _BillingProductsState extends State<BillingProducts> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    events.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
@@ -132,10 +164,15 @@ class _BillingProductsState extends State<BillingProducts> {
             }
           }
           if (state is EditBillingProductState) {
-            productList[state.index].sellingPrice = ((state.price) / productList[state.index].count).toStringAsFixed(2);
-            productList[state.index].earningCoins = state.earningCoin.toStringAsFixed(2);
-            print("productList[state.index].sellingPrice-->${productList[state.index].sellingPrice}");
-            productList[state.index].earningCoins = state.earningCoin.toStringAsFixed(2);
+            productList[state.index].sellingPrice =
+                ((state.price) / productList[state.index].count)
+                    .toStringAsFixed(2);
+            productList[state.index].earningCoins =
+                state.earningCoin.toStringAsFixed(2);
+            print(
+                "productList[state.index].sellingPrice-->${productList[state.index].sellingPrice}");
+            productList[state.index].earningCoins =
+                state.earningCoin.toStringAsFixed(2);
             calculateAmounts(productList);
           }
         },
@@ -151,7 +188,10 @@ class _BillingProductsState extends State<BillingProducts> {
             centerTitle: false,
             title: Text(
               "billing_products_key".tr(),
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, letterSpacing: 0.5),
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0.5),
             ),
             actions: [
               Row(children: [
@@ -175,7 +215,8 @@ class _BillingProductsState extends State<BillingProducts> {
               ]),
             ],
           ),
-          body: BlocBuilder<BillingProductsBloc, BillingProductsState>(builder: (context, state) {
+          body: BlocBuilder<BillingProductsBloc, BillingProductsState>(
+              builder: (context, state) {
             if (state is IntitalBillingProductstate) {
               calculateAmounts(productList);
             }
@@ -197,14 +238,16 @@ class _BillingProductsState extends State<BillingProducts> {
                     if (product.productOption.length - 1 == i)
                       variantName += product.productOption[i].value.toString();
                     else
-                      variantName += product.productOption[i].value.toString() + ", ";
+                      variantName +=
+                          product.productOption[i].value.toString() + ", ";
                   }
                 }
 
                 return Stack(
                   children: [
                     Container(
-                      margin: EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 10),
+                      margin: EdgeInsets.only(
+                          left: 14, right: 14, top: 10, bottom: 10),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         boxShadow: [
@@ -231,19 +274,25 @@ class _BillingProductsState extends State<BillingProducts> {
                                   ),
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(10),
-                                    child: productList[index].productImages.isNotEmpty
+                                    child: productList[index]
+                                            .productImages
+                                            .isNotEmpty
                                         ? Image(
                                             height: 55,
                                             width: 55,
                                             fit: BoxFit.contain,
-                                            image: NetworkImage("${productList[index].productImages[0].productImage}"),
+                                            image: NetworkImage(
+                                                "${productList[index].productImages[0].productImage}"),
                                           )
-                                        : productList[index].categoryImage.isNotEmpty
+                                        : productList[index]
+                                                .categoryImage
+                                                .isNotEmpty
                                             ? Image(
                                                 height: 55,
                                                 width: 55,
                                                 fit: BoxFit.contain,
-                                                image: NetworkImage("${productList[index].categoryImage}"),
+                                                image: NetworkImage(
+                                                    "${productList[index].categoryImage}"),
                                               )
                                             : Image(
                                                 image: AssetImage(
@@ -261,12 +310,14 @@ class _BillingProductsState extends State<BillingProducts> {
                                 Flexible(
                                   child: Container(
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
                                           width: width * 0.70,
                                           child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
                                               Container(
                                                 width: width * 0.55,
@@ -274,27 +325,36 @@ class _BillingProductsState extends State<BillingProducts> {
                                                     ? Text(
                                                         "${productList[index].productName}",
                                                         maxLines: 2,
-                                                        overflow: TextOverflow.ellipsis,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
                                                         style: TextStyle(
-                                                            color: TextBlackLight,
-                                                            fontWeight: FontWeight.bold,
+                                                            color:
+                                                                TextBlackLight,
+                                                            fontWeight:
+                                                                FontWeight.bold,
                                                             fontSize: 15),
                                                       )
                                                     : Text(
                                                         "${productList[index].productName} ($variantName)",
                                                         maxLines: 2,
-                                                        overflow: TextOverflow.ellipsis,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
                                                         style: TextStyle(
-                                                            color: TextBlackLight,
-                                                            fontWeight: FontWeight.bold,
+                                                            color:
+                                                                TextBlackLight,
+                                                            fontWeight:
+                                                                FontWeight.bold,
                                                             fontSize: 15),
                                                       ),
                                               ),
                                               Text(
-                                                "qty_key".tr() + ": ${productList[index].count}",
+                                                "qty_key".tr() +
+                                                    ": ${productList[index].count}",
                                                 maxLines: 1,
                                                 style: TextStyle(
-                                                    color: TextBlackLight, fontWeight: FontWeight.bold, fontSize: 13),
+                                                    color: TextBlackLight,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 13),
                                               ),
                                             ],
                                           ),
@@ -305,17 +365,20 @@ class _BillingProductsState extends State<BillingProducts> {
                                         Container(
                                           width: width * 0.70,
                                           child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
                                               Row(
-                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
                                                 children: [
                                                   new RichText(
                                                     text: new TextSpan(
                                                       text:
                                                           '\u20B9 ${double.parse(productList[index].sellingPrice) * productList[index].count}  ',
                                                       style: TextStyle(
-                                                          fontWeight: FontWeight.bold,
+                                                          fontWeight:
+                                                              FontWeight.bold,
                                                           color: ColorPrimary,
                                                           fontSize: 18),
                                                       // children: <TextSpan>[
@@ -337,19 +400,30 @@ class _BillingProductsState extends State<BillingProducts> {
                                                   InkWell(
                                                     onTap: () async {
                                                       // i = 0;
-                                                      if (await Network.isConnected()) {
-                                                        _displayDialog(context, index, 0, "edit_amount_key".tr(),
-                                                            "enter_amount_key".tr(), widget.mobile);
+                                                      if (await Network
+                                                          .isConnected()) {
+                                                        _displayDialog(
+                                                            context,
+                                                            index,
+                                                            0,
+                                                            "edit_amount_key"
+                                                                .tr(),
+                                                            "enter_amount_key"
+                                                                .tr(),
+                                                            widget.mobile);
                                                       } else {
                                                         Utility.showToast(
-                                                          msg: "please_check_your_internet_connection_key".tr(),
+                                                          msg:
+                                                              "please_check_your_internet_connection_key"
+                                                                  .tr(),
                                                         );
                                                       }
                                                     },
                                                     child: Container(
                                                       height: 20,
                                                       width: 20,
-                                                      child: Image.asset("assets/images/edit.png"),
+                                                      child: Image.asset(
+                                                          "assets/images/edit.png"),
                                                     ),
                                                   ),
                                                 ],
@@ -407,14 +481,17 @@ class _BillingProductsState extends State<BillingProducts> {
                                               //   ],
                                               // )
                                               Row(
-                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
                                                 children: [
                                                   Text(
                                                     "earn_key".tr() + ": ",
                                                     style: TextStyle(
                                                         fontSize: 13,
-                                                        fontWeight: FontWeight.bold,
-                                                        color: ColorTextPrimary),
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color:
+                                                            ColorTextPrimary),
                                                   ),
                                                   Container(
                                                       child: Image.asset(
@@ -425,7 +502,10 @@ class _BillingProductsState extends State<BillingProducts> {
                                                   Text(
                                                     " ${(double.parse(productList[index].earningCoins) * productList[index].count).toStringAsFixed(2)}",
                                                     style: TextStyle(
-                                                        fontSize: 14, fontWeight: FontWeight.bold, color: ColorPrimary),
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: ColorPrimary),
                                                   ),
                                                 ],
                                               ),
@@ -460,14 +540,17 @@ class _BillingProductsState extends State<BillingProducts> {
                           if (await Network.isConnected()) {
                             log("Product Index  >>>>>>>>> " + index.toString());
 
-                            billingProductsBloc.add(DeleteBillingProductsEvent(index: index));
+                            billingProductsBloc
+                                .add(DeleteBillingProductsEvent(index: index));
                           } else {
                             Utility.showToast(
-                              msg: "please_check_your_internet_connection_key".tr(),
+                              msg: "please_check_your_internet_connection_key"
+                                  .tr(),
                             );
                           }
                         },
-                        child: BlocBuilder<BillingProductsBloc, BillingProductsState>(
+                        child: BlocBuilder<BillingProductsBloc,
+                            BillingProductsState>(
                           builder: (context, state) {
                             return Container(
                               height: 20,
@@ -493,169 +576,243 @@ class _BillingProductsState extends State<BillingProducts> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
-                        child: BlocBuilder<BillingProductsBloc, BillingProductsState>(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 14),
+                        child: BlocBuilder<BillingProductsBloc,
+                            BillingProductsState>(
                           builder: (context, state) {
                             return InkWell(
                               onTap: () async {
                                 if (double.parse(widget.coin.toString()) >= 3) {
                                   if (await Network.isConnected()) {
                                     if (onTileTap == false) {
-                                      billingProductsBloc
-                                          .add(CheckedBillingProductsEvent(isChecked: true, productList: productList));
+                                      billingProductsBloc.add(
+                                          CheckedBillingProductsEvent(
+                                              isChecked: true,
+                                              productList: productList));
                                     }
                                     if (onTileTap == true) {
-                                      billingProductsBloc
-                                          .add(CheckedBillingProductsEvent(isChecked: false, productList: productList));
+                                      billingProductsBloc.add(
+                                          CheckedBillingProductsEvent(
+                                              isChecked: false,
+                                              productList: productList));
                                     }
                                   } else {
                                     Utility.showToast(
-                                      msg: "please_check_your_internet_connection_key".tr(),
+                                      msg:
+                                          "please_check_your_internet_connection_key"
+                                              .tr(),
                                     );
                                   }
                                 } else {
-                                  Utility.showToast(msg: "You_dont_have_enough_coins_key".tr());
+                                  Utility.showToast(
+                                      msg: "You_dont_have_enough_coins_key"
+                                          .tr());
                                 }
                               },
-                              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                Text(
-                                  "${"redeem_coins_key".tr()}",
-                                  style: TextStyle(fontSize: 15, color: ColorTextPrimary, fontWeight: FontWeight.bold),
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                  height: 20,
-                                  child: Checkbox(
-                                    // checkColor: Colors.indigo,
-                                    value: billingChecked,
-                                    activeColor: ColorPrimary,
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
-                                    side: BorderSide(width: 1.5),
-                                    onChanged: (value) async {
-                                      if (productList.isNotEmpty) {
-                                        if (double.parse(widget.coin.toString()) >= 3) {
-                                          if (await Network.isConnected()) {
-                                            billingProductsBloc.add(CheckedBillingProductsEvent(
-                                                isChecked: value!, productList: productList));
-                                          } else {
-                                            Utility.showToast(
-                                              msg: "please_check_your_internet_connection_key".tr(),
-                                            );
+                              child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "${"redeem_coins_key".tr()}",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          color: ColorTextPrimary,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    SizedBox(
+                                      width: 20,
+                                      height: 20,
+                                      child: Checkbox(
+                                        // checkColor: Colors.indigo,
+                                        value: billingChecked,
+                                        activeColor: ColorPrimary,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(2)),
+                                        side: BorderSide(width: 1.5),
+                                        onChanged: (value) async {
+                                          if (productList.isNotEmpty) {
+                                            if (double.parse(
+                                                    widget.coin.toString()) >=
+                                                3) {
+                                              if (await Network.isConnected()) {
+                                                billingProductsBloc.add(
+                                                    CheckedBillingProductsEvent(
+                                                        isChecked: value!,
+                                                        productList:
+                                                            productList));
+                                              } else {
+                                                Utility.showToast(
+                                                  msg:
+                                                      "please_check_your_internet_connection_key"
+                                                          .tr(),
+                                                );
+                                              }
+                                            } else {
+                                              Utility.showToast(
+                                                msg:
+                                                    "You_dont_have_enough_coins_key"
+                                                        .tr(),
+                                              );
+                                            }
                                           }
-                                        } else {
-                                          Utility.showToast(
-                                            msg: "You_dont_have_enough_coins_key".tr(),
-                                          );
-                                        }
-                                      }
-                                    },
-                                  ),
-                                ),
-                              ]),
+                                        },
+                                      ),
+                                    ),
+                                  ]),
                             );
                           },
                         ),
                       ),
-                      BlocBuilder<BillingProductsBloc, BillingProductsState>(builder: (context, state) {
+                      BlocBuilder<BillingProductsBloc, BillingProductsState>(
+                          builder: (context, state) {
                         if (state is IntitalBillingProductstate) {
                           calculateAmounts(productList);
                         }
                         return Container(
-                          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 14),
-                          decoration:
-                              BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8), boxShadow: [
-                            BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 8,
-                            ),
-                          ]),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 14),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(8),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black12,
+                                  blurRadius: 8,
+                                ),
+                              ]),
                           child: Column(
                             children: [
-                              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                Text(
-                                  "total_order_value_key".tr(),
-                                  style: TextStyle(color: TextBlackLight, fontSize: 15, fontWeight: FontWeight.bold),
-                                ),
-                                Row(
+                              Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text("\u20B9",
-                                        style:
-                                            TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
-                                    Text("${orderTotal.toStringAsFixed(2)}",
-                                        style:
-                                            TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
-                                  ],
-                                ),
-                              ]),
+                                    Text(
+                                      "total_order_value_key".tr(),
+                                      style: TextStyle(
+                                          color: TextBlackLight,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text("\u20B9",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black)),
+                                        Text("${orderTotal.toStringAsFixed(2)}",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black)),
+                                      ],
+                                    ),
+                                  ]),
                               SizedBox(
                                 height: 10,
                               ),
-                              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                Text(
-                                  "redeemed_coins_key".tr(),
-                                  style: TextStyle(color: TextBlackLight, fontSize: 15, fontWeight: FontWeight.bold),
-                                ),
-                                Row(
+                              Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text("(",
-                                        style:
-                                            TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
-                                    Container(
-                                        child: Image.asset(
-                                      "assets/images/point.png",
-                                      width: 16,
-                                      height: 16,
-                                    )),
-                                    Text("${redeemCoins.toStringAsFixed(2)})",
-                                        style:
-                                            TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
-                                    Text(" \u20B9${(redeemCoins / 3).toStringAsFixed(2)}",
-                                        style:
-                                            TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
-                                  ],
-                                ),
-                              ]),
+                                    Text(
+                                      "redeemed_coins_key".tr(),
+                                      style: TextStyle(
+                                          color: TextBlackLight,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text("(",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black)),
+                                        Container(
+                                            child: Image.asset(
+                                          "assets/images/point.png",
+                                          width: 16,
+                                          height: 16,
+                                        )),
+                                        Text(
+                                            "${redeemCoins.toStringAsFixed(2)})",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black)),
+                                        Text(
+                                            " \u20B9${(redeemCoins / 3).toStringAsFixed(2)}",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black)),
+                                      ],
+                                    ),
+                                  ]),
                               SizedBox(
                                 height: 10,
                               ),
-                              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                Text(
-                                  "earned_coins_key".tr(),
-                                  style: TextStyle(color: TextBlackLight, fontSize: 15, fontWeight: FontWeight.bold),
-                                ),
-                                Row(
+                              Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Container(
-                                        child: Image.asset(
-                                      "assets/images/point.png",
-                                      width: 16,
-                                      height: 16,
-                                    )),
-                                    Text(" ${(earnCoins).toStringAsFixed(2)}",
-                                        style:
-                                            TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
-                                  ],
-                                ),
-                              ]),
+                                    Text(
+                                      "earned_coins_key".tr(),
+                                      style: TextStyle(
+                                          color: TextBlackLight,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Container(
+                                            child: Image.asset(
+                                          "assets/images/point.png",
+                                          width: 16,
+                                          height: 16,
+                                        )),
+                                        Text(
+                                            " ${(earnCoins).toStringAsFixed(2)}",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black)),
+                                      ],
+                                    ),
+                                  ]),
                               SizedBox(
                                 height: 10,
                               ),
-                              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                Text(
-                                  "net_payable_key".tr(),
-                                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: ColorPrimary),
-                                ),
-                                Row(
+                              Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text("\u20B9",
-                                        style:
-                                            TextStyle(fontSize: 23, fontWeight: FontWeight.bold, color: ColorPrimary)),
-                                    Text("${totalPay.toStringAsFixed(2)}",
-                                        style:
-                                            TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: ColorPrimary)),
-                                  ],
-                                ),
-                              ]),
+                                    Text(
+                                      "net_payable_key".tr(),
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color: ColorPrimary),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text("\u20B9",
+                                            style: TextStyle(
+                                                fontSize: 23,
+                                                fontWeight: FontWeight.bold,
+                                                color: ColorPrimary)),
+                                        Text("${totalPay.toStringAsFixed(2)}",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                                color: ColorPrimary)),
+                                      ],
+                                    ),
+                                  ]),
                             ],
                           ),
                         );
@@ -670,6 +827,7 @@ class _BillingProductsState extends State<BillingProducts> {
                       status = state.succes;
                       otpVerifyList = state.data;
                       log("${otpVerifyList!.otp}");
+                      startTimer();
                       _displayDialog(
                         context,
                         0,
@@ -678,6 +836,22 @@ class _BillingProductsState extends State<BillingProducts> {
                         "enter_otp_key".tr(),
                         widget.mobile,
                       );
+                    }
+                    if (state is OtpResendBillingProductState) {
+                      message = state.message;
+                      status = state.succes;
+                      otpVerifyList = state.data;
+                      log("${otpVerifyList!.otp}");
+                      if (state.succes) {
+                        startTimer();
+                        Utility.showToast(
+                          msg: "otp_resend_successfully".tr(),
+                        );
+                      } else {
+                        Utility.showToast(
+                          msg: state.message,
+                        );
+                      }
                     }
                     if (state is PayBillingProductsStateFailureState) {
                       message = state.message;
@@ -694,15 +868,22 @@ class _BillingProductsState extends State<BillingProducts> {
                       );
 
                       otpVerifyList!.remainingOrdAmt == "0"
-                          ? _displayCumulative(context, otpVerifyList!.remainingOrdAmt, otpVerifyList!.freeGiftName)
+                          ? _displayCumulative(
+                                  context,
+                                  otpVerifyList!.remainingOrdAmt,
+                                  otpVerifyList!.freeGiftName)
                               .then((value) {
                               otpVerifyList!.qrCodeStatus == 0
-                                  ? _displayDialogs(context, passing!.earningCoins, 0, "")
-                                  : _displayDialogs(context, passing!.earningCoins, 1, passing);
+                                  ? _displayDialogs(
+                                      context, passing!.earningCoins, 0, "")
+                                  : _displayDialogs(context,
+                                      passing!.earningCoins, 1, passing);
                             })
                           : otpVerifyList!.qrCodeStatus == 0
-                              ? _displayDialogs(context, passing!.earningCoins, 0, "")
-                              : _displayDialogs(context, passing!.earningCoins, 1, passing);
+                              ? _displayDialogs(
+                                  context, passing!.earningCoins, 0, "")
+                              : _displayDialogs(
+                                  context, passing!.earningCoins, 1, passing);
                       //log("-------$result --------");
                       // codes = result;
                       // Navigator.push(
@@ -724,10 +905,12 @@ class _BillingProductsState extends State<BillingProducts> {
                       onTap: () async {
                         if (productList.isNotEmpty) {
                           if (await Network.isConnected()) {
-                            billingProducts(context).then((value) => _textFieldController.clear());
+                            billingProducts(context)
+                                .then((value) => _textFieldController.clear());
                           } else {
                             Utility.showToast(
-                              msg: "please_check_your_internet_connection_key".tr(),
+                              msg: "please_check_your_internet_connection_key"
+                                  .tr(),
                             );
                           }
                         } else {
@@ -742,7 +925,10 @@ class _BillingProductsState extends State<BillingProducts> {
                         child: Center(
                           child: Text(
                             "submit_button_key".tr(),
-                            style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                         height: height * 0.07,
@@ -760,9 +946,12 @@ class _BillingProductsState extends State<BillingProducts> {
 
   Future<void> billingProducts(BuildContext context) async {
     Map<String, dynamic> input = HashMap<String, dynamic>();
-    input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    input["vendor_id"] =
+        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     input["mobile"] = widget.mobile;
-    input["full_name"] = widget.firstName;
+    input["full_name"] = widget.firstName + " " + widget.lastName;
+    input['first_name'] = widget.firstName;
+    input['last_name'] = widget.lastName;
     input["address_id"] = "";
     input["payment_method"] = "cash";
     input["payment_code"] = "COD";
@@ -782,7 +971,8 @@ class _BillingProductsState extends State<BillingProducts> {
         billingProduct["product_name"] = productList[i].productName;
         billingProduct["qty"] = productList[i].count.toString();
         billingProduct["price"] = productList[i].sellingPrice;
-        billingProduct["total"] = double.parse(productList[i].sellingPrice) * productList[i].count;
+        billingProduct["total"] =
+            double.parse(productList[i].sellingPrice) * productList[i].count;
         //  if (billingChecked) {
         log("=====>redeemCoins-$redeemCoins");
         log("=====>orderTotal-$orderTotal ");
@@ -793,7 +983,10 @@ class _BillingProductsState extends State<BillingProducts> {
         // log("=====>rccalculation${productList[i].count}");
         // log("=====>rccalculation$rc");
 
-        double rev = (rc * (double.parse(productList[i].sellingPrice) * (productList[i].count) * 3));
+        double rev = (rc *
+            (double.parse(productList[i].sellingPrice) *
+                (productList[i].count) *
+                3));
         log("=====>rc1=>$rev");
         productList[i].redeemCoins = rev.toStringAsFixed(2);
         print("=====>productList[i].redeemCoins$rc");
@@ -801,9 +994,11 @@ class _BillingProductsState extends State<BillingProducts> {
         // log("amount p[aid==>${((double.parse(productList[i].sellingPrice * productList[i].count)) - (double.parse(productList[i].redeemCoins) / 3))}");
         // log("amount p[aid==>${((double.parse(productList[i].sellingPrice) * (productList[i].count)) - (double.parse(productList[i].redeemCoins) / 3))}");
         billingProduct["product_redeem"] = productList[i].redeemCoins;
-        billingProduct["amount_paid"] = ((double.parse(productList[i].sellingPrice) * (productList[i].count)) -
-                (double.parse(productList[i].redeemCoins) / 3))
-            .toStringAsFixed(2);
+        billingProduct["amount_paid"] =
+            ((double.parse(productList[i].sellingPrice) *
+                        (productList[i].count)) -
+                    (double.parse(productList[i].redeemCoins) / 3))
+                .toStringAsFixed(2);
         //}
         // if (mCoins >= double.parse(productList[i].redeemCoins)) {
         //   billingProduct["product_redeem"] = double.parse(productList[i].redeemCoins) * productList[i].count;
@@ -822,17 +1017,26 @@ class _BillingProductsState extends State<BillingProducts> {
         billingProduct["product_name"] = productList[i].productName;
         billingProduct["qty"] = productList[i].count.toString();
         billingProduct["price"] = productList[i].sellingPrice;
-        billingProduct["total"] = double.parse(productList[i].sellingPrice) * productList[i].count;
+        billingProduct["total"] =
+            double.parse(productList[i].sellingPrice) * productList[i].count;
 
         billingProduct["product_redeem"] = "0";
-        billingProduct["amount_paid"] = double.parse(productList[i].sellingPrice) * productList[i].count;
+        billingProduct["amount_paid"] =
+            double.parse(productList[i].sellingPrice) * productList[i].count;
         billingProductList.add(billingProduct);
       }
     }
     input["product"] = billingProductList;
     log("input @=====> $input");
+    if (isResendOTPpage) {
+      billingProductsBloc.add(OtpResendProductsEvent(input: input));
+      // startTimer();
+    } else {
+      // startTimer();
+      isResendOTPpage = true;
 
-    billingProductsBloc.add(PayBillingProductsEvent(input: input));
+      billingProductsBloc.add(PayBillingProductsEvent(input: input));
+    }
   }
 
   redeemDialog(BuildContext context, String redeemCoins) async {
@@ -844,7 +1048,8 @@ class _BillingProductsState extends State<BillingProducts> {
             contentPadding: const EdgeInsets.all(0),
             titlePadding: const EdgeInsets.all(0),
             actionsPadding: const EdgeInsets.all(10),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             title: Image.asset(
               "assets/images/3x/hooray-banner.png",
               fit: BoxFit.cover,
@@ -857,11 +1062,17 @@ class _BillingProductsState extends State<BillingProducts> {
                   children: [
                     Text(
                       "${"hooray_you_saved".tr()} ${widget.firstName} ${"saved_key".tr()}",
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
                     ),
                     Text(
                       " \u20B9${(double.parse(redeemCoins) / 3).toStringAsFixed(0)}",
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: ColorPrimary),
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: ColorPrimary),
                     ),
                   ],
                 ),
@@ -875,14 +1086,17 @@ class _BillingProductsState extends State<BillingProducts> {
                   padding: const EdgeInsets.all(8.0),
                   textColor: Colors.white,
                   color: ColorPrimary,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
                   onPressed: () {
                     Navigator.pop(context);
                   },
                   child: new Text(
                     "redeem_popup_button_key".tr(),
                     style: GoogleFonts.openSans(
-                        fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
+                        fontSize: 17,
+                        fontWeight: FontWeight.w600,
+                        decoration: TextDecoration.none),
                   ),
                 ),
               ),
@@ -903,123 +1117,225 @@ class _BillingProductsState extends State<BillingProducts> {
         context: context,
         barrierDismissible: false,
         builder: (context) {
-          return AlertDialog(
-            titlePadding: const EdgeInsets.only(left: 18, right: 18, top: 10, bottom: 0),
-            contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 18),
-            actionsPadding: const EdgeInsets.only(left: 12, right: 12, top: 0, bottom: 18),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            title: status == 1
-                ? RichText(
-                    text: TextSpan(
-                      text: "${"otp_verification_key".tr()}\n",
-                      style: GoogleFonts.openSans(
-                        fontSize: 25.0,
-                        height: 2.0,
-                        color: TextBlackLight,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      children: [
-                        TextSpan(
-                          text: "${"please_verify_your_otp_on_key".tr()}\n",
-                          style: GoogleFonts.openSans(
-                            fontSize: 14.0,
-                            height: 1.5,
-                            color: ColorTextPrimary,
-                            fontWeight: FontWeight.w400,
-                          ),
+          return WillPopScope(
+            onWillPop: () async {
+              if (_counter > 0) {
+                Utility.showToast(
+                    msg: "try_after".tr() +
+                        " $_counter " +
+                        "seconds".tr() +
+                        " " +
+                        "try_after_hi".tr());
+                return Future.value(false);
+              } else {
+                isResendOTPpage = false;
+
+                return Future.value(true);
+              }
+            },
+            child: AlertDialog(
+              titlePadding: const EdgeInsets.only(
+                  left: 18, right: 18, top: 10, bottom: 0),
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 10, horizontal: 18),
+              actionsPadding: const EdgeInsets.only(
+                  left: 12, right: 12, top: 0, bottom: 10),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              title: status == 1
+                  ? RichText(
+                      text: TextSpan(
+                        text: "${"otp_verification_key".tr()}\n",
+                        style: GoogleFonts.openSans(
+                          fontSize: 25.0,
+                          height: 2.0,
+                          color: TextBlackLight,
+                          fontWeight: FontWeight.w600,
                         ),
-                        TextSpan(
-                          text: "+91 $mobile",
-                          style: GoogleFonts.openSans(
-                            fontSize: 14.0,
-                            height: 1.5,
-                            color: ColorTextPrimary,
-                            fontWeight: FontWeight.w400,
+                        children: [
+                          TextSpan(
+                            text: "${"please_verify_your_otp_on_key".tr()}\n",
+                            style: GoogleFonts.openSans(
+                              fontSize: 14.0,
+                              height: 1.5,
+                              color: ColorTextPrimary,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
-                        )
-                      ],
-                    ),
-                  )
-                : Container(
-                    height: 50,
-                    child: Text(
-                      "${"enter_amount_key".tr()}\n",
-                      style: GoogleFonts.openSans(
-                        fontSize: 25.0,
-                        height: 2.0,
-                        color: TextBlackLight,
-                        fontWeight: FontWeight.w600,
+                          TextSpan(
+                            text: "+91 $mobile",
+                            style: GoogleFonts.openSans(
+                              fontSize: 14.0,
+                              height: 1.5,
+                              color: ColorTextPrimary,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  : Container(
+                      height: 50,
+                      child: Text(
+                        "${"enter_amount_key".tr()}\n",
+                        style: GoogleFonts.openSans(
+                          fontSize: 25.0,
+                          height: 2.0,
+                          color: TextBlackLight,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
+              content: TextFormField(
+                controller: _textFieldController,
+                maxLength: status == 1 ? 4 : 5,
+                cursorColor: ColorPrimary,
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                decoration: InputDecoration(
+                  filled: true,
+                  counterText: "",
+                  // fillColor: Colors.black,
+                  hintText: status == 1
+                      ? "enter_otp_key".tr()
+                      : "enter_amount_key".tr(),
+                  hintStyle: GoogleFonts.openSans(
+                    fontWeight: FontWeight.w600,
                   ),
-            content: TextFormField(
-              controller: _textFieldController,
-              maxLength: status == 1 ? 4 : 5,
-              cursorColor: ColorPrimary,
-              keyboardType: TextInputType.number,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              decoration: InputDecoration(
-                filled: true,
-                counterText: "",
-                // fillColor: Colors.black,
-                hintText: status == 1 ? "enter_otp_key".tr() : "enter_amount_key".tr(),
-                hintStyle: GoogleFonts.openSans(
-                  fontWeight: FontWeight.w600,
-                ),
-                contentPadding: const EdgeInsets.only(left: 14.0, right: 14, top: 8, bottom: 8),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
-                  borderRadius: BorderRadius.circular(10),
+                  contentPadding: const EdgeInsets.only(
+                      left: 14.0, right: 14, top: 8, bottom: 8),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
               ),
+              actions: <Widget>[
+                Column(
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: MaterialButton(
+                        height: 50,
+                        padding: const EdgeInsets.all(8.0),
+                        textColor: Colors.white,
+                        color: ColorPrimary,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        onPressed: () async {
+                          if (status == 0) {
+                            if (_textFieldController.text.isNotEmpty) {
+                              log("onPressed->$status");
+                              // productList[index].sellingPrice = _textFieldController.text;
+                              double y = double.parse(
+                                  _textFieldController.text.trim());
+                              log("y->$y");
+                              double earningCoin = await earningPrice(
+                                  y,
+                                  double.parse(productList[index].commission),
+                                  productList[index].count);
+
+                              log("index->$index");
+                              log("earningCoin->$earningCoin");
+                              // EasyLoading.show();
+                              billingProductsBloc.add(EditBillingProductsEvent(
+                                  price: y,
+                                  index: index,
+                                  earningCoin: earningCoin));
+
+                              Navigator.pop(context);
+                              _textFieldController.clear();
+                            } else {
+                              Utility.showToast(
+                                msg: "please_enter_amount_key".tr(),
+                              );
+                            }
+                          } else {
+                            verifyOtp(context);
+                          }
+                        },
+                        child: new Text(
+                          status == 1
+                              ? "submit_button_key".tr()
+                              : "done_key".tr(),
+                          style: GoogleFonts.openSans(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w600,
+                              decoration: TextDecoration.none),
+                        ),
+                      ),
+                    ),
+                    status == 1
+                        ? StreamBuilder<int>(
+                            stream: events.stream,
+                            builder: (context, snapshot) {
+                              if (!snapshot.hasData) {
+                                EasyLoading.isShow;
+                                return Container();
+                              }
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Container();
+                              }
+                              return Container(
+                                padding: EdgeInsets.only(top: 5),
+                                //  width: MediaQuery.of(context).size.width,
+                                child: snapshot.data! > 0
+                                    ? Text(
+                                        "resend_OTP_after".tr() +
+                                            " " +
+                                            "${snapshot.data.toString()} " +
+                                            "seconds".tr(),
+                                        style: GoogleFonts.openSans(
+                                            color: ColorTextPrimary,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w400,
+                                            decoration: TextDecoration.none),
+                                      )
+                                    : TextButton(
+                                        style: TextButton.styleFrom(
+                                            padding: EdgeInsets.zero),
+                                        onPressed: () async {
+                                          if (productList.isNotEmpty) {
+                                            if (await Network.isConnected()) {
+                                              billingProducts(context).then(
+                                                  (value) =>
+                                                      _textFieldController
+                                                          .clear());
+                                            } else {
+                                              Utility.showToast(
+                                                msg:
+                                                    "please_check_your_internet_connection_key"
+                                                        .tr(),
+                                              );
+                                            }
+                                          } else {
+                                            Utility.showToast(
+                                              msg:
+                                                  "please_atleast_one_product_key"
+                                                      .tr(),
+                                            );
+                                          }
+                                        },
+                                        child: new Text(
+                                          "otp_resend".tr(),
+                                          style: GoogleFonts.openSans(
+                                              color: ColorPrimary,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w600,
+                                              decoration: TextDecoration.none),
+                                        ),
+                                      ),
+                              );
+                            })
+                        : Container(),
+                  ],
+                ),
+              ],
             ),
-            actions: <Widget>[
-              Container(
-                width: MediaQuery.of(context).size.width,
-                child: MaterialButton(
-                  height: 50,
-                  padding: const EdgeInsets.all(8.0),
-                  textColor: Colors.white,
-                  color: ColorPrimary,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                  onPressed: () async {
-                    if (status == 0) {
-                      if (_textFieldController.text.isNotEmpty) {
-                        log("onPressed->$status");
-                        // productList[index].sellingPrice = _textFieldController.text;
-                        double y = double.parse(_textFieldController.text.trim());
-                        log("y->$y");
-                        double earningCoin = await earningPrice(
-                            y, double.parse(productList[index].commission), productList[index].count);
-
-                        log("index->$index");
-                        log("earningCoin->$earningCoin");
-                        // EasyLoading.show();
-                        billingProductsBloc
-                            .add(EditBillingProductsEvent(price: y, index: index, earningCoin: earningCoin));
-
-                        Navigator.pop(context);
-                        _textFieldController.clear();
-                      } else {
-                        Utility.showToast(
-                          msg: "please_enter_amount_key".tr(),
-                        );
-                      }
-                    } else {
-                      verifyOtp(context);
-                    }
-                  },
-                  child: new Text(
-                    status == 1 ? "submit_button_key".tr() : "done_key".tr(),
-                    style: GoogleFonts.openSans(
-                        fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
-                  ),
-                ),
-              ),
-            ],
           );
         });
   }
@@ -1030,45 +1346,51 @@ class _BillingProductsState extends State<BillingProducts> {
         barrierDismissible: false,
         builder: (context) {
           return ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
+            constraints:
+                BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
             child: AlertDialog(
               titlePadding: const EdgeInsets.all(20),
-              actionsPadding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+              actionsPadding:
+                  const EdgeInsets.only(left: 20, right: 20, bottom: 20),
               contentPadding: const EdgeInsets.only(left: 20, right: 20),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-              title: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                Image.asset(
-                  "assets/images/otp-wallet.png",
-                  fit: BoxFit.cover,
-                  height: 70,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Image.asset(
-                    "assets/images/point.png",
-                    height: 35,
-                    width: 35,
-                  ),
-                  Text(
-                    " ${double.parse(hintText).toStringAsFixed(2)} ",
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.openSans(
-                      fontSize: 38,
-                      color: ColorPrimary,
-                      fontWeight: FontWeight.w600,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      "assets/images/otp-wallet.png",
+                      fit: BoxFit.cover,
+                      height: 70,
                     ),
-                  ),
-                ]),
-                Text("${"coin_generated_successfully_key".tr()}\n ${"in_customer_wallet_key".tr()}",
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.openSans(
-                      fontSize: 17.0,
-                      color: ColorTextPrimary,
-                      fontWeight: FontWeight.w600,
-                    )),
-              ]),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      Image.asset(
+                        "assets/images/point.png",
+                        height: 35,
+                        width: 35,
+                      ),
+                      Text(
+                        " ${double.parse(hintText).toStringAsFixed(2)} ",
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.openSans(
+                          fontSize: 38,
+                          color: ColorPrimary,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ]),
+                    Text(
+                        "${"coin_generated_successfully_key".tr()}\n ${"in_customer_wallet_key".tr()}",
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.openSans(
+                          fontSize: 17.0,
+                          color: ColorTextPrimary,
+                          fontWeight: FontWeight.w600,
+                        )),
+                  ]),
               actions: <Widget>[
                 Center(
                   child: MaterialButton(
@@ -1077,19 +1399,28 @@ class _BillingProductsState extends State<BillingProducts> {
                     padding: const EdgeInsets.all(8.0),
                     textColor: Colors.white,
                     color: ColorPrimary,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
                     onPressed: () {
                       status == 1
-                          ? Navigator.push(context, MaterialPageRoute(builder: (context) => Scanner(data: passing!)))
+                          ? Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      Scanner(data: passing!)))
                           : Navigator.pushAndRemoveUntil(
                               context,
-                              PageTransition(child: BottomNavigationHome(), type: PageTransitionType.fade),
+                              PageTransition(
+                                  child: BottomNavigationHome(),
+                                  type: PageTransitionType.fade),
                               ModalRoute.withName("/"));
                     },
                     child: new Text(
                       "done_key".tr(),
                       style: GoogleFonts.openSans(
-                          fontSize: 18, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          decoration: TextDecoration.none),
                     ),
                   ),
                 ),
@@ -1105,40 +1436,45 @@ class _BillingProductsState extends State<BillingProducts> {
         barrierDismissible: false,
         builder: (context) {
           return ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
+            constraints:
+                BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
             child: AlertDialog(
               titlePadding: const EdgeInsets.all(20),
-              actionsPadding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+              actionsPadding:
+                  const EdgeInsets.only(left: 20, right: 20, bottom: 20),
               contentPadding: const EdgeInsets.only(left: 20, right: 20),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-              title: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                Image.asset(
-                  "assets/images/otp-wallet.png",
-                  fit: BoxFit.cover,
-                  height: 70,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text("${otpVerifyList!.remainingOrdAmt}",
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.openSans(
-                      fontSize: 17.0,
-                      color: ColorTextPrimary,
-                      fontWeight: FontWeight.w600,
-                    )),
-                Text(
-                    "${"amount_remaining_key".tr()} ${otpVerifyList!.freeGiftName} ${"amount_remaining_gift_key".tr()}",
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.openSans(
-                      fontSize: 17.0,
-                      color: ColorTextPrimary,
-                      fontWeight: FontWeight.w600,
-                    )),
-              ]),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      "assets/images/otp-wallet.png",
+                      fit: BoxFit.cover,
+                      height: 70,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text("${otpVerifyList!.remainingOrdAmt}",
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.openSans(
+                          fontSize: 17.0,
+                          color: ColorTextPrimary,
+                          fontWeight: FontWeight.w600,
+                        )),
+                    Text(
+                        "${"amount_remaining_key".tr()} ${otpVerifyList!.freeGiftName} ${"amount_remaining_gift_key".tr()}",
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.openSans(
+                          fontSize: 17.0,
+                          color: ColorTextPrimary,
+                          fontWeight: FontWeight.w600,
+                        )),
+                  ]),
               actions: <Widget>[
                 Center(
                   child: MaterialButton(
@@ -1147,14 +1483,17 @@ class _BillingProductsState extends State<BillingProducts> {
                     padding: const EdgeInsets.all(8.0),
                     textColor: Colors.white,
                     color: ColorPrimary,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
                     onPressed: () {
                       Navigator.pop(context);
                     },
                     child: new Text(
                       "done_key".tr(),
                       style: GoogleFonts.openSans(
-                          fontSize: 18, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          decoration: TextDecoration.none),
                     ),
                   ),
                 ),
@@ -1207,9 +1546,11 @@ class _BillingProductsState extends State<BillingProducts> {
   // ),
   // );
   // });
+
   Future<void> verifyOtp(BuildContext context) async {
     Map<String, dynamic> input = HashMap<String, dynamic>();
-    input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    input["vendor_id"] =
+        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     input["mobile"] = widget.mobile;
     input["order_id"] = "${otpVerifyList!.orderId}";
     input["customer_id"] = "${otpVerifyList!.customerId}";
@@ -1239,17 +1580,23 @@ class _BillingProductsState extends State<BillingProducts> {
       product.redeemCoins = (double.parse(product.sellingPrice) * 3).toString();
       orderTotal += double.parse(product.sellingPrice) * product.count;
       if (billingChecked) {
-        if (availableCoins >= (double.parse(product.redeemCoins) * double.parse(product.count.toString()))) {
-          redeemCoins += double.parse(product.redeemCoins) * double.parse(product.count.toString());
+        if (availableCoins >=
+            (double.parse(product.redeemCoins) *
+                double.parse(product.count.toString()))) {
+          redeemCoins += double.parse(product.redeemCoins) *
+              double.parse(product.count.toString());
           double rc = redeemCoins / (orderTotal * 3);
           // log("=====>redeemCoins$redeemCoins");
           // log("=====>orderTotal$orderTotal");
           log("=====>rc$rc");
 
-          availableCoins = availableCoins - double.parse(product.redeemCoins) * double.parse(product.count.toString());
+          availableCoins = availableCoins -
+              double.parse(product.redeemCoins) *
+                  double.parse(product.count.toString());
         } else {
-          double remainingCoin =
-              (double.parse(product.redeemCoins) * double.parse(product.count.toString())) - availableCoins;
+          double remainingCoin = (double.parse(product.redeemCoins) *
+                  double.parse(product.count.toString())) -
+              availableCoins;
           log("availableCoins1======>$availableCoins");
           // log("customerCoins1=====>$customerCoins");
           log("amount1 ==> $remainingCoin");
@@ -1393,13 +1740,16 @@ class _DialogState extends State<Dialog> {
           return ConstrainedBox(
             constraints: BoxConstraints(maxWidth: 400),
             child: AlertDialog(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
               title: Container(
                 height: 100,
                 width: 70,
-                child: Image.asset("assets/images/coins.png", fit: BoxFit.contain),
+                child:
+                    Image.asset("assets/images/coins.png", fit: BoxFit.contain),
               ),
-              content: Text("coins_generated_successfully_in_customer_wallet_key".tr()),
+              content: Text(
+                  "coins_generated_successfully_in_customer_wallet_key".tr()),
               actions: <Widget>[
                 Center(
                   child: MaterialButton(
@@ -1408,17 +1758,22 @@ class _DialogState extends State<Dialog> {
                     padding: const EdgeInsets.all(8.0),
                     textColor: Colors.white,
                     color: ColorPrimary,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
                     onPressed: () {
                       Navigator.pushAndRemoveUntil(
                           context,
-                          PageTransition(child: BottomNavigationHome(), type: PageTransitionType.fade),
+                          PageTransition(
+                              child: BottomNavigationHome(),
+                              type: PageTransitionType.fade),
                           ModalRoute.withName("/"));
                     },
                     child: new Text(
                       "done_key".tr(),
                       style: GoogleFonts.openSans(
-                          fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
+                          fontSize: 17,
+                          fontWeight: FontWeight.w600,
+                          decoration: TextDecoration.none),
                     ),
                   ),
                 ),

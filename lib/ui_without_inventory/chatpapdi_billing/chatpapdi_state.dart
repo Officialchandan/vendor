@@ -2,12 +2,14 @@ import 'package:equatable/equatable.dart';
 
 abstract class ChatPapdiBillingCustomerNumberResponseState extends Equatable {}
 
-class ChatPapdiBillingCustomerNumberResponseIntialState extends ChatPapdiBillingCustomerNumberResponseState {
+class ChatPapdiBillingCustomerNumberResponseIntialState
+    extends ChatPapdiBillingCustomerNumberResponseState {
   @override
   List<Object?> get props => [];
 }
 
-class GetChatPapdiBillingCustomerNumberResponseState extends ChatPapdiBillingCustomerNumberResponseState {
+class GetChatPapdiBillingCustomerNumberResponseState
+    extends ChatPapdiBillingCustomerNumberResponseState {
   final message;
   final data;
   final succes;
@@ -15,29 +17,38 @@ class GetChatPapdiBillingCustomerNumberResponseState extends ChatPapdiBillingCus
   final firstName;
   final lastName;
   GetChatPapdiBillingCustomerNumberResponseState(
-      {this.message, this.data, this.succes, this.status, this.firstName, this.lastName});
+      {this.message,
+      this.data,
+      this.succes,
+      this.status,
+      this.firstName,
+      this.lastName});
 
   @override
   List<Object> get props => [message, data, succes, status];
 }
 
-class GetChatPapdiBillingCustomerNumberResponseLoadingstate extends ChatPapdiBillingCustomerNumberResponseState {
+class GetChatPapdiBillingCustomerNumberResponseLoadingstate
+    extends ChatPapdiBillingCustomerNumberResponseState {
   // final String message;
   // GetChatPapdiBillingCustomerNumberResponseLoadingstate({required this.message});
   @override
   List<Object?> get props => [];
 }
 
-class GetChatPapdiBillingCustomerNumberResponseFailureState extends ChatPapdiBillingCustomerNumberResponseState {
+class GetChatPapdiBillingCustomerNumberResponseFailureState
+    extends ChatPapdiBillingCustomerNumberResponseState {
   final String message;
   final succes;
   final status;
-  GetChatPapdiBillingCustomerNumberResponseFailureState({required this.message, required this.succes, this.status});
+  GetChatPapdiBillingCustomerNumberResponseFailureState(
+      {required this.message, required this.succes, this.status});
   @override
   List<Object?> get props => [message, succes];
 }
 
-class GetChatPapdiBillingState extends ChatPapdiBillingCustomerNumberResponseState {
+class GetChatPapdiBillingState
+    extends ChatPapdiBillingCustomerNumberResponseState {
   final message;
   final data;
   final succes;
@@ -48,22 +59,38 @@ class GetChatPapdiBillingState extends ChatPapdiBillingCustomerNumberResponseSta
   List<Object> get props => [message, data, succes];
 }
 
-class GetChatPapdiBillingLoadingstate extends ChatPapdiBillingCustomerNumberResponseState {
+class GetChatPapdiResendOtpState
+    extends ChatPapdiBillingCustomerNumberResponseState {
+  final message;
+  final data;
+  final succes;
+
+  GetChatPapdiResendOtpState({this.message, this.data, this.succes});
+
+  @override
+  List<Object> get props => [message, data, succes];
+}
+
+class GetChatPapdiBillingLoadingstate
+    extends ChatPapdiBillingCustomerNumberResponseState {
   // final String message;
   // GetChatPapdiBillingLoadingstate({required this.message});
   @override
   List<Object?> get props => [];
 }
 
-class GetChatPapdiBillingFailureState extends ChatPapdiBillingCustomerNumberResponseState {
+class GetChatPapdiBillingFailureState
+    extends ChatPapdiBillingCustomerNumberResponseState {
   final String message;
   final succes;
-  GetChatPapdiBillingFailureState({required this.message, required this.succes});
+  GetChatPapdiBillingFailureState(
+      {required this.message, required this.succes});
   @override
   List<Object?> get props => [message, succes];
 }
 
-class GetChatPapdiBillingOtpState extends ChatPapdiBillingCustomerNumberResponseState {
+class GetChatPapdiBillingOtpState
+    extends ChatPapdiBillingCustomerNumberResponseState {
   final message;
   final data;
   final succes;
@@ -73,22 +100,26 @@ class GetChatPapdiBillingOtpState extends ChatPapdiBillingCustomerNumberResponse
   List<Object> get props => [message, data, succes];
 }
 
-class GetChatPapdiBillingOtpLoadingstate extends ChatPapdiBillingCustomerNumberResponseState {
+class GetChatPapdiBillingOtpLoadingstate
+    extends ChatPapdiBillingCustomerNumberResponseState {
   // final String message;
   // GetChatPapdiBillingLoadingstate({required this.message});
   @override
   List<Object?> get props => [];
 }
 
-class GetChatPapdiBillingOtpFailureState extends ChatPapdiBillingCustomerNumberResponseState {
+class GetChatPapdiBillingOtpFailureState
+    extends ChatPapdiBillingCustomerNumberResponseState {
   final String message;
   final succes;
-  GetChatPapdiBillingOtpFailureState({required this.message, required this.succes});
+  GetChatPapdiBillingOtpFailureState(
+      {required this.message, required this.succes});
   @override
   List<Object?> get props => [message, succes];
 }
 
-class GetChatPapdiPartialUserState extends ChatPapdiBillingCustomerNumberResponseState {
+class GetChatPapdiPartialUserState
+    extends ChatPapdiBillingCustomerNumberResponseState {
   final message;
   final data;
   final succes;
@@ -98,29 +129,34 @@ class GetChatPapdiPartialUserState extends ChatPapdiBillingCustomerNumberRespons
   List<Object> get props => [message, data, succes];
 }
 
-class GetChatPapdiPartialUserLoadingstate extends ChatPapdiBillingCustomerNumberResponseState {
+class GetChatPapdiPartialUserLoadingstate
+    extends ChatPapdiBillingCustomerNumberResponseState {
   // final String message;
   // GetChatPapdiBillingLoadingstate({required this.message});
   @override
   List<Object?> get props => [];
 }
 
-class GetChatPapdiPartialUserFailureState extends ChatPapdiBillingCustomerNumberResponseState {
+class GetChatPapdiPartialUserFailureState
+    extends ChatPapdiBillingCustomerNumberResponseState {
   final String message;
   final succes;
-  GetChatPapdiPartialUserFailureState({required this.message, required this.succes});
+  GetChatPapdiPartialUserFailureState(
+      {required this.message, required this.succes});
   @override
   List<Object?> get props => [message, succes];
 }
 
-class ChatPapdiCheckboxState extends ChatPapdiBillingCustomerNumberResponseState {
+class ChatPapdiCheckboxState
+    extends ChatPapdiBillingCustomerNumberResponseState {
   final bool isChecked;
   ChatPapdiCheckboxState({required this.isChecked});
   @override
   List<Object?> get props => [isChecked];
 }
 
-class GetDirectBillingCategoryByVendorIdState extends ChatPapdiBillingCustomerNumberResponseState {
+class GetDirectBillingCategoryByVendorIdState
+    extends ChatPapdiBillingCustomerNumberResponseState {
   final message;
   final data;
   GetDirectBillingCategoryByVendorIdState({this.message, this.data});
@@ -128,14 +164,16 @@ class GetDirectBillingCategoryByVendorIdState extends ChatPapdiBillingCustomerNu
   List<Object?> get props => [message, data];
 }
 
-class GetDirectBillingCategoryByVendorIdFailureState extends ChatPapdiBillingCustomerNumberResponseState {
+class GetDirectBillingCategoryByVendorIdFailureState
+    extends ChatPapdiBillingCustomerNumberResponseState {
   final String message;
   GetDirectBillingCategoryByVendorIdFailureState({required this.message});
   @override
   List<Object?> get props => [message];
 }
 
-class DirectBillingCheckBoxState extends ChatPapdiBillingCustomerNumberResponseState {
+class DirectBillingCheckBoxState
+    extends ChatPapdiBillingCustomerNumberResponseState {
   final int index;
   final bool isChecked;
   DirectBillingCheckBoxState({required this.index, required this.isChecked});
@@ -143,7 +181,8 @@ class DirectBillingCheckBoxState extends ChatPapdiBillingCustomerNumberResponseS
   List<Object?> get props => [index, isChecked];
 }
 
-class GetDirectBillingCategoryByVendorIdLoadingstate extends ChatPapdiBillingCustomerNumberResponseState {
+class GetDirectBillingCategoryByVendorIdLoadingstate
+    extends ChatPapdiBillingCustomerNumberResponseState {
   // final String message;
   // GetChatPapdiBillingLoadingstate({required this.message});
   @override

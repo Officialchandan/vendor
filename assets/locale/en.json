@@ -60,7 +60,9 @@
   "pay_key": "Pay",
   "first_time_customer_key": "First time customer",
   "first_name_key": "First Name",
+  "first_name_excp_key":"Please enter first name",
   "last_name_key": "Last Name",
+  "last_name_excp_key":"Please enter last name",
   "refferal_mobile_no_key": "Refferal mobile no.(if any)",
   "address_key": "Address (Residing)",
   "address_for_the_gift_key": "Address (For the gift if different)",
@@ -238,6 +240,8 @@
   "enter_customer_phone_number_key": "Enter Customer Phone Number",
   "mobile_number_key": "Mobile Number",
   "enter_customer_name_key": "Enter Customer Name",
+  "enter_customer_first_name_key":"Enter customer first name",
+  "enter_customer_last_name_key":"Enter customer last name",
   "full_name_key": "Full Name",
   "please_enter_name_key": "Please enter Name",
   "search_all_products_key": "  Search All Products",
@@ -444,5 +448,11 @@
   "terms_and_condition_not_available_key": "Terms & condition not available",
   "signature_not_available_key": "Signature not available",
   "coins_earned__by_customer_key": "Coins Earned by Customer",
-  "to_key" : "to"
+  "to_key" : "to",
+  "otp_resend": "Resend OTP",
+  "resend_OTP_after" : "Resend OTP After",
+  "seconds" : "Seconds",
+  "otp_resend_successfully":"OTP sended Successfully",
+  "try_after": "Try After",
+  "try_after_hi" : ""
 }

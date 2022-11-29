@@ -15,9 +15,11 @@ import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/utility.dart';
 
-class DirectBillingCustomerNumberResponseBloc
-    extends Bloc<DirectBillingCustomerNumberResponseEvent, DirectBillingCustomerNumberResponseState> {
-  DirectBillingCustomerNumberResponseBloc() : super(DirectBillingCustomerNumberResponseIntialState());
+class DirectBillingCustomerNumberResponseBloc extends Bloc<
+    DirectBillingCustomerNumberResponseEvent,
+    DirectBillingCustomerNumberResponseState> {
+  DirectBillingCustomerNumberResponseBloc()
+      : super(DirectBillingCustomerNumberResponseIntialState());
 
   @override
   Stream<DirectBillingCustomerNumberResponseState> mapEventToState(
@@ -36,6 +38,9 @@ class DirectBillingCustomerNumberResponseBloc
     if (event is GetDirectBillingEvent) {
       yield* getDirectBilling(event.input);
     }
+    if (event is ResendOtpDirectBillingEvent) {
+      yield* otpResendDirectBilling(event.input);
+    }
 
     if (event is GetDirectBillingOtpEvent) {
       yield* getDirectBillingOtp(event.input);
@@ -51,7 +56,8 @@ class DirectBillingCustomerNumberResponseBloc
 
     if (event is GetDirectBillingCheckBoxEvent) {
       yield DirectBillingLoadingState();
-      yield DirectBillingCheckBoxState(index: event.index, isChecked: event.isChecked);
+      yield DirectBillingCheckBoxState(
+          index: event.index, isChecked: event.isChecked);
     }
     if (event is GetDirectBillingRedeemCheckBoxEvent) {
       yield DirectBillingLoadingState();
@@ -59,13 +65,15 @@ class DirectBillingCustomerNumberResponseBloc
     }
   }
 
-  Stream<DirectBillingCustomerNumberResponseState> getDirectBillingCustomerNumberResponse(mobile) async* {
+  Stream<DirectBillingCustomerNumberResponseState>
+      getDirectBillingCustomerNumberResponse(mobile) async* {
     if (await Network.isConnected()) {
       EasyLoading.show();
       yield GetDirectBillingCustomerNumberResponseLoadingstate();
       EasyLoading.dismiss();
       try {
-        CustomerNumberResponse result = await apiProvider.getCustomerCoins(mobile);
+        CustomerNumberResponse result =
+            await apiProvider.getCustomerCoins(mobile);
 
         log("$result");
         if (result.success) {
@@ -79,7 +87,9 @@ class DirectBillingCustomerNumberResponseBloc
         } else {
           Utility.showToast(msg: result.message);
           yield GetDirectBillingCustomerNumberResponseFailureState(
-              message: result.message, succes: result.success, status: result.cust_reg_status);
+              message: result.message,
+              succes: result.success,
+              status: result.cust_reg_status);
         }
       } catch (error) {
         yield GetDirectBillingCustomerNumberResponseFailureState(
@@ -90,24 +100,66 @@ class DirectBillingCustomerNumberResponseBloc
     }
   }
 
-  Stream<DirectBillingCustomerNumberResponseState> getDirectBilling(input) async* {
-    if (await Network.isConnected()) {
+  Stream<DirectBillingCustomerNumberResponseState> getDirectBilling(
+      input) async* {
+    if (true) {
       // yield GetDirectBillingLoadingstate();
       try {
-        DirectBillingResponse result = await apiProvider.getDirectBilling(input);
+        DirectBillingResponse result =
+            await apiProvider.getDirectBilling(input);
         log("$result");
         if (result.success) {
-          SharedPref.setStringPreference(SharedPref.VendorCoin, result.data!.vendorAvailableCoins);
+          SharedPref.setStringPreference(
+              SharedPref.VendorCoin, result.data!.vendorAvailableCoins);
           log("VendorCoin------->${result.data!.vendorAvailableCoins}");
-          yield GetDirectBillingState(message: result.message, data: result.data!, succes: result.success);
+          yield GetDirectBillingState(
+              message: result.message,
+              data: result.data!,
+              succes: result.success);
         } else {
           Utility.showToast(
             msg: result.message,
           );
-          yield GetDirectBillingFailureState(message: result.message, succes: result.success);
+          yield GetDirectBillingFailureState(
+              message: result.message, succes: result.success);
         }
       } catch (error) {
-        yield GetDirectBillingFailureState(message: "internal_server_error_key".tr(), succes: false);
+        yield GetDirectBillingFailureState(
+            message: "internal_server_error_key".tr(), succes: false);
+      }
+    } else {
+      // Utility.showToast(
+      //   msg: "please_check_your_internet_connection_key".tr(),
+      // );
+    }
+  }
+
+  Stream<DirectBillingCustomerNumberResponseState> otpResendDirectBilling(
+      input) async* {
+    if (await Network.isConnected()) {
+      // yield GetDirectBillingLoadingstate();
+      try {
+        DirectBillingResponse result =
+            await apiProvider.getDirectBilling(input);
+        log("$result");
+        if (result.success) {
+          SharedPref.setStringPreference(
+              SharedPref.VendorCoin, result.data!.vendorAvailableCoins);
+          log("VendorCoin------->${result.data!.vendorAvailableCoins}");
+          yield ResendOtpDirectBillingState(
+              message: result.message,
+              data: result.data!,
+              succes: result.success);
+        } else {
+          Utility.showToast(
+            msg: result.message,
+          );
+          yield GetDirectBillingFailureState(
+              message: result.message, succes: result.success);
+        }
+      } catch (error) {
+        yield GetDirectBillingFailureState(
+            message: "internal_server_error_key".tr(), succes: false);
       }
     } else {
       Utility.showToast(
@@ -116,26 +168,33 @@ class DirectBillingCustomerNumberResponseBloc
     }
   }
 
-  Stream<DirectBillingCustomerNumberResponseState> getDirectBillingOtp(input) async* {
+  Stream<DirectBillingCustomerNumberResponseState> getDirectBillingOtp(
+      input) async* {
     if (await Network.isConnected()) {
       // yield GetDirectBillingOtpLoadingstate();
       try {
         EasyLoading.show();
-        DirectBillingOtpResponse result = await apiProvider.getDirectBillingOtp(input);
+        DirectBillingOtpResponse result =
+            await apiProvider.getDirectBillingOtp(input);
         log("$result");
         if (result.success) {
           EasyLoading.dismiss();
-          yield GetDirectBillingOtpState(message: result.message, data: result.message, succes: result.success);
+          yield GetDirectBillingOtpState(
+              message: result.message,
+              data: result.message,
+              succes: result.success);
         } else {
           EasyLoading.dismiss();
           Utility.showToast(
             msg: result.message,
           );
-          yield GetDirectBillingOtpFailureState(message: result.message, succes: result.success);
+          yield GetDirectBillingOtpFailureState(
+              message: result.message, succes: result.success);
         }
       } catch (error) {
         EasyLoading.dismiss();
-        yield GetDirectBillingOtpFailureState(message: "internal_server_error_key".tr(), succes: false);
+        yield GetDirectBillingOtpFailureState(
+            message: "internal_server_error_key".tr(), succes: false);
       }
     } else {
       Utility.showToast(
@@ -144,38 +203,50 @@ class DirectBillingCustomerNumberResponseBloc
     }
   }
 
-  Stream<DirectBillingCustomerNumberResponseState> getDirectBillingPartialUserRegister(input) async* {
+  Stream<DirectBillingCustomerNumberResponseState>
+      getDirectBillingPartialUserRegister(input) async* {
     if (await Network.isConnected()) {
       try {
-        PartialUserRegisterResponse result = await apiProvider.getChatPapdiPatialUserRegister(input);
+        PartialUserRegisterResponse result =
+            await apiProvider.getChatPapdiPatialUserRegister(input);
         log("$result");
         if (result.success) {
-          yield GetDirectBillingPartialUserState(message: result.message, data: result.message, succes: result.success);
+          yield GetDirectBillingPartialUserState(
+              message: result.message,
+              data: result.message,
+              succes: result.success);
         } else {
           Utility.showToast(msg: result.message);
-          yield GetDirectBillingPartialUserFailureState(message: result.message, succes: result.success);
+          yield GetDirectBillingPartialUserFailureState(
+              message: result.message, succes: result.success);
         }
       } catch (error) {
-        yield GetDirectBillingPartialUserFailureState(message: "internal_server_error_key".tr(), succes: false);
+        yield GetDirectBillingPartialUserFailureState(
+            message: "internal_server_error_key".tr(), succes: false);
       }
     } else {
       Utility.showToast(msg: "please_check_your_internet_connection_key".tr());
     }
   }
 
-  Stream<DirectBillingCustomerNumberResponseState> getVendorCategoryByIdResponse() async* {
+  Stream<DirectBillingCustomerNumberResponseState>
+      getVendorCategoryByIdResponse() async* {
     if (await Network.isConnected()) {
       yield GetDirectBillingLoadingstate();
       try {
-        GetCategoriesResponse result = await apiProvider.getCategoryByVendorId();
+        GetCategoriesResponse result =
+            await apiProvider.getCategoryByVendorId();
         log("$result");
         if (result.success) {
-          yield GetDirectBillingCategoryByVendorIdState(message: result.message, data: result.data!);
+          yield GetDirectBillingCategoryByVendorIdState(
+              message: result.message, data: result.data!);
         } else {
-          yield GetDirectBillingCategoryByVendorIdFailureState(message: result.message);
+          yield GetDirectBillingCategoryByVendorIdFailureState(
+              message: result.message);
         }
       } catch (error) {
-        yield GetDirectBillingCategoryByVendorIdFailureState(message: "internal_server_error_key".tr());
+        yield GetDirectBillingCategoryByVendorIdFailureState(
+            message: "internal_server_error_key".tr());
       }
     } else {
       Utility.showToast(msg: "please_check_your_internet_connection_key".tr());
