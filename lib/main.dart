@@ -31,12 +31,12 @@ import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/routs.dart';
 
 BaseOptions baseOptions = BaseOptions(
-  baseUrl: Endpoint.BASE_URL,
-  receiveTimeout: 60000,
-  sendTimeout: 60000,
-  responseType: ResponseType.json,
-  maxRedirects: 3,
-);
+    baseUrl: Endpoint.BASE_URL,
+    receiveTimeout: 60000,
+    sendTimeout: 60000,
+    responseType: ResponseType.json,
+    maxRedirects: 3,
+    headers: {'content-type': 'application/json'});
 Dio dio = Dio(baseOptions);
 ApiProvider apiProvider = ApiProvider();
 ImagePicker imagePicker = ImagePicker();
@@ -69,7 +69,8 @@ ThemeData themeData(context) => ThemeData(
     ),
     bottomSheetTheme: BottomSheetThemeData(
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(topRight: Radius.circular(25), topLeft: Radius.circular(25)))),
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(25), topLeft: Radius.circular(25)))),
     // accentTextTheme: Theme.of(context).textTheme,
     unselectedWidgetColor: Colors.black,
     fontFamily: GoogleFonts.openSans().fontFamily,
@@ -142,7 +143,8 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
     "high_importance_channel", "High Importance Notification",
     importance: Importance.high, playSound: true);
 
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
@@ -162,7 +164,8 @@ fcmToken() async {
 }
 
 // initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
-const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('app_icon');
+const AndroidInitializationSettings initializationSettingsAndroid =
+    AndroidInitializationSettings('app_icon');
 void selectNotification(String? payload) async {
   if (payload != null) {
     debugPrint('notification payload: $payload');
@@ -196,16 +199,18 @@ void selectNotification(String? payload) async {
 
     case "UpiTransferHistory":
       {
-        Navigator.push(
-            navigationService.navigatorKey.currentContext!, MaterialPageRoute(builder: (_) => UpiTransferHistory()));
+        Navigator.push(navigationService.navigatorKey.currentContext!,
+            MaterialPageRoute(builder: (_) => UpiTransferHistory()));
         print("Fair");
       }
       break;
 
     case "UpiTransferHistoryWithoutInventory":
       {
-        Navigator.push(navigationService.navigatorKey.currentContext!,
-            MaterialPageRoute(builder: (_) => UpiTransferHistoryWithoutInventory()));
+        Navigator.push(
+            navigationService.navigatorKey.currentContext!,
+            MaterialPageRoute(
+                builder: (_) => UpiTransferHistoryWithoutInventory()));
         print("Poor");
       }
       break;
@@ -218,8 +223,8 @@ void selectNotification(String? payload) async {
       break;
     case "ReportTypeScreen":
       {
-        Navigator.push(
-            navigationService.navigatorKey.currentContext!, MaterialPageRoute(builder: (_) => ReportTypeScreen()));
+        Navigator.push(navigationService.navigatorKey.currentContext!,
+            MaterialPageRoute(builder: (_) => ReportTypeScreen()));
         print("Poor");
       }
       break;
@@ -370,16 +375,18 @@ void main() async {
 
       case "UpiTransferHistory":
         {
-          Navigator.push(
-              navigationService.navigatorKey.currentContext!, MaterialPageRoute(builder: (_) => UpiTransferHistory()));
+          Navigator.push(navigationService.navigatorKey.currentContext!,
+              MaterialPageRoute(builder: (_) => UpiTransferHistory()));
           print("Fair");
         }
         break;
 
       case "UpiTransferHistoryWithoutInventory":
         {
-          Navigator.push(navigationService.navigatorKey.currentContext!,
-              MaterialPageRoute(builder: (_) => UpiTransferHistoryWithoutInventory()));
+          Navigator.push(
+              navigationService.navigatorKey.currentContext!,
+              MaterialPageRoute(
+                  builder: (_) => UpiTransferHistoryWithoutInventory()));
           print("Poor");
         }
         break;
@@ -392,8 +399,8 @@ void main() async {
         break;
       case "ReportTypeScreen":
         {
-          Navigator.push(
-              navigationService.navigatorKey.currentContext!, MaterialPageRoute(builder: (_) => ReportTypeScreen()));
+          Navigator.push(navigationService.navigatorKey.currentContext!,
+              MaterialPageRoute(builder: (_) => ReportTypeScreen()));
           print("Poor");
         }
         break;
@@ -407,8 +414,9 @@ void main() async {
 
   checkForInitialMessage() async {
     await Firebase.initializeApp();
-    RemoteMessage? initialMessage =
-        await FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) async {});
+    RemoteMessage? initialMessage = await FirebaseMessaging.instance
+        .getInitialMessage()
+        .then((RemoteMessage? message) async {});
     ;
     log("in terminated");
     if (initialMessage != null) {
@@ -417,7 +425,8 @@ void main() async {
   }
 
   await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(channel);
   configEasyLoading();
 
@@ -429,7 +438,8 @@ void main() async {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: ColorPrimary,
   ));
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   dio.interceptors.add(LogInterceptor(
       responseBody: true,
       responseHeader: false,
@@ -443,7 +453,10 @@ void main() async {
   // assets/locale
   runApp(
     EasyLocalization(
-        supportedLocales: Constant.language, path: 'assets/locale', fallbackLocale: Locale('en'), child: MyApp()),
+        supportedLocales: Constant.language,
+        path: 'assets/locale',
+        fallbackLocale: Locale('en'),
+        child: MyApp()),
   );
 }
 
@@ -481,22 +494,29 @@ class _MyAppState extends State<MyApp> {
       onGenerateRoute: (route) {
         switch (route.name) {
           case "/":
-            return PageTransition(type: PageTransitionType.fade, child: SplashScreen());
+            return PageTransition(
+                type: PageTransitionType.fade, child: SplashScreen());
 
           case Routes.SplashScreen:
-            return PageTransition(type: PageTransitionType.fade, child: SplashScreen());
+            return PageTransition(
+                type: PageTransitionType.fade, child: SplashScreen());
 
           case Routes.SelectLanguage:
-            return PageTransition(type: PageTransitionType.fade, child: SelectLanguage());
+            return PageTransition(
+                type: PageTransitionType.fade, child: SelectLanguage());
 
           case Routes.LoginScreen:
-            return PageTransition(type: PageTransitionType.fade, child: LoginScreen());
+            return PageTransition(
+                type: PageTransitionType.fade, child: LoginScreen());
 
           case Routes.HomeScreen:
-            return PageTransition(type: PageTransitionType.fade, child: HomeScreen());
+            return PageTransition(
+                type: PageTransitionType.fade, child: HomeScreen());
 
           case Routes.HomeScreenWithoutInventory:
-            return PageTransition(type: PageTransitionType.fade, child: HomeScreenWithoutInventory());
+            return PageTransition(
+                type: PageTransitionType.fade,
+                child: HomeScreenWithoutInventory());
 
           case Routes.BOTTOM_NAVIGATION_HOME:
             int index = route.arguments as int;
