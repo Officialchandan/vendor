@@ -1305,7 +1305,7 @@ class _DirectBillingState extends State<DirectBilling> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
                     onPressed: () {
-                      status == 0
+                      status == 1
                           ? Navigator.push(
                               context,
                               MaterialPageRoute(
