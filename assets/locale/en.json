@@ -454,5 +454,17 @@
   "seconds" : "Seconds",
   "otp_resend_successfully":"OTP sended Successfully",
   "try_after": "Try After",
-  "try_after_hi" : ""
+  "try_after_hi" : "",
+  "billing_option_key":"Billing Options",
+  "your_last_Pay_Key":"Your past due is Rs. ",
+  "your_total_pay_key":" And your total outstanding is Rs. ",
+  "due_amount_flash": ". Please pay now.",
+  "pay_now":"Pay now",
+  "hour_ago":"hour ago",
+  "minute_ago":"minute ago",
+  "today":"Today",
+  "this_week":"This Week",
+  "older":"Earlier",
+  "inventory_new_key": "Invoice",
+  "restart_502_error":"Seem's that your Internet is reconnecting .For better experience please restart your App "
 }

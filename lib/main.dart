@@ -32,10 +32,12 @@ import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/routs.dart';
 
 BaseOptions baseOptions = BaseOptions(
-    baseUrl: Endpoint.BASE_URL,
+    baseUrl: Endpoint.BASE_URL_V2,
     receiveTimeout: 60000,
     sendTimeout: 60000,
     responseType: ResponseType.json,
+    // followRedirects: false,
+    // validateStatus: (status) => true,
     maxRedirects: 3,
     headers: {'content-type': 'application/json'});
 Dio dio = Dio(baseOptions);

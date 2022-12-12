@@ -21,3 +21,7 @@ class GetBillingPartialUserRegisterEvent extends CustomerNumberResponseEvent {
   @override
   List<Object> get props => [input];
 }
+
+class GetBillingDueAmmountEvent extends CustomerNumberResponseEvent {
+  GetBillingDueAmmountEvent();
+}

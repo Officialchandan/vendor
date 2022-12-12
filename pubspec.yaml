@@ -21,113 +21,70 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
+  animated_text_kit: ^4.2.2
+  animated_widgets: ^1.1.0
+  auto_size_text: ^3.0.0-nullsafety.0
+  cached_network_image: null
+  chewie: null
+  connectivity: null
+  cupertino_icons: ^1.0.2
+  dio: null
+  easy_localization: null
+  equatable: null
+  expandable: ^5.0.1
+  firebase_core: null
+  firebase_messaging: null
   flutter:
     sdk: flutter
+  flutter_barcode_scanner: null
+  flutter_bloc: 7.3.3
+  flutter_cache_manager: ^3.3.0
+  flutter_easyloading: null
+  flutter_inappwebview: ^5.4.3+7
+  flutter_local_notifications: null
   flutter_localizations:
     sdk: flutter
-
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
-  flutter_staggered_grid_view: ^0.4.1
-  equatable:
-
-  #bloc architecture
-  flutter_bloc: 7.3.3
-  page_transition:
-  fluttertoast:
-
-  #internet connection
-  connectivity:
-
-  shared_preferences:
-  #app fonts
-  google_fonts:
-
-  #api integration
-  dio:
-  http:
-  url_launcher:
-
-  #time line tile
-  timeline_tile:
-
-  #date range picker
-  syncfusion_flutter_datepicker:
-  month_picker_dialog: ^0.4.0
-  intl:
-
-  #  picker provider permission check
-  permission_handler:
-  path_provider:
-  image_picker:
-  modal_bottom_sheet:
-
- # web view
-  webview_flutter: 
-
-  expandable: ^5.0.1
-  #image view
-  cached_network_image:
-  auto_size_text: ^3.0.0-nullsafety.0
-#LOADER
-  flutter_easyloading:
-  loading_indicator:
-  loading_overlay_pro: ^2.1.1
-
-#sycnfussion
-  syncfusion_flutter_xlsio:
-  open_file:
-  syncfusion_flutter_datagrid:
-  syncfusion_flutter_datagrid_export:
-  syncfusion_flutter_pdf:
-
-#qrcode
-  qr_code_scanner: 
-  flutter_barcode_scanner:
-#GRAFH
-  syncfusion_flutter_charts:
-
- #  Pull to refresh also used for pagination, refresh data
-  pull_to_refresh:
-  #share
-  share:
-
-  provider:
-  flutter_widget_from_html:
-  math_expressions:
-  easy_localization:
-
-
-
- #firebase
-  firebase_core:
-  flutter_local_notifications:
-  firebase_messaging:
-
-
-#multi select
-  multi_select_flutter:
-
-#
-  package_info_plus:
-
-#store play
-  store_redirect:
-#payment integration
-  paytm_allinonesdk:
-#auto fetch number
-  sms_autofill:
-#video player
-  chewie:
-  video_player:
-  youtube_player_iframe:
-  flutter_inappwebview: ^5.4.3+7
-#restartapp
   flutter_phoenix: ^1.1.0
-  flutter_cache_manager: ^3.3.0
-
+  flutter_staggered_grid_view: ^0.4.1
+  flutter_widget_from_html: null
+  fluttertoast: null
+  google_fonts: null
+  grouped_list: ^5.1.2
+  http: null
+  image_picker: null
+  intl: null
+  loading_indicator: null
+  loading_overlay_pro: ^2.1.1
+  lottie: any
+  marquee: ^2.2.3
+  math_expressions: null
+  modal_bottom_sheet: null
+  month_picker_dialog: ^0.4.0
+  multi_select_flutter: null
+  open_file: 3.2.1
+  package_info_plus: null
+  page_transition: null
+  path_provider: null
+  paytm_allinonesdk: null
+  permission_handler: null
+  provider: null
+  pull_to_refresh: null
+  qr_code_scanner: null
+  share: null
+  shared_preferences: null
+  sms_autofill: null
+  store_redirect: null
+  syncfusion_flutter_charts: null
+  syncfusion_flutter_datagrid: null
+  syncfusion_flutter_datagrid_export: null
+  syncfusion_flutter_datepicker: null
+  syncfusion_flutter_pdf: null
+  syncfusion_flutter_xlsio: null
+  timeline_tile: null
+  url_launcher: null
+  video_player: null
+  webview_flutter: null
+  youtube_player_iframe: null
 
 dev_dependencies:
   flutter_test:
@@ -135,7 +92,6 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter.
 flutter:
 
@@ -153,13 +109,10 @@ flutter:
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
-
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
-
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
-
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a

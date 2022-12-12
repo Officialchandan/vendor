@@ -226,9 +226,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                           " " +
                                           "${snapshot.data.toString()} " +
                                           "seconds".tr(),
+                                      textAlign: TextAlign.center,
                                       style: GoogleFonts.openSans(
                                           color: ColorTextPrimary,
-                                          fontSize: 15,
+                                          fontSize: 18,
                                           fontWeight: FontWeight.w400,
                                           decoration: TextDecoration.none),
                                     )
@@ -258,7 +259,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         "otp_resend".tr(),
                                         style: GoogleFonts.openSans(
                                             color: ColorPrimary,
-                                            fontSize: 15,
+                                            fontSize: 18,
                                             fontWeight: FontWeight.w600,
                                             decoration: TextDecoration.none),
                                       ),
@@ -372,7 +373,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: BlocConsumer<LoginBloc, LoginState>(
         bloc: loginBloc,
         listener: (context, state) async {
-         await SharedPref.getIntegerPreference(SharedPref.USERSTATUS);
+          await SharedPref.getIntegerPreference(SharedPref.USERSTATUS);
           if (state is GetLoginState) {
             _displayDialog(context, mobileController.text);
           }
@@ -421,6 +422,16 @@ class _LoginScreenState extends State<LoginScreen> {
                           width: double.infinity,
                           fit: BoxFit.fill,
                         )),
+                        Positioned(
+                            right: 12,
+                            top: 30,
+                            child: Image.asset(
+                              "assets/images/logo2.png",
+                              // height: deviceHeight - 50,
+                              width: 50,
+                              height: 50,
+                              fit: BoxFit.cover,
+                            )),
                         Positioned(
                           left: 20,
                           right: 20,

@@ -31,10 +31,12 @@ class AccountManagementWithoutInventoryScreen extends StatefulWidget {
   const AccountManagementWithoutInventoryScreen({Key? key}) : super(key: key);
 
   @override
-  _AccountManagementWithoutInventoryScreenState createState() => _AccountManagementWithoutInventoryScreenState();
+  _AccountManagementWithoutInventoryScreenState createState() =>
+      _AccountManagementWithoutInventoryScreenState();
 }
 
-class _AccountManagementWithoutInventoryScreenState extends State<AccountManagementWithoutInventoryScreen> {
+class _AccountManagementWithoutInventoryScreenState
+    extends State<AccountManagementWithoutInventoryScreen> {
   List<String> textList = [
     "change_language_key".tr(),
     "about_us_key".tr(),
@@ -97,11 +99,15 @@ class _AccountManagementWithoutInventoryScreenState extends State<AccountManagem
                         borderRadius: BorderRadius.circular(70),
                         child: CachedNetworkImage(
                           imageUrl: snapshot.data!.vendorImage!.isNotEmpty
-                              ? snapshot.data!.vendorImage!.first.image.toString()
+                              ? snapshot.data!.vendorImage!.first.image
+                                  .toString()
                               : "https://blog.yorksj.ac.uk/amelia-lambert/wp-content/themes/oria/images/placeholder.png",
-                          progressIndicatorBuilder: (context, url, downloadProgress) =>
-                              CircularProgressIndicator(value: downloadProgress.progress),
-                          errorWidget: (context, url, error) => Icon(Icons.error),
+                          progressIndicatorBuilder:
+                              (context, url, downloadProgress) =>
+                                  CircularProgressIndicator(
+                                      value: downloadProgress.progress),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
                           width: 55,
                           height: 55,
                           fit: BoxFit.cover,
@@ -111,21 +117,30 @@ class _AccountManagementWithoutInventoryScreenState extends State<AccountManagem
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(snapshot.data!.ownerName.toString(),
-                              style: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.w700)),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w700)),
                           SizedBox(height: 3),
                           Text(snapshot.data!.shopName.toString(),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w600)),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600)),
                         ],
                       ),
                       trailing: Container(
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(50), color: Colors.white),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            color: Colors.white),
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(5, 2, 5, 2),
                           child: Text(
                             snapshot.data!.ownerMobile.toString(),
-                            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontSize: 13, fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),
@@ -139,8 +154,11 @@ class _AccountManagementWithoutInventoryScreenState extends State<AccountManagem
           actions: [
             GestureDetector(
               onTap: () {
-                Navigator.pushAndRemoveUntil(context,
-                    MaterialPageRoute(builder: (context) => HomeScreenWithoutInventory()), ModalRoute.withName(""));
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => HomeScreenWithoutInventory()),
+                    ModalRoute.withName(""));
               },
               child: Container(
                 padding: EdgeInsets.only(right: 10),
@@ -168,7 +186,9 @@ class _AccountManagementWithoutInventoryScreenState extends State<AccountManagem
                   child: Container(
                     padding: EdgeInsets.all(15),
                     decoration: BoxDecoration(
-                      border: Border(bottom: BorderSide(width: 1, color: Color(0xffbdbdbd))),
+                      border: Border(
+                          bottom:
+                              BorderSide(width: 1, color: Color(0xffbdbdbd))),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -177,9 +197,13 @@ class _AccountManagementWithoutInventoryScreenState extends State<AccountManagem
                         SizedBox(width: 17),
                         Expanded(
                           child: Text(textList[index],
-                              style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600)),
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600)),
                         ),
-                        Icon(Icons.arrow_forward_ios, color: Colors.black, size: 15),
+                        Icon(Icons.arrow_forward_ios,
+                            color: Colors.black, size: 15),
                       ],
                     ),
                   ),
@@ -249,7 +273,8 @@ class _AccountManagementWithoutInventoryScreenState extends State<AccountManagem
         //             url: "http://vendor.myprofitinc.com/privacypolicy",
         //           )),
         // );
-        Navigator.push(context, MaterialPageRoute(builder: (context) => PrivacyPolicyScreen()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => PrivacyPolicyScreen()));
         break;
       // case 2:
       //   Navigator.push(
@@ -285,36 +310,50 @@ class _AccountManagementWithoutInventoryScreenState extends State<AccountManagem
           return AlertDialog(
             contentPadding: EdgeInsets.fromLTRB(25, 10, 0, 0),
             title: Text("logout_key".tr(),
-                style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w600)),
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600)),
             content: Text("are_you_sure_you_want_to_logout_key".tr(),
-                style: TextStyle(color: Color.fromRGBO(85, 85, 85, 1), fontSize: 15, fontWeight: FontWeight.w500)),
+                style: TextStyle(
+                    color: Color.fromRGBO(85, 85, 85, 1),
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500)),
             actions: [
               MaterialButton(
-                child: Text("cancel_key".tr(), style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w600)),
+                child: Text("cancel_key".tr(),
+                    style: TextStyle(
+                        color: Colors.grey, fontWeight: FontWeight.w600)),
                 onPressed: () {
                   Navigator.pop(context);
                 },
               ),
               MaterialButton(
-                child: Text("logout_key".tr(), style: TextStyle(color: Color(0xfff4511e), fontWeight: FontWeight.w600)),
+                child: Text("logout_key".tr(),
+                    style: TextStyle(
+                        color: Color(0xfff4511e), fontWeight: FontWeight.w600)),
                 onPressed: () async {
                   log("ndndnd");
                   LogOutResponse logoutData = await ApiProvider().getLogOut();
                   print("kai kroge +${logoutData.success}");
-                  await SharedPref.setBooleanPreference(SharedPref.LOGIN, false);
+                  await SharedPref.setBooleanPreference(
+                      SharedPref.LOGIN, false);
                   print("kai kroge +${logoutData.success}");
                   if (await Network.isConnected()) {
                     SharedPref.clearSharedPreference(context);
                     SystemChannels.textInput.invokeMethod("TextInput.hide");
                     print("kai kroge +");
                     Navigator.pushAndRemoveUntil(
-                        context, MaterialPageRoute(builder: (context) => LoginScreen()), ModalRoute.withName("/"));
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                        ModalRoute.withName("/"));
 
                     Utility.showToast(msg: "logout_successfully_key".tr()
                         // timeInSecForIos: 3
                         );
                   } else {
-                    Utility.showToast(msg: "please_check_your_internet_connection_key".tr());
+                    Utility.showToast(
+                        msg: "please_check_your_internet_connection_key".tr());
                   }
                 },
               ),
@@ -327,14 +366,16 @@ class _AccountManagementWithoutInventoryScreenState extends State<AccountManagem
     try {
       Map input = HashMap<String, dynamic>();
 
-      input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+      input["vendor_id"] =
+          await SharedPref.getIntegerPreference(SharedPref.VENDORID);
 
       Response res = await dio.post(
         Endpoint.GET_VENDOR_PROFILE,
         data: input,
       );
 
-      VendorDetailResponse response = VendorDetailResponse.fromJson(res.toString());
+      VendorDetailResponse response =
+          VendorDetailResponse.fromJson(res.toString());
       vendorDetailData = response.data;
       controller.add(response.data!);
       return response;

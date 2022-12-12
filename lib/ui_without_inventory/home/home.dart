@@ -1,6 +1,8 @@
 import 'dart:collection';
 import 'dart:developer';
 
+import 'package:animated_widgets/widgets/rotation_animated.dart';
+import 'package:animated_widgets/widgets/shake_animated_widget.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
@@ -55,13 +57,20 @@ class _HomeScreenWithoutInventoryState extends State<HomeScreenWithoutInventory>
   int isReadCount = 0;
   int totalNotification = 0;
   String message = "";
+  bool enable = true;
   _onShareWithEmptyOrigin(BuildContext context) async {
     await Share.share("https://play.google.com/store/apps/details?id=com.tencent.ig");
   }
 
+
   @override
   void initState() {
     getNotifications();
+    Future.delayed(const Duration(seconds: 3), () {
+      setState(() {
+        enable = false;
+      });
+    });
     super.initState();
   }
 
@@ -79,24 +88,30 @@ class _HomeScreenWithoutInventoryState extends State<HomeScreenWithoutInventory>
         actions: [
           Stack(
             children: [
-              IconButton(
-                icon: Icon(
-                  Icons.notifications,
-                ),
-                onPressed: () {
-                  message == ""
-                      ? Utility.showToast(msg: "no_notification_key".tr())
-                      : Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => WithoutInventoryNotificationScreen(
-                                    notificationData: notificationData!,
-                                  ))).then((value) {
-                          setState(() {
-                            count -= value as int;
+              ShakeAnimatedWidget(
+                enabled: notificationData != null && enable,
+                duration: Duration(milliseconds: 500),
+                shakeAngle: Rotation.deg(z: 40),
+                curve: Curves.linear,
+                child: IconButton(
+                  icon: Icon(
+                    Icons.notifications,
+                  ),
+                  onPressed: () {
+                    message == ""
+                        ? Utility.showToast(msg: "no_notification_key".tr())
+                        : Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => WithoutInventoryNotificationScreen(
+                                      notificationData: notificationData!,
+                                    ))).then((value) {
+                            setState(() {
+                              count -= value as int;
+                            });
                           });
-                        });
-                },
+                  },
+                ),
               ),
               notificationData != null
                   ? Positioned(

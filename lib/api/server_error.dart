@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:vendor/ui/login/login_screen.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
@@ -143,8 +144,6 @@ class ServerError implements Exception {
   }
 
   void resetapp() async {
-    double devicewidth = 300;
-
     showDialog(
         barrierDismissible: false,
         context: navigationService.navigatorKey.currentContext!,
@@ -153,15 +152,19 @@ class ServerError implements Exception {
                 return false;
               },
               child: AlertDialog(
-                content:
-                    Text("Network Switching occur. Please restart the app."),
+                content: Text(
+                  "restart_502_error".tr(),
+                  style: GoogleFonts.openSans(
+                    color: Colors.black,
+                  ),
+                ),
                 contentPadding: EdgeInsets.all(15),
                 actions: [
                   TextButton(
                       onPressed: () async {
-                        Phoenix.rebirth(context);
+                        await Phoenix.rebirth(context);
                       },
-                      child: Text("Restart"))
+                      child: Text("Re-start"))
                 ],
               ),
             ));

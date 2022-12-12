@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:vendor/model/getdue_amount_by_day.dart';
 
 abstract class ChatPapdiBillingCustomerNumberResponseState extends Equatable {}
 
@@ -26,6 +27,23 @@ class GetChatPapdiBillingCustomerNumberResponseState
 
   @override
   List<Object> get props => [message, data, succes, status];
+}
+
+// ignore: must_be_immutable
+class GetChatPapdiBillingDueAmoutResponseState
+    extends ChatPapdiBillingCustomerNumberResponseState {
+  final message;
+  DueData data;
+  final status;
+
+  GetChatPapdiBillingDueAmoutResponseState({
+    required this.message,
+    required this.data,
+    this.status,
+  });
+
+  @override
+  List<Object> get props => [message, data, status];
 }
 
 class GetChatPapdiBillingCustomerNumberResponseLoadingstate

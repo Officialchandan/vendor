@@ -74,3 +74,8 @@ class GetDirectBillingRedeemCheckBoxEvent
   @override
   List<Object> get props => [isChecked];
 }
+
+class GetDirectBillingDueAmmountEvent
+    extends DirectBillingCustomerNumberResponseEvent {
+  GetDirectBillingDueAmmountEvent();
+}

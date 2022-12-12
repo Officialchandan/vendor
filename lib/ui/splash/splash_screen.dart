@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
-
+import 'package:lottie/lottie.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -21,7 +21,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  RefreshController _refreshController = RefreshController(initialRefresh: false);
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
   refresh() {
     log("refresh hua");
     validApp();
@@ -32,7 +33,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> validApp() async {
     if (await Network.isConnected()) {
-      ValidateAppVersionResponse result = await apiProvider.validateAppVersion();
+      ValidateAppVersionResponse result =
+          await apiProvider.validateAppVersion();
       if (result.success) {
         getLogin();
       } else {
@@ -51,7 +53,8 @@ class _SplashScreenState extends State<SplashScreen> {
         barrierDismissible: false,
         context: navigationService.navigatorKey.currentContext!,
         builder: (context) => AlertDialog(
-              content: Text("You are using older Version of Vendor App, \n Please Update App For Better Performance."),
+              content: Text(
+                  "You are using older Version of Vendor App, \n Please Update App For Better Performance."),
               contentPadding: EdgeInsets.all(15),
               actions: [
                 TextButton(
@@ -103,33 +106,47 @@ class _SplashScreenState extends State<SplashScreen> {
     var log = await SharedPref.getBooleanPreference(SharedPref.LOGIN);
     var lang = await SharedPref.getStringPreference(SharedPref.SELECTEDLANG);
     if (lang.isEmpty) {
-      Timer(Duration(seconds: 3),
-          () => Navigator.pushNamedAndRemoveUntil(context, Routes.SelectLanguage, (route) => false));
+      Timer(
+          Duration(seconds: 3),
+          () => Navigator.pushNamedAndRemoveUntil(
+              context, Routes.SelectLanguage, (route) => false));
     } else if (log) {
       String token = await SharedPref.getStringPreference(SharedPref.TOKEN);
       int vendorId = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
-      int statusId = await SharedPref.getIntegerPreference(SharedPref.USERSTATUS);
-      baseOptions.headers.addAll({"languagecode": "${await SharedPref.getStringPreference(SharedPref.SELECTEDLANG)}"});
+      int statusId =
+          await SharedPref.getIntegerPreference(SharedPref.USERSTATUS);
+      baseOptions.headers.addAll({
+        "languagecode":
+            "${await SharedPref.getStringPreference(SharedPref.SELECTEDLANG)}"
+      });
       print("token-->$token");
       print("vendorId-->$vendorId");
       if (token.isEmpty) {
-        Timer(Duration(seconds: 3),
-            () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen())));
+        Timer(
+            Duration(seconds: 3),
+            () => Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => LoginScreen())));
       } else {
         baseOptions.headers.addAll({"Authorization": "bearer $token"});
         if (await SharedPref.getIntegerPreference(SharedPref.USERSTATUS) == 0) {
           Timer(
               Duration(seconds: 3),
               () => Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (context) => HomeScreenWithoutInventory())));
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => HomeScreenWithoutInventory())));
         } else {
-          Timer(Duration(seconds: 3),
-              () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen())));
+          Timer(
+              Duration(seconds: 3),
+              () => Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => HomeScreen())));
         }
       }
     } else {
-      Timer(Duration(seconds: 3),
-          () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen())));
+      Timer(
+          Duration(seconds: 3),
+          () => Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => LoginScreen())));
     }
   }
 
@@ -183,7 +200,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   Positioned(
                       child: Center(
                     child: Image.asset(
-                      'assets/images/logo.png',
+                      'assets/images/profit-logo1.gif',
                       height: deviceHeight * 0.40,
                     ),
                   )),

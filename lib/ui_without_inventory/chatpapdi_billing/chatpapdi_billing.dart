@@ -23,6 +23,8 @@ import 'package:vendor/utility/validator.dart';
 import 'package:vendor/widget/progress_indecator.dart';
 
 import '../../utility/network.dart';
+import '../../widget/due_amount_flash.dart';
+import '../performancetracker/upi/due_amount_screen.dart';
 
 class ChatPapdiBilling extends StatefulWidget {
   ChatPapdiBilling({Key? key}) : super(key: key);
@@ -35,11 +37,10 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
   TextEditingController mobileController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
-
   TextEditingController amountController = TextEditingController();
   TextEditingController otpController = TextEditingController();
   ChatPapdiBillingCustomerNumberResponseBloc
-      directBillingCustomerNumberResponseBloc =
+      chatpapdiBillingCustomerNumberResponseBloc =
       ChatPapdiBillingCustomerNumberResponseBloc();
   List<CategoryModel> categoryList = [];
   List categoryIdList = [];
@@ -49,6 +50,9 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
   bool valuefirst = false;
   String coins = "0.0";
   String firstName = "You";
+
+  String dueAmount = "0";
+  String lastpayamount = "0";
   String lastName = "";
   var status1;
   String earningCoins = "0.0";
@@ -56,6 +60,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
   bool checkbox = false;
   String amount = "0.0";
   var billing, succes, indicator;
+  bool isFlashLineShow = false;
   ChatPapdiData? datas;
   ChatPapdiData? passing;
   Widget show(var coins) {
@@ -106,26 +111,53 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
   @override
   void initState() {
     // TODO: implement initState
+
     super.initState();
+
     userType();
-    directBillingCustomerNumberResponseBloc
+
+    chatpapdiBillingCustomerNumberResponseBloc
         .add(GetDirectBillingCategoryEvent());
+
+    // chatpapdiBillingCustomerNumberResponseBloc
+    //     .add(GetDirectBillingDueAmmountEvent());
   }
 
   @override
   void dispose() {
-    events.close();
-    _timer!.cancel();
-    _counter = 0;
-
     // TODO: implement dispose
+    cleardata();
     super.dispose();
+  }
+
+  cleardata() {
+    print("run");
+    events.close();
+    _timer?.cancel();
+    _counter = 0;
+    nameController.clear();
+    lastNameController.clear();
+    amountController.clear();
+    mobileController.clear();
+    categoryList.clear();
+    categoryIdList.clear();
+    value = true;
+    message = "";
+    redeem = false;
+    valuefirst = false;
+    coins = "0.0";
+    firstName = "You";
+    lastName = "";
+    earningCoins = "0.0";
+    coinss = "0.0";
+    checkbox = false;
+    amount = "0.0";
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ChatPapdiBillingCustomerNumberResponseBloc>(
-      create: (context) => directBillingCustomerNumberResponseBloc,
+      create: (context) => chatpapdiBillingCustomerNumberResponseBloc,
       child: BlocConsumer<ChatPapdiBillingCustomerNumberResponseBloc,
           ChatPapdiBillingCustomerNumberResponseState>(
         listener: (context, state) {},
@@ -135,7 +167,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
               automaticallyImplyLeading: false,
               title:
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text("billing_key".tr(),
+                Text("direct_billing_key".tr(),
                     style: TextStyle(fontWeight: FontWeight.w600)),
                 SizedBox(width: 5),
                 Image.asset(
@@ -146,6 +178,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                   width: 35,
                 )
               ]),
+              leading: Text(""),
               actions: [
                 IconButton(
                   icon: Icon(Icons.home),
@@ -163,12 +196,39 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
             ),
             body: SingleChildScrollView(
               child: Container(
-                padding: EdgeInsets.only(left: 15, right: 15, top: 10),
+                padding:
+                    EdgeInsets.only(left: 15, right: 15, top: false ? 10 : 0),
                 child: Column(
                   children: [
+                    isFlashLineShow
+                        ? DueAmountFlash(
+                            lastpayamount: lastpayamount,
+                            amount: dueAmount,
+                            navigatetoUpi: () {
+                              Navigator.push(
+                                context,
+                                PageTransition(
+                                    child: DueAmountScreen(),
+                                    type: PageTransitionType.fade),
+                              );
+                            },
+                          )
+                        : Container(),
+                    SizedBox(
+                      height: 10,
+                    ),
                     BlocConsumer<ChatPapdiBillingCustomerNumberResponseBloc,
                         ChatPapdiBillingCustomerNumberResponseState>(
                       listener: (context, state) async {
+                        if (state is GetChatPapdiBillingDueAmoutResponseState) {
+                          isFlashLineShow =
+                              await SharedPref.getBooleanPreference(
+                                  "isDueAmount");
+                          lastpayamount =
+                              "${state.data.totalDue!.toDouble() - state.data.todayDue!.toDouble()}";
+                          dueAmount =
+                              state.data.totalDue!.toDouble().toString();
+                        }
                         if (state
                             is GetChatPapdiBillingCustomerNumberResponseState) {
                           coins = state.data.toString();
@@ -217,20 +277,22 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                         }
                         if (state is GetChatPapdiBillingOtpState) {
                           Utility.showToast(msg: state.message);
-
+                          events.close();
+                          _counter = 0;
                           // var result = await
                           datas!.remainingOrdAmt == "0"
-                              ? _displayCumulative(
-                                      context,
-                                      datas!.remainingOrdAmt,
-                                      datas!.freeGiftName)
-                                  .then((value) {
-                                  datas!.qrCodeStatus == 0
-                                      ? _displayDialogs(
-                                          context, datas!.earningCoins, 0, "")
-                                      : _displayDialogs(context,
-                                          datas!.earningCoins, 1, datas);
-                                })
+                              ?
+                              // _displayCumulative(
+                              //         context,
+                              //         datas!.remainingOrdAmt,
+                              //         datas!.freeGiftName)
+                              //     .then((value) {
+                              datas!.qrCodeStatus == 0
+                                  ? _displayDialogs(
+                                      context, datas!.earningCoins, 0, "")
+                                  : _displayDialogs(
+                                      context, datas!.earningCoins, 1, datas)
+                              //  })
                               : datas!.qrCodeStatus == 0
                                   ? _displayDialogs(
                                       context, datas!.earningCoins, 0, "")
@@ -268,7 +330,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                                 });
                               } else {
                                 Utility.showToast(
-                                    msg: "You_dont_have_enough_coins".tr());
+                                    msg: "You_dont_have_enough_coins_key".tr());
                               }
                             } else {
                               Utility.showToast(
@@ -333,12 +395,12 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                             ),
                             onChanged: (length) {
                               if (mobileController.text.length == 10) {
-                                directBillingCustomerNumberResponseBloc.add(
+                                chatpapdiBillingCustomerNumberResponseBloc.add(
                                     GetChatPapdiBillingCustomerNumberResponseEvent(
                                         mobile: mobileController.text));
                               }
                               if (mobileController.text.length == 9) {
-                                directBillingCustomerNumberResponseBloc.add(
+                                chatpapdiBillingCustomerNumberResponseBloc.add(
                                     GetChatPapdiBillingCustomerNumberResponseEvent(
                                         mobile: mobileController.text));
                                 coins = "0";
@@ -555,7 +617,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                                           onTap: () {
                                             if (categoryList[index].onTileTap ==
                                                 false) {
-                                              directBillingCustomerNumberResponseBloc
+                                              chatpapdiBillingCustomerNumberResponseBloc
                                                   .add(
                                                       GetDirectBillingCheckBoxEvent(
                                                           index: index,
@@ -563,7 +625,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                                             }
                                             if (categoryList[index].onTileTap ==
                                                 true) {
-                                              directBillingCustomerNumberResponseBloc
+                                              chatpapdiBillingCustomerNumberResponseBloc
                                                   .add(
                                                       GetDirectBillingCheckBoxEvent(
                                                           index: index,
@@ -612,7 +674,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                                                               2)),
                                                   side: BorderSide(width: 1.5),
                                                   onChanged: (isCheck) {
-                                                    directBillingCustomerNumberResponseBloc
+                                                    chatpapdiBillingCustomerNumberResponseBloc
                                                         .add(
                                                             GetDirectBillingCheckBoxEvent(
                                                                 index: index,
@@ -638,19 +700,20 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                       );
                     }),
                     SizedBox(
-                      height: 32,
+                      height:
+                          MediaQuery.of(context).size.height < 673 ? 32 : 40,
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 15),
                       child: InkWell(
                         onTap: () {
                           if (redeem == false) {
-                            directBillingCustomerNumberResponseBloc
+                            chatpapdiBillingCustomerNumberResponseBloc
                                 .add(ChatPapdiCheckBoxEvent(isChecked: true));
                           }
 
                           if (redeem == true) {
-                            directBillingCustomerNumberResponseBloc
+                            chatpapdiBillingCustomerNumberResponseBloc
                                 .add(ChatPapdiCheckBoxEvent(isChecked: false));
                           }
                         },
@@ -678,8 +741,8 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                                 activeColor: ColorPrimary,
                                 onChanged: (value) {
                                   FocusScope.of(context).unfocus();
-                                  directBillingCustomerNumberResponseBloc.add(
-                                      ChatPapdiCheckBoxEvent(
+                                  chatpapdiBillingCustomerNumberResponseBloc
+                                      .add(ChatPapdiCheckBoxEvent(
                                           isChecked: value!));
                                 },
                               ),
@@ -984,12 +1047,12 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
     input["coin_deducted"] = coinss;
     log("======>input$input");
     if (isResendOTPpage) {
-      directBillingCustomerNumberResponseBloc
+      chatpapdiBillingCustomerNumberResponseBloc
           .add(GetChatPapdiResendOtpEvent(input: input));
     } else {
       isResendOTPpage = true;
       print(input['first_name'] + input['last_name']);
-      directBillingCustomerNumberResponseBloc
+      chatpapdiBillingCustomerNumberResponseBloc
           .add(GetChatPapdiBillingEvent(input: input));
     }
   }
@@ -1010,7 +1073,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
     input["vendor_available_coins"] = datas!.vendorAvailableCoins;
     log("=====? $input");
 
-    directBillingCustomerNumberResponseBloc
+    chatpapdiBillingCustomerNumberResponseBloc
         .add(GetChatPapdiBillingOtpEvent(input: input));
   }
 
@@ -1042,7 +1105,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                   },
                   child: ConstrainedBox(
                     constraints: BoxConstraints(
-                        maxWidth: MediaQuery.of(context).size.width * 0.40),
+                        maxWidth: MediaQuery.of(context).size.width * 0.50),
                     child: AlertDialog(
                       titlePadding: const EdgeInsets.only(
                           left: 18, right: 18, top: 10, bottom: 10),
@@ -1152,10 +1215,11 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                                           " " +
                                           "${snapshot.data.toString()} " +
                                           "seconds".tr(),
+                                      textAlign: TextAlign.center,
                                       style: GoogleFonts.openSans(
                                           color: ColorTextPrimary,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w400,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
                                           decoration: TextDecoration.none),
                                     )
                                   : TextButton(
@@ -1185,7 +1249,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                                         "otp_resend".tr(),
                                         style: GoogleFonts.openSans(
                                             color: ColorPrimary,
-                                            fontSize: 15,
+                                            fontSize: 18,
                                             fontWeight: FontWeight.w600,
                                             decoration: TextDecoration.none),
                                       ),
@@ -1209,82 +1273,91 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
           return ConstrainedBox(
             constraints:
                 BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
-            child: AlertDialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              title: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      "assets/images/otp-wallet.png",
-                      fit: BoxFit.cover,
-                      height: 70,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            child: WillPopScope(
+              onWillPop: () => Future.value(false),
+              child: AlertDialog(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
                       Image.asset(
-                        "assets/images/point.png",
-                        height: 40,
-                        width: 40,
+                        "assets/images/otp-wallet.png",
+                        fit: BoxFit.cover,
+                        height: 70,
                       ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              "assets/images/point.png",
+                              height: 40,
+                              width: 40,
+                            ),
+                            Text(
+                              " ${double.parse(hinttext).toStringAsFixed(2)} ",
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.openSans(
+                                fontSize: 40.0,
+                                color: ColorPrimary,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ]),
                       Text(
-                        " ${double.parse(hinttext).toStringAsFixed(2)} ",
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.openSans(
-                          fontSize: 40.0,
-                          color: ColorPrimary,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+                          "${"coin_generated_successfully_key".tr()}\n ${"in_customer_wallet_key".tr()}",
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.openSans(
+                            fontSize: 17.0,
+                            color: ColorTextPrimary,
+                            fontWeight: FontWeight.w600,
+                          )),
                     ]),
-                    Text(
-                        "${"coin_generated_successfully_key".tr()}\n ${"in_customer_wallet_key".tr()}",
-                        textAlign: TextAlign.center,
+                actions: <Widget>[
+                  Center(
+                    child: MaterialButton(
+                      minWidth: MediaQuery.of(context).size.width * 0.40,
+                      height: 50,
+                      padding: const EdgeInsets.all(8.0),
+                      textColor: Colors.white,
+                      color: ColorPrimary,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      onPressed: () {
+                        log("sta==>$sta");
+                        sta == 1
+                            ? Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        Scanner(data: datas!)))
+                            : Navigator.pushAndRemoveUntil(
+                                    context,
+                                    PageTransition(
+                                        child: HomeScreenWithoutInventory(),
+                                        type: PageTransitionType.fade),
+                                    ModalRoute.withName("/"))
+                                .then((value) {
+                                cleardata();
+                              });
+                      },
+                      child: new Text(
+                        "done_key".tr(),
                         style: GoogleFonts.openSans(
-                          fontSize: 17.0,
-                          color: ColorTextPrimary,
-                          fontWeight: FontWeight.w600,
-                        )),
-                  ]),
-              actions: <Widget>[
-                Center(
-                  child: MaterialButton(
-                    minWidth: MediaQuery.of(context).size.width * 0.40,
-                    height: 50,
-                    padding: const EdgeInsets.all(8.0),
-                    textColor: Colors.white,
-                    color: ColorPrimary,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    onPressed: () {
-                      log("sta==>$sta");
-                      sta == 1
-                          ? Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Scanner(data: datas!)))
-                          : Navigator.pushAndRemoveUntil(
-                              context,
-                              PageTransition(
-                                  child: BottomNavigationHomeWithOutInventory(),
-                                  type: PageTransitionType.fade),
-                              ModalRoute.withName("/"));
-                    },
-                    child: new Text(
-                      "done_key".tr(),
-                      style: GoogleFonts.openSans(
-                          fontSize: 17,
-                          fontWeight: FontWeight.w600,
-                          decoration: TextDecoration.none),
+                            fontSize: 17,
+                            fontWeight: FontWeight.w600,
+                            decoration: TextDecoration.none),
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 10,
-                )
-              ],
+                  SizedBox(
+                    height: 10,
+                  )
+                ],
+              ),
             ),
           );
         });

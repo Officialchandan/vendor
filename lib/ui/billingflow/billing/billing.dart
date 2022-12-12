@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:vendor/model/get_categories_response.dart';
 import 'package:vendor/ui/billingflow/billing/billing_bloc.dart';
@@ -15,6 +16,7 @@ import 'package:vendor/ui/billingflow/billing/billing_state.dart';
 import 'package:vendor/ui/billingflow/direct_billing/direct_billing.dart';
 import 'package:vendor/ui/billingflow/search_all/search_all_product.dart';
 import 'package:vendor/ui/billingflow/search_by_categories/search_by_categories.dart';
+import 'package:vendor/ui/home/bottom_navigation_home.dart';
 import 'package:vendor/ui/home/home.dart';
 import 'package:vendor/ui/inventory/add_product/add_product_screen.dart';
 import 'package:vendor/utility/color.dart';
@@ -22,6 +24,9 @@ import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/utility.dart';
 import 'package:vendor/utility/validator.dart';
+
+import '../../../widget/due_amount_flash.dart';
+import '../../money_due_upi/money_due_screen.dart';
 
 class BillingScreen extends StatefulWidget {
   BillingScreen({Key? key}) : super(key: key);
@@ -37,7 +42,9 @@ class _BillingScreenState extends State<BillingScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   List<CategoryModel> category = [];
-
+  bool isFlashLineShow = false;
+  String dueAmount = "0.0";
+  String lastpayamount = "0.0";
   var check;
   var coins;
   String customerCoins = "0.0";
@@ -54,7 +61,17 @@ class _BillingScreenState extends State<BillingScreen> {
   @override
   void initState() {
     super.initState();
+    //customerNumberResponseBloc.add(GetBillingDueAmmountEvent());
     log("my data==>");
+  }
+
+  void dispose() {
+    mobileController.dispose();
+    nameController.dispose();
+    lastNameController.dispose();
+    //...
+    super.dispose();
+    //...
   }
 
   refresh() {
@@ -99,6 +116,13 @@ class _BillingScreenState extends State<BillingScreen> {
           listener: (context, state) async {
             userStatus =
                 await SharedPref.getIntegerPreference(SharedPref.USERSTATUS);
+            if (state is GetBillingDueAmoutResponseState) {
+              isFlashLineShow =
+                  await SharedPref.getBooleanPreference("isDueAmount");
+              lastpayamount =
+                  "${state.data.totalDue!.toDouble() - state.data.todayDue!.toDouble()}";
+              dueAmount = state.data.totalDue!.toDouble().toString();
+            }
           },
           builder: (context, state) {
             return Scaffold(
@@ -117,43 +141,44 @@ class _BillingScreenState extends State<BillingScreen> {
                   ),
                 ]),
                 leadingWidth: 100,
-                leading: userStatus == 1 || userStatus == 3
-                    ? Padding(
-                        padding: const EdgeInsets.only(
-                            top: 15.0, bottom: 15, left: 20),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                PageTransition(
-                                    child: DirectBilling(usertype: userStatus),
-                                    type: PageTransitionType.fade));
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(5)),
-                            child: Center(
-                              child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Text(
-                                      "direct_billing_key".tr(),
-                                      style: TextStyle(
-                                          color: ColorPrimary,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Image.asset(
-                                      "assets/images/point.png",
-                                      scale: 3,
-                                    ),
-                                  ]),
-                            ),
-                          ),
-                        ),
-                      )
-                    : Text(""),
+                // leading: userStatus == 1 || userStatus == 3
+                //     ? Padding(
+                //         padding: const EdgeInsets.only(
+                //             top: 15.0, bottom: 15, left: 20),
+                //         child: InkWell(
+                //           onTap: () {
+                //             Navigator.push(
+                //                 context,
+                //                 PageTransition(
+                //                     child: DirectBilling(usertype: userStatus),
+                //                     type: PageTransitionType.fade));
+                //           },
+                //           child: Container(
+                //             decoration: BoxDecoration(
+                //                 color: Colors.white,
+                //                 borderRadius: BorderRadius.circular(5)),
+                //             child: Center(
+                //               child: Row(
+                //                   mainAxisAlignment:
+                //                       MainAxisAlignment.spaceEvenly,
+                //                   children: [
+                //                     Text(
+                //                       "direct_billing_key".tr(),
+                //                       style: TextStyle(
+                //                           color: ColorPrimary,
+                //                           fontWeight: FontWeight.bold),
+                //                     ),
+                //                     Image.asset(
+                //                       "assets/images/point.png",
+                //                       scale: 3,
+                //                     ),
+                //                   ]),
+                //             ),
+                //           ),
+                //         ),
+                //       )
+                //     : Text(""),
+                leading: Text(""),
                 centerTitle: true,
                 actions: [
                   GestureDetector(
@@ -196,6 +221,20 @@ class _BillingScreenState extends State<BillingScreen> {
                         //mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          isFlashLineShow
+                              ? DueAmountFlash(
+                                  lastpayamount: lastpayamount,
+                                  amount: dueAmount,
+                                  navigatetoUpi: () {
+                                    Navigator.push(
+                                      context,
+                                      PageTransition(
+                                          child: MoneyDueScreen(false),
+                                          type: PageTransitionType.fade),
+                                    );
+                                  },
+                                )
+                              : Container(),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
@@ -641,7 +680,10 @@ class _BillingScreenState extends State<BillingScreen> {
                                 if (userStatus == 3) {
                                   category = state.data;
                                   category.removeWhere((element) =>
-                                      element.id == "21" || element.id == "31");
+                                      //! old code
+                                      //    element.id == "21" || element.id == "31");
+                                      int.parse(element.id) >= 41 &&
+                                      int.parse(element.id) < 50);
                                 } else {
                                   category = state.data;
                                 }
@@ -670,7 +712,7 @@ class _BillingScreenState extends State<BillingScreen> {
                 ),
               ),
               bottomNavigationBar: Padding(
-                padding: const EdgeInsets.only(left: 17, right: 17),
+                padding: const EdgeInsets.only(left: 17, right: 17, bottom: 3),
                 child: InkWell(
                   onTap: () async {
                     if (await Network.isConnected()) {

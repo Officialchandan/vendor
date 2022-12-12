@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+import '../../../model/getdue_amount_by_day.dart';
+
 abstract class CustomerNumberResponseState extends Equatable {}
 
 class CustomerNumberResponseIntialState extends CustomerNumberResponseState {
@@ -15,7 +17,12 @@ class GetCustomerNumberResponseState extends CustomerNumberResponseState {
   final firstName;
   final lastName;
   GetCustomerNumberResponseState(
-      {this.message, this.status, this.data, this.succes,this.firstName, this.lastName});
+      {this.message,
+      this.status,
+      this.data,
+      this.succes,
+      this.firstName,
+      this.lastName});
 
   @override
   List<Object> get props => [message, data, succes, firstName, lastName];
@@ -87,4 +94,19 @@ class GetBillingPartialUserFailureState extends CustomerNumberResponseState {
       {required this.message, required this.succes});
   @override
   List<Object?> get props => [message, succes];
+}
+
+class GetBillingDueAmoutResponseState extends CustomerNumberResponseState {
+  final message;
+  DueData data;
+  final status;
+
+  GetBillingDueAmoutResponseState({
+    required this.message,
+    required this.data,
+    this.status,
+  });
+
+  @override
+  List<Object> get props => [message, data, status];
 }

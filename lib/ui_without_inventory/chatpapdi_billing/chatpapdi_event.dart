@@ -70,3 +70,8 @@ class GetDirectBillingCategoryEvent
     extends ChatPapdiBillingCustomerNumberResponseEvent {
   GetDirectBillingCategoryEvent();
 }
+
+class GetDirectBillingDueAmmountEvent
+    extends ChatPapdiBillingCustomerNumberResponseEvent {
+  GetDirectBillingDueAmmountEvent();
+}

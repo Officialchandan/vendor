@@ -460,5 +460,17 @@
   "seconds" : "सेकंड",
   "otp_resend_successfully":"ओटीपी सफलतापूर्वक भेजा गया",
   "try_after": "",
-  "try_after_hi" : "के बाद प्रयास करे"
+  "try_after_hi" : "के बाद प्रयास करे",
+  "billing_option_key":"बिलिंग विकल्प",
+  "your_last_Pay_Key":"आपका पिछला बक़ाया रुपये ",
+  "your_total_pay_key":" है। और आपका कुल बक़ाया रुपये ",
+  "due_amount_flash": " है।  कृपया अभी भुकतान करे। ",
+  "pay_now":"भुगतान करें",
+  "hour_ago":"घंटे पहले",
+  "minute_ago":"मिनट पहले",
+  "today":"आज",
+  "this_week":"इस सप्ताह",
+  "older":"पहले",
+  "inventory_new_key": "इन्वेंटरी",
+  "restart_502_error":"ऐसा लगता है कि आपका इंटरनेट फिर से कनेक्ट हो रहा है। बेहतर अनुभव के लिए कृपया रीस्टार्ट करें आपका ऐप"
 }

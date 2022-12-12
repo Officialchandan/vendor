@@ -19,11 +19,10 @@ class BottomNavigationHomeWithOutInventory extends StatefulWidget {
 class _BottomNavigationHomeWithOutInventoryState
     extends State<BottomNavigationHomeWithOutInventory>
     with TickerProviderStateMixin {
-  TabController? _tabController;
-
+  TabController? _tabControllerwithoutinventory;
   @override
   void initState() {
-    _tabController = TabController(
+    _tabControllerwithoutinventory = TabController(
       length: 4,
       initialIndex: widget.index,
       vsync: this,
@@ -39,7 +38,7 @@ class _BottomNavigationHomeWithOutInventoryState
       child: Scaffold(
         body: TabBarView(
           physics: NeverScrollableScrollPhysics(),
-          controller: _tabController,
+          controller: _tabControllerwithoutinventory,
           children: [
             ChatPapdiBilling(),
             PerformanceTrackerWithoutInventory(),
@@ -53,7 +52,7 @@ class _BottomNavigationHomeWithOutInventoryState
         bottomNavigationBar: MBottomNavigationBar(
           index: widget.index,
           onChange: (index) {
-            _tabController!.animateTo(index);
+            _tabControllerwithoutinventory!.animateTo(index);
           },
         ),
       ),

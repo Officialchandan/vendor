@@ -22,6 +22,8 @@ import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/utility.dart';
 
+import '../../home/home.dart';
+
 class BillingProducts extends StatefulWidget {
   final List<ProductModel> billingItemList;
   final String firstName;
@@ -867,18 +869,22 @@ class _BillingProductsState extends State<BillingProducts> {
                         msg: state.message,
                       );
 
+                      _counter = 0;
+                      _timer?.cancel();
+                      events.close();
                       otpVerifyList!.remainingOrdAmt == "0"
-                          ? _displayCumulative(
-                                  context,
-                                  otpVerifyList!.remainingOrdAmt,
-                                  otpVerifyList!.freeGiftName)
-                              .then((value) {
-                              otpVerifyList!.qrCodeStatus == 0
-                                  ? _displayDialogs(
-                                      context, passing!.earningCoins, 0, "")
-                                  : _displayDialogs(context,
-                                      passing!.earningCoins, 1, passing);
-                            })
+                          ?
+                          // _displayCumulative(
+                          //         context,
+                          //         otpVerifyList!.remainingOrdAmt,
+                          //         otpVerifyList!.freeGiftName)
+                          //     .then((value) {
+                          otpVerifyList!.qrCodeStatus == 0
+                              ? _displayDialogs(
+                                  context, passing!.earningCoins, 0, "")
+                              : _displayDialogs(
+                                  context, passing!.earningCoins, 1, passing)
+                          //})
                           : otpVerifyList!.qrCodeStatus == 0
                               ? _displayDialogs(
                                   context, passing!.earningCoins, 0, "")
@@ -1289,9 +1295,10 @@ class _BillingProductsState extends State<BillingProducts> {
                                             " " +
                                             "${snapshot.data.toString()} " +
                                             "seconds".tr(),
+                                        textAlign: TextAlign.center,
                                         style: GoogleFonts.openSans(
                                             color: ColorTextPrimary,
-                                            fontSize: 15,
+                                            fontSize: 18,
                                             fontWeight: FontWeight.w400,
                                             decoration: TextDecoration.none),
                                       )
@@ -1324,7 +1331,7 @@ class _BillingProductsState extends State<BillingProducts> {
                                           "otp_resend".tr(),
                                           style: GoogleFonts.openSans(
                                               color: ColorPrimary,
-                                              fontSize: 15,
+                                              fontSize: 18,
                                               fontWeight: FontWeight.w600,
                                               decoration: TextDecoration.none),
                                         ),
@@ -1348,83 +1355,91 @@ class _BillingProductsState extends State<BillingProducts> {
           return ConstrainedBox(
             constraints:
                 BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
-            child: AlertDialog(
-              titlePadding: const EdgeInsets.all(20),
-              actionsPadding:
-                  const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-              contentPadding: const EdgeInsets.only(left: 20, right: 20),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              title: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      "assets/images/otp-wallet.png",
-                      fit: BoxFit.cover,
-                      height: 70,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            child: WillPopScope(
+              onWillPop: () {
+                return Future.value(false);
+                //
+              },
+              child: AlertDialog(
+                titlePadding: const EdgeInsets.all(20),
+                actionsPadding:
+                    const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                contentPadding: const EdgeInsets.only(left: 20, right: 20),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
                       Image.asset(
-                        "assets/images/point.png",
-                        height: 35,
-                        width: 35,
+                        "assets/images/otp-wallet.png",
+                        fit: BoxFit.cover,
+                        height: 70,
                       ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              "assets/images/point.png",
+                              height: 35,
+                              width: 35,
+                            ),
+                            Text(
+                              " ${double.parse(hintText).toStringAsFixed(2)} ",
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.openSans(
+                                fontSize: 38,
+                                color: ColorPrimary,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ]),
                       Text(
-                        " ${double.parse(hintText).toStringAsFixed(2)} ",
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.openSans(
-                          fontSize: 38,
-                          color: ColorPrimary,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+                          "${"coin_generated_successfully_key".tr()}\n ${"in_customer_wallet_key".tr()}",
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.openSans(
+                            fontSize: 17.0,
+                            color: ColorTextPrimary,
+                            fontWeight: FontWeight.w600,
+                          )),
                     ]),
-                    Text(
-                        "${"coin_generated_successfully_key".tr()}\n ${"in_customer_wallet_key".tr()}",
-                        textAlign: TextAlign.center,
+                actions: <Widget>[
+                  Center(
+                    child: MaterialButton(
+                      minWidth: MediaQuery.of(context).size.width * 0.40,
+                      height: 50,
+                      padding: const EdgeInsets.all(8.0),
+                      textColor: Colors.white,
+                      color: ColorPrimary,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      onPressed: () {
+                        status == 1
+                            ? Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        Scanner(data: passing!)))
+                            : Navigator.pushAndRemoveUntil(
+                                context,
+                                PageTransition(
+                                    child: HomeScreen(),
+                                    type: PageTransitionType.fade),
+                                ModalRoute.withName("/"));
+                      },
+                      child: new Text(
+                        "done_key".tr(),
                         style: GoogleFonts.openSans(
-                          fontSize: 17.0,
-                          color: ColorTextPrimary,
-                          fontWeight: FontWeight.w600,
-                        )),
-                  ]),
-              actions: <Widget>[
-                Center(
-                  child: MaterialButton(
-                    minWidth: MediaQuery.of(context).size.width * 0.40,
-                    height: 50,
-                    padding: const EdgeInsets.all(8.0),
-                    textColor: Colors.white,
-                    color: ColorPrimary,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    onPressed: () {
-                      status == 1
-                          ? Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      Scanner(data: passing!)))
-                          : Navigator.pushAndRemoveUntil(
-                              context,
-                              PageTransition(
-                                  child: BottomNavigationHome(),
-                                  type: PageTransitionType.fade),
-                              ModalRoute.withName("/"));
-                    },
-                    child: new Text(
-                      "done_key".tr(),
-                      style: GoogleFonts.openSans(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          decoration: TextDecoration.none),
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            decoration: TextDecoration.none),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         });

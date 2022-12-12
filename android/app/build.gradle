@@ -8,7 +8,7 @@ if (localPropertiesFile.exists()) {
 
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
-    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+    throw new FileNotFoundException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
@@ -31,13 +31,13 @@ android {
 //keytool -list -v -keystore /Users/mac/Documents/vaibhav/myprofit_vendor/android/app/src/main/assets/vendor.jks -alias vendor
 
 //            keytool -list -v -keystore ~/.android/app/src/main/assets/vendor.jks -alias vendor -storepass 123456 -keypass 123456
-            storeFile file('/Users/mac/Documents/vaibhav/myprofit_vendor/android/app/src/main/assets/vendor.jks')
+            storeFile file('/home/tekzee-d21/Desktop/jahid_dev/vendor_git/android/app/src/main/assets/vendor.jks')
             storePassword '123456'
             keyAlias 'vendor'
             keyPassword '123456'
         }
         release {
-            storeFile file('/Users/mac/Documents/vaibhav/myprofit_vendor/android/app/src/main/assets/vendor.jks')
+            storeFile file('/home/tekzee-d21/Desktop/jahid_dev/vendor_git/android/app/src/main/assets/vendor.jks')
             storePassword '123456'
             keyAlias 'vendor'
             keyPassword '123456'

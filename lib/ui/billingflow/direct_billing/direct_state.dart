@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+import '../../../model/getdue_amount_by_day.dart';
+
 abstract class DirectBillingCustomerNumberResponseState extends Equatable {}
 
 class DirectBillingCustomerNumberResponseIntialState
@@ -182,4 +184,20 @@ class DirectBillingLoadingState
   DirectBillingLoadingState();
   @override
   List<Object?> get props => [];
+}
+
+class GetDirectBillingDueAmoutResponseState
+    extends DirectBillingCustomerNumberResponseState {
+  final message;
+  DueData data;
+  final status;
+
+  GetDirectBillingDueAmoutResponseState({
+    required this.message,
+    required this.data,
+    this.status,
+  });
+
+  @override
+  List<Object> get props => [message, data, status];
 }

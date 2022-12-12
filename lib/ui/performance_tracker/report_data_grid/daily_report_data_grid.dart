@@ -211,7 +211,10 @@ class _DailyReportDataGridState extends State<DailyReportDataGrid> {
                         },
                         child: Text(
                           "Cancel",
-                          style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Colors.black),
+                          style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
                         ),
                       ),
                       InkWell(
@@ -226,7 +229,10 @@ class _DailyReportDataGridState extends State<DailyReportDataGrid> {
                         },
                         child: Text(
                           "Export",
-                          style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: ColorPrimary),
+                          style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                              color: ColorPrimary),
                         ),
                       ),
                     ],
@@ -246,9 +252,13 @@ class _DailyReportDataGridState extends State<DailyReportDataGrid> {
       Directory? directory;
       directory = await getExternalStorageDirectory();
       String fileName = "/Daily Sales Report ";
-      String path = directory!.path + fileName + DateFormat("dd MMM yyyy").format(DateTime.now()) + ".xlsx";
+      String path = directory!.path +
+          fileName +
+          DateFormat("dd MMM yyyy").format(DateTime.now()) +
+          ".xlsx";
 
-      final xlsio.Workbook workbook = dataGridKey.currentState!.exportToExcelWorkbook();
+      final xlsio.Workbook workbook =
+          dataGridKey.currentState!.exportToExcelWorkbook();
       final List<int> bytes = workbook.saveAsStream();
 
       File(path).writeAsBytes(bytes);
@@ -267,10 +277,14 @@ class _DailyReportDataGridState extends State<DailyReportDataGrid> {
       Directory? directory;
       directory = await getExternalStorageDirectory();
       String fileName = "/Daily Sales Report ";
-      String path = directory!.path + fileName + DateFormat("dd MMM yyyy").format(DateTime.now()) + ".pdf";
+      String path = directory!.path +
+          fileName +
+          DateFormat("dd MMM yyyy").format(DateTime.now()) +
+          ".pdf";
       log(path);
-      final PdfDocument document = dataGridKey.currentState!.exportToPdfDocument(fitAllColumnsInOnePage: true);
-      final List<int> bytes = document.save();
+      final PdfDocument document = dataGridKey.currentState!
+          .exportToPdfDocument(fitAllColumnsInOnePage: true);
+      final List<int> bytes = document.save() as List<int>;
       File(path).writeAsBytes(bytes);
       document.dispose();
       Utility.showToast(msg: "File Saved " + path);
@@ -287,22 +301,43 @@ class ReportDataSource extends DataGridSource {
     _reportData = reportData
         .map<DataGridRow>((e) => DataGridRow(cells: [
               DataGridCell<String>(
-                  columnName: 'Order ID', value: e['order_id'] == null ? "-" : e['order_id'].toString()),
+                  columnName: 'Order ID',
+                  value:
+                      e['order_id'] == null ? "-" : e['order_id'].toString()),
               // DataGridCell<String>(
               //     columnName: 'Product ID',
               //     value: e['product_id'].toString().isEmpty ? "Direct" : e['product_id'].toString()),
               DataGridCell<String>(
-                  columnName: 'Category Name', value: e['category_name'] == null ? "-" : e['category_name'].toString()),
+                  columnName: 'Category Name',
+                  value: e['category_name'] == null
+                      ? "-"
+                      : e['category_name'].toString()),
               DataGridCell<String>(
-                  columnName: 'Product Name', value: e['product_name'] == null ? "-" : e['product_name'].toString()),
-              DataGridCell<String>(columnName: 'Mobile', value: e['mobile'] == null ? "-" : e['mobile'].toString()),
-              DataGridCell<String>(columnName: 'MRP', value: e['mrp'] == null ? "-" : e['mrp'].toString()),
-              DataGridCell<String>(columnName: 'Total', value: e['total'] == null ? "-" : e['total'].toString()),
+                  columnName: 'Product Name',
+                  value: e['product_name'] == null
+                      ? "-"
+                      : e['product_name'].toString()),
               DataGridCell<String>(
-                  columnName: 'Earning Coins', value: e['earning_coins'] == null ? "-" : e['earning_coins'].toString()),
+                  columnName: 'Mobile',
+                  value: e['mobile'] == null ? "-" : e['mobile'].toString()),
               DataGridCell<String>(
-                  columnName: 'Redeem Coins', value: e['redeem_coins'] == null ? "-" : e['redeem_coins'].toString()),
-              DataGridCell<String>(columnName: 'Date', value: e['date'].toString()),
+                  columnName: 'MRP',
+                  value: e['mrp'] == null ? "-" : e['mrp'].toString()),
+              DataGridCell<String>(
+                  columnName: 'Total',
+                  value: e['total'] == null ? "-" : e['total'].toString()),
+              DataGridCell<String>(
+                  columnName: 'Earning Coins',
+                  value: e['earning_coins'] == null
+                      ? "-"
+                      : e['earning_coins'].toString()),
+              DataGridCell<String>(
+                  columnName: 'Redeem Coins',
+                  value: e['redeem_coins'] == null
+                      ? "-"
+                      : e['redeem_coins'].toString()),
+              DataGridCell<String>(
+                  columnName: 'Date', value: e['date'].toString()),
             ]))
         .toList();
   }
@@ -328,7 +363,8 @@ class ReportDataSource extends DataGridSource {
 class RadioListBuilder extends StatefulWidget {
   final Function(String format) onFormatSelect;
 
-  const RadioListBuilder({required this.onFormatSelect, Key? key}) : super(key: key);
+  const RadioListBuilder({required this.onFormatSelect, Key? key})
+      : super(key: key);
 
   @override
   RadioListBuilderState createState() {
@@ -361,7 +397,8 @@ class RadioListBuilderState extends State<RadioListBuilder> {
           },
           title: Text(
             types[index],
-            style: const TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+                color: Colors.black, fontSize: 17, fontWeight: FontWeight.bold),
           ),
         );
       },

@@ -8,6 +8,9 @@ import 'package:vendor/ui/home/bottom_navigation_home.dart';
 import 'package:vendor/ui_without_inventory/home/bottom_navigation_bar.dart';
 import 'package:vendor/utility/color.dart';
 
+import '../ui/home/home.dart';
+import '../ui_without_inventory/home/home.dart';
+
 class CoinDialog {
   static displayCoinDialog(BuildContext context, int route) async {
     return showDialog(
@@ -16,13 +19,16 @@ class CoinDialog {
           return ConstrainedBox(
             constraints: BoxConstraints(maxWidth: 400),
             child: AlertDialog(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
               title: Container(
                 height: 100,
                 width: 70,
-                child: Image.asset("assets/images/coins.png", fit: BoxFit.contain),
+                child:
+                    Image.asset("assets/images/coins.png", fit: BoxFit.contain),
               ),
-              content: Text("coins_generated_successfully_in_customer_wallet_key".tr()),
+              content: Text(
+                  "coins_generated_successfully_in_customer_wallet_key".tr()),
               actions: <Widget>[
                 Center(
                   child: MaterialButton(
@@ -31,24 +37,30 @@ class CoinDialog {
                     padding: const EdgeInsets.all(8.0),
                     textColor: Colors.white,
                     color: ColorPrimary,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
                     onPressed: () {
                       log("route-->$route");
                       route == 1
                           ? Navigator.pushAndRemoveUntil(
                               context,
-                              PageTransition(child: BottomNavigationHome(), type: PageTransitionType.fade),
+                              PageTransition(
+                                  child: HomeScreen(),
+                                  type: PageTransitionType.fade),
                               ModalRoute.withName("/"))
                           : Navigator.pushAndRemoveUntil(
                               context,
                               PageTransition(
-                                  child: BottomNavigationHomeWithOutInventory(), type: PageTransitionType.fade),
+                                  child: HomeScreenWithoutInventory(),
+                                  type: PageTransitionType.fade),
                               ModalRoute.withName("/"));
                     },
                     child: new Text(
                       "done_key".tr(),
                       style: GoogleFonts.openSans(
-                          fontSize: 17, fontWeight: FontWeight.w600, decoration: TextDecoration.none),
+                          fontSize: 17,
+                          fontWeight: FontWeight.w600,
+                          decoration: TextDecoration.none),
                     ),
                   ),
                 ),

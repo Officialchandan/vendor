@@ -7,6 +7,9 @@ import 'package:vendor/ui/money_due_upi/money_due_screen.dart';
 import 'package:vendor/ui/performance_tracker/tracker_report_screen.dart';
 import 'package:vendor/utility/color.dart';
 
+import '../../utility/sharedpref.dart';
+import '../billingflow/billingOptionPage/billing_option.dart';
+
 class BottomNavigationHome extends StatefulWidget {
   final int index;
 
@@ -16,7 +19,8 @@ class BottomNavigationHome extends StatefulWidget {
   _BottomNavigationHomeState createState() => _BottomNavigationHomeState();
 }
 
-class _BottomNavigationHomeState extends State<BottomNavigationHome> with TickerProviderStateMixin {
+class _BottomNavigationHomeState extends State<BottomNavigationHome>
+    with TickerProviderStateMixin {
   TabController? _tabController;
 
   @override
@@ -26,7 +30,19 @@ class _BottomNavigationHomeState extends State<BottomNavigationHome> with Ticker
       initialIndex: widget.index,
       vsync: this,
     );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      userStatusfun();
+    });
+
     super.initState();
+  }
+
+  var userStatus;
+
+  userStatusfun() async {
+    setState(() {});
+    userStatus = await SharedPref.getIntegerPreference(SharedPref.USERSTATUS);
+    print(userStatus);
   }
 
   @override
@@ -39,7 +55,11 @@ class _BottomNavigationHomeState extends State<BottomNavigationHome> with Ticker
           physics: NeverScrollableScrollPhysics(),
           controller: _tabController,
           children: [
-            BillingScreen(),
+            userStatus == 2
+                ? BillingScreen()
+                : BillingOptions(
+                    userStatus: userStatus,
+                  ),
             InventoryScreen(),
             MoneyDueScreen(false),
             TrackerReportDashboard(),
@@ -89,7 +109,8 @@ class _BottomBarState extends State<BottomBar> {
     return TabBar(
       controller: widget.tabController,
       indicator: UnderlineTabIndicator(
-          borderSide: BorderSide(width: 3, color: ColorPrimary, style: BorderStyle.solid),
+          borderSide: BorderSide(
+              width: 3, color: ColorPrimary, style: BorderStyle.solid),
           insets: EdgeInsets.fromLTRB(30, 0, 30, 54)),
       labelColor: ColorPrimary,
       unselectedLabelColor: Colors.grey.shade500,
@@ -229,7 +250,7 @@ class _MBottomNavigationBarState extends State<MBottomNavigationBar> {
               "assets/images/point.png",
               scale: 2,
             ),
-            label: "billing_key".tr()),
+            label: "inventory_new_key".tr()),
         BottomNavigationBarItem(
             icon: Image.asset(
               "assets/images/f2.png",

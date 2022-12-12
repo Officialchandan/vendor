@@ -1,6 +1,8 @@
 import 'dart:collection';
 import 'dart:developer';
 
+import 'package:animated_widgets/widgets/rotation_animated.dart';
+import 'package:animated_widgets/widgets/shake_animated_widget.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -33,6 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<NotificationData>? notificationData;
   int count = 0;
   int isReadCount = 0;
+  bool enable = true;
   int totalNotification = 0;
   String message = "";
   List<String> name = [
@@ -91,6 +94,11 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     getNotifications();
+    Future.delayed(const Duration(seconds: 3), () {
+      setState(() {
+        enable = false;
+      });
+    });
   }
 
   @override
@@ -103,12 +111,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        backgroundColor: ColorPrimary,
+        automaticallyImplyLeading: false,
         title: Text(
           "home_key".tr(),
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          style: TextStyle(
+              fontWeight: FontWeight.bold, color: Colors.white, fontSize: 18),
         ),
         leading: Text(""),
-        centerTitle: true,
+        // centerTitle: true,
         // backgroundColor: Colors.indigoAccent,
         // actions: [
         //   Padding(
@@ -154,25 +166,31 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           Stack(
             children: [
-              IconButton(
-                icon: Icon(
-                  Icons.notifications,
-                ),
-                onPressed: () {
-                  message == ""
-                      ? Utility.showToast(msg: "no_notification_key".tr())
-                      : Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => NotificationScreen(
-                                    notificationData: notificationData!,
-                                  ))).then((value) {
-                          setState(() {
-                            count -= value as int;
-                          });
-                        });
-                },
-              ),
+              ShakeAnimatedWidget(
+                  enabled: notificationData != null && enable,
+                  duration: Duration(milliseconds: 500),
+                  shakeAngle: Rotation.deg(z: 40),
+                  curve: Curves.linear,
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.notifications,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      message == ""
+                          ? Utility.showToast(msg: "no_notification_key".tr())
+                          : Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => NotificationScreen(
+                                        notificationData: notificationData!,
+                                      ))).then((value) {
+                              setState(() {
+                                count -= value as int;
+                              });
+                            });
+                    },
+                  )),
               notificationData != null
                   ? Positioned(
                       right: 10,
@@ -182,9 +200,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: new Container(
                           padding: EdgeInsets.all(1.5),
                           decoration: new BoxDecoration(
-                            color: Colors.white,
+                            color: ColorPrimary,
                             border: Border.all(
-                              color: ColorPrimary,
+                              color: Colors.white,
                             ),
                             borderRadius: BorderRadius.circular(50),
                           ),
@@ -197,7 +215,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Text(
                               count.toString(),
                               style: TextStyle(
-                                color: ColorPrimary,
+                                color: Colors.white,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 8,
                               ),
