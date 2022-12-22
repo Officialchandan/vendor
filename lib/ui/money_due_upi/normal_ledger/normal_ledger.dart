@@ -27,9 +27,23 @@ class NormalLedger extends StatefulWidget {
   _NormalLedgerState createState() => _NormalLedgerState();
 }
 
-class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMixin {
+class _NormalLedgerState extends State<NormalLedger>
+    with TickerProviderStateMixin {
   TabController? _tabController;
-  List<String> months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  List<String> months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+  ];
   DateTime? dateTime;
   DateTime now = DateTime.now();
   String year = "";
@@ -39,25 +53,29 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
   List<OrderData> searchList = [];
 
   List<OrderData> orderList = [];
-  RefreshController _refreshController = RefreshController(initialRefresh: false);
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
   NormalLedgerHistoryBloc _normalLedgerHistoryBloc = NormalLedgerHistoryBloc();
   TextEditingController _searchController = TextEditingController();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    log("${now}");
+    log("$now");
     year = (now.year).toString();
-    _tabController = TabController(length: 12, vsync: this, initialIndex: now.month - 1);
+    _tabController =
+        TabController(length: 12, vsync: this, initialIndex: now.month - 1);
     log("${year}");
     // normalLedgerApiCall(context);
   }
 
   Future<void> normalLedgerApiCall(BuildContext context) async {
     Map<String, dynamic> input = HashMap<String, dynamic>();
-    input["vendor_id"] = await SharedPref.getIntegerPreference(SharedPref.VENDORID);
+    input["vendor_id"] =
+        await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     input["from_date"] = startDate.isEmpty ? "" : startDate.toString();
-    input["to_date"] = endDate.isEmpty ? startDate.toString() : endDate.toString();
+    input["to_date"] =
+        endDate.isEmpty ? startDate.toString() : endDate.toString();
     _normalLedgerHistoryBloc.add(GetNormalLedgerHistoryEvent(input: input));
     _refreshController.refreshCompleted();
   }
@@ -131,28 +149,35 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                         ),
                         filled: true,
                         hintText: "search_here_key".tr(),
-                        hintStyle: GoogleFonts.openSans(fontWeight: FontWeight.w600, color: Colors.black),
-                        contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                        hintStyle: GoogleFonts.openSans(
+                            fontWeight: FontWeight.w600, color: Colors.black),
+                        contentPadding: const EdgeInsets.only(
+                            left: 14.0, bottom: 8.0, top: 8.0),
                         fillColor: Colors.white,
                         border: OutlineInputBorder(
-                          borderSide: BorderSide(color: textFieldBorderColor, width: 1.0),
+                          borderSide: BorderSide(
+                              color: textFieldBorderColor, width: 1.0),
                           borderRadius: BorderRadius.circular(5.0),
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: textFieldBorderColor, width: 1.0),
+                          borderSide: BorderSide(
+                              color: textFieldBorderColor, width: 1.0),
                           borderRadius: BorderRadius.circular(5),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: textFieldBorderColor, width: 1.0),
+                          borderSide: BorderSide(
+                              color: textFieldBorderColor, width: 1.0),
                           borderRadius: BorderRadius.circular(5),
                         ),
                       ),
                       onChanged: (text) {
-                        _normalLedgerHistoryBloc.add(GetFindUserEvent(searchkeyword: text));
+                        _normalLedgerHistoryBloc
+                            .add(GetFindUserEvent(searchkeyword: text));
                       },
                     ),
                   ),
-                  BlocBuilder<NormalLedgerHistoryBloc, NormalLedgerHistoryState>(builder: (context, state) {
+                  BlocBuilder<NormalLedgerHistoryBloc,
+                      NormalLedgerHistoryState>(builder: (context, state) {
                     log("state===>$state");
                     if (state is GetNormalLedgerHistoryInitialState) {
                       normalLedgerApiCall(context);
@@ -175,16 +200,19 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                       if (state is GetNormalLedgerHistoryFailureState) {
                         return Container(
                           height: MediaQuery.of(context).size.height * .50,
-                          child: Center(child: Image.asset("assets/images/no_data.gif")),
+                          child: Center(
+                              child: Image.asset("assets/images/no_data.gif")),
                         );
                       } else if (state is GetNormalLedgerUserSearchState) {
                         return Container(
                           height: MediaQuery.of(context).size.height * .50,
-                          child: Center(child: Image.asset("assets/images/no_data.gif")),
+                          child: Center(
+                              child: Image.asset("assets/images/no_data.gif")),
                         );
                       } else {
                         return Container(
-                            height: MediaQuery.of(context).size.height * 0.80, child: Center(child: CircularLoader()));
+                            height: MediaQuery.of(context).size.height * 0.80,
+                            child: Center(child: CircularLoader()));
                       }
                     }
                     if (state is GetNormalLedgerUserSearchState) {
@@ -193,7 +221,9 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                       } else {
                         List<OrderData> list = [];
                         orderList.forEach((element) {
-                          if (element.mobile.toLowerCase().contains(state.searchword.toLowerCase())) {
+                          if (element.mobile
+                              .toLowerCase()
+                              .contains(state.searchword.toLowerCase())) {
                             list.add(element);
                             log("how much -->${state.searchword}");
                           }
@@ -201,7 +231,9 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                         if (list == null || list.isEmpty) {
                           return Container(
                             height: MediaQuery.of(context).size.height * .50,
-                            child: Center(child: Image.asset("assets/images/no_data.gif")),
+                            child: Center(
+                                child:
+                                    Image.asset("assets/images/no_data.gif")),
                           );
                         } else {
                           searchList = list;
@@ -211,10 +243,14 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                     return Column(children: [
                       searchList.first.status == 0
                           ? Container(
-                              padding: EdgeInsets.only(left: 14, bottom: 10, top: 10),
+                              padding: EdgeInsets.only(
+                                  left: 14, bottom: 10, top: 10),
                               child: Text(
                                 "Pending",
-                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: ColorTextPrimary),
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: ColorTextPrimary),
                               ),
                               alignment: Alignment.topLeft,
                             )
@@ -228,14 +264,16 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                               return Container();
                             }
                             return Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 14, vertical: 10),
                               child: InkWell(
                                 splashColor: Colors.transparent,
                                 onTap: () {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => NormalLedgerDetails(
+                                          builder: (context) =>
+                                              NormalLedgerDetails(
                                                 // commonLedgerHistory: _commonLedgerHistory!,
                                                 order: searchList[index],
                                               )));
@@ -255,36 +293,53 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                                         ),
                                       ],
                                     ),
-                                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                      Column(
-                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "     +91 ${searchList[index].mobile}",
-                                              style: TextStyle(
-                                                  fontSize: 16, fontWeight: FontWeight.bold, color: TextBlackLight),
-                                            ),
-                                            Text(
-                                              "      ${DateFormat("dd MMM yyyy").format(searchList[index].dateTime)}-${DateFormat.jm().format(searchList[index].dateTime)}",
-                                              style:
-                                                  TextStyle(fontSize: 13, color: TextGrey, fontWeight: FontWeight.bold),
-                                            ),
-                                          ]),
-                                      searchList[index].myProfitVendor == "0"
-                                          ? Text(
-                                              " \u20B9 ${double.parse(searchList[index].vendorMyProfit).toStringAsFixed(2)} ",
-                                              style: GoogleFonts.openSans(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 20,
-                                                  color: RejectedBoxTextColor),
-                                            )
-                                          : Text(
-                                              " \u20B9 ${double.parse(searchList[index].myProfitVendor).toStringAsFixed(2)} ",
-                                              style: GoogleFonts.openSans(
-                                                  fontWeight: FontWeight.bold, fontSize: 20, color: GreenBoxTextColor),
-                                            ),
-                                    ]),
+                                    child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  "     +91 ${searchList[index].mobile}",
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: TextBlackLight),
+                                                ),
+                                                Text(
+                                                  "      ${DateFormat("dd MMM yyyy").format(searchList[index].dateTime)}-${DateFormat.jm().format(searchList[index].dateTime)}",
+                                                  style: TextStyle(
+                                                      fontSize: 13,
+                                                      color: TextGrey,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ]),
+                                          searchList[index].myProfitVendor ==
+                                                  "0"
+                                              ? Text(
+                                                  " \u20B9 ${double.parse(searchList[index].vendorMyProfit).toStringAsFixed(2)} ",
+                                                  style: GoogleFonts.openSans(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20,
+                                                      color:
+                                                          RejectedBoxTextColor),
+                                                )
+                                              : Text(
+                                                  " \u20B9 ${double.parse(searchList[index].myProfitVendor).toStringAsFixed(2)} ",
+                                                  style: GoogleFonts.openSans(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20,
+                                                      color: GreenBoxTextColor),
+                                                ),
+                                        ]),
                                   ),
                                   searchList[index].isReturn == 1
                                       ? Positioned(
@@ -296,7 +351,9 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                                             decoration: BoxDecoration(
                                                 color: ColorPrimary,
                                                 borderRadius: BorderRadius.only(
-                                                    topLeft: Radius.circular(7), bottomLeft: Radius.circular(7))),
+                                                    topLeft: Radius.circular(7),
+                                                    bottomLeft:
+                                                        Radius.circular(7))),
                                             child: RotatedBox(
                                               quarterTurns: 3,
                                               child: Center(
@@ -304,7 +361,8 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                                                     style: TextStyle(
                                                         color: Colors.white,
                                                         fontSize: 14,
-                                                        fontWeight: FontWeight.w400)),
+                                                        fontWeight:
+                                                            FontWeight.w400)),
                                               ),
                                             ),
                                           ),
@@ -316,7 +374,8 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                           }),
                     ]);
                   }),
-                  BlocBuilder<NormalLedgerHistoryBloc, NormalLedgerHistoryState>(builder: (context, state) {
+                  BlocBuilder<NormalLedgerHistoryBloc,
+                      NormalLedgerHistoryState>(builder: (context, state) {
                     log("state===>$state");
                     // if (state is GetNormalLedgerHistoryInitialState) {
                     //   normalLedgerApiCall(context);
@@ -346,7 +405,9 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                       } else {
                         List<OrderData> list = [];
                         orderList.forEach((element) {
-                          if (element.mobile.toLowerCase().contains(state.searchword.toLowerCase())) {
+                          if (element.mobile
+                              .toLowerCase()
+                              .contains(state.searchword.toLowerCase())) {
                             list.add(element);
                             log("how much -->${state.searchword}");
                           }
@@ -363,11 +424,14 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                         : Column(children: [
                             searchList.first.status == 0
                                 ? Container(
-                                    padding: EdgeInsets.only(left: 14, bottom: 10, top: 10),
+                                    padding: EdgeInsets.only(
+                                        left: 14, bottom: 10, top: 10),
                                     child: Text(
                                       "Settled",
-                                      style:
-                                          TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: ColorTextPrimary),
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: ColorTextPrimary),
                                     ),
                                     alignment: Alignment.topLeft,
                                   )
@@ -381,14 +445,16 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                                     return Container();
                                   }
                                   return Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 14, vertical: 10),
                                     child: InkWell(
                                       splashColor: Colors.transparent,
                                       onTap: () {
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (context) => NormalLedgerDetails(
+                                                builder: (context) =>
+                                                    NormalLedgerDetails(
                                                       // commonLedgerHistory: _commonLedgerHistory!,
                                                       order: searchList[index],
                                                     )));
@@ -399,79 +465,101 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                                           padding: EdgeInsets.all(14),
                                           decoration: BoxDecoration(
                                             color: Colors.grey.shade200,
-                                            borderRadius: BorderRadius.circular(10),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
                                             boxShadow: [
                                               BoxShadow(
                                                 // color: Colors.grey.shade300,
-                                                offset: Offset(0.0, 0.2), //(x,y)
+                                                offset:
+                                                    Offset(0.0, 0.2), //(x,y)
                                                 blurRadius: 0,
                                               ),
                                             ],
                                           ),
-                                          child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                            Column(
-                                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    "     +91 ${searchList[index].mobile}",
-                                                    style: TextStyle(
-                                                        fontSize: 16,
-                                                        fontWeight: FontWeight.bold,
-                                                        color: TextBlackLight),
-                                                  ),
-                                                  Text(
-                                                    "      ${DateFormat("dd MMM yyyy").format(searchList[index].dateTime)}",
-                                                    style: TextStyle(
-                                                        fontSize: 13, color: TextGrey, fontWeight: FontWeight.bold),
-                                                  ),
-                                                ]),
+                                          child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceEvenly,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        "     +91 ${searchList[index].mobile}",
+                                                        style: TextStyle(
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color:
+                                                                TextBlackLight),
+                                                      ),
+                                                      Text(
+                                                        "      ${DateFormat("dd MMM yyyy").format(searchList[index].dateTime)}",
+                                                        style: TextStyle(
+                                                            fontSize: 13,
+                                                            color: TextGrey,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ]),
 
-                                            // Center(
-                                            //   child: searchList[index].status == 1
-                                            //       ? Container(
-                                            //           padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
-                                            //           decoration: BoxDecoration(
-                                            //               borderRadius: BorderRadius.circular(20),
-                                            //               color: PendingTextBgColor),
-                                            //           child: Text(
-                                            //             "pending_key".tr(),
-                                            //             style: TextStyle(
-                                            //                 color: PendingTextColor,
-                                            //                 fontSize: 10,
-                                            //                 fontWeight: FontWeight.w400),
-                                            //           ),
-                                            //         )
-                                            //       : Container(
-                                            //           padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
-                                            //           decoration: BoxDecoration(
-                                            //               borderRadius: BorderRadius.circular(20),
-                                            //               color: ApproveTextBgColor),
-                                            //           child: Text(
-                                            //             "paid_key".tr(),
-                                            //             style: TextStyle(
-                                            //                 color: ApproveTextColor,
-                                            //                 fontSize: 10,
-                                            //                 fontWeight: FontWeight.w400),
-                                            //           ),
-                                            //         ),
-                                            // ),
-                                            searchList[index].myProfitVendor == "0"
-                                                ? Text(
-                                                    " \u20B9 ${double.parse(searchList[index].vendorMyProfit).toStringAsFixed(2)} ",
-                                                    style: GoogleFonts.openSans(
-                                                        fontWeight: FontWeight.bold,
-                                                        fontSize: 20,
-                                                        color: RejectedBoxTextColor),
-                                                  )
-                                                : Text(
-                                                    " \u20B9 ${double.parse(searchList[index].myProfitVendor).toStringAsFixed(2)} ",
-                                                    style: GoogleFonts.openSans(
-                                                        fontWeight: FontWeight.bold,
-                                                        fontSize: 20,
-                                                        color: GreenBoxTextColor),
-                                                  ),
-                                          ]),
+                                                // Center(
+                                                //   child: searchList[index].status == 1
+                                                //       ? Container(
+                                                //           padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
+                                                //           decoration: BoxDecoration(
+                                                //               borderRadius: BorderRadius.circular(20),
+                                                //               color: PendingTextBgColor),
+                                                //           child: Text(
+                                                //             "pending_key".tr(),
+                                                //             style: TextStyle(
+                                                //                 color: PendingTextColor,
+                                                //                 fontSize: 10,
+                                                //                 fontWeight: FontWeight.w400),
+                                                //           ),
+                                                //         )
+                                                //       : Container(
+                                                //           padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+                                                //           decoration: BoxDecoration(
+                                                //               borderRadius: BorderRadius.circular(20),
+                                                //               color: ApproveTextBgColor),
+                                                //           child: Text(
+                                                //             "paid_key".tr(),
+                                                //             style: TextStyle(
+                                                //                 color: ApproveTextColor,
+                                                //                 fontSize: 10,
+                                                //                 fontWeight: FontWeight.w400),
+                                                //           ),
+                                                //         ),
+                                                // ),
+                                                searchList[index]
+                                                            .myProfitVendor ==
+                                                        "0"
+                                                    ? Text(
+                                                        " \u20B9 ${double.parse(searchList[index].vendorMyProfit).toStringAsFixed(2)} ",
+                                                        style: GoogleFonts.openSans(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 20,
+                                                            color:
+                                                                RejectedBoxTextColor),
+                                                      )
+                                                    : Text(
+                                                        " \u20B9 ${double.parse(searchList[index].myProfitVendor).toStringAsFixed(2)} ",
+                                                        style: GoogleFonts.openSans(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 20,
+                                                            color:
+                                                                GreenBoxTextColor),
+                                                      ),
+                                              ]),
                                         ),
                                         searchList[index].isReturn == 1
                                             ? Positioned(
@@ -482,16 +570,25 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                                                   width: 28,
                                                   decoration: BoxDecoration(
                                                       color: ColorPrimary,
-                                                      borderRadius: BorderRadius.only(
-                                                          topLeft: Radius.circular(7), bottomLeft: Radius.circular(7))),
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                              topLeft: Radius
+                                                                  .circular(7),
+                                                              bottomLeft: Radius
+                                                                  .circular(
+                                                                      7))),
                                                   child: RotatedBox(
                                                     quarterTurns: 3,
                                                     child: Center(
-                                                      child: Text("return_key".tr(),
+                                                      child: Text(
+                                                          "return_key".tr(),
                                                           style: TextStyle(
-                                                              color: Colors.white,
+                                                              color:
+                                                                  Colors.white,
                                                               fontSize: 14,
-                                                              fontWeight: FontWeight.w400)),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400)),
                                                     ),
                                                   ),
                                                 ),
@@ -559,7 +656,8 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                     ),
                   ),
                   Container(
-                      height: MediaQuery.of(context).copyWith().size.height * 0.30,
+                      height:
+                          MediaQuery.of(context).copyWith().size.height * 0.30,
                       color: Colors.white,
                       child: CupertinoPicker(
                         children: Weeks,
@@ -572,7 +670,8 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                         itemExtent: 25,
                         diameterRatio: 1,
                         useMagnifier: true,
-                        scrollController: FixedExtentScrollController(initialItem: 1),
+                        scrollController:
+                            FixedExtentScrollController(initialItem: 1),
                         magnification: 1.3,
                         looping: true,
                       )),
@@ -602,7 +701,10 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
                           height: 30,
                           child: Text(
                             "Done",
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: ColorPrimary),
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: ColorPrimary),
                           ),
                         ),
                       )
@@ -624,66 +726,73 @@ class _NormalLedgerState extends State<NormalLedger> with TickerProviderStateMix
         builder: (BuildContext context) {
           return Container(
             height: MediaQuery.of(context).copyWith().size.height * 0.40,
-            child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Text(
-                "Select Days",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Container(
-                  height: MediaQuery.of(context).copyWith().size.height * 0.30,
-                  color: Colors.white,
-                  child: CupertinoPicker(
-                    children: days,
-                    onSelectedItemChanged: (value) {
-                      log("$value");
-                      // Text text = countries[value];
-                      // selectedValue = text.data.toString();
-                      setState(() {});
-                    },
-                    itemExtent: 25,
-                    diameterRatio: 1,
-                    useMagnifier: true,
-                    scrollController: FixedExtentScrollController(initialItem: 1),
-                    magnification: 1.3,
-                    looping: true,
-                  )),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      log("${_tabController!.index}");
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      height: 30,
-                      child: Text(
-                        "Cancel",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                  Text(
+                    "Select Days",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      height: 30,
-                      child: Text(
-                        "Done",
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: ColorPrimary),
+                  Container(
+                      height:
+                          MediaQuery.of(context).copyWith().size.height * 0.30,
+                      color: Colors.white,
+                      child: CupertinoPicker(
+                        children: days,
+                        onSelectedItemChanged: (value) {
+                          log("$value");
+                          // Text text = countries[value];
+                          // selectedValue = text.data.toString();
+                          setState(() {});
+                        },
+                        itemExtent: 25,
+                        diameterRatio: 1,
+                        useMagnifier: true,
+                        scrollController:
+                            FixedExtentScrollController(initialItem: 1),
+                        magnification: 1.3,
+                        looping: true,
+                      )),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          log("${_tabController!.index}");
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          height: 30,
+                          child: Text(
+                            "Cancel",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          height: 30,
+                          child: Text(
+                            "Done",
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: ColorPrimary),
+                          ),
+                        ),
+                      )
+                    ],
                   )
-                ],
-              )
-            ]),
+                ]),
           );
         });
   }

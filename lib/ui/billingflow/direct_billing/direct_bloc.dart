@@ -245,7 +245,8 @@ class DirectBillingCustomerNumberResponseBloc extends Bloc<
         if (result.success) {
           yield GetDirectBillingCategoryByVendorIdState(
               message: result.message, data: result.data!);
-          add(GetDirectBillingDueAmmountEvent());
+          /*!!! if you want to show due amount uncomment below code */
+          // add(GetDirectBillingDueAmmountEvent());
         } else {
           yield GetDirectBillingCategoryByVendorIdFailureState(
               message: result.message);

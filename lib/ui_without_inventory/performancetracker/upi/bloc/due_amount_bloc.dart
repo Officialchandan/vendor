@@ -10,6 +10,8 @@ import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/utility.dart';
 
+import '../../../../model/Vender_earn_redeem_detail.dart';
+
 class MoneyDueBloc extends Bloc<MoneyDueEvent, MoneyDueState> {
   MoneyDueBloc() : super(MoneyDueInitialState());
 
@@ -24,12 +26,30 @@ class MoneyDueBloc extends Bloc<MoneyDueEvent, MoneyDueState> {
     if (event is GetInitiateTransiction) {
       yield* getInitatePaymentApi(event.input);
     }
+    if (event is GetVendorEarnRedeemGenEvent) {
+      yield* getVendorEarnRedeemDataApi();
+    }
   }
 
   Stream<MoneyDueState> getDueAmountApi() async* {
     if (await Network.isConnected()) {
+      yield GetFreeCoinLoadingState();
       GetDueAmountResponse response = await apiProvider.getDueAmount();
-      yield GetDueAmountState(dueAmount: response.data!);
+      if (response.success) {
+        yield GetDueAmountState(dueAmount: response.data!);
+      } else {
+        Utility.showToast(msg: response.message);
+      }
+    } else {
+      Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
+    }
+  }
+
+  Stream<MoneyDueState> getVendorEarnRedeemDataApi() async* {
+    if (await Network.isConnected()) {
+      Getvendorearnredeemdetail response =
+          await apiProvider.getVendorEarnRedeemAmount();
+      yield GetVendorEarnGenerateState(data: response.data!);
     } else {
       Utility.showToast(msg: Constant.INTERNET_ALERT_MSG);
     }
@@ -37,7 +57,8 @@ class MoneyDueBloc extends Bloc<MoneyDueEvent, MoneyDueState> {
 
   Stream<MoneyDueState> getFreeCoinApi() async* {
     if (await Network.isConnected()) {
-      GetVendorFreeCoinResponse response = await apiProvider.getVendorFreeCoins();
+      GetVendorFreeCoinResponse response =
+          await apiProvider.getVendorFreeCoins();
       if (response.success) {
         yield GetFreeCoinState(data: response.data);
       } else {
@@ -53,7 +74,8 @@ class MoneyDueBloc extends Bloc<MoneyDueEvent, MoneyDueState> {
 
   Stream<MoneyDueState> getInitatePaymentApi(input) async* {
     if (await Network.isConnected()) {
-      IntiatePaymnetResponse response = await apiProvider.initiatePayment(input);
+      IntiatePaymnetResponse response =
+          await apiProvider.initiatePayment(input);
       if (response.success) {
         EasyLoading.dismiss();
         yield GetPaymentTransictionState(

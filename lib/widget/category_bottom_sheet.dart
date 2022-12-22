@@ -1,7 +1,5 @@
 import 'dart:developer';
-
 import 'package:easy_localization/src/public_ext.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:vendor/main.dart';
 import 'package:vendor/model/get_categories_response.dart';
@@ -35,7 +33,10 @@ class _CategoryBottomSheetState extends State<CategoryBottomSheet> {
               alignment: Alignment.centerLeft,
               child: Text(
                 "select_category_key".tr(),
-                style: TextStyle(color: ColorPrimary, fontSize: 18, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: ColorPrimary,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -97,15 +98,16 @@ class _CategoryBottomSheetState extends State<CategoryBottomSheet> {
   }
 
   Future<List<CategoryModel>> getCategory() async {
-    int userStatus = await SharedPref.getIntegerPreference(SharedPref.USERSTATUS);
+    int userStatus =
+        await SharedPref.getIntegerPreference(SharedPref.USERSTATUS);
     if (await Network.isConnected()) {
       GetCategoriesResponse response = await apiProvider.getAllCategories();
 
       if (response.success) {
         categories = response.data!;
         if (userStatus == 3) {
-          categories.removeWhere((element) => element.id == "21");
-          categories.removeWhere((element) => element.id == "31");
+          categories.removeWhere((element) => int.parse(element.id) <= 50);
+
           log("categories$categories");
         }
         return categories;

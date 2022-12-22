@@ -75,6 +75,7 @@ import 'package:vendor/ui/notification_screen/model/notification_response.dart';
 import 'package:vendor/utility/sharedpref.dart';
 
 import '../main.dart';
+import '../model/Vender_earn_redeem_detail.dart';
 import '../model/getdue_amount_by_day.dart';
 
 class ApiProvider {
@@ -1206,11 +1207,34 @@ class ApiProvider {
     }
   }
 
+  //? Get Vendor Earn & Redeem Api
+
+  Future<Getvendorearnredeemdetail> getVendorEarnRedeemAmount() async {
+    try {
+      Map input = {
+        "vendor_id": await SharedPref.getIntegerPreference(SharedPref.VENDORID)
+      };
+      Response res =
+          await dio.post(Endpoint.Get_Vendor_Earn_Redeem_detail, data: input);
+      log("===>otp$res");
+      return Getvendorearnredeemdetail.fromJson(res.toString());
+    } catch (error) {
+      String message = "";
+      if (error is DioError) {
+        ServerError e = ServerError.withError(error: error);
+        message = e.getErrorMessage();
+      } else {
+        message = "Please try again later!";
+      }
+      print("Exception occurred: $message stackTrace: $error");
+      return Getvendorearnredeemdetail(success: false, message: message);
+    }
+  }
+
   Future<ChatPapdiResponse> getChatPapdiBilling(
       Map<String, dynamic> input) async {
     try {
-      Response res =
-          await dio.post(Endpoint.GET_CHATPAPDI_BILLING, data: input);
+      Response res = await dio.post(Endpoint.GET_DIRECT_BILLING, data: input);
       log("===>billing$res");
       return ChatPapdiResponse.fromJson(res.toString());
     } catch (error, stacktrace) {
@@ -1230,7 +1254,7 @@ class ApiProvider {
       Map<String, dynamic> input) async {
     try {
       Response res =
-          await dio.post(Endpoint.GET_CHATPAPDI_BILLING_OTP, data: input);
+          await dio.post(Endpoint.GET_DIRECT_BILLING_OTP, data: input);
       log("===>otp$res");
       return ChatPapdiOtpResponse.fromJson(res.toString());
     } catch (error, stacktrace) {

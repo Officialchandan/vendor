@@ -14,7 +14,6 @@ import 'package:vendor/ui_without_inventory/chatpapdi_billing/ScannerChatPapdi/s
 import 'package:vendor/ui_without_inventory/chatpapdi_billing/chatpapdi_bloc.dart';
 import 'package:vendor/ui_without_inventory/chatpapdi_billing/chatpapdi_event.dart';
 import 'package:vendor/ui_without_inventory/chatpapdi_billing/chatpapdi_state.dart';
-import 'package:vendor/ui_without_inventory/home/bottom_navigation_bar.dart';
 import 'package:vendor/ui_without_inventory/home/home.dart';
 import 'package:vendor/utility/color.dart';
 import 'package:vendor/utility/sharedpref.dart';
@@ -111,7 +110,6 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
   @override
   void initState() {
     // TODO: implement initState
-
     super.initState();
 
     userType();
@@ -1103,162 +1101,154 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                       return Future.value(true);
                     }
                   },
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                        maxWidth: MediaQuery.of(context).size.width * 0.50),
-                    child: AlertDialog(
-                      titlePadding: const EdgeInsets.only(
-                          left: 18, right: 18, top: 10, bottom: 10),
-                      contentPadding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 18),
-                      actionsPadding: const EdgeInsets.only(
-                          left: 12, right: 12, top: 0, bottom: 18),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      insetPadding: const EdgeInsets.all(50),
-                      title: RichText(
-                        text: TextSpan(
-                          text: "${"otp_verification_key".tr()}\n",
-                          style: GoogleFonts.openSans(
-                            fontSize: 25.0,
-                            height: 2.0,
-                            color: TextBlackLight,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: "${"please_verify_your_otp_on_key".tr()}\n",
-                              style: GoogleFonts.openSans(
-                                fontSize: 14.0,
-                                height: 1.5,
-                                color: ColorTextPrimary,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            TextSpan(
-                              text: "+91 ${mobileController.text}",
-                              style: GoogleFonts.openSans(
-                                fontSize: 14.0,
-                                height: 1.5,
-                                color: ColorTextPrimary,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            )
-                          ],
+                  child: AlertDialog(
+                    titlePadding: const EdgeInsets.only(
+                        left: 18, right: 18, top: 10, bottom: 10),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 18),
+                    actionsPadding: const EdgeInsets.only(
+                        left: 12, right: 12, top: 0, bottom: 18),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    // insetPadding: const EdgeInsets.all(50),
+                    title: RichText(
+                      text: TextSpan(
+                        text: "${"otp_verification_key".tr()}\n",
+                        style: GoogleFonts.openSans(
+                          fontSize: 25.0,
+                          height: 2.0,
+                          color: TextBlackLight,
+                          fontWeight: FontWeight.w600,
                         ),
-                      ),
-                      content: TextFormField(
-                        controller: otpController,
-                        maxLength: 4,
-                        cursorColor: ColorPrimary,
-                        keyboardType: TextInputType.number,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly
+                        children: [
+                          TextSpan(
+                            text: "${"please_verify_your_otp_on_key".tr()}\n",
+                            style: GoogleFonts.openSans(
+                              fontSize: 14.0,
+                              height: 1.5,
+                              color: ColorTextPrimary,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          TextSpan(
+                            text: "+91 ${mobileController.text}",
+                            style: GoogleFonts.openSans(
+                              fontSize: 14.0,
+                              height: 1.5,
+                              color: ColorTextPrimary,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          )
                         ],
-                        decoration: InputDecoration(
-                          filled: true,
-                          counterText: "",
-                          // fillColor: Colors.black,
-                          hintText: "enter_otp_key".tr(),
-                          hintStyle: GoogleFonts.openSans(
-                            fontWeight: FontWeight.w600,
-                          ),
-                          contentPadding: const EdgeInsets.only(
-                              left: 14.0, right: 14, top: 8, bottom: 8),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
+                      ),
+                    ),
+                    content: TextFormField(
+                      controller: otpController,
+                      maxLength: 4,
+                      cursorColor: ColorPrimary,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      decoration: InputDecoration(
+                        filled: true,
+                        counterText: "",
+                        // fillColor: Colors.black,
+                        hintText: "enter_otp_key".tr(),
+                        hintStyle: GoogleFonts.openSans(
+                          fontWeight: FontWeight.w600,
+                        ),
+                        contentPadding: const EdgeInsets.only(
+                            left: 14.0, right: 14, top: 8, bottom: 8),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      actions: <Widget>[
-                        Column(
-                          children: [
-                            Center(
-                              child: MaterialButton(
-                                minWidth: MediaQuery.of(context).size.width,
-                                height: 50,
-                                textColor: Colors.white,
-                                color: ColorPrimary,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10)),
-                                onPressed: () {
-                                  if (status == 0) {
-                                    log("index->$index");
+                    ),
+                    actions: <Widget>[
+                      Column(
+                        children: [
+                          Center(
+                            child: MaterialButton(
+                              minWidth: MediaQuery.of(context).size.width,
+                              height: 50,
+                              textColor: Colors.white,
+                              color: ColorPrimary,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              onPressed: () {
+                                if (status == 0) {
+                                  log("index->$index");
 
-                                    // directBillingCustomerNumberResponseBloc.add((
-                                    //     price: y, index: index, earningCoin: earningCoin));
-                                    otpController.clear();
-                                    Navigator.pop(context);
-                                  } else {
-                                    verifyOtp(context);
-                                  }
-                                },
-                                child: new Text(
-                                  "submit_button_key".tr(),
-                                  style: GoogleFonts.openSans(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.w600,
-                                      decoration: TextDecoration.none),
-                                ),
+                                  // directBillingCustomerNumberResponseBloc.add((
+                                  //     price: y, index: index, earningCoin: earningCoin));
+                                  otpController.clear();
+                                  Navigator.pop(context);
+                                } else {
+                                  verifyOtp(context);
+                                }
+                              },
+                              child: new Text(
+                                "submit_button_key".tr(),
+                                style: GoogleFonts.openSans(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w600,
+                                    decoration: TextDecoration.none),
                               ),
                             ),
-                            Container(
-                              padding: EdgeInsets.only(top: 5),
-                              //  width: MediaQuery.of(context).size.width,
-                              child: snapshot.data! > 0
-                                  ? Text(
-                                      "resend_OTP_after".tr() +
-                                          " " +
-                                          "${snapshot.data.toString()} " +
-                                          "seconds".tr(),
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.openSans(
-                                          color: ColorTextPrimary,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          decoration: TextDecoration.none),
-                                    )
-                                  : TextButton(
-                                      style: TextButton.styleFrom(
-                                          padding: EdgeInsets.zero),
-                                      onPressed: () async {
-                                        if (mobileController.text.length ==
-                                            10) {
-                                          if (await Network.isConnected()) {
-                                            directBilling(context);
-                                          } else {
-                                            Utility.showToast(
-                                              msg:
-                                                  "please_check_your_internet_connection_key"
-                                                      .tr(),
-                                            );
-                                          }
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(top: 5),
+                            //  width: MediaQuery.of(context).size.width,
+                            child: snapshot.data! > 0
+                                ? Text(
+                                    "resend_OTP_after".tr() +
+                                        " " +
+                                        "${snapshot.data.toString()} " +
+                                        "seconds".tr(),
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.openSans(
+                                        color: ColorTextPrimary,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        decoration: TextDecoration.none),
+                                  )
+                                : TextButton(
+                                    style: TextButton.styleFrom(
+                                        padding: EdgeInsets.zero),
+                                    onPressed: () async {
+                                      if (mobileController.text.length == 10) {
+                                        if (await Network.isConnected()) {
+                                          directBilling(context);
                                         } else {
                                           Utility.showToast(
                                             msg:
-                                                "please_atleast_one_product_key"
+                                                "please_check_your_internet_connection_key"
                                                     .tr(),
                                           );
                                         }
-                                      },
-                                      child: new Text(
-                                        "otp_resend".tr(),
-                                        style: GoogleFonts.openSans(
-                                            color: ColorPrimary,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w600,
-                                            decoration: TextDecoration.none),
-                                      ),
+                                      } else {
+                                        Utility.showToast(
+                                          msg: "please_atleast_one_product_key"
+                                              .tr(),
+                                        );
+                                      }
+                                    },
+                                    child: new Text(
+                                      "otp_resend".tr(),
+                                      style: GoogleFonts.openSans(
+                                          color: ColorPrimary,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600,
+                                          decoration: TextDecoration.none),
                                     ),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
+                                  ),
+                          )
+                        ],
+                      ),
+                    ],
                   ),
                 );
               });

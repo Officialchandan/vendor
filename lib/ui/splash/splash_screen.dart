@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
-import 'package:lottie/lottie.dart';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -24,11 +24,8 @@ class _SplashScreenState extends State<SplashScreen> {
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
   refresh() {
-    log("refresh hua");
     validApp();
     _refreshController.refreshCompleted();
-
-    //setState(() {});
   }
 
   Future<void> validApp() async {
@@ -66,14 +63,14 @@ class _SplashScreenState extends State<SplashScreen> {
                       );
                     },
                     child: Text("Update")),
-                mandotory == 10
-                    ? Container()
-                    : TextButton(
-                        onPressed: () async {
-                          Navigator.of(context);
-                          getLogin();
-                        },
-                        child: Text("Later"))
+                // mandotory == 10
+                //     ? Container()
+                //     : TextButton(
+                //         onPressed: () async {
+                //           Navigator.of(context);
+                //           getLogin();
+                //         },
+                //         child: Text("Later"))
               ],
             ));
 

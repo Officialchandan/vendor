@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:intl/intl.dart';
+
 import 'package:vendor/main.dart';
 import 'package:vendor/model/chat_papdi_module/billing_chatpapdi.dart';
 import 'package:vendor/model/chat_papdi_module/billing_chatpapdi_otp.dart';
@@ -222,7 +222,8 @@ class ChatPapdiBillingCustomerNumberResponseBloc extends Bloc<
         if (result.success) {
           yield GetDirectBillingCategoryByVendorIdState(
               message: result.message, data: result.data!);
-          add(GetDirectBillingDueAmmountEvent());
+          /*!!! if you want to show due amount uncomment below code */
+          //  add(GetDirectBillingDueAmmountEvent());
         } else {
           yield GetDirectBillingCategoryByVendorIdFailureState(
               message: result.message);

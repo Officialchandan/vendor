@@ -93,7 +93,8 @@ class CustomerNumberResponseBloc
         if (result.success) {
           yield GetCategoryByVendorIdState(
               message: result.message, data: result.data!);
-          add(GetBillingDueAmmountEvent());
+          /*!!! if you want to show due amount uncomment below code */
+          // add(GetBillingDueAmmountEvent());
         } else {
           yield GetCategoryByVendorIdFailureState(message: result.message);
         }

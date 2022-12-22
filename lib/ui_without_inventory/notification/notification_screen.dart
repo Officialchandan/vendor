@@ -48,7 +48,7 @@ class _WithoutInventoryNotificationScreenState
             //   },
             // ),
             title: Padding(
-              padding: const EdgeInsets.only(top:8.0),
+              padding: const EdgeInsets.only(top: 8.0),
               child: Text("notification_key".tr(),
                   style: GoogleFonts.fredoka(
                     textStyle: TextStyle(
@@ -91,23 +91,23 @@ class _WithoutInventoryNotificationScreenState
         stickyHeaderBackgroundColor: Colors.white,
         elements: data,
         groupBy: (element) => today
-            .difference(new DateFormat('yyyy-MM-dd HH:mm:ss')
-            .parse(element.createdAt))
-            .inDays ==
-            0
+                    .difference(
+                        new DateFormat('yyyy-MM-dd').parse(element.createdAt))
+                    .inDays ==
+                0
             ? "today".tr()
             : today
-            .difference(new DateFormat('yyyy-MM-dd HH:mm:ss')
-            .parse(element.createdAt))
-            .inDays >=
-            1 &&
-            today
-                .difference(new DateFormat('yyyy-MM-dd HH:mm:ss')
-                .parse(element.createdAt))
-                .inDays <
-                8
-            ? "this_week".tr()
-            : "older".tr(),
+                            .difference(new DateFormat('yyyy-MM-dd')
+                                .parse(element.createdAt))
+                            .inDays >=
+                        1 &&
+                    today
+                            .difference(new DateFormat('yyyy-MM-dd')
+                                .parse(element.createdAt))
+                            .inDays <
+                        7
+                ? "this_week".tr()
+                : "older".tr(),
         reverse: false,
         padding: const EdgeInsets.only(top: 15, bottom: 15),
         itemBuilder: (context, index) {
@@ -121,7 +121,7 @@ class _WithoutInventoryNotificationScreenState
                   }
                   index.isRead = 1;
                 });
-                markRead(index.id);
+                markRead(index.id, index.notiListId);
               },
               child: Card(
                 child: Container(
@@ -139,16 +139,18 @@ class _WithoutInventoryNotificationScreenState
                             Icons.circle,
                             size: 10,
                             color:
-                            index.isRead == 1 ? Colors.white : Colors.blue,
+                                index.isRead == 1 ? Colors.white : Colors.blue,
                           ),
                           SizedBox(
                             width: 5,
                           ),
                           CircleAvatar(
-                            backgroundImage: AssetImage(
+                            child: Image.asset(
                               index.notiListId == 9
-                                  ? "assets/images/logo.png"
+                                  ? "assets/images/logo2.png"
                                   : "assets/images/3x/rt2.png",
+                              fit: BoxFit.fill,
+                              width: index.notiListId == 9 ? 25 : null,
                             ),
                           ),
                           SizedBox(
@@ -157,30 +159,30 @@ class _WithoutInventoryNotificationScreenState
                           Flexible(
                             child: RichText(
                                 text: TextSpan(
-                                  text: index.notificationDataDetails!.title + " ",
-                                  style: GoogleFonts.abel(
-                                    textStyle: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18,
-                                        wordSpacing: 2,
-                                        height: 1.6,
-                                        // textBaseline: TextBaseline.alphabetic,
-                                        color: index.isRead == 1
-                                            ? Color.fromARGB(192, 17, 17, 17)
-                                            : Colors.blue),
-                                  ),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                        text: index.notificationDataDetails!.body,
-                                        style: GoogleFonts.baumans(
-                                            textStyle: TextStyle(
-                                                fontWeight: FontWeight.w300,
-                                                fontSize: 16,
-                                                color: Colors.black,
-                                                wordSpacing: 2,
-                                                height: 1))),
-                                  ],
-                                )),
+                              text: index.notificationDataDetails!.title + " ",
+                              style: GoogleFonts.abel(
+                                textStyle: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                    wordSpacing: 2,
+                                    height: 1.6,
+                                    // textBaseline: TextBaseline.alphabetic,
+                                    color: index.isRead == 1
+                                        ? Color.fromARGB(192, 17, 17, 17)
+                                        : Colors.blue),
+                              ),
+                              children: <TextSpan>[
+                                TextSpan(
+                                    text: index.notificationDataDetails!.body,
+                                    style: GoogleFonts.baumans(
+                                        textStyle: TextStyle(
+                                            fontWeight: FontWeight.w300,
+                                            fontSize: 16,
+                                            color: Colors.black,
+                                            wordSpacing: 2,
+                                            height: 1))),
+                              ],
+                            )),
                           ),
                         ],
                       ),
@@ -198,42 +200,42 @@ class _WithoutInventoryNotificationScreenState
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           today
-                              .difference(
-                              new DateFormat('yyyy-MM-dd HH:mm:ss')
-                                  .parse(index.createdAt))
-                              .inDays ==
-                              0
+                                      .difference(
+                                          new DateFormat('yyyy-MM-dd HH:mm:ss')
+                                              .parse(index.createdAt))
+                                      .inMinutes <
+                                  60
                               ? Text(
-                            "${today.difference(new DateFormat('yyyy-MM-dd HH:mm:ss').parse(index.createdAt)).inHours} " +
-                                "hour_ago".tr(),
-                            style: GoogleFonts.salsa(
-                                textStyle:
-                                TextStyle(color: Colors.black45)),
-                          )
+                                  "${today.difference(new DateFormat('yyyy-MM-dd HH:mm:ss').parse(index.createdAt)).inMinutes} " +
+                                      "minute_ago".tr())
                               : today
-                              .difference(new DateFormat(
-                              'yyyy-MM-dd HH:mm:ss')
-                              .parse(index.createdAt))
-                              .inMinutes <
-                              60
-                              ? Text(
-                              "${today.difference(new DateFormat('yyyy-MM-dd HH:mm:ss').parse(index.createdAt)).inMinutes} " +
-                                  "minute_ago".tr())
-                              : Text(
-                            DateFormat("dd MMM").format(
-                                DateTime.parse(index.createdAt)) +
-                                " " +
-                                DateFormat.jm()
-                                    .format(DateTime.parse(
-                                    index.createdAt))
-                                    .toLowerCase(),
-                            style: TextStyle(
-                                color: index.isRead == 1
-                                    ? Colors.grey
-                                    : Colors.black54,
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold),
-                          ),
+                                          .difference(new DateFormat(
+                                                  'yyyy-MM-dd HH:mm:ss')
+                                              .parse(index.createdAt))
+                                          .inDays ==
+                                      0
+                                  ? Text(
+                                      "${today.difference(new DateFormat('yyyy-MM-dd HH:mm:ss').parse(index.createdAt)).inHours} " +
+                                          "hour_ago".tr(),
+                                      style: GoogleFonts.salsa(
+                                          textStyle:
+                                              TextStyle(color: Colors.black45)),
+                                    )
+                                  : Text(
+                                      DateFormat("dd MMM").format(
+                                              DateTime.parse(index.createdAt)) +
+                                          " " +
+                                          DateFormat.jm()
+                                              .format(DateTime.parse(
+                                                  index.createdAt))
+                                              .toLowerCase(),
+                                      style: TextStyle(
+                                          color: index.isRead == 1
+                                              ? Colors.grey
+                                              : Colors.black54,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold),
+                                    ),
                         ],
                       )
                     ],
@@ -244,25 +246,25 @@ class _WithoutInventoryNotificationScreenState
           );
         },
         groupSeparatorBuilder: (element) => Row(
-          children: [
-            SizedBox(
-              width: 10,
-            ),
-            Padding(
-              padding:
-              const EdgeInsets.symmetric(horizontal: 14, vertical: 1),
-              child: Text(element.toString(),
-                  style: GoogleFonts.merriweather(
-                      textStyle: TextStyle(
-                          color: Colors.blueGrey,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold))),
-            ),
-          ],
-        ));
+              children: [
+                SizedBox(
+                  width: 10,
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 14, vertical: 1),
+                  child: Text(element.toString(),
+                      style: GoogleFonts.merriweather(
+                          textStyle: TextStyle(
+                              color: Colors.blueGrey,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold))),
+                ),
+              ],
+            ));
   }
 
-  Future<NotificationStatusResponse> markRead(int id) async {
+  Future<NotificationStatusResponse> markRead(int id, int notfyid) async {
     Map input = HashMap();
     String userId =
         (await SharedPref.getIntegerPreference(SharedPref.VENDORID)).toString();
@@ -274,9 +276,16 @@ class _WithoutInventoryNotificationScreenState
 
       NotificationStatusResponse response =
           NotificationStatusResponse.fromJson(res.toString());
-      Navigator.pushNamed(
-          context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY,
-          arguments: 2);
+      if (notfyid == 28) {
+        Navigator.pushNamed(
+            context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY,
+            arguments: 0);
+      } else {
+        Navigator.pushNamed(
+            context, Routes.BOTTOM_NAVIGATION_HOME_WITHOUTINVENTORY,
+            arguments: 2);
+      }
+
       if (response.success) {
         return NotificationStatusResponse(
             message: response.message, success: true);

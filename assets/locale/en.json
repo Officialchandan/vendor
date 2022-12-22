@@ -457,7 +457,7 @@
   "try_after_hi" : "",
   "billing_option_key":"Billing Options",
   "your_last_Pay_Key":"Your past due is Rs. ",
-  "your_total_pay_key":" And your total outstanding is Rs. ",
+  "your_total_pay_key":" Your total amount is ",
   "due_amount_flash": ". Please pay now.",
   "pay_now":"Pay now",
   "hour_ago":"hour ago",
@@ -466,5 +466,8 @@
   "this_week":"This Week",
   "older":"Earlier",
   "inventory_new_key": "Invoice",
-  "restart_502_error":"Seem's that your Internet is reconnecting .For better experience please restart your App "
+  "restart_502_error":"Seem's that your Internet is reconnecting .For better experience please restart your App ",
+  "restart_key": "Restart",
+  "total_redem_key": "Used MP Coins",
+  "total_generate_key": "Settled by MyProfit"
 }

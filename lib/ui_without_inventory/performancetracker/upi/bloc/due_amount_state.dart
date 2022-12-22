@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:vendor/model/get_due_amount_response.dart';
 
+import '../../../../model/Vender_earn_redeem_detail.dart';
+
 class MoneyDueState extends Equatable {
   @override
   List<Object?> get props => [];
@@ -20,6 +22,16 @@ class GetDueAmountState extends MoneyDueState {
 
   @override
   List<Object?> get props => [dueAmount];
+}
+
+// ? vendor data earn generate State
+class GetVendorEarnGenerateState extends MoneyDueState {
+  final VendorDataearnredeem data;
+  GetVendorEarnGenerateState({
+    required this.data,
+  });
+  @override
+  List<Object?> get props => [data];
 }
 
 class GetFreeCoinInitialState extends MoneyDueState {
@@ -61,7 +73,12 @@ class GetPaymentTransictionState extends MoneyDueState {
   final mid;
   final orderId;
   final callbackUrl;
-  GetPaymentTransictionState({this.signature, this.txnToken, this.mid, this.orderId, this.callbackUrl});
+  GetPaymentTransictionState(
+      {this.signature,
+      this.txnToken,
+      this.mid,
+      this.orderId,
+      this.callbackUrl});
   @override
   List<Object?> get props => [signature, txnToken, mid, orderId, callbackUrl];
 }

@@ -96,8 +96,7 @@ class _DirectBillingState extends State<DirectBilling> {
   void initState() {
     directBillingCustomerNumberResponseBloc
         .add(GetDirectBillingCategoryEvent());
-    directBillingCustomerNumberResponseBloc
-        .add(GetDirectBillingDueAmmountEvent());
+
     super.initState();
   }
 

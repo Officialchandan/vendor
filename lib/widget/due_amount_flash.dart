@@ -36,9 +36,7 @@ class _DueAmountFlashState extends State<DueAmountFlash> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4.0),
                 child: Marquee(
-                  text: 'your_last_Pay_Key'.tr() +
-                      "${widget.lastpayamount}" +
-                      "your_total_pay_key".tr() +
+                  text: "your_total_pay_key".tr() +
                       "${widget.amount}" +
                       "due_amount_flash".tr(),
                   style: TextStyle(

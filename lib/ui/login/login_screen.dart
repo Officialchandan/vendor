@@ -423,16 +423,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           fit: BoxFit.fill,
                         )),
                         Positioned(
-                            right: 12,
-                            top: 30,
-                            child: Image.asset(
-                              "assets/images/logo2.png",
-                              // height: deviceHeight - 50,
-                              width: 50,
-                              height: 50,
-                              fit: BoxFit.cover,
-                            )),
-                        Positioned(
                           left: 20,
                           right: 20,
                           top: deviceHeight * 0.17,

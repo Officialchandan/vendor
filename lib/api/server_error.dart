@@ -164,11 +164,10 @@ class ServerError implements Exception {
                       onPressed: () async {
                         await Phoenix.rebirth(context);
                       },
-                      child: Text("Re-start"))
+                      child: Text("restart_key".tr()))
                 ],
               ),
             ));
-
     // EasyLoading.showError("Your session has been expired! Please login again",);
   }
 }

@@ -16,6 +16,7 @@ import 'package:vendor/utility/network.dart';
 import 'package:vendor/utility/utility.dart';
 import 'package:vendor/widget/progress_indecator.dart';
 
+import '../../inventory/add_product/add_product_screen.dart';
 import 'search_all_bloc.dart';
 
 class SearchAllProduct extends StatefulWidget {
@@ -111,91 +112,35 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                         Navigator.pop(context);
                       },
                       icon: Icon(Icons.arrow_back_ios))),
-              body: Container(
-                child: Stack(children: [
-                  BlocConsumer<SearchAllBloc, SearchAllState>(
-                    listener: (context, state) {
-                      if (state is SearchAllIntialState) {
-                        searchAllBloc.add(GetProductsEvent());
-                      }
-                    },
-                    builder: (context, state) {
-                      if (state is GetSearchState) {
-                        products = state.data!;
-                        searchList = products;
-                        log("${products.length}");
-                      }
-                      if (state is GetSearchLoadingState) {
-                        return Center(
-                          child: CircularLoader(),
-                        );
-                      }
-                      if (state is GetSearchFailureState) {
-                        return Center(
-                          child: Image.asset("assets/images/no_data.gif"),
-                        );
-                      }
-                      if (state is CategoriesSearchState) {
-                        if (state.searchword.isEmpty) {
-                          searchList = products;
-                        } else {
-                          List<ProductModel> list = [];
-                          products.forEach((element) {
-                            if (element.productName
-                                .toLowerCase()
-                                .contains(state.searchword.toLowerCase())) {
-                              list.add(element);
-                              log("how much -->${state.searchword}");
-                            }
-                          });
-
-                          if (list.isEmpty) {
-                            return Container(
-                              height: height,
-                              child: Image.asset("assets/images/no_data.gif"),
-                            );
+              body: Column(
+                children: [
+                  SizedBox(
+                    height: 60,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          left: 17, right: 17, bottom: 3, top: 16),
+                      child: InkWell(
+                        onTap: () async {
+                          if (await Network.isConnected()) {
+                            FocusScope.of(context).unfocus();
+                            Navigator.push(
+                                    context,
+                                    PageTransition(
+                                        child: AddProductScreen(status: 0),
+                                        type: PageTransitionType.fade))
+                                .then((value) =>
+                                    FocusScope.of(context).unfocus());
                           } else {
-                            searchList = list;
+                            Utility.showToast(
+                              msg: "please_check_your_internet_connection_key"
+                                  .tr(),
+                            );
                           }
-                        }
-                      }
-                      if (state is GetCheckBoxState) {
-                        searchList[state.index].check = state.check;
-                      }
-                      if (state is GetDecrementState) {
-                        searchList[state.index].count -= state.count;
-                      }
-                      if (state is GetIncrementState) {
-                        searchList[state.index].count += state.count;
-                        searchAllBloc.add(
-                            GetCheckBoxEvent(check: true, index: state.index));
-                      }
-
-                      return ListView.builder(
-                        padding: const EdgeInsets.only(top: 5, bottom: 10),
-                        itemCount: searchList.length,
-                        itemBuilder: (context, index) {
-                          String variantName = "";
-                          ProductModel product = searchList[index];
-                          if (product.productOption.isNotEmpty) {
-                            for (int i = 0;
-                                i < product.productOption.length;
-                                i++) {
-                              if (product.productOption.length - 1 == i)
-                                variantName +=
-                                    product.productOption[i].value.toString();
-                              else
-                                variantName +=
-                                    product.productOption[i].value.toString() +
-                                        ", ";
-                            }
-                          }
-                          return Container(
-                            width: MediaQuery.of(context).size.width,
-                            margin: EdgeInsets.only(
-                                left: 14, right: 14, top: 10, bottom: 10),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 50,
+                          decoration: BoxDecoration(
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.grey.shade300,
@@ -204,362 +149,484 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                 ),
                               ],
                               borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 12, right: 12, top: 12, bottom: 12),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Colors.grey.shade200,
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
-                                        child: searchList[index]
-                                                .productImages
-                                                .isNotEmpty
-                                            ? ClipRRect(
+                              //  borderRadius: BorderRadius.circular(10),
+                              border: Border.all(width: 2, color: ColorPrimary),
+                              color: Colors.white),
+                          child: Center(
+                              child: Text(
+                            "add_new_product_key".tr(),
+                            style: TextStyle(
+                                color: ColorPrimary,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600),
+                          )),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      child: Stack(children: [
+                        BlocConsumer<SearchAllBloc, SearchAllState>(
+                          listener: (context, state) {
+                            if (state is SearchAllIntialState) {
+                              searchAllBloc.add(GetProductsEvent());
+                            }
+                          },
+                          builder: (context, state) {
+                            if (state is GetSearchState) {
+                              products = state.data!;
+                              searchList = products;
+                              log("${products.length}");
+                            }
+                            if (state is GetSearchLoadingState) {
+                              return Center(
+                                child: CircularLoader(),
+                              );
+                            }
+                            if (state is GetSearchFailureState) {
+                              return Center(
+                                child: Image.asset("assets/images/no_data.gif"),
+                              );
+                            }
+                            if (state is CategoriesSearchState) {
+                              if (state.searchword.isEmpty) {
+                                searchList = products;
+                              } else {
+                                List<ProductModel> list = [];
+                                products.forEach((element) {
+                                  if (element.productName
+                                      .toLowerCase()
+                                      .contains(
+                                          state.searchword.toLowerCase())) {
+                                    list.add(element);
+                                    log("how much -->${state.searchword}");
+                                  }
+                                });
+
+                                if (list.isEmpty) {
+                                  return Container(
+                                    height: height,
+                                    child: Image.asset(
+                                        "assets/images/no_data.gif"),
+                                  );
+                                } else {
+                                  searchList = list;
+                                }
+                              }
+                            }
+                            if (state is GetCheckBoxState) {
+                              searchList[state.index].check = state.check;
+                            }
+                            if (state is GetDecrementState) {
+                              searchList[state.index].count -= state.count;
+                            }
+                            if (state is GetIncrementState) {
+                              searchList[state.index].count += state.count;
+                              searchAllBloc.add(GetCheckBoxEvent(
+                                  check: true, index: state.index));
+                            }
+
+                            return ListView.builder(
+                              padding:
+                                  const EdgeInsets.only(top: 5, bottom: 10),
+                              itemCount: searchList.length,
+                              itemBuilder: (context, index) {
+                                String variantName = "";
+                                ProductModel product = searchList[index];
+                                if (product.productOption.isNotEmpty) {
+                                  for (int i = 0;
+                                      i < product.productOption.length;
+                                      i++) {
+                                    if (product.productOption.length - 1 == i)
+                                      variantName += product
+                                          .productOption[i].value
+                                          .toString();
+                                    else
+                                      variantName += product
+                                              .productOption[i].value
+                                              .toString() +
+                                          ", ";
+                                  }
+                                }
+                                return Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  margin: EdgeInsets.only(
+                                      left: 14, right: 14, top: 10, bottom: 10),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.shade300,
+                                        offset: Offset(0.0, 0.0), //(x,y)
+                                        blurRadius: 7.0,
+                                      ),
+                                    ],
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 12,
+                                        right: 12,
+                                        top: 12,
+                                        bottom: 12),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                color: Colors.grey.shade200,
                                                 borderRadius:
-                                                    BorderRadius.circular(8),
-                                                child: searchList[index]
-                                                        .productImages[0]
-                                                        .productImage
-                                                        .isNotEmpty
-                                                    ? Image(
-                                                        height: 55,
-                                                        width: 55,
-                                                        fit: BoxFit.cover,
-                                                        image: NetworkImage(
-                                                            "${searchList[index].productImages[0].productImage}"),
-                                                      )
-                                                    : Image(
+                                                    BorderRadius.circular(5),
+                                              ),
+                                              child: searchList[index]
+                                                      .productImages
+                                                      .isNotEmpty
+                                                  ? ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                      child: searchList[index]
+                                                              .productImages[0]
+                                                              .productImage
+                                                              .isNotEmpty
+                                                          ? Image(
+                                                              height: 55,
+                                                              width: 55,
+                                                              fit: BoxFit.cover,
+                                                              image: NetworkImage(
+                                                                  "${searchList[index].productImages[0].productImage}"),
+                                                            )
+                                                          : Image(
+                                                              image: NetworkImage(
+                                                                  "${searchList[index].categoryImage}"),
+                                                              height: 55,
+                                                              width: 55,
+                                                              fit: BoxFit
+                                                                  .contain,
+                                                            ),
+                                                    )
+                                                  : ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      child: Image(
                                                         image: NetworkImage(
                                                             "${searchList[index].categoryImage}"),
                                                         height: 55,
                                                         width: 55,
                                                         fit: BoxFit.contain,
                                                       ),
-                                              )
-                                            : ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                child: Image(
-                                                  image: NetworkImage(
-                                                      "${searchList[index].categoryImage}"),
-                                                  height: 55,
-                                                  width: 55,
-                                                  fit: BoxFit.contain,
-                                                ),
-                                              ),
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Flexible(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Container(
-                                                  width: width * 0.45,
-                                                  child: variantName.isEmpty
-                                                      ? Text(
-                                                          "${searchList[index].productName} ",
-                                                          maxLines: 2,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          style: TextStyle(
-                                                              color:
-                                                                  TextBlackLight,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontSize: 15),
-                                                        )
-                                                      : Text(
-                                                          "${searchList[index].productName} ($variantName)",
-                                                          maxLines: 2,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          style: TextStyle(
-                                                              color:
-                                                                  TextBlackLight,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontSize: 15),
-                                                        ),
-                                                ),
-                                                searchList[index].check != true
-                                                    ? InkWell(
-                                                        onTap: () async {
-                                                          if (await Network
-                                                              .isConnected()) {
-                                                            searchAllBloc.add(
-                                                                GetCheckBoxEvent(
-                                                                    check: true,
-                                                                    index:
-                                                                        index));
-                                                            selectedProductList =
-                                                                searchList[
-                                                                    index];
-                                                          } else {
-                                                            Utility.showToast(
-                                                              msg:
-                                                                  "please_check_your_internet_connection_key"
-                                                                      .tr(),
-                                                            );
-                                                          }
-                                                        },
-                                                        child: Container(
-                                                          height: 25,
-                                                          width: 71,
-                                                          decoration: BoxDecoration(
-                                                              color:
-                                                                  Buttonactive,
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          25),
-                                                              border: Border.all(
-                                                                  color:
-                                                                      ColorPrimary)),
-                                                          child: Center(
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Text(
-                                                                  "add_key"
-                                                                      .tr(),
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          12,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      color:
-                                                                          ColorPrimary),
-                                                                ),
-                                                                SizedBox(
-                                                                  width: 3,
-                                                                ),
-                                                                Icon(
-                                                                  Icons.add,
-                                                                  size: 18,
-                                                                  color:
-                                                                      ColorPrimary,
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      )
-                                                    : Container(
-                                                        height: 25,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                                // color: Colors.amber,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            25),
-                                                                border: Border.all(
-                                                                    color:
-                                                                        ColorPrimary)),
-                                                        child: Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          children: [
-                                                            Container(
-                                                              width: 23,
-                                                              child: IconButton(
-                                                                  padding:
-                                                                      EdgeInsets
-                                                                          .all(
-                                                                              0),
-                                                                  onPressed:
-                                                                      () async {
-                                                                    if (await Network
-                                                                        .isConnected()) {
-                                                                      searchAllBloc.add(GetDecrementEvent(
-                                                                          index:
-                                                                              index,
-                                                                          count:
-                                                                              1));
-                                                                      if (searchList[index]
-                                                                              .count <=
-                                                                          1) {
-                                                                        searchAllBloc.add(GetCheckBoxEvent(
-                                                                            check:
-                                                                                false,
-                                                                            index:
-                                                                                index));
-                                                                      }
-                                                                    } else {
-                                                                      Utility
-                                                                          .showToast(
-                                                                        msg:
-                                                                            "please_check_your_internet_connection_key",
-                                                                      );
-                                                                    }
-                                                                  },
-                                                                  iconSize: 20,
-                                                                  splashRadius:
-                                                                      10,
-                                                                  icon: Icon(
-                                                                    Icons
-                                                                        .remove,
-                                                                  )),
-                                                            ),
-                                                            Container(
-                                                              width: 23,
-                                                              color:
-                                                                  ColorPrimary,
-                                                              child: Center(
-                                                                child:
-                                                                    AutoSizeText(
-                                                                  "${searchList[index].count}",
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Colors
-                                                                        .white,
-                                                                  ),
-                                                                  maxFontSize:
-                                                                      14,
-                                                                  minFontSize:
-                                                                      10,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Container(
-                                                              width: 23,
-                                                              child: IconButton(
-                                                                  padding:
-                                                                      EdgeInsets
-                                                                          .all(
-                                                                              0),
-                                                                  onPressed:
-                                                                      () async {
-                                                                    if (await Network
-                                                                        .isConnected()) {
-                                                                      searchAllBloc.add(GetIncrementEvent(
-                                                                          index:
-                                                                              index,
-                                                                          count:
-                                                                              1));
-                                                                    } else {
-                                                                      Utility
-                                                                          .showToast(
-                                                                        msg:
-                                                                            "please_check_your_internet_connection_key",
-                                                                      );
-                                                                    }
-                                                                  },
-                                                                  iconSize: 20,
-                                                                  splashRadius:
-                                                                      10,
-                                                                  icon: Icon(
-                                                                    Icons.add,
-                                                                  )),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                              ],
+                                                    ),
                                             ),
                                             SizedBox(
-                                              height: 6,
+                                              width: 10,
                                             ),
-                                            Container(
-                                              width: width * 0.71,
-                                              child: Row(
+                                            Flexible(
+                                              child: Column(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
                                                         .spaceBetween,
                                                 children: [
-                                                  new RichText(
-                                                    text: new TextSpan(
-                                                      text:
-                                                          '\u20B9 ${double.parse(searchList[index].sellingPrice) * searchList[index].count}  ',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: ColorPrimary,
-                                                          fontSize: 18),
-                                                      children: <TextSpan>[
-                                                        new TextSpan(
-                                                          text:
-                                                              '\u20B9${double.parse(searchList[index].mrp) * searchList[index].count}',
-                                                          style: new TextStyle(
-                                                            color: TextGrey,
-                                                            fontSize: 13,
-                                                            decoration:
-                                                                TextDecoration
-                                                                    .lineThrough,
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Container(
+                                                        width: width * 0.45,
+                                                        child:
+                                                            variantName.isEmpty
+                                                                ? Text(
+                                                                    "${searchList[index].productName} ",
+                                                                    maxLines: 2,
+                                                                    overflow:
+                                                                        TextOverflow
+                                                                            .ellipsis,
+                                                                    style: TextStyle(
+                                                                        color:
+                                                                            TextBlackLight,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .bold,
+                                                                        fontSize:
+                                                                            15),
+                                                                  )
+                                                                : Text(
+                                                                    "${searchList[index].productName} ($variantName)",
+                                                                    maxLines: 2,
+                                                                    overflow:
+                                                                        TextOverflow
+                                                                            .ellipsis,
+                                                                    style: TextStyle(
+                                                                        color:
+                                                                            TextBlackLight,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .bold,
+                                                                        fontSize:
+                                                                            15),
+                                                                  ),
+                                                      ),
+                                                      searchList[index].check !=
+                                                              true
+                                                          ? InkWell(
+                                                              onTap: () async {
+                                                                if (await Network
+                                                                    .isConnected()) {
+                                                                  searchAllBloc.add(
+                                                                      GetCheckBoxEvent(
+                                                                          check:
+                                                                              true,
+                                                                          index:
+                                                                              index));
+                                                                  selectedProductList =
+                                                                      searchList[
+                                                                          index];
+                                                                } else {
+                                                                  Utility
+                                                                      .showToast(
+                                                                    msg: "please_check_your_internet_connection_key"
+                                                                        .tr(),
+                                                                  );
+                                                                }
+                                                              },
+                                                              child: Container(
+                                                                height: 25,
+                                                                width: 71,
+                                                                decoration: BoxDecoration(
+                                                                    color:
+                                                                        Buttonactive,
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            25),
+                                                                    border: Border.all(
+                                                                        color:
+                                                                            ColorPrimary)),
+                                                                child: Center(
+                                                                  child: Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .center,
+                                                                    children: [
+                                                                      Text(
+                                                                        "add_key"
+                                                                            .tr(),
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                12,
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                            color: ColorPrimary),
+                                                                      ),
+                                                                      SizedBox(
+                                                                        width:
+                                                                            3,
+                                                                      ),
+                                                                      Icon(
+                                                                        Icons
+                                                                            .add,
+                                                                        size:
+                                                                            18,
+                                                                        color:
+                                                                            ColorPrimary,
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            )
+                                                          : Container(
+                                                              height: 25,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                      // color: Colors.amber,
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              25),
+                                                                      border: Border.all(
+                                                                          color:
+                                                                              ColorPrimary)),
+                                                              child: Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .min,
+                                                                children: [
+                                                                  Container(
+                                                                    width: 23,
+                                                                    child: IconButton(
+                                                                        padding: EdgeInsets.all(0),
+                                                                        onPressed: () async {
+                                                                          if (await Network
+                                                                              .isConnected()) {
+                                                                            searchAllBloc.add(GetDecrementEvent(
+                                                                                index: index,
+                                                                                count: 1));
+                                                                            if (searchList[index].count <=
+                                                                                1) {
+                                                                              searchAllBloc.add(GetCheckBoxEvent(check: false, index: index));
+                                                                            }
+                                                                          } else {
+                                                                            Utility.showToast(
+                                                                              msg: "please_check_your_internet_connection_key",
+                                                                            );
+                                                                          }
+                                                                        },
+                                                                        iconSize: 20,
+                                                                        splashRadius: 10,
+                                                                        icon: Icon(
+                                                                          Icons
+                                                                              .remove,
+                                                                        )),
+                                                                  ),
+                                                                  Container(
+                                                                    width: 23,
+                                                                    color:
+                                                                        ColorPrimary,
+                                                                    child:
+                                                                        Center(
+                                                                      child:
+                                                                          AutoSizeText(
+                                                                        "${searchList[index].count}",
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color:
+                                                                              Colors.white,
+                                                                        ),
+                                                                        maxFontSize:
+                                                                            14,
+                                                                        minFontSize:
+                                                                            10,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  Container(
+                                                                    width: 23,
+                                                                    child: IconButton(
+                                                                        padding: EdgeInsets.all(0),
+                                                                        onPressed: () async {
+                                                                          if (await Network
+                                                                              .isConnected()) {
+                                                                            searchAllBloc.add(GetIncrementEvent(
+                                                                                index: index,
+                                                                                count: 1));
+                                                                          } else {
+                                                                            Utility.showToast(
+                                                                              msg: "please_check_your_internet_connection_key",
+                                                                            );
+                                                                          }
+                                                                        },
+                                                                        iconSize: 20,
+                                                                        splashRadius: 10,
+                                                                        icon: Icon(
+                                                                          Icons
+                                                                              .add,
+                                                                        )),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                    height: 6,
+                                                  ),
+                                                  Container(
+                                                    width: width * 0.71,
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        new RichText(
+                                                          text: new TextSpan(
+                                                            text:
+                                                                '\u20B9 ${double.parse(searchList[index].sellingPrice) * searchList[index].count}  ',
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color:
+                                                                    ColorPrimary,
+                                                                fontSize: 18),
+                                                            children: <
+                                                                TextSpan>[
+                                                              new TextSpan(
+                                                                text:
+                                                                    '\u20B9${double.parse(searchList[index].mrp) * searchList[index].count}',
+                                                                style:
+                                                                    new TextStyle(
+                                                                  color:
+                                                                      TextGrey,
+                                                                  fontSize: 13,
+                                                                  decoration:
+                                                                      TextDecoration
+                                                                          .lineThrough,
+                                                                ),
+                                                              ),
+                                                            ],
                                                           ),
+                                                        ),
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                              "earn_key".tr() +
+                                                                  ": ",
+                                                              style: TextStyle(
+                                                                  fontSize: 13,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  color:
+                                                                      TextGrey),
+                                                            ),
+                                                            Container(
+                                                                child:
+                                                                    Image.asset(
+                                                              "assets/images/point.png",
+                                                              height: 13,
+                                                              width: 13,
+                                                            )),
+                                                            Text(
+                                                              " ${(double.parse(searchList[index].earningCoins) * searchList[index].count).toStringAsFixed(1)}",
+                                                              style: TextStyle(
+                                                                  fontSize: 13,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  color:
+                                                                      ColorPrimary),
+                                                            ),
+                                                          ],
                                                         ),
                                                       ],
                                                     ),
-                                                  ),
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      Text(
-                                                        "earn_key".tr() + ": ",
-                                                        style: TextStyle(
-                                                            fontSize: 13,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: TextGrey),
-                                                      ),
-                                                      Container(
-                                                          child: Image.asset(
-                                                        "assets/images/point.png",
-                                                        height: 13,
-                                                        width: 13,
-                                                      )),
-                                                      Text(
-                                                        " ${(double.parse(searchList[index].earningCoins) * searchList[index].count).toStringAsFixed(1)}",
-                                                        style: TextStyle(
-                                                            fontSize: 13,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color:
-                                                                ColorPrimary),
-                                                      ),
-                                                    ],
                                                   ),
                                                 ],
                                               ),
                                             ),
                                           ],
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                    },
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      ]),
+                    ),
                   ),
-                ]),
+                ],
               ),
               bottomNavigationBar: GestureDetector(
                 onTap: () async {

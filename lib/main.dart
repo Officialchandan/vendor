@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element
+
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
@@ -32,7 +34,7 @@ import 'package:vendor/utility/constant.dart';
 import 'package:vendor/utility/routs.dart';
 
 BaseOptions baseOptions = BaseOptions(
-    baseUrl: Endpoint.BASE_URL_V2,
+    baseUrl: Endpoint.BASE_URL,
     receiveTimeout: 60000,
     sendTimeout: 60000,
     responseType: ResponseType.json,
@@ -270,6 +272,7 @@ void main() async {
             channel.name,
             color: ColorPrimary,
             playSound: true,
+            styleInformation: BigTextStyleInformation(''),
             icon: "logo",
           ),
         ),
@@ -414,13 +417,13 @@ void main() async {
         break;
     }
   });
-
+//!'Droid Sans Mono', 'monospace', monospace
   checkForInitialMessage() async {
     await Firebase.initializeApp();
     RemoteMessage? initialMessage = await FirebaseMessaging.instance
         .getInitialMessage()
         .then((RemoteMessage? message) async {});
-    ;
+
     log("in terminated");
     if (initialMessage != null) {
       log("in terminated");

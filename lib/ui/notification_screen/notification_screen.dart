@@ -92,21 +92,21 @@ class _NotificationScreenState extends State<NotificationScreen> {
         stickyHeaderBackgroundColor: Colors.white,
         elements: data,
         groupBy: (element) => today
-                    .difference(new DateFormat('yyyy-MM-dd HH:mm:ss')
-                        .parse(element.createdAt))
+                    .difference(
+                        new DateFormat('yyyy-MM-dd').parse(element.createdAt))
                     .inDays ==
                 0
             ? "today".tr()
             : today
-                            .difference(new DateFormat('yyyy-MM-dd HH:mm:ss')
+                            .difference(new DateFormat('yyyy-MM-dd')
                                 .parse(element.createdAt))
                             .inDays >=
                         1 &&
                     today
-                            .difference(new DateFormat('yyyy-MM-dd HH:mm:ss')
+                            .difference(new DateFormat('yyyy-MM-dd')
                                 .parse(element.createdAt))
                             .inDays <
-                        8
+                        7
                 ? "this_week".tr()
                 : "older".tr(),
         reverse: false,
@@ -122,7 +122,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   }
                   index.isRead = 1;
                 });
-                markAsRead(index.id);
+                markAsRead(index.id, index.notiListId);
               },
               child: Card(
                 child: Container(
@@ -146,10 +146,17 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             width: 5,
                           ),
                           CircleAvatar(
-                            backgroundImage: AssetImage(
+                            // backgroundImage: AssetImage(
+                            //   index.notiListId == 9
+                            //       ? "assets/images/logo.png"
+                            //       : "assets/images/3x/rt2.png",
+                            // ),
+                            child: Image.asset(
                               index.notiListId == 9
-                                  ? "assets/images/logo.png"
+                                  ? "assets/images/logo2.png"
                                   : "assets/images/3x/rt2.png",
+                              fit: BoxFit.fill,
+                              width: index.notiListId == 9 ? 25 : null,
                             ),
                           ),
                           SizedBox(
@@ -202,24 +209,24 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                       .difference(
                                           new DateFormat('yyyy-MM-dd HH:mm:ss')
                                               .parse(index.createdAt))
-                                      .inDays ==
-                                  0
+                                      .inMinutes <
+                                  60
                               ? Text(
-                                  "${today.difference(new DateFormat('yyyy-MM-dd HH:mm:ss').parse(index.createdAt)).inHours} " +
-                                      "hour_ago".tr(),
-                                  style: GoogleFonts.salsa(
-                                      textStyle:
-                                          TextStyle(color: Colors.black45)),
-                                )
+                                  "${today.difference(new DateFormat('yyyy-MM-dd HH:mm:ss').parse(index.createdAt)).inMinutes} " +
+                                      "minute_ago".tr())
                               : today
                                           .difference(new DateFormat(
                                                   'yyyy-MM-dd HH:mm:ss')
                                               .parse(index.createdAt))
-                                          .inMinutes <
-                                      60
+                                          .inDays ==
+                                      0
                                   ? Text(
-                                      "${today.difference(new DateFormat('yyyy-MM-dd HH:mm:ss').parse(index.createdAt)).inMinutes} " +
-                                          "minute_ago".tr())
+                                      "${today.difference(new DateFormat('yyyy-MM-dd HH:mm:ss').parse(index.createdAt)).inHours} " +
+                                          "hour_ago".tr(),
+                                      style: GoogleFonts.salsa(
+                                          textStyle:
+                                              TextStyle(color: Colors.black45)),
+                                    )
                                   : Text(
                                       DateFormat("dd MMM").format(
                                               DateTime.parse(index.createdAt)) +
@@ -263,7 +270,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             ));
   }
 
-  Future<NotificationStatusResponse> markAsRead(int id) async {
+  Future<NotificationStatusResponse> markAsRead(int id, int notfyid) async {
     Map input = HashMap();
     String userId =
         (await SharedPref.getIntegerPreference(SharedPref.VENDORID)).toString();
@@ -277,7 +284,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
       NotificationStatusResponse response =
           NotificationStatusResponse.fromJson(res.toString());
-      Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME, arguments: 2);
+      if (notfyid == 28) {
+        Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME,
+            arguments: 0);
+      } else {
+        Navigator.pushNamed(context, Routes.BOTTOM_NAVIGATION_HOME,
+            arguments: 2);
+      }
+
       if (response.success) {
         return NotificationStatusResponse(
             message: response.message, success: true);

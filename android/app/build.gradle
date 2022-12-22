@@ -31,13 +31,13 @@ android {
 //keytool -list -v -keystore /Users/mac/Documents/vaibhav/myprofit_vendor/android/app/src/main/assets/vendor.jks -alias vendor
 
 //            keytool -list -v -keystore ~/.android/app/src/main/assets/vendor.jks -alias vendor -storepass 123456 -keypass 123456
-            storeFile file('/home/tekzee-d21/Desktop/jahid_dev/vendor_git/android/app/src/main/assets/vendor.jks')
+            storeFile file('/home/tekzee-d21/Desktop/jahid_Dev_Work/prodwork/vendor/android/app/src/main/assets/vendor.jks')
             storePassword '123456'
             keyAlias 'vendor'
             keyPassword '123456'
         }
         release {
-            storeFile file('/home/tekzee-d21/Desktop/jahid_dev/vendor_git/android/app/src/main/assets/vendor.jks')
+            storeFile file('/home/tekzee-d21/Desktop/jahid_Dev_Work/prodwork/vendor/android/app/src/main/assets/vendor.jks')
             storePassword '123456'
             keyAlias 'vendor'
             keyPassword '123456'
@@ -59,8 +59,8 @@ android {
         applicationId "com.myprofit.vendor"
         minSdkVersion 21
         targetSdkVersion 33
-        versionCode 10
-        versionName '1.9'
+        versionCode 11
+        versionName '2.0'
         signingConfig signingConfigs.release
         multiDexEnabled true
     }

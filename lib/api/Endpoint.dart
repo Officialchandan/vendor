@@ -2,13 +2,13 @@ class Endpoint {
   // static const String BASE_URL = "http://vendor.tekzee.in/api/v1/";
   // http://vendor.myprofitinc.com/
   static const String BASE_URL = "http://vendor.myprofitinc.com/api/v1/";
-  static const String BASE_URL_V2 = "http://vendor.myprofitinc.com/api/v2/";
-  static const String TEST_BASE_URL =
-      "http://vendor.tekzee.in/api/v2/verifyOTP";
-  static const String GET_ALL_CATEGORY_V2 =
-      "http://vendor.tekzee.in/api/v2/getAllCategoryByVendorID";
-  static const String GET_CHATPAPDI_BILLING_V2 =
-      "http://vendor.tekzee.in/api/v2/chatPapdiBilling";
+  // static const String BASE_URL_V2 = "http://vendor.myprofitinc.com/api/v2/";
+  // static const String TEST_BASE_URL =
+  // "http://vendor.tekzee.i/napi/v2/verifyOTP";
+  // static const String GET_ALL_CATEGORY_V2 =
+  //     "http://vendor.tekzee.in/api/v2/getAllCategoryByVendorID";
+  // static const String GET_CHATPAPDI_BILLING_V2 =
+  //     "http://vendor.tekzee.in/api/v2/chatPapdiBilling";
 
   static const String GENERATE_OTP = "genereateOTP";
 
@@ -40,8 +40,8 @@ class Endpoint {
   // static const String GET_PRODUCT_VARIANT_TYPE = "getProductVariants";
 
   static const String BILLING_PRODUCT = "billingProducts";
-  static const String BILLING_PRODUCT_V2 =
-      "http://vendor.tekzee.in/api/v2/billingProducts";
+  // static const String BILLING_PRODUCT_V2 =
+  //     "http://vendor.tekzee.in/api/v2/billingProducts";
 
   static const String GET_PRODUCT_VARIANT_TYPE = "getVariants";
 
@@ -139,8 +139,8 @@ class Endpoint {
   static const String GET_MONTHLY_WALKIN_AMOUNT = "monthlyWalkIns";
 
   static const String GET_DIRECT_BILLING = "directBilling";
-  static const String GET_DIRECT_BILLING_v2 =
-      "http://vendor.tekzee.in/api/v2/directBilling";
+  // static const String GET_DIRECT_BILLING_v2 =
+  //     "http://vendor.tekzee.in/api/v2/directBilling";
 
   static const String GET_DIRECT_BILLING_OTP = "confirmBillingByOtp";
 
@@ -234,4 +234,7 @@ class Endpoint {
   static const String GET_VENDOR_Video = "getVendorVideo";
 
   static const String GET_SALES_RETURN_NEW_OTP = "salesReturnNewOTP";
+
+  static const String Get_Vendor_Earn_Redeem_detail =
+      "getVendorEarnRedeemDetails";
 }

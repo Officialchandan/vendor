@@ -61,7 +61,7 @@ class _BillingScreenState extends State<BillingScreen> {
   @override
   void initState() {
     super.initState();
-    //customerNumberResponseBloc.add(GetBillingDueAmmountEvent());
+
     log("my data==>");
   }
 
@@ -709,42 +709,6 @@ class _BillingScreenState extends State<BillingScreen> {
                       ),
                     ),
                   ]),
-                ),
-              ),
-              bottomNavigationBar: Padding(
-                padding: const EdgeInsets.only(left: 17, right: 17, bottom: 3),
-                child: InkWell(
-                  onTap: () async {
-                    if (await Network.isConnected()) {
-                      FocusScope.of(context).unfocus();
-                      Navigator.push(
-                              context,
-                              PageTransition(
-                                  child: AddProductScreen(status: 0),
-                                  type: PageTransitionType.fade))
-                          .then((value) => FocusScope.of(context).unfocus());
-                    } else {
-                      Utility.showToast(
-                        msg: "please_check_your_internet_connection_key".tr(),
-                      );
-                    }
-                  },
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 50,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(width: 2, color: ColorPrimary),
-                        color: Colors.white),
-                    child: Center(
-                        child: Text(
-                      "add_new_product_key".tr(),
-                      style: TextStyle(
-                          color: ColorPrimary,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600),
-                    )),
-                  ),
                 ),
               ),
             );
