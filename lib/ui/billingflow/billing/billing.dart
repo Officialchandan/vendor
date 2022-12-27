@@ -25,6 +25,7 @@ import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/utility.dart';
 import 'package:vendor/utility/validator.dart';
 
+import '../../../utility/constant.dart';
 import '../../../widget/due_amount_flash.dart';
 import '../../money_due_upi/money_due_screen.dart';
 
@@ -524,14 +525,22 @@ class _BillingScreenState extends State<BillingScreen> {
                                                             0.toString(),
                                                         lastName: lastNameController
                                                                 .text.isEmpty
-                                                            ? lastName
-                                                            : lastNameController
-                                                                .text,
-                                                        firstName:
-                                                            firstName.isEmpty
-                                                                ? nameController
+                                                            ? capitalizeAllWord(
+                                                                lastName)
+                                                            : capitalizeAllWord(
+                                                                lastNameController
                                                                     .text
-                                                                : firstName,
+                                                                    .trim()
+                                                                    .toString()),
+                                                        firstName: firstName
+                                                                .isEmpty
+                                                            ? capitalizeAllWord(
+                                                                nameController
+                                                                    .text
+                                                                    .trim()
+                                                                    .toString())
+                                                            : capitalizeAllWord(
+                                                                firstName),
                                                       ),
                                                       type: PageTransitionType
                                                           .fade))
@@ -560,12 +569,19 @@ class _BillingScreenState extends State<BillingScreen> {
                                                         .text
                                                         .trim()
                                                         .isEmpty
-                                                    ? lastName
-                                                    : lastNameController.text
-                                                        .trim(),
+                                                    ? capitalizeAllWord(
+                                                        lastName)
+                                                    : capitalizeAllWord(
+                                                        lastNameController.text
+                                                            .trim()
+                                                            .toString()),
                                                 firstName: firstName.isEmpty
-                                                    ? nameController.text.trim()
-                                                    : firstName,
+                                                    ? capitalizeAllWord(
+                                                        nameController.text
+                                                            .trim()
+                                                            .toString())
+                                                    : capitalizeAllWord(
+                                                        firstName),
                                                 mobile: mobileController.text,
                                                 coin: coins,
                                               ),
@@ -743,13 +759,19 @@ class _BillingScreenState extends State<BillingScreen> {
                                   PageTransition(
                                       child: SearchByCategory(
                                         firstName: firstName.isEmpty
-                                            ? nameController.text.trim()
-                                            : firstName,
+                                            ? capitalizeAllWord(nameController
+                                                .text
+                                                .trim()
+                                                .toString())
+                                            : capitalizeAllWord(firstName),
                                         lastName: lastNameController.text
                                                 .trim()
                                                 .isEmpty
-                                            ? lastName
-                                            : lastNameController.text.trim(),
+                                            ? capitalizeAllWord(lastName)
+                                            : capitalizeAllWord(
+                                                lastNameController.text
+                                                    .trim()
+                                                    .toString()),
                                         catid: category[index].id.toString(),
                                         mobile: mobileController.text,
                                         coin: coins,
@@ -776,11 +798,14 @@ class _BillingScreenState extends State<BillingScreen> {
                           PageTransition(
                               child: SearchByCategory(
                                 lastName: lastNameController.text.trim().isEmpty
-                                    ? lastName
-                                    : lastNameController.text.trim(),
+                                    ? capitalizeAllWord(lastName)
+                                    : capitalizeAllWord(lastNameController.text
+                                        .trim()
+                                        .toString()),
                                 firstName: firstName.isEmpty
-                                    ? nameController.text.trim()
-                                    : firstName,
+                                    ? capitalizeAllWord(
+                                        nameController.text.trim().toString())
+                                    : capitalizeAllWord(firstName),
                                 catid: category[index].id.toString(),
                                 mobile: mobileController.text,
                                 coin: coins,

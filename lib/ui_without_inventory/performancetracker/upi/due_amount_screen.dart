@@ -242,7 +242,7 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
               ),
               body: SingleChildScrollView(
                 child: Container(
-                  height: MediaQuery.of(context).size.height * 0.93,
+                  height: MediaQuery.of(context).size.height * 0.96,
                   child: Stack(
                     children: [
                       Container(
@@ -325,8 +325,9 @@ class _DueAmountScreenState extends State<DueAmountScreen> {
                                   padding: const EdgeInsets.all(20),
                                   child: UpiSummaryBox(
                                       billingcounter: "0",
-                                      gencoin: totalCoinGenration,
-                                      reedemamount: totalRedeemption),
+                                      gencoin: totalCoinGenration.toString(),
+                                      reedemamount:
+                                          totalRedeemption.toString()),
                                 ),
 
                                 Padding(

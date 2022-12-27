@@ -19,3 +19,18 @@ TextInputType priceKeyboardType =
 List<TextInputFormatter> priceInputFormatter = [
   FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,5}'))
 ];
+List<TextInputFormatter> positiveintger = [
+  FilteringTextInputFormatter.allow(RegExp(r'(^[0-9]*$)'))
+];
+
+String capitalizeAllWord(String value) {
+  var result = value[0].toUpperCase();
+  for (int i = 1; i < value.length; i++) {
+    if (value[i - 1] == " ") {
+      result = result + value[i].toUpperCase();
+    } else {
+      result = result + value[i];
+    }
+  }
+  return result;
+}

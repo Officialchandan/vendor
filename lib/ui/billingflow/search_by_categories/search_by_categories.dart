@@ -5,6 +5,7 @@ import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:rxdart/rxdart.dart';
@@ -550,7 +551,13 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                                         text:
                                                             '\u20B9 ${double.parse(searchList[index].sellingPrice) * searchList[index].count}  ',
                                                         style: TextStyle(
-                                                            fontSize: 18,
+                                                            fontSize: double.parse(searchList[index]
+                                                                            .sellingPrice) *
+                                                                        searchList[index]
+                                                                            .count >
+                                                                    100000
+                                                                ? 14
+                                                                : 17,
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                             color:
@@ -558,7 +565,8 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                                         children: <TextSpan>[
                                                           new TextSpan(
                                                             text:
-                                                                '\u20B9${double.parse(searchList[index].mrp) * searchList[index].count}',
+                                                                '${NumberFormat.compactCurrency(decimalDigits: 1, symbol: "\u20B9 ", locale: 'en_US').format(double.parse(searchList[index].mrp) * searchList[index].count)}', //:
+
                                                             style:
                                                                 new TextStyle(
                                                               fontSize: 13,
@@ -577,7 +585,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.start,
                                                   children: [
-                                                    Text(
+                                                    AutoSizeText(
                                                       "earn_key".tr() + ": ",
                                                       style: TextStyle(
                                                           fontSize: 13,
@@ -593,7 +601,28 @@ class _SearchByCategoryState extends State<SearchByCategory> {
                                                       width: 13,
                                                     )),
                                                     Text(
-                                                      " ${(double.parse(searchList[index].earningCoins) * searchList[index].count).toStringAsFixed(1)}",
+                                                      (double.parse(searchList[
+                                                                          index]
+                                                                      .earningCoins) *
+                                                                  searchList[
+                                                                          index]
+                                                                      .count) >
+                                                              100000
+                                                          ? NumberFormat.compactCurrency(
+                                                                  decimalDigits:
+                                                                      1,
+                                                                  symbol:
+                                                                      "\u20B9 ",
+                                                                  locale:
+                                                                      'en_US')
+                                                              .format(double.parse(
+                                                                      searchList[
+                                                                              index]
+                                                                          .earningCoins) *
+                                                                  searchList[
+                                                                          index]
+                                                                      .count)
+                                                          : " ${(double.parse(searchList[index].earningCoins) * searchList[index].count).toStringAsFixed(1)}",
                                                       style: TextStyle(
                                                           fontSize: 13,
                                                           fontWeight:

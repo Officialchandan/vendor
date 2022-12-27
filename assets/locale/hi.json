@@ -1,5 +1,6 @@
 {
   "login_key": "लॉग इन करें",
+  "version_update_info":"नई अपडेट:- इन्वेंट्री जोड़ें में समस्या ठीक की गई। और बेहतर प्रदर्शन के लिए कुछ और मुद्दे भी ठीक किए गए हैं। कृपया नया update डाउनलोड करें",
   "add_your_details_to_login_key": "लॉगिन करने के लिए अपना विवरण जोड़ें",
   "upi_transaction_details" : "UPI लेनदेन विवरण",
   "upi_transaction_are_not_available" : "लेन-देन विवरण उपलब्ध नहीं हैं",

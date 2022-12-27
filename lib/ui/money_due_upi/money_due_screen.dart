@@ -77,6 +77,7 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
   int condition = 1;
   String availableconis = "0";
   String vendorName = "";
+  bool initialloader = true;
   void getname() async {
     vendorName = await SharedPref.getStringPreference(SharedPref.VENDORNAME);
     availableconis =
@@ -84,11 +85,13 @@ class _MoneyDueScreenState extends State<MoneyDueScreen> {
     setState(() {});
     log("=======>$vendorName");
     log("=======>$availableconis");
+    initialloader = false;
   }
 
   @override
   void initState() {
     super.initState();
+
     getname();
     moneyDueBloc.add(GetFreeCoins());
   }

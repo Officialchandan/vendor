@@ -5,7 +5,8 @@ class Validator {
   static RegExp emailRegex = new RegExp(
       r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
 
-  static RegExp passwordRegex = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+  static RegExp passwordRegex =
+      RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
   static RegExp doubleRegex = RegExp(r'^(?:0|[1-9][0-9]*)\.[0-9]+$');
 
   static RegExp name = RegExp(r'[a-z A-Z]');
@@ -21,6 +22,7 @@ class Validator {
     return null;
   }
 
+  String patttern = r'(^[0-9]*$)';
   static String? validateMobile(String value, BuildContext context) {
     String patttern = r'(^[0-9]*$)';
     RegExp regExp = new RegExp(patttern);

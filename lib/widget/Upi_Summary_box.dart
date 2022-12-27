@@ -21,70 +21,70 @@ class UpiSummaryBox extends StatefulWidget {
 }
 
 class _UpiSummaryBoxState extends State<UpiSummaryBox> {
-  Widget listtileview(title, value, icon, Size screen, bool costumercheak) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-      child: Row(
-        children: [
-          CircleAvatar(
-            radius: 22,
-            backgroundColor: ColorPrimary,
-            child: CircleAvatar(
-              backgroundColor: Colors.white,
-              // backgroundImage: AssetImage(icon),
-              radius: 21,
-              child: Image.asset(
-                icon,
-                width: 24,
-                height: 24,
-                fit: BoxFit.contain,
-              ),
-            ),
-          ),
-          SizedBox(
-            width: screen.width * 0.05,
-          ),
-          SizedBox(
-            width: screen.width * 0.15,
-            child: costumercheak
-                ? Text(
-                    double.parse(value).toStringAsFixed(0).length > 6
-                        ? NumberFormat.compactCurrency(
-                                decimalDigits: 2, symbol: "", locale: 'en_IN')
-                            .format(value)
-                        : double.parse(value).toStringAsFixed(0),
-                    style: GoogleFonts.openSans(
-                        color: ColorPrimary,
-                        fontWeight: FontWeight.w900,
-                        fontSize: 16),
-                  )
-                : Text(
-                    double.parse(value).toStringAsFixed(2).length > 6
-                        ? NumberFormat.compactCurrency(
-                                decimalDigits: 2, symbol: "", locale: 'en_IN')
-                            .format(value)
-                        : double.parse(value).toStringAsFixed(2),
-                    style: GoogleFonts.openSans(
-                        color: ColorPrimary,
-                        fontWeight: FontWeight.w900,
-                        fontSize: 16),
-                  ),
-          ),
-          SizedBox(
-            width: screen.width * 0.12,
-          ),
-          Expanded(
-              child: Text(
-            title,
-            style: GoogleFonts.openSans(
-                color: TextBlackLight,
-                fontWeight: FontWeight.w700,
-                fontSize: screen.width >= 360.0 ? 14 : 13),
-          ))
-        ],
-      ),
-    );
-  }
+  // Widget listtileview(title, value, icon, Size screen, bool costumercheak) {
+  //   return Padding(
+  //     padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+  //     child: Row(
+  //       children: [
+  //         CircleAvatar(
+  //           radius: 22,
+  //           backgroundColor: ColorPrimary,
+  //           child: CircleAvatar(
+  //             backgroundColor: Colors.white,
+  //             // backgroundImage: AssetImage(icon),
+  //             radius: 21,
+  //             child: Image.asset(
+  //               icon,
+  //               width: 24,
+  //               height: 24,
+  //               fit: BoxFit.contain,
+  //             ),
+  //           ),
+  //         ),
+  //         SizedBox(
+  //           width: screen.width * 0.05,
+  //         ),
+  //         SizedBox(
+  //           width: screen.width * 0.15,
+  //           child: costumercheak
+  //               ? Text(
+  //                   double.parse(value).toStringAsFixed(0).length > 6
+  //                       ? NumberFormat.compactCurrency(
+  //                               decimalDigits: 2, symbol: "", locale: 'en_IN')
+  //                           .format(value)
+  //                       : double.parse(value).toStringAsFixed(0),
+  //                   style: GoogleFonts.openSans(
+  //                       color: ColorPrimary,
+  //                       fontWeight: FontWeight.w900,
+  //                       fontSize: 16),
+  //                 )
+  //               : Text(
+  //                   double.parse(value).toStringAsFixed(2).length > 6
+  //                       ? NumberFormat.compactCurrency(
+  //                               decimalDigits: 2, symbol: "", locale: 'en_UK')
+  //                           .format(value)
+  //                       : double.parse(value).toStringAsFixed(2),
+  //                   style: GoogleFonts.openSans(
+  //                       color: ColorPrimary,
+  //                       fontWeight: FontWeight.w900,
+  //                       fontSize: 16),
+  //                 ),
+  //         ),
+  //         SizedBox(
+  //           width: screen.width * 0.12,
+  //         ),
+  //         Expanded(
+  //             child: Text(
+  //           title,
+  //           style: GoogleFonts.openSans(
+  //               color: TextBlackLight,
+  //               fontWeight: FontWeight.w700,
+  //               fontSize: screen.width >= 360.0 ? 14 : 13),
+  //         ))
+  //       ],
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -170,14 +170,14 @@ class _UpiSummaryBoxState extends State<UpiSummaryBox> {
                             ),
                             Text(
                               double.parse(widget.reedemamount)
-                                          .toStringAsFixed(2)
+                                          .toStringAsFixed(1)
                                           .length >
-                                      6
+                                      7
                                   ? NumberFormat.compactCurrency(
                                           decimalDigits: 2,
                                           symbol: "",
-                                          locale: 'en_IN')
-                                      .format(widget.reedemamount)
+                                          locale: 'en_UK')
+                                      .format(double.parse(widget.reedemamount))
                                   : double.parse(widget.reedemamount)
                                       .toStringAsFixed(2),
                               style: GoogleFonts.openSans(
@@ -259,13 +259,13 @@ class _UpiSummaryBoxState extends State<UpiSummaryBox> {
                         height: 5,
                       ),
                       Text(
-                        double.parse(widget.gencoin).toStringAsFixed(2).length >
-                                6
+                        double.parse(widget.gencoin).toStringAsFixed(1).length >
+                                7
                             ? NumberFormat.compactCurrency(
                                     decimalDigits: 2,
                                     symbol: "₹ ",
-                                    locale: 'en_IN')
-                                .format(widget.gencoin)
+                                    locale: 'en_UK')
+                                .format(double.parse(widget.gencoin))
                             : "₹ " +
                                 double.parse(widget.gencoin).toStringAsFixed(2),
                         style: GoogleFonts.openSans(

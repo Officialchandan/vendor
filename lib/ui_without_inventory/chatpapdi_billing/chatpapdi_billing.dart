@@ -21,6 +21,7 @@ import 'package:vendor/utility/utility.dart';
 import 'package:vendor/utility/validator.dart';
 import 'package:vendor/widget/progress_indecator.dart';
 
+import '../../utility/constant.dart';
 import '../../utility/network.dart';
 import '../../widget/due_amount_flash.dart';
 import '../performancetracker/upi/due_amount_screen.dart';
@@ -1036,8 +1037,10 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
     ///
     input["full_name"] =
         nameController.text.trim() + " " + lastNameController.text.trim();
-    input["first_name"] = nameController.text.trim();
-    input['last_name'] = lastNameController.text.trim();
+    input["first_name"] =
+        capitalizeAllWord(nameController.text.trim().toString());
+    input['last_name'] =
+        capitalizeAllWord(lastNameController.text.trim().toString());
     input["category_id"] = categoryIdList.join(',');
     input["vendor_id"] =
         await SharedPref.getIntegerPreference(SharedPref.VENDORID);

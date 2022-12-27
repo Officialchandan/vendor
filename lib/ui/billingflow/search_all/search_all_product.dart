@@ -5,6 +5,7 @@ import 'package:easy_localization/src/public_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:vendor/model/product_model.dart';
@@ -548,17 +549,24 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                             text:
                                                                 '\u20B9 ${double.parse(searchList[index].sellingPrice) * searchList[index].count}  ',
                                                             style: TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color:
-                                                                    ColorPrimary,
-                                                                fontSize: 18),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color:
+                                                                  ColorPrimary,
+                                                              fontSize: double.parse(searchList[index]
+                                                                              .sellingPrice) *
+                                                                          searchList[index]
+                                                                              .count >
+                                                                      100000
+                                                                  ? 14
+                                                                  : 17,
+                                                            ),
                                                             children: <
                                                                 TextSpan>[
                                                               new TextSpan(
                                                                 text:
-                                                                    '\u20B9${double.parse(searchList[index].mrp) * searchList[index].count}',
+                                                                    '${NumberFormat.compactCurrency(decimalDigits: 1, symbol: "\u20B9 ", locale: 'en_US').format(double.parse(searchList[index].mrp) * searchList[index].count)}',
                                                                 style:
                                                                     new TextStyle(
                                                                   color:
@@ -577,7 +585,7 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                               MainAxisAlignment
                                                                   .start,
                                                           children: [
-                                                            Text(
+                                                            AutoSizeText(
                                                               "earn_key".tr() +
                                                                   ": ",
                                                               style: TextStyle(
@@ -596,7 +604,23 @@ class _SearchAllProductState extends State<SearchAllProduct> {
                                                               width: 13,
                                                             )),
                                                             Text(
-                                                              " ${(double.parse(searchList[index].earningCoins) * searchList[index].count).toStringAsFixed(1)}",
+                                                              (double.parse(searchList[index]
+                                                                              .earningCoins) *
+                                                                          searchList[index]
+                                                                              .count) >
+                                                                      100000
+                                                                  ? NumberFormat.compactCurrency(
+                                                                          decimalDigits:
+                                                                              1,
+                                                                          symbol:
+                                                                              "\u20B9 ",
+                                                                          locale:
+                                                                              'en_US')
+                                                                      .format(double.parse(searchList[index]
+                                                                              .earningCoins) *
+                                                                          searchList[index]
+                                                                              .count)
+                                                                  : " ${(double.parse(searchList[index].earningCoins) * searchList[index].count).toStringAsFixed(1)}",
                                                               style: TextStyle(
                                                                   fontSize: 13,
                                                                   fontWeight:

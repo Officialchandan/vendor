@@ -45,7 +45,9 @@ class _BillingOptionsState extends State<BillingOptions> {
             IconButton(
                 onPressed: () {
                   Navigator.pushAndRemoveUntil(
-                      context, MaterialPageRoute(builder: (_) => HomeScreen()), (route) => false);
+                      context,
+                      MaterialPageRoute(builder: (_) => HomeScreen()),
+                      (route) => false);
                 },
                 icon: Icon(Icons.home))
           ],
@@ -57,7 +59,7 @@ class _BillingOptionsState extends State<BillingOptions> {
             children: [
               customcard("billing_key".tr(), "assets/images/invoice.png",
                   Colors.white, false),
-              widget.userStatus == 1 || widget.userStatus == 3
+              widget.userStatus == 3
                   ? customcard("direct_billing_key".tr(),
                       "assets/images/direct-debit.png", Colors.white, true)
                   : Container(),
@@ -92,13 +94,11 @@ class _BillingOptionsState extends State<BillingOptions> {
         },
         child: Material(
           color: color,
-
           borderRadius: BorderRadius.circular(14.0),
           elevation: 2.5,
           child: Container(
             decoration: BoxDecoration(
               border: Border(
-
                 bottom: BorderSide(width: 2.0, color: ColorPrimary),
               ),
               color: Colors.white,
@@ -108,15 +108,16 @@ class _BillingOptionsState extends State<BillingOptions> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-
-                 Padding(
+                Padding(
                   padding: EdgeInsets.symmetric(vertical: 10.0),
                   child: Container(
                     width: 200,
                     height: 70,
-
-                    child: Image.asset(image,color: ColorPrimary,),
-                     ),
+                    child: Image.asset(
+                      image,
+                      color: ColorPrimary,
+                    ),
+                  ),
                 ),
                 Padding(
                     padding: EdgeInsets.all(10.0),

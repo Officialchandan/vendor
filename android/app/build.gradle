@@ -59,8 +59,8 @@ android {
         applicationId "com.myprofit.vendor"
         minSdkVersion 21
         targetSdkVersion 33
-        versionCode 11
-        versionName '2.0'
+        versionCode 12
+        versionName '2.1'
         signingConfig signingConfigs.release
         multiDexEnabled true
     }

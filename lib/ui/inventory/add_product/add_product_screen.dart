@@ -1138,7 +1138,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
       log("000000000000");
       if (response.success) {
         categories = response.data!;
+
         log("userstatus$userStatus");
+        print(categories.length);
         if (response.data!.length == 1) {
           log("categories2$categories");
           categoryId = categories[0].id;
@@ -1150,13 +1152,17 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
           categories.removeWhere((element) => int.parse(element.id) <= 50);
           log("categories$categories");
-          setState(() {
-            Iterable<CategoryModel> tempdata =
-                categories.where((element) => element.id == widget.catid);
-            categoryId = tempdata.first.id.toString();
-            edtCategory.text = tempdata.first.categoryName.toString();
-            print("$categoryId + ${edtCategory.text}");
-          });
+
+          try {
+            setState(() {
+              Iterable<CategoryModel> tempdata =
+                  categories.where((element) => element.id == widget.catid);
+              categoryId = tempdata.first.id.toString();
+              edtCategory.text = tempdata.first.categoryName.toString();
+              print("$categoryId + ${edtCategory.text}");
+            });
+          } catch (e) {}
+
           if (categories.length == 1) {
             log("categories3$categories");
             categoryId = categories[0].id;

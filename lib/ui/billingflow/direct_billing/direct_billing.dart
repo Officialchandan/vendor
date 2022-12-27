@@ -20,6 +20,7 @@ import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/utility.dart';
 import 'package:vendor/utility/validator.dart';
 import 'package:vendor/widget/due_amount_flash.dart';
+import '../../../utility/constant.dart';
 import '../../../utility/network.dart';
 import '../../home/home.dart';
 import '../../money_due_upi/money_due_screen.dart';
@@ -1026,8 +1027,10 @@ class _DirectBillingState extends State<DirectBilling> {
     input["bill_amount"] = amountController.text;
     input["full_name"] =
         nameController.text.trim() + " " + lastnameController.text.trim();
-    input['first_name'] = nameController.text.trim();
-    input['last_name'] = lastnameController.text.trim();
+    input['first_name'] =
+        capitalizeAllWord(nameController.text.trim().toString());
+    input['last_name'] =
+        capitalizeAllWord(lastnameController.text.trim()).toString();
     input["vendor_id"] =
         await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     input["total_pay"] = amount;

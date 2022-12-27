@@ -29,7 +29,8 @@ class _SelectCategoryWidgetState extends State<SelectCategoryWidget> {
           margin: EdgeInsets.all(10),
           child: ListTile(
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10), side: BorderSide(color: Colors.grey.shade300, width: 1)),
+                borderRadius: BorderRadius.circular(10),
+                side: BorderSide(color: Colors.grey.shade300, width: 1)),
             onTap: () {
               widget.onSelect(null);
             },
@@ -70,7 +71,8 @@ class _SelectCategoryWidgetState extends State<SelectCategoryWidget> {
         ),
         Padding(
           padding: const EdgeInsets.only(left: 10.0),
-          child: Text("search_by_category_key".tr(), style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
+          child: Text("search_by_category_key".tr(),
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
         ),
         SizedBox(
           height: 10,
@@ -97,7 +99,8 @@ class _SelectCategoryWidgetState extends State<SelectCategoryWidget> {
                     child: ListTile(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
-                          side: BorderSide(color: Colors.grey.shade300, width: 1)),
+                          side: BorderSide(
+                              color: Colors.grey.shade300, width: 1)),
                       onTap: () {
                         widget.onSelect(snap.data![index].id.toString());
                         // Navigator.push(
@@ -117,7 +120,8 @@ class _SelectCategoryWidgetState extends State<SelectCategoryWidget> {
                         fit: BoxFit.contain,
                       ),
                       title: Text(snap.data![index].categoryName!,
-                          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, fontSize: 16)),
                     ),
                   );
                 }),
@@ -133,11 +137,12 @@ class _SelectCategoryWidgetState extends State<SelectCategoryWidget> {
   Future<List<CategoryModel>> getCategory() async {
     if (await Network.isConnected()) {
       GetCategoriesResponse response = await apiProvider.getAllCategories();
-      int userStatus = await SharedPref.getIntegerPreference(SharedPref.USERSTATUS);
+      int userStatus =
+          await SharedPref.getIntegerPreference(SharedPref.USERSTATUS);
       if (response.success) {
         categories = response.data!;
         if (userStatus == 3) {
-          categories.removeWhere((element) => element.id == "21" || element.id == "31");
+          categories.removeWhere((element) => int.parse(element.id) <= 50);
         }
         return categories;
       } else {

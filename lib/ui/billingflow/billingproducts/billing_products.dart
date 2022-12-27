@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:vendor/model/billing_product_response.dart';
 import 'package:vendor/model/product_model.dart';
@@ -502,7 +503,29 @@ class _BillingProductsState extends State<BillingProducts> {
                                                     width: 13,
                                                   )),
                                                   Text(
-                                                    " ${(double.parse(productList[index].earningCoins) * productList[index].count).toStringAsFixed(2)}",
+                                                    (double.parse(productList[
+                                                                        index]
+                                                                    .earningCoins) *
+                                                                productList[
+                                                                        index]
+                                                                    .count) >
+                                                            100000
+                                                        ? NumberFormat
+                                                                .compactCurrency(
+                                                                    decimalDigits:
+                                                                        1,
+                                                                    symbol:
+                                                                        "\u20B9 ",
+                                                                    locale:
+                                                                        'en_US')
+                                                            .format(double.parse(
+                                                                    productList[
+                                                                            index]
+                                                                        .earningCoins) *
+                                                                productList[
+                                                                        index]
+                                                                    .count)
+                                                        : " ${(double.parse(productList[index].earningCoins) * productList[index].count).toStringAsFixed(2)}",
                                                     style: TextStyle(
                                                         fontSize: 14,
                                                         fontWeight:

@@ -340,45 +340,48 @@ class EditProductScreenState extends State<EditProductScreen> {
                         onChanged: (text) {
                           variantModel.stock = text;
                         },
+                        inputFormatters: positiveintger,
+                        keyboardType: TextInputType.numberWithOptions(
+                            signed: false, decimal: false),
                       ),
-                      flex: 2,
+//flex: 2,
                     ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    Expanded(
-                      child: TextFormField(
-                        readOnly: true,
-                        controller: edtUnit,
-                        onTap: () {
-                          if (categoryId.isEmpty) {
-                            Utility.showToast(
-                                msg: "please_select_category_first_key".tr());
-                            return;
-                          }
+                    // SizedBox(
+                    //   width: 5,
+                    // ),
+                    // Expanded(
+                    //   child: TextFormField(
+                    //     readOnly: true,
+                    //     controller: edtUnit,
+                    //     onTap: () {
+                    //       if (categoryId.isEmpty) {
+                    //         Utility.showToast(
+                    //             msg: "please_select_category_first_key".tr());
+                    //         return;
+                    //       }
 
-                          showModalBottomSheet(
-                              context: context,
-                              builder: (context) {
-                                return UnitBottomSheet(
-                                    categoryId: categoryId,
-                                    onSelect: (unit) {
-                                      unitId = unit.id;
-                                      edtUnit.text = unit.unitName;
-                                    });
-                              });
-                        },
-                        decoration: InputDecoration(
-                            labelText: "unit_key".tr(),
-                            suffixIcon: Icon(Icons.keyboard_arrow_right_sharp),
-                            suffixIconConstraints: BoxConstraints(
-                                minWidth: 20,
-                                maxWidth: 21,
-                                minHeight: 20,
-                                maxHeight: 21)),
-                      ),
-                      flex: 2,
-                    ),
+                    //       showModalBottomSheet(
+                    //           context: context,
+                    //           builder: (context) {
+                    //             return UnitBottomSheet(
+                    //                 categoryId: categoryId,
+                    //                 onSelect: (unit) {
+                    //                   unitId = unit.id;
+                    //                   edtUnit.text = unit.unitName;
+                    //                 });
+                    //           });
+                    //     },
+                    //     decoration: InputDecoration(
+                    //         labelText: "unit_key".tr(),
+                    //         suffixIcon: Icon(Icons.keyboard_arrow_right_sharp),
+                    //         suffixIconConstraints: BoxConstraints(
+                    //             minWidth: 20,
+                    //             maxWidth: 21,
+                    //             minHeight: 20,
+                    //             maxHeight: 21)),
+                    //   ),
+                    //   flex: 2,
+                    // ),
                   ],
                 ),
                 const SizedBox(
