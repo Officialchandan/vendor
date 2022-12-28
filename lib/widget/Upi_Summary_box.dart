@@ -169,7 +169,7 @@ class _UpiSummaryBoxState extends State<UpiSummaryBox> {
                               width: 4,
                             ),
                             Text(
-                              double.parse(widget.reedemamount)
+                              double.parse(widget.gencoin)
                                           .toStringAsFixed(1)
                                           .length >
                                       7
@@ -177,13 +177,14 @@ class _UpiSummaryBoxState extends State<UpiSummaryBox> {
                                           decimalDigits: 2,
                                           symbol: "",
                                           locale: 'en_UK')
-                                      .format(double.parse(widget.reedemamount))
-                                  : double.parse(widget.reedemamount)
+                                      .format(double.parse(widget.gencoin))
+                                  : double.parse(widget.gencoin)
                                       .toStringAsFixed(2),
                               style: GoogleFonts.openSans(
                                   color: ColorPrimary,
                                   fontWeight: FontWeight.w900,
-                                  fontSize: 16),
+                                  fontSize: 16,
+                                  textStyle: TextStyle()),
                             ),
                           ],
                         ),
@@ -259,20 +260,22 @@ class _UpiSummaryBoxState extends State<UpiSummaryBox> {
                         height: 5,
                       ),
                       Text(
-                        double.parse(widget.gencoin).toStringAsFixed(1).length >
+                        double.parse(widget.reedemamount)
+                                    .toStringAsFixed(1)
+                                    .length >
                                 7
                             ? NumberFormat.compactCurrency(
                                     decimalDigits: 2,
                                     symbol: "₹ ",
                                     locale: 'en_UK')
-                                .format(double.parse(widget.gencoin))
+                                .format(double.parse(widget.reedemamount))
                             : "₹ " +
-                                double.parse(widget.gencoin).toStringAsFixed(2),
+                                double.parse(widget.reedemamount)
+                                    .toStringAsFixed(2),
                         style: GoogleFonts.openSans(
                             color: ColorPrimary,
                             fontWeight: FontWeight.w900,
-                            fontSize: 16,
-                            textStyle: TextStyle()),
+                            fontSize: 16),
                       ),
                     ],
                   ),

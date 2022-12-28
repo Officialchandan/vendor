@@ -465,6 +465,7 @@
   "billing_option_key":"बिलिंग विकल्प",
   "your_last_Pay_Key":"आपका पिछला बक़ाया रुपये ",
   "your_total_pay_key":"आपकी कुल देय राशि ",
+  "please_valid_enter_amount_key": "कृपया वैध राशि दर्ज करें",
   "due_amount_flash": " है।  कृपया अभी भुकतान करे। ",
   "pay_now":"भुगतान करें",
   "hour_ago":"घंटे पहले",

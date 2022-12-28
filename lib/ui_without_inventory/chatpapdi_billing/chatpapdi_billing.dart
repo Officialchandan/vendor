@@ -916,7 +916,8 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                       });
                       if (status1 == 0) {
                         if (mobileController.text.length == 10) {
-                          if (amountController.text.length > 0) {
+                          if (amountController.text.isNotEmpty &&
+                              double.parse(amountController.text) > 0) {
                             if (nameController.text.trim().length >= 3) {
                               //   userRegister(context);
                               if (lastNameController.text.trim().length >= 3) {
@@ -940,7 +941,7 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                             }
                           } else {
                             Utility.showToast(
-                                msg: "please_enter_amount_key".tr());
+                                msg: "please_valid_enter_amount_key".tr());
                           }
                         } else {
                           Utility.showToast(
@@ -948,7 +949,8 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                         }
                       } else {
                         if (mobileController.text.length == 10) {
-                          if (amountController.text.length >= 0) {
+                          if (amountController.text.isNotEmpty &&
+                              double.parse(amountController.text) > 0) {
                             if (checkbox == true) {
                               directBilling(context);
                             } else {
@@ -956,7 +958,8 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
                                   msg: "Please select category".tr());
                             }
                           } else {
-                            Utility.showToast(msg: "please_enter_amount_key");
+                            Utility.showToast(
+                                msg: "please_valid_enter_amount_key".tr());
                           }
                         } else {
                           Utility.showToast(
@@ -1037,10 +1040,12 @@ class _ChatPapdiBillingState extends State<ChatPapdiBilling> {
     ///
     input["full_name"] =
         nameController.text.trim() + " " + lastNameController.text.trim();
-    input["first_name"] =
-        capitalizeAllWord(nameController.text.trim().toString());
-    input['last_name'] =
-        capitalizeAllWord(lastNameController.text.trim().toString());
+    input["first_name"] = nameController.text.isNotEmpty
+        ? capitalizeAllWord(nameController.text.trim().toString())
+        : "";
+    input['last_name'] = lastNameController.text.isNotEmpty
+        ? capitalizeAllWord(lastNameController.text.trim().toString())
+        : "";
     input["category_id"] = categoryIdList.join(',');
     input["vendor_id"] =
         await SharedPref.getIntegerPreference(SharedPref.VENDORID);

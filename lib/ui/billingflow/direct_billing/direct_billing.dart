@@ -20,10 +20,10 @@ import 'package:vendor/utility/sharedpref.dart';
 import 'package:vendor/utility/utility.dart';
 import 'package:vendor/utility/validator.dart';
 import 'package:vendor/widget/due_amount_flash.dart';
+
 import '../../../utility/constant.dart';
 import '../../../utility/network.dart';
 import '../../home/home.dart';
-import '../../money_due_upi/money_due_screen.dart';
 
 class DirectBilling extends StatefulWidget {
   int usertype;
@@ -939,42 +939,55 @@ class _DirectBillingState extends State<DirectBilling> {
                   }
                 });
                 if (status1 == 0) {
-                  if (mobileController.text.length == 10) {
-                    if (amountController.text.length > 0) {
-                      if (nameController.text.trim().length >= 3) {
-                        if (lastnameController.text.trim().length >= 3) {
-                          if (checkbox == true) {
-                            directBilling(context);
-                            //   userRegister(context);
+                  if (double.parse(amountController.text) <= 0) {
+                    Utility.showToast(
+                        msg: "please_valid_enter_amount_key".tr());
+                  } else {
+                    if (mobileController.text.length == 10) {
+                      if (amountController.text.length > 0 ||
+                          amountController.text.isNotEmpty &&
+                              int.parse(amountController.text) > 0) {
+                        if (nameController.text.trim().length >= 3) {
+                          if (lastnameController.text.trim().length >= 3) {
+                            if (checkbox == true) {
+                              directBilling(context);
+                              //   userRegister(context);
+                            } else {
+                              Utility.showToast(
+                                  msg: "Please select category".tr());
+                            }
                           } else {
-                            Utility.showToast(
-                                msg: "Please select category".tr());
+                            Utility.showToast(msg: "last_name_excp_key".tr());
                           }
                         } else {
-                          Utility.showToast(msg: "last_name_excp_key".tr());
+                          Utility.showToast(
+                            msg: "first_name_excp_key".tr(),
+                          );
                         }
                       } else {
-                        Utility.showToast(
-                          msg: "first_name_excp_key".tr(),
-                        );
+                        Utility.showToast(msg: "please_enter_amount_key".tr());
                       }
                     } else {
-                      Utility.showToast(msg: "please_enter_amount_key".tr());
+                      Utility.showToast(
+                          msg: "please_enter_10_digits_number_key".tr());
                     }
-                  } else {
-                    Utility.showToast(
-                        msg: "please_enter_10_digits_number_key".tr());
                   }
                 } else {
                   if (mobileController.text.length == 10) {
-                    if (amountController.text.length > 0) {
-                      if (checkbox == true) {
-                        directBilling(context);
-                      } else {
-                        Utility.showToast(msg: "Please select category".tr());
-                      }
+                    if (double.parse(amountController.text) <= 0) {
+                      Utility.showToast(
+                          msg: "please_valid_enter_amount_key".tr());
                     } else {
-                      Utility.showToast(msg: "please_enter_amount_key".tr());
+                      if (amountController.text.isNotEmpty) {
+                        log("hey_aagaya");
+                        if (checkbox == true) {
+                          directBilling(context);
+                        } else {
+                          Utility.showToast(msg: "Please select category".tr());
+                        }
+                      } else {
+                        Utility.showToast(msg: "please_enter_amount_key".tr());
+                      }
                     }
                   } else {
                     Utility.showToast(
@@ -1027,10 +1040,12 @@ class _DirectBillingState extends State<DirectBilling> {
     input["bill_amount"] = amountController.text;
     input["full_name"] =
         nameController.text.trim() + " " + lastnameController.text.trim();
-    input['first_name'] =
-        capitalizeAllWord(nameController.text.trim().toString());
-    input['last_name'] =
-        capitalizeAllWord(lastnameController.text.trim()).toString();
+    input['first_name'] = nameController.text.isNotEmpty
+        ? capitalizeAllWord(nameController.text.trim().toString())
+        : "";
+    input['last_name'] = lastnameController.text.isNotEmpty
+        ? capitalizeAllWord(lastnameController.text.trim().toString())
+        : "";
     input["vendor_id"] =
         await SharedPref.getIntegerPreference(SharedPref.VENDORID);
     input["total_pay"] = amount;

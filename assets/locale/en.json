@@ -69,6 +69,7 @@
   "address_for_the_gift_key": "Address (For the gift if different)",
   "email_id_optional_key": "Email ID (Optional)",
   "please_enter_amount_key": "Please Enter Amount",
+  "please_valid_enter_amount_key": "Please Enter Valid Amount",
   "please_enter_mobile_number_key": "Please Enter Mobile Number",
   "yesterday_key": "YESTERDAY",
   "yes_key": "yes",
@@ -470,5 +471,5 @@
   "restart_502_error":"Seem's that your Internet is reconnecting .For better experience please restart your App ",
   "restart_key": "Restart",
   "total_redem_key": "Used MP Coins",
-  "total_generate_key": "Settled by MyProfit"
+  "total_generate_key": "Settle by MyProfit"
 }

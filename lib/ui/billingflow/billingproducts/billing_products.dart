@@ -933,14 +933,20 @@ class _BillingProductsState extends State<BillingProducts> {
                     return InkWell(
                       onTap: () async {
                         if (productList.isNotEmpty) {
-                          if (await Network.isConnected()) {
-                            billingProducts(context)
-                                .then((value) => _textFieldController.clear());
-                          } else {
+                          if (orderTotal <= 0) {
                             Utility.showToast(
-                              msg: "please_check_your_internet_connection_key"
-                                  .tr(),
+                              msg: "please_valid_enter_amount_key".tr(),
                             );
+                          } else {
+                            if (await Network.isConnected()) {
+                              billingProducts(context).then(
+                                  (value) => _textFieldController.clear());
+                            } else {
+                              Utility.showToast(
+                                msg: "please_check_your_internet_connection_key"
+                                    .tr(),
+                              );
+                            }
                           }
                         } else {
                           Utility.showToast(
@@ -984,6 +990,7 @@ class _BillingProductsState extends State<BillingProducts> {
     input["address_id"] = "";
     input["payment_method"] = "cash";
     input["payment_code"] = "COD";
+    input["total_order_value"] = orderTotal;
     input["total_pay"] = totalPay;
     input["total_redeem"] = redeemCoins;
     input["order_status"] = "0";
