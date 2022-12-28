@@ -23,7 +23,7 @@ class _EarningAmountState extends State<EarningAmount> {
   TooltipBehavior? _tooltipBehavior;
   WithoutInventoryDailyEarningResponse? resultDaily;
   WithoutInventoryMonthlyEarningResponse? resultMonthly;
-  StreamController<WithoutInventoryMonthlyEarningData> controller = StreamController();
+  StreamController<WithoutInventoryMonthlyEarningData> controller = StreamController.broadcast();
   WithoutInventoryHourlyEarningResponse? resultHourly;
   Map<String, String>? resultHourlyMap;
 
@@ -35,7 +35,7 @@ class _EarningAmountState extends State<EarningAmount> {
 
   Future<WithoutInventoryMonthlyEarningData> getDhabasMonthly() async {
     resultMonthly = await ApiProvider().getChatPapdiMonthlyEarningAmount();
-    controller.add(resultMonthly!.data!);
+    //controller.sink.add(resultMonthly!.data!);
     //log('${resultMonthly!.data!}');
     return resultMonthly!.data!;
   }
@@ -61,6 +61,7 @@ class _EarningAmountState extends State<EarningAmount> {
     return DefaultTabController(
       length: 2,
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: Scaffold(
           appBar: AppBar(
             bottom: PreferredSize(
@@ -517,9 +518,9 @@ class _EarningAmountState extends State<EarningAmount> {
                             ]));
                       })),
               SingleChildScrollView(
-                  child: StreamBuilder<WithoutInventoryMonthlyEarningData>(
-                      //   future: getDhabasMonthly(),
-                      stream: controller.stream,
+                  child:FutureBuilder<WithoutInventoryMonthlyEarningData>(
+                         future: getDhabasMonthly(),
+                  //    stream: controller.stream,
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.waiting) {
                           return Center(child: CircularLoader());
