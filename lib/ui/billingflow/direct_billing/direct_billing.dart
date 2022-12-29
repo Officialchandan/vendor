@@ -939,7 +939,8 @@ class _DirectBillingState extends State<DirectBilling> {
                   }
                 });
                 if (status1 == 0) {
-                  if (double.parse(amountController.text) <= 0) {
+                  if (amountController.text.isEmpty ||
+                      double.parse(amountController.text) <= 0) {
                     Utility.showToast(
                         msg: "please_valid_enter_amount_key".tr());
                   } else {
@@ -974,7 +975,8 @@ class _DirectBillingState extends State<DirectBilling> {
                   }
                 } else {
                   if (mobileController.text.length == 10) {
-                    if (double.parse(amountController.text) <= 0) {
+                    if (amountController.text.isEmpty ||
+                        double.parse(amountController.text) <= 0) {
                       Utility.showToast(
                           msg: "please_valid_enter_amount_key".tr());
                     } else {

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -63,14 +62,14 @@ class _SplashScreenState extends State<SplashScreen> {
                       );
                     },
                     child: Text("Update")),
-                // mandotory == 10
-                //     ? Container()
-                //     : TextButton(
-                //         onPressed: () async {
-                //           Navigator.of(context);
-                //           getLogin();
-                //         },
-                //         child: Text("Later"))
+                mandotory == 13
+                    ? Container()
+                    : TextButton(
+                        onPressed: () async {
+                          Navigator.of(context);
+                          getLogin();
+                        },
+                        child: Text("Later"))
               ],
             ));
 
